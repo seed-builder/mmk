@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableAttendance extends Migration
+class CreateTableAttendances extends Migration
 {
     /**
      * Run the migrations.
@@ -18,7 +18,7 @@ class CreateTableAttendance extends Migration
             $table->string('fbillno')->unique();
             $table->uuid('forg_id');
             $table->uuid('femp_id');
-            $table->timestamp('ftime');
+            $table->timestamp('ftime')->nullable();
             $table->string('fremark')->default('');
             $table->string('faddress')->default('');
             $table->string('fphoto')->default('');

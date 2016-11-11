@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableUserFile extends Migration
+class CreateTableResources extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class CreateTableUserFile extends Migration
     public function up()
     {
         //
-        Schema::create('Resources', function (Blueprint $table) {
+        Schema::create('resources', function (Blueprint $table) {
             $table->uuid('id');
             $table->string('name');
             $table->string('ext')->default('');
@@ -36,6 +36,6 @@ class CreateTableUserFile extends Migration
     public function down()
     {
         //
-        Schema::drop('Resources');
+        Schema::drop('resources');
     }
 }

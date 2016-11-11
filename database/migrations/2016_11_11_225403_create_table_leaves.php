@@ -20,10 +20,10 @@ class CreateTableLeaves extends Migration
             $table->uuid('fdept_id');
             $table->uuid('femp_id');
             $table->integer('fask_type')->default(0);
-            $table->integer('freason')->default('');
-            $table->timestamp('fstart_time');
-            $table->timestamp('fend_time');
-            $table->integer('flentime');
+            $table->string('freason')->default('');
+            $table->timestamp('fstart_time')->nullable();
+            $table->timestamp('fend_time')->nullable();
+            $table->integer('flentime')->default(0);
             $table->string('fremarks')->default('');
             $table->timestamps();
             $table->primary('id');
