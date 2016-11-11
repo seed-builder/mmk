@@ -12,6 +12,8 @@
 */
 Route::get('/', function () {
     var_dump('ss');
+    var_dump('ss');
+    var_dump('ss');
     return view('welcome');
 });
 
