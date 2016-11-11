@@ -29,6 +29,8 @@ class VerifyApiSign
         ksort($data);
         $arr = [];
         foreach($data as $k => $v) {
+            if($request->hasFile($k))
+                continue;
             $arr[] = $k .'=' . $v;
         }
         $str =  implode('&', $arr). env('APP_KEY');

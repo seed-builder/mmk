@@ -14,15 +14,15 @@ class CreateTableBdOrganization extends Migration
     public function up()
     {
         //
-        Schema::create('bd_organization', function (Blueprint $table) {
-            $table->string('id');
-            $table->string('fnumber')->nullable();
-            $table->string('fname')->nullable();
-            $table->string('ffullname')->nullable();
-            $table->string('faddress')->nullable();
-            $table->string('fcontacts')->nullable();
-            $table->string('fphone')->nullable();
-            $table->string('fowner')->nullable();
+        Schema::create('bd_organizations', function (Blueprint $table) {
+            $table->uuid('id');
+            $table->string('fnumber')->unique();
+            $table->string('fname');
+            $table->string('ffullname')->default('');
+            $table->string('faddress')->default('');
+            $table->string('fcontacts')->default('');
+            $table->string('fphone')->default('');
+            $table->string('fowner')->default('');
             $table->timestamps();
             $table->primary('id');
         });
@@ -36,6 +36,6 @@ class CreateTableBdOrganization extends Migration
     public function down()
     {
         //
-        Schema::drop('bd_organization');
+        Schema::drop('organizations');
     }
 }
