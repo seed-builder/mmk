@@ -77,14 +77,6 @@ Route::group(['prefix' => 'user', 'middleware' => 'api.sign'], function (){
      *              defaultValue="john"
      *          ),
      *          @SWG\Parameter(
-     *              name="testfile",
-     *              description="testfile",
-     *              required=true,
-     *              type="file",
-     *              paramType="form",
-     *              defaultValue=""
-     *          ),
-     *          @SWG\Parameter(
      *              name="_sign",
      *              description="签名",
      *              required=true,
