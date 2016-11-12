@@ -26,4 +26,9 @@ class UtlController extends ApiController
         $img = Image::make($image)->resize(300, 200);
         return $img->response('jpg');
     }
+
+    public function syncDB(Request $request){
+
+    }
+
 }

@@ -14,10 +14,10 @@ class CreateTableAttendances extends Migration
     public function up()
     {
         Schema::create('ms_attendances', function (Blueprint $table) {
-            $table->uuid('id');
+            $table->increments('id');
             $table->string('fbillno')->unique();
-            $table->uuid('forg_id');
-            $table->uuid('femp_id');
+            $table->increments('forg_id')->default(0);
+            $table->increments('femp_id')->default(0);
             $table->timestamp('ftime')->nullable();
             $table->string('fremark')->default('');
             $table->string('faddress')->default('');
@@ -26,16 +26,16 @@ class CreateTableAttendances extends Migration
             $table->integer('fmode')->default(0);
             $table->string('flongitude')->default('');
             $table->string('flatitude')->default('');
-            $table->uuid('fcreator_id')->default('');
+            $table->increments('fcreator_id')->default('');
             $table->timestamp('fcreate_date')->nullable();
-            $table->uuid('fmodify_id')->default('');
+            $table->increments('fmodify_id')->default('');
             $table->timestamp('fmodify_date')->nullable();
-            $table->uuid('fauditor_id')->default('');
+            $table->increments('fauditor_id')->default('');
             $table->timestamp('faudit_date')->nullable();
             $table->integer('fdocument_status')->default(0);
-            $table->uuid('fforbidder_id')->default('');
+            $table->increments('fforbidder_id')->default('');
             $table->timestamp('fforbid_date')->nullable();
-            $table->integer('fforbid_status')->default(0);
+            $table->string('fforbid_status')->default(0);
             $table->primary('id');
         });
     }

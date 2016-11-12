@@ -8,4 +8,5 @@ use Zizaco\Entrust\EntrustRole;
 class Role extends EntrustRole
 {
     //
+    protected $table = 'sys_roles';
 }

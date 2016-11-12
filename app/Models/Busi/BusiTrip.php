@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * 出差明细
- * @package App\Models
+ * @package App\Models\Busi
  *
  * @author xrs
  * @SWG\Model(id="BusiTrip")
@@ -23,7 +23,7 @@ use Illuminate\Database\Eloquent\Model;
  * @SWG\Property(name="flongitude", type="string", description="经度")
  * @SWG\Property(name="flatitude", type="string", description="纬度")
  */
-class BusiTrip extends UuidModel
+class BusiTrip extends BaseModel
 {
     //
 }

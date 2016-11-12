@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * 资源（文件,图片..）
- * @package App
+ * @package App\Models\Busi
  *
  * @author xrs
  * @SWG\Model(id="Resources")
@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @SWG\Property(name="email", type="string", description="email")
  * @SWG\Property(name="password", type="string", description="password")
  */
-class Resources extends UuidModel
+class Resources extends BaseModel
 {
     //
 }

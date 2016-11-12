@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class User
- * @package App
+ * @package App\Models\Busi
  *
  * @author xrs
  * @SWG\Model(id="Orgnization")
@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @SWG\Property(name="email", type="string", description="email")
  * @SWG\Property(name="password", type="string", description="password")
  */
-class Orgnization extends UuidModel
+class Orgnization extends BaseModel
 {
     //
 }

@@ -15,7 +15,7 @@ class CreateTableOrganizations extends Migration
     {
         //
         Schema::create('bd_organizations', function (Blueprint $table) {
-            $table->uuid('id');
+            $table->increments('id');
             $table->string('fnumber')->unique();
             $table->string('fname');
             $table->string('ffullname')->default('');
@@ -24,14 +24,14 @@ class CreateTableOrganizations extends Migration
             $table->string('fphone')->default('');
             $table->string('fowner')->default('');
             //$table->timestamps();
-            $table->uuid('fcreator_id')->default('');
+            $table->integer('fcreator_id')->default('');
             $table->timestamp('fcreate_date')->nullable();
-            $table->uuid('fmodify_id')->default('');
+            $table->integer('fmodify_id')->default('');
             $table->timestamp('fmodify_date')->nullable();
-            $table->uuid('fauditor_id')->default('');
+            $table->integer('fauditor_id')->default('');
             $table->timestamp('faudit_date')->nullable();
             $table->integer('fdocument_status')->default(0);
-            $table->uuid('fforbidder_id')->default('');
+            $table->integer('fforbidder_id')->default('');
             $table->timestamp('fforbid_date')->nullable();
             $table->integer('fforbid_status')->default(0);
             $table->primary('id');

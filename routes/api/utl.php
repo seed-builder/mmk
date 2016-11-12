@@ -95,4 +95,57 @@ Route::group(['prefix' => 'utl', 'middleware' => 'api.sign'], function (){
      * )
      */
     Route::get('/show-image', ['uses' => 'UtlController@showImage']);
+
+    /**
+     * @SWG\Api(
+     *   path="/api/utl/sync-db",
+     *   @SWG\Operation(
+     *      method="POST",
+     *      nickname="sync-db",
+     *      summary="同步数据表",
+     *      notes="同步数据库表",
+     *      type="",
+     *      @SWG\Parameters(
+     *          @SWG\Parameter(
+     *              name="table",
+     *              description="表名",
+     *              required=true,
+     *              type="string",
+     *              paramType="query",
+     *              defaultValue="user"
+     *          ),
+     *          @SWG\Parameter(
+     *              name="op",
+     *              description="操作（0-新增， 1-修改， 2-删除",
+     *              required=true,
+     *              type="integer",
+     *              paramType="query",
+     *              defaultValue="0"
+     *          ),
+     *          @SWG\Parameter(
+     *              name="data",
+     *              description="json格式字符串",
+     *              required=true,
+     *              type="string",
+     *              paramType="query",
+     *              defaultValue="{id:1, name:'1234'}"
+     *          ),
+     *          @SWG\Parameter(
+     *              name="_sign",
+     *              description="签名",
+     *              required=true,
+     *              type="string",
+     *              paramType="form",
+     *              defaultValue="****"
+     *          )
+     *      ),
+     *      @SWG\ResponseMessages(
+     *          @SWG\ResponseMessage(code=401, message="签名验证错误！"),
+     *          @SWG\ResponseMessage(code=200, message="成功。")
+     *      )
+     *   )
+     * )
+     */
+    Route::post('/sync-db', ['uses' => 'UtlController@syncDB']);
+
 });

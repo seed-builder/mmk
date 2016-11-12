@@ -15,28 +15,28 @@ class CreateTableEmployees extends Migration
     {
         //
         Schema::create('bd_employees', function (Blueprint $table) {
-            $table->uuid('id');
-            $table->uuid('fdept_id');
-            $table->uuid('fpost_id');
+            $table->increments('id');
+            $table->integer('fdept_id')->default(0);
+            $table->integer('fpost_id')->default(0);
             $table->string('fname');
             $table->string('fnumber')->unique();
             $table->string('fempnum')->default('');
             $table->string('fphone')->default('');
             $table->string('faddress')->default('');
             $table->string('fremark')->default('');
-            $table->uuid('fphoto')->default('');
+            $table->integer('fphoto')->default('');
             $table->string('femail')->unique();
             $table->string('password')->default('');
-            $table->uuid('fcreator_id')->default('');
+            $table->integer('fcreator_id')->default('');
             $table->timestamp('fcreate_date')->nullable();
-            $table->uuid('fmodify_id')->default('');
+            $table->integer('fmodify_id')->default('');
             $table->timestamp('fmodify_date')->nullable();
-            $table->uuid('fauditor_id')->default('');
+            $table->integer('fauditor_id')->default('');
             $table->timestamp('faudit_date')->nullable();
             $table->integer('fdocument_status')->default(0);
-            $table->uuid('fforbidder_id')->default('');
+            $table->integer('fforbidder_id')->default('');
             $table->timestamp('fforbid_date')->nullable();
-            $table->integer('fforbid_status')->default(0);
+            $table->string('fforbid_status')->default(0);
             $table->primary('id');
         });
     }

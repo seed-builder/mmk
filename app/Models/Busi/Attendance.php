@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * 考勤签到
- * @package App\Models
+ * @package App\Models\Busi
  *
  * @author xrs
  * @SWG\Model(id="Attendance")
@@ -22,7 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  * @SWG\Property(name="flatitude", type="string", description="纬度")
  * @SWG\Property(name="ftime", type="string",format="date", description="签到时间")
  */
-class Attendance extends UuidModel
+class Attendance extends BaseModel
 {
     //
     protected $table = 'ms_attendance';
