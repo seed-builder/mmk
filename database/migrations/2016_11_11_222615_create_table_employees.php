@@ -24,20 +24,20 @@ class CreateTableEmployees extends Migration
             $table->string('fphone')->default('');
             $table->string('faddress')->default('');
             $table->string('fremark')->default('');
-            $table->integer('fphoto')->default('');
+            $table->integer('fphoto')->default(0);
             $table->string('femail')->unique();
             $table->string('password')->default('');
-            $table->integer('fcreator_id')->default('');
+            $table->integer('fcreator_id')->default(0);
             $table->timestamp('fcreate_date')->nullable();
-            $table->integer('fmodify_id')->default('');
+            $table->integer('fmodify_id')->default(0);
             $table->timestamp('fmodify_date')->nullable();
-            $table->integer('fauditor_id')->default('');
+            $table->integer('fauditor_id')->default(0);
             $table->timestamp('faudit_date')->nullable();
             $table->integer('fdocument_status')->default(0);
-            $table->integer('fforbidder_id')->default('');
+            $table->integer('fforbidder_id')->default(0);
             $table->timestamp('fforbid_date')->nullable();
-            $table->string('fforbid_status')->default(0);
-            $table->primary('id');
+            $table->integer('fforbid_status')->default(0);
+
         });
     }
 

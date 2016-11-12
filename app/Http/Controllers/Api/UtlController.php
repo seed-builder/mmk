@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use Storage;
 use Response;
 use Image;
+use App\Models\ModelMap;
+use Log;
 
 class UtlController extends ApiController
 {
@@ -27,8 +29,19 @@ class UtlController extends ApiController
         return $img->response('jpg');
     }
 
+    /**
+     * 数据库同步
+     * @param Request $request
+     * @return Response
+     */
     public function syncDB(Request $request){
+        $map =  new ModelMap; //::find(11);
+        $map->model='xxx';
+        $map->table = 'yyyy';
+        $re = $map->save();
 
+        Log::info('model created: '. json_encode($map));
+        return response('success', 200);
     }
 
 }

@@ -18,7 +18,7 @@ class CreateTableBusiTrips extends Migration
             $table->string('fbillno')->unique();
             $table->integer('forg_id')->default(0);
             $table->integer('femp_id')->default(0);
-            $table->integer('farrive_image')->default('');
+            $table->integer('farrive_image')->default(0);
             $table->timestamp('fout_time')->nullable();
             $table->timestamp('farrive_time')->nullable();
             $table->string('fremark')->default('');
@@ -26,17 +26,17 @@ class CreateTableBusiTrips extends Migration
             $table->string('ffile_name')->default('');
             $table->string('flongitude')->default('');
             $table->string('flatitude')->default('');
-            $table->integer('fcreator_id')->default('');
+            $table->integer('fcreator_id')->default(0);
             $table->timestamp('fcreate_date')->nullable();
-            $table->integer('fmodify_id')->default('');
+            $table->integer('fmodify_id')->default(0);
             $table->timestamp('fmodify_date')->nullable();
-            $table->integer('fauditor_id')->default('');
+            $table->integer('fauditor_id')->default(0);
             $table->timestamp('faudit_date')->nullable();
             $table->integer('fdocument_status')->default(0);
-            $table->integer('fforbidder_id')->default('');
+            $table->integer('fforbidder_id')->default(0);
             $table->timestamp('fforbid_date')->nullable();
-            $table->string('fforbid_status')->default(0);
-            $table->primary('id');
+            $table->integer('fforbid_status')->default(0);
+
         });
     }
 

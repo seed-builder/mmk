@@ -16,8 +16,8 @@ class CreateTableAttendances extends Migration
         Schema::create('ms_attendances', function (Blueprint $table) {
             $table->increments('id');
             $table->string('fbillno')->unique();
-            $table->increments('forg_id')->default(0);
-            $table->increments('femp_id')->default(0);
+            $table->integer('forg_id')->default(0);
+            $table->integer('femp_id')->default(0);
             $table->timestamp('ftime')->nullable();
             $table->string('fremark')->default('');
             $table->string('faddress')->default('');
@@ -26,17 +26,17 @@ class CreateTableAttendances extends Migration
             $table->integer('fmode')->default(0);
             $table->string('flongitude')->default('');
             $table->string('flatitude')->default('');
-            $table->increments('fcreator_id')->default('');
+            $table->integer('fcreator_id')->default(0);
             $table->timestamp('fcreate_date')->nullable();
-            $table->increments('fmodify_id')->default('');
+            $table->integer('fmodify_id')->default(0);
             $table->timestamp('fmodify_date')->nullable();
-            $table->increments('fauditor_id')->default('');
+            $table->integer('fauditor_id')->default(0);
             $table->timestamp('faudit_date')->nullable();
             $table->integer('fdocument_status')->default(0);
-            $table->increments('fforbidder_id')->default('');
+            $table->integer('fforbidder_id')->default(0);
             $table->timestamp('fforbid_date')->nullable();
-            $table->string('fforbid_status')->default(0);
-            $table->primary('id');
+            $table->integer('fforbid_status')->default(0);
+
         });
     }
 

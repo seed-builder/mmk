@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Models\ModelMap;
 
 class ExampleTest extends TestCase
 {
@@ -13,7 +14,12 @@ class ExampleTest extends TestCase
      */
     public function testBasicExample()
     {
-        $this->visit('/')
-             ->see('Laravel');
+//        $this->visit('http://laradock')
+//             ->see('Laravel');
+        $map = new ModelMap;
+        $map->model = 'User';
+        $map->table = 'sys_user';
+        $re = $map->save();
+        $this->assertTrue($re);
     }
 }

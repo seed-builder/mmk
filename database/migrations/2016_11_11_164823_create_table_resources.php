@@ -22,12 +22,12 @@ class CreateTableResources extends Migration
             $table->string('path')->default('');
             $table->string('mimetype')->default('');
             $table->string('res_type')->default('');
-            $table->integer('res_id')->default('');
-            $table->integer('fcreator_id')->default('');
+            $table->integer('res_id')->default(0);
+            $table->integer('fcreator_id')->default(0);
             $table->timestamp('fcreate_date')->nullable();
-            $table->integer('fmodify_id')->default('');
+            $table->integer('fmodify_id')->default(0);
             $table->timestamp('fmodify_date')->nullable();
-            $table->primary('id');
+
         });
     }
 
