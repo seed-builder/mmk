@@ -23,7 +23,17 @@ class CreateTableOrganizations extends Migration
             $table->string('fcontacts')->default('');
             $table->string('fphone')->default('');
             $table->string('fowner')->default('');
-            $table->timestamps();
+            //$table->timestamps();
+            $table->uuid('fcreator_id')->default('');
+            $table->timestamp('fcreate_date')->nullable();
+            $table->uuid('fmodify_id')->default('');
+            $table->timestamp('fmodify_date')->nullable();
+            $table->uuid('fauditor_id')->default('');
+            $table->timestamp('faudit_date')->nullable();
+            $table->integer('fdocument_status')->default(0);
+            $table->uuid('fforbidder_id')->default('');
+            $table->timestamp('fforbid_date')->nullable();
+            $table->integer('fforbid_status')->default(0);
             $table->primary('id');
         });
     }
@@ -36,6 +46,6 @@ class CreateTableOrganizations extends Migration
     public function down()
     {
         //
-        Schema::drop('organizations');
+        Schema::drop('bd_organizations');
     }
 }

@@ -21,7 +21,16 @@ class CreateTableDepartments extends Migration
             $table->string('fpardept_id')->default(0);
             $table->string('ffullname')->default('');
             $table->string('fremark')->default('');
-            $table->timestamps();
+            $table->uuid('fcreator_id')->default('');
+            $table->timestamp('fcreate_date')->nullable();
+            $table->uuid('fmodify_id')->default('');
+            $table->timestamp('fmodify_date')->nullable();
+            $table->uuid('fauditor_id')->default('');
+            $table->timestamp('faudit_date')->nullable();
+            $table->integer('fdocument_status')->default(0);
+            $table->uuid('fforbidder_id')->default('');
+            $table->timestamp('fforbid_date')->nullable();
+            $table->integer('fforbid_status')->default(0);
             $table->primary('id');
         });
     }
@@ -34,6 +43,6 @@ class CreateTableDepartments extends Migration
     public function down()
     {
         //
-        Schema::drop('departments');
+        Schema::drop('bd_departments');
     }
 }

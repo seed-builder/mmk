@@ -8,7 +8,7 @@ use Storage;
 use Response;
 use Image;
 
-class UtlController extends Controller
+class UtlController extends ApiController
 {
     //
     public function uploadImage(Request $request){

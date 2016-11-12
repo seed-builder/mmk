@@ -25,3 +25,20 @@ if(!function_exists('uuid')){
         }
     }
 }
+
+if (! function_exists('display')) {
+    /**
+     * Get the evaluated view contents for the given view.
+     *
+     * @param  string $view
+     * @param  array $data
+     * @param  array $mergeData
+     * @param string $theme
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    function display($view = null, $data = [], $mergeData = [] , $theme = 'default')
+    {
+        $template = $theme . '.' . $view;
+        return view($template, $data, $mergeData);
+    }
+}

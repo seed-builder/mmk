@@ -27,7 +27,16 @@ class CreateTableEmployees extends Migration
             $table->uuid('fphoto')->default('');
             $table->string('femail')->unique();
             $table->string('password')->default('');
-            $table->timestamps();
+            $table->uuid('fcreator_id')->default('');
+            $table->timestamp('fcreate_date')->nullable();
+            $table->uuid('fmodify_id')->default('');
+            $table->timestamp('fmodify_date')->nullable();
+            $table->uuid('fauditor_id')->default('');
+            $table->timestamp('faudit_date')->nullable();
+            $table->integer('fdocument_status')->default(0);
+            $table->uuid('fforbidder_id')->default('');
+            $table->timestamp('fforbid_date')->nullable();
+            $table->integer('fforbid_status')->default(0);
             $table->primary('id');
         });
     }
@@ -40,6 +49,6 @@ class CreateTableEmployees extends Migration
     public function down()
     {
         //
-        Schema::drop('employees');
+        Schema::drop('bd_employees');
     }
 }
