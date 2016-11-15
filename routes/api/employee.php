@@ -8,7 +8,7 @@
 Route::group(['prefix' => 'employee', 'middleware' => 'api.sign'], function () {
     /**
      * @SWG\Api(
-     *   path="/api/employee/login",
+     *   path="/api/employee/login/{phone}",
      *   @SWG\Operation(
      *      method="POST",
      *      nickname="employee-login",
@@ -49,4 +49,7 @@ Route::group(['prefix' => 'employee', 'middleware' => 'api.sign'], function () {
      * )
      */
     Route::post('/login', ['as' => 'EmployeeLogin', 'uses' => 'EmployeeController@login']);
+
+
+
 });
