@@ -8,6 +8,7 @@ use Storage;
 use Response;
 use Image;
 use App\Models\ModelMap;
+use App\Models\Busi\Resources;
 use Log;
 
 class UtlController extends ApiController
@@ -15,9 +16,21 @@ class UtlController extends ApiController
     //
     public function uploadImage(Request $request){
         $file = $request->file('imageFile');
+        //var_dump($file);
         if($file->isValid())
-            $re = $file->store('upload/images');
-        return response($re, 200);
+        {
+            $path = $file->store('upload/images');
+            if($path){
+                $res = Resources::create([
+                    'name' => $file->getClientOriginalName(),
+                    'ext' => $file->getClientOriginalExtension(),
+                    'size' => $file->getSize(),
+                    'path' => 'app/' . $path ,
+                    'mimetype' => $file->getMimeType(),
+                ]);
+            }
+        }
+        return response($res, 200);
     }
 
     public function showImage(Request $request){

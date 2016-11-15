@@ -18,4 +18,5 @@ use Illuminate\Database\Eloquent\Model;
 class Resources extends BaseModel
 {
     //
+    protected $table = 'bd_resources';
 }
