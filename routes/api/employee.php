@@ -56,11 +56,7 @@ Route::group(['prefix' => 'employee', 'middleware' => 'api.sign'], function () {
      *      notes="新增员工",
      *      type="",
      *      @SWG\Parameters(
-     *          @SWG\Parameter(name="faddress", description="faddress", required=true,type="string", paramType="form", defaultValue="" ),
-     *          @SWG\Parameter(name="fauditor_id", description="fauditor_id", required=true,type="string", paramType="form", defaultValue="0" ),
-                @SWG\Parameter(name="faudit_date", description="faudit_date", required=false,type="string", paramType="form", defaultValue="" ),
-                @SWG\Parameter(name="fcreate_date", description="fcreate_date", required=false,type="string", paramType="form", defaultValue="" ),
-                @SWG\Parameter(name="fcreator_id", description="fcreator_id", required=true,type="string", paramType="form", defaultValue="0" ),
+     *          @SWG\Parameter(name="faddress", description="faddress", required=true,type="string", paramType="form", defaultValue="" ),     *
                 @SWG\Parameter(name="fdept_id", description="fdept_id", required=true,type="string", paramType="form", defaultValue="0" ),
                 @SWG\Parameter(name="fdocument_status", description="fdocument_status", required=true,type="string", paramType="form", defaultValue="0" ),
                 @SWG\Parameter(name="femail", description="femail", required=true,type="string", paramType="form", defaultValue="" ),
@@ -68,8 +64,6 @@ Route::group(['prefix' => 'employee', 'middleware' => 'api.sign'], function () {
                 @SWG\Parameter(name="fforbidder_id", description="fforbidder_id", required=true,type="string", paramType="form", defaultValue="0" ),
                 @SWG\Parameter(name="fforbid_date", description="fforbid_date", required=false,type="string", paramType="form", defaultValue="" ),
                 @SWG\Parameter(name="fforbid_status", description="fforbid_status", required=true,type="string", paramType="form", defaultValue="0" ),
-                @SWG\Parameter(name="fmodify_date", description="fmodify_date", required=false,type="string", paramType="form", defaultValue="" ),
-                @SWG\Parameter(name="fmodify_id", description="fmodify_id", required=true,type="string", paramType="form", defaultValue="0" ),
                 @SWG\Parameter(name="fname", description="fname", required=true,type="string", paramType="form", defaultValue="" ),
                 @SWG\Parameter(name="fnumber", description="fnumber", required=true,type="string", paramType="form", defaultValue="" ),
                 @SWG\Parameter(name="fpassword", description="fpassword", required=true,type="string", paramType="form", defaultValue="" ),
