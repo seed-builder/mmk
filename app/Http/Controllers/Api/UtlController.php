@@ -10,6 +10,7 @@ use Image;
 use App\Models\ModelMap;
 use App\Models\Busi\Resources;
 use Log;
+use DB;
 
 class UtlController extends ApiController
 {
@@ -52,13 +53,49 @@ class UtlController extends ApiController
      * @return Response
      */
     public function syncDB(Request $request){
-        $map =  new ModelMap; //::find(11);
-        $map->model='xxx';
-        $map->table = 'yyyy';
-        $re = $map->save();
+        $table = $request->input('table');
+        $op = $request->input('op');
+        $data = json_decode( $request->input('data', '') , true );
+        $affected = 0;
+        if(!empty($data) && !empty($table)) {
+            $columns = [];
+            $values = [];
+            //0-新增， 1-修改， 2-删除
+            switch ($op) {
+                default:
+                case 0:
+                    $patten = [];
+                    foreach ($data as $col => $val){
+                        $columns[] = "`$col`";
+                        $values[] = $val;
+                        $patten[] = '?';
+                    }
+                    $query = 'insert into '.$table.' ('. implode(',', $columns) .') values ('.implode(',',$patten).')';
+                    $affected = DB::insert($query, $values);
+                    break;
+                case 1:
+                    $where = 'id=';
+                    foreach ($data as $col => $val){
+                        if($col == 'id'){
+                            $where .= $val;
+                            continue;
+                        }
+                        $columns[] = "`$col`" . '=?' ;
+                        $values[] = $val;
+                    }
+                    $affected = DB::update('update '.$table.' set '.implode(',', $columns).' where ' . $where, $values);
+                    break;
+                case 2:
+                    foreach ($data as $col => $val){
+                        $columns[] = "`$col`" . '=?' ;
+                        $values[] = $val;
+                    }
+                    $affected = DB::delete('delete from ' . $table . ' where ' . implode(' and ', $columns), $values);
+                    break;
+            }
+        }
 
-        Log::info('model created: '. json_encode($map));
-        return response('success', 200);
+        return response(['affected' => $affected], 200);
     }
 
 }
