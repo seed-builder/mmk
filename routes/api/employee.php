@@ -21,7 +21,7 @@ Route::group(['prefix' => 'employee', 'middleware' => 'api.sign'], function () {
      *              description="电话号码",
      *              required=true,
      *              type="string",
-     *              paramType="query",
+     *              paramType="path",
      *              defaultValue="1387777777"
      *          ),
      *          @SWG\Parameter(
