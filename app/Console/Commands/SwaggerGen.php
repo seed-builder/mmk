@@ -107,7 +107,10 @@ class SwaggerGen extends Command
     }
 
     protected function getColType($typ){
+        //$this->info('COLUMN_TYPE: ' . $typ);
         $t = 'string';
+        $typ = preg_replace('/\(\d+\).*/', '', $typ);
+        //$this->info('COLUMN_TYPE replaced: ' . $typ);
         switch ($typ) {
             default:
             case 'varchar':
@@ -121,6 +124,7 @@ class SwaggerGen extends Command
     }
 
     protected function getNotNullable($able){
+        //$this->info('IS_NULLABLE: ' . $able);
         return $able == 'YES' ? 'false':'true';
     }
 }
