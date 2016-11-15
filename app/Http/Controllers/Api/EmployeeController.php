@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\Busi\Employee as Entity;
 use Hash;
 use App\Http\Requests\StoreEmployeeRequest;
 
-class EmployeeController extends Controller
+class EmployeeController extends ApiController
 {
     //
     public function login(Request $request){
@@ -16,9 +15,9 @@ class EmployeeController extends Controller
             'phone' => 'required',
             'pwd' => 'required'
         ]);
-        $emp = Employee::where('fphone', $request->input('phone'))->first();
+        $emp = Entity::where('fphone', $request->input('phone'))->first();
         $pwd = $request->input('pwd');
-        if(Hash::check($pwd, $emp->password)){
+        if($pwd == $emp->fpassword){
             return response($emp, 200);
         }else{
             return response('wrong!', 401);
@@ -36,11 +35,11 @@ class EmployeeController extends Controller
         $page = $request->input('page', 1);
         $pageSize = $request->input('pageSize', 10);
         $sort = $request->input('sort', 'id asc');
+        $arr = explode(' ', $sort);
         $count = Entity::count();
-        $data = Entity::orderBy($sort)->take($page)->skip(($page-1)*$pageSize)->get();
+        $data = Entity::orderBy($arr[0], $arr[1])->take($page)->skip(($page-1)*$pageSize)->get();
         return response(['count' => $count, 'list' => $data, 'page' => $page, 'pageSize' => $pageSize], 200);
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -54,9 +53,9 @@ class EmployeeController extends Controller
         $data = $request->all();
         unset($data['_sign']);
         $entity = Entity::create($data);
-        $re = $entity->save();
-        $status = $re ? 200 : 400;
-        return response(['success' => $re], $status);
+        //$re = $entity->save();
+        $status = !empty($entity) ? 200 : 400;
+        return response($entity, $status);
     }
 
     /**
@@ -68,6 +67,8 @@ class EmployeeController extends Controller
     public function show($id)
     {
         //
+        $entity = Entity::find($id);
+        return response($entity, 200);
     }
 
     /**
@@ -80,6 +81,12 @@ class EmployeeController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $entity = Entity::find($id);
+        $data = $request->all();
+        unset($data['_sign']);
+        $re = $entity->save($data);
+        $status = $re ? 200 : 401;
+        return response(['success' => $re], $status);
     }
 
     /**
@@ -91,5 +98,10 @@ class EmployeeController extends Controller
     public function destroy($id)
     {
         //
+        $entity = Entity::find($id);
+        $re = $entity->delete();
+        $status = $re ? 200 : 401;
+        return response(['success' => $re], $status);
     }
+
 }

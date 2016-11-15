@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Busi\Attendance;
+use App\Models\Busi\Attendance as Entity;
 
-class AttendanceController extends Controller
+class AttendanceController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -16,17 +16,13 @@ class AttendanceController extends Controller
     public function index(Request $request)
     {
         //
-
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $page = $request->input('page', 1);
+        $pageSize = $request->input('pageSize', 10);
+        $sort = $request->input('sort', 'id asc');
+        $arr = explode(' ', $sort);
+        $count = Entity::count();
+        $data = Entity::orderBy($arr[0], $arr[1])->take($page)->skip(($page-1)*$pageSize)->get();
+        return response(['count' => $count, 'list' => $data, 'page' => $page, 'pageSize' => $pageSize], 200);
     }
 
     /**
@@ -38,6 +34,12 @@ class AttendanceController extends Controller
     public function store(Request $request)
     {
         //
+        $data = $request->all();
+        unset($data['_sign']);
+        $entity = Entity::create($data);
+        //$re = $entity->save();
+        $status = !empty($entity) ? 200 : 400;
+        return response($entity, $status);
     }
 
     /**
@@ -49,17 +51,8 @@ class AttendanceController extends Controller
     public function show($id)
     {
         //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        $entity = Entity::find($id);
+        return response($entity, 200);
     }
 
     /**
@@ -72,6 +65,12 @@ class AttendanceController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $entity = Entity::find($id);
+        $data = $request->all();
+        unset($data['_sign']);
+        $re = $entity->save($data);
+        $status = $re ? 200 : 401;
+        return response(['success' => $re], $status);
     }
 
     /**
@@ -83,5 +82,10 @@ class AttendanceController extends Controller
     public function destroy($id)
     {
         //
+        $entity = Entity::find($id);
+        $re = $entity->delete();
+        $status = $re ? 200 : 401;
+        return response(['success' => $re], $status);
     }
+
 }

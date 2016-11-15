@@ -20,13 +20,13 @@ class CreateTableEmployees extends Migration
             $table->integer('fpost_id')->default(0);
             $table->string('fname');
             $table->string('fnumber')->unique();
-            $table->string('fempnum')->default('');
-            $table->string('fphone')->default('');
+            $table->string('femp_num')->default('');
+            $table->string('fphone')->unique();
             $table->string('faddress')->default('');
             $table->string('fremark')->default('');
             $table->integer('fphoto')->default(0);
-            $table->string('femail')->unique();
-            $table->string('password')->default('');
+            $table->string('femail')->default('');
+            $table->string('fpassword')->default('');
             $table->integer('fcreator_id')->default(0);
             $table->timestamp('fcreate_date')->nullable();
             $table->integer('fmodify_id')->default(0);

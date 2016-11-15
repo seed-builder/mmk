@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class BaseModel extends Model
 {
+    protected $guarded = ['id'];
+
     /**
      * The name of the "created at" column.
      *
