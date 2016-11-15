@@ -34,11 +34,15 @@ class UtlController extends ApiController
     }
 
     public function showImage(Request $request){
-        $imageName = $request->input('imageName');
-        $imageName = '1bea3a3faa3838407eec786975f68335.jpeg';
-        $image = storage_path('app/upload/images/'. $imageName); //Storage::url('upload/images/' . $imageName);
-
-        $img = Image::make($image)->resize(300, 200);
+        $id = $request->input('imageId');
+        $h = $request->input('h', null);
+        $w = $request->input('w', null);
+        $image = Resources::find($id); //'
+        $image = storage_path($image->path);
+        $img = Image::make($image);
+        if($h || $w){
+            $img->resize($w, $h);
+        }
         return $img->response('jpg');
     }
 

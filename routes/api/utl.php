@@ -56,7 +56,7 @@ Route::group(['prefix' => 'utl', 'middleware' => 'api.sign'], function (){
      *      @SWG\Parameters(
      *          @SWG\Parameter(
      *              name="imageId",
-     *              description="图片文件",
+     *              description="图片文件id",
      *              required=true,
      *              type="string",
      *              paramType="query",
