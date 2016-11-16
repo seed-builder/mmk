@@ -27,7 +27,7 @@ class KingdeeSyncData extends SyncData
     public function sync($table, $op, $data){
         $this->login();
         $result = $this->sendData($table, $op, $data);
-        return json_encode($result, true);
+        return json_decode($result, true);
     }
 
     public static function add($table, $data){
