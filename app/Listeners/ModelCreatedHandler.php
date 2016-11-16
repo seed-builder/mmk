@@ -6,6 +6,8 @@ use App\Events\ModelCreatedEvent;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Log;
+use App\Services\KingdeeSyncData;
+use App\Models\ModelMap;
 
 class ModelCreatedHandler implements ShouldQueue
 {
@@ -28,6 +30,10 @@ class ModelCreatedHandler implements ShouldQueue
     public function handle(ModelCreatedEvent $event)
     {
         //
-        Log::info('ModelCreatedHandler: '.json_encode($event->model));
+        //Log::info('ModelCreatedHandler: '.json_encode($event->model));
+        $map = ModelMap::where('table', $event->model->getTable())->first();
+        if(!empty($map)){
+            $result = KingdeeSyncData::add($map->foreign_table, $event->model);
+        }
     }
 }

@@ -6,6 +6,8 @@ use App\Events\ModelDeletedEvent;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Log;
+use App\Services\KingdeeSyncData;
+use App\Models\ModelMap;
 
 class ModelDeletedHandler implements ShouldQueue
 {
@@ -29,5 +31,9 @@ class ModelDeletedHandler implements ShouldQueue
     {
         //
         Log::info('ModelDeletedHandler: '.json_encode($event->model));
+        $map = ModelMap::where('table', $event->model->getTable())->first();
+        if(!empty($map)){
+            $result = KingdeeSyncData::delete($map->foreign_table, $event->model);
+        }
     }
 }
