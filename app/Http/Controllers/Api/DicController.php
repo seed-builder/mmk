@@ -18,10 +18,11 @@ class DicController extends ApiController
     {
         //
         $type = $request->input('type', '');
+        $arr = explode(',', $type);
         if(empty($type)){
             $data = Entity::all();
         }else{
-            $data = Entity::where('type', $type)->get();
+            $data = Entity::whereIn('type', $arr)->get();
         }
         return response($data, 200);
     }
