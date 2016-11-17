@@ -231,7 +231,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Uuid' => Webpatser\Uuid\Uuid::class,
-        'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
+        //'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
     ],
 
 ];
