@@ -12,7 +12,7 @@ use App\Models\Busi\Resources;
 use Log;
 use DB;
 
-class UtlController extends ApiController
+class UtlController extends Controller
 {
     //
     public function uploadImage(Request $request){
