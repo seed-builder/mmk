@@ -76,8 +76,7 @@ use Illuminate\Database\Eloquent\Builder;
     public function show($id)
     {
         //
-        $entity =$this->newEntity();
-        $entity = $entity->newQuery()->find($id);
+        $entity =$this->newEntity()->newQuery()->find($id);
         return response($entity, 200);
     }
 
@@ -91,8 +90,7 @@ use Illuminate\Database\Eloquent\Builder;
     public function update(Request $request, $id)
     {
         //
-        $entity =$this->newEntity();
-        $entity = $entity->newQuery()->find($id);
+        $entity =$this->newEntity()->newQuery()->find($id);
         //$entity = Entity::find($id);
         $data = $request->all();
         unset($data['_sign']);
@@ -110,8 +108,7 @@ use Illuminate\Database\Eloquent\Builder;
     public function destroy($id)
     {
         //
-        $entity =$this->newEntity();
-        $entity = $entity->newQuery()->find($id);
+        $entity =$this->newEntity()->newQuery()->find($id);
         $re = $entity->delete();
         $status = $re ? 200 : 401;
         return response(['success' => $re], $status);
