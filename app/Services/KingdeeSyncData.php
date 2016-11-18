@@ -21,6 +21,7 @@ class KingdeeSyncData extends SyncData
 
     public function sendData($table, $op, $data){
         $arr = ['parameters' => [$table, $op, json_encode($data)]];
+        var_dump(json_encode($arr));
         return $this->post($this->dataUrl, $arr);
     }
 
@@ -31,17 +32,17 @@ class KingdeeSyncData extends SyncData
     }
 
     public static function add($table, $data){
-        $sync = new KingdeeSyncData();
+        $sync = new static();
         return $sync->sync($table, 0, $data);
     }
 
     public static function update($table, $data){
-        $sync = new KingdeeSyncData();
+        $sync = new static();
         return $sync->sync($table, 1, $data);
     }
 
     public static function delete($table, $data){
-        $sync = new KingdeeSyncData();
+        $sync = new static();
         return $sync->sync($table, 2, $data);
     }
 

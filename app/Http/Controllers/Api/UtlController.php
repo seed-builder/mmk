@@ -98,4 +98,16 @@ class UtlController extends Controller
         return response(['affected' => $affected], 200);
     }
 
+    /**
+     * 发送验证码短信
+     * @param Request $request
+     */
+    public function sendVerifyCode(Request $request){
+
+    }
+
+    public function checkVerifyCode(Request $request){
+
+    }
+
 }
