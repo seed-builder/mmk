@@ -55,7 +55,7 @@ use Illuminate\Database\Eloquent\Builder;
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreEmployeeRequest $request)
+    public function store(Request $request)
     {
         //
         $data = $request->all();
