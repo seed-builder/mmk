@@ -40,16 +40,21 @@ class Employee extends BaseModel
     //
     protected $table = 'bd_employees';
 
-
-    public function Organization(){
-        $this->hasOne(Organization::class, 'id', 'forg_id');
+    public function organization(){
+        return $this->hasOne(Organization::class, 'id', 'forg_id');
     }
 
-    public function Department(){
-        $this->hasOne(Department::class, 'id', 'fdept_id');
+    public function department(){
+        return $this->hasOne(Department::class, 'id', 'fdept_id');
     }
 
-    public function Position(){
-        $this->hasOne(Position::class, 'id', 'fpost_id');
+    public function position(){
+        return $this->hasOne(Position::class, 'id', 'fpost_id');
+    }
+
+    public function getSenior(){
+        if($this->position->fparpost_id > 0){
+
+        }
     }
 }

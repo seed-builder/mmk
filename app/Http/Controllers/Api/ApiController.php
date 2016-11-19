@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Builder;
  abstract class  ApiController extends Controller
 {
     //
-
     public function __construct()
     {
     }
@@ -113,7 +112,5 @@ use Illuminate\Database\Eloquent\Builder;
         $status = $re ? 200 : 401;
         return response(['success' => $re], $status);
     }
-
-
 
 }

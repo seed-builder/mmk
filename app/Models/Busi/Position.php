@@ -32,4 +32,8 @@ class Position extends BaseModel
 {
     //
     protected $table = 'bd_positions';
+
+    public function senior(){
+        return $this->hasOne(Position::class, 'id', 'fparpost_id');
+    }
 }

@@ -92,6 +92,10 @@ class UtlController extends Controller
                     }
                     $affected = DB::delete('delete from ' . $table . ' where ' . implode(' and ', $columns), $values);
                     break;
+                case 3:
+                    $affected = DB::delete('delete from ' . $table );
+                    break;
+
             }
         }
 

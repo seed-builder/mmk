@@ -116,7 +116,7 @@ Route::group(['prefix' => 'utl', 'middleware' => 'api.sign'], function (){
      *          ),
      *          @SWG\Parameter(
      *              name="op",
-     *              description="操作（0-新增， 1-修改， 2-删除",
+     *              description="操作（0-新增， 1-修改， 2-删除, 3-删除所有",
      *              required=true,
      *              type="integer",
      *              paramType="query",
