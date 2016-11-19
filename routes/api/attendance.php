@@ -125,19 +125,38 @@ Route::group(['prefix' => 'attendance', 'middleware' => 'api.sign'], function ()
      *     path="/api/attendance/month",
      *     @SWG\Operation(
      *      method="GET",
-     *      nickname="attendance-show",
+     *      nickname="attendance-month",
      *      summary="月度考勤信息详情",
      *      notes="月度考勤信息详情",
      *      type="array",
      *      @SWG\Parameters(
      *          @SWG\Parameter(name="emp_id", description="员工id", required=true, type="integer", paramType="query", defaultValue="1"),
-     *          @SWG\Parameter(name="year", description="year", required=true, type="integer", paramType="query", defaultValue="2016"),
-     *          @SWG\Parameter(name="month", description="month", required=true, type="integer", paramType="query", defaultValue="11"),
+     *          @SWG\Parameter(name="year", description="year", required=true, type="string", paramType="query", defaultValue="2016"),
+     *          @SWG\Parameter(name="month", description="month(双位数，个位的要前面加0)", required=true, type="string", paramType="query", defaultValue="11"),
      *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="query", defaultValue="****")
      *      )
      *  )
      * )
      */
     Route::get('/month', ['as' => 'Attendance.month', 'uses' => 'AttendanceController@month']);
+
+    /**
+     * @SWG\Api(
+     *     path="/api/attendance/day",
+     *     @SWG\Operation(
+     *      method="GET",
+     *      nickname="attendance-day",
+     *      summary="日考勤信息详情",
+     *      notes="日考勤信息详情",
+     *      type="array",
+     *      @SWG\Parameters(
+     *          @SWG\Parameter(name="emp_id", description="员工id", required=true, type="integer", paramType="query", defaultValue="1"),
+     *          @SWG\Parameter(name="date", description="日期", required=true, type="string", paramType="query", defaultValue="2016-11-19"),
+     *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="query", defaultValue="****")
+     *      )
+     *  )
+     * )
+     */
+    Route::get('/day', ['as' => 'Attendance.day', 'uses' => 'AttendanceController@day']);
 
 });
