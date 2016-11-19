@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Busi\Organization as Entity;
+use App\Models\Busi\Position;
 
-class OrganizationController extends ApiController
+class PositionController extends ApiController
 {
+    //
     public function newEntity(array $attributes = [])
     {
-        return new Entity($attributes);
+        // TODO: Implement newEntity() method.
+        return new Position($attributes);
     }
 }

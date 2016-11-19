@@ -40,10 +40,16 @@ class Employee extends BaseModel
     //
     protected $table = 'bd_employees';
 
-    public static function boot(){
-        parent::boot();
-        static::creating(function($model){
 
-        });
+    public function Organization(){
+        $this->hasOne(Organization::class, 'id', 'forg_id');
+    }
+
+    public function Department(){
+        $this->hasOne(Department::class, 'id', 'fdept_id');
+    }
+
+    public function Position(){
+        $this->hasOne(Position::class, 'id', 'fpost_id');
     }
 }
