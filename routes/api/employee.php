@@ -160,6 +160,14 @@ Route::group(['prefix' => 'employee', 'middleware' => 'api.sign'], function () {
      *              defaultValue="123456"
      *          ),
      *          @SWG\Parameter(
+     *              name="device",
+     *              description="设备号",
+     *              required=true,
+     *              type="string",
+     *              paramType="query",
+     *              defaultValue="asdafdasd"
+     *          )
+     *          @SWG\Parameter(
      *              name="_sign",
      *              description="签名",
      *              required=true,

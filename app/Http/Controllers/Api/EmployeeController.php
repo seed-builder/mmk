@@ -18,10 +18,20 @@ class EmployeeController extends ApiController
         $device = $request->input('device','');
         $emp = Entity::where('fphone', $request->input('phone'))->first();
         $pwd = $request->input('pwd');
+        if(empty($emp)){
+            return response('该号码不存在！', 401);
+        }
         if($pwd == $emp->fpassword){
+            if(empty($emp->device)){
+                $emp->device = $device;
+            }else if($emp->device != $device){
+                return response('设备号不一致！', 401);
+            }
+            $emp->login_time += 1;
+            $emp->save();
             return response($emp, 200);
         }else{
-            return response('wrong!', 401);
+            return response('密码错误!', 401);
         }
     }
 
