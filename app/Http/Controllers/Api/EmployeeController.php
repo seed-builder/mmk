@@ -40,7 +40,6 @@ class EmployeeController extends ApiController
             $data = [
                 'id' => $emp->id,
                 'fname' => $emp->fname,
-                'fname' => $emp->fname,
                 'fphoto' => $emp->fphoto,
                 'login_time' => $emp->login_time,
                 'position' => $emp->position ? $emp->position->fname : '',
