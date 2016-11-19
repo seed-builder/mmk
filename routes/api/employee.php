@@ -166,7 +166,7 @@ Route::group(['prefix' => 'employee', 'middleware' => 'api.sign'], function () {
      *              type="string",
      *              paramType="query",
      *              defaultValue="asdafdasd"
-     *          )
+     *          ),
      *          @SWG\Parameter(
      *              name="_sign",
      *              description="签名",
