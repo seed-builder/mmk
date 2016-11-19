@@ -8,4 +8,5 @@ class SysLog extends Model
 {
     //
     protected $table = 'sys_logs';
+    protected $guarded = ['id'];
 }

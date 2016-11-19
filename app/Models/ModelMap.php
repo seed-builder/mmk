@@ -15,6 +15,7 @@ class ModelMap extends BaseModel
     //
     protected $table = 'sys_model_maps';
     public $timestamps = false;
+    protected $guarded = ['id'];
 
 
 }
