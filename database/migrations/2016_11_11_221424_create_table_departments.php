@@ -19,6 +19,7 @@ class CreateTableDepartments extends Migration
             $table->string('fnumber')->unique();
             $table->string('fname');
             $table->integer('fpardept_id')->default(0);
+            $table->integer('forg_id')->default(0);
             $table->string('ffullname')->default('');
             $table->string('fremark')->default('');
 
