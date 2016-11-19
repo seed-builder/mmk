@@ -43,11 +43,11 @@ class EmployeeController extends ApiController
                 'fname' => $emp->fname,
                 'fphoto' => $emp->fphoto,
                 'login_time' => $emp->login_time,
-                'position' => $emp->position->fname?:'',
+                'position' => $emp->position ? $emp->position->fname : '',
                 'senior_phone' => $senior ? $senior->fphone:'',
                 'senior_name' => $senior ? $senior->fname:'',
-                'department_name' => $emp->department->fname?:'',
-                'org_name' => $emp->organization->fname?:''
+                'department_name' => $emp->department? $emp->department->fname : '',
+                'org_name' => $emp->organization? $emp->organization->fname : ''
             ];
 
             return response($data, 200);
