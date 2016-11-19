@@ -31,6 +31,9 @@ use Illuminate\Database\Eloquent\Model;
  * @SWG\Property(name="fpost_id", type="string", description="fpost_id")
  * @SWG\Property(name="fremark", type="string", description="fremark")
  * @SWG\Property(name="id", type="string", description="id")
+ * @SWG\Property(name="login_time", type="string", description="登陆次数")
+ * @SWG\Property(name="device", type="string", description="设备号")
+ * @SWG\Property(name="forg_id", type="string", description="组织id")
  */
 class Employee extends BaseModel
 {
