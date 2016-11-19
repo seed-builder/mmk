@@ -9,6 +9,59 @@ Route::group(['prefix' => 'employee', 'middleware' => 'api.sign'], function () {
 
     /**
      * @SWG\Api(
+     *   path="/api/employee/login",
+     *   @SWG\Operation(
+     *      method="POST",
+     *      nickname="employee-login",
+     *      summary="员工登陆",
+     *      notes="员工登陆",
+     *      type="Employee",
+     *      @SWG\Parameters(
+     *          @SWG\Parameter(
+     *              name="phone",
+     *              description="电话号码",
+     *              required=true,
+     *              type="string",
+     *              paramType="query",
+     *              defaultValue="1387777777"
+     *          ),
+     *          @SWG\Parameter(
+     *              name="pwd",
+     *              description="密码",
+     *              required=true,
+     *              type="string",
+     *              paramType="query",
+     *              defaultValue="123456"
+     *          ),
+     *          @SWG\Parameter(
+     *              name="device",
+     *              description="设备号",
+     *              required=true,
+     *              type="string",
+     *              paramType="query",
+     *              defaultValue="asdafdasd"
+     *          ),
+     *          @SWG\Parameter(
+     *              name="_sign",
+     *              description="签名",
+     *              required=true,
+     *              type="string",
+     *              paramType="query",
+     *              defaultValue="09af6226a3643ea393622c67aedb9908"
+     *          )
+     *      ),
+     *      @SWG\ResponseMessages(
+     *          @SWG\ResponseMessage(code=401, message="签名验证错误！"),
+     *          @SWG\ResponseMessage(code=200, message="成功。")
+     *      )
+     *   )
+     * )
+     */
+    Route::post('/login', ['as' => 'EmployeeLogin', 'uses' => 'EmployeeController@login']);
+
+
+    /**
+     * @SWG\Api(
      *     path="/api/employee",
      *     @SWG\Operation(
      *      method="GET",
@@ -133,57 +186,6 @@ Route::group(['prefix' => 'employee', 'middleware' => 'api.sign'], function () {
      */
     Route::delete('/{id}', ['as' => 'Employee.delete', 'uses' => 'EmployeeController@destroy']);
 
-    /**
-     * @SWG\Api(
-     *   path="/api/employee/login",
-     *   @SWG\Operation(
-     *      method="POST",
-     *      nickname="employee-login",
-     *      summary="员工登陆",
-     *      notes="员工登陆",
-     *      type="Employee",
-     *      @SWG\Parameters(
-     *          @SWG\Parameter(
-     *              name="phone",
-     *              description="电话号码",
-     *              required=true,
-     *              type="string",
-     *              paramType="query",
-     *              defaultValue="1387777777"
-     *          ),
-     *          @SWG\Parameter(
-     *              name="pwd",
-     *              description="密码",
-     *              required=true,
-     *              type="string",
-     *              paramType="query",
-     *              defaultValue="123456"
-     *          ),
-     *          @SWG\Parameter(
-     *              name="device",
-     *              description="设备号",
-     *              required=true,
-     *              type="string",
-     *              paramType="query",
-     *              defaultValue="asdafdasd"
-     *          ),
-     *          @SWG\Parameter(
-     *              name="_sign",
-     *              description="签名",
-     *              required=true,
-     *              type="string",
-     *              paramType="query",
-     *              defaultValue="09af6226a3643ea393622c67aedb9908"
-     *          )
-     *      ),
-     *      @SWG\ResponseMessages(
-     *          @SWG\ResponseMessage(code=401, message="签名验证错误！"),
-     *          @SWG\ResponseMessage(code=200, message="成功。")
-     *      )
-     *   )
-     * )
-     */
-    Route::post('/login', ['as' => 'EmployeeLogin', 'uses' => 'EmployeeController@login']);
 
 
 

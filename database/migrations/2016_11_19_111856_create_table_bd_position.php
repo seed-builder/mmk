@@ -14,6 +14,9 @@ class CreateTableBdPosition extends Migration
     public function up()
     {
         //
+        Schema::create('bd_positions', function (Blueprint $table){
+
+        });
     }
 
     /**
@@ -24,5 +27,6 @@ class CreateTableBdPosition extends Migration
     public function down()
     {
         //
+        Schema::drop('bd_positions');
     }
 }

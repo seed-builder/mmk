@@ -21,9 +21,11 @@ class EmployeeController extends ApiController
         if(empty($emp)){
             return response('该号码不存在！', 401);
         }
+        var_dump($emp);
         if($pwd == $emp->fpassword){
             if(empty($emp->device)){
-                $emp->device = $device;
+                if(!env('APP_DEBUG'))
+                    $emp->device = $device;
             }else if($emp->device != $device){
                 return response('设备号不一致！', 401);
             }
