@@ -13,8 +13,11 @@ class EmployeeController extends ApiController
     public function login(Request $request){
         $this->validate($request, [
             'phone' => 'required',
-            'pwd' => 'required'
+            'pwd' => 'required',
+            'device_sn' => 'required',
+            'device' => 'required',
         ]);
+        $device_sn = $request->input('device_sn','');
         $device = $request->input('device','');
         $emp = Entity::where('fphone', $request->input('phone'))->first();
         $pwd = $request->input('pwd');
@@ -23,10 +26,12 @@ class EmployeeController extends ApiController
         }
         //var_dump($emp);
         if($pwd == $emp->fpassword){
-            if(empty($emp->device)){
-                if(!env('APP_DEBUG'))
+            if(empty($emp->device_sn)){
+                if(!env('APP_DEBUG')) {
+                    $emp->device_sn = $device_sn;
                     $emp->device = $device;
-            }else if($emp->device != $device){
+                }
+            }else if($emp->device_sn != $device_sn){
                 return response('设备号不一致！', 401);
             }
             $emp->login_time += 1;
