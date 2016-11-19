@@ -21,7 +21,7 @@ class KingdeeSyncData extends SyncData
 
     public function sendData($table, $op, $data){
         $arr = ['parameters' => [$table, $op, json_encode($data)]];
-        var_dump(json_encode($arr));
+        //var_dump(json_encode($arr));
         return $this->post($this->dataUrl, $arr);
     }
 
