@@ -120,4 +120,24 @@ Route::group(['prefix' => 'attendance', 'middleware' => 'api.sign'], function ()
      */
     Route::delete('/{id}', ['as' => 'Attendance.delete', 'uses' => 'AttendanceController@destroy']);
 
+    /**
+     * @SWG\Api(
+     *     path="/api/attendance/month",
+     *     @SWG\Operation(
+     *      method="GET",
+     *      nickname="attendance-show",
+     *      summary="月度考勤信息详情",
+     *      notes="月度考勤信息详情",
+     *      type="array",
+     *      @SWG\Parameters(
+     *          @SWG\Parameter(name="emp_id", description="员工id", required=true, type="integer", paramType="query", defaultValue="1"),
+     *          @SWG\Parameter(name="year", description="year", required=true, type="integer", paramType="query", defaultValue="2016"),
+     *          @SWG\Parameter(name="month", description="month", required=true, type="integer", paramType="query", defaultValue="11"),
+     *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="query", defaultValue="****")
+     *      )
+     *  )
+     * )
+     */
+    Route::get('/month', ['as' => 'Attendance.month', 'uses' => 'AttendanceController@month']);
+
 });
