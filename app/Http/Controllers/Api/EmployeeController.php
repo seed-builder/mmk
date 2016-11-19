@@ -47,7 +47,9 @@ class EmployeeController extends ApiController
                 'senior_phone' => $senior ? $senior->fphone:'',
                 'senior_name' => $senior ? $senior->fname:'',
                 'department_name' => $emp->department? $emp->department->fname : '',
-                'org_name' => $emp->organization? $emp->organization->fname : ''
+                'department_id' => $emp->fdept_id,
+                'org_name' => $emp->organization? $emp->organization->fname : '',
+                'org_id' => $emp->forg_id
             ];
 
             return response($data, 200);
