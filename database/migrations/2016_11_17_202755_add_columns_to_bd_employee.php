@@ -16,7 +16,9 @@ class AddColumnsToBdEmployee extends Migration
         //
         Schema::table('bd_employees', function (Blueprint $table) {
             //
-            $table->string('forg_id')->default(0);
+            $table->integer('forg_id')->default(0);
+            $table->string('device')->default('');
+            $table->integer('login_time')->default(0);
         });
     }
 
@@ -31,6 +33,8 @@ class AddColumnsToBdEmployee extends Migration
         Schema::table('bd_employees', function (Blueprint $table) {
             //
             $table->dropColumn('foreign_table');
+            $table->dropColumn('device');
+            $table->dropColumn('login_time');
         });
     }
 }

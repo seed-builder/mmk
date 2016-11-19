@@ -15,6 +15,7 @@ class EmployeeController extends ApiController
             'phone' => 'required',
             'pwd' => 'required'
         ]);
+        $device = $request->input('device','');
         $emp = Entity::where('fphone', $request->input('phone'))->first();
         $pwd = $request->input('pwd');
         if($pwd == $emp->fpassword){
