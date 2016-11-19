@@ -76,7 +76,7 @@ Route::group(['prefix' => 'organization', 'middleware' => 'api.sign'], function 
      * @SWG\Api(
      *     path="/api/organization/{id}",
      *     @SWG\Operation(
-     *      method="PUT",
+     *      method="POST",
      *      nickname="organization-update",
      *      summary="组织更新",
      *      notes="组织更新",

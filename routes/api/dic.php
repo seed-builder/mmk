@@ -68,7 +68,7 @@ Route::group(['prefix' => 'dic', 'middleware' => 'api.sign'], function () {
      * @SWG\Api(
      *     path="/api/dic/{id}",
      *     @SWG\Operation(
-     *      method="PUT",
+     *      method="POST",
      *      nickname="dic-update",
      *      summary="字典更新",
      *      notes="字典更新",

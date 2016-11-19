@@ -74,7 +74,7 @@ Route::group(['prefix' => 'department', 'middleware' => 'api.sign'], function ()
      * @SWG\Api(
      *     path="/api/department/{id}",
      *     @SWG\Operation(
-     *      method="PUT",
+     *      method="POST",
      *      nickname="department-update",
      *      summary="部门更新",
      *      notes="部门更新",

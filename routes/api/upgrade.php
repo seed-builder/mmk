@@ -74,7 +74,7 @@ Route::group(['prefix' => 'upgrade', 'middleware' => 'api.sign'], function () {
      * @SWG\Api(
      *     path="/api/upgrade/{id}",
      *     @SWG\Operation(
-     *      method="PUT",
+     *      method="POST",
      *      nickname="upgrade-update",
      *      summary="apk 升级信息更新",
      *      notes="apk 升级信息更新",

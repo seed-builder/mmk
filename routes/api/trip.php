@@ -80,7 +80,7 @@ Route::group(['prefix' => 'trip', 'middleware' => 'api.sign'], function () {
      * @SWG\Api(
      *     path="/api/trip/{id}",
      *     @SWG\Operation(
-     *      method="PUT",
+     *      method="POST",
      *      nickname="trip-update",
      *      summary="出差更新",
      *      notes="出差更新",

@@ -80,7 +80,7 @@ Route::group(['prefix' => 'attendance', 'middleware' => 'api.sign'], function ()
      * @SWG\Api(
      *     path="/api/attendance/{id}",
      *     @SWG\Operation(
-     *      method="PUT",
+     *      method="POST",
      *      nickname="attendance-update",
      *      summary="考勤信息更新",
      *      notes="考勤信息更新",

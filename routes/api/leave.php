@@ -88,7 +88,7 @@ Route::group(['prefix' => 'leave', 'middleware' => 'api.sign'], function () {
      * @SWG\Api(
      *     path="/api/leave/{id}",
      *     @SWG\Operation(
-     *      method="PUT",
+     *      method="POST",
      *      nickname="leave-update",
      *      summary="请假更新",
      *      notes="请假更新",
