@@ -15,7 +15,7 @@ class CreateTableAttendances extends Migration
     {
         Schema::create('ms_attendances', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('fbillno')->unique();
+            //$table->string('fbillno')->unique();
             $table->integer('forg_id')->default(0);
             $table->integer('femp_id')->default(0);
             $table->timestamp('ftime')->nullable();

@@ -41,6 +41,7 @@ class EmployeeController extends ApiController
                 'id' => $emp->id,
                 'fname' => $emp->fname,
                 'femail' => $emp->femail,
+                'fphone' => $emp->fphone,
                 'fphoto' => $emp->fphoto,
                 'login_time' => $emp->login_time,
                 'position' => $emp->position ? $emp->position->fname : '',
