@@ -120,5 +120,4 @@ Route::group(['prefix' => 'attendance', 'middleware' => 'api.sign'], function ()
      */
     Route::delete('/{id}', ['as' => 'Attendance.delete', 'uses' => 'AttendanceController@destroy']);
 
-
 });
