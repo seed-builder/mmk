@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Model;
  * @SWG\Property(name="faddress", type="string", description="faddress")
  * @SWG\Property(name="fauditor_id", type="integer", description="fauditor_id")
  * @SWG\Property(name="faudit_date", type="string", description="faudit_date")
- * @SWG\Property(name="fbillno", type="string", description="fbillno")
  * @SWG\Property(name="fcreate_date", type="string", description="fcreate_date")
  * @SWG\Property(name="fcreator_id", type="integer", description="fcreator_id")
  * @SWG\Property(name="fdocument_status", type="integer", description="fdocument_status")

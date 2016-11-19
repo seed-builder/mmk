@@ -38,4 +38,5 @@ class AttendanceController extends ApiController
 
         return response(['list' => $results], 200);
     }
+
 }

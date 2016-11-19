@@ -23,7 +23,7 @@ class CreateTableAttendances extends Migration
             $table->string('faddress')->default('');
             $table->string('fphoto')->default('');
             $table->integer('ftype')->default(0);
-            $table->string('fmode')->default('');
+            $table->integer('fmode')->default('');
             $table->string('flongitude')->default('');
             $table->string('flatitude')->default('');
             $table->integer('fcreator_id')->default(0);
