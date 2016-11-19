@@ -120,7 +120,7 @@ Route::group(['prefix' => 'leave', 'middleware' => 'api.sign'], function () {
      *  )
      * )
      */
-    Route::put('/{id}', ['as' => 'Leave.update', 'uses' => 'LeaveController@update']);
+    Route::post('/{id}', ['as' => 'Leave.update', 'uses' => 'LeaveController@update']);
 
     /**
      * @SWG\Api(

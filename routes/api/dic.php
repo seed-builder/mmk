@@ -82,7 +82,7 @@ Route::group(['prefix' => 'dic', 'middleware' => 'api.sign'], function () {
      *  )
      * )
      */
-    Route::put('/{id}', ['as' => 'Dic.update', 'uses' => 'DicController@update']);
+    Route::post('/{id}', ['as' => 'Dic.update', 'uses' => 'DicController@update']);
 
     /**
      * @SWG\Api(

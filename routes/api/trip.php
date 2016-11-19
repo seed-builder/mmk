@@ -113,7 +113,7 @@ Route::group(['prefix' => 'trip', 'middleware' => 'api.sign'], function () {
      *  )
      * )
      */
-    Route::put('/{id}', ['as' => 'trip.update', 'uses' => 'BusiTripController@update']);
+    Route::post('/{id}', ['as' => 'trip.update', 'uses' => 'BusiTripController@update']);
 
     /**
      * @SWG\Api(

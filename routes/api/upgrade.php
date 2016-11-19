@@ -57,6 +57,7 @@ Route::group(['prefix' => 'upgrade', 'middleware' => 'api.sign'], function () {
      *      notes="新增apk 升级信息",
      *      type="",
      *      @SWG\Parameters(
+     *          @SWG\Parameter(name="upgrade_date", description="更新日期", required=false,type="string", paramType="form", defaultValue="" ),
      *          @SWG\Parameter(name="content", description="更新内容", required=true,type="string", paramType="form", defaultValue="" ),
                 @SWG\Parameter(name="enforce", description="是否强制（0-否， 1-是）", required=true,type="integer", paramType="form", defaultValue="0" ),
                 @SWG\Parameter(name="url", description="下载地址", required=true,type="string", paramType="form", defaultValue="" ),
@@ -79,7 +80,8 @@ Route::group(['prefix' => 'upgrade', 'middleware' => 'api.sign'], function () {
      *      notes="apk 升级信息更新",
      *      type="",
      *      @SWG\Parameters(
-     *           @SWG\Parameter(name="content", description="更新内容", required=true,type="string", paramType="form", defaultValue="" ),
+     *          @SWG\Parameter(name="upgrade_date", description="更新日期", required=false,type="string", paramType="form", defaultValue="" ),
+     *          @SWG\Parameter(name="content", description="更新内容", required=true,type="string", paramType="form", defaultValue="" ),
                 @SWG\Parameter(name="created_at", description="created_at", required=false,type="string", paramType="form", defaultValue="" ),
                 @SWG\Parameter(name="enforce", description="是否强制（0-否， 1-是）", required=true,type="integer", paramType="form", defaultValue="0" ),
                 @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="" ),
@@ -92,7 +94,7 @@ Route::group(['prefix' => 'upgrade', 'middleware' => 'api.sign'], function () {
      *  )
      * )
      */
-    Route::put('/{id}', ['as' => 'Upgrade.update', 'uses' => 'UpgradeController@update']);
+    Route::post('/{id}', ['as' => 'Upgrade.update', 'uses' => 'UpgradeController@update']);
 
     /**
      * @SWG\Api(

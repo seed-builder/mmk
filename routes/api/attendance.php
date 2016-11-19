@@ -113,7 +113,7 @@ Route::group(['prefix' => 'attendance', 'middleware' => 'api.sign'], function ()
      *  )
      * )
      */
-    Route::put('/{id}', ['as' => 'Attendance.update', 'uses' => 'AttendanceController@update']);
+    Route::post('/{id}', ['as' => 'Attendance.update', 'uses' => 'AttendanceController@update']);
 
     /**
      * @SWG\Api(

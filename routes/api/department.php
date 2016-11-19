@@ -101,7 +101,7 @@ Route::group(['prefix' => 'department', 'middleware' => 'api.sign'], function ()
      *  )
      * )
      */
-    Route::put('/{id}', ['as' => 'Department.update', 'uses' => 'DepartmentController@update']);
+    Route::post('/{id}', ['as' => 'Department.update', 'uses' => 'DepartmentController@update']);
 
     /**
      * @SWG\Api(

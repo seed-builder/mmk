@@ -105,7 +105,7 @@ Route::group(['prefix' => 'organization', 'middleware' => 'api.sign'], function 
      *  )
      * )
      */
-    Route::put('/{id}', ['as' => 'Organization.update', 'uses' => 'OrganizationController@update']);
+    Route::post('/{id}', ['as' => 'Organization.update', 'uses' => 'OrganizationController@update']);
 
     /**
      * @SWG\Api(

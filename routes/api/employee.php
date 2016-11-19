@@ -113,7 +113,7 @@ Route::group(['prefix' => 'employee', 'middleware' => 'api.sign'], function () {
      *  )
      * )
      */
-    Route::put('/{id}', ['as' => 'Employee.update', 'uses' => 'EmployeeController@update']);
+    Route::post('/{id}', ['as' => 'Employee.update', 'uses' => 'EmployeeController@update']);
 
     /**
      * @SWG\Api(

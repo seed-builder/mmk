@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * @package App\Models\Busi
  * @author xrs
  * @SWG\Model(id="Upgrade")
+ * @SWG\Property(name="upgrade_date", type="string", description="更新日期")
  * @SWG\Property(name="content", type="string", description="更新内容")
  * @SWG\Property(name="created_at", type="string", description="created_at")
  * @SWG\Property(name="enforce", type="integer", description="是否强制（0-否，1-是）")
