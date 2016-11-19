@@ -119,7 +119,7 @@ Route::group(['prefix' => 'employee', 'middleware' => 'api.sign'], function () {
      *      type="",
      *      @SWG\Parameters(
      *          @SWG\Parameter(name="faddress", description="faddress", required=true,type="string", paramType="form", defaultValue="" ),     *
-                @SWG\Parameter(name="fdept_id", description="fdept_id", required=true,type="string", paramType="form", defaultValue="0" ),
+                @SWG\Parameter(name="fdept_id", description="部门id", required=true,type="string", paramType="form", defaultValue="0" ),
                 @SWG\Parameter(name="fdocument_status", description="fdocument_status", required=true,type="string", paramType="form", defaultValue="0" ),
                 @SWG\Parameter(name="femail", description="femail", required=true,type="string", paramType="form", defaultValue="" ),
                 @SWG\Parameter(name="femp_num", description="femp_num", required=true,type="string", paramType="form", defaultValue="" ),
@@ -128,7 +128,8 @@ Route::group(['prefix' => 'employee', 'middleware' => 'api.sign'], function () {
                 @SWG\Parameter(name="fpassword", description="fpassword", required=true,type="string", paramType="form", defaultValue="" ),
                 @SWG\Parameter(name="fphone", description="fphone", required=true,type="string", paramType="form", defaultValue="" ),
                 @SWG\Parameter(name="fphoto", description="fphoto", required=true,type="string", paramType="form", defaultValue="0" ),
-                @SWG\Parameter(name="fpost_id", description="fpost_id", required=true,type="string", paramType="form", defaultValue="0" ),
+                @SWG\Parameter(name="fpost_id", description="职位id", required=true,type="string", paramType="form", defaultValue="0" ),
+                @SWG\Parameter(name="forg_id", description="组织id", required=true,type="string", paramType="form", defaultValue="0" ),
                 @SWG\Parameter(name="fremark", description="fremark", required=true,type="string", paramType="form", defaultValue="" ),
      *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
      *      )

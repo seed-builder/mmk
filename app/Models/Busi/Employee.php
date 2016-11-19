@@ -53,8 +53,10 @@ class Employee extends BaseModel
     }
 
     public function getSenior(){
-        if($this->position->fparpost_id > 0){
-
+        $psenior = $this->position->senior;
+        if(empty($psenior)){
+           return [];
         }
+        return static::where('fpost_id', $psenior->id)->first();
     }
 }

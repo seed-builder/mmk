@@ -36,7 +36,21 @@ class EmployeeController extends ApiController
             }
             $emp->login_time += 1;
             $emp->save();
-            return response($emp, 200);
+            $senior = $emp->getSenior();
+            $data = [
+                'id' => $emp->id,
+                'fname' => $emp->fname,
+                'fname' => $emp->fname,
+                'fphoto' => $emp->fphoto,
+                'login_time' => $emp->login_time,
+                'position' => $emp->position->fname?:'',
+                'senior_phone' => $senior ? $senior->fphone:'',
+                'senior_name' => $senior ? $senior->fname:'',
+                'department_name' => $emp->department->fname?:'',
+                'org_name' => $emp->organization->fname?:''
+            ];
+
+            return response($data, 200);
         }else{
             return response('密码错误!', 401);
         }
