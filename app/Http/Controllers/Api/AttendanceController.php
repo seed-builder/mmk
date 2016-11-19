@@ -25,6 +25,6 @@ class AttendanceController extends ApiController
         foreach ($results as $obj){
             $data[] = $obj->day;
         }
-        return response($data, 200);
+        return response(['list' => $data], 200);
     }
 }
