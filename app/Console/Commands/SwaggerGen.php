@@ -61,7 +61,7 @@ class SwaggerGen extends Command
         $user = config('database.connections.' . $this->driver . '.username');
         $pwd = config('database.connections.' . $this->driver . '.password');
 
-        return new PDO("$this->driver:host=$this->host;dbname=$this->schemaDb", $user, $pwd);
+        return new PDO("$this->driver:host=$this->host;dbname=$this->schemaDb;charset=utf8", $user, $pwd);
     }
 
     protected function getColumns($conn, $db, $table){
@@ -79,8 +79,8 @@ class SwaggerGen extends Command
         $arr[] = ' * @author xrs';
         $arr[] = ' * @SWG\Model(id="'.$model.'")';
         foreach ($columns as $col){
-            $arr[] = ' * @SWG\Property(name="'.$col['COLUMN_NAME'].'", type="'.$this->getColType($col['COLUMN_TYPE']).'", description="'.$col['COLUMN_NAME'].'")';
-            $parameters[] = '@SWG\Parameter(name="'.$col['COLUMN_NAME'].'", description="'.$col['COLUMN_NAME'].'", required='.$this->getNotNullable($col['IS_NULLABLE']).',type="'.$this->getColType($col['COLUMN_TYPE']).'", paramType="form", defaultValue="'.$col['COLUMN_DEFAULT'].'" ),';
+            $arr[] = ' * @SWG\Property(name="'.$col['COLUMN_NAME'].'", type="'.$this->getColType($col['COLUMN_TYPE']).'", description="'.$col['COLUMN_COMMENT'].'")';
+            $parameters[] = '@SWG\Parameter(name="'.$col['COLUMN_NAME'].'", description="'.$col['COLUMN_COMMENT'].'", required='.$this->getNotNullable($col['IS_NULLABLE']).',type="'.$this->getColType($col['COLUMN_TYPE']).'", paramType="form", defaultValue="'.$col['COLUMN_DEFAULT'].'" ),';
         }
         $arr[] = ' */';
 
@@ -98,7 +98,7 @@ class SwaggerGen extends Command
     protected function generateRouteFlag($columns, $model){
         $arr = [];
         foreach ($columns as $col){
-            $arr[] = '@SWG\Parameter(name="'.$col['COLUMN_NAME'].'", description="'.$col['COLUMN_NAME'].'", required='.$this->getNotNullable($col['IS_NULLABLE']).',type="'.$this->getColType($col['COLUMN_TYPE']).'", paramType="form", defaultValue="'.$col['COLUMN_DEFAULT'].'" ),';
+            $arr[] = '@SWG\Parameter(name="'.$col['COLUMN_NAME'].'", description="'.$col['COLUMN_COMMENT'].'", required='.$this->getNotNullable($col['IS_NULLABLE']).',type="'.$this->getColType($col['COLUMN_TYPE']).'", paramType="form", defaultValue="'.$col['COLUMN_DEFAULT'].'" ),';
         }
         $this->info('generateRouteFlag result is ...');
         foreach ($arr as $s){
