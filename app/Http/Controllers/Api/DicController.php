@@ -26,12 +26,13 @@ class DicController extends ApiController
         }
         $result = [];
         if(count($arr)>1) {
-            $data->each(function ($item, $key) use ($result) {
-                $result[$item->type] = $item;
-            });
+            foreach ($data as $item){
+                $result[$item->type][] = $item;
+            }
         }else{
             $result = $data ;
         }
+        //var_dump($result);
         return response($result, 200);
     }
 
