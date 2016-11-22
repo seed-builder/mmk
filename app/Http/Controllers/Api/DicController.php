@@ -25,10 +25,13 @@ class DicController extends ApiController
             $data = Entity::whereIn('type', $arr)->get();
         }
         $result = [];
-        $data->each(function($item, $key) use ($result){
-            $result[$item->type] = $item;
-        });
-
+        if(count($arr)>1) {
+            $data->each(function ($item, $key) use ($result) {
+                $result[$item->type] = $item;
+            });
+        }else{
+            $result = $data ;
+        }
         return response($result, 200);
     }
 
