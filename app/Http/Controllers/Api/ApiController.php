@@ -44,7 +44,7 @@ use Illuminate\Database\Eloquent\Builder;
         $query = $entity->query();
         $this->fillQueryForIndex($request, $query);
         $count = $query->count();
-        $data = $query->orderBy($arr[0], $arr[1])->take($page)->skip(($page-1)*$pageSize)->get();
+        $data = $query->orderBy($arr[0], $arr[1])->take($pageSize)->skip(($page-1)*$pageSize)->get();
         return response(['count' => $count, 'list' => $data, 'page' => $page, 'pageSize' => $pageSize], 200);
     }
 
