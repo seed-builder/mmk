@@ -24,7 +24,12 @@ class DicController extends ApiController
         }else{
             $data = Entity::whereIn('type', $arr)->get();
         }
-        return response($data, 200);
+        $result = [];
+        $data->each(function($item, $key) use ($result){
+            $result[$item->type] = $item;
+        });
+
+        return response($result, 200);
     }
 
     public function newEntity(array $attributes = [])
