@@ -58,4 +58,8 @@ class Store extends BaseModel
 {
     //
     protected $table = 'st_stores';
+
+    public function customer(){
+        return $this->belongsTo(Customer::class, 'fcust_id');
+    }
 }
