@@ -91,9 +91,13 @@ use Illuminate\Database\Eloquent\Builder;
         //
         $entity =$this->newEntity()->newQuery()->find($id);
         //$entity = Entity::find($id);
+        //var_dump($entity);
+
         $data = $request->all();
+        //var_dump($data);
         unset($data['_sign']);
-        $re = $entity->save($data);
+        $entity->fill($data);
+        $re = $entity->save();
         $status = $re ? 200 : 401;
         return response(['success' => $re], $status);
     }

@@ -44,7 +44,7 @@ class UtlController extends Controller
         if($h || $w){
             $img->resize($w, $h);
         }
-        return $img->response('jpg');
+        return $img->response();
     }
 
     /**
