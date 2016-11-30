@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Models\ModelMap;
 
 class ModelMapSeeder extends Seeder
 {
@@ -12,7 +13,7 @@ class ModelMapSeeder extends Seeder
     public function run()
     {
         //
-        DB::table('sys_model_maps')->insert([
+        ModelMap::create([
             'model' => 'Employee',
             'table' => 'bd_employees',
             'foreign_table' => 'T_BD_EmpInfo'

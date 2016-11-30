@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-         //$this->call(ModelMapSeeder::class);
-         $this->call(HolidaySeeder::class);
+         $this->call(ModelMapSeeder::class);
+         //$this->call(HolidaySeeder::class);
     }
 }
