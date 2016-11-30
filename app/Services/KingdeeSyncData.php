@@ -14,6 +14,7 @@ class KingdeeSyncData extends SyncData
     protected $loginUrl = '/k3cloud/Kingdee.BOS.WebApi.ServicesStub.AuthService.ValidateUser.common.kdsvc';
     protected $dataUrl = '/k3cloud/CYD.ApiService.ServicesStub.CustomBusinessService.Syncdb.common.kdsvc';
 
+
     public function __construct()
     {
         $this->loginUrl = env('KINGDEE_HOST') . $this->loginUrl;
@@ -21,8 +22,13 @@ class KingdeeSyncData extends SyncData
     }
 
     public function login($cookie_jar = null){
-        $data = env('KINGDEE_HOST_LOGIN_DATA');
-        return $this->post($this->loginUrl, $data, 1, $cookie_jar);
+        //{ "parameters": "[\"5826e02fe123a9\",\"Administrator\",\"888888\",2052]" }
+        //5826e02fe123a9,Administrator,888888
+        $str = env('KINGDEE_HOST_LOGIN_DATA');
+        $arr = explode(',', $str);
+        $arr[] = 2052;
+        $loginData = ['parameters' => json_encode($arr)];
+        return $this->post($this->loginUrl, json_encode($loginData), 1, $cookie_jar);
     }
 
     public function sendData($table, $op, $data, $cookie_jar = null){
