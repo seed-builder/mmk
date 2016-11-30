@@ -11,8 +11,14 @@ use  GuzzleHttp\Client;
 
 class KingdeeSyncData extends SyncData
 {
-    protected $loginUrl = 'http://117.28.234.39:81/k3cloud/Kingdee.BOS.WebApi.ServicesStub.AuthService.ValidateUser.common.kdsvc';
-    protected $dataUrl = 'http://117.28.234.39:81/k3cloud/CYD.ApiService.ServicesStub.CustomBusinessService.Syncdb.common.kdsvc';
+    protected $loginUrl = '/k3cloud/Kingdee.BOS.WebApi.ServicesStub.AuthService.ValidateUser.common.kdsvc';
+    protected $dataUrl = '/k3cloud/CYD.ApiService.ServicesStub.CustomBusinessService.Syncdb.common.kdsvc';
+
+    public function __construct()
+    {
+        $this->loginUrl = env('KINGDEE_HOST') . $this->loginUrl;
+        $this->dataUrl = env('KINGDEE_HOST') . $this->dataUrl;
+    }
 
     public function login($cookie_jar = null){
         $data = '{ "parameters": "[\"5826e02fe123a9\",\"Administrator\",\"888888\",2052]" }';
