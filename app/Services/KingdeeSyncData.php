@@ -21,7 +21,7 @@ class KingdeeSyncData extends SyncData
     }
 
     public function login($cookie_jar = null){
-        $data = '{ "parameters": "[\"5826e02fe123a9\",\"Administrator\",\"888888\",2052]" }';
+        $data = env('KINGDEE_HOST_LOGIN_DATA');
         return $this->post($this->loginUrl, $data, 1, $cookie_jar);
     }
 
