@@ -35,7 +35,7 @@ class CreateTableBusiTrips extends Migration
             $table->string('fdocument_status')->default('A');
             $table->integer('fforbidder_id')->default(0);
             $table->timestamp('fforbid_date')->nullable();
-            $table->integer('fforbid_status')->default(0);
+            $table->string('fforbid_status')->default('A');
 
         });
     }
