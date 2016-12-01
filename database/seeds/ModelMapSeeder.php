@@ -23,6 +23,10 @@ class ModelMapSeeder extends Seeder
             'table' => 'ms_attendances',
             'foreign_table' => 'ms_attendances'
         ]);
-
+        ModelMap::create([
+            'model' => 'Store',
+            'table' => 'st_stores',
+            'foreign_table' => 'st_stores'
+        ]);
     }
 }
