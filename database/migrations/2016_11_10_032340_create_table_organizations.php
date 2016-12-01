@@ -30,7 +30,7 @@ class CreateTableOrganizations extends Migration
             $table->timestamp('fmodify_date')->nullable();
             $table->integer('fauditor_id')->default(0);
             $table->timestamp('faudit_date')->nullable();
-            $table->integer('fdocument_status')->default(0);
+            $table->string('fdocument_status')->default('A');
             $table->integer('fforbidder_id')->default(0);
             $table->timestamp('fforbid_date')->nullable();
             $table->integer('fforbid_status')->default(0);
