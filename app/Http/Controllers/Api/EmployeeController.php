@@ -27,10 +27,10 @@ class EmployeeController extends ApiController
         //var_dump($emp);
         if($pwd == $emp->fpassword){
             if(empty($emp->device_sn)){
-                if(!env('APP_DEBUG')) {
+                //if(!env('APP_DEBUG')) {
                     $emp->device_sn = $device_sn;
                     $emp->device = $device;
-                }
+                //}
             }else if($emp->device_sn != $device_sn){
                 return response('设备号不一致！', 401);
             }
