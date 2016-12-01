@@ -37,7 +37,7 @@ class StoreController extends ApiController
         $data = $request->all();
         if(!empty($data['fpostalcode'])){
             $count = Store::where('fpostalcode', $data['fpostalcode'])->count();
-            $data['fnumber'] = $data['fpostalcode'] . ($count+1);
+            $data['fnumber'] = $data['fpostalcode'] . sprintf('%05d', ($count+1));
         }
 
         unset($data['_sign']);
