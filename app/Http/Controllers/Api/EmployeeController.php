@@ -26,7 +26,8 @@ class EmployeeController extends ApiController
         }
         //var_dump($emp);
         if($pwd == $emp->fpassword){
-            if(empty($emp->device_sn)){
+            $sn = trim($emp->device_sn);
+            if(empty($sn)){
                 //if(!env('APP_DEBUG')) {
                     $emp->device_sn = $device_sn;
                     $emp->device = $device;
