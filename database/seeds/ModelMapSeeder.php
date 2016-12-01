@@ -16,9 +16,13 @@ class ModelMapSeeder extends Seeder
         ModelMap::create([
             'model' => 'Employee',
             'table' => 'bd_employees',
-            'foreign_table' => 'T_BD_EmpInfo'
+            'foreign_table' => 'bd_employees'
         ]);
-
+        ModelMap::create([
+            'model' => 'Attendance',
+            'table' => 'ms_attendances',
+            'foreign_table' => 'ms_attendances'
+        ]);
 
     }
 }

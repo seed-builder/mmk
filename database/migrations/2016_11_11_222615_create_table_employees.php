@@ -19,7 +19,7 @@ class CreateTableEmployees extends Migration
             $table->integer('fdept_id')->default(0);
             $table->integer('fpost_id')->default(0);
             $table->string('fname');
-            $table->string('fnumber')->unique();
+            $table->string('fnumber')->default('');
             $table->string('femp_num')->default('');
             $table->string('fphone')->unique();
             $table->string('faddress')->default('');
