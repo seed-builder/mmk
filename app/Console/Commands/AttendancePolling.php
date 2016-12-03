@@ -53,17 +53,17 @@ class AttendancePolling extends Command
         }
         $client = new JPush(env('JPUSH_APP_KEY'), env('JPUSH_SECRET'));
         // type=1 , content=
-        $content = ['type' => 1, 'template' => $messageTemp->content, 'ids'=> [1,2,3] ];
+        $content = ['type' => 1, 'template' => $messageTemp->content ];
         $message = array(
             'title' => $messageTemp->title,
             'content_type' => 'text',
-            'extras' => ['ids' => [1,2,3]]
+            'extras' => ['kd' => 'soft']
         );
 
         try {
             $response = $client->push()
                 ->setPlatform("all")
-                ->addAllAudience()
+                ->addAlias(['1','2','3'])
                 ->message(json_encode($content), $message)
                 ->send();
 
