@@ -22,6 +22,7 @@ class CreateTableUpgrade extends Migration
             $table->text('content');
             $table->string('upgrade_date')->default('');
             $table->integer('enforce')->default(0);
+            $table->integer('type')->default('android');
             $table->timestamps();
         });
     }

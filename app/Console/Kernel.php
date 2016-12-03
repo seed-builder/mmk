@@ -14,7 +14,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         //
-        'App\Console\Commands\SwaggerGen'
+        'App\Console\Commands\SwaggerGen',
+        'App\Console\Commands\AttendancePolling'
     ];
 
     /**
