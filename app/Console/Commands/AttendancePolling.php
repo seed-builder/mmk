@@ -53,18 +53,31 @@ class AttendancePolling extends Command
         }
         $client = new JPush(env('JPUSH_APP_KEY'), env('JPUSH_SECRET'));
         // type=1 , content=
-        $content = ['type' => 1, 'template' => $messageTemp->content ];
-        $message = array(
-            'title' => $messageTemp->title,
-            'content_type' => 'text',
-            'extras' => ['kd' => 'soft']
-        );
+        $content = str_replace('#name', 'test', $messageTemp->content);
+//        $message = array(
+//            'title' => $messageTemp->title,
+//            'content_type' => 'text',
+//            'extras' => ['type' => 1]
+//        );
 
         try {
             $response = $client->push()
-                ->setPlatform("all")
-                ->addAlias(['1','2','3'])
-                ->message(json_encode($content), $message)
+                ->setPlatform(array('ios', 'android'))
+                ->addAlias(['1','120412','3'])
+                ->iosNotification($content, array(
+                    'sound' => 'sound.caf',
+                    'badge' => '1',
+                    // 'content-available' => true,
+                    // 'mutable-content' => true,
+                    'category' => 'jiguang',
+                    'extras' => ['type' => 1]
+                ))
+                ->androidNotification($content, array(
+                    'title' => $messageTemp->title,
+                    // 'build_id' => 2,
+                    'extras' =>  ['type' => 1]
+                ))
+                //->message($content, $message)
                 ->send();
 
         } catch (\JPush\Exceptions\APIConnectionException $e) {

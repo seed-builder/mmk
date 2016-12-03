@@ -159,4 +159,22 @@ Route::group(['prefix' => 'attendance', 'middleware' => 'api.sign'], function ()
      */
     Route::get('/day', ['as' => 'Attendance.day', 'uses' => 'AttendanceController@day']);
 
+    /**
+     * @SWG\Api(
+     *     path="/api/attendance/day-completed",
+     *     @SWG\Operation(
+     *      method="GET",
+     *      nickname="attendance-day",
+     *      summary="是否有日完成",
+     *      notes="是否有日完成",
+     *      type="array",
+     *      @SWG\Parameters(
+     *          @SWG\Parameter(name="emp_id", description="员工id", required=true, type="integer", paramType="query", defaultValue="1"),
+     *          @SWG\Parameter(name="date", description="日期", required=true, type="string", paramType="query", defaultValue="2016-11-19"),
+     *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="query", defaultValue="****")
+     *      )
+     *  )
+     * )
+     */
+    Route::get('/day-completed', ['as' => 'Attendance.day-completed', 'uses' => 'AttendanceController@completed']);
 });

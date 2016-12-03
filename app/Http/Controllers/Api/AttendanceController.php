@@ -39,4 +39,20 @@ class AttendanceController extends ApiController
         return response(['list' => $results], 200);
     }
 
+    /**
+     * 是否日完成
+     * @param Request $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
+    public function completed(Request $request){
+        $empId = $request->input('emp_id', 0);
+        $date = $request->input('date', date('Y-m-d'));
+
+        $results = DB::selectOne('select count(*) as count from ms_attendances WHERE femp_id=? and date_format(ftime, \'%Y-%m-%d\') = ? and ftype=1',
+            [$empId, $date]);
+//        $results = Entity::where('femp_id', $empId)->where('date_format(ftime, \'%Y-%m-%d\')', $date)->get();
+
+        return response(['completed' => $results->count], 200);
+    }
+
 }
