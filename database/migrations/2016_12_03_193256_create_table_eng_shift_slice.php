@@ -29,7 +29,6 @@ class CreateTableEngShiftSlice extends Migration
             $table->timestamp('fmodify_date')->nullable()->comment('修改时间');
             $table->string('fdocument_status')->default('A')->comment('审核状态');
 
-
         });
     }
 

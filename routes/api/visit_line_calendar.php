@@ -106,4 +106,27 @@ Route::group(['prefix' => 'visit-line-calendar', 'middleware' => 'api.sign'], fu
      */
     Route::delete('/{id}', ['as' => 'VisitLineCalendar.delete', 'uses' => 'VisitLineCalendarController@destroy']);
 
+
+    /**
+     * @SWG\Api(
+     *     path="/api/visit-line-calendar/list",
+     *     @SWG\Operation(
+     *      method="GET",
+     *      nickname="visit-line-calendar-list",
+     *      summary="获取一段日期内的巡访线路日历列表",
+     *      notes="获取一段日期内的巡访线路日历列表",
+     *      type="array",
+     *     items="$ref:VisitLineCalendar",
+     *      @SWG\Parameters(
+     *          @SWG\Parameter(name="begin", description="开始日期", required=false, type="string", paramType="query", defaultValue="2016-12-05"),
+     *          @SWG\Parameter(name="end", description="结束日期", required=false, type="string", paramType="query", defaultValue="2016-12-15"),
+     *          @SWG\Parameter(name="femp_id", description="员工id", required=false, type="integer", paramType="query", defaultValue="1),
+     *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="query", defaultValue="****")
+     *      )
+     *    )
+     * )
+     */
+    Route::get('/list', ['as' => 'VisitLineCalendar.getList', 'uses' => 'VisitLineCalendarController@getList']);
+
+
 });

@@ -12,6 +12,10 @@ class ModelMapSeeder extends Seeder
      */
     public function run()
     {
+        $entities = ModelMap::all();
+        $entities->each(function($item){
+            $item->delete();
+        });
         //
         ModelMap::create([
             'model' => 'Employee',
@@ -27,6 +31,21 @@ class ModelMapSeeder extends Seeder
             'model' => 'Store',
             'table' => 'st_stores',
             'foreign_table' => 'st_stores'
+        ]);
+        ModelMap::create([
+            'model' => 'VisitLineCalendar',
+            'table' => 'visit_line_calendar',
+            'foreign_table' => 'visit_line_calendar'
+        ]);
+        ModelMap::create([
+            'model' => 'VisitStoreCalendar',
+            'table' => 'visit_store_calendar',
+            'foreign_table' => 'visit_store_calendar'
+        ]);
+        ModelMap::create([
+            'model' => 'VisitTodoCalendar',
+            'table' => 'visit_todo_calendar',
+            'foreign_table' => 'visit_todo_calendar'
         ]);
     }
 }
