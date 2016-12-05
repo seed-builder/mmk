@@ -1,22 +1,22 @@
 <?php
 /**
  * @SWG\Resource(
- *  resourcePath="/visit-line",
- *  description="巡访线路"
+ *  resourcePath="/visit-store-todo",
+ *  description="巡访门店执行项目"
  * )
  */
-Route::group(['prefix' => 'visit-line', 'middleware' => 'api.sign'], function () {
+Route::group(['prefix' => 'visit-store-todo', 'middleware' => 'api.sign'], function () {
 
     /**
      * @SWG\Api(
-     *     path="/api/visit-line",
+     *     path="/api/visit-store-todo",
      *     @SWG\Operation(
      *      method="GET",
-     *      nickname="visit-line-list",
-     *      summary="巡访线路列表",
-     *      notes="巡访线路列表",
+     *      nickname="visit-store-todo-list",
+     *      summary="巡访门店执行项目列表",
+     *      notes="巡访门店执行项目列表",
      *      type="array",
-     *     items="$ref:VisitLine",
+     *     items="$ref:VisitStoreTodo",
      *      @SWG\Parameters(
      *          @SWG\Parameter(name="page", description="当前页", required=false, type="integer", paramType="query", defaultValue="1"),
      *          @SWG\Parameter(name="pageSize", description="页大小", required=false, type="integer", paramType="query", defaultValue="10"),
@@ -27,17 +27,17 @@ Route::group(['prefix' => 'visit-line', 'middleware' => 'api.sign'], function ()
      *    )
      * )
      */
-    Route::get('/', ['as' => 'VisitLine.index', 'uses' => 'VisitLineController@index']);
+    Route::get('/', ['as' => 'VisitStoreTodo.index', 'uses' => 'VisitStoreTodoController@index']);
 
     /**
      * @SWG\Api(
-     *     path="/api/visit-line/{id}",
+     *     path="/api/visit-store-todo/{id}",
      *     @SWG\Operation(
      *      method="GET",
-     *      nickname="visit-line-show",
-     *      summary="巡访线路详情",
-     *      notes="巡访线路详情",
-     *      type="VisitLine",
+     *      nickname="visit-store-todo-show",
+     *      summary="巡访门店执行项目详情",
+     *      notes="巡访门店执行项目详情",
+     *      type="VisitStoreTodo",
      *      @SWG\Parameters(
      *          @SWG\Parameter(name="id", description="id", required=true, type="integer", paramType="path", defaultValue="1"),
      *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="query", defaultValue="****")
@@ -45,59 +45,67 @@ Route::group(['prefix' => 'visit-line', 'middleware' => 'api.sign'], function ()
      *  )
      * )
      */
-    Route::get('/{id}', ['as' => 'VisitLine.show', 'uses' => 'VisitLineController@show']);
+    Route::get('/{id}', ['as' => 'VisitStoreTodo.show', 'uses' => 'VisitStoreTodoController@show']);
 
     /**
      * @SWG\Api(
-     *     path="/api/visit-line",
+     *     path="/api/visit-store-todo",
      *     @SWG\Operation(
      *      method="POST",
-     *      nickname="visit-line-store",
-     *      summary="新增巡访线路",
-     *      notes="新增巡访线路",
+     *      nickname="visit-store-todo-store",
+     *      summary="新增巡访门店执行项目",
+     *      notes="新增巡访门店执行项目",
      *      type="",
      *      @SWG\Parameters(
-     *          @SWG\Parameter(name="femp_id", description="员工id", required=true,type="integer", paramType="form", defaultValue="0" ),
+     *          @SWG\Parameter(name="ffunction_number", description="定制功能编号", required=true,type="string", paramType="form", defaultValue="" ),
+                @SWG\Parameter(name="fgroup_id", description="分组标识", required=true,type="string", paramType="form", defaultValue="" ),
+                @SWG\Parameter(name="fis_must_visit", description="是否必巡", required=true,type="integer", paramType="form", defaultValue="0" ),
+                @SWG\Parameter(name="flag", description="标识符", required=true,type="string", paramType="form", defaultValue="0" ),
                 @SWG\Parameter(name="fname", description="名称", required=true,type="string", paramType="form", defaultValue="" ),
                 @SWG\Parameter(name="fnumber", description="编号", required=true,type="string", paramType="form", defaultValue="" ),
                 @SWG\Parameter(name="forg_id", description="组织id", required=true,type="integer", paramType="form", defaultValue="0" ),
+                @SWG\Parameter(name="fparent_id", description="父级id", required=true,type="integer", paramType="form", defaultValue="0" ),
      *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
      *      )
      *  )
      * )
      */
-    Route::post('/', ['as' => 'VisitLine.store', 'uses' => 'VisitLineController@store']);
+    Route::post('/', ['as' => 'VisitStoreTodo.store', 'uses' => 'VisitStoreTodoController@store']);
 
     /**
      * @SWG\Api(
-     *     path="/api/visit-line/{id}",
+     *     path="/api/visit-store-todo/{id}",
      *     @SWG\Operation(
      *      method="POST",
-     *      nickname="visit-line-update",
-     *      summary="巡访线路更新",
-     *      notes="巡访线路更新",
+     *      nickname="visit-store-todo-update",
+     *      summary="巡访门店执行项目更新",
+     *      notes="巡访门店执行项目更新",
      *      type="",
      *      @SWG\Parameters(
-     *          @SWG\Parameter(name="femp_id", description="员工id", required=true,type="integer", paramType="form", defaultValue="0" ),
+     *          @SWG\Parameter(name="ffunction_number", description="定制功能编号", required=true,type="string", paramType="form", defaultValue="" ),
+                @SWG\Parameter(name="fgroup_id", description="分组标识", required=true,type="string", paramType="form", defaultValue="" ),
+                @SWG\Parameter(name="fis_must_visit", description="是否必巡", required=true,type="integer", paramType="form", defaultValue="0" ),
+                @SWG\Parameter(name="flag", description="标识符", required=true,type="string", paramType="form", defaultValue="0" ),
                 @SWG\Parameter(name="fname", description="名称", required=true,type="string", paramType="form", defaultValue="" ),
                 @SWG\Parameter(name="fnumber", description="编号", required=true,type="string", paramType="form", defaultValue="" ),
                 @SWG\Parameter(name="forg_id", description="组织id", required=true,type="integer", paramType="form", defaultValue="0" ),
+                @SWG\Parameter(name="fparent_id", description="父级id", required=true,type="integer", paramType="form", defaultValue="0" ),
                 @SWG\Parameter(name="id", description="", required=true,type="integer", paramType="path", defaultValue="" ),
      *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
      *      )
      *  )
      * )
      */
-    Route::post('/{id}', ['as' => 'VisitLine.update', 'uses' => 'VisitLineController@update']);
+    Route::post('/{id}', ['as' => 'VisitStoreTodo.update', 'uses' => 'VisitStoreTodoController@update']);
 
     /**
      * @SWG\Api(
-     *     path="/api/visit-line/{id}",
+     *     path="/api/visit-store-todo/{id}",
      *     @SWG\Operation(
      *      method="DELETE",
-     *      nickname="VisitLine-delete",
-     *      summary="巡访线路删除",
-     *      notes="巡访线路删除",
+     *      nickname="VisitStoreTodo-delete",
+     *      summary="巡访门店执行项目删除",
+     *      notes="巡访门店执行项目删除",
      *      type="",
      *      @SWG\Parameters(
      *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="1" ),
@@ -106,6 +114,6 @@ Route::group(['prefix' => 'visit-line', 'middleware' => 'api.sign'], function ()
      *  )
      * )
      */
-    Route::delete('/{id}', ['as' => 'VisitLine.delete', 'uses' => 'VisitLineController@destroy']);
+    Route::delete('/{id}', ['as' => 'VisitStoreTodo.delete', 'uses' => 'VisitStoreTodoController@destroy']);
 
 });

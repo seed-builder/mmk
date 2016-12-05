@@ -14,7 +14,6 @@ class CreateTableVisitLineStore extends Migration
     public function up()
     {
         Schema::create('visit_line_store', function (Blueprint $table) {
-            $table->increments('id');
             $table->integer('fline_id')->default(0)->comment('线路id');
             $table->integer('fstore_id')->default(0)->comment('门店id');
         });
