@@ -18,7 +18,6 @@ class CreateTableEngWorkCalendarTemplate extends Migration
         //
         Schema::create('eng_work_calendar_template', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('fmaster_id')->default(0)->comment('组id');
             $table->string('fnumber')->default('')->comment('编号');
             $table->string('fname')->default('')->comment('名称');
             //$table->decimal('fwork_hours')->default(4)->comment('工作时间');
@@ -32,10 +31,7 @@ class CreateTableEngWorkCalendarTemplate extends Migration
             $table->timestamp('fmodify_date')->nullable()->comment('修改时间');
             $table->integer('fauditor_id')->default(0)->comment('审核人');
             $table->timestamp('faudit_date')->nullable()->comment('审核日期');
-            $table->string('fdocument_status')->default('A')->comment('审核状态');
-            $table->integer('fforbidder_id')->default(0)->comment('禁用人');
-            $table->timestamp('fforbid_date')->nullable()->comment('禁用日期');
-            $table->string('fforbid_status')->default('A')->comment('禁用状态');
+
 
         });
     }

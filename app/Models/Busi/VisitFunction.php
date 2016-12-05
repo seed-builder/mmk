@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * 定制功能
- * Class VisitFunctionList
+ * Class VisitFunction
  * @package App\Models\Busi
  * @author xrs
- * @SWG\Model(id="VisitFunctionList")
+ * @SWG\Model(id="VisitFunction")
  * @SWG\Property(name="fcreate_date", type="string", description="创建时间")
  * @SWG\Property(name="fcreator_id", type="integer", description="创建人")
  * @SWG\Property(name="fdocument_status", type="string", description="审核状态")

@@ -21,7 +21,7 @@ class CreateTableVisitTodoListLog extends Migration
             $table->integer('femp_id')->default(0)->comment('员工id');
             $table->integer('fstore_calendar_id')->default(0)->comment('线路门店巡防日历id');
             $table->integer('ftodo_list_id')->default(0)->comment('门店巡访项目id');
-            $table->string('fstatus')->default('')->comment('巡访状态');
+            $table->integer('fstatus')->default(1)->comment('巡访状态（1-未开始， 2-进行中， 3-已完成）');
 
             $table->integer('fcreator_id')->default(0)->comment('创建人');
             $table->timestamp('fcreate_date')->nullable()->comment('创建时间');
