@@ -13,9 +13,11 @@ class ModelMapSeeder extends Seeder
     public function run()
     {
         $entities = ModelMap::all();
-        $entities->each(function($item){
-            $item->delete();
-        });
+        if(!empty($entities)) {
+            $entities->each(function ($item) {
+                $item->delete();
+            });
+        }
         //
         ModelMap::create([
             'model' => 'Employee',
