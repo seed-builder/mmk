@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableMsVisitList extends Migration
+class CreateTableVisitTodoList extends Migration
 {
     /**
      * 门店寻访项目清单

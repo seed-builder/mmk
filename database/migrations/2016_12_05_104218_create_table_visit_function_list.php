@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableMsFunctionList extends Migration
+class CreateTableVisitFunctionList extends Migration
 {
     /**
      * 定制功能清单
