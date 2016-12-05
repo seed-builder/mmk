@@ -15,7 +15,7 @@ class CreateTableVisitTodoList extends Migration
     public function up()
     {
         //
-        Schema::create('visit_todo_list', function (Blueprint $table) {
+        Schema::create('visit_store_todo', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('forg_id')->default(0)->comment('组织id');
             $table->integer('fparent_id')->default(0)->comment('父级id');
@@ -44,6 +44,6 @@ class CreateTableVisitTodoList extends Migration
     public function down()
     {
         //
-        Schema::drop('visit_todo_list');
+        Schema::drop('visit_store_todo');
     }
 }

@@ -15,7 +15,7 @@ class CreateTableVisitFunctionList extends Migration
     public function up()
     {
         //
-        Schema::create('visit_function_list', function (Blueprint $table) {
+        Schema::create('visit_function', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('forg_id')->default(0)->comment('组织id');
             $table->string('fnumber')->default('')->comment('编号');
@@ -37,6 +37,6 @@ class CreateTableVisitFunctionList extends Migration
     public function down()
     {
         //
-        Schema::drop('visit_function_list');
+        Schema::drop('visit_function');
     }
 }
