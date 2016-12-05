@@ -24,14 +24,11 @@ class CreateTableEngShift extends Migration
             $table->timestamp('fexpire_date')->nullable()->comment('失效时间');
             $table->timestamp('feffect_date')->nullable()->comment('生效时间');
             $table->string('fis_system_set')->default('')->comment('是否系统设置');
-            $table->integer('fcreate_org_id')->default(0)->comment('创建组织id');
-            $table->integer('fuse_org_id')->default(0)->comment('使用组织id');
+            $table->integer('forg_id')->default(0)->comment('组织id');
             $table->integer('fcreator_id')->default(0)->comment('创建人');
             $table->timestamp('fcreate_date')->nullable()->comment('创建时间');
             $table->integer('fmodify_id')->default(0)->comment('修改人');
             $table->timestamp('fmodify_date')->nullable()->comment('修改时间');
-            $table->integer('fauditor_id')->default(0)->comment('审核人');
-            $table->timestamp('faudit_date')->nullable()->comment('审核日期');
             $table->string('fdocument_status')->default('A')->comment('审核状态');
 
         });
