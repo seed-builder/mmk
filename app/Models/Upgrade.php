@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @SWG\Property(name="url", type="string", description="下载地址")
  * @SWG\Property(name="version_code", type="string", description="version_code")
  * @SWG\Property(name="version_name", type="string", description="version_name")
+ * @SWG\Property(name="type", type="string", description="类型（android, iphone）")
  */
 class Upgrade extends Model
 {
