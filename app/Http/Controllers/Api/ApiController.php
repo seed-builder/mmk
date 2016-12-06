@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\Builder;
+use App\Services\LogSvr;
 
  abstract class  ApiController extends Controller
 {
@@ -62,6 +63,7 @@ use Illuminate\Database\Eloquent\Builder;
         $entity = $this->newEntity($data);
         //$entity = Entity::create($data);
         $re = $entity->save();
+	    //LogSvr::Sync()->info('ModelCreated : '.json_encode($entity));
         $status = $re ? 200 : 400;
         return response($entity, $status);
     }

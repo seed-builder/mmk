@@ -12,6 +12,7 @@ use App\Services\LogSvr;
 
 class ModelCreatedHandler implements ShouldQueue
 {
+	use InteractsWithQueue;
     /**
      * Create the event listener.
      *
@@ -35,6 +36,9 @@ class ModelCreatedHandler implements ShouldQueue
         $map = ModelMap::where('table', $event->model->getTable())->first();
         if(!empty($map)){
             $result = KingdeeSyncData::add($map->foreign_table, $event->model);
+			if(empty($result)){
+				$this->fail('result is null');
+			}
             LogSvr::Sync()->info('ModelCreatedHandler result: ' . json_encode( $result ) );
         }
     }

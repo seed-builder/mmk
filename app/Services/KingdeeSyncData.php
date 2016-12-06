@@ -8,6 +8,7 @@
 
 namespace App\Services;
 use  GuzzleHttp\Client;
+use App\Services\LogSvr;
 
 class KingdeeSyncData extends SyncData
 {
@@ -28,12 +29,16 @@ class KingdeeSyncData extends SyncData
         $arr = explode(',', $str);
         $arr[] = 2052;
         $loginData = ['parameters' => json_encode($arr)];
+	    LogSvr::KingdeeSync()->info('login Url : ' . $this->dataUrl);
+	    LogSvr::KingdeeSync()->info('login Data : ' . json_encode($loginData));
         return $this->post($this->loginUrl, json_encode($loginData), 1, $cookie_jar);
     }
 
     public function sendData($table, $op, $data, $cookie_jar = null){
         $arr = ['parameters' => [$table, $op, json_encode($data)]];
         //var_dump(json_encode($arr));
+	    LogSvr::KingdeeSync()->info('data Url : ' . $this->dataUrl);
+	    LogSvr::KingdeeSync()->info('data : ' . json_encode($arr));
         return $this->post($this->dataUrl, $arr, 0, $cookie_jar);
     }
 
@@ -42,6 +47,7 @@ class KingdeeSyncData extends SyncData
         $re = $this->login($cookie_jar);
 
         $result = $this->sendData($table, $op, $data, $cookie_jar);
+	    LogSvr::KingdeeSync()->info('$result  : ' . $result);
         return json_decode($result, true);
     }
 
