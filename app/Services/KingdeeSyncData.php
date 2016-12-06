@@ -47,6 +47,7 @@ class KingdeeSyncData extends SyncData
         $re = $this->login($cookie_jar);
 
         $result = $this->sendData($table, $op, $data, $cookie_jar);
+	    LogSvr::KingdeeSync()->info('$result  : ' . $result);
         return json_decode($result, true);
     }
 
