@@ -148,4 +148,76 @@ Route::group(['prefix' => 'utl', 'middleware' => 'api.sign'], function (){
      */
     Route::post('/sync-db', ['uses' => 'UtlController@syncDB']);
 
+	/**
+	 * @SWG\Api(
+	 *   path="/api/utl/upload-",
+	 *   @SWG\Operation(
+	 *      method="POST",
+	 *      consumes={"multipart/form-data"},
+	 *      nickname="upload-image",
+	 *      summary="上传文件",
+	 *      notes="上传文件",
+	 *      type="",
+	 *      @SWG\Parameters(
+	 *          @SWG\Parameter(
+	 *              name="sourceFile",
+	 *              description="文件",
+	 *              required=true,
+	 *              type="file",
+	 *              paramType="form",
+	 *              defaultValue=""
+	 *          ),
+	 *          @SWG\Parameter(
+	 *              name="_sign",
+	 *              description="签名",
+	 *              required=true,
+	 *              type="string",
+	 *              paramType="form",
+	 *              defaultValue="****"
+	 *          )
+	 *      ),
+	 *      @SWG\ResponseMessages(
+	 *          @SWG\ResponseMessage(code=401, message="签名验证错误！"),
+	 *          @SWG\ResponseMessage(code=200, message="成功。")
+	 *      )
+	 *   )
+	 * )
+	 */
+	Route::post('/upload-file', ['uses' => 'UtlController@uploadFile']);
+
+	/**
+	 * @SWG\Api(
+	 *   path="/api/utl/download-file",
+	 *   @SWG\Operation(
+	 *      method="GET",
+	 *      nickname="download-file",
+	 *      summary="下载文件",
+	 *      notes="下载文件",
+	 *      type="",
+	 *      @SWG\Parameters(
+	 *          @SWG\Parameter(
+	 *              name="id",
+	 *              description="文件id",
+	 *              required=true,
+	 *              type="integer",
+	 *              paramType="query",
+	 *              defaultValue="12"
+	 *          ),
+	 *          @SWG\Parameter(
+	 *              name="_sign",
+	 *              description="签名",
+	 *              required=true,
+	 *              type="string",
+	 *              paramType="query",
+	 *              defaultValue="****"
+	 *          )
+	 *      ),
+	 *      @SWG\ResponseMessages(
+	 *          @SWG\ResponseMessage(code=401, message="签名验证错误！"),
+	 *          @SWG\ResponseMessage(code=200, message="成功。")
+	 *      )
+	 *   )
+	 * )
+	 */
+	Route::get('/download-file', ['uses' => 'UtlController@downloadFile']);
 });

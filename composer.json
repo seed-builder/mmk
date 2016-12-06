@@ -10,7 +10,6 @@
         "predis/predis": "^1.1",
         "intervention/image": "^2.3",
         "webpatser/laravel-uuid": "2.*",
-        "encore/laravel-admin": "1.3.x-dev",
         "jpush/jpush": "v3.5.*"
     },
     "require-dev": {

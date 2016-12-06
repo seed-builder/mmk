@@ -47,7 +47,34 @@ class UtlController extends Controller
         return $img->response();
     }
 
-    /**
+	public function uploadFile(Request $request){
+		$file = $request->file('sourceFile');
+		//var_dump($file);
+		if($file->isValid())
+		{
+			$path = $file->store('upload/files');
+			if($path){
+				$res = Resources::create([
+					'name' => $file->getClientOriginalName(),
+					'ext' => $file->getClientOriginalExtension(),
+					'size' => $file->getSize(),
+					'path' => 'app/' . $path ,
+					'mimetype' => $file->getMimeType(),
+				]);
+			}
+		}
+		return response($res, 200);
+	}
+
+	public function downloadFile(Request $request){
+		$id = $request->input('id');
+		$file = Resources::find($id); //'
+		$path = storage_path($file->path);
+		return response()->download($path);
+	}
+
+
+	/**
      * 数据库同步
      * @param Request $request
      * @return Response
