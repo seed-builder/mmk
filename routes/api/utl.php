@@ -150,7 +150,7 @@ Route::group(['prefix' => 'utl', 'middleware' => 'api.sign'], function (){
 
 	/**
 	 * @SWG\Api(
-	 *   path="/api/utl/upload-",
+	 *   path="/api/utl/upload-file",
 	 *   @SWG\Operation(
 	 *      method="POST",
 	 *      consumes={"multipart/form-data"},
