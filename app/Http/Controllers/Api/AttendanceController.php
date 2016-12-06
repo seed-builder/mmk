@@ -14,6 +14,27 @@ class AttendanceController extends ApiController
         return new Entity($attributes);
     }
 
+	/**
+	 * Store a newly created resource in storage.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @return \Illuminate\Http\Response
+	 */
+	public function store(Request $request)
+	{
+		//
+		$data = $request->all();
+		unset($data['_sign']);
+		$data['ftime'] = date('Y-m-d H:i:s');
+
+		$entity = $this->newEntity($data);
+		//$entity = Entity::create($data);
+		$re = $entity->save();
+		//LogSvr::Sync()->info('ModelCreated : '.json_encode($entity));
+		$status = $re ? 200 : 400;
+		return response($entity, $status);
+	}
+
     public function month(Request $request){
         $empId = $request->input('emp_id', 0);
         $year = $request->input('year', date('Y'));
