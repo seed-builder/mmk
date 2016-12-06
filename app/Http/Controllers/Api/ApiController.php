@@ -63,7 +63,7 @@ use App\Services\LogSvr;
         $entity = $this->newEntity($data);
         //$entity = Entity::create($data);
         $re = $entity->save();
-	    LogSvr::Sync()->info('ModelCreated : '.json_encode($entity));
+	    //LogSvr::Sync()->info('ModelCreated : '.json_encode($entity));
         $status = $re ? 200 : 400;
         return response($entity, $status);
     }
