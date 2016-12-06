@@ -60,7 +60,7 @@ Route::group(['prefix' => 'utl', 'middleware' => 'api.sign'], function (){
      *              required=true,
      *              type="string",
      *              paramType="query",
-     *              defaultValue="1bea3a3faa3838407eec786975f68335.jpeg"
+     *              defaultValue="1"
      *          ),
      *          @SWG\Parameter(
      *              name="h",

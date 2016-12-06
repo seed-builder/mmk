@@ -69,8 +69,12 @@ class UtlController extends Controller
 	public function downloadFile(Request $request){
 		$id = $request->input('id');
 		$file = Resources::find($id); //'
-		$path = storage_path($file->path);
-		return response()->download($path);
+		if(!empty($file)) {
+			$path = storage_path($file->path);
+			return response()->download($path);
+		}else{
+			return response('has no file', 200);
+		}
 	}
 
 
