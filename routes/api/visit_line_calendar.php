@@ -120,7 +120,7 @@ Route::group(['prefix' => 'visit-line-calendar', 'middleware' => 'api.sign'], fu
      *      @SWG\Parameters(
      *          @SWG\Parameter(name="begin", description="开始日期", required=false, type="string", paramType="query", defaultValue="2016-12-05"),
      *          @SWG\Parameter(name="end", description="结束日期", required=false, type="string", paramType="query", defaultValue="2016-12-15"),
-     *          @SWG\Parameter(name="femp_id", description="员工id", required=false, type="integer", paramType="query", defaultValue="1),
+     *          @SWG\Parameter(name="femp_id", description="员工id", required=false, type="integer", paramType="query", defaultValue="1"),
      *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="query", defaultValue="****")
      *      )
      *    )
