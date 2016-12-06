@@ -71,7 +71,7 @@ class UtlController extends Controller
 		$file = Resources::find($id); //'
 		if(!empty($file)) {
 			$path = storage_path($file->path);
-			return response()->download($path);
+			return response()->download($path, $file->name, ['Content-Type' => $file->mimetype]);
 		}else{
 			return response('has no file', 200);
 		}
