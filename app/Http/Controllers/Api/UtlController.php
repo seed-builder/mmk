@@ -84,22 +84,12 @@ class UtlController extends Controller
 		$condition = $request->input('condition');
 		$query = "select * from $table where $condition ";
 		$result = DB::select($query);
-		var_dump($query);
+		//var_dump($query);
 		$arr = [];
 		if(!empty($result)){
-			switch ($op){
-				case 0:
-					$func = KingdeeSyncData::add;
-					break;
-				case 1:
-					$func = KingdeeSyncData::update;
-					break;
-				case 2:
-					$func = KingdeeSyncData::delete;
-					break;
-			}
+			$sync = new KingdeeSyncData();
 			foreach ($result as $model){
-				$res = $func($table, $model);
+				$res = $sync->sync($table, $op, $model);
 				$arr[] = ['data' => $model, 'response' => $res];
 			}
 		}
