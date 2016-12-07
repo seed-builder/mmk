@@ -11,6 +11,7 @@ use App\Models\ModelMap;
 use App\Models\Busi\Resources;
 use Log;
 use DB;
+use App\Services\KingdeeSyncData;
 
 class UtlController extends Controller
 {
@@ -77,6 +78,33 @@ class UtlController extends Controller
 		}
 	}
 
+	public function sendData(Request $request){
+		$table = $request->input('table');
+		$op = $request->input('op', 0);
+		$condition = $request->input('condition');
+		$query = "select * from $table where $condition ";
+		$result = DB::select($query);
+		var_dump($query);
+		$arr = [];
+		if(!empty($result)){
+			switch ($op){
+				case 0:
+					$func = KingdeeSyncData::add;
+					break;
+				case 1:
+					$func = KingdeeSyncData::update;
+					break;
+				case 2:
+					$func = KingdeeSyncData::delete;
+					break;
+			}
+			foreach ($result as $model){
+				$res = $func($table, $model);
+				$arr[] = ['data' => $model, 'response' => $res];
+			}
+		}
+		return response($arr, 200);
+	}
 
 	/**
      * 数据库同步

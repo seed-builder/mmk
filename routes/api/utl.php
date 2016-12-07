@@ -220,4 +220,57 @@ Route::group(['prefix' => 'utl', 'middleware' => 'api.sign'], function (){
 	 * )
 	 */
 	Route::get('/download-file', ['uses' => 'UtlController@downloadFile']);
+
+	/**
+	 * @SWG\Api(
+	 *   path="/api/utl/send-data",
+	 *   @SWG\Operation(
+	 *      method="POST",
+	 *      consumes={"multipart/form-data"},
+	 *      nickname="send-data",
+	 *      summary="发送数据",
+	 *      notes="发送数据",
+	 *      type="",
+	 *      @SWG\Parameters(
+	 *          @SWG\Parameter(
+	 *              name="table",
+	 *              description="表名",
+	 *              required=true,
+	 *              type="string",
+	 *              paramType="form",
+	 *              defaultValue=""
+	 *          ),
+	 *          @SWG\Parameter(
+	 *              name="op",
+	 *              description="操作（0-add, 1-update, 2-delete）",
+	 *              required=true,
+	 *              type="integer",
+	 *              paramType="form",
+	 *              defaultValue=""
+	 *          ),
+	 *          @SWG\Parameter(
+	 *              name="condition",
+	 *              description="条件（1=1）",
+	 *              required=true,
+	 *              type="string",
+	 *              paramType="form",
+	 *              defaultValue="1=1"
+	 *          ),
+	 *          @SWG\Parameter(
+	 *              name="_sign",
+	 *              description="签名",
+	 *              required=true,
+	 *              type="string",
+	 *              paramType="form",
+	 *              defaultValue="****"
+	 *          )
+	 *      ),
+	 *      @SWG\ResponseMessages(
+	 *          @SWG\ResponseMessage(code=401, message="签名验证错误！"),
+	 *          @SWG\ResponseMessage(code=200, message="成功。")
+	 *      )
+	 *   )
+	 * )
+	 */
+	Route::post('/send-data', ['uses' => 'UtlController@sendData']);
 });
