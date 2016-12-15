@@ -20,6 +20,7 @@ class CreateTableEngWorkCalendar extends Migration
             $table->string('fnumber')->default('')->comment('编号');
             $table->string('fname')->default('')->comment('名称');
             $table->integer('forg_id')->default(0)->comment('组织id');
+            $table->integer('fdepartment_id')->default(0)->comment('部门id');
             $table->integer('fcalendar_template_id')->default(0)->comment('模板id');
             $table->string('fis_system_set')->default('')->comment('是否系统设置');
             $table->integer('fcreator_id')->default(0)->comment('创建人');
