@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Busi\VisitLineCalendar;
+use DB;
 
 class VisitLineCalendarController extends ApiController
 {
@@ -28,7 +29,7 @@ class VisitLineCalendarController extends ApiController
     public function getStores(Request $request){
         $fline_calendar_id = $request->input('fline_calendar_id', 0);
         //VisitLineCalendar::where('femp_id', $emp_id)->where('fdate')
-        $results =
+        $results = [];
         response(['list' => $results], 200);
     }
 }
