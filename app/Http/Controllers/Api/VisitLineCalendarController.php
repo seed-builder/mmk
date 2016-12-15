@@ -26,10 +26,4 @@ class VisitLineCalendarController extends ApiController
         response(['list' => $results], 200);
     }
 
-    public function getStores(Request $request){
-        $fline_calendar_id = $request->input('fline_calendar_id', 0);
-        //VisitLineCalendar::where('femp_id', $emp_id)->where('fdate')
-        $results = [];
-        response(['list' => $results], 200);
-    }
 }
