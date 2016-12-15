@@ -36,10 +36,10 @@ class ModelUpdatedHandler implements ShouldQueue
         $map = ModelMap::where('table', $event->model->getTable())->first();
         if(!empty($map)){
             $result = KingdeeSyncData::update($map->foreign_table, $event->model);
-	        if(empty($result) || $result['Result'] != 1){
-		        LogSvr::Sync()->info('ModelUpdatedHandler fail: ');
-		        $this->fail('result is null');
-	        }
+//	        if(empty($result) || $result['Result'] != 1){
+//		        LogSvr::Sync()->info('ModelUpdatedHandler fail: ');
+//		        $this->fail('result is null');
+//	        }
 	        LogSvr::Sync()->info('ModelUpdatedHandler result: ' .  json_encode( $result ));
         }
     }

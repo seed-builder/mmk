@@ -37,10 +37,10 @@ class ModelDeletedHandler implements ShouldQueue
         if(!empty($map)){
             $result = KingdeeSyncData::delete($map->foreign_table, $event->model);
 
-	        if(empty($result) || $result['Result'] != 1){
-		        LogSvr::Sync()->info('ModelDeletedHandler fail: ');
-		        $this->fail('result is null');
-	        }
+//	        if(empty($result) || $result['Result'] != 1){
+//		        LogSvr::Sync()->info('ModelDeletedHandler fail: ');
+//		        $this->fail('result is null');
+//	        }
 	        LogSvr::Sync()->info('ModelDeletedHandler result: ' . json_encode( $result ) );
         }
     }
