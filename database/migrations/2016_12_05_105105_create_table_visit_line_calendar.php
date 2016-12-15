@@ -19,6 +19,7 @@ class CreateTableVisitLineCalendar extends Migration
             $table->increments('id');
             $table->integer('forg_id')->default(0)->comment('组织id');
             $table->timestamp('fdate')->nullable()->comment('日期');
+            $table->integer('fleader_id')->default(0)->comment('员工上级id');
             $table->integer('femp_id')->default(0)->comment('员工id');
             $table->integer('fline_id')->default(0)->comment('线路id');
             $table->integer('fstatus')->default(1)->comment('巡访状态（1-未开始， 2-进行中， 3-已完成）');

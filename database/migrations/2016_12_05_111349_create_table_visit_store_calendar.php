@@ -19,6 +19,7 @@ class CreateTableVisitStoreCalendar extends Migration
             $table->increments('id');
             $table->integer('forg_id')->default(0)->comment('组织id');
             $table->timestamp('fdate')->nullable()->comment('日期');
+	        $table->integer('fleader_id')->default(0)->comment('员工上级id');
             $table->integer('femp_id')->default(0)->comment('员工id');
             $table->integer('fline_calendar_id')->default(0)->comment('线路巡防日历id');
             $table->integer('fstore_id')->default(0)->comment('门店id');
