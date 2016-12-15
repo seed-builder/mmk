@@ -46,6 +46,7 @@ class KingdeeSyncData extends SyncData
         $cookie_jar = tempnam('./tmp','CloudSession');
         $re = $this->login($cookie_jar);
 	    LogSvr::KingdeeSync()->info('login result : ' . $re);
+	    //if(!empty($re))
         $result = $this->sendData($table, $op, $data, $cookie_jar);
 	    LogSvr::KingdeeSync()->info('$result  : ' . $result);
         return json_decode($result, true);

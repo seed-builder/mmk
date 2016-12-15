@@ -23,9 +23,9 @@ class ExampleTest extends TestCase
 //        $re = $map->save();
         $sync = new KingdeeSyncData();
         //$re = $sync->login();
-        $re = $sync->sync('T_BD_EmpInfo', '0', ['id'=>10,'name'=>'xx2']);
+        $re = $sync->sync('bd_employees', '0', ['id'=>10,'name'=>'xx2']);
         var_dump($re);
-        $this->assertNotNull($re);
+        $this->assertNull($re);
 //        $class = ModelMap::class;
 ////        $query = {$class}->query();
 ////        $this->assertNotNull($query);
