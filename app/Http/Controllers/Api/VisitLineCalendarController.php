@@ -22,8 +22,11 @@ class VisitLineCalendarController extends ApiController
         $end = $request->input('end', date('Y-m-d'));
         $empId = $request->input('femp_id', 0);
         //VisitLineCalendar::where('femp_id', $emp_id)->where('fdate')
+//		var_dump($begin);
+//		var_dump($end);
+//		var_dump($empId);
         $results = DB::select('select * from visit_line_calendar WHERE femp_id=? and date_format(fdate, \'%Y-%m-%d\') BETWEEN  ? and ?', [$empId, $begin, $end]);
-        response(['list' => $results], 200);
+        return response(['list' => $results], 200);
     }
 
 
