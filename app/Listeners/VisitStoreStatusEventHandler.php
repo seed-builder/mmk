@@ -7,7 +7,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Models\Busi\VisitStoreCalendar;
 use App\Models\Busi\VisitLineCalendar;
-
+use Log;
 
 class VisitStoreStatusEventHandler implements ShouldQueue
 {
@@ -30,6 +30,7 @@ class VisitStoreStatusEventHandler implements ShouldQueue
      */
     public function handle(VisitStoreStatusChangedEvent $event)
     {
+	    Log::info('VisitStoreStatusEventHandler , model = ' . json_encode($event->model));
     	if($event->model->fstatus > 1) {
 		    //
 		    $lineCalendar = VisitLineCalendar::find($event->model->fline_calendar_id);
