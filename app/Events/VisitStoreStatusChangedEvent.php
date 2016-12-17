@@ -9,6 +9,7 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use App\Models\Busi\VisitStoreCalendar;
 
 class VisitStoreStatusChangedEvent
 {
@@ -19,9 +20,9 @@ class VisitStoreStatusChangedEvent
 	/**
 	 * Create a new event instance.
 	 *
-	 * @return void
+	 * @param VisitStoreCalendar $model
 	 */
-	public function __construct(Model $model)
+	public function __construct(VisitStoreCalendar $model)
 	{
 		//
 		$this->model = $model;

@@ -33,20 +33,39 @@ class VisitStoreTodoStatusEventHandler  implements ShouldQueue
      */
     public function handle(VisitTodoStatusChangedEvent $event)
     {
-        //
-	    $storeCalendar = VisitStoreCalendar::find($event->model->fstore_calendar_id);
-		if($event->model->fstatus == 2){
-			if(!empty($storeCalendar)){
-				$storeCalendar->fstatus = 2;
-				$storeCalendar->save();
-			}
-		}elseif($event->model->fstatus == 3){
-			$count = VisitTodoCalendar::where('fstore_calendar_id', $event->model->fstore_calendar_id)->where('fstatus', 3)->count();
-			$todoCount = VisitStoreTodo::where('ffunction_id', '>', 0)->where('fis_must_visit', 1)->count();
-			if($count == $todoCount){
-				$storeCalendar->fstatus = 3;
-				$storeCalendar->save();
-			}
-		}
+	    if($event->model->fstatus > 1) {
+		    //
+		    $storeCalendar = VisitStoreCalendar::find($event->model->fstore_calendar_id);
+		    if ($event->model->fstatus == 2) {
+			    if (!empty($storeCalendar)) {
+				    $storeCalendar->fstatus = 2;
+				    $storeCalendar->save();
+			    }
+		    } elseif ($event->model->fstatus == 3) {
+			    $count = VisitTodoCalendar::where('fstore_calendar_id', $event->model->fstore_calendar_id)->where('fstatus', '<', 3)->count();
+			    if ($count == 0) {
+				    $storeCalendar->fstatus = 3;
+				    $storeCalendar->save();
+			    }
+		    }
+		    $this->updateParent($event->model);
+	    }
+    }
+
+    protected function updateParent(VisitTodoCalendar $todoCalendar){
+    	if($todoCalendar->fparent_id > 0) {
+		    $parent = VisitTodoCalendar::find($todoCalendar->fparent_id);
+		    if($todoCalendar->fstatus == 2){
+			    $parent->fstatus = 2;
+			    $parent->save();
+		    }elseif($todoCalendar->fstatus == 3){
+			    $count = VisitTodoCalendar::where('fparent_id', $todoCalendar->fparent_id)->where('fstatus', '<', 3)->count();
+			    if ($count == 0) {
+				    $parent->fstatus = 3;
+				    $parent->save();
+			    }
+		    }
+		    $this->updateParent($parent);
+	    }
     }
 }

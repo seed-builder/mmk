@@ -3,12 +3,12 @@
 namespace App\Events;
 
 use Illuminate\Broadcasting\Channel;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use App\Models\Busi\VisitTodoCalendar;
 
 class VisitTodoStatusChangedEvent
 {
@@ -19,9 +19,9 @@ class VisitTodoStatusChangedEvent
 	/**
 	 * Create a new event instance.
 	 *
-	 * @return void
+	 * @param VisitTodoCalendar $model
 	 */
-	public function __construct(Model $model)
+	public function __construct(VisitTodoCalendar $model)
 	{
 		//
 		$this->model = $model;
