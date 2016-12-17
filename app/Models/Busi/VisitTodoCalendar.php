@@ -27,6 +27,7 @@ class VisitTodoCalendar extends BaseModel
 {
     //
     protected $table = 'visit_todo_calendar';
+	protected $with = ['todo'];
 
     public static function boot()
     {
@@ -39,5 +40,9 @@ class VisitTodoCalendar extends BaseModel
 	    static::updated(function ($model){
 		    event(new \App\Events\VisitTodoStatusChangedEvent($model));
 	    });
+    }
+
+    public function todo(){
+    	$this->belongsTo(VisitStoreTodo::class, 'ftodo_id');
     }
 }
