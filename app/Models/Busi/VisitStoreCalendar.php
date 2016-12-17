@@ -28,6 +28,7 @@ class VisitStoreCalendar extends BaseModel
 {
     //
     protected $table = 'visit_store_calendar';
+	protected $with = ['store'];
 
     public function store(){
         return $this->belongsTo(Store::class, 'fstore_id');
