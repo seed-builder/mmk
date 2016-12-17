@@ -57,4 +57,13 @@ class VisitTodoCalendarController extends ApiController
 //
 //	}
 
+	public function getStatus(Request $request){
+		$fdate = $request->input('fdate');
+		$femp_id = $request->input('femp_id');
+		$fstore_calendar_id = $request->input('fstore_calendar_id');
+		$ftodo_id = $request->input('ftodo_id');
+
+
+	}
+
 }
