@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  * @SWG\Property(name="forg_id", type="integer", description="组织id")
  * @SWG\Property(name="fstatus", type="integer", description="巡访状态（1-未开始， 2-进行中， 3-已完成）")
  * @SWG\Property(name="fstore_calendar_id", type="integer", description="线路门店巡防日历id")
- * @SWG\Property(name="ftodo_list_id", type="integer", description="门店巡访项目id")
+ * @SWG\Property(name="ftodo_id", type="integer", description="门店巡访项目id")
  * @SWG\Property(name="id", type="integer", description="")
  */
 class VisitTodoCalendar extends BaseModel
