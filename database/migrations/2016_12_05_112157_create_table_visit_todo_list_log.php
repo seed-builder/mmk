@@ -16,6 +16,7 @@ class CreateTableVisitTodoListLog extends Migration
         //
         Schema::create('visit_todo_calendar', function (Blueprint $table) {
             $table->increments('id');
+	        $table->integer('fparent_id')->default(0)->comment('父级id');
             $table->integer('forg_id')->default(0)->comment('组织id');
             $table->timestamp('fdate')->nullable()->comment('日期');
             $table->integer('femp_id')->default(0)->comment('员工id');

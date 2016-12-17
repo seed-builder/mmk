@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Busi\VisitTodoCalendar;
+use App\Models\Busi\VisitStoreTodo;
+use DB;
 
 class VisitTodoCalendarController extends ApiController
 {
@@ -44,6 +46,15 @@ class VisitTodoCalendarController extends ApiController
 		//LogSvr::Sync()->info('ModelCreated : '.json_encode($entity));
 		$status = $re ? 200 : 400;
 		return response($entity, $status);
+	}
+
+	public function getStatus(Request $request){
+		$fdate = $request->input('fdate');
+		$femp_id = $request->input('femp_id');
+		$fstore_calendar_id = $request->input('fstore_calendar_id');
+		$ftodo_id = $request->input('ftodo_id');
+
+
 	}
 
 }
