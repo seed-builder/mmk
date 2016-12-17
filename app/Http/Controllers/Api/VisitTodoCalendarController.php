@@ -26,9 +26,21 @@ class VisitTodoCalendarController extends ApiController
 		//
 		$data = $request->all();
 		unset($data['_sign']);
-		$entity = $this->newEntity($data);
-		//$entity = Entity::create($data);
-		$re = $entity->save();
+
+		$todoCalendar = VisitTodoCalendar::where('femp_id', $data['femp_id'])
+			->where('fstore_calendar_id', $data['fstore_calendar_id'])
+			->where('fdate', $data['fdate'])
+			->where('ftodo_id', $data['ftodo_id'])
+			->first();
+
+		if(empty($todoCalendar)){
+			$entity = $this->newEntity($data);
+			$re = $entity->save();
+		}else{
+			$todoCalendar->fstatus =  $data['fstatus'];
+			$re = $todoCalendar->save();
+		}
+
 		//LogSvr::Sync()->info('ModelCreated : '.json_encode($entity));
 		$status = $re ? 200 : 400;
 		return response($entity, $status);
