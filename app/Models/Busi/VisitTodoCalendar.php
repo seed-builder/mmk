@@ -29,7 +29,7 @@ class VisitTodoCalendar extends BaseModel
 {
     //
     protected $table = 'visit_todo_calendar';
-	//protected $with = ['todo'];
+	protected $with = ['todo'];
 
     public static function boot()
     {
@@ -41,6 +41,6 @@ class VisitTodoCalendar extends BaseModel
     }
 
     public function todo(){
-    	$this->belongsTo(VisitStoreTodo::class, 'ftodo_id');
+    	return $this->belongsTo(VisitStoreTodo::class, 'ftodo_id');
     }
 }
