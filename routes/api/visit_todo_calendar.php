@@ -57,6 +57,7 @@ Route::group(['prefix' => 'visit-todo-calendar', 'middleware' => 'api.sign'], fu
      *      notes="新增巡访门店项目日历",
      *      type="",
      *      @SWG\Parameters(
+     *          @SWG\Parameter(name="fparent_id", description="父级id", required=true,type="integer", paramType="form", defaultValue="0" ),
      *          @SWG\Parameter(name="fdate", description="日期", required=true,type="string", paramType="form", defaultValue="" ),
                 @SWG\Parameter(name="femp_id", description="员工id", required=true,type="integer", paramType="form", defaultValue="0" ),
                 @SWG\Parameter(name="forg_id", description="组织id", required=false,type="integer", paramType="form", defaultValue="0" ),
