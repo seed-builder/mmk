@@ -19,7 +19,11 @@ class CreateTableVisitPzbz extends Migration
             $table->string('fremark')->default('')->comment('备注');
             $table->integer('fphoto_id')->default(0)->comment('picture id');
             $table->integer('flog_id')->default(0)->comment('visit_todo_calendar id');
-            $table->timestamps();
+	        $table->integer('fcreator_id')->default(0)->comment('创建人');
+	        $table->timestamp('fcreate_date')->nullable()->comment('创建时间');
+	        $table->integer('fmodify_id')->default(0)->comment('修改人');
+	        $table->timestamp('fmodify_date')->nullable()->comment('修改时间');
+	        $table->string('fdocument_status')->default('A')->comment('审核状态');
         });
     }
 
