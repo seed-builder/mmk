@@ -17,7 +17,7 @@ class CreateTableVisitPzbz extends Migration
             $table->increments('id');
             $table->string('fbill_no')->default('')->comment('bill no');
             $table->string('fremark')->default('')->comment('备注');
-            $table->integer('fphoto_id')->default(0)->comment('picture id');
+            $table->string('fphotos')->default('')->comment('图片id 集合， 逗号隔开');
             $table->integer('flog_id')->default(0)->comment('visit_todo_calendar id');
 	        $table->integer('fcreator_id')->default(0)->comment('创建人');
 	        $table->timestamp('fcreate_date')->nullable()->comment('创建时间');

@@ -59,7 +59,7 @@ Route::group(['prefix' => 'visit-pzbz', 'middleware' => 'api.sign'], function ()
      *      @SWG\Parameters(
      *          @SWG\Parameter(name="fbill_no", description="bill no", required=false,type="string", paramType="form", defaultValue="" ),
 			    @SWG\Parameter(name="flog_id", description="visit_todo_calendar id", required=false,type="integer", paramType="form", defaultValue="0" ),
-			    @SWG\Parameter(name="fphoto_id", description="picture id", required=false,type="integer", paramType="form", defaultValue="0" ),
+			    @SWG\Parameter(name="fphotos", description="图片id 集合， 逗号隔开", required=false,type="string", paramType="form", defaultValue="0" ),
 			    @SWG\Parameter(name="fremark", description="备注", required=false,type="string", paramType="form", defaultValue="" ),
      *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
      *      )
@@ -80,7 +80,7 @@ Route::group(['prefix' => 'visit-pzbz', 'middleware' => 'api.sign'], function ()
      *      @SWG\Parameters(
      *          @SWG\Parameter(name="fbill_no", description="bill no", required=false,type="string", paramType="form", defaultValue="" ),
 			    @SWG\Parameter(name="flog_id", description="visit_todo_calendar id", required=false,type="integer", paramType="form", defaultValue="0" ),
-			    @SWG\Parameter(name="fphoto_id", description="picture id", required=false,type="integer", paramType="form", defaultValue="0" ),
+			    @SWG\Parameter(name="fphotos", description="图片id 集合， 逗号隔开", required=false,type="string", paramType="form", defaultValue="0" ),
 			    @SWG\Parameter(name="fremark", description="备注", required=false,type="string", paramType="form", defaultValue="" ),
 			    @SWG\Parameter(name="id", description="", required=true,type="integer", paramType="path", defaultValue="1" ),
      *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
