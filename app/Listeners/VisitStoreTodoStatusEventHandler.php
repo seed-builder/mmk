@@ -62,8 +62,10 @@ class VisitStoreTodoStatusEventHandler  implements ShouldQueue
 			    $count = VisitTodoCalendar::where('fparent_id', $todoCalendar->fparent_id)->where('fstatus', '<', 3)->count();
 			    if ($count == 0) {
 				    $parent->fstatus = 3;
-				    $parent->save();
+			    }else{
+				    $parent->fstatus = 2;
 			    }
+			    $parent->save();
 		    }
 		    $this->updateParent($parent);
 	    }
