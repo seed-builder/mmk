@@ -67,7 +67,7 @@ class VisitStoreTodoStatusEventHandler  implements ShouldQueue
 			    }
 			    $parent->save();
 		    }
-		    $this->updateParent($parent);
+		    //$this->updateParent($parent);
 	    }
     }
 }
