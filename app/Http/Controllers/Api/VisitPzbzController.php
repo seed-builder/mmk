@@ -36,10 +36,16 @@ class VisitPzbzController extends ApiController
 			//$entity = $this->newEntity($data);
 			$entity = VisitPzbz::create($data);
 		}
+		if($entity){
+			$status =   200 ;
+			event(new VisitDetailCompletedEventHandler($entity->flog_id));
+		}else{
+			$status =   400;
+		}
 		//$entity = Entity::create($data);
 		//$re = $entity->save();
 		//LogSvr::Sync()->info('ModelCreated : '.json_encode($entity));
-		$status =   200 ;
+		//$status =   200 ;
 		return response($entity, $status);
 	}
 }
