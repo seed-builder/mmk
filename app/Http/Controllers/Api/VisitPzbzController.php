@@ -15,4 +15,31 @@ class VisitPzbzController extends ApiController
         // TODO: Implement newEntity() method.
         return new VisitPzbz($attributes);
     }
+
+	/**
+	 * Store a newly created resource in storage.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @return \Illuminate\Http\Response
+	 */
+	public function store(Request $request)
+	{
+		//
+		$data = $request->all();
+		unset($data['_sign']);
+		$logId = $data['flog_id'];
+		$entity = VisitPzbz::where('flog_id', $logId)->first();
+		if($entity){
+			$entity->fill($data);
+			$entity->save();
+		}else{
+			//$entity = $this->newEntity($data);
+			$entity = VisitPzbz::create($data);
+		}
+		//$entity = Entity::create($data);
+		//$re = $entity->save();
+		//LogSvr::Sync()->info('ModelCreated : '.json_encode($entity));
+		$status =   200 ;
+		return response($entity, $status);
+	}
 }

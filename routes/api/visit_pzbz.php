@@ -53,8 +53,8 @@ Route::group(['prefix' => 'visit-pzbz', 'middleware' => 'api.sign'], function ()
      *     @SWG\Operation(
      *      method="POST",
      *      nickname="visit-pzbz-store",
-     *      summary="新增拍照备注",
-     *      notes="新增拍照备注",
+     *      summary="新增或者更新拍照备注",
+     *      notes="新增或者更新拍照备注",
      *      type="",
      *      @SWG\Parameters(
      *          @SWG\Parameter(name="fbill_no", description="bill no", required=false,type="string", paramType="form", defaultValue="" ),
