@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\VisitDetailCompletedEvent;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Busi\VisitPzbz;
@@ -38,7 +39,7 @@ class VisitPzbzController extends ApiController
 		}
 		if($entity){
 			$status =   200 ;
-			event(new VisitDetailCompletedEventHandler($entity->flog_id));
+			event(new VisitDetailCompletedEvent($entity->flog_id));
 		}else{
 			$status =   400;
 		}
