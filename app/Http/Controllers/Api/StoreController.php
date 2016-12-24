@@ -38,8 +38,14 @@ class StoreController extends ApiController
         $data = $request->all();
         $postalcode = City::getPostalCode($data['fprovince'], $data['fcity'], $data['fcountry']);
         if($postalcode){
-            $count = Store::where('fpostalcode', $postalcode)->count();
-            $data['fnumber'] = $postalcode . sprintf('%05d', ($count+1));
+            $fn = Store::where('fpostalcode', $postalcode)->max('fnumber');
+            if($fn){
+            	$fn++;
+	            $data['fnumber'] = $fn;
+            }else{
+	            $data['fnumber'] = $postalcode . sprintf('%05d', 1);
+            }
+            $data['fpostalcode'] = $postalcode;
         }
 
         unset($data['_sign']);
