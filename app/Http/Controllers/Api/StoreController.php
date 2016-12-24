@@ -47,7 +47,6 @@ class StoreController extends ApiController
             }
             $data['fpostalcode'] = $postalcode;
         }
-
         unset($data['_sign']);
         $entity = $this->newEntity($data);
         //$entity = Entity::create($data);
