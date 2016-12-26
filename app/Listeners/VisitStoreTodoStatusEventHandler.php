@@ -55,7 +55,7 @@ class VisitStoreTodoStatusEventHandler  implements ShouldQueue
     }
 
     protected function updateParent(VisitTodoCalendar $todoCalendar){
-    	if($todoCalendar->fparent_id > 0) {
+    	if($todoCalendar && $todoCalendar->fparent_id > 0) {
 		    $parent = VisitTodoCalendar::find($todoCalendar->fparent_id);
 		    if($todoCalendar->fstatus == 2){
 			    $parent->fstatus = 2;
