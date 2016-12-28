@@ -21,16 +21,19 @@ class ExampleTest extends TestCase
 //        $map->model = 'User';
 //        $map->table = 'sys_user';
 //        $re = $map->save();
-        $sync = new KingdeeSyncData();
-        //$re = $sync->login();
-        $re = $sync->sync('bd_employees', '0', ['id'=>10,'name'=>'xx2']);
-        var_dump($re);
-        $this->assertNull($re);
+//        $sync = new KingdeeSyncData();
+//        //$re = $sync->login();
+//        $re = $sync->sync('T_BD_EmpInfo', '0', ['id'=>10,'name'=>'xx2']);
+//        var_dump($re);
+//        $this->assertNotNull($re);
 //        $class = ModelMap::class;
 ////        $query = {$class}->query();
 ////        $this->assertNotNull($query);
 //        $class = new ReflectionClass($class); // 建立 Person这个类的反射类
 //        $instance = $class->newInstanceArgs();
 //        $this->assertNotNull($instance);
+	    $zip = \App\Models\City::getPostalCode('福建省','厦门市','湖里区');
+	    var_dump($zip);
+	    $this->assertNotNull($zip);
     }
 }

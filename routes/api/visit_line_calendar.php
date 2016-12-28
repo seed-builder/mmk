@@ -58,6 +58,7 @@ Route::group(['prefix' => 'visit-line-calendar', 'middleware' => 'api.sign'], fu
      *      type="",
      *      @SWG\Parameters(
      *          @SWG\Parameter(name="fdate", description="日期", required=false,type="string", paramType="form", defaultValue="" ),
+                @SWG\Parameter(name="fleader_id", description="员工上级id", required=true,type="integer", paramType="form", defaultValue="0" ),
                 @SWG\Parameter(name="femp_id", description="员工id", required=true,type="integer", paramType="form", defaultValue="0" ),
                 @SWG\Parameter(name="fline_id", description="线路id", required=true,type="integer", paramType="form", defaultValue="0" ),
                 @SWG\Parameter(name="forg_id", description="组织id", required=true,type="integer", paramType="form", defaultValue="0" ),

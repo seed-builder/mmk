@@ -28,6 +28,8 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+	    //下午18点开始每小时执行一次
+	    $schedule->command('command:attendance_polling')->cron('* 18-23/1 * * *');
     }
 
     /**

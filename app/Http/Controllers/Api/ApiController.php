@@ -100,6 +100,7 @@ use App\Services\LogSvr;
         unset($data['_sign']);
         $entity->fill($data);
         $re = $entity->save();
+	    //LogSvr::update()->info(json_encode($re));
         $status = $re ? 200 : 401;
         return response(['success' => $re], $status);
     }

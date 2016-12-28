@@ -25,6 +25,15 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\ModelUpdatedEvent' => [
             'App\Listeners\ModelUpdatedHandler',
         ],
+	    'App\Events\VisitTodoStatusChangedEvent' => [
+		    'App\Listeners\VisitStoreTodoStatusEventHandler',
+	    ],
+	    'App\Events\VisitStoreStatusChangedEvent' => [
+		    'App\Listeners\VisitStoreStatusEventHandler',
+	    ],
+	    'App\Events\VisitDetailCompletedEvent' => [
+		    'App\Listeners\VisitDetailCompletedEventHandler',
+	    ],
     ];
 
     /**

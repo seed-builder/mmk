@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\City;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Busi\Store;
@@ -35,11 +36,17 @@ class StoreController extends ApiController
     {
         //
         $data = $request->all();
-        if(!empty($data['fpostalcode'])){
-            $count = Store::where('fpostalcode', $data['fpostalcode'])->count();
-            $data['fnumber'] = $data['fpostalcode'] . sprintf('%05d', ($count+1));
+        $postalcode = City::getPostalCode($data['fprovince'], $data['fcity'], $data['fcountry']);
+        if($postalcode){
+            $fn = Store::where('fpostalcode', $postalcode)->max('fnumber');
+            if($fn){
+            	$fn++;
+	            $data['fnumber'] = $fn;
+            }else{
+	            $data['fnumber'] = $postalcode . sprintf('%05d', 1);
+            }
+            $data['fpostalcode'] = $postalcode;
         }
-
         unset($data['_sign']);
         $entity = $this->newEntity($data);
         //$entity = Entity::create($data);
