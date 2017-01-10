@@ -10,7 +10,8 @@
         "predis/predis": "^1.1",
         "intervention/image": "^2.3",
         "webpatser/laravel-uuid": "2.*",
-        "jpush/jpush": "v3.5.*"
+        "jpush/jpush": "v3.5.*",
+        "zizaco/entrust": "5.2.x-dev"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
