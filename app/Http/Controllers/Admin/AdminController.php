@@ -158,7 +158,7 @@ abstract class AdminController extends Controller
 	}
 
 	public function success($data){
-		return response()->json(['data' => $data]);
+		return response()->json(['data' => [$data]]);
 	}
 
 	public function fail($error, $fieldErrors = []){

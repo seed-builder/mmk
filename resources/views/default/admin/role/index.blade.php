@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/packages/admin/datatable/extensions/Buttons/css/buttons.bootstrap.css" />
     <link rel="stylesheet" href="/packages/admin/datatable/extensions/Select/css/select.dataTables.css" />
     <link rel="stylesheet" href="/packages/admin/datatable/extensions/Select/css/select.bootstrap.css" />
+    <link rel="stylesheet" href="/packages/admin/datatable/extensions/Editor/css/editor.bootstrap.css" />
 
 @endsection
 
@@ -61,49 +62,13 @@
 @endsection
 
 @section('js')
-    <script src="/packages/admin/datatable/js/jquery.dataTables.js"></script>
-    <script src="/packages/admin/datatable/js/dataTables.bootstrap.js"></script>
-    <script src="/packages/admin/datatable/extensions/Buttons/js/dataTables.buttons.min.js"></script>
-    <script src="/packages/admin/datatable/extensions/Buttons/js/buttons.bootstrap.min.js"></script>
-    <script src="/packages/admin/datatable/extensions/Select/js/dataTables.select.min.js"></script>
-    <script src="/packages/admin/datatable/js/pipeline.js"></script>
-    <script src="/packages/admin/datatable/js/zh_CN.js"></script>
-    <script src="/packages/admin/AdminLTE/dist/js/demo.js"></script>
+    @include('admin.layout.datatable-js')
     <script type="text/javascript">
-        var table;
+
         $(function () {
-
-            function reload() {
-                //editor.close();
-                setTimeout(function () {
-                    table.clearPipeline().draw();
-                }, 100);
-            }
-
-            table = $("#moduleTable").DataTable({
-                dom: "Bfrtip",
-                language: zhCN,
-                processing: true,
-                serverSide: true,
-                select: true,
-                paging: true,
-                ajax: $.fn.dataTable.pipeline({
-                    url: '/admin/role/pagination',
-                    pages: 5
-                }),
-                columns: [
-                    { "data": "id" },
-                    { "data": "name" },
-                    { "data": "display_name" },
-                    { "data": "description" },
-                    { "data": "icon" },
-                    { "data": "created_at" },
-                    { "data": "updated_at" },
-                ],
-                buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+            seajs.use('app-role', function (role) {
+                role.index($, 'moduleTable');
             });
-
-
         });
 
     </script>

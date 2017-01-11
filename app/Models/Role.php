@@ -9,4 +9,6 @@ class Role extends EntrustRole
 {
     //
     protected $table = 'sys_roles';
+    protected $guarded = ['id'];
+
 }

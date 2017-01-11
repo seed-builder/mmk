@@ -21,6 +21,18 @@
 
     <link rel="stylesheet" href="/packages/admin/AdminLTE/plugins/toastr/toastr.min.css">
     @yield('styles')
+    <!-- jQuery 2.2.3 -->
+    <script src="/packages/admin/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <!-- Bootstrap 3.3.6 -->
+    <script src="/packages/admin/AdminLTE/bootstrap/js/bootstrap.min.js"></script>
+    <!-- SlimScroll -->
+    <script src="/packages/admin/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    <!-- FastClick -->
+    <script src="/packages/admin/AdminLTE/plugins/fastclick/fastclick.js"></script>
+    <script src="/packages/admin/AdminLTE/plugins/toastr/toastr.min.js"></script>
+    <script src="/packages/admin/layer/layer.js"></script>
+    <script src="/packages/admin/sea.js"></script>
+    <script src="/packages/admin/sea.config.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -211,16 +223,6 @@
 </div>
 <!-- ./wrapper -->
 
-<!-- jQuery 2.2.3 -->
-<script src="/packages/admin/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
-<!-- Bootstrap 3.3.6 -->
-<script src="/packages/admin/AdminLTE/bootstrap/js/bootstrap.min.js"></script>
-<!-- SlimScroll -->
-<script src="/packages/admin/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js"></script>
-<!-- FastClick -->
-<script src="/packages/admin/AdminLTE/plugins/fastclick/fastclick.js"></script>
-<script src="/packages/admin/AdminLTE/plugins/toastr/toastr.min.js"></script>
-<script src="/packages/admin/layer/layer.js"></script>
 <!-- AdminLTE App -->
 <script src="/packages/admin/AdminLTE/dist/js/app.min.js"></script>
 <!-- AdminLTE for demo purposes -->

@@ -1,0 +1,16 @@
+<script src="/packages/admin/datatable/js/jquery.dataTables.js"></script>
+<script src="/packages/admin/datatable/js/dataTables.bootstrap.js"></script>
+<script src="/packages/admin/datatable/extensions/Buttons/js/dataTables.buttons.min.js"></script>
+<script src="/packages/admin/datatable/extensions/Buttons/js/buttons.bootstrap.min.js"></script>
+<script src="/packages/admin/datatable/extensions/Buttons/js/buttons.colVis.min.js"></script>
+<script src="/packages/admin/datatable/extensions/Buttons/js/buttons.html5.min.js"></script>
+<script src="/packages/admin/datatable/extensions/Buttons/js/buttons.print.min.js"></script>
+<script src="/packages/admin/datatable/extensions/Buttons/js/buttons.flash.min.js"></script>
+<script src="/packages/admin/datatable/extensions/Buttons/js/jszip.min.js"></script>
+<script src="/packages/admin/datatable/extensions/Buttons/js/pdfmake.min.js"></script>
+<script src="/packages/admin/datatable/extensions/Buttons/js/vfs_fonts.js"></script>
+<script src="/packages/admin/datatable/extensions/Select/js/dataTables.select.min.js"></script>
+<script src="/packages/admin/datatable/extensions/Editor/js/dataTables.editor.min.js"></script>
+<script src="/packages/admin/datatable/extensions/Editor/js/editor.bootstrap.min.js"></script>
+<script src="/packages/admin/datatable/js/pipeline.js"></script>
+<script src="/packages/admin/datatable/js/zh_CN.js"></script>
