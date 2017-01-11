@@ -62,7 +62,7 @@ define(function(require, exports, module) {
                 {extend: "remove", text: '删除', editor: editor},
                 {extend: 'excel', text: '导出Excel'},
                 {extend: 'print', text: '打印'},
-                {extend: 'colvis', text: '列显示'}
+                //{extend: 'colvis', text: '列显示'}
             ]
         });
 
