@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Validator;
 
 abstract class AdminController extends Controller
 {
+	protected $rules = [];
     //
 	public abstract function newEntity(array $attributes = []);
 
@@ -40,9 +42,14 @@ abstract class AdminController extends Controller
 		if(empty($data))
 			return $this->fail('data is empty');
 		$props = current($data);
-		$entity = $this->newEntity($props);
-		$entity->save();
-		return $this->success($entity);
+		$fieldErrors = $this->validateFields($props);
+		if(!empty($fieldErrors)){
+			return $this->fail('validate error', $fieldErrors);
+		} else {
+			$entity = $this->newEntity($props);
+			$entity->save();
+			return $this->success($entity);
+		}
 	}
 
 	/**
@@ -81,10 +88,15 @@ abstract class AdminController extends Controller
 			return $this->fail('data is empty');
 
 		$props = current($data);
-		$entity = $this->newEntity()->newQuery()->find($id);
-		$entity->fill($props);
-		$entity->save();
-		return $this->success($entity);
+		$fieldErrors = $this->validateFields($props);
+		if(!empty($fieldErrors)){
+			return $this->fail('validate error', $fieldErrors);
+		} else {
+			$entity = $this->newEntity()->newQuery()->find($id);
+			$entity->fill($props);
+			$entity->save();
+			return $this->success($entity);
+		}
 	}
 
 	/**
@@ -155,6 +167,20 @@ abstract class AdminController extends Controller
 			'data' => $entities
 		];
 		return response()->json($result);
+	}
+
+	protected function validateFields($data)
+	{
+		$fieldErrors = [];
+		$validator = Validator::make($data, $this->rules);
+		if ($validator->fails()) {
+			$errors = $validator->errors();
+			$keys = $errors->keys();
+			foreach ($keys as $k) {
+				$fieldErrors[] = ['name' => $k, 'status' => $errors->first($k)];
+			}
+		}
+		return $fieldErrors;
 	}
 
 	public function success($data){
