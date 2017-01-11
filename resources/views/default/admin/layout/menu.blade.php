@@ -40,6 +40,49 @@
             </li>
             <li class="treeview active">
                 <a href="#">
+                    <i class="fa fa-fw fa-tv"></i>
+                    <span>基础信息管理</span>
+                    <span class="pull-right-container">
+						<i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="{{url('employee/index')}}"><i class="fa fa-circle-o"></i></i> 员工信息</a></li>
+                    <li><a href="#"><i class="fa fa-circle-o"></i></i> 部门信息</a></li>
+                    <li><a href="#"><i class="fa fa-circle-o"></i></i> 产品信息</a></li>
+                    <li><a href="#"><i class="fa fa-circle-o"></i></i> 渠道信息</a></li>
+                    <li><a href="#"><i class="fa fa-circle-o"></i></i> 区域经营品项</a></li>
+                    <li><a href="#"><i class="fa fa-circle-o"></i></i> 主竞品</a></li>
+                    <li><a href="#"><i class="fa fa-circle-o"></i></i> 重点品项</a></li>
+                </ul>
+            </li>
+            <li class="treeview active">
+                <a href="#">
+                    <i class="fa fa-fw fa-calendar-check-o"></i>
+                    <span>考勤管理</span>
+                    <span class="pull-right-container">
+                    </span>
+                </a>
+            </li>
+            <li class="treeview active">
+                <a href="#">
+                    <i class="fa fa-fw fa-building-o"></i>
+                    <span>门店管理</span>
+                    <span class="pull-right-container">
+						<i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="#"><i class="fa fa-circle-o"></i></i> 门店信息</a></li>
+                    <li><a href="#"><i class="fa fa-circle-o"></i></i> 线路</a></li>
+                    <li><a href="#"><i class="fa fa-circle-o"></i></i> 人员线路规划</a></li>
+                    <li><a href="#"><i class="fa fa-circle-o"></i></i> 拜访日记</a></li>
+                    <li><a href="#"><i class="fa fa-circle-o"></i></i> 拜访工作纪录</a></li>
+                    <li><a href="#"><i class="fa fa-circle-o"></i></i> 门店拜访查看</a></li>
+                </ul>
+            </li>
+            <li class="treeview active">
+                <a href="#">
                     <i class="fa fa-users"></i>
                     <span>用户权限管理</span>
                     <span class="pull-right-container">

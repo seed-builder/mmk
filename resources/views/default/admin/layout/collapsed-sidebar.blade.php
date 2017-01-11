@@ -186,7 +186,7 @@
             </div>
         </nav>
     </header>
-
+	<input type="hidden" id="cur_url" value="{{url( Route::getCurrentRoute()->getPath() )}}">
     <!-- =============================================== -->
 
     @include('admin.layout.menu')
@@ -242,8 +242,30 @@
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
     }
+
+    /**
+     *	根据当前url选中菜单
+     *	设置导航栏
+    **/
+    $(".treeview-menu").each(function(i,obj){
+    	$(obj).find("a").each(function(j,a){
+        	var node_url = $(a).attr("href");//菜单url
+        	var cur_url = $("#cur_url").val();//当前页url
+        	
+        	if(node_url==cur_url){
+            	$(this).parent().addClass("active")
+            	var node = $(obj).prev();
+            	var node_i = $(node).find("i").prop("outerHTML");
+            	var node_span = $(node).find("span").prop("outerHTML");
+            	console.log(node)
+            	var navigation = "<li>"+node_i+"  "+node_span+"</li><li>"+$(this).text()+"</li>"
+            	$(".breadcrumb").html(navigation);
+            }
+        })
+    })
 </script>
 @yield('js')
 @include('admin.layout.flash-message')
+
 </body>
 </html>
