@@ -9,6 +9,11 @@ class HomeController extends AdminController
 {
     //
     public function index(){
-        return display('admin.');
+        return view('admin.home.index');
     }
+
+	public function newEntity(array $attributes = [])
+	{
+		// TODO: Implement newEntity() method.
+	}
 }
