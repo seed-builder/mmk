@@ -8,31 +8,31 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <meta name="_token" content="{{csrf_token()}}">
     <!-- Bootstrap 3.3.6 -->
-    <link rel="stylesheet" href="/packages/admin/AdminLTE/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/plugins/AdminLTE/bootstrap/css/bootstrap.min.css">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="/packages/admin/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/plugins/font-awesome/css/font-awesome.min.css">
     <!-- Ionicons -->
-    <link rel="stylesheet" href="/packages/admin/ionicons/css/ionicons.min.css">
+    <link rel="stylesheet" href="/assets/plugins/ionicons/css/ionicons.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="/packages/admin/AdminLTE/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="/assets/plugins/AdminLTE/dist/css/AdminLTE.min.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="/packages/admin/AdminLTE/dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="/assets/plugins/AdminLTE/dist/css/skins/_all-skins.min.css">
 
-    <link rel="stylesheet" href="/packages/admin/AdminLTE/plugins/toastr/toastr.min.css">
+    <link rel="stylesheet" href="/assets/plugins/toastr/toastr.min.css">
     @yield('styles')
     <!-- jQuery 2.2.3 -->
-    <script src="/packages/admin/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="/assets/plugins//jQuery/jquery-2.2.3.min.js"></script>
     <!-- Bootstrap 3.3.6 -->
-    <script src="/packages/admin/AdminLTE/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/assets/plugins/AdminLTE/bootstrap/js/bootstrap.min.js"></script>
     <!-- SlimScroll -->
-    <script src="/packages/admin/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    <script src="/assets/plugins/slimScroll/jquery.slimscroll.min.js"></script>
     <!-- FastClick -->
-    <script src="/packages/admin/AdminLTE/plugins/fastclick/fastclick.js"></script>
-    <script src="/packages/admin/AdminLTE/plugins/toastr/toastr.min.js"></script>
-    <script src="/packages/admin/layer/layer.js"></script>
-    <script src="/packages/admin/sea.js"></script>
-    <script src="/packages/admin/sea.config.js"></script>
+    <script src="/assets/plugins/fastclick/fastclick.js"></script>
+    <script src="/assets/plugins/toastr/toastr.min.js"></script>
+    <script src="/assets/plugins/layer/layer.js"></script>
+    <script src="/assets/sea.js"></script>
+    <script src="/assets/sea.config.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -48,7 +48,7 @@
 
     <header class="main-header">
         <!-- Logo -->
-        <a href="/packages/admin/AdminLTE/index2.html" class="logo">
+        <a href="/assets/plugins/AdminLTE/index2.html" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>A</b>LT</span>
             <!-- logo for regular state and mobile devices -->
@@ -80,7 +80,7 @@
                                     <li><!-- start message -->
                                         <a href="#">
                                             <div class="pull-left">
-                                                <img src="/packages/admin/AdminLTE/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                                <img src="/assets/plugins/AdminLTE/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                                             </div>
                                             <h4>
                                                 Support Team
@@ -151,13 +151,13 @@
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="/packages/admin/AdminLTE/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                            <img src="/assets/plugins/AdminLTE/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
                             <span class="hidden-xs">Alexander Pierce</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header">
-                                <img src="/packages/admin/AdminLTE/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                <img src="/assets/plugins/AdminLTE/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                                 <p>
                                     Alexander Pierce - Web Developer
@@ -224,7 +224,7 @@
 <!-- ./wrapper -->
 
 <!-- AdminLTE App -->
-<script src="/packages/admin/AdminLTE/dist/js/app.min.js"></script>
+<script src="/assets/plugins/AdminLTE/dist/js/app.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script type="text/javascript">
     toastr.options = {
