@@ -57,8 +57,10 @@ class AttRepoortGen extends Command
 	    if($month == 0){
 	    	$month = date('m');
 	    }
+	    $this->log("year: $year, month: $month, generate attendance report begin...");
 	    $this->init($year, $month);
 	    $this->statistic($year, $month);
+	    $this->log("year: $year, month: $month, generate attendance report end!");
     }
 
 	/**
@@ -70,8 +72,9 @@ class AttRepoortGen extends Command
     	$this->log('begin init..');
     	$date = $year.'-'. sprintf('%02d',$month);
 		$workdays = DB::select("select count(1) as c from  eng_work_calendar_data where DATE_FORMAT(fday,'%Y-%m')='$date' and fis_work_time=1");
+		//var_dump($workdays);
 		$employees = Employee::all();
-		if($workdays[0]->c > 0 && !empty($employees)){
+		if(!empty($workdays) && $workdays[0]->c > 0 && !empty($employees)){
 			foreach ($employees as $employee){
 				$count = AttendanceReport::where('fyear', $year)
 					->where('fmonth', $month)
@@ -93,7 +96,7 @@ class AttRepoortGen extends Command
 				}
 			}
 		}else{
-			$this->log("init not begin; workdays=$workdays");
+			$this->log("init not begin; workdays=". json_encode($workdays));
 		}
 	    $this->log('end init!');
     }

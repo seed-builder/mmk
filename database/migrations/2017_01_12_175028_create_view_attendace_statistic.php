@@ -16,7 +16,7 @@ class CreateViewAttendaceStatistic extends Migration
     {
         //
 	    DB::statement("
-        create view view_attendace_statistic as 
+        create view view_attendace_preview as 
 		SELECT
 			femp_id,
 			DATE_FORMAT(ftime, '%Y-%m-%d') AS fday,
@@ -40,6 +40,13 @@ class CreateViewAttendaceStatistic extends Migration
 			DATE_FORMAT(ftime, '%Y-%m-%d'),
 			ftype;
     ");
+
+	    DB::statement("
+	    CREATE view view_attendace_statistic as 
+		select femp_id, fday, SUM(`begin`) as `begin`, SUM(complete) as complete
+		from view_attendace_preview
+		group by femp_id, fday;
+	    ");
     }
 
     /**
@@ -50,6 +57,7 @@ class CreateViewAttendaceStatistic extends Migration
     public function down()
     {
         //
+	    DB::statement('DROP VIEW IF EXISTS view_attendace_preview');
 	    DB::statement('DROP VIEW IF EXISTS view_attendace_statistic');
     }
 }
