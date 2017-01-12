@@ -109,8 +109,8 @@ class AttRepoortGen extends Command
 		if(!empty($rps)){
 			foreach ($rps as $rp){
 				$empId = $rp->femp_id;
-				$normalSql = "SELECT count(1) c FROM	view_attendace_statistic WHERE fday<='$today' AND  femp_id=$empId AND `begin`=1 and complete=1";
-				$abnormalSql = "SELECT count(1) c FROM	 view_attendace_statistic WHERE	fday<='$today' AND femp_id=$empId AND (`begin`=0 or complete=0)";
+				$normalSql = "SELECT count(1) c FROM	view_attendace_statistic WHERE DATE_FORMAT(fday,'%Y-%m')='$date' AND fday<='$today' AND  femp_id=$empId AND `begin`=1 and complete=1";
+				$abnormalSql = "SELECT count(1) c FROM	 view_attendace_statistic WHERE DATE_FORMAT(fday,'%Y-%m')='$date' AND	fday<='$today' AND femp_id=$empId AND (`begin`=0 or complete=0)";
 				$normal = DB::select($normalSql);
 				$abnormal = DB::select($abnormalSql);
 				$rp->fnormal_days = $normal[0]->c;

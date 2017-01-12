@@ -28,7 +28,10 @@ class CreateViewAttendaceStatistic extends Migration
 			(
 				(`c`.`fis_work_time` = 1)
 				AND (
-					date_format(`c`.`fday`, '%Y-%m') = date_format(now(), '%Y-%m')
+					date_format(`c`.`fday`, '%Y-%m') <= date_format(now(), '%Y-%m')
+				)
+				AND(
+					date_format(`c`.`fday`, '%Y-%m') >= date_format(DATE_SUB(NOW(),INTERVAL 2 MONTH), '%Y-%m')
 				)
 			)
 	    ");
