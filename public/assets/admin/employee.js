@@ -11,27 +11,33 @@ define(function(require, exports, module) {
             ajax: {
                 create: {
                     type: 'POST',
-                    url: '/admin/role',
+                    url: '/admin/employee',
                     data: {_token: $('meta[name="_token"]').attr('content')},
                 },
                 edit: {
                     type: 'PUT',
-                    url: '/admin/role/_id_',
+                    url: '/admin/employee/_id_',
                     data: {_token: $('meta[name="_token"]').attr('content')},
                 },
                 remove: {
                     type: 'DELETE',
-                    url: '/admin/role/_id_',
+                    url: '/admin/employee/_id_',
                     data: {_token: $('meta[name="_token"]').attr('content')},
                 }
             },
             table: "#" + tableId,
             idSrc: 'id',
             fields: [
-                {'label': 'name', 'name': 'name',},
-                {'label': 'display_name', 'name': 'display_name',},
-                {'label': 'description', 'name': 'description',},
-                {'label': 'icon', 'name': 'icon',},
+                {'label': '姓名', 'name': 'fname',},
+                {'label': '工号', 'name': 'fnumber',},
+                {'label': '电话', 'name': 'fphone',},
+                {'label': '地址', 'name': 'faddress',},
+                {'label': '邮箱', 'name': 'femail',},
+//                {
+//                	'label': '组织', 
+//                	'name': 'for_id',
+//                	'type': 'select',
+//                },
             ]
         });
 
@@ -43,15 +49,40 @@ define(function(require, exports, module) {
             select: true,
             paging: true,
             rowId: "id",
-            ajax: '/admin/role/pagination',
+            ajax: '/admin/employee/pagination',
             columns: [
                 {"data": "id"},
-                {"data": "name"},
-                {"data": "display_name"},
-                {"data": "description"},
-                {"data": "icon"},
-                {"data": "created_at"},
-                {"data": "updated_at"},
+                {"data": "fname"},
+                {"data": "fnumber"},
+                {
+                	"data": 'forg_id',
+                    render: function ( data, type, full ) {
+                    	if(full.organization!=null)
+                    		return full.organization.fname
+                    	else
+                    		return "";
+                    }
+                },
+                {
+                	"data": 'fdept_id',
+                    render: function ( data, type, full ) {
+                    	if(full.department!=null)
+                    		return full.department.fname
+                    	else
+                    		return "";
+                    }
+                },
+                {
+                	"data": 'fpost_id',
+                    render: function ( data, type, full ) {
+                    	if(full.position!=null)
+                    		return full.position.fname
+                    	else
+                    		return "";
+                    }
+                },
+                {"data": "fphone"},
+                {"data": "femail"},
             ],
             buttons: [
                 // { text: '新增', action: function () { }  },

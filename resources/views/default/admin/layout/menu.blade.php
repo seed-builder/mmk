@@ -47,7 +47,7 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="{{url('employee/index')}}"><i class="fa fa-circle-o"></i></i> 员工信息</a></li>
+                    <li><a href="{{url('admin/employee/index')}}"><i class="fa fa-circle-o"></i></i> 员工信息</a></li>
                     <li><a href="#"><i class="fa fa-circle-o"></i></i> 部门信息</a></li>
                     <li><a href="#"><i class="fa fa-circle-o"></i></i> 产品信息</a></li>
                     <li><a href="#"><i class="fa fa-circle-o"></i></i> 渠道信息</a></li>
@@ -91,7 +91,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="{{url('/admin/user')}}"><i class="fa fa-user"></i>用户管理</a></li>
-                    <li><a href="{{url('/admin/role')}}"><i class="fa fa-group"></i>角色管理</a></li>
+                    <li><a href="{{url('/admin/role/')}}"><i class="fa fa-group"></i>角色管理</a></li>
                     <li><a href="{{url('/admin/permission')}}"><i class="fa fa-folder"></i>菜单权限管理</a></li>
                 </ul>
             </li>

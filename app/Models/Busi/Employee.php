@@ -39,7 +39,11 @@ class Employee extends BaseModel
 {
     //
     protected $table = 'bd_employees';
-
+    
+    protected $with = ['organization','department','position'];
+    
+    public $validateRules=['fname' => 'required', 'fphone' => 'required'];
+    
     public function organization(){
         return $this->hasOne(Organization::class, 'id', 'forg_id');
     }
