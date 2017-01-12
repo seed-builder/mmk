@@ -28,7 +28,7 @@ define(function(require, exports, module) {
         "select": {
             "rows": {
                 _: "选择了 %d 行",
-                0: "点击选择行",
+                0: "请点击选择行",
                 1: "只 1 行被选"
             }
         }
