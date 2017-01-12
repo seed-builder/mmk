@@ -8,7 +8,6 @@ use App\Models\Role;
 
 class RoleController extends AdminController
 {
-	protected $rules = ['name' => 'required', 'display_name' => 'required'];
 
     //
 	public function newEntity(array $attributes = [])

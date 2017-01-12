@@ -8,7 +8,6 @@ use Validator;
 
 abstract class AdminController extends Controller
 {
-	protected $rules = [];
     //
 	public abstract function newEntity(array $attributes = []);
 
@@ -172,12 +171,15 @@ abstract class AdminController extends Controller
 	protected function validateFields($data)
 	{
 		$fieldErrors = [];
-		$validator = Validator::make($data, $this->rules);
-		if ($validator->fails()) {
-			$errors = $validator->errors();
-			$keys = $errors->keys();
-			foreach ($keys as $k) {
-				$fieldErrors[] = ['name' => $k, 'status' => $errors->first($k)];
+		$entity= $this->newEntity();
+		if(isset($entity->validateRules)) {
+			$validator = Validator::make($data, $entity->validateRules);
+			if ($validator->fails()) {
+				$errors = $validator->errors();
+				$keys = $errors->keys();
+				foreach ($keys as $k) {
+					$fieldErrors[] = ['name' => $k, 'status' => $errors->first($k)];
+				}
 			}
 		}
 		return $fieldErrors;
