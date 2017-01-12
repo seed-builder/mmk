@@ -12,7 +12,7 @@ class SwaggerGen extends Command
      *
      * @var string
      */
-    protected $signature = 'swg:gen {--table=} {--model=}';
+    protected $signature = 'gen:swg {--table=} {--model=}';
     protected $driver ;
     protected $host;
     protected $db ;
