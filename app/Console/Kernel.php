@@ -32,7 +32,7 @@ class Kernel extends ConsoleKernel
         //          ->hourly();
 	    //下午18点开始每小时执行一次
 	    $schedule->command('command:attendance_polling')->cron('* 18-23/1 * * *');
-	    $schedule->command('gen:att-rpt')->dailyAt('23:00');
+	    $schedule->command('gen:att-rpt')->dailyAt('22:00');
     }
 
     /**
