@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Busi\Employee;
 use App\Models\Busi\Organization;
+use Swagger\Annotations\Items;
 
 class EmployeeController extends AdminController
 {
@@ -19,7 +20,10 @@ class EmployeeController extends AdminController
 
 	public function index()
 	{
-		$orgs = Organization::all();
+		$all = Organization::all();
+		$orgs = $all->map(function ($item){
+			return ['label' => $item->fname, 'value' => $item->id];
+		});
 		return view('admin.employee.index',compact('orgs'));
 	}
 
