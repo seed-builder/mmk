@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Model;
  * @package App\Models\Busi
  * @author xrs
  * @SWG\Model(id="AttendanceReport")
-
  * @SWG\Property(name="fcreate_date", type="string", description="创建时间")
  * @SWG\Property(name="fcreator_id", type="integer", description="创建人")
  * @SWG\Property(name="fdocument_status", type="string", description="数据状态")
