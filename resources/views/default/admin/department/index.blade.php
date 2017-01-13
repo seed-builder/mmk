@@ -11,7 +11,7 @@
     <section class="content-header">
         <h1>
             基础信息管理
-            <small>员工信息</small>
+            <small>部门信息</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="/admin/"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -35,13 +35,11 @@
                             <thead>
                             <tr>
                                 <th>顺序</th>
-                                <th>姓名</th>
-                                <th>工号</th>
+                                <th>部门名称</th>
+                                <th>部门号</th>
+                                <th>部门全称</th>
                                 <th>所属组织</th>
-                                <th>所属部门</th>
-                                <th>职位</th>
-                                <th>个人手机号</th>
-                                <th>邮箱</th>
+                                <th>创建时间</th>
                             </tr>
                             </thead>
                         </table>
@@ -62,8 +60,8 @@
     <script type="text/javascript">
 
         $(function () {
-            seajs.use('app-employee', function (employee) {
-            	employee.index($, 'moduleTable');
+            seajs.use('app-department', function (department) {
+            	department.index($, 'moduleTable');
             });
 
             

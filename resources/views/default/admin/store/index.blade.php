@@ -11,7 +11,7 @@
     <section class="content-header">
         <h1>
             基础信息管理
-            <small>员工信息</small>
+            <small>部门信息</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="/admin/"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -26,7 +26,7 @@
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">角色列表</h3>
+                        <h3 class="box-title">门店基础信息</h3>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
@@ -34,14 +34,13 @@
                         <table id="moduleTable" class="table table-bordered table-hover">
                             <thead>
                             <tr>
-                                <th>顺序</th>
-                                <th>姓名</th>
-                                <th>工号</th>
-                                <th>所属组织</th>
-                                <th>所属部门</th>
-                                <th>职位</th>
-                                <th>个人手机号</th>
-                                <th>邮箱</th>
+                                <th>门店全称</th>
+                                <th>门店简称</th>
+                                <th>详细地址</th>
+                                <th>负责人</th>
+                                <th>负责人</th>
+                                <th>联系电话</th>
+                                <th>负责业代</th>
                             </tr>
                             </thead>
                         </table>
@@ -54,7 +53,7 @@
         </div>
         <!-- /.row -->
     </section>
-
+    	
 @endsection
 
 @section('js')
@@ -62,8 +61,8 @@
     <script type="text/javascript">
 
         $(function () {
-            seajs.use('app-employee', function (employee) {
-            	employee.index($, 'moduleTable');
+            seajs.use('app-store', function (store) {
+            	store.index($, 'moduleTable');
             });
 
             

@@ -48,12 +48,12 @@
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="{{url('admin/employee/index')}}"><i class="fa fa-circle-o"></i></i> 员工信息</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i></i> 部门信息</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i></i> 产品信息</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i></i> 渠道信息</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i></i> 区域经营品项</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i></i> 主竞品</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i></i> 重点品项</a></li>
+                    <li><a href="{{url('admin/department/index')}}"><i class="fa fa-circle-o"></i></i> 部门信息</a></li>
+<!--                     <li><a href="#"><i class="fa fa-circle-o"></i></i> 产品信息</a></li> -->
+<!--                     <li><a href="#"><i class="fa fa-circle-o"></i></i> 渠道信息</a></li> -->
+<!--                     <li><a href="#"><i class="fa fa-circle-o"></i></i> 区域经营品项</a></li> -->
+<!--                     <li><a href="#"><i class="fa fa-circle-o"></i></i> 主竞品</a></li> -->
+<!--                     <li><a href="#"><i class="fa fa-circle-o"></i></i> 重点品项</a></li> -->
                 </ul>
             </li>
             <li class="treeview active">
@@ -73,7 +73,7 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-circle-o"></i></i> 门店信息</a></li>
+                    <li><a href="{{url('admin/store/index')}}"><i class="fa fa-circle-o"></i></i> 门店信息</a></li>
                     <li><a href="#"><i class="fa fa-circle-o"></i></i> 线路</a></li>
                     <li><a href="#"><i class="fa fa-circle-o"></i></i> 人员线路规划</a></li>
                     <li><a href="#"><i class="fa fa-circle-o"></i></i> 拜访日记</a></li>

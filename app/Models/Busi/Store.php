@@ -58,8 +58,22 @@ class Store extends BaseModel
 {
     //
     protected $table = 'st_stores';
+    
+    protected $with = ['employee','customer'];
+    
+    public $validateRules=[
+    		'ffullname' => 'required', 
+    		'fcontracts' => 'required', 
+    		'ftelephone' => 'required',
+    		'faddress' => 'required',
+    		'fpostalcode' => 'required',
+    ];
 
     public function customer(){
         return $this->belongsTo(Customer::class, 'fcust_id');
+    }
+    
+    public function employee(){
+    	return $this->belongsTo(Employee::class, 'femp_id');
     }
 }

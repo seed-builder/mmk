@@ -31,4 +31,12 @@ class Department extends BaseModel
 {
     //
     protected $table = 'bd_departments';
+    
+    protected $with = ['organization'];
+    
+    public $validateRules=['fname' => 'required', 'fnumber' => 'required', 'ffullname' => 'required'];
+    
+    public function organization(){
+    	return $this->hasOne(Organization::class, 'id', 'forg_id');
+    }
 }

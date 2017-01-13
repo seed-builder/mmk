@@ -11,33 +11,29 @@ define(function(require, exports, module) {
             ajax: {
                 create: {
                     type: 'POST',
-                    url: '/admin/employee',
+                    url: '/admin/store',
                     data: {_token: $('meta[name="_token"]').attr('content')},
                 },
                 edit: {
                     type: 'PUT',
-                    url: '/admin/employee/_id_',
+                    url: '/admin/store/_id_',
                     data: {_token: $('meta[name="_token"]').attr('content')},
                 },
                 remove: {
                     type: 'DELETE',
-                    url: '/admin/employee/_id_',
+                    url: '/admin/store/_id_',
                     data: {_token: $('meta[name="_token"]').attr('content')},
                 }
             },
             table: "#" + tableId,
             idSrc: 'id',
             fields: [
-                {'label': '姓名', 'name': 'fname',},
-                {'label': '工号', 'name': 'fnumber',},
-                {'label': '电话', 'name': 'fphone',},
-                {'label': '地址', 'name': 'faddress',},
-                {'label': '邮箱', 'name': 'femail',},
-                {
-                	'label': '组织', 
-                	'name': 'for_id',
-                	'type': 'select',
-                },
+                {'label': '门店全称', 'name': 'ffullname'},
+                {'label': '门店简称', 'name': 'fshortname'},
+                {'label': '客户详址', 'name': 'faddress'},
+                {'label': '负责人', 'name': 'fcontracts'},
+                {'label': '联系电话', 'name': 'ftelephone'},
+                {'label': '渠道分类', 'name': 'fchannel'},
             ]
         });
 
@@ -49,40 +45,23 @@ define(function(require, exports, module) {
             select: true,
             paging: true,
             rowId: "id",
-            ajax: '/admin/employee/pagination',
+            ajax: '/admin/store/pagination',
             columns: [
-                {"data": "id"},
-                {"data": "fname"},
-                {"data": "fnumber"},
+                {"data": "ffullname"},
+                {"data": "fshortname"},
+                {"data": "faddress"},
+                {"data": "fcontracts"},
+                {"data": "ftelephone"},
+                {"data": "fchannel"},
                 {
-                	"data": 'forg_id',
-                    render: function ( data, type, full ) {
-                    	if(full.organization!=null)
-                    		return full.organization.fname
-                    	else
-                    		return "";
-                    }
+                	"data": 'femp_id',
+                	render: function ( data, type, full ) {
+                		if(full.employee!=null)
+                			return full.employee.fname
+                			else
+                				return "";
+                	}
                 },
-                {
-                	"data": 'fdept_id',
-                    render: function ( data, type, full ) {
-                    	if(full.department!=null)
-                    		return full.department.fname
-                    	else
-                    		return "";
-                    }
-                },
-                {
-                	"data": 'fpost_id',
-                    render: function ( data, type, full ) {
-                    	if(full.position!=null)
-                    		return full.position.fname
-                    	else
-                    		return "";
-                    }
-                },
-                {"data": "fphone"},
-                {"data": "femail"},
                 
             ],
             buttons: [

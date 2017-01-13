@@ -11,33 +11,27 @@ define(function(require, exports, module) {
             ajax: {
                 create: {
                     type: 'POST',
-                    url: '/admin/employee',
+                    url: '/admin/department',
                     data: {_token: $('meta[name="_token"]').attr('content')},
                 },
                 edit: {
                     type: 'PUT',
-                    url: '/admin/employee/_id_',
+                    url: '/admin/department/_id_',
                     data: {_token: $('meta[name="_token"]').attr('content')},
                 },
                 remove: {
                     type: 'DELETE',
-                    url: '/admin/employee/_id_',
+                    url: '/admin/department/_id_',
                     data: {_token: $('meta[name="_token"]').attr('content')},
                 }
             },
             table: "#" + tableId,
             idSrc: 'id',
             fields: [
-                {'label': '姓名', 'name': 'fname',},
-                {'label': '工号', 'name': 'fnumber',},
-                {'label': '电话', 'name': 'fphone',},
-                {'label': '地址', 'name': 'faddress',},
-                {'label': '邮箱', 'name': 'femail',},
-                {
-                	'label': '组织', 
-                	'name': 'for_id',
-                	'type': 'select',
-                },
+                {'label': '部门名称', 'name': 'fname'},
+                {'label': '部门全称', 'name': 'ffullname'},
+                {'label': '部门号', 'name': 'fnumber'},
+                {'label': '备注', 'name': 'fremark'},
             ]
         });
 
@@ -49,40 +43,22 @@ define(function(require, exports, module) {
             select: true,
             paging: true,
             rowId: "id",
-            ajax: '/admin/employee/pagination',
+            ajax: '/admin/department/pagination',
             columns: [
                 {"data": "id"},
                 {"data": "fname"},
                 {"data": "fnumber"},
+                {"data": "ffullname"},
                 {
                 	"data": 'forg_id',
-                    render: function ( data, type, full ) {
-                    	if(full.organization!=null)
-                    		return full.organization.fname
-                    	else
-                    		return "";
-                    }
+                	render: function ( data, type, full ) {
+                		if(full.organization!=null)
+                			return full.organization.fname
+                			else
+                				return "";
+                	}
                 },
-                {
-                	"data": 'fdept_id',
-                    render: function ( data, type, full ) {
-                    	if(full.department!=null)
-                    		return full.department.fname
-                    	else
-                    		return "";
-                    }
-                },
-                {
-                	"data": 'fpost_id',
-                    render: function ( data, type, full ) {
-                    	if(full.position!=null)
-                    		return full.position.fname
-                    	else
-                    		return "";
-                    }
-                },
-                {"data": "fphone"},
-                {"data": "femail"},
+                {"data": "fcreate_date"},
                 
             ],
             buttons: [

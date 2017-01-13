@@ -8,5 +8,7 @@ seajs.config({
         //
         'app-role': 'admin/role.js',
         'app-employee' : 'admin/employee.js',
+        'app-department' : 'admin/department.js',
+        'app-store' : 'admin/store.js',
     }
 });
