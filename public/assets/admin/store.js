@@ -47,6 +47,7 @@ define(function(require, exports, module) {
             rowId: "id",
             ajax: '/admin/store/pagination',
             columns: [
+                {"data": "id"},
                 {"data": "ffullname"},
                 {"data": "fshortname"},
                 {"data": "faddress"},

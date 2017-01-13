@@ -34,6 +34,7 @@
                         <table id="moduleTable" class="table table-bordered table-hover">
                             <thead>
                             <tr>
+                                <th>序号</th>
                                 <th>门店全称</th>
                                 <th>门店简称</th>
                                 <th>详细地址</th>
