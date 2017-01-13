@@ -5,36 +5,33 @@ define(function(require, exports, module) {
     
     var zhCN = require('datatableZh');
 
-    exports.index = function ($, tableId, orgs) {
+    exports.index = function ($, tableId,orgs) {
 
         var editor = new $.fn.dataTable.Editor({
             ajax: {
                 create: {
                     type: 'POST',
-                    url: '/admin/employee',
+                    url: '/admin/visit_line',
                     data: {_token: $('meta[name="_token"]').attr('content')},
                 },
                 edit: {
                     type: 'PUT',
-                    url: '/admin/employee/_id_',
+                    url: '/admin/visit_line/_id_',
                     data: {_token: $('meta[name="_token"]').attr('content')},
                 },
                 remove: {
                     type: 'DELETE',
-                    url: '/admin/employee/_id_',
+                    url: '/admin/visit_line/_id_',
                     data: {_token: $('meta[name="_token"]').attr('content')},
                 }
             },
             table: "#" + tableId,
             idSrc: 'id',
             fields: [
-                {'label': '姓名', 'name': 'fname',},
-                {'label': '工号', 'name': 'fnumber',},
-                {'label': '电话', 'name': 'fphone',},
-                {'label': '地址', 'name': 'faddress',},
-                {'label': '邮箱', 'name': 'femail',},
+                {'label': '线路名称', 'name': 'fname',},
+                {'label': '线路代码', 'name': 'fnumber',},
                 {
-                	'label': '组织', 
+                	'label': '所属组织', 
                 	'name': 'forg_id',
                 	'type': 'select',
                     'options': orgs
@@ -50,41 +47,20 @@ define(function(require, exports, module) {
             select: true,
             paging: true,
             rowId: "id",
-            ajax: '/admin/employee/pagination',
+            ajax: '/admin/visit_line/pagination',
             columns: [
-                {"data": "id"},
-                {"data": "fname"},
-                {"data": "fnumber"},
-                {
-                	"data": 'forg_id',
-                    render: function ( data, type, full ) {
-                    	if(full.organization!=null)
-                    		return full.organization.fname
-                    	else
-                    		return "";
-                    }
-                },
-                {
-                	"data": 'fdept_id',
-                    render: function ( data, type, full ) {
-                    	if(full.department!=null)
-                    		return full.department.fname
-                    	else
-                    		return "";
-                    }
-                },
-                {
-                	"data": 'fpost_id',
-                    render: function ( data, type, full ) {
-                    	if(full.position!=null)
-                    		return full.position.fname
-                    	else
-                    		return "";
-                    }
-                },
-                {"data": "fphone"},
-                {"data": "femail"},
-                
+				{"data": "id"},
+				{"data": "fname"},
+				{"data": "fnumber"},
+				{
+					"data": 'forg_id',
+				    render: function ( data, type, full ) {
+				    	if(full.organization!=null)
+				    		return full.organization.fname
+				    	else
+				    		return "";
+				    }
+				},
             ],
             buttons: [
                 // { text: '新增', action: function () { }  },
@@ -98,7 +74,7 @@ define(function(require, exports, module) {
                 //{extend: 'colvis', text: '列显示'}
             ]
         });
-        
+
         // table.on( 'select', checkBtn).on( 'deselect', checkBtn);
         //
         // function checkBtn(e, dt, type, indexes) {

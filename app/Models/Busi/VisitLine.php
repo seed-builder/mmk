@@ -25,4 +25,12 @@ class VisitLine extends BaseModel
 {
     //
     protected $table = 'visit_line';
+    
+    protected $with = ['organization'];
+    
+    public $validateRules=['fname' => 'required', 'fnumber' => 'required'];
+    
+    public function organization(){
+    	return $this->hasOne(Organization::class, 'id', 'forg_id');
+    }
 }

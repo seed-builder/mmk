@@ -26,7 +26,7 @@
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">角色列表</h3>
+                        <h3 class="box-title">线路基本信息</h3>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
@@ -34,12 +34,10 @@
                         <table id="moduleTable" class="table table-bordered table-hover">
                             <thead>
                             <tr>
-                                <th>顺序</th>
-                                <th>部门名称</th>
-                                <th>部门号</th>
-                                <th>部门全称</th>
+                                <th>序号</th>
+                                <th>线路名称</th>
+                                <th>线路代码</th>
                                 <th>所属组织</th>
-                                <th>创建时间</th>
                             </tr>
                             </thead>
                         </table>
@@ -52,7 +50,7 @@
         </div>
         <!-- /.row -->
     </section>
-
+    	
 @endsection
 
 @section('js')
@@ -61,8 +59,8 @@
 
         $(function () {
         	var orgs = {!! json_encode($orgs) !!}
-            seajs.use('app-department', function (department) {
-            	department.index($, 'moduleTable',orgs);
+            seajs.use('app-visit-line', function (visitline) {
+            	visitline.index($, 'moduleTable',orgs);
             });
 
             

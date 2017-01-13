@@ -10,5 +10,8 @@ seajs.config({
         'app-employee' : 'admin/employee.js',
         'app-department' : 'admin/department.js',
         'app-store' : 'admin/store.js',
+        'app-visit-line' : 'admin/visit_line.js',
+        'app-visit-line-calendar' : 'admin/visit_line_calendar.js',
+        'app-visit-store-calendar' : 'admin/visit_store_calendar.js',
     }
 });

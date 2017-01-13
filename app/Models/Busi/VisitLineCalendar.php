@@ -27,4 +27,18 @@ class VisitLineCalendar extends BaseModel
 {
     //
     protected $table = 'visit_line_calendar';
+    
+    protected $with = ['organization','employee','line'];
+    
+    public function organization(){
+    	return $this->hasOne(Organization::class, 'id', 'forg_id');
+    }
+    
+    public function employee(){
+    	return $this->hasOne(Employee::class, 'id', 'femp_id');
+    }
+    
+    public function line(){
+    	return $this->hasOne(VisitLine::class, 'id', 'fline_id');
+    }
 }

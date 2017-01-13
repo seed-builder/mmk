@@ -4,19 +4,18 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Busi\Employee;
+use App\Models\Busi\VisitLine;
 use App\Models\Busi\Organization;
 use Swagger\Annotations\Items;
-use App\Models\Busi\Department;
 
-class EmployeeController extends AdminController
+class VisitLineController extends AdminController
 {
 
     //
 	public function newEntity(array $attributes = [])
 	{
 		// TODO: Implement newEntity() method.
-		return new Employee($attributes);
+		return new VisitLine($attributes);
 	}
 
 	public function index()
@@ -26,7 +25,7 @@ class EmployeeController extends AdminController
 			return ['label' => $item->fname, 'value' => $item->id];
 		});
 		
-		return view('admin.employee.index',compact('orgs'));
+		return view('admin.visit_line.index',compact('orgs'));
 	}
 
 	/**
@@ -35,7 +34,7 @@ class EmployeeController extends AdminController
 	 * @return \Illuminate\Http\JsonResponse
 	 */
 	public function pagination(Request $request, $searchCols = []){
-		$searchCols = ['fname', 'fnumber', 'fphone'];
+		$searchCols = ['fname', 'fnumber'];
 		return parent::pagination($request, $searchCols);
 	}
 

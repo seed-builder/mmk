@@ -5,7 +5,7 @@ define(function(require, exports, module) {
     
     var zhCN = require('datatableZh');
 
-    exports.index = function ($, tableId) {
+    exports.index = function ($, tableId,orgs) {
 
         var editor = new $.fn.dataTable.Editor({
             ajax: {
@@ -31,6 +31,12 @@ define(function(require, exports, module) {
                 {'label': '部门名称', 'name': 'fname'},
                 {'label': '部门全称', 'name': 'ffullname'},
                 {'label': '部门号', 'name': 'fnumber'},
+                {
+                	'label': '所属组织', 
+                	'name': 'forg_id',
+                	'type': 'select',
+                    'options': orgs
+                },
                 {'label': '备注', 'name': 'fremark'},
             ]
         });

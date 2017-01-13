@@ -74,11 +74,11 @@
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="{{url('admin/store/index')}}"><i class="fa fa-circle-o"></i></i> 门店信息</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i></i> 线路</a></li>
+                    <li><a href="{{url('admin/visit_line/index')}}"><i class="fa fa-circle-o"></i></i> 线路</a></li>
                     <li><a href="#"><i class="fa fa-circle-o"></i></i> 人员线路规划</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i></i> 拜访日记</a></li>
+                    <li><a href="{{url('admin/visit_line_calendar/index')}}"><i class="fa fa-circle-o"></i></i> 拜访日记</a></li>
                     <li><a href="#"><i class="fa fa-circle-o"></i></i> 拜访工作纪录</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i></i> 门店拜访查看</a></li>
+                    <li><a href="{{url('admin/visit_store_calendar/index')}}"><i class="fa fa-circle-o"></i></i> 门店拜访查看</a></li>
                 </ul>
             </li>
             <li class="treeview active">

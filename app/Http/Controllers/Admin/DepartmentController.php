@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Busi\Department;
+use App\Models\Busi\Organization;
 
 class DepartmentController extends AdminController
 {
@@ -18,7 +19,11 @@ class DepartmentController extends AdminController
 
 	public function index()
 	{
-		return view('admin.department.index');
+		$all = Organization::all();
+		$orgs = $all->map(function ($item){
+			return ['label' => $item->fname, 'value' => $item->id];
+		});
+		return view('admin.department.index',compact('orgs'));
 	}
 
 	/**
@@ -31,4 +36,7 @@ class DepartmentController extends AdminController
 		return parent::pagination($request, $searchCols);
 	}
 
+	public function ajaxGetDepart(Request $request){
+		dd($request->all());
+	}
 }

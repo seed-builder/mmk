@@ -31,7 +31,7 @@ class VisitStoreCalendar extends BaseModel
 {
     //
     protected $table = 'visit_store_calendar';
-	protected $with = ['store'];
+	protected $with = ['store','employee'];
 
 	public static function boot()
 	{
