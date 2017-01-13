@@ -15,7 +15,10 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         //
         'App\Console\Commands\SwaggerGen',
-        'App\Console\Commands\AttendancePolling'
+        'App\Console\Commands\AttendancePolling',
+        'App\Console\Commands\AttRepoortGen',
+        'App\Console\Commands\AttStatisticGen',
+
     ];
 
     /**
@@ -30,6 +33,8 @@ class Kernel extends ConsoleKernel
         //          ->hourly();
 	    //下午18点开始每小时执行一次
 	    $schedule->command('command:attendance_polling')->cron('* 18-23/1 * * *');
+	    $schedule->command('gen:att-stc')->dailyAt('22:00');
+	    $schedule->command('gen:att-rpt')->dailyAt('23:00');
     }
 
     /**
