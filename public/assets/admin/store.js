@@ -52,7 +52,6 @@ define(function(require, exports, module) {
                 {"data": "faddress"},
                 {"data": "fcontracts"},
                 {"data": "ftelephone"},
-                {"data": "fchannel"},
                 {
                 	"data": 'femp_id',
                 	render: function ( data, type, full ) {
