@@ -71,32 +71,33 @@ class AttRepoortGen extends Command
     public function init($year, $month){
     	$this->log('begin init..');
     	$date = $year.'-'. sprintf('%02d',$month);
-		$workdays = DB::select("select count(1) as c from  eng_work_calendar_data where DATE_FORMAT(fday,'%Y-%m')='$date' and fis_work_time=1");
-		//var_dump($workdays);
 		$employees = Employee::all();
-		if(!empty($workdays) && $workdays[0]->c > 0 && !empty($employees)){
+		if(!empty($employees)){
 			foreach ($employees as $employee){
-				$count = AttendanceReport::where('fyear', $year)
-					->where('fmonth', $month)
-					->where('forg_id', $employee->forg_id)
-					->where('femp_id', $employee->id)
-					->count();
-				if($count == 0){
-					$rp = AttendanceReport::create([
-						'fyear'=> $year,
-						'fmonth' => $month,
-						'fwork_days' => $workdays[0]->c,
-						'forg_id' => $employee->forg_id,
-						'femp_id' => $employee->id
-						]
-					);
-					if($rp){
-						$this->log('craete data success , data=【'.json_encode($rp).'】');
+				$startDate=$employee->fstart_date;
+				$workdays = DB::select("select count(1) as c from  eng_work_calendar_data where DATE_FORMAT(fday,'%Y-%m')='$date' and fday >= '$startDate' and fis_work_time=1");
+				//var_dump($workdays);
+				if(!empty($workdays) && $workdays[0]->c > 0) {
+					$count = AttendanceReport::where('fyear', $year)
+						->where('fmonth', $month)
+						->where('forg_id', $employee->forg_id)
+						->where('femp_id', $employee->id)
+						->count();
+					if ($count == 0) {
+						$rp = AttendanceReport::create([
+								'fyear' => $year,
+								'fmonth' => $month,
+								'fwork_days' => $workdays[0]->c,
+								'forg_id' => $employee->forg_id,
+								'femp_id' => $employee->id
+							]
+						);
+						if ($rp) {
+							$this->log('craete data success , data=【' . json_encode($rp) . '】');
+						}
 					}
 				}
 			}
-		}else{
-			$this->log("init not begin; workdays=". json_encode($workdays));
 		}
 	    $this->log('end init!');
     }
@@ -109,8 +110,8 @@ class AttRepoortGen extends Command
 		if(!empty($rps)){
 			foreach ($rps as $rp){
 				$empId = $rp->femp_id;
-				$normalSql = "SELECT count(1) c FROM	view_attendace_statistic WHERE DATE_FORMAT(fday,'%Y-%m')='$date' AND fday<='$today' AND  femp_id=$empId AND `begin`=1 and complete=1";
-				$abnormalSql = "SELECT count(1) c FROM	 view_attendace_statistic WHERE DATE_FORMAT(fday,'%Y-%m')='$date' AND	fday<='$today' AND femp_id=$empId AND (`begin`=0 or complete=0)";
+				$normalSql = "SELECT count(1) c FROM attendance_statistics WHERE DATE_FORMAT(fday,'%Y-%m')='$date' AND fday<='$today' AND  femp_id=$empId AND fstatus=1";
+				$abnormalSql = "SELECT count(1) c FROM	 attendance_statistics WHERE DATE_FORMAT(fday,'%Y-%m')='$date' AND	fday<='$today' AND femp_id=$empId AND fstatus<>1";
 				$normal = DB::select($normalSql);
 				$abnormal = DB::select($abnormalSql);
 				$rp->fnormal_days = $normal[0]->c;

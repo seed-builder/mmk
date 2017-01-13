@@ -1,22 +1,22 @@
 <?php
 /**
  * @SWG\Resource(
- *  resourcePath="/attendance-report",
- *  description="考勤报表"
+ *  resourcePath="/attendance-statistic",
+ *  description="考勤统计"
  * )
  */
-Route::group(['prefix' => 'attendance-report', 'middleware' => 'api.sign'], function () {
+Route::group(['prefix' => 'attendance-statistic', 'middleware' => 'api.sign'], function () {
 
     /**
      * @SWG\Api(
-     *     path="/api/attendance-report",
+     *     path="/api/attendance-statistic",
      *     @SWG\Operation(
      *      method="GET",
-     *      nickname="attendance-report-list",
-     *      summary="考勤报表信息列表",
-     *      notes="考勤报表信息列表",
+     *      nickname="attendance-statistic-list",
+     *      summary="考勤统计信息列表",
+     *      notes="考勤统计信息列表",
      *      type="array",
-     *     items="$ref:AttendanceReport",
+     *     items="$ref:AttendanceStatistic",
      *      @SWG\Parameters(
      *          @SWG\Parameter(name="page", description="当前页", required=false, type="integer", paramType="query", defaultValue="1"),
      *          @SWG\Parameter(name="pageSize", description="页大小", required=false, type="integer", paramType="query", defaultValue="10"),
@@ -27,17 +27,17 @@ Route::group(['prefix' => 'attendance-report', 'middleware' => 'api.sign'], func
      *    )
      * )
      */
-    Route::get('/', ['as' => 'AttendanceReport.index', 'uses' => 'AttendanceReportController@index']);
+    Route::get('/', ['as' => 'AttendanceStatistic.index', 'uses' => 'AttendanceStatisticController@index']);
 
     /**
      * @SWG\Api(
-     *     path="/api/attendance-report/{id}",
+     *     path="/api/attendance-statistic/{id}",
      *     @SWG\Operation(
      *      method="GET",
-     *      nickname="attendance-report-show",
-     *      summary="考勤报表信息详情",
-     *      notes="考勤报表信息详情",
-     *      type="AttendanceReport",
+     *      nickname="attendance-statistic-show",
+     *      summary="考勤统计信息详情",
+     *      notes="考勤统计信息详情",
+     *      type="AttendanceStatistic",
      *      @SWG\Parameters(
      *          @SWG\Parameter(name="id", description="id", required=true, type="integer", paramType="path", defaultValue="1"),
      *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="query", defaultValue="****")
@@ -45,7 +45,7 @@ Route::group(['prefix' => 'attendance-report', 'middleware' => 'api.sign'], func
      *  )
      * )
      */
-    Route::get('/{id}', ['as' => 'AttendanceReport.show', 'uses' => 'AttendanceReportController@show']);
+    Route::get('/{id}', ['as' => 'AttendanceStatistic.show', 'uses' => 'AttendanceStatisticController@show']);
 
 
 });

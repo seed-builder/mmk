@@ -13,7 +13,7 @@ class CreateTableRpAttendances extends Migration
      */
     public function up()
     {
-        Schema::create('rp_attendances', function (Blueprint $table) {
+        Schema::create('attendance_reports', function (Blueprint $table) {
             $table->increments('id');
 	        $table->integer('forg_id')->default(0);
 	        $table->integer('femp_id')->default(0);
@@ -38,6 +38,6 @@ class CreateTableRpAttendances extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rp_attendances');
+        Schema::dropIfExists('attendance_reports');
     }
 }

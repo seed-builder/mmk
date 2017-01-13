@@ -34,6 +34,7 @@ use Illuminate\Database\Eloquent\Model;
  * @SWG\Property(name="login_time", type="string", description="登陆次数")
  * @SWG\Property(name="device", type="string", description="设备号")
  * @SWG\Property(name="forg_id", type="string", description="组织id")
+ * @SWG\Property(name="fstart_date", type="string", description="入职日期")
  */
 class Employee extends BaseModel
 {
