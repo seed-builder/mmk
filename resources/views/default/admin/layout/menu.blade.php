@@ -105,6 +105,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="{{url('/admin/sys-config')}}"><i class="fa fa-cogs"></i>配置管理</a></li>
+                    <li><a href="{{url('/admin/sys-dics')}}"><i class="fa fa-fw fa-book"></i>字典管理</a></li>
                 </ul>
             </li>
 

@@ -11,29 +11,26 @@ define(function(require, exports, module) {
             ajax: {
                 create: {
                     type: 'POST',
-                    url: '/admin/store',
+                    url: '/admin/sys-dics',
                     data: {_token: $('meta[name="_token"]').attr('content')},
                 },
                 edit: {
                     type: 'PUT',
-                    url: '/admin/store/_id_',
+                    url: '/admin/sys-dics/_id_',
                     data: {_token: $('meta[name="_token"]').attr('content')},
                 },
                 remove: {
                     type: 'DELETE',
-                    url: '/admin/store/_id_',
+                    url: '/admin/sys-dics/_id_',
                     data: {_token: $('meta[name="_token"]').attr('content')},
                 }
             },
             table: "#" + tableId,
             idSrc: 'id',
             fields: [
-                {'label': '门店全称', 'name': 'ffullname'},
-                {'label': '门店简称', 'name': 'fshortname'},
-                {'label': '客户详址', 'name': 'faddress'},
-                {'label': '负责人', 'name': 'fcontracts'},
-                {'label': '联系电话', 'name': 'ftelephone'},
-                {'label': '渠道分类', 'name': 'fchannel'},
+                {'label': '类别', 'name': 'type',},
+                {'label': '键名', 'name': 'value',},
+                {'label': '键值', 'name': 'key',},
             ]
         });
 
@@ -45,41 +42,24 @@ define(function(require, exports, module) {
             select: true,
             paging: true,
             rowId: "id",
-            ajax: '/admin/store/pagination',
+            ajax: '/admin/sys-dics/pagination',
             columns: [
                 {"data": "id"},
-                {"data": "ffullname"},
-                {"data": "fshortname"},
-                {"data": "faddress"},
-                {"data": "fcontracts"},
-                {"data": "ftelephone"},
-                {
-                	"data": 'femp_id',
-                	render: function ( data, type, full ) {
-                		if(full.employee!=null)
-                			return full.employee.fname
-                			else
-                				return "";
-                	}
-                },
-                
+                {"data": "type"},
+                {"data": "key"},
+                {"data": "value"},
+                {"data": "created_at"},
+                {"data": "updated_at"},
             ],
             buttons: [
                 // { text: '新增', action: function () { }  },
                 // { text: '编辑', className: 'edit', enabled: false },
                 // { text: '删除', className: 'delete', enabled: false },
-                {
-                	text: '新增<i class="fa fa-fw fa-plus"></i>',
-                	action: function () { 
-                		$('#storeinfo').modal('show');
-                	}
-                },
-//                {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: editor},
+                {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: editor},
                 {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: editor},
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
-                
                 //{extend: 'colvis', text: '列显示'}
             ]
         });
