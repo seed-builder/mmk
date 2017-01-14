@@ -7,6 +7,7 @@ seajs.config({
         "datatableZh": "plugins/datatables/js/zh_CN.js",
         //
         'app-role': 'admin/role.js',
+        'app-sysdics': 'admin/sysdics.js',
         'app-employee' : 'admin/employee.js',
         'app-department' : 'admin/department.js',
         'app-store' : 'admin/store.js',
