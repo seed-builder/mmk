@@ -11,7 +11,8 @@
         "intervention/image": "^2.3",
         "webpatser/laravel-uuid": "2.*",
         "jpush/jpush": "v3.5.*",
-        "zizaco/entrust": "5.2.x-dev"
+        "zizaco/entrust": "5.2.x-dev",
+        "philo/laravel-blade": "3.*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

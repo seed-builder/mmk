@@ -42,3 +42,10 @@ if (! function_exists('display')) {
         return view($template, $data, $mergeData);
     }
 }
+
+if(!function_exists('snake_case2')){
+
+	function snake_case2($str){
+		return snake_case($str, '-');
+	}
+}

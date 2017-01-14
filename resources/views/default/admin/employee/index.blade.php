@@ -62,11 +62,11 @@
     <script type="text/javascript">
 
         $(function () {
+
             var orgs = {!! json_encode($orgs) !!}
             seajs.use('app-employee', function (employee) {
             	employee.index($, 'moduleTable', orgs);
             });
-
             
         });
 

@@ -12,5 +12,3 @@
 <script src="/assets/plugins/datatables/extensions/Select/js/dataTables.select.min.js"></script>
 <script src="/assets/plugins/datatables/extensions/Editor/js/dataTables.editor.min.js"></script>
 <script src="/assets/plugins/datatables/extensions/Editor/js/editor.bootstrap.min.js"></script>
-<script src="/assets/plugins/datatables/js/pipeline.js"></script>
-<script src="/assets/plugins/datatables/js/zh_CN.js"></script>

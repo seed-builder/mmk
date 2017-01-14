@@ -1,5 +1,7 @@
 <?php
 
+use App\Services\CodeBuilder;
+use App\Services\DbHelper;
 use Illuminate\Foundation\Inspiring;
 
 /*
@@ -16,3 +18,12 @@ use Illuminate\Foundation\Inspiring;
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->describe('Display an inspiring quote');
+
+Artisan::command('test', function () {
+	$this->comment('begin ...');
+	$db = new DbHelper();
+	$columns = $db->getColumns('bd_channels');
+	$builder = new CodeBuilder('Channel', 'bd_channels', $columns);
+	$builder->createFiles();
+	$this->comment('end ...');
+})->describe('philo blade test');
