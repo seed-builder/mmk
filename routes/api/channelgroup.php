@@ -57,17 +57,17 @@ Route::group(['prefix' => 'channel-group'], function () {
     *      notes="新增",
     *      type="",
     *      @SWG\Parameters(
-    *          @SWG\Parameter(name="fcreate_date", description="创建时间", required='true',type="datetime", paramType="form", defaultValue="" ),';
-    *          @SWG\Parameter(name="fcreator_id", description="创建人", required='false',type="integer", paramType="form", defaultValue="0" ),';
-    *          @SWG\Parameter(name="fdocument_status", description="数据状态", required='false',type="string", paramType="form", defaultValue="A" ),';
-    *          @SWG\Parameter(name="fmodify_date", description="修改时间", required='true',type="datetime", paramType="form", defaultValue="" ),';
-    *          @SWG\Parameter(name="fmodify_id", description="修改人", required='false',type="integer", paramType="form", defaultValue="0" ),';
-    *          @SWG\Parameter(name="fname", description="分组名称", required='false',type="string", paramType="form", defaultValue="" ),';
-    *          @SWG\Parameter(name="fnumber", description="分组编码", required='false',type="string", paramType="form", defaultValue="" ),';
-    *          @SWG\Parameter(name="fparent_id", description="分组上级", required='false',type="integer", paramType="form", defaultValue="0" ),';
-    *          @SWG\Parameter(name="fsort", description="排序", required='false',type="integer", paramType="form", defaultValue="0" ),';
-    *          @SWG\Parameter(name="ftype", description="分组类型", required='false',type="string", paramType="form", defaultValue="" ),';
-    *          @SWG\Parameter(name="id", description="", required='false',type="integer", paramType="form", defaultValue="" ),';
+    *          @SWG\Parameter(name="fcreate_date", description="创建时间", required=true,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="fcreator_id", description="创建人", required=false,type="integer", paramType="form", defaultValue="0" ),
+    *          @SWG\Parameter(name="fdocument_status", description="数据状态", required=false,type="string", paramType="form", defaultValue="A" ),
+    *          @SWG\Parameter(name="fmodify_date", description="修改时间", required=true,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="fmodify_id", description="修改人", required=false,type="integer", paramType="form", defaultValue="0" ),
+    *          @SWG\Parameter(name="fname", description="分组名称", required=false,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="fnumber", description="分组编码", required=false,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="fparent_id", description="分组上级", required=false,type="integer", paramType="form", defaultValue="0" ),
+    *          @SWG\Parameter(name="fsort", description="排序", required=false,type="integer", paramType="form", defaultValue="0" ),
+    *          @SWG\Parameter(name="ftype", description="分组类型", required=false,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="id", description="", required=false,type="integer", paramType="form", defaultValue="" ),
     *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
     *      )
     *  )
@@ -85,17 +85,17 @@ Route::group(['prefix' => 'channel-group'], function () {
     *      notes="更新",
     *      type="",
     *      @SWG\Parameters(
-    *          @SWG\Parameter(name="fcreate_date", description="创建时间", required='false',type="datetime", paramType="form", defaultValue="" ),';
-    *          @SWG\Parameter(name="fcreator_id", description="创建人", required='false',type="integer", paramType="form", defaultValue="0" ),';
-    *          @SWG\Parameter(name="fdocument_status", description="数据状态", required='false',type="string", paramType="form", defaultValue="A" ),';
-    *          @SWG\Parameter(name="fmodify_date", description="修改时间", required='false',type="datetime", paramType="form", defaultValue="" ),';
-    *          @SWG\Parameter(name="fmodify_id", description="修改人", required='false',type="integer", paramType="form", defaultValue="0" ),';
-    *          @SWG\Parameter(name="fname", description="分组名称", required='false',type="string", paramType="form", defaultValue="" ),';
-    *          @SWG\Parameter(name="fnumber", description="分组编码", required='false',type="string", paramType="form", defaultValue="" ),';
-    *          @SWG\Parameter(name="fparent_id", description="分组上级", required='false',type="integer", paramType="form", defaultValue="0" ),';
-    *          @SWG\Parameter(name="fsort", description="排序", required='false',type="integer", paramType="form", defaultValue="0" ),';
-    *          @SWG\Parameter(name="ftype", description="分组类型", required='false',type="string", paramType="form", defaultValue="" ),';
-    *          @SWG\Parameter(name="id", description="", required='false',type="integer", paramType="form", defaultValue="" ),';
+    *          @SWG\Parameter(name="fcreate_date", description="创建时间", required=false,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="fcreator_id", description="创建人", required=false,type="integer", paramType="form", defaultValue="0" ),
+    *          @SWG\Parameter(name="fdocument_status", description="数据状态", required=false,type="string", paramType="form", defaultValue="A" ),
+    *          @SWG\Parameter(name="fmodify_date", description="修改时间", required=false,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="fmodify_id", description="修改人", required=false,type="integer", paramType="form", defaultValue="0" ),
+    *          @SWG\Parameter(name="fname", description="分组名称", required=false,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="fnumber", description="分组编码", required=false,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="fparent_id", description="分组上级", required=false,type="integer", paramType="form", defaultValue="0" ),
+    *          @SWG\Parameter(name="fsort", description="排序", required=false,type="integer", paramType="form", defaultValue="0" ),
+    *          @SWG\Parameter(name="ftype", description="分组类型", required=false,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="id", description="", required=false,type="integer", paramType="form", defaultValue="" ),
     *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="" ),
     *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
     *      )

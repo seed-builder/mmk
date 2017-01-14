@@ -36,4 +36,10 @@ class Attendance extends BaseModel
 {
     //
     protected $table = 'ms_attendances';
+    
+    protected $with = ['employee','customer'];
+    
+    public function employee(){
+    	return $this->belongsTo(Employee::class, 'femp_id');
+    }
 }

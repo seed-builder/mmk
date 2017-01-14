@@ -63,6 +63,9 @@
                     <span class="pull-right-container">
                     </span>
                 </a>
+                <ul class="treeview-menu">
+                    <li><a href="{{url('/admin/attendance/index')}}"><i class="fa fa-user"></i>考勤情况查看</a></li>
+                </ul>
             </li>
             <li class="treeview active">
                 <a href="#">

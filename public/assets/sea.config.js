@@ -14,5 +14,6 @@ seajs.config({
         'app-visit-line' : 'admin/visit_line.js',
         'app-visit-line-calendar' : 'admin/visit_line_calendar.js',
         'app-visit-store-calendar' : 'admin/visit_store_calendar.js',
+        'app-attendance' : 'admin/attendance.js',
     }
 });
