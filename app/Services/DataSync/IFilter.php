@@ -10,9 +10,9 @@ namespace App\Services\DataSync;
 
 interface IFilter
 {
-	public function beforeSend($data);
-	public function afterSend($data);
+	public function beforeSend(&$data);
+	public function afterSend(&$data);
 
-	public function beforeAccept($data);
-	public function afterAccept($data);
+	public function beforeAccept(&$data);
+	public function afterAccept(&$data);
 }
