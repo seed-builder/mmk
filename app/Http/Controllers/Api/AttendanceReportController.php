@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
+use Illuminate\Database\Eloquent\Builder;
 use App\Models\Busi\AttendanceReport;
+use App\Models\Busi\Employee;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use DB;
 
 class AttendanceReportController extends ApiController
 {
@@ -15,31 +18,34 @@ class AttendanceReportController extends ApiController
 		return new AttendanceReport($attributes);
 	}
 
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	public function index(Request $request)
-	{
-		//
-		$page = $request->input('page', 1);
-		$pageSize = $request->input('pageSize', 10);
-		$sort = $request->input('sort', 'id asc');
-		$arr = explode(' ', $sort);
-		$entity = $this->newEntity();
-		$query = $entity->query();
-		$this->fillQueryForIndex($request, $query);
-		//
-//		$search = $request->input('search', '{}');
-//		$conditions = json_decode($search, true);
-//		if(array_key_exists('femp_id', $conditions)){
-//			$fempId = $conditions['femp_id'];
-//			$query->j
-//		}
-		$count = $query->count();
-		$data = $query->orderBy($arr[0], $arr[1])->take($pageSize)->skip(($page-1)*$pageSize)->get();
-		return response(['count' => $count, 'list' => $data, 'page' => $page, 'pageSize' => $pageSize], 200);
+	public function fillQueryForIndex(Request $request, Builder &$query){
+		$search = $request->input('search', '{}');
+		$conditions = json_decode($search, true);
+		if(!empty($conditions)) {
+			//dump($conditions);
+			foreach ($conditions as $k => $v) {
+				$tmp = explode(' ', $k);
+				if($tmp[0] == 'femp_id'){
+					$fempId = $v;
+					$employee = Employee::find($fempId);
+					if(!empty($employee->position)){
+						$fnumber = $employee->position->fnumber;
+						$sql = "select e.id from bd_employees e, bd_positions p where e.fpost_id = p.id and p.fnumber like '$fnumber%'";
+						$ids = DB::select($sql);
+						if(!empty($ids)){
+							$arr = [];
+							foreach ($ids as $item){
+								$arr[] = $item->id;
+							}
+							$query->whereIn('femp_id', $arr);
+						}
+					}
+				}else {
+					$query->where($tmp[0], isset($tmp[1]) ? $tmp[1] : '=', $v);
+				}
+			}
+		}
+		//return $query;
 	}
 
 }
