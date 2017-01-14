@@ -22,7 +22,7 @@ function showEditorType($column){
 define(function(require, exports, module) {
 
     var zhCN = require('datatableZh');
-
+    var editorCN = require('i18n');
     exports.index = function ($, tableId) {
         var editor = new $.fn.dataTable.Editor({
             ajax: {
@@ -42,6 +42,7 @@ define(function(require, exports, module) {
                     data: {_token: $('meta[name="_token"]').attr('content')},
                 }
             },
+            i18n: editorCN,
             table: "#" + tableId,
             idSrc: 'id',
             fields: [
