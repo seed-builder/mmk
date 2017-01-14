@@ -78,66 +78,67 @@ class AttStatisticGen extends Command
 	    $this->log('AttStatisticGen end!');
     }
 
-    public function day($day, $employee){
-    	$workTimeBegin = env('WORK_TIME_BEGIN');
-    	$workTimeEnd = env('WORK_TIME_END');
+    public function day($day, $employee)
+    {
+	    $workTimeBegin = env('WORK_TIME_BEGIN');
+	    $workTimeEnd = env('WORK_TIME_END');
 	    $beginStatus = 0;
 	    $completeStatus = 0;
 	    $date = strtotime($day);
 	    $props = [
-	    	'forg_id' => $employee->forg_id,
-	    	'femp_id' => $employee->id,
-	    	'fyear' => date('Y', $date),
-	    	'fmonth' => date('m', $date),
-	    	'fday' =>  $day,
+		    'forg_id' => $employee->forg_id,
+		    'femp_id' => $employee->id,
+		    'fyear' => date('Y', $date),
+		    'fmonth' => date('m', $date),
+		    'fday' => $day,
 		    'fbegin_status' => 0,
 		    'fcomplete_status' => 0,
 	    ];
-		//$day = str_replace(' 00:00:00','',$day);
-		$atts = DB::select('select * from ms_attendances where DATE_FORMAT(ftime,	\'%Y-%m-%d\')=\''.date('Y-m-d',$date).'\' and femp_id=' . $employee->id);
-		if(!empty($atts)){
-			foreach ($atts as $att){
-				if($att->ftype == 0){
-					$begin = $att->ftime;
-					$workBegin = str_replace('00:00:00', $workTimeBegin, $day);
-					if(strtotime($workBegin) >= strtotime($begin)){
-						$beginStatus = 1;
-					}else{
-						$beginStatus = 2;
-					}
-					$props['fbegin'] = $begin;
-					$props['fbegin_id'] = $att->id;
-					$props['fbegin_status'] = $beginStatus;
-				}elseif($att->ftype == 1){
-					$complete = $att->ftime;
-					$workEnd = str_replace('00:00:00', $workTimeEnd, $day);
-					if(strtotime($complete) >= strtotime($workEnd)){
-						$completeStatus = 1;
-					}else{
-						$completeStatus = 2;
-					}
-					$props['fcomplete'] = $complete;
-					$props['fcomplete_id'] = $att->id;
-					$props['fcomplete_status'] = $completeStatus;
-				}
-			}
-			if($beginStatus == 0 || $completeStatus == 0){
-				$props['fstatus'] = 0;
-			}elseif($beginStatus == 1 && $completeStatus == 1){
-				$props['fstatus'] = 1;
-			}elseif($beginStatus == 2 || $completeStatus == 2){
-				$props['fstatus'] = 2;
-			}
-		}
-		$entity = AttendanceStatistic::where('femp_id', $employee->id)
-			->where('fday', $day)->first();
-		if(empty($entity)){
-			$entity = new AttendanceStatistic($props);
-		}else{
-			$entity->fill($props);
-		}
-		$re = $entity->save();
-		$this->log('attendance statistic : ' . json_encode($entity));
+	    //$day = str_replace(' 00:00:00','',$day);
+	    $beginAtt = DB::select('select * from ms_attendances where ftype=0 AND DATE_FORMAT(ftime,	\'%Y-%m-%d\')=\'' . date('Y-m-d', $date) . '\' and femp_id=' . $employee->id . ' order by ftime asc limit 1 ');
+	    $completeAtt = DB::select('select * from ms_attendances where ftype=1 AND DATE_FORMAT(ftime,	\'%Y-%m-%d\')=\'' . date('Y-m-d', $date) . '\' and femp_id=' . $employee->id . ' order by ftime desc limit 1 ');
+	    if (!empty($beginAtt)) {
+		    $begin = $beginAtt[0]->ftime;
+		    $workBegin = str_replace('00:00:00', $workTimeBegin, $day);
+		    if (strtotime($workBegin) >= strtotime($begin)) {
+			    $beginStatus = 1;
+		    } else {
+			    $beginStatus = 2;
+		    }
+		    $props['fbegin'] = $begin;
+		    $props['fbegin_id'] = $beginAtt[0]->id;
+		    $props['fbegin_status'] = $beginStatus;
+	    }
+	    if (!empty($completeAtt)) {
+		    $complete = $completeAtt[0]->ftime;
+		    $workEnd = str_replace('00:00:00', $workTimeEnd, $day);
+		    if (strtotime($complete) >= strtotime($workEnd)) {
+			    $completeStatus = 1;
+		    } else {
+			    $completeStatus = 2;
+		    }
+		    $props['fcomplete'] = $complete;
+		    $props['fcomplete_id'] = $completeAtt[0]->id;
+		    $props['fcomplete_status'] = $completeStatus;
+	    }
+
+	    if ($beginStatus == 0 || $completeStatus == 0) {
+		    $props['fstatus'] = 0;
+	    } elseif ($beginStatus == 1 && $completeStatus == 1) {
+		    $props['fstatus'] = 1;
+	    } elseif ($beginStatus == 2 || $completeStatus == 2) {
+		    $props['fstatus'] = 2;
+	    }
+
+	    $entity = AttendanceStatistic::where('femp_id', $employee->id)
+		    ->where('fday', $day)->first();
+	    if (empty($entity)) {
+		    $entity = new AttendanceStatistic($props);
+	    } else {
+		    $entity->fill($props);
+	    }
+	    $re = $entity->save();
+	    $this->log('attendance statistic : ' . json_encode($entity));
     }
 
 	public function log($msg){
