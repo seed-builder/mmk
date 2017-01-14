@@ -1,3 +1,10 @@
+<?php
+if(!function_exists('dataTypeFilter')){
+	function dataTypeFilter($data_type){
+		return $data_type == 'datetime' ? 'string' : $data_type;
+	}
+}
+?>
 {!! $BEGIN_PHP !!}
 /**
 * @SWG\Resource(
@@ -58,7 +65,7 @@ Route::group(['prefix' => '{{snake_case($model,'-')}}'], function () {
     *      type="",
     *      @SWG\Parameters(
 @forelse($columns as $col)
-    *          @SWG\Parameter(name="{{$col->name}}", description="{{$col->comment}}", required='{{$col->is_nullable ? 'true':'false'}}',type="{{$col->data_type}}", paramType="form", defaultValue="{{$col->default_value}}" ),
+    *          @SWG\Parameter(name="{{$col->name}}", description="{{$col->comment}}", required={{$col->is_nullable ? 'true':'false'}},type="<?=dataTypeFilter($col->data_type)?>", paramType="form", defaultValue="{{$col->default_value}}" ),
 @empty
 @endforelse
     *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
@@ -79,7 +86,7 @@ Route::group(['prefix' => '{{snake_case($model,'-')}}'], function () {
     *      type="",
     *      @SWG\Parameters(
 @forelse($columns as $col)
-    *          @SWG\Parameter(name="{{$col->name}}", description="{{$col->comment}}", required='false',type="{{$col->data_type}}", paramType="form", defaultValue="{{$col->default_value}}" ),
+    *          @SWG\Parameter(name="{{$col->name}}", description="{{$col->comment}}", required=false,type="<?=dataTypeFilter($col->data_type)?>", paramType="form", defaultValue="{{$col->default_value}}" ),
 @empty
 @endforelse
     *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="" ),

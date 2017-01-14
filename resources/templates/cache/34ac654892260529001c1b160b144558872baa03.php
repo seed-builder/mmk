@@ -1,3 +1,10 @@
+<?php
+if(!function_exists('dataTypeFilter')){
+	function dataTypeFilter($data_type){
+		return $data_type == 'datetime' ? 'string' : $data_type;
+	}
+}
+?>
 <?php echo $BEGIN_PHP; ?>
 
 /**
@@ -59,7 +66,7 @@ Route::group(['prefix' => '<?php echo e(snake_case($model,'-')); ?>'], function 
     *      type="",
     *      @SWG\Parameters(
 <?php $__empty_1 = true; $__currentLoopData = $columns; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $col): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); $__empty_1 = false; ?>
-    *          @SWG\Parameter(name="<?php echo e($col->name); ?>", description="<?php echo e($col->comment); ?>", required='<?php echo e($col->is_nullable ? 'true':'false'); ?>',type="<?php echo e($col->data_type); ?>", paramType="form", defaultValue="<?php echo e($col->default_value); ?>" ),';
+    *          @SWG\Parameter(name="<?php echo e($col->name); ?>", description="<?php echo e($col->comment); ?>", required=<?php echo e($col->is_nullable ? 'true':'false'); ?>,type="<?=dataTypeFilter($col->data_type)?>", paramType="form", defaultValue="<?php echo e($col->default_value); ?>" ),
 <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); if ($__empty_1): ?>
 <?php endif; ?>
     *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
@@ -80,7 +87,7 @@ Route::group(['prefix' => '<?php echo e(snake_case($model,'-')); ?>'], function 
     *      type="",
     *      @SWG\Parameters(
 <?php $__empty_1 = true; $__currentLoopData = $columns; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $col): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); $__empty_1 = false; ?>
-    *          @SWG\Parameter(name="<?php echo e($col->name); ?>", description="<?php echo e($col->comment); ?>", required='false',type="<?php echo e($col->data_type); ?>", paramType="form", defaultValue="<?php echo e($col->default_value); ?>" ),';
+    *          @SWG\Parameter(name="<?php echo e($col->name); ?>", description="<?php echo e($col->comment); ?>", required=false,type="<?=dataTypeFilter($col->data_type)?>", paramType="form", defaultValue="<?php echo e($col->default_value); ?>" ),
 <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); if ($__empty_1): ?>
 <?php endif; ?>
     *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="" ),

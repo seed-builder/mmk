@@ -95,7 +95,7 @@ class DbHelper{
 				break;
 			case 'decimal':
 			case 'double':
-				$t = 'decimal';
+				$t = 'number';
 				break;
 		}
 		return $t;

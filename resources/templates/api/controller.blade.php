@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
-use App\Models\{{$model}};
+use App\Models\Busi\{{$model}};
 
 class {{$model}}Controller extends ApiController
 {
