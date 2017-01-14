@@ -100,7 +100,7 @@ class AttStatisticGen extends Command
 	    if (!empty($beginAtt)) {
 		    $begin = $beginAtt[0]->ftime;
 		    $workBegin = str_replace('00:00:00', $workTimeBegin, $day);
-		    if (strtotime($workBegin) >= strtotime($begin)) {
+		    if (strtotime($workBegin) > strtotime($begin)) {
 			    $beginStatus = 1;
 		    } else {
 			    $beginStatus = 2;
