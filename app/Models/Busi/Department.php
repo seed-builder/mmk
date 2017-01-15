@@ -39,4 +39,14 @@ class Department extends BaseModel
     public function organization(){
     	return $this->hasOne(Organization::class, 'id', 'forg_id');
     }
+    
+    public function child_depart($id){
+    	return Department::query()
+    					   ->where('fpardept_id',$id)
+    					   ->get();
+    }
+    
+    public function employees(){
+    	return $this->hasMany(Employee::class,'fdept_id','id');
+    }
 }

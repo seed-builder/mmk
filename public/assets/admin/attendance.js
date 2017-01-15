@@ -5,8 +5,30 @@ define(function(require, exports, module) {
     
     var zhCN = require('datatableZh');
 
-    exports.index = function ($, tableId) {
+    exports.index = function ($, tableId,treeId) {
 
+    	
+    	var getTreeData = function () {
+        	$.ajax({
+            	url: "../../admin/employee/employeeTree",
+            	type: "POST",
+            	data: {'_token':$('meta[name="_token"]').attr('content')},
+            	dataType:'json',
+            	success:function(data){
+            		$("#" + treeId).treeview({
+                        color: "#428bca",
+                        enableLinks: true,
+                        levels: 99,
+                        data: data,
+                    });
+            		
+                },
+            });
+        	
+        }
+    	
+    	getTreeData();
+        
         var editor = new $.fn.dataTable.Editor({
             ajax: {
                 create: {
@@ -94,7 +116,8 @@ define(function(require, exports, module) {
         //     var count = table.rows( { selected: true } ).count();
         //     table.buttons( ['.edit', '.delete'] ).enable(count > 0);
         // }
-
+        
+        
     }
-
+    
 });

@@ -38,5 +38,51 @@ class EmployeeController extends AdminController
 		$searchCols = ['fname', 'fnumber', 'fphone'];
 		return parent::pagination($request, $searchCols);
 	}
+	
+	public function ajaxEmployeeTree(){
+		$orgs = Organization::all();
+		$datas = [];
+		
+		
+		foreach ($orgs as $ok=>$ov){
+			$pardepts = $ov->departments($ov->id);
+			$par_dept = $this->toTextArray($pardepts); //组织下的所有父部门
+			
+			foreach ($pardepts as $dk=>$dv){
+				$childdepts = $dv->child_depart($dv->id);
+				$child_dept = $this->toTextArray($childdepts); //部门下的子部门
+				
+				foreach ($childdepts as $cdk=>$cdv){
+					$emps = $cdv->employees()->get();
+					$emp = $this->toTextArray($emps); //部门下的员工
+					
+					$child_dept[$cdk]['text'] = $cdv->fname;
+					$child_dept[$cdk]['nodes'] = $emp;
+				}
+				
+				$par_dept[$dk]['text'] = $dv->fname;
+				$par_dept[$dk]['nodes'] = $child_dept;
+				
+			}
+			
+			$org = $this->toTextArray($orgs);
+			$org[$ok]['nodes'] = $par_dept;
+		}
+			
+		
+		return json_encode($org);
+	}
 
+	protected function toTextArray($datas){
+		$rs = [];
+		foreach ($datas as $d){
+			$rs[]=array(
+					'text' => $d->fname,
+					'dataid' => $d->id,
+			);
+		}
+		
+		return $rs;
+	}
+	
 }

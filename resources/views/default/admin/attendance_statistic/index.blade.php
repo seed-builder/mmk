@@ -1,12 +1,14 @@
-@extends('admin.layout.collapsed-sidebar') 
-@section('styles')
-@include('admin.layout.datatable-css') 
+@extends('admin.layout.collapsed-sidebar') @section('styles')
+@include('admin.layout.datatable-css')
+<link rel="stylesheet" href="/assets/plugins/bootstrap-treeview/bootstrap-treeview.min.css">
 <style type="text/css">
-		#allmap{height:500px;width:100%;}
-		#r-result{width:100%; font-size:14px;}
-	</style>
-@endsection 
-@section('content')
+#allmap {
+	height: 500px;
+	width: 100%;
+}
+
+</style>
+@endsection @section('content')
 <!-- Content Header (Page header) -->
 <section class="content-header">
 	<h1>
@@ -22,23 +24,31 @@
 <!-- Main content -->
 <section class="content">
 	<div class="row">
-		<div class="col-xs-12">
+		<div class="col-md-2" >
 			<div class="box">
 				<div class="box-header">
-					<h3 class="box-title">考勤地图定位</h3>
+					<h3 class="box-title">组织架构信息</h3>
 				</div>
 				<!-- /.box-header -->
 				<div class="box-body">
-
-					<div id="allmap"></div>
+					<div id="tree"></div>
 				</div>
-				<!-- /.box-body -->
 			</div>
-			<!-- /.box -->
-			
 		</div>
-		<!-- /.row -->
-		<div class="col-xs-12">
+		<div class="col-md-10">
+				<div class="box">
+					<div class="box-header">
+						<h3 class="box-title">考勤地图定位</h3>
+					</div>
+					<!-- /.box-header -->
+					<div class="box-body">
+
+						<div id="allmap"></div>
+					</div>
+					<!-- /.box-body -->
+				</div>
+				<!-- /.box -->
+
 				<div class="box">
 					<div class="box-header">
 						<h3 class="box-title">考勤信息</h3>
@@ -61,29 +71,42 @@
 					<!-- /.box-body -->
 				</div>
 				<!-- /.box -->
-			</div>
-			<!-- /.col -->
+		</div>
+
 </section>
 
 @endsection 
 @section('js') 
 @include('admin.layout.datatable-js')
-<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=D4Bi3270ydgA5HsnWDnmBVwF3zaPdoMC"></script>
+<script src="/assets/plugins/bootstrap-treeview/bootstrap-treeview.min.js"></script>
+<script type="text/javascript"
+	src="http://api.map.baidu.com/api?v=2.0&ak=D4Bi3270ydgA5HsnWDnmBVwF3zaPdoMC"></script>
 <script type="text/javascript">
 
         $(function () {
             seajs.use('app-attendance', function (attendance) {
-            	attendance.index($, 'moduleTable');
+            	attendance.index($, 'moduleTable','tree');
             });
+
         });
 
-    </script>
-    
-    <script type="text/javascript">
 	// 百度地图API功能
 	var map = new BMap.Map("allmap");
-	map.centerAndZoom(new BMap.Point(116.331398,39.897445),20);
+	map.centerAndZoom(new BMap.Point(),20);
 	map.enableScrollWheelZoom(true);
 
+	var geolocation = new BMap.Geolocation();
+	geolocation.getCurrentPosition(function(r){
+		if(this.getStatus() == BMAP_STATUS_SUCCESS){
+			var mk = new BMap.Marker(r.point);
+// 			map.addOverlay(mk);
+			map.panTo(r.point);
+		}
+		else {
+			alert('获取地图失败'+this.getStatus());
+		}        
+	},{enableHighAccuracy: true})
+
+	
 </script>
 @endsection

@@ -33,4 +33,11 @@ class Organization extends BaseModel
 {
     //
     protected $table = 'bd_organizations';
+    
+    public function departments($id){
+    	return Department::query()
+    					   ->where('forg_id',$id)
+    					   ->where('fpardept_id',0)
+    					   ->get();
+    }
 }
