@@ -50,7 +50,7 @@ class AttendancePolling extends Command
 
         $sql = <<<EOH
 select e.id from bd_employees e
-where NOT EXISTS (select a.id from ms_attendances a where e.id = a.femp_id  DATE_FORMAT(a.ftime,'%Y-%m-%d')='$today' and a.ftype = 1)
+where NOT EXISTS (select a.id from ms_attendances a where e.id = a.femp_id and DATE_FORMAT(a.ftime,'%Y-%m-%d')='$today' and a.ftype = 1)
 EOH;
 		$result = DB::select($sql);
 
