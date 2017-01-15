@@ -34,7 +34,7 @@ class AttendanceStatistic extends BaseModel
 {
     //
 	protected $table = 'attendance_statistics';
-	protected $with = ['beginAttendance', 'completeAttendance'];
+	protected $with = ['beginAttendance', 'completeAttendance','employee'];
 
 	public function beginAttendance(){
 		return $this->belongsTo(Attendance::class, 'fbegin_id');
@@ -42,5 +42,9 @@ class AttendanceStatistic extends BaseModel
 
 	public function completeAttendance(){
 		return $this->belongsTo(Attendance::class, 'fcomplete_id');
+	}
+	
+	public function employee(){
+		return $this->belongsTo(Employee::class, 'femp_id');
 	}
 }

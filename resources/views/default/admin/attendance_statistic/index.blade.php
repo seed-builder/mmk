@@ -79,33 +79,16 @@
 @section('js') 
 @include('admin.layout.datatable-js')
 <script src="/assets/plugins/bootstrap-treeview/bootstrap-treeview.min.js"></script>
-<script type="text/javascript"
-	src="http://api.map.baidu.com/api?v=2.0&ak=D4Bi3270ydgA5HsnWDnmBVwF3zaPdoMC"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=D4Bi3270ydgA5HsnWDnmBVwF3zaPdoMC"></script>
 <script type="text/javascript">
 
         $(function () {
             seajs.use('app-attendance', function (attendance) {
-            	attendance.index($, 'moduleTable','tree');
+            	attendance.index($, 'moduleTable','tree','allmap');
             });
 
         });
 
-	// 百度地图API功能
-	var map = new BMap.Map("allmap");
-	map.centerAndZoom(new BMap.Point(),20);
-	map.enableScrollWheelZoom(true);
-
-	var geolocation = new BMap.Geolocation();
-	geolocation.getCurrentPosition(function(r){
-		if(this.getStatus() == BMAP_STATUS_SUCCESS){
-			var mk = new BMap.Marker(r.point);
-// 			map.addOverlay(mk);
-			map.panTo(r.point);
-		}
-		else {
-			alert('获取地图失败'+this.getStatus());
-		}        
-	},{enableHighAccuracy: true})
 
 	
 </script>

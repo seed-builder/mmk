@@ -5,30 +5,9 @@ define(function(require, exports, module) {
     
     var zhCN = require('datatableZh');
 
-    exports.index = function ($, tableId,treeId) {
+    exports.index = function ($, tableId,treeId,mapId) {
 
     	
-    	var getTreeData = function () {
-        	$.ajax({
-            	url: "../../admin/employee/employeeTree",
-            	type: "POST",
-            	data: {'_token':$('meta[name="_token"]').attr('content')},
-            	dataType:'json',
-            	success:function(data){
-            		$("#" + treeId).treeview({
-                        color: "#428bca",
-                        enableLinks: true,
-                        levels: 99,
-                        data: data,
-                    });
-            		
-                },
-            });
-        	
-        }
-    	
-    	getTreeData();
-        
         var editor = new $.fn.dataTable.Editor({
             ajax: {
                 create: {
@@ -81,8 +60,8 @@ define(function(require, exports, module) {
                 {
                 	"data": 'fbegin_id',
                 	render: function ( data, type, full ) {
-                		if(full.beginAttendance!=null)
-                			return full.beginAttendance.fdate
+                		if(full.begin_attendance!=null)
+                			return full.begin_attendance.ftime
                 			else
                 				return "";
                 	}
@@ -90,8 +69,8 @@ define(function(require, exports, module) {
                 {
                 	"data": 'fcomplete_id',
                 	render: function ( data, type, full ) {
-                		if(full.completeAttendance!=null)
-                			return full.completeAttendance.fdate
+                		if(full.complete_attendance!=null)
+                			return full.complete_attendance.ftime
                 			else
                 				return "";
                 	}
@@ -117,7 +96,82 @@ define(function(require, exports, module) {
         //     table.buttons( ['.edit', '.delete'] ).enable(count > 0);
         // }
         
+        var map = new BMap.Map(mapId);
         
+        var mapShow = function(){
+        	// 百度地图API功能 
+        	map.centerAndZoom(new BMap.Point(),14);
+        	map.enableScrollWheelZoom(true);
+
+        	var geolocation = new BMap.Geolocation();
+        	geolocation.getCurrentPosition(function(r){
+        		if(this.getStatus() == BMAP_STATUS_SUCCESS){
+        			var mk = new BMap.Marker(r.point);
+//         			map.addOverlay(mk);
+        			map.panTo(r.point);
+        		}
+        		else {
+        			alert('获取地图失败'+this.getStatus());
+        		}        
+        	},{enableHighAccuracy: true})
+        }
+        
+        var mapAddOverlay = function(longitude,latitude,data){
+        	var point = new BMap.Point(longitude,latitude);
+        	var marker = new BMap.Marker(point);  // 创建标注
+			map.addOverlay(marker);              // 将标注添加到地图中
+			map.panTo(point);
+			
+			//添加信息窗口
+			var content = `<h3>`+data.employee.fname+`</h3><p>签到时间：`+data.begin_attendance.ftime+`</p><p>签退时间：`+data.complete_attendance.ftime+`</p>`
+			var infoWindow = new BMap.InfoWindow(content)  // 创建信息窗口对象 
+			marker.addEventListener("click", function(){          
+				   this.openInfoWindow(infoWindow);
+			});
+        }
+        
+        var getTreeData = function () {
+        	$.ajax({
+            	url: "../../admin/employee/employeeTree",
+            	type: "POST",
+            	data: {'_token':$('meta[name="_token"]').attr('content')},
+            	dataType:'json',
+            	success:function(data){
+            		$("#" + treeId).treeview({
+                        color: "#428bca",
+                        enableLinks: true,
+                        levels: 99,
+                        data: data,
+                    });
+            		
+            		$(".node-tree").bind('click',nodeClick)
+                },
+            });
+        	
+        	table.on( 'xhr', function () {
+        	    var data = table.ajax.json();
+        	    for(var i=0;i<data['data'].length;i++){
+        	    	var at = data['data'][i];
+        	    	if(at.begin_attendance!=null){
+        	    		mapAddOverlay(at.begin_attendance.flongitude,at.begin_attendance.flatitude,at);
+            	    }
+        	    	if(at.complete_attendance!=null){
+            	    	mapAddOverlay(at.begin_attendance.flongitude,at.begin_attendance.flatitude,at);
+            	    }
+        	    }
+        	    
+        	});
+        	
+        	$(".node-tree").on('click',nodeClick)
+        	
+        	function nodeClick(){
+        		var id=$(this).data("id");
+    			table.search( id ).draw();
+        	}
+        }
+    	
+        mapShow();
+    	getTreeData();
     }
     
 });
