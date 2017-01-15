@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\Model;
  * @SWG\Property(name="version_code", type="string", description="")
  * @SWG\Property(name="version_name", type="string", description="")
   */
-class AppUpgrade extends BaseModel
+class AppUpgrade extends Model
 {
 	//
 	protected $table = 'sys_upgrades';
