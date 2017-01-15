@@ -1,21 +1,3 @@
-<?php
-
-function exclude($column){
-	$arr = ['id', 'created_at', 'updated_at'];
-	return in_array($column->name , $arr);
-}
-function showEditorType($column){
-	if(empty($column))
-		return '';
-
-	switch ($column->name){
-		case 'created_at':
-		case 'updated_at':
-			return "'type':'datetime'";
-	}
-}
-?>
-
 /**
 *
 */
@@ -28,17 +10,17 @@ define(function(require, exports, module) {
             ajax: {
                 create: {
                     type: 'POST',
-                    url: '/admin/<?php echo e(snake_case($model,'-')); ?>',
+                    url: '/admin/app-upgrade',
                     data: {_token: $('meta[name="_token"]').attr('content')},
                 },
                 edit: {
                     type: 'PUT',
-                    url: '/admin/<?php echo e(snake_case($model,'-')); ?>/_id_',
+                    url: '/admin/app-upgrade/_id_',
                     data: {_token: $('meta[name="_token"]').attr('content')},
                 },
                 remove: {
                     type: 'DELETE',
-                    url: '/admin/<?php echo e(snake_case($model,'-')); ?>/_id_',
+                    url: '/admin/app-upgrade/_id_',
                     data: {_token: $('meta[name="_token"]').attr('content')},
                 }
             },
@@ -46,13 +28,13 @@ define(function(require, exports, module) {
             table: "#" + tableId,
             idSrc: 'id',
             fields: [
-<?php $__empty_1 = true; $__currentLoopData = $columns; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $col): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); $__empty_1 = false; ?>
-    <?php if(!exclude($col)): ?>
-        { 'label':  '<?php echo e($col->display); ?>', 'name': '<?php echo e($col->name); ?>',<?=showEditorType($col)?> },
-    <?php endif; ?>
-<?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); if ($__empty_1): ?>
-<?php endif; ?>
-]
+                { 'label':  'version_code', 'name': 'version_code', },
+                { 'label':  'version_name', 'name': 'version_name', },
+                { 'label':  'url', 'name': 'url', },
+                { 'label':  'content', 'name': 'content', },
+                { 'label':  'enforce', 'name': 'enforce', },
+                { 'label':  'upgrade_date', 'name': 'upgrade_date', },
+            ]
         });
 
         var table = $("#" + tableId).DataTable({
@@ -63,13 +45,16 @@ define(function(require, exports, module) {
             select: true,
             paging: true,
             rowId: "id",
-            ajax: '/admin/<?php echo e(snake_case($model,'-')); ?>/pagination',
+            ajax: '/admin/app-upgrade/pagination',
             columns: [
-        <?php $__empty_1 = true; $__currentLoopData = $columns; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $col): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); $__empty_1 = false; ?>
-            {  'data': '<?php echo e($col->name); ?>' },
-        <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); if ($__empty_1): ?>
-        <?php endif; ?>
-    ],
+                {  'data': 'id' },
+                {  'data': 'version_code' },
+                {  'data': 'version_name' },
+                {  'data': 'url' },
+                {  'data': 'content' },
+                {  'data': 'enforce' },
+                {  'data': 'upgrade_date' },
+            ],
             buttons: [
                 // { text: '新增', action: function () { }  },
                 // { text: '编辑', className: 'edit', enabled: false },

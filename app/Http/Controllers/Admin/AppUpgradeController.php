@@ -3,15 +3,14 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
-use App\Models\User;
+use App\Models\Busi\AppUpgrade;
 
-class UserController extends AdminController
+class AppUpgradeController extends AdminController
 {
-
 	public function newEntity(array $attributes = [])
 	{
 		// TODO: Implement newEntity() method.
-		return new User($attributes);
+		return new AppUpgrade($attributes);
 	}
 
 	/**
@@ -22,7 +21,7 @@ class UserController extends AdminController
 	public function index()
 	{
 		//
-		return view('admin.user.index');
+		return view('admin.app-upgrade.index');
 	}
 
 	/**
@@ -32,7 +31,7 @@ class UserController extends AdminController
 	*/
 	public function create()
 	{
-		return view('admin.user.create');
+		return view('admin.app-upgrade.create');
 	}
 
 	/**
@@ -43,8 +42,8 @@ class UserController extends AdminController
 	*/
 	public function edit($id)
 	{
-		$entity = User::find($id);
-		return view('admin.user.edit', ['entity' => $entity]);
+		$entity = AppUpgrade::find($id);
+		return view('admin.app-upgrade.edit', ['entity' => $entity]);
 	}
 
 	/**
@@ -64,9 +63,8 @@ class UserController extends AdminController
 	* @return  \Illuminate\Http\JsonResponse
 	*/
 	public function pagination(Request $request, $searchCols = []){
-		$searchCols = ["email","name","password","remember_token"];
+		$searchCols = ["content","upgrade_date","url","version_code","version_name"];
 		return parent::pagination($request, $searchCols);
 	}
-
 
 }

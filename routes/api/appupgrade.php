@@ -1,22 +1,22 @@
 <?php
 /**
 * @SWG\Resource(
-*  resourcePath="/user",
-*  description="User"
+*  resourcePath="/app-upgrade",
+*  description="AppUpgrade"
 * )
 */
-Route::group(['prefix' => 'user'], function () {
+Route::group(['prefix' => 'app-upgrade'], function () {
 
     /**
     * @SWG\Api(
-    *     path="/api/user",
+    *     path="/api/app-upgrade",
     *     @SWG\Operation(
     *      method="GET",
-    *      nickname="user-list",
+    *      nickname="app-upgrade-list",
     *      summary="page list",
     *      notes="page list",
     *      type="array",
-    *     items="$ref:User",
+    *     items="$ref:AppUpgrade",
     *      @SWG\Parameters(
     *          @SWG\Parameter(name="page", description="当前页", required=false, type="integer", paramType="query", defaultValue="1"),
     *          @SWG\Parameter(name="pageSize", description="页大小", required=false, type="integer", paramType="query", defaultValue="10"),
@@ -27,14 +27,14 @@ Route::group(['prefix' => 'user'], function () {
     *    )
     * )
     */
-    Route::get('/', ['as' => 'User.index', 'uses' => 'UserController@index']);
+    Route::get('/', ['as' => 'AppUpgrade.index', 'uses' => 'AppUpgradeController@index']);
 
     /**
     * @SWG\Api(
-    *     path="/api/user/{id}",
+    *     path="/api/app-upgrade/{id}",
     *     @SWG\Operation(
     *      method="GET",
-    *      nickname="user-show",
+    *      nickname="app-upgrade-show",
     *      summary="信息详情",
     *      notes="信息详情",
     *      type="Attendance",
@@ -45,63 +45,67 @@ Route::group(['prefix' => 'user'], function () {
     *  )
     * )
     */
-    Route::get('/{id}', ['as' => 'User.show', 'uses' => 'UserController@show']);
+    Route::get('/{id}', ['as' => 'AppUpgrade.show', 'uses' => 'AppUpgradeController@show']);
 
     /**
     * @SWG\Api(
-    *     path="/api/user",
+    *     path="/api/app-upgrade",
     *     @SWG\Operation(
     *      method="POST",
-    *      nickname="user-store",
+    *      nickname="app-upgrade-store",
     *      summary="新增",
     *      notes="新增",
     *      type="",
     *      @SWG\Parameters(
+    *          @SWG\Parameter(name="content", description="", required=false,type="string", paramType="form", defaultValue="" ),
     *          @SWG\Parameter(name="created_at", description="", required=true,type="string", paramType="form", defaultValue="" ),
-    *          @SWG\Parameter(name="email", description="", required=false,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="enforce", description="", required=false,type="integer", paramType="form", defaultValue="0" ),
     *          @SWG\Parameter(name="id", description="", required=false,type="integer", paramType="form", defaultValue="" ),
-    *          @SWG\Parameter(name="name", description="", required=false,type="string", paramType="form", defaultValue="" ),
-    *          @SWG\Parameter(name="password", description="", required=false,type="string", paramType="form", defaultValue="" ),
-    *          @SWG\Parameter(name="remember_token", description="", required=true,type="string", paramType="form", defaultValue="" ),
     *          @SWG\Parameter(name="updated_at", description="", required=true,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="upgrade_date", description="", required=false,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="url", description="", required=false,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="version_code", description="", required=false,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="version_name", description="", required=false,type="string", paramType="form", defaultValue="" ),
     *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
     *      )
     *  )
     * )
     */
-    Route::post('/', ['as' => 'User.store', 'uses' => 'UserController@store']);
+    Route::post('/', ['as' => 'AppUpgrade.store', 'uses' => 'AppUpgradeController@store']);
 
     /**
     * @SWG\Api(
-    *     path="/api/user/{id}",
+    *     path="/api/app-upgrade/{id}",
     *     @SWG\Operation(
     *      method="PUT",
-    *      nickname="user-update",
+    *      nickname="app-upgrade-update",
     *      summary="更新",
     *      notes="更新",
     *      type="",
     *      @SWG\Parameters(
+    *          @SWG\Parameter(name="content", description="", required=false,type="string", paramType="form", defaultValue="" ),
     *          @SWG\Parameter(name="created_at", description="", required=false,type="string", paramType="form", defaultValue="" ),
-    *          @SWG\Parameter(name="email", description="", required=false,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="enforce", description="", required=false,type="integer", paramType="form", defaultValue="0" ),
     *          @SWG\Parameter(name="id", description="", required=false,type="integer", paramType="form", defaultValue="" ),
-    *          @SWG\Parameter(name="name", description="", required=false,type="string", paramType="form", defaultValue="" ),
-    *          @SWG\Parameter(name="password", description="", required=false,type="string", paramType="form", defaultValue="" ),
-    *          @SWG\Parameter(name="remember_token", description="", required=false,type="string", paramType="form", defaultValue="" ),
     *          @SWG\Parameter(name="updated_at", description="", required=false,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="upgrade_date", description="", required=false,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="url", description="", required=false,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="version_code", description="", required=false,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="version_name", description="", required=false,type="string", paramType="form", defaultValue="" ),
     *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="" ),
     *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
     *      )
     *  )
     * )
     */
-    Route::put('/{id}', ['as' => 'User.update', 'uses' => 'UserController@update']);
+    Route::put('/{id}', ['as' => 'AppUpgrade.update', 'uses' => 'AppUpgradeController@update']);
 
     /**
     * @SWG\Api(
-    *     path="/api/user/{id}",
+    *     path="/api/app-upgrade/{id}",
     *     @SWG\Operation(
     *      method="DELETE",
-    *      nickname="user-delete",
+    *      nickname="app-upgrade-delete",
     *      summary="删除",
     *      notes="删除",
     *      type="",
@@ -112,6 +116,6 @@ Route::group(['prefix' => 'user'], function () {
     *  )
     * )
     */
-    Route::delete('/{id}', ['as' => 'User.delete', 'uses' => 'UserController@destroy']);
+    Route::delete('/{id}', ['as' => 'AppUpgrade.delete', 'uses' => 'AppUpgradeController@destroy']);
 
 });

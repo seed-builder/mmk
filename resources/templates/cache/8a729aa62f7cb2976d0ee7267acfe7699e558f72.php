@@ -25,7 +25,7 @@ use Illuminate\Database\Eloquent\Model;
  <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); if ($__empty_1): ?>
  <?php endif; ?>
  */
-class <?php echo e($model); ?> extends Model
+class <?php echo e($model); ?> extends BaseModel
 {
 	//
 	protected $table = '<?php echo e($table); ?>';

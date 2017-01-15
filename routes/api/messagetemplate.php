@@ -1,22 +1,22 @@
 <?php
 /**
 * @SWG\Resource(
-*  resourcePath="/user",
-*  description="User"
+*  resourcePath="/message-template",
+*  description="MessageTemplate"
 * )
 */
-Route::group(['prefix' => 'user'], function () {
+Route::group(['prefix' => 'message-template'], function () {
 
     /**
     * @SWG\Api(
-    *     path="/api/user",
+    *     path="/api/message-template",
     *     @SWG\Operation(
     *      method="GET",
-    *      nickname="user-list",
+    *      nickname="message-template-list",
     *      summary="page list",
     *      notes="page list",
     *      type="array",
-    *     items="$ref:User",
+    *     items="$ref:MessageTemplate",
     *      @SWG\Parameters(
     *          @SWG\Parameter(name="page", description="当前页", required=false, type="integer", paramType="query", defaultValue="1"),
     *          @SWG\Parameter(name="pageSize", description="页大小", required=false, type="integer", paramType="query", defaultValue="10"),
@@ -27,14 +27,14 @@ Route::group(['prefix' => 'user'], function () {
     *    )
     * )
     */
-    Route::get('/', ['as' => 'User.index', 'uses' => 'UserController@index']);
+    Route::get('/', ['as' => 'MessageTemplate.index', 'uses' => 'MessageTemplateController@index']);
 
     /**
     * @SWG\Api(
-    *     path="/api/user/{id}",
+    *     path="/api/message-template/{id}",
     *     @SWG\Operation(
     *      method="GET",
-    *      nickname="user-show",
+    *      nickname="message-template-show",
     *      summary="信息详情",
     *      notes="信息详情",
     *      type="Attendance",
@@ -45,63 +45,61 @@ Route::group(['prefix' => 'user'], function () {
     *  )
     * )
     */
-    Route::get('/{id}', ['as' => 'User.show', 'uses' => 'UserController@show']);
+    Route::get('/{id}', ['as' => 'MessageTemplate.show', 'uses' => 'MessageTemplateController@show']);
 
     /**
     * @SWG\Api(
-    *     path="/api/user",
+    *     path="/api/message-template",
     *     @SWG\Operation(
     *      method="POST",
-    *      nickname="user-store",
+    *      nickname="message-template-store",
     *      summary="新增",
     *      notes="新增",
     *      type="",
     *      @SWG\Parameters(
-    *          @SWG\Parameter(name="created_at", description="", required=true,type="string", paramType="form", defaultValue="" ),
-    *          @SWG\Parameter(name="email", description="", required=false,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="content", description="内容模板，变量（#name）", required=false,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="fcreate_date", description="", required=true,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="fmodify_date", description="", required=true,type="string", paramType="form", defaultValue="" ),
     *          @SWG\Parameter(name="id", description="", required=false,type="integer", paramType="form", defaultValue="" ),
-    *          @SWG\Parameter(name="name", description="", required=false,type="string", paramType="form", defaultValue="" ),
-    *          @SWG\Parameter(name="password", description="", required=false,type="string", paramType="form", defaultValue="" ),
-    *          @SWG\Parameter(name="remember_token", description="", required=true,type="string", paramType="form", defaultValue="" ),
-    *          @SWG\Parameter(name="updated_at", description="", required=true,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="title", description="标题", required=false,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="type", description="消息模板类型： 0-jpush 推送", required=false,type="integer", paramType="form", defaultValue="0" ),
     *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
     *      )
     *  )
     * )
     */
-    Route::post('/', ['as' => 'User.store', 'uses' => 'UserController@store']);
+    Route::post('/', ['as' => 'MessageTemplate.store', 'uses' => 'MessageTemplateController@store']);
 
     /**
     * @SWG\Api(
-    *     path="/api/user/{id}",
+    *     path="/api/message-template/{id}",
     *     @SWG\Operation(
     *      method="PUT",
-    *      nickname="user-update",
+    *      nickname="message-template-update",
     *      summary="更新",
     *      notes="更新",
     *      type="",
     *      @SWG\Parameters(
-    *          @SWG\Parameter(name="created_at", description="", required=false,type="string", paramType="form", defaultValue="" ),
-    *          @SWG\Parameter(name="email", description="", required=false,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="content", description="内容模板，变量（#name）", required=false,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="fcreate_date", description="", required=false,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="fmodify_date", description="", required=false,type="string", paramType="form", defaultValue="" ),
     *          @SWG\Parameter(name="id", description="", required=false,type="integer", paramType="form", defaultValue="" ),
-    *          @SWG\Parameter(name="name", description="", required=false,type="string", paramType="form", defaultValue="" ),
-    *          @SWG\Parameter(name="password", description="", required=false,type="string", paramType="form", defaultValue="" ),
-    *          @SWG\Parameter(name="remember_token", description="", required=false,type="string", paramType="form", defaultValue="" ),
-    *          @SWG\Parameter(name="updated_at", description="", required=false,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="title", description="标题", required=false,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="type", description="消息模板类型： 0-jpush 推送", required=false,type="integer", paramType="form", defaultValue="0" ),
     *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="" ),
     *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
     *      )
     *  )
     * )
     */
-    Route::put('/{id}', ['as' => 'User.update', 'uses' => 'UserController@update']);
+    Route::put('/{id}', ['as' => 'MessageTemplate.update', 'uses' => 'MessageTemplateController@update']);
 
     /**
     * @SWG\Api(
-    *     path="/api/user/{id}",
+    *     path="/api/message-template/{id}",
     *     @SWG\Operation(
     *      method="DELETE",
-    *      nickname="user-delete",
+    *      nickname="message-template-delete",
     *      summary="删除",
     *      notes="删除",
     *      type="",
@@ -112,6 +110,6 @@ Route::group(['prefix' => 'user'], function () {
     *  )
     * )
     */
-    Route::delete('/{id}', ['as' => 'User.delete', 'uses' => 'UserController@destroy']);
+    Route::delete('/{id}', ['as' => 'MessageTemplate.delete', 'uses' => 'MessageTemplateController@destroy']);
 
 });

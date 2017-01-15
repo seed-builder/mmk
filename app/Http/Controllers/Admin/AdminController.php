@@ -8,7 +8,12 @@ use Validator;
 
 abstract class AdminController extends Controller
 {
-    //
+	public function __construct()
+	{
+		$this->middleware('auth');
+	}
+
+	//
 	public abstract function newEntity(array $attributes = []);
 
 	/**

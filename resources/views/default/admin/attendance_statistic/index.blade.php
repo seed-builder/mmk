@@ -24,7 +24,7 @@
 <!-- Main content -->
 <section class="content">
 	<div class="row">
-		<div class="col-md-2" >
+		<div class="col-md-3" >
 			<div class="box">
 				<div class="box-header">
 					<h3 class="box-title">组织架构信息</h3>
@@ -35,7 +35,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-md-10">
+		<div class="col-md-9">
 				<div class="box">
 					<div class="box-header">
 						<h3 class="box-title">考勤地图定位</h3>

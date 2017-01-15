@@ -1,10 +1,3 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: john
- * Date: 2017-01-11
- * Time: 13:35
- */
-
-Route::match(['get', 'post'], 'user/login', ['uses' => 'UserController@login']);
+Route::get('user/pagination', ['uses' => 'UserController@pagination']);
 Route::resource('user', 'UserController');

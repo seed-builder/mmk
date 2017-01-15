@@ -3,15 +3,14 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
-use App\Models\User;
+use App\Models\Busi\MessageTemplate;
 
-class UserController extends AdminController
+class MessageTemplateController extends AdminController
 {
-
 	public function newEntity(array $attributes = [])
 	{
 		// TODO: Implement newEntity() method.
-		return new User($attributes);
+		return new MessageTemplate($attributes);
 	}
 
 	/**
@@ -22,7 +21,7 @@ class UserController extends AdminController
 	public function index()
 	{
 		//
-		return view('admin.user.index');
+		return view('admin.message-template.index');
 	}
 
 	/**
@@ -32,7 +31,7 @@ class UserController extends AdminController
 	*/
 	public function create()
 	{
-		return view('admin.user.create');
+		return view('admin.message-template.create');
 	}
 
 	/**
@@ -43,8 +42,8 @@ class UserController extends AdminController
 	*/
 	public function edit($id)
 	{
-		$entity = User::find($id);
-		return view('admin.user.edit', ['entity' => $entity]);
+		$entity = MessageTemplate::find($id);
+		return view('admin.message-template.edit', ['entity' => $entity]);
 	}
 
 	/**
@@ -64,9 +63,8 @@ class UserController extends AdminController
 	* @return  \Illuminate\Http\JsonResponse
 	*/
 	public function pagination(Request $request, $searchCols = []){
-		$searchCols = ["email","name","password","remember_token"];
+		$searchCols = ["content","title"];
 		return parent::pagination($request, $searchCols);
 	}
-
 
 }

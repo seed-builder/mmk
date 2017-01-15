@@ -3,24 +3,15 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
+use App\Models\Busi\User;
 
 class UserController extends ApiController
 {
-    public function index()
-    {
-        //
-        return response('1231 user',200);
-    }
-
-    //
-    public function login(){
-        $data = [
-            "id" => 0,
-            "name" => "test",
-            "email" => "test",
-            "password" => "123456"
-        ];
-        return response($data, 200);
-    }
+	//
+	public function newEntity(array $attributes = [])
+	{
+		// TODO: Implement newEntity() method.
+		return new User($attributes);
+	}
 }

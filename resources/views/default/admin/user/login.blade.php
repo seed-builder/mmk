@@ -7,15 +7,15 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.6 -->
-    <link rel="stylesheet" href="/packages/admin/AdminLTE/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/plugins/AdminLTE/bootstrap/css/bootstrap.min.css">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="/packages/admin/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/plugins/font-awesome/css/font-awesome.min.css">
     <!-- Ionicons -->
-    <link rel="stylesheet" href="/packages/admin/ionicons/css/ionicons.min.css">
+    <link rel="stylesheet" href="/assets/plugins/ionicons/css/ionicons.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="/packages/admin/AdminLTE/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="/assets/plugins/AdminLTE/dist/css/AdminLTE.min.css">
     <!-- iCheck -->
-    <link rel="stylesheet" href="/packages/admin/AdminLTE/plugins/iCheck/square/blue.css">
+    <link rel="stylesheet" href="/assets/plugins/iCheck/square/blue.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -27,20 +27,20 @@
 <body class="hold-transition login-page">
 <div class="login-box">
     <div class="login-logo">
-        <b>Admin</b>LTE
+        <b>管理系统登陆</b>
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
         <p class="login-box-msg">Sign in to start your session</p>
 
-        <form action="/admin/user/login" method="post">
+        <form action="/admin/login" method="post">
             {!! csrf_field() !!}
             <div class="form-group has-feedback">
-                <input type="text" class="form-control" placeholder="user name">
+                <input type="text" name="name" class="form-control" placeholder="user name">
                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">
-                <input type="password" class="form-control" placeholder="password">
+                <input type="password" name="password" class="form-control" placeholder="password">
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             </div>
             <div class="row">
@@ -68,11 +68,11 @@
 <!-- /.login-box -->
 
 <!-- jQuery 2.2.3 -->
-<script src="/packages/admin/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="/assets/plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- Bootstrap 3.3.6 -->
-<script src="/packages/admin/AdminLTE/bootstrap/js/bootstrap.min.js"></script>
+<script src="/assets/plugins/AdminLTE/bootstrap/js/bootstrap.min.js"></script>
 <!-- iCheck -->
-<script src="/packages/admin/AdminLTE/plugins/iCheck/icheck.min.js"></script>
+<script src="/assets/plugins/iCheck/icheck.min.js"></script>
 <script>
     $(function () {
         $('input').iCheck({
