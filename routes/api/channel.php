@@ -5,7 +5,7 @@
 *  description="Channel"
 * )
 */
-Route::group(['prefix' => 'channel'], function () {
+Route::group(['prefix' => 'channel', 'middleware' => 'api.sign'], function () {
 
     /**
     * @SWG\Api(

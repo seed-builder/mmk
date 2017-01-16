@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\ApiController;
-use App\Models\Channel;
+use App\Models\Busi\Channel;
 
 class ChannelController extends ApiController
 {

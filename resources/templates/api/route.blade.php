@@ -12,7 +12,7 @@ if(!function_exists('dataTypeFilter')){
 *  description="{{$model}}"
 * )
 */
-Route::group(['prefix' => '{{snake_case($model,'-')}}'], function () {
+Route::group(['prefix' => '{{snake_case($model,'-')}}', 'middleware' => 'api.sign'], function () {
 
     /**
     * @SWG\Api(

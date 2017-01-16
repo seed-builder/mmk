@@ -5,7 +5,7 @@
 *  description="User"
 * )
 */
-Route::group(['prefix' => 'user'], function () {
+Route::group(['prefix' => 'user', 'middleware' => 'api.sign'], function () {
 
     /**
     * @SWG\Api(

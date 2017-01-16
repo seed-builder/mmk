@@ -5,7 +5,7 @@
 *  description="AppUpgrade"
 * )
 */
-Route::group(['prefix' => 'app-upgrade'], function () {
+Route::group(['prefix' => 'app-upgrade', 'middleware' => 'api.sign'], function () {
 
     /**
     * @SWG\Api(
