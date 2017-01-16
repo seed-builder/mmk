@@ -27,7 +27,7 @@ class AttendanceStatisticController extends AdminController
 	 * @return \Illuminate\Http\JsonResponse
 	 */
 	public function pagination(Request $request, $searchCols = []){
-		$searchCols = ['femp_id'];
+		$searchCols = ['femp_id','fday'];
 		return parent::pagination($request, $searchCols);
 	}
 

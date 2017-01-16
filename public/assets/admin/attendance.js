@@ -78,7 +78,6 @@ define(function(require, exports, module) {
             ],
             buttons: [
                 // { text: '新增', action: function () { }  },
-                // { text: '编辑', className: 'edit', enabled: false },
                 // { text: '删除', className: 'delete', enabled: false },
 //                {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: editor},
 //                {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: editor},
@@ -96,6 +95,7 @@ define(function(require, exports, module) {
         //     table.buttons( ['.edit', '.delete'] ).enable(count > 0);
         // }
         table.on( 'xhr', function () {
+        	map.clearOverlays();
             var data = table.ajax.json();
             for(var i=0;i<data['data'].length;i++){
                 var at = data['data'][i];
@@ -158,13 +158,30 @@ define(function(require, exports, module) {
                         onNodeSelected: function(event, data) {
                             // Your logic goes here
 							//alert(data.dataid);
-                            table.search( data.dataid ).draw();
+//                            table.search( data.dataid ).draw();
+                        	searchtable(data.dataid);
                         }
                     });
                 },
             });
         }
+        
+        var searchtable = function(emp_id){
+        	table.columns( 1 ).search( emp_id )
+        		 .columns( 2 ).search( $('#datepicker').val() )
+        		 .draw(0);
+        }
+        
+        var datepicker = $( "#datepicker" ).datepicker({
+        		format:'yyyy-mm-dd',
+        		language: 'zh-CN',
+        });
+        
+        datepicker.on('changeDate', function(ev){
+        	searchtable($(".node-selected").data('id'));
+        });
     	
+        
         mapShow();
     	getTreeData();
     }
