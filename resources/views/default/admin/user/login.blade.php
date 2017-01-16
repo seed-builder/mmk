@@ -32,7 +32,7 @@
     <!-- /.login-logo -->
     <div class="login-box-body">
         <p class="login-box-msg">Sign in to start your session</p>
-
+        @include('admin.layout.flash-message')
         <form action="/admin/login" method="post">
             {!! csrf_field() !!}
             <div class="form-group has-feedback">
@@ -47,7 +47,7 @@
                 <div class="col-xs-8">
                     <div class="checkbox icheck">
                         <label>
-                            <input type="checkbox"> Remember Me
+                            <input type="checkbox" name="remember"> Remember Me
                         </label>
                     </div>
                 </div>

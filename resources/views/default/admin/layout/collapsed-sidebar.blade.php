@@ -267,7 +267,7 @@
     })
 </script>
 @yield('js')
-@include('admin.layout.flash-message')
+@include('admin.layout.toastr-message')
 
 </body>
 </html>

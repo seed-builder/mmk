@@ -1,15 +1,25 @@
-<script type="text/javascript">
-    $(function () {
+<div class="row" style="margin-top: 10px;">
+    <div class="col-md-12">
         @if (Session::has('message'))
-          toastr.warning("{{ Session::get('message') }}", {timeOut: 2000});
+            <div class="alert fade in alert-info"> <i class="icon-remove close" data-dismiss="alert"></i> {{ Session::get('message') }}</div>
         @endif
-
         @if (Session::has('success'))
-          toastr.success("{{ Session::get('success') }}", {timeOut: 2000});
+            <div class="alert fade in  alert-success"> <i class="icon-remove close" data-dismiss="alert"></i> {{ Session::get('success') }}</div>
+        @endif
+        @if (Session::has('error'))
+            <div class="alert fade in  alert-danger"> <i class="icon-remove close" data-dismiss="alert"></i> {{ Session::get('error') }}</div>
         @endif
 
-        @if (Session::has('error'))
-          toastr.error("{{ Session::get('error') }}", {timeOut: 2000});
+        @if (!empty($errors->all()))
+            <div class="alert fade in  alert-danger"> <i class="icon-remove close" data-dismiss="alert"></i>
+				<?php $error_arr =  $errors->all();?>
+                @foreach ($error_arr as $k=>$item)
+                    @if ($k >0)
+                        |
+                    @endif
+                    {{$item}}
+                @endforeach
+            </div>
         @endif
-    });
-</script>
+    </div>
+</div>
