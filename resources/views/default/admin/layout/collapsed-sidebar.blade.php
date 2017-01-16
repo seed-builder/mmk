@@ -259,9 +259,10 @@
             	var node = $(obj).prev();
             	var node_i = $(node).find("i").prop("outerHTML");
             	var node_span = $(node).find("span").prop("outerHTML");
-            	console.log(node)
-            	var navigation = "<li>"+node_i+"  "+node_span+"</li><li>"+$(this).text()+"</li>"
-            	$(".breadcrumb").html(navigation);
+            	var node_text = $(node).find("span").text();
+            	var title = "<h1>"+node_text+" <small>"+$(this).text()+"</small></h1><ol class=\"breadcrumb\"><li>"+node_i+"  "+node_span+"</li><li>"+$(this).text()+"</li></ol>"
+            	
+            	$(".content-header").html(title);
             }
         })
     })
