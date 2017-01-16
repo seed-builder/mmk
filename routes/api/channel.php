@@ -2,7 +2,7 @@
 /**
 * @SWG\Resource(
 *  resourcePath="/channel",
-*  description="Channel"
+*  description="Channel 渠道"
 * )
 */
 Route::group(['prefix' => 'channel', 'middleware' => 'api.sign'], function () {
@@ -13,8 +13,8 @@ Route::group(['prefix' => 'channel', 'middleware' => 'api.sign'], function () {
     *     @SWG\Operation(
     *      method="GET",
     *      nickname="channel-list",
-    *      summary="page list",
-    *      notes="page list",
+    *      summary="渠道列表",
+    *      notes="渠道列表",
     *      type="array",
     *     items="$ref:Channel",
     *      @SWG\Parameters(
@@ -35,8 +35,8 @@ Route::group(['prefix' => 'channel', 'middleware' => 'api.sign'], function () {
     *     @SWG\Operation(
     *      method="GET",
     *      nickname="channel-show",
-    *      summary="信息详情",
-    *      notes="信息详情",
+    *      summary="渠道信息详情",
+    *      notes="渠道信息详情",
     *      type="Attendance",
     *      @SWG\Parameters(
     *          @SWG\Parameter(name="id", description="id", required=true, type="integer", paramType="path", defaultValue="1"),
@@ -53,8 +53,8 @@ Route::group(['prefix' => 'channel', 'middleware' => 'api.sign'], function () {
     *     @SWG\Operation(
     *      method="POST",
     *      nickname="channel-store",
-    *      summary="新增",
-    *      notes="新增",
+    *      summary="新增渠道",
+    *      notes="新增渠道",
     *      type="",
     *      @SWG\Parameters(
     *          @SWG\Parameter(name="fcreate_date", description="创建时间", required=true,type="string", paramType="form", defaultValue="" ),
@@ -81,8 +81,8 @@ Route::group(['prefix' => 'channel', 'middleware' => 'api.sign'], function () {
     *     @SWG\Operation(
     *      method="PUT",
     *      nickname="channel-update",
-    *      summary="更新",
-    *      notes="更新",
+    *      summary="更新渠道",
+    *      notes="更新渠道",
     *      type="",
     *      @SWG\Parameters(
     *          @SWG\Parameter(name="fcreate_date", description="创建时间", required=false,type="string", paramType="form", defaultValue="" ),
@@ -110,8 +110,8 @@ Route::group(['prefix' => 'channel', 'middleware' => 'api.sign'], function () {
     *     @SWG\Operation(
     *      method="DELETE",
     *      nickname="channel-delete",
-    *      summary="删除",
-    *      notes="删除",
+    *      summary="删除渠道",
+    *      notes="删除渠道",
     *      type="",
     *      @SWG\Parameters(
     *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="1" ),
