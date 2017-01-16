@@ -95,7 +95,20 @@ define(function(require, exports, module) {
         //     var count = table.rows( { selected: true } ).count();
         //     table.buttons( ['.edit', '.delete'] ).enable(count > 0);
         // }
-        
+        table.on( 'xhr', function () {
+            var data = table.ajax.json();
+            for(var i=0;i<data['data'].length;i++){
+                var at = data['data'][i];
+                if(at.begin_attendance!=null){
+                    mapAddOverlay(at.begin_attendance.flongitude,at.begin_attendance.flatitude,at);
+                }
+                if(at.complete_attendance!=null){
+                    mapAddOverlay(at.begin_attendance.flongitude,at.begin_attendance.flatitude,at);
+                }
+            }
+
+        });
+
         var map = new BMap.Map(mapId);
         
         var mapShow = function(){
@@ -142,32 +155,14 @@ define(function(require, exports, module) {
                         enableLinks: true,
                         levels: 99,
                         data: data,
+                        onNodeSelected: function(event, data) {
+                            // Your logic goes here
+							//alert(data.dataid);
+                            table.search( data.dataid ).draw();
+                        }
                     });
-            		
-            		$(".node-tree").bind('click',nodeClick)
                 },
             });
-        	
-        	table.on( 'xhr', function () {
-        	    var data = table.ajax.json();
-        	    for(var i=0;i<data['data'].length;i++){
-        	    	var at = data['data'][i];
-        	    	if(at.begin_attendance!=null){
-        	    		mapAddOverlay(at.begin_attendance.flongitude,at.begin_attendance.flatitude,at);
-            	    }
-        	    	if(at.complete_attendance!=null){
-            	    	mapAddOverlay(at.begin_attendance.flongitude,at.begin_attendance.flatitude,at);
-            	    }
-        	    }
-        	    
-        	});
-        	
-        	$(".node-tree").on('click',nodeClick)
-        	
-        	function nodeClick(){
-        		var id=$(this).data("id");
-    			table.search( id ).draw();
-        	}
         }
     	
         mapShow();

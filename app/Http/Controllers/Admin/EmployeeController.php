@@ -46,11 +46,11 @@ class EmployeeController extends AdminController
 		
 		foreach ($orgs as $ok=>$ov){
 			$pardepts = $ov->departments($ov->id);
-			$par_dept = $this->toTextArray($pardepts); //组织下的所有父部门
+			$par_dept = $this->toTextArray($pardepts, false); //组织下的所有父部门
 			
 			foreach ($pardepts as $dk=>$dv){
 				$childdepts = $dv->child_depart($dv->id);
-				$child_dept = $this->toTextArray($childdepts); //部门下的子部门
+				$child_dept = $this->toTextArray($childdepts, false); //部门下的子部门
 				
 				foreach ($childdepts as $cdk=>$cdv){
 					$emps = $cdv->employees()->get();
@@ -65,7 +65,7 @@ class EmployeeController extends AdminController
 				
 			}
 			
-			$org = $this->toTextArray($orgs);
+			$org = $this->toTextArray($orgs, false);
 			$org[$ok]['nodes'] = $par_dept;
 		}
 			
@@ -73,12 +73,13 @@ class EmployeeController extends AdminController
 		return json_encode($org);
 	}
 
-	protected function toTextArray($datas){
+	protected function toTextArray($datas, $selectable = true){
 		$rs = [];
 		foreach ($datas as $d){
 			$rs[]=array(
-					'text' => $d->fname,
-					'dataid' => $d->id,
+				'text' => $d->fname,
+				'dataid' => $d->id,
+				'selectable' => $selectable
 			);
 		}
 		
