@@ -10,17 +10,17 @@ define(function(require, exports, module) {
             ajax: {
                 create: {
                     type: 'POST',
-                    url: '/admin/role',
+                    url: '/admin/permission',
                     data: {_token: $('meta[name="_token"]').attr('content')},
                 },
                 edit: {
                     type: 'PUT',
-                    url: '/admin/role/_id_',
+                    url: '/admin/permission/_id_',
                     data: {_token: $('meta[name="_token"]').attr('content')},
                 },
                 remove: {
                     type: 'DELETE',
-                    url: '/admin/role/_id_',
+                    url: '/admin/permission/_id_',
                     data: {_token: $('meta[name="_token"]').attr('content')},
                 }
             },
@@ -42,7 +42,7 @@ define(function(require, exports, module) {
             select: true,
             paging: true,
             rowId: "id",
-            ajax: '/admin/role/pagination',
+            ajax: '/admin/permission/pagination',
             columns: [
                 {  'data': 'id' },
                 {  'data': 'name' },

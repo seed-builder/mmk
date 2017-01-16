@@ -31,7 +31,7 @@ define(function(require, exports, module) {
                 { 'label':  'version_code', 'name': 'version_code', },
                 { 'label':  'version_name', 'name': 'version_name', },
                 { 'label':  'url', 'name': 'url', },
-                { 'label':  'content', 'name': 'content', },
+                { 'label':  'content', 'name': 'content', 'type': 'textarea'},
                 { 'label':  'enforce', 'name': 'enforce', },
                 { 'label':  'upgrade_date', 'name': 'upgrade_date', },
             ]

@@ -1,22 +1,19 @@
 @extends('admin.layout.collapsed-sidebar')
-
 @section('styles')
-
     @include('admin.layout.datatable-css')
-
 @endsection
 
 @section('content')
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            用户权限管理
-            <small>角色管理</small>
+            top module
+            <small>sys_roles</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="/admin/"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="#">用户权限管理</a></li>
-            <li class="active">角色管理</li>
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="#">top module</a></li>
+            <li class="active">sys_roles</li>
         </ol>
     </section>
 
@@ -34,11 +31,10 @@
                         <table id="moduleTable" class="table table-bordered table-hover">
                             <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>id</th>
                                 <th>名称</th>
                                 <th>显示名称</th>
                                 <th>描述</th>
-                                <th>图标</th>
                                 <th>创建时间</th>
                                 <th>修改时间</th>
                             </tr>
@@ -55,16 +51,14 @@
     </section>
 
 @endsection
-
 @section('js')
     @include('admin.layout.datatable-js')
     <script type="text/javascript">
-
         $(function () {
-            seajs.use('app-role', function (role) {
-                role.index($, 'moduleTable');
+            seajs.use('admin/role.js', function (app) {
+                app.index($, 'moduleTable');
             });
         });
-
     </script>
+
 @endsection

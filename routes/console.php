@@ -22,8 +22,8 @@ Artisan::command('inspire', function () {
 Artisan::command('test', function () {
 	$this->comment('begin ...');
 	$db = new DbHelper();
-	$columns = $db->getColumns('bd_channels');
-	$builder = new CodeBuilder('Channel', 'bd_channels', $columns);
+	$columns = $db->getColumns('sys_permissions');
+	$builder = new CodeBuilder('Permission', 'sys_permissions', $columns);
 	$builder->createFiles();
 	$this->comment('end ...');
 })->describe('philo blade test');

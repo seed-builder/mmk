@@ -1,9 +1,3 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: john
- * Date: 2017-01-11
- * Time: 13:35
- */
-
+Route::get('permission/pagination', ['uses' => 'PermissionController@pagination']);
 Route::resource('permission', 'PermissionController');

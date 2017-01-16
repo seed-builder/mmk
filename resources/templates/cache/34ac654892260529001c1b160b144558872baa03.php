@@ -13,7 +13,7 @@ if(!function_exists('dataTypeFilter')){
 *  description="<?php echo e($model); ?>"
 * )
 */
-Route::group(['prefix' => '<?php echo e(snake_case($model,'-')); ?>'], function () {
+Route::group(['prefix' => '<?php echo e(snake_case($model,'-')); ?>', 'middleware' => 'api.sign'], function () {
 
     /**
     * @SWG\Api(
