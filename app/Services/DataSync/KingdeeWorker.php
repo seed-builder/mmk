@@ -31,7 +31,6 @@ class KingdeeWorker extends DbWorker
 	 * @param $name - 表名
 	 * @param $op - 0-新增， 1-修改， 2-删除
 	 * @param array $data - 数据行
-	 * @return mixed|void
 	 */
 	public function send($name, $op, array $data)
 	{
@@ -42,7 +41,7 @@ class KingdeeWorker extends DbWorker
 		//if(!empty($re))
 		$result = $this->sendData($table, $op, $data, $cookie_jar);
 		LogSvr::KingdeeSync()->info('$result  : ' . $result);
-		return json_decode($result, true);
+		//return json_decode($result, true);
 	}
 
 	protected function login($cookie_jar = null){

@@ -72,27 +72,27 @@ class DataSyncSvr
 		}
 	}
 
-	public function addWorker($name, $workerClass){
-		if(!array_key_exists($name, $this->workers)){
-			$this->workers[$name][] = [];
+	public function registerWorker($workerClass, $group='default'){
+		if(!array_key_exists($group, $this->workers)){
+			$this->workers[$group][] = [];
 		}
-		if(!in_array($workerClass, $this->workers[$name])){
-			$this->workers[$name][] = $workerClass;
-		}
-	}
-
-	public function addFilter($name, $filterClass){
-		if(!array_key_exists($name, $this->filters)){
-			$this->filters[$name] = [];
-		}
-		if(!in_array($filterClass, $this->filters[$name])){
-			$this->filters[$name][] = $filterClass;
+		if(!in_array($workerClass, $this->workers[$group])){
+			$this->workers[$group][] = $workerClass;
 		}
 	}
 
-	public function getWorkers($name){
-		if(array_key_exists($name, $this->workers)){
-			$workers = $this->workers[$name];
+	public function registerFilter($filterClass, $group='default'){
+		if(!array_key_exists($group, $this->filters)){
+			$this->filters[$group] = [];
+		}
+		if(!in_array($filterClass, $this->filters[$group])){
+			$this->filters[$group][] = $filterClass;
+		}
+	}
+
+	public function getWorkers($group){
+		if(array_key_exists($group, $this->workers)){
+			$workers = $this->workers[$group];
 		}else{
 			$workers = $this->workers['default'];
 		}
@@ -106,9 +106,9 @@ class DataSyncSvr
 		return $instances;
 	}
 
-	public function getFilters($name){
-		if(array_key_exists($name, $this->filters)){
-			$filters = $this->filters[$name];
+	public function getFilters($group){
+		if(array_key_exists($group, $this->filters)){
+			$filters = $this->filters[$group];
 		}else{
 			$filters = $this->filters['default'];
 		}

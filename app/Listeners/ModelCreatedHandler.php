@@ -35,13 +35,16 @@ class ModelCreatedHandler implements ShouldQueue
         LogSvr::Sync()->info('ModelCreatedHandler: '.json_encode($event->model));
         $map = ModelMap::where('table', $event->model->getTable())->first();
         if(!empty($map)){
-            $result = KingdeeSyncData::add($map->foreign_table, $event->model);
+	        $dataSync = app('dataSync');
+	        $dataSync->send($map->foreign_table, 0,  $event->model);
+
+            //$result = KingdeeSyncData::add($map->foreign_table, $event->model);
 
 //	        if(empty($result) || $result['Result'] != 1){
 //		        LogSvr::Sync()->info('ModelCreatedHandler fail: ');
 //		        $this->fail('result is null');
 //	        }
-	        LogSvr::Sync()->info('ModelCreatedHandler result: ' . json_encode( $result ) );
+	        //LogSvr::Sync()->info('ModelCreatedHandler result: ' . json_encode( $result ) );
         }
     }
 }

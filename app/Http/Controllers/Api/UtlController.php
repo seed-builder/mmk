@@ -101,7 +101,7 @@ class UtlController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function syncDB(Request $request){
+    public function syncDB2(Request $request){
         $table = $request->input('table');
         $op = $request->input('op');
         $data = json_decode( $request->input('data', '') , true );
@@ -149,6 +149,16 @@ class UtlController extends Controller
         }
 
         return response(['affected' => $affected], 200);
+    }
+
+    public function syncDB(Request $request){
+	    $table = $request->input('table');
+	    $op = $request->input('op');
+	    $data = json_decode( $request->input('data', '') , true );
+	    $affected = 1;
+	    $dataSync = app('dataSync');
+	    $dataSync->accept($table, $op, $data);
+	    return response(['affected' => $affected], 200);
     }
 
     /**
