@@ -3,7 +3,7 @@
 namespace App\Models\Busi;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\Services\LogSvr;
 
 /**
  * 门店
@@ -97,11 +97,19 @@ class Store extends BaseModel
 	    });
 
 	    static::updating(function ($store) {
+		    //LogSvr::storeUpdate()->info(json_encode($store));
 	    	if($store->fline_id){
 				$entity = VisitLineStore::where('fstore_id', $store->id)->first();
 				if($entity){
-					$entity->fline_id = $store->fline_id;
+					$entity->fill(['fline_id' => $store->fline_id]);
 					$entity->save();
+				}else{
+					VisitLineStore::create([
+							'fline_id' => $store->fline_id,
+							'fstore_id' => $store->id,
+							'femp_id' => $store->femp_id
+						]
+					);
 				}
 		    }else{
 	    		$entities = VisitLineStore::where('fstore_id', $store->id)->get();
@@ -119,6 +127,6 @@ class Store extends BaseModel
 		    });
 		    VisitLineStore::destroy($ids);
 	    });
-	    parent::boot();
+	    //parent::boot();
     }
 }
