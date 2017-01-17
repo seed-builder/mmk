@@ -89,6 +89,7 @@ Route::group(['prefix' => 'store', 'middleware' => 'api.sign'], function () {
                 @SWG\Parameter(name="ftelephone", description="联系人电话", required=false,type="string", paramType="form", defaultValue="" ),
                 @SWG\Parameter(name="ftitle", description="联系人职位", required=false,type="string", paramType="form", defaultValue="" ),
                 @SWG\Parameter(name="ftran_cust_id", description="配送商id", required=false,type="integer", paramType="form", defaultValue="0" ),
+                @SWG\Parameter(name="fline_id", description="线路id", required=false,type="string", paramType="form", defaultValue="" ),
      *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
      *      )
      *  )
@@ -138,6 +139,7 @@ Route::group(['prefix' => 'store', 'middleware' => 'api.sign'], function () {
                 @SWG\Parameter(name="ftelephone", description="联系人电话", required=false,type="string", paramType="form", defaultValue="" ),
                 @SWG\Parameter(name="ftitle", description="联系人职位", required=false,type="string", paramType="form", defaultValue="" ),
                 @SWG\Parameter(name="ftran_cust_id", description="配送商id", required=false,type="integer", paramType="form", defaultValue="0" ),
+     *          @SWG\Parameter(name="fline_id", description="线路id", required=false,type="string", paramType="form", defaultValue="" ),
                 @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="" ),
      *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
      *      )
