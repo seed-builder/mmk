@@ -169,7 +169,7 @@ define(function(require, exports, module) {
         var searchtable = function(emp_id){
         	table.columns( 1 ).search( emp_id )
         		 .columns( 2 ).search( $('#datepicker').val() )
-        		 .draw(0);
+        		 .draw();
         }
         
         var datepicker = $( "#datepicker" ).datepicker({

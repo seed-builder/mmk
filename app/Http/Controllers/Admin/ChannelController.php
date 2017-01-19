@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
 use App\Models\Busi\Channel;
+use App\Models\Busi\ChannelGroup;
 
 class ChannelController extends AdminController
 {
@@ -21,7 +22,13 @@ class ChannelController extends AdminController
 	public function index()
 	{
 		//
-		return view('admin.channel.index');
+		$all = ChannelGroup::all();
+		$groups = $all->map(function ($item){
+			return ['label' => $item->fname, 'value' => $item->id];
+		});
+		$groups[]=['label' => '无', 'value' => 0];
+		
+		return view('admin.channel.index',compact('groups'));
 	}
 
 	/**

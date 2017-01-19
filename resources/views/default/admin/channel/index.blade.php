@@ -20,10 +20,44 @@
     <!-- Main content -->
     <section class="content">
         <div class="row">
-            <div class="col-xs-12">
+        	<div class="col-md-3">
+        		<div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">组织架构信息</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+
+                        <div id="tree"></div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+        	</div>
+            <div class="col-md-9">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">bd_channels列表</h3>
+                        <h3 class="box-title">渠道组列表</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+
+                        <table id="groupTable" class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>渠道代码</th>
+                                <th>渠道名称</th>
+                                <th>上级渠道</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">渠道列表</h3>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
@@ -31,17 +65,11 @@
                         <table id="moduleTable" class="table table-bordered table-hover">
                             <thead>
                             <tr>
-                                <th>fcreate_date</th>
-                                <th>fcreator_id</th>
-                                <th>fdocument_status</th>
-                                <th>fgroup_id</th>
-                                <th>fmodify_date</th>
-                                <th>fmodify_id</th>
-                                <th>fname</th>
-                                <th>fnumber</th>
-                                <th>fremark</th>
-                                <th>fsort</th>
-                                <th>id</th>
+                                <th>序号</th>
+                                <th>渠道代码</th>
+                                <th>渠道名称</th>
+                                <th>所属渠道组</th>
+                                <th>备注</th>
                             </tr>
                             </thead>
                         </table>
@@ -58,10 +86,13 @@
 @endsection
 @section('js')
     @include('admin.layout.datatable-js')
+    <script src="/assets/plugins/bootstrap-treeview/bootstrap-treeview.min.js"></script>
     <script type="text/javascript">
         $(function () {
+        	var groups = {!! json_encode($groups) !!}
+        	
             seajs.use('admin/channel.js', function (app) {
-                app.index($, 'moduleTable');
+                app.index($, 'moduleTable','groupTable','tree',groups);
             });
         });
     </script>

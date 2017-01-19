@@ -28,4 +28,10 @@ class Channel extends BaseModel
 	//
 	protected $table = 'bd_channels';
 	protected $guarded = ['id'];
+	
+	protected $with = ['group'];
+	
+public function group(){
+        return $this->hasOne(ChannelGroup::class, 'id', 'fgroup_id');
+    }
 }

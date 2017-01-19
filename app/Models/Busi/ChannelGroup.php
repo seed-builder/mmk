@@ -37,6 +37,7 @@ class ChannelGroup extends BaseModel
 	];
 	protected $visible = ['id', 'fnumber', 'fname', 'fparent_id', 'fsort', 'children_count', 'channel_count'];
 	protected $appends = ['children_count', 'channel_count'];
+	
 
 	public function getChildrenCountAttribute(){
 		$c = static::where('fparent_id', $this->id)->count();
@@ -47,4 +48,14 @@ class ChannelGroup extends BaseModel
 		$c = Channel::where('fgroup_id', $this->id)->count();
 		return $c;
 	}
+	
+	public function childrenGroup(){
+		return ChannelGroup::query()->where('fparent_id',$this->id)->get();
+	}
+	
+	public function parentGroup(){
+// 		return ChannelGroup::query()->where('id',$this->fparent_id)->first();
+// 		return $this->hasOne(self::class, 'id', 'fparent_id');
+	}
+	
 }

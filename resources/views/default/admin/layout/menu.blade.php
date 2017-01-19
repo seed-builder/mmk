@@ -50,7 +50,7 @@
                     <li><a href="{{url('admin/employee/index')}}"><i class="fa fa-circle-o"></i></i> 员工信息</a></li>
                     <li><a href="{{url('admin/department/index')}}"><i class="fa fa-circle-o"></i></i> 部门信息</a></li>
 <!--                     <li><a href="#"><i class="fa fa-circle-o"></i></i> 产品信息</a></li> -->
-<!--                     <li><a href="#"><i class="fa fa-circle-o"></i></i> 渠道信息</a></li> -->
+                    <li><a href="{{url('admin/channel/index')}}"><i class="fa fa-circle-o"></i></i> 渠道信息</a></li>
 <!--                     <li><a href="#"><i class="fa fa-circle-o"></i></i> 区域经营品项</a></li> -->
 <!--                     <li><a href="#"><i class="fa fa-circle-o"></i></i> 主竞品</a></li> -->
 <!--                     <li><a href="#"><i class="fa fa-circle-o"></i></i> 重点品项</a></li> -->
