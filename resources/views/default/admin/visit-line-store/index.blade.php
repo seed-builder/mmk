@@ -85,6 +85,79 @@
         <!-- /.row -->
     </section>
 
+    
+<div class="modal fade" tabindex="-1" role="dialog" id="lineAdjust">
+	<div class="modal-dialog" role="document" style="width: 30%">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title">线路调整</h4>
+			</div>
+			<form class="form-horizontal">
+				<div class="modal-body">
+					<div class="box-body">
+		                <label class="col-md-4">
+		                  <input type="radio" name="r1" checked> 当前人员
+		                </label>
+		                <label class="col-md-4">
+		                  <input type="radio" name="r1" > 同组业代
+		                </label>
+		                <label class="col-md-4">
+		                  <input type="radio" name="r1" > 跨组业代
+		                </label>
+							                
+					</div>
+					<div class="box-body">
+						<div class="form-group col-md-6"><label>门店名称</label>   <input type="text"></div>			                
+						<div class="form-group col-md-6"><label>所属人员</label>   <input type="text"></div>		
+						<div class="form-group col-md-6"><label>线路代码</label>   
+							<select>
+								@foreach($lines as $l)
+								<option value="{{$l->id}}">{{$l->fname}}</option>
+								@endforeach
+							</select>
+						</div>		
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-primary">保存</button>
+				</div>
+			</form>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+<div class="modal fade" tabindex="-1" role="dialog" id="storeAdjust">
+	<div class="modal-dialog" role="document" style="width: 50%">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title">门店调整</h4>
+			</div>
+			<form class="form-horizontal">
+				<div class="modal-body">
+					<div class="box-body">
+						
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-primary">保存</button>
+				</div>
+			</form>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
 @endsection
 @section('js')
 	<script src="/assets/plugins/bootstrap-treeview/bootstrap-treeview.min.js"></script>

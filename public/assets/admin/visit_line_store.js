@@ -130,6 +130,14 @@ define(function(require, exports, module) {
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
+                {
+                	text: '线路调整<i class="fa fa-fw fa-random"></i>',
+                	className: 'adjust',
+                	enabled: false,
+                	action: function () { 
+                		$('#lineAdjust').modal('show');
+                	}
+                },
                 //{extend: 'colvis', text: '列显示'}
             ]
         });
@@ -200,7 +208,6 @@ define(function(require, exports, module) {
                 {
                 	text: '新增<i class="fa fa-fw fa-plus"></i>',
                 	action: function () { 
-                		$('#storeinfo').modal('show');
                 	}
                 },
 //                {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: editor},
@@ -208,12 +215,41 @@ define(function(require, exports, module) {
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
+                {
+                	text: '门店调整<i class="fa fa-fw fa-random"></i>',
+                	className: 'adjust',
+                	enabled: false,
+                	action: function () { 
+                		$('#storeAdjust').modal('show');
+                		adjustStoreTable.rows.add(childTable.rows('.selected').data());
+                	}
+                },
                 
                 //{extend: 'colvis', text: '列显示'}
             ]
         });
         
+        
+        var searchtable = function(emp_id){
+        	table.columns( 3 ).search( emp_id )
+        		 .draw();
+        }
+        
+        
+        table.on( 'select', checkBtn1).on( 'deselect', checkBtn1);
+        childTable.on( 'select', checkBtn).on( 'deselect', checkBtn);
+        
         table.on( 'select', reloadChildTable);
+        
+        function checkBtn1(e, dt, type, indexes) {
+        	var count = table.rows( { selected: true } ).count();
+        	table.buttons( ['.adjust'] ).enable(count > 0);
+        }
+        
+        function checkBtn(e, dt, type, indexes) {
+             var count = childTable.rows( { selected: true } ).count();
+             childTable.buttons( ['.adjust'] ).enable(count > 0);
+         }
         
         function reloadChildTable(){
         	var selected_emp_id = table.rows('.selected').data()[0].femp_id
@@ -221,13 +257,6 @@ define(function(require, exports, module) {
    		 	.draw();
         }
         
-        
-        
-        var searchtable = function(emp_id){
-        	table.columns( 3 ).search( emp_id )
-        		 .draw();
-        }
-
         
         getTreeData();
 

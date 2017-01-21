@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
 use App\Models\Busi\VisitLineStore;
+use App\Models\Busi\VisitLine;
 
 class VisitLineStoreController extends AdminController
 {
@@ -21,7 +22,8 @@ class VisitLineStoreController extends AdminController
 	public function index()
 	{
 		//
-		return view('admin.visit-line-store.index');
+		$lines = VisitLine::all();
+		return view('admin.visit-line-store.index',compact('lines'));
 	}
 
 	/**
