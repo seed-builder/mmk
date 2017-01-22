@@ -103,7 +103,7 @@ define(function(require, exports, module) {
                     mapAddOverlay(at.begin_attendance.flongitude,at.begin_attendance.flatitude,at);
                 }
                 if(at.complete_attendance!=null){
-                    mapAddOverlay(at.begin_attendance.flongitude,at.begin_attendance.flatitude,at);
+                    mapAddOverlay(at.complete_attendance.flongitude,at.complete_attendance.flatitude,at);
                 }
             }
 
