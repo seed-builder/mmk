@@ -5,7 +5,7 @@ define(function(require, exports, module) {
 
     var zhCN = require('datatableZh');
     var editorCN = require('i18n');
-    exports.index = function ($, tableId,treeId,childTableId) {
+    exports.index = function ($, tableId,treeId,childTableId,mapId) {
     	
     	var getTreeData = function () {
         	$.ajax({
@@ -131,11 +131,19 @@ define(function(require, exports, module) {
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
                 {
-                	text: '线路调整<i class="fa fa-fw fa-random"></i>',
-                	className: 'adjust',
+                	text: '线路门店互调<i class="fa fa-fw fa-random"></i>',
+                	className: 'lineAdjust',
                 	enabled: false,
                 	action: function () { 
                 		$('#lineAdjust').modal('show');
+                	}
+                },
+                {
+                	text: '线路门店调整<i class="fa fa-fw fa-random"></i>',
+                	className: 'storeAdjust',
+                	enabled: false,
+                	action: function () { 
+                		$('#storeAdjust').modal('show');
                 	}
                 },
                 //{extend: 'colvis', text: '列显示'}
@@ -215,18 +223,73 @@ define(function(require, exports, module) {
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
-                {
-                	text: '门店调整<i class="fa fa-fw fa-random"></i>',
-                	className: 'adjust',
-                	enabled: false,
-                	action: function () { 
-                		$('#storeAdjust').modal('show');
-                		adjustStoreTable.rows.add(childTable.rows('.selected').data());
-                	}
-                },
+                
                 
                 //{extend: 'colvis', text: '列显示'}
             ]
+        });
+        
+        //预分配门店列表
+        var readyTable = $("#readyTable").DataTable({
+        	dom: "Bfrtip",
+        	language: zhCN,
+        	processing: true,
+        	serverSide: true,
+        	select: true,
+        	scrollX: true,
+        	paging: true,
+        	rowId: "id",
+        	ajax: '/admin/store/pagination',
+        	columns: [
+        	          {"data": "id"},
+        	          {"data": "ffullname"},
+        	          {"data": "fshortname"},
+        	          {"data": "faddress"},
+        	          {"data": "fcontracts"},
+        	          {
+        	        	  "data": 'femp_id',
+        	        	  render: function ( data, type, full ) {
+        	        		  if(full.employee!=null)
+        	        			  return full.employee.fname
+        	        			  else
+        	        				  return "";
+        	        	  }
+        	          },
+        	          {"data": "ftelephone"},
+        	          
+        	          ],
+        	          buttons: []
+        });
+        
+        //线路已分配门店列表
+        var allotTable = $("#allotTable").DataTable({
+        	dom: "Bfrtip",
+        	language: zhCN,
+        	processing: true,
+        	serverSide: true,
+        	select: false,
+        	paging: true,
+        	rowId: "id",
+        	ajax: '/admin/store/pagination',
+        	columns: [
+        	          {"data": "id"},
+        	          {"data": "ffullname"},
+        	          {"data": "fshortname"},
+        	          {"data": "faddress"},
+        	          {"data": "fcontracts"},
+        	          {"data": "ftelephone"},
+        	          {
+        	        	  "data": 'femp_id',
+        	        	  render: function ( data, type, full ) {
+        	        		  if(full.employee!=null)
+        	        			  return full.employee.fname
+        	        			  else
+        	        				  return "";
+        	        	  }
+        	          },
+        	          
+        	          ],
+        	          buttons: []
         });
         
         
@@ -235,20 +298,24 @@ define(function(require, exports, module) {
         		 .draw();
         }
         
+        var map = new BMap.Map(mapId);
         
-        table.on( 'select', checkBtn1).on( 'deselect', checkBtn1);
-        childTable.on( 'select', checkBtn).on( 'deselect', checkBtn);
-        
-        table.on( 'select', reloadChildTable);
-        
-        function checkBtn1(e, dt, type, indexes) {
-        	var count = table.rows( { selected: true } ).count();
-        	table.buttons( ['.adjust'] ).enable(count > 0);
+        var mapShow = function(){
+        	// 百度地图API功能 
+        	 map.centerAndZoom("厦门", 12);  
+        	    map.enableScrollWheelZoom();   //启用滚轮放大缩小，默认禁用  
+        	    map.enableContinuousZoom();    //启用地图惯性拖拽，默认禁用  
+        	    map.enableInertialDragging();  
+        	  
         }
         
+        
+        table.on( 'select', checkBtn).on( 'deselect', checkBtn);
+        table.on( 'select', reloadChildTable);
+        
         function checkBtn(e, dt, type, indexes) {
-             var count = childTable.rows( { selected: true } ).count();
-             childTable.buttons( ['.adjust'] ).enable(count > 0);
+             var count = table.rows( { selected: true } ).count();
+             table.buttons( ['.storeAdjust','.lineAdjust'] ).enable(count > 0);
          }
         
         function reloadChildTable(){
@@ -257,7 +324,7 @@ define(function(require, exports, module) {
    		 	.draw();
         }
         
-        
+        mapShow();
         getTreeData();
 
     }

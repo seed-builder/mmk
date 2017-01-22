@@ -103,7 +103,7 @@ define(function(require, exports, module) {
                     mapAddOverlay(at.begin_attendance.flongitude,at.begin_attendance.flatitude,at);
                 }
                 if(at.complete_attendance!=null){
-                    mapAddOverlay(at.begin_attendance.flongitude,at.begin_attendance.flatitude,at);
+                    mapAddOverlay(at.complete_attendance.flongitude,at.complete_attendance.flatitude,at);
                 }
             }
 
@@ -136,11 +136,18 @@ define(function(require, exports, module) {
 			map.panTo(point);
 			
 			//添加信息窗口
-			var content = `<h3>`+data.employee.fname+`</h3><p>签到时间：`+data.begin_attendance.ftime+`</p><p>签退时间：`+data.complete_attendance.ftime+`</p>`
+			var begin_time = data.begin_attendance!=null?data.begin_attendance.ftime:'无';
+			var complete_time = data.complete_attendance!=null?data.complete_attendance.ftime:'无'
+				
+			var content = "<h3>"+data.employee.fname+"</h3>"+
+			"<p>签到时间："+begin_time+"</p>"+
+			"<p>签退时间："+complete_time+"</p>"
+			
 			var infoWindow = new BMap.InfoWindow(content)  // 创建信息窗口对象 
 			marker.addEventListener("click", function(){          
 				   this.openInfoWindow(infoWindow);
 			});
+			
         }
         
         var getTreeData = function () {

@@ -1,6 +1,20 @@
 @extends('admin.layout.collapsed-sidebar')
 @section('styles')
     @include('admin.layout.datatable-css')
+    <style>
+/*     .BMap_CityListCtrl{ */
+/*     	z-index:100000000 !important; */
+/*     } */
+/*     .BMap_noprint{ */
+/*     	z-index:100000000 !important; */
+/*     }  */
+/*     .BMap_CityListCtrl{ */
+/*     	z-index:100000000 !important; */
+/*     }  */
+/*     .anchorTL{ */
+/*     	z-index:100000000 !important; */
+/*     } */
+	</style>
 @endsection
 
 @section('content')
@@ -111,15 +125,22 @@
 							                
 					</div>
 					<div class="box-body">
-						<div class="form-group col-md-6"><label>门店名称</label>   <input type="text"></div>			                
-						<div class="form-group col-md-6"><label>所属人员</label>   <input type="text"></div>		
-						<div class="form-group col-md-6"><label>线路代码</label>   
-							<select>
+						<div class="form-group">
+		                  <label>所属组织</label>
+		                  <input type="text" class="form-control" >
+		                </div>
+						<div class="form-group">
+		                  <label>所属人员</label>
+		                  <input type="text" class="form-control" >
+		                </div>
+						<div class="form-group">
+		                  <label>线路代码</label>
+		                  <select class="form-control">
 								@foreach($lines as $l)
 								<option value="{{$l->id}}">{{$l->fname}}</option>
 								@endforeach
 							</select>
-						</div>		
+		                </div>
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -133,7 +154,7 @@
 	<!-- /.modal-dialog -->
 </div>
 <div class="modal fade" tabindex="-1" role="dialog" id="storeAdjust">
-	<div class="modal-dialog" role="document" style="width: 50%">
+	<div class="modal-dialog" role="document" style="width: 90%">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal"
@@ -145,7 +166,47 @@
 			<form class="form-horizontal">
 				<div class="modal-body">
 					<div class="box-body">
-						
+						<div class="col-md-4">
+							<table id="readyTable" class="table table-bordered table-hover">
+								<thead>
+									<tr style="white-space: nowrap;">
+										<th>序号</th>
+										<th>门店全称</th>
+										<th>门店简称</th>
+										<th>详细地址</th>
+										<th>负责人</th>
+										<th>负责业代</th>
+										<th>联系电话</th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+			                  <label class="col-md-2 control-label">省份</label>
+			                  <div class="col-md-4">
+			                  	<select class="form-control" ></select>
+			                  </div>
+			                  
+			                  <label class="col-md-2 control-label">城市</label>
+			                  <div class="col-md-4">
+			                    <select class="form-control" ></select>
+			                  </div>
+			                </div>
+			                <div class="form-group">
+			                  <label class="col-md-2 control-label">区域</label>
+			                  <div class="col-md-4">
+			                    <select class="form-control" ></select>
+			                  </div>
+			                  
+			                  <div class="col-md-6">
+			                  	<button type="button" class="btn btn-info"><i class="fa fa-fw fa-search"></i>查询</button>
+			                  	<button type="button" class="btn btn-info"><i class="fa fa-fw fa-plus"></i>添加</button>
+			                  </div>
+			                </div>
+			                <div id="map" style="height: 500px;></div>
+						</div>
+						<div class="col-md-4"></div>
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -161,11 +222,12 @@
 @endsection
 @section('js')
 	<script src="/assets/plugins/bootstrap-treeview/bootstrap-treeview.min.js"></script>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=D4Bi3270ydgA5HsnWDnmBVwF3zaPdoMC"></script>
     @include('admin.layout.datatable-js')
     <script type="text/javascript">
         $(function () {
             seajs.use('admin/visit_line_store.js', function (app) {
-                app.index($, 'moduleTable','tree','childTable');
+                app.index($, 'moduleTable','tree','childTable','map');
             });
         });
     </script>
