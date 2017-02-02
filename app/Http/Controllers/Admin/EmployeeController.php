@@ -70,7 +70,7 @@ class EmployeeController extends AdminController
 		}
 			
 		
-		return json_encode($org);
+		return json_encode($par_dept);
 	}
 
 	protected function toTextArray($datas, $selectable = true){
