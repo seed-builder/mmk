@@ -102,7 +102,23 @@ define(function(require, exports, module) {
                             return "";
                     }
                 },
+                {
+                    "data": 'id',
+                    render: function ( data, type, full ) {
+                        if(full.fbegin_id==null||full.fcomplete_id==null){
+                            return "<span style='color: red'>异常</span>";
+                        }else {
+                            return "<span style='color: #00a65a'>正常</span>"
+                        }
+                    }
+                },
             ],
+            createdRow: function( row, data, dataIndex ) {
+                console.log(data.fbegin_id==null||data.fcomplete_id==null);
+                if(data.fbegin_id==null||data.fcomplete_id==null){
+                    //$(row).css( 'background','red' );
+                }
+            },
             buttons: [
                 // { text: '新增', action: function () { }  },
                 // { text: '删除', className: 'delete', enabled: false },
