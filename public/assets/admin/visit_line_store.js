@@ -6,7 +6,7 @@ define(function(require, exports, module) {
     var zhCN = require('datatableZh');
     var editorCN = require('i18n');
     exports.index = function ($, tableId,treeId,childTableId,mapId) {
-    	
+
     	var getTreeData = function () {
         	$.ajax({
             	url: "../../admin/employee/employeeTree",
@@ -29,7 +29,7 @@ define(function(require, exports, module) {
                 },
             });
         }
-    	
+
         var editor = new $.fn.dataTable.Editor({
             ajax: {
                 create: {
@@ -74,7 +74,7 @@ define(function(require, exports, module) {
             rowId: "id",
             ajax: '/admin/visit-line-store/pagination',
             columns: [
-                    {  'data': 'id' },		
+                    {  'data': 'id' },
                     {
     					"data": 'fline_id',
     					render: function ( data, type, full ) {
@@ -134,7 +134,7 @@ define(function(require, exports, module) {
                 	text: '线路门店互调<i class="fa fa-fw fa-random"></i>',
                 	className: 'lineAdjust',
                 	enabled: false,
-                	action: function () { 
+                	action: function () {
                 		$('#lineAdjust').modal('show');
                 	}
                 },
@@ -142,7 +142,8 @@ define(function(require, exports, module) {
                 	text: '线路门店调整<i class="fa fa-fw fa-random"></i>',
                 	className: 'storeAdjust',
                 	enabled: false,
-                	action: function () { 
+                	action: function () {
+                        allotTable.columns( 7 ).search( table.rows('.selected').data()[0].fline_id ).draw();
                 		$('#storeAdjust').modal('show');
                 	}
                 },
@@ -150,7 +151,7 @@ define(function(require, exports, module) {
             ]
         });
 
-        
+
         //子表
         var childEditor = new $.fn.dataTable.Editor({
             ajax: {
@@ -207,7 +208,7 @@ define(function(require, exports, module) {
                 				return "";
                 	}
                 },
-                
+
             ],
             buttons: [
                 // { text: '新增', action: function () { }  },
@@ -215,7 +216,7 @@ define(function(require, exports, module) {
                 // { text: '删除', className: 'delete', enabled: false },
                 {
                 	text: '新增<i class="fa fa-fw fa-plus"></i>',
-                	action: function () { 
+                	action: function () {
                 	}
                 },
 //                {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: editor},
@@ -223,12 +224,12 @@ define(function(require, exports, module) {
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
-                
-                
+
+
                 //{extend: 'colvis', text: '列显示'}
             ]
         });
-        
+
         //预分配门店列表
         var readyTable = $("#readyTable").DataTable({
         	dom: "Bfrtip",
@@ -237,15 +238,58 @@ define(function(require, exports, module) {
         	serverSide: true,
         	select: true,
         	scrollX: true,
+            scrollY: '350px',
+            scrollCollapse: true,
+            searching:false,
         	paging: true,
         	rowId: "id",
-        	ajax: '/admin/store/pagination',
+        	ajax: {
+        	    url : '/admin/visit_line_store/pagination',
+                data : function ( data ) {
+                    data['fname'] = $("#fname").val();
+                    data['faddress'] = $("#faddress").val();
+                    data['is_allot'] = $("#is_allot").val();
+                    data['fnumber'] = $("#fnumber").val();
+                }
+            },
         	columns: [
         	          {"data": "id"},
-        	          {"data": "ffullname"},
-        	          {"data": "fshortname"},
-        	          {"data": "faddress"},
-        	          {"data": "fcontracts"},
+                {
+                    "data": 'fstore_id',
+                    render: function ( data, type, full ) {
+                        if(full.store!=null)
+                            return full.store.ffullname
+                        else
+                            return "";
+                    }
+                },
+                {
+                    "data": 'fstore_id',
+                    render: function ( data, type, full ) {
+                        if(full.store!=null)
+                            return full.store.fshortname
+                        else
+                            return "";
+                    }
+                },
+                {
+                    "data": 'fstore_id',
+                    render: function ( data, type, full ) {
+                        if(full.store!=null)
+                            return full.store.faddress
+                        else
+                            return "";
+                    }
+                },
+                {
+                    "data": 'fstore_id',
+                    render: function ( data, type, full ) {
+                        if(full.store!=null)
+                            return full.store.fcontracts
+                        else
+                            return "";
+                    }
+                },
         	          {
         	        	  "data": 'femp_id',
         	        	  render: function ( data, type, full ) {
@@ -255,12 +299,24 @@ define(function(require, exports, module) {
         	        				  return "";
         	        	  }
         	          },
-        	          {"data": "ftelephone"},
-        	          
+                {
+                    "data": 'fstore_id',
+                    render: function ( data, type, full ) {
+                        if(full.store!=null)
+                            return full.store.ftelephone
+                        else
+                            return "";
+                    }
+                },
+
         	          ],
         	          buttons: []
         });
-        
+
+        $("#redayBtn").on('click',function () {
+            readyTable.ajax.reload();
+        });
+
         //线路已分配门店列表
         var allotTable = $("#allotTable").DataTable({
         	dom: "Bfrtip",
@@ -268,16 +324,60 @@ define(function(require, exports, module) {
         	processing: true,
         	serverSide: true,
         	select: false,
+            scrollX: true,
+            scrollY: '700px',
+            scrollCollapse: true,
+            searching:true,
         	paging: true,
         	rowId: "id",
-        	ajax: '/admin/store/pagination',
+        	ajax: '/admin/visit_line_store/pagination',
         	columns: [
         	          {"data": "id"},
-        	          {"data": "ffullname"},
-        	          {"data": "fshortname"},
-        	          {"data": "faddress"},
-        	          {"data": "fcontracts"},
-        	          {"data": "ftelephone"},
+                {
+                    "data": 'fstore_id',
+                    render: function ( data, type, full ) {
+                        if(full.store!=null)
+                            return full.store.ffullname
+                        else
+                            return "";
+                    }
+                },
+                {
+                    "data": 'fstore_id',
+                    render: function ( data, type, full ) {
+                        if(full.store!=null)
+                            return full.store.fshortname
+                        else
+                            return "";
+                    }
+                },
+                {
+                    "data": 'fstore_id',
+                    render: function ( data, type, full ) {
+                        if(full.store!=null)
+                            return full.store.faddress
+                        else
+                            return "";
+                    }
+                },
+                {
+                    "data": 'fstore_id',
+                    render: function ( data, type, full ) {
+                        if(full.store!=null)
+                            return full.store.fcontracts
+                        else
+                            return "";
+                    }
+                },
+                {
+                    "data": 'fstore_id',
+                    render: function ( data, type, full ) {
+                        if(full.store!=null)
+                            return full.store.ftelephone
+                        else
+                            return "";
+                    }
+                },
         	          {
         	        	  "data": 'femp_id',
         	        	  render: function ( data, type, full ) {
@@ -287,43 +387,52 @@ define(function(require, exports, module) {
         	        				  return "";
         	        	  }
         	          },
-        	          
+                {
+                    "data": 'fline_id',
+                },
+
         	          ],
+            columnDefs: [
+                {
+                    "targets": [7],
+                    "visible": false
+                }
+            ],
         	          buttons: []
         });
-        
-        
+
+
         var searchtable = function(emp_id){
         	table.columns( 3 ).search( emp_id )
         		 .draw();
         }
-        
+
         var map = new BMap.Map(mapId);
-        
+
         var mapShow = function(){
-        	// 百度地图API功能 
-        	 map.centerAndZoom("厦门", 12);  
-        	    map.enableScrollWheelZoom();   //启用滚轮放大缩小，默认禁用  
-        	    map.enableContinuousZoom();    //启用地图惯性拖拽，默认禁用  
-        	    map.enableInertialDragging();  
-        	  
+        	// 百度地图API功能
+        	 map.centerAndZoom("厦门", 12);
+        	    map.enableScrollWheelZoom();   //启用滚轮放大缩小，默认禁用
+        	    map.enableContinuousZoom();    //启用地图惯性拖拽，默认禁用
+        	    map.enableInertialDragging();
+
         }
-        
-        
+
+
         table.on( 'select', checkBtn).on( 'deselect', checkBtn);
         table.on( 'select', reloadChildTable);
-        
+
         function checkBtn(e, dt, type, indexes) {
              var count = table.rows( { selected: true } ).count();
              table.buttons( ['.storeAdjust','.lineAdjust'] ).enable(count > 0);
          }
-        
+
         function reloadChildTable(){
         	var selected_emp_id = table.rows('.selected').data()[0].femp_id
         	childTable.columns( 6 ).search( selected_emp_id )
    		 	.draw();
         }
-        
+
         mapShow();
         getTreeData();
 
