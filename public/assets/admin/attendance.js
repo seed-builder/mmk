@@ -114,7 +114,6 @@ define(function(require, exports, module) {
                 },
             ],
             createdRow: function( row, data, dataIndex ) {
-                console.log(data.fbegin_id==null||data.fcomplete_id==null);
                 if(data.fbegin_id==null||data.fcomplete_id==null){
                     //$(row).css( 'background','red' );
                 }

@@ -71,7 +71,21 @@ class ChannelController extends AdminController
 	*/
 	public function pagination(Request $request, $searchCols = []){
 		$searchCols = ["fdocument_status","fname","fnumber","fremark"];
+        $data = $request->all();
+
+        $query = Channel::query();
+
+        foreach ($data['columns'] as $d) {
+            if ($d['data']=='fgroup_id'&&!empty($d['search']['value'])){
+                $entity = new ChannelGroup();
+                $ids = $entity->getChildrenIds($d['search']['value']);
+                $request['queryBuilder'] = $query->whereIn('fgroup_id',$ids);
+            }
+        }
+
 		return parent::pagination($request, $searchCols);
 	}
+
+
 
 }

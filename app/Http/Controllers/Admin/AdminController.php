@@ -143,9 +143,14 @@ abstract class AdminController extends Controller
 
 		$total = $queryBuilder->count();
 
-		foreach ($conditions as $col => $val) {
-			$queryBuilder->where($col, $val);
-		}
+        if (!empty($request['queryBuilder'])){ //自定义query
+            $queryBuilder = $request['queryBuilder'];
+        }else{
+            foreach ($conditions as $col => $val) {
+                $queryBuilder->where($col, $val);
+            }
+        }
+
 		//模糊查询
 		if(!empty($searchCols) && !empty($search['value'])){
 			$queryBuilder->where(function ($query) use ($search, $searchCols) {

@@ -63,7 +63,16 @@ class ChannelGroupController extends AdminController
 	* @return  \Illuminate\Http\JsonResponse
 	*/
 	public function pagination(Request $request, $searchCols = []){
-		$searchCols = ["fdocument_status","fname","fnumber","ftype","fparent_id"];
+		$searchCols = ["fdocument_status","fname","fnumber","ftype","fparent_id","id"];
+
+        $data = $request->all();
+        $query = ChannelGroup::query();
+        foreach ($data['columns'] as $d) {
+            if ($d['data']=='id'&&!empty($d['search']['value'])){
+                $cg = ChannelGroup::find($d['search']['value']);
+                $request['queryBuilder'] = $cg->queryChildren($query,$cg);
+            }
+        }
 		return parent::pagination($request, $searchCols);
 	}
 	

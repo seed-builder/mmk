@@ -48,14 +48,44 @@ class ChannelGroup extends BaseModel
 		$c = Channel::where('fgroup_id', $this->id)->count();
 		return $c;
 	}
-	
+
 	public function childrenGroup(){
 		return ChannelGroup::query()->where('fparent_id',$this->id)->get();
 	}
-	
+
 	public function parentGroup(){
 // 		return ChannelGroup::query()->where('id',$this->fparent_id)->first();
 // 		return $this->hasOne(self::class, 'id', 'fparent_id');
 	}
-	
+
+	public function getChildrenIds($id){
+	    $query = ChannelGroup::query();
+        $cg = ChannelGroup::find($id);
+        $query = $this->queryChildren($query,$cg);
+
+        $data = $query->get();
+        $ids = [];
+
+        foreach ($data as $d){
+            $ids[] = $d->id;
+        }
+
+        return $ids;
+    }
+
+    /*
+	 * 递归查询所有子渠道组
+	 */
+    public function queryChildren($query,$cg){
+        $query->orWhere('id',$cg->id);//先加上自己
+        $data = $cg->childrenGroup();
+        foreach ($data as $d){
+            $query->orWhere('fparent_id',$d->fparent_id);
+            if ($d->children_count!=0){
+                $this->queryChildren($query,$d);
+            }
+        }
+
+        return $query;
+    }
 }
