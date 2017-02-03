@@ -101,6 +101,7 @@ define(function(require, exports, module) {
                 mapAddOverlay(st.flongitude,st.flatitude,st);
             }
 
+
         });
 
         table.on( 'select', rowselect);
@@ -128,7 +129,7 @@ define(function(require, exports, module) {
             var point = new BMap.Point(longitude,latitude);
             var marker = new BMap.Marker(point);  // 创建标注
             map.addOverlay(marker);              // 将标注添加到地图中
-            //map.panTo(point);
+            map.panTo(point);
 
             infoWindow(marker,data);
         }
