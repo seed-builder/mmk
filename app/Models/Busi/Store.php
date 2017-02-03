@@ -63,8 +63,8 @@ class Store extends BaseModel
     protected $with = ['employee','customer', 'lines'];
     
     public $validateRules=[
-    		'ffullname' => 'required', 
-    		'fcontracts' => 'required', 
+    		'ffullname' => 'required',
+    		'fcontracts' => 'required',
     		'ftelephone' => 'required',
     		'faddress' => 'required',
     		'fpostalcode' => 'required',

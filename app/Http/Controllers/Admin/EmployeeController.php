@@ -39,18 +39,19 @@ class EmployeeController extends AdminController
 		return parent::pagination($request, $searchCols);
 	}
 	
-	public function ajaxEmployeeTree(){
+	public function ajaxEmployeeTree(Request $request){
 		$orgs = Organization::all();
+		$req = $request->all();
 		$datas = [];
 		
 		
 		foreach ($orgs as $ok=>$ov){
 			$pardepts = $ov->departments($ov->id);
-			$par_dept = $this->toTextArray($pardepts, false); //组织下的所有父部门
+			$par_dept = $this->toTextArray($pardepts, !empty($req['dept_select'])?true:false); //组织下的所有父部门
 			
 			foreach ($pardepts as $dk=>$dv){
 				$childdepts = $dv->child_depart($dv->id);
-				$child_dept = $this->toTextArray($childdepts, false); //部门下的子部门
+				$child_dept = $this->toTextArray($childdepts, !empty($req['dept_select'])?true:false); //部门下的子部门
 				
 				foreach ($childdepts as $cdk=>$cdv){
 					$emps = $cdv->employees()->get();

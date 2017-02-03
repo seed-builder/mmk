@@ -16,7 +16,29 @@
 <!-- Main content -->
 <section class="content">
 	<div class="row">
-		<div class="col-xs-12">
+		<div class="col-md-3" >
+			<div class="box">
+				<div class="box-header">
+					<h3 class="box-title">组织架构信息</h3>
+				</div>
+				<!-- /.box-header -->
+				<div class="box-body">
+					<div id="tree"></div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-9">
+			<div class="box">
+				<div class="box-header">
+					<h3 class="box-title">门店地图定位</h3>
+				</div>
+				<!-- /.box-header -->
+				<div class="box-body">
+
+					<div id="allmap" style="height: 500px;"></div>
+				</div>
+				<!-- /.box-body -->
+			</div>
 			<div class="box">
 				<div class="box-header">
 					<h3 class="box-title">门店基础信息</h3>
@@ -34,6 +56,8 @@
 								<th>负责人</th>
 								<th>联系电话</th>
 								<th>负责业代</th>
+								<th>flongitude</th>
+								<th>flatitude</th>
 							</tr>
 						</thead>
 					</table>
@@ -254,12 +278,14 @@
 @section('js') 
 <script src="/assets/plugins/bootstrap-fileinput/js/fileinput.min.js"></script>
 <script src="/assets/plugins/bootstrap-fileinput/js/fileinput_locale_zh_CN.js"></script>
+<script src="/assets/plugins/bootstrap-treeview/bootstrap-treeview.min.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=D4Bi3270ydgA5HsnWDnmBVwF3zaPdoMC"></script>
 @include('admin.layout.datatable-js')
 <script type="text/javascript">
 
         $(function () {
             seajs.use('app-store', function (store) {
-            	store.index($, 'moduleTable');
+            	store.index($, 'moduleTable','tree','allmap');
             });
             $("#storepic").fileinput({
             	overwriteInitial: true,
