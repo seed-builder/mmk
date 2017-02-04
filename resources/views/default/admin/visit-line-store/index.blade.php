@@ -209,8 +209,8 @@
 											</div>
 
 											<div class="col-sm-6">
-												<button type="button" class="btn btn-info" id="redayBtn"><i class="fa fa-fw fa-search"></i>查询</button>
-												<button type="button" class="btn btn-info" id="taddBtn"><i class="fa fa-fw fa-plus"></i>添加</button>
+												<button type="button" class="btn btn-info" id="tQueryBtn"><i class="fa fa-fw fa-search"></i>查询</button>
+												<button type="button" class="btn btn-info" id="tAddBtn"><i class="fa fa-fw fa-plus"></i>添加</button>
 											</div>
 										</div>
 

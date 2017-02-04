@@ -7,6 +7,7 @@ define(function(require, exports, module) {
     var editorCN = require('i18n');
     exports.index = function ($, tableId,treeId,childTableId,mapId) {
 
+        //组织结构初始化
     	var getTreeData = function () {
         	$.ajax({
             	url: "../../admin/employee/employeeTree",
@@ -30,6 +31,19 @@ define(function(require, exports, module) {
             });
         }
 
+        //地图初始化
+        var map = new BMap.Map(mapId);
+
+        var mapShow = function(){
+            // 百度地图API功能
+            map.centerAndZoom("厦门", 12);
+            map.enableScrollWheelZoom();   //启用滚轮放大缩小，默认禁用
+            map.enableContinuousZoom();    //启用地图惯性拖拽，默认禁用
+            map.enableInertialDragging();
+
+        }
+
+        //各表初始化
         var editor = new $.fn.dataTable.Editor({
             ajax: {
                 create: {
@@ -280,64 +294,29 @@ define(function(require, exports, module) {
         	          buttons: []
         });
 
-        $("#redayBtn").on('click',function () {
-            readyTable.ajax.reload();
-        });
-
-        //预分配门店列表 添加门店至所选线路已分配门店列表
-        $("#taddBtn").on('click',function () {
-            addAllotStore(readyTable.rows('.selected').data()[0].id);
-        });
-
-
-        var addAllotStore = function (store_id) {
-            $.ajax({
-                type : "POST",
-                url : "/admin/visit_line_store",
-                data : {
-                    "action" : "create",
-                    "data[0][fline_id]" : table.rows('.selected').data()[0].fline_id,
-                    "data[0][fstore_id]" :store_id ,
-                    "data[0][femp_id]" : table.rows('.selected').data()[0].femp_id,
-                    "_token": $('meta[name="_token"]').attr('content')
-                },
-                success : function(data) {
-                    readyTable.ajax.reload();
-                    allotTable.ajax.reload();
-                    mapQuery();
-                }
-            })
-        }
-
-
-        //窗口关闭时清除地图标注
-        $('#storeAdjust').on('hide.bs.modal', function () {
-            map.clearOverlays();
-        })
-
         //线路已分配门店列表
         var allotTable = $("#allotTable").DataTable({
-        	dom: "Bfrtip",
-        	language: zhCN,
-        	processing: true,
-        	serverSide: true,
-        	select: false,
+            dom: "Bfrtip",
+            language: zhCN,
+            processing: true,
+            serverSide: true,
+            select: false,
             scrollX: true,
             scrollY: '700px',
             scrollCollapse: true,
             searching:true,
-        	paging: true,
-        	rowId: "id",
-        	ajax: {
-        	    url : '/admin/visit_line_store/pagination',
+            paging: true,
+            rowId: "id",
+            ajax: {
+                url : '/admin/visit_line_store/pagination',
                 data : function (data) {
                     data.columns[6]['search']['value'] = table.rows('.selected').data()[0]!=null?table.rows('.selected').data()[0].femp_id:'';
                     data.columns[7]['search']['value'] = table.rows('.selected').data()[0]!=null?table.rows('.selected').data()[0].fline_id:'';
                     // allotTable.columns( 7 ).search( table.rows('.selected').data()[0].fline_id ).draw();
                 }
             },
-        	columns: [
-        	          {"data": "id"},
+            columns: [
+                {"data": "id"},
                 {
                     "data": 'fstore_id',
                     render: function ( data, type, full ) {
@@ -383,28 +362,98 @@ define(function(require, exports, module) {
                             return "";
                     }
                 },
-        	          {
-        	        	  "data": 'femp_id',
-        	        	  render: function ( data, type, full ) {
-        	        		  if(full.employee!=null)
-        	        			  return full.employee.fname
-        	        			  else
-        	        				  return "";
-        	        	  }
-        	          },
+                {
+                    "data": 'femp_id',
+                    render: function ( data, type, full ) {
+                        if(full.employee!=null)
+                            return full.employee.fname
+                        else
+                            return "";
+                    }
+                },
                 {
                     "data": 'fline_id',
                 },
 
-        	          ],
+            ],
             columnDefs: [
                 {
                     "targets": [7],
                     "visible": false
                 }
             ],
-        	          buttons: []
+            buttons: []
         });
+
+        //预分配门店 表格查询按钮
+        $("#tQueryBtn").on('click',function () {
+            readyTable.ajax.reload();
+        });
+
+        //预分配门店 表格添加按钮
+        $("#tAddBtn").on('click',function () {
+            addAllotStore(readyTable.rows('.selected').data()[0].id);
+        });
+
+        //预分配门店 地图查询按钮
+        $("#mQueryBtn").on('click',function () {
+            mapQuery();
+        })
+
+        //预分配门店 地图添加按钮
+        $("#mAddBtn").on('click',function () {
+            addAllotStore($("#map_select_id").val());
+        })
+
+        //添加门店至已分配门店列表方法
+        var addAllotStore = function (store_id) {
+            $.ajax({
+                type : "POST",
+                url : "/admin/visit_line_store",
+                data : {
+                    "action" : "create",
+                    "data[0][fline_id]" : table.rows('.selected').data()[0].fline_id,
+                    "data[0][fstore_id]" :store_id ,
+                    "data[0][femp_id]" : table.rows('.selected').data()[0].femp_id,
+                    "_token": $('meta[name="_token"]').attr('content')
+                },
+                success : function(data) {
+                    readyTable.ajax.reload();
+                    allotTable.ajax.reload();
+                    mapQuery();
+                }
+            })
+        }
+
+        //地图查询方法
+        var mapQuery = function () {
+            map.clearOverlays();
+
+            $.ajax({
+                type : "GET",
+                url : "/admin/store/query",
+                dataType : "json" ,
+                data : {
+                    "fprovince":$("#province_id").find("option:selected").text(),
+                    "fcity":$("#city_id").find("option:selected").text(),
+                    "fcountry":$("#country_id").find("option:selected").text(),
+                    "femp_id":table.rows('.selected').data()[0]!=null?table.rows('.selected').data()[0].femp_id:'',
+                    'fline_id' : table.rows('.selected').data()[0]!=null?table.rows('.selected').data()[0].fline_id:'',
+                    "_token": $('meta[name="_token"]').attr('content')
+                },
+                success : function(data) {
+                    for (index in data){
+                        mapAddOverlay(data[index]['flongitude'],data[index]['flatitude'],data[index]);
+                    }
+
+                }
+            })
+        }
+
+        //窗口关闭时清除地图标注
+        $('#storeAdjust').on('hide.bs.modal', function () {
+            map.clearOverlays();
+        })
 
 
         var searchtable = function(emp_id){
@@ -455,50 +504,7 @@ define(function(require, exports, module) {
             })
         })
 
-        $("#mQueryBtn").on('click',function () {
-            mapQuery();
-        })
-
-        var mapQuery = function () {
-            map.clearOverlays();
-
-            $.ajax({
-                type : "GET",
-                url : "/admin/store/query",
-                dataType : "json" ,
-                data : {
-                    "fprovince":$("#province_id").find("option:selected").text(),
-                    "fcity":$("#city_id").find("option:selected").text(),
-                    "fcountry":$("#country_id").find("option:selected").text(),
-                    "femp_id":table.rows('.selected').data()[0]!=null?table.rows('.selected').data()[0].femp_id:'',
-                    'fline_id' : table.rows('.selected').data()[0]!=null?table.rows('.selected').data()[0].fline_id:'',
-                    "_token": $('meta[name="_token"]').attr('content')
-                },
-                success : function(data) {
-                    for (index in data){
-                        mapAddOverlay(data[index]['flongitude'],data[index]['flatitude'],data[index]);
-                    }
-
-                }
-            })
-        }
-
-
-        var map = new BMap.Map(mapId);
-
-        var mapShow = function(){
-        	// 百度地图API功能
-        	 map.centerAndZoom("厦门", 12);
-        	    map.enableScrollWheelZoom();   //启用滚轮放大缩小，默认禁用
-        	    map.enableContinuousZoom();    //启用地图惯性拖拽，默认禁用
-        	    map.enableInertialDragging();
-
-        }
-        var mapPanTo =function(longitude,latitude){
-            var point = new BMap.Point(longitude,latitude);
-            map.panTo(point);
-        }
-
+        //地图标注方法
         var mapAddOverlay = function(longitude,latitude,data){
             var point = new BMap.Point(longitude,latitude);
             var marker = new BMap.Marker(point);  // 创建标注
@@ -525,10 +531,7 @@ define(function(require, exports, module) {
                 $("#map_select_id").val(data.id);//store_id
             });
         }
-        
-        $("#mAddBtn").on('click',function () {
-            addAllotStore($("#map_select_id").val());
-        })
+
 
         table.on( 'select', checkBtn).on( 'deselect', checkBtn);
         table.on( 'select', reloadChildTable);
