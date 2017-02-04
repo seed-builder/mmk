@@ -39,6 +39,8 @@ define(function(require, exports, module) {
                 	'type': 'select',
                     'options': orgs
                 },
+                {'label': '设备', 'name': 'device',},
+                {'label': '设备号', 'name': 'device_sn',},
             ]
         });
 
