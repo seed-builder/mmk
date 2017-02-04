@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Busi\Store;
+use App\Models\City;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
 use App\Models\Busi\VisitLineStore;
@@ -24,7 +25,8 @@ class VisitLineStoreController extends AdminController
 	{
 		//
 		$lines = VisitLine::all();
-		return view('admin.visit-line-store.index',compact('lines'));
+		$citys = City::query()->where('LevelType',1)->get();
+		return view('admin.visit-line-store.index',compact('lines','citys'));
 	}
 
 	/**
@@ -69,54 +71,10 @@ class VisitLineStoreController extends AdminController
 		$searchCols = ["fline_id","femp_id"];
 
 		$data = $request->all();
-		if (!empty($data['fname'])||!empty($data['faddress'])||!empty($data['fnumber'])||!empty($data['is_allot'])){
-            $request['queryBuilder']=$this->readyAllotStoreQuery($data);
-        }
-
 
 		return parent::pagination($request, $searchCols);
 	}
 
-	public function readyAllotStoreQuery($data){
-        $query = VisitLineStore::query();
-        if (!empty($data['fname'])){
-            $stores = Store::query()->where('ffullname','like','%'.$data['fname'].'%')->get();
-            $ids = [];
-            foreach ($stores as $s){
-                $ids[] = $s->id;
-            }
-            $query->whereIn('fstore_id',$ids);
-        }
-        if (!empty($data['faddress'])){
-            $stores = Store::query()->where('faddress','like','%'.$data['faddress'].'%')->get();
-            $ids = [];
-            foreach ($stores as $s){
-                $ids[] = $s->id;
-            }
-            $query->whereIn('fstore_id',$ids);
-        }
-        if (!empty($data['fnumber'])){
-            $lines = VisitLine::query()->where('fnumber','like','%'.$data['fnumber'].'%')->get();
-            $ids = [];
-            foreach ($lines as $l){
-                $ids[] = $l->id;
-            }
-            $query->whereIn('fline_id',$ids);
-        }
-        if (!empty($data['is_allot'])){
-            $stores = Store::query()->where('femp_id',$data['femp_id'])->get();
-            $ids = [];
-            foreach ($stores as $s){
-                $ids[] = $s->id;
-            }
-            if ($data['is_allot']==1){
-                $query->whereIn('fstore_id',$ids)->where('femp_id',$data['femp_id']);
-            }else if ($data['is_allot']==2){
-                $query->whereNotIn('fstore_id',$ids)->where('femp_id',$data['femp_id']);
-            }
-        }
 
-        return $query;
-    }
 
 }

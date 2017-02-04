@@ -246,7 +246,7 @@ define(function(require, exports, module) {
         	paging: true,
         	rowId: "id",
         	ajax: {
-        	    url : '/admin/visit_line_store/pagination',
+        	    url : '/admin/store/pagination',
                 data : function ( data ) {
                     data.columns[5]['search']['value'] = table.rows('.selected').data()[0]!=null?table.rows('.selected').data()[0].femp_id:'';
                     data['femp_id'] = table.rows('.selected').data()[0]!=null?table.rows('.selected').data()[0].femp_id:'';
@@ -254,64 +254,27 @@ define(function(require, exports, module) {
                     data['faddress'] = $("#faddress").val();
                     data['is_allot'] = $("#is_allot").val();
                     data['fnumber'] = $("#fnumber").val();
+                    data['fline_id'] = table.rows('.selected').data()[0]!=null?table.rows('.selected').data()[0].fline_id:'';
                 }
             },
         	columns: [
         	          {"data": "id"},
-                {
-                    "data": 'fstore_id',
-                    render: function ( data, type, full ) {
-                        if(full.store!=null)
-                            return full.store.ffullname
-                        else
-                            return "";
-                    }
-                },
-                {
-                    "data": 'fstore_id',
-                    render: function ( data, type, full ) {
-                        if(full.store!=null)
-                            return full.store.fshortname
-                        else
-                            return "";
-                    }
-                },
-                {
-                    "data": 'fstore_id',
-                    render: function ( data, type, full ) {
-                        if(full.store!=null)
-                            return full.store.faddress
-                        else
-                            return "";
-                    }
-                },
-                {
-                    "data": 'fstore_id',
-                    render: function ( data, type, full ) {
-                        if(full.store!=null)
-                            return full.store.fcontracts
-                        else
-                            return "";
-                    }
-                },
-        	          {
-        	        	  "data": 'femp_id',
-        	        	  render: function ( data, type, full ) {
-        	        		  if(full.employee!=null)
-        	        			  return full.employee.fname
-        	        			  else
-        	        				  return "";
-        	        	  }
-        	          },
-                {
-                    "data": 'fstore_id',
-                    render: function ( data, type, full ) {
-                        if(full.store!=null)
-                            return full.store.ftelephone
-                        else
-                            return "";
-                    }
-                },
+                {"data": "ffullname"},
+                {"data": "fshortname"},
+                {"data": "faddress"},
+                {"data": "fcontracts"},
+
+                  {
+                      "data": 'femp_id',
+                      render: function ( data, type, full ) {
+                          if(full.employee!=null)
+                              return full.employee.fname
+                              else
+                                  return "";
+                      }
+                  },
+                {"data": "ftelephone"},
+
 
         	          ],
         	          buttons: []
@@ -320,6 +283,37 @@ define(function(require, exports, module) {
         $("#redayBtn").on('click',function () {
             readyTable.ajax.reload();
         });
+
+        //预分配门店列表 添加门店至所选线路已分配门店列表
+        $("#taddBtn").on('click',function () {
+            addAllotStore(readyTable.rows('.selected').data()[0].id);
+        });
+
+
+        var addAllotStore = function (store_id) {
+            $.ajax({
+                type : "POST",
+                url : "/admin/visit_line_store",
+                data : {
+                    "action" : "create",
+                    "data[0][fline_id]" : table.rows('.selected').data()[0].fline_id,
+                    "data[0][fstore_id]" :store_id ,
+                    "data[0][femp_id]" : table.rows('.selected').data()[0].femp_id,
+                    "_token": $('meta[name="_token"]').attr('content')
+                },
+                success : function(data) {
+                    readyTable.ajax.reload();
+                    allotTable.ajax.reload();
+                    mapQuery();
+                }
+            })
+        }
+
+
+        //窗口关闭时清除地图标注
+        $('#storeAdjust').on('hide.bs.modal', function () {
+            map.clearOverlays();
+        })
 
         //线路已分配门店列表
         var allotTable = $("#allotTable").DataTable({
@@ -418,6 +412,78 @@ define(function(require, exports, module) {
         		 .draw();
         }
 
+        //城市区域联动
+        $("#province_id").on('change',function () {
+            $.ajax({
+                type : "GET",
+                url : "/admin/city/list",
+                dataType : "json" ,
+                data : {
+                    "parent_id":$("#province_id").val(),
+                    "_token": $('meta[name="_token"]').attr('content')
+                },
+                success : function(data) {
+                    var html = "";
+                    for (index in data){
+                        html+='<option value="'+data[index].id+'">'+data[index].Name+'</option>';
+                    }
+
+                    $("#city_id").html(html)
+                    $("#city_id").trigger('change');
+                }
+            })
+
+        })
+
+        $("#city_id").on('change',function () {
+            $.ajax({
+                type : "GET",
+                url : "/admin/city/list",
+                dataType : "json" ,
+                data : {
+                    "parent_id":$("#city_id").val(),
+                    "_token": $('meta[name="_token"]').attr('content')
+                },
+                success : function(data) {
+                    var html = "";
+                    for (index in data){
+                        html+='<option value="'+data[index].id+'">'+data[index].Name+'</option>';
+                    }
+                    $("#country_id").html(html)
+                    mapQuery();
+                }
+            })
+        })
+
+        $("#mQueryBtn").on('click',function () {
+            mapQuery();
+        })
+
+        var mapQuery = function () {
+            map.clearOverlays();
+
+            $.ajax({
+                type : "GET",
+                url : "/admin/store/query",
+                dataType : "json" ,
+                data : {
+                    "fprovince":$("#province_id").find("option:selected").text(),
+                    "fcity":$("#city_id").find("option:selected").text(),
+                    "fcountry":$("#country_id").find("option:selected").text(),
+                    "femp_id":table.rows('.selected').data()[0]!=null?table.rows('.selected').data()[0].femp_id:'',
+                    'fline_id' : table.rows('.selected').data()[0]!=null?table.rows('.selected').data()[0].fline_id:'',
+                    "_token": $('meta[name="_token"]').attr('content')
+                },
+                success : function(data) {
+                    for (index in data){
+                        mapAddOverlay(data[index]['flongitude'],data[index]['flatitude'],data[index]);
+                    }
+
+                }
+            })
+        }
+
+
         var map = new BMap.Map(mapId);
 
         var mapShow = function(){
@@ -428,7 +494,41 @@ define(function(require, exports, module) {
         	    map.enableInertialDragging();
 
         }
+        var mapPanTo =function(longitude,latitude){
+            var point = new BMap.Point(longitude,latitude);
+            map.panTo(point);
+        }
 
+        var mapAddOverlay = function(longitude,latitude,data){
+            var point = new BMap.Point(longitude,latitude);
+            var marker = new BMap.Marker(point);  // 创建标注
+
+            map.addOverlay(marker);              // 将标注添加到地图中
+            map.panTo(point);
+
+            infoWindow(marker,data);
+        }
+
+        //信息窗口
+        function infoWindow(element,data) {
+
+            var content = "<h3>"+data.ffullname+"</h3>"+
+                "<p>地址："+data.faddress+"</p>"+
+                "<p>负责人人："+data.fcontracts+"</p>"+
+                "<p>电话："+data.ftelephone+"</p>"+
+                "<p>负责业代："+data.employee.fname+"</p>"
+
+            var infoWindow = new BMap.InfoWindow(content)  // 创建信息窗口对象
+
+            element.addEventListener("click", function(){
+                this.openInfoWindow(infoWindow);
+                $("#map_select_id").val(data.id);//store_id
+            });
+        }
+        
+        $("#mAddBtn").on('click',function () {
+            addAllotStore($("#map_select_id").val());
+        })
 
         table.on( 'select', checkBtn).on( 'deselect', checkBtn);
         table.on( 'select', reloadChildTable);
@@ -444,6 +544,7 @@ define(function(require, exports, module) {
    		 	.draw();
         }
 
+        $("#province_id").trigger('change');
         mapShow();
         getTreeData();
 

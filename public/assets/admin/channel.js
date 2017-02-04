@@ -100,7 +100,7 @@ define(function (require, exports, module) {
                 {'label': '渠道名称', 'name': 'fname',},
                 {
                     'label': '父渠道组',
-                    'name': 'fgroup_id',
+                    'name': 'fparent_id',
                     'type': 'select',
                     'options': groups
                 },

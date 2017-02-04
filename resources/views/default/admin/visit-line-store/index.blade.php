@@ -210,7 +210,7 @@
 
 											<div class="col-sm-6">
 												<button type="button" class="btn btn-info" id="redayBtn"><i class="fa fa-fw fa-search"></i>查询</button>
-												<button type="button" class="btn btn-info"><i class="fa fa-fw fa-plus"></i>添加</button>
+												<button type="button" class="btn btn-info" id="taddBtn"><i class="fa fa-fw fa-plus"></i>添加</button>
 											</div>
 										</div>
 
@@ -243,39 +243,42 @@
 								<h3 class="box-title">预分配的门店</h3>
 							</div>
 							<div class="box-body">
-								<form class="form-horizontal">
+								<form class="form-horizontal" id="mapForm">
 									<div class="box-body">
 
 										<div class="form-group">
-											<label class="col-sm-2 control-label">区域</label>
-
-											<div class="col-sm-4">
-												<select class="form-control">
-													<option>1</option>
-												</select>
-											</div>
-
 											<label class="col-sm-2 control-label">省份</label>
 
 											<div class="col-sm-4">
-												<select class="form-control">
-													<option>1</option>
+												<select class="form-control" id="province_id">
+													@foreach($citys as $c)
+														<option value="{{$c->id}}">{{$c->Name}}</option>
+													@endforeach
+												</select>
+											</div>
+
+											<label class="col-sm-2 control-label">城市</label>
+
+											<div class="col-sm-4">
+												<select class="form-control" id="city_id">
+
 												</select>
 											</div>
 										</div>
 
 										<div class="form-group">
-											<label class="col-sm-2 control-label">城市</label>
+											<label class="col-sm-2 control-label">区域</label>
 
 											<div class="col-sm-4">
-												<select class="form-control">
-													<option>1</option>
+												<select class="form-control" id="country_id">
+
 												</select>
 											</div>
 
 											<div class="col-sm-6">
-												<button type="button" class="btn btn-info"><i class="fa fa-fw fa-search"></i>查询</button>
-												<button type="button" class="btn btn-info"><i class="fa fa-fw fa-plus"></i>添加</button>
+												<input type="hidden" value="" id="map_select_id">
+												<button type="button" class="btn btn-info" id="mQueryBtn"><i class="fa fa-fw fa-search"></i>查询</button>
+												<button type="button" class="btn btn-info" id="mAddBtn"><i class="fa fa-fw fa-plus"></i>添加</button>
 											</div>
 										</div>
 
