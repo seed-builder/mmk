@@ -207,24 +207,73 @@ define(function(require, exports, module) {
             select: true,
             paging: true,
             rowId: "id",
-            ajax: '/admin/store/pagination',
+            ajax: '/admin/visit_line_store/pagination',
             columns: [
                 {"data": "id"},
-                {"data": "ffullname"},
-                {"data": "fshortname"},
-                {"data": "faddress"},
-                {"data": "fcontracts"},
-                {"data": "ftelephone"},
                 {
-                	"data": 'femp_id',
-                	render: function ( data, type, full ) {
-                		if(full.employee!=null)
-                			return full.employee.fname
-                			else
-                				return "";
-                	}
+                    "data": 'fstore_id',
+                    render: function ( data, type, full ) {
+                        if(full.store!=null)
+                            return full.store.ffullname
+                        else
+                            return "";
+                    }
+                },
+                {
+                    "data": 'fstore_id',
+                    render: function ( data, type, full ) {
+                        if(full.store!=null)
+                            return full.store.fshortname
+                        else
+                            return "";
+                    }
+                },
+                {
+                    "data": 'fstore_id',
+                    render: function ( data, type, full ) {
+                        if(full.store!=null)
+                            return full.store.faddress
+                        else
+                            return "";
+                    }
+                },
+                {
+                    "data": 'fstore_id',
+                    render: function ( data, type, full ) {
+                        if(full.store!=null)
+                            return full.store.fcontracts
+                        else
+                            return "";
+                    }
+                },
+                {
+                    "data": 'fstore_id',
+                    render: function ( data, type, full ) {
+                        if(full.store!=null)
+                            return full.store.ftelephone
+                        else
+                            return "";
+                    }
+                },
+                {
+                    "data": 'femp_id',
+                    render: function ( data, type, full ) {
+                        if(full.employee!=null)
+                            return full.employee.fname
+                        else
+                            return "";
+                    }
+                },
+                {
+                    "data": 'fline_id',
                 },
 
+            ],
+            columnDefs: [
+                {
+                    "targets": [7],
+                    "visible": false
+                }
             ],
             buttons: [
                 // { text: '新增', action: function () { }  },
@@ -543,7 +592,8 @@ define(function(require, exports, module) {
 
         function reloadChildTable(){
         	var selected_emp_id = table.rows('.selected').data()[0].femp_id
-        	childTable.columns( 6 ).search( selected_emp_id )
+        	childTable.columns( 6 ).search( table.rows('.selected').data()[0].femp_id )
+                .columns( 7 ).search( table.rows('.selected').data()[0].fline_id )
    		 	.draw();
         }
 
