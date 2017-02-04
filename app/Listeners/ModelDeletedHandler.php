@@ -43,7 +43,7 @@ class ModelDeletedHandler implements ShouldQueue
 //	        }
 //	        LogSvr::Sync()->info('ModelDeletedHandler result: ' . json_encode( $result ) );
 	        $dataSync = app('dataSync');
-	        $dataSync->send($map->foreign_table, 2,  $event->model);
+	        $dataSync->send($map->foreign_table, 2,  $event->model->toArray());
 
         }
     }

@@ -39,6 +39,8 @@ define(function(require, exports, module) {
                 	'type': 'select',
                     'options': orgs
                 },
+                {'label': '设备', 'name': 'device',},
+                {'label': '设备号', 'name': 'device_sn',},
             ]
         });
 
@@ -84,7 +86,21 @@ define(function(require, exports, module) {
                 },
                 {"data": "fphone"},
                 {"data": "femail"},
-                
+                {"data": "device"},
+                {"data": "device_sn"},
+
+            ],
+            "columnDefs": [
+                {
+                    "targets": [ 8 ],
+                    "visible": false,
+                    "searchable": false
+                },
+                {
+                    "targets": [ 9 ],
+                    "visible": false,
+                    "searchable": false
+                }
             ],
             buttons: [
                 // { text: '新增', action: function () { }  },

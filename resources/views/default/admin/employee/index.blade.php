@@ -42,6 +42,8 @@
                                 <th>职位</th>
                                 <th>个人手机号</th>
                                 <th>邮箱</th>
+                                <th>设备</th>
+                                <th>设备号</th>
                             </tr>
                             </thead>
                         </table>
