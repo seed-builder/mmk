@@ -143,7 +143,9 @@ define(function(require, exports, module) {
                 	className: 'storeAdjust',
                 	enabled: false,
                 	action: function () {
-                        allotTable.columns( 7 ).search( table.rows('.selected').data()[0].fline_id ).draw();
+
+                        readyTable.ajax.reload();
+                        allotTable.ajax.reload();
                 		$('#storeAdjust').modal('show');
                 	}
                 },
@@ -240,12 +242,14 @@ define(function(require, exports, module) {
         	scrollX: true,
             scrollY: '350px',
             scrollCollapse: true,
-            searching:false,
+            searching:true,
         	paging: true,
         	rowId: "id",
         	ajax: {
         	    url : '/admin/visit_line_store/pagination',
                 data : function ( data ) {
+                    data.columns[5]['search']['value'] = table.rows('.selected').data()[0]!=null?table.rows('.selected').data()[0].femp_id:'';
+                    data['femp_id'] = table.rows('.selected').data()[0]!=null?table.rows('.selected').data()[0].femp_id:'';
                     data['fname'] = $("#fname").val();
                     data['faddress'] = $("#faddress").val();
                     data['is_allot'] = $("#is_allot").val();
@@ -330,7 +334,14 @@ define(function(require, exports, module) {
             searching:true,
         	paging: true,
         	rowId: "id",
-        	ajax: '/admin/visit_line_store/pagination',
+        	ajax: {
+        	    url : '/admin/visit_line_store/pagination',
+                data : function (data) {
+                    data.columns[6]['search']['value'] = table.rows('.selected').data()[0]!=null?table.rows('.selected').data()[0].femp_id:'';
+                    data.columns[7]['search']['value'] = table.rows('.selected').data()[0]!=null?table.rows('.selected').data()[0].fline_id:'';
+                    // allotTable.columns( 7 ).search( table.rows('.selected').data()[0].fline_id ).draw();
+                }
+            },
         	columns: [
         	          {"data": "id"},
                 {

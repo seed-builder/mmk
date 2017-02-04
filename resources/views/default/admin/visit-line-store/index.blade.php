@@ -150,72 +150,7 @@
 	</div>
 	<!-- /.modal-dialog -->
 </div>
-{{--<div class="modal fade" tabindex="-1" role="dialog" id="">--}}
-	{{--<div class="modal-dialog" role="document" style="width: 90%">--}}
-		{{--<div class="modal-content">--}}
-			{{--<div class="modal-header">--}}
-				{{--<button type="button" class="close" data-dismiss="modal"--}}
-					{{--aria-label="Close">--}}
-					{{--<span aria-hidden="true">&times;</span>--}}
-				{{--</button>--}}
-				{{--<h4 class="modal-title">门店调整</h4>--}}
-			{{--</div>--}}
-			{{--<form class="form-horizontal">--}}
-				{{--<div class="modal-body">--}}
-					{{--<div class="box-body">--}}
-						{{--<div class="col-md-4">--}}
-							{{--<table id="readyTable" class="table table-bordered table-hover">--}}
-								{{--<thead>--}}
-									{{--<tr style="white-space: nowrap;">--}}
-										{{--<th>序号</th>--}}
-										{{--<th>门店全称</th>--}}
-										{{--<th>门店简称</th>--}}
-										{{--<th>详细地址</th>--}}
-										{{--<th>负责人</th>--}}
-										{{--<th>负责业代</th>--}}
-										{{--<th>联系电话</th>--}}
-									{{--</tr>--}}
-								{{--</thead>--}}
-							{{--</table>--}}
-						{{--</div>--}}
-						{{--<div class="col-md-4">--}}
-							{{--<div class="form-group">--}}
-			                  {{--<label class="col-md-2 control-label">省份</label>--}}
-			                  {{--<div class="col-md-4">--}}
-			                  	{{--<select class="form-control" ></select>--}}
-			                  {{--</div>--}}
 
-			                  {{--<label class="col-md-2 control-label">城市</label>--}}
-			                  {{--<div class="col-md-4">--}}
-			                    {{--<select class="form-control" ></select>--}}
-			                  {{--</div>--}}
-			                {{--</div>--}}
-			                {{--<div class="form-group">--}}
-			                  {{--<label class="col-md-2 control-label">区域</label>--}}
-			                  {{--<div class="col-md-4">--}}
-			                    {{--<select class="form-control" ></select>--}}
-			                  {{--</div>--}}
-
-			                  {{--<div class="col-md-6">--}}
-			                  	{{--<button type="button" class="btn btn-info"><i class="fa fa-fw fa-search"></i>查询</button>--}}
-			                  	{{--<button type="button" class="btn btn-info"><i class="fa fa-fw fa-plus"></i>添加</button>--}}
-			                  {{--</div>--}}
-			                {{--</div>--}}
-			                {{--<div id="map" style="height: 500px;></div>--}}
-						{{--</div>--}}
-						{{--<div class="col-md-4"></div>--}}
-					{{--</div>--}}
-				{{--</div>--}}
-				{{--<div class="modal-footer">--}}
-					{{--<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>--}}
-					{{--<button type="button" class="btn btn-primary">保存</button>--}}
-				{{--</div>--}}
-			{{--</form>--}}
-		{{--</div>--}}
-		{{--<!-- /.modal-content -->--}}
-	{{--</div>--}}
-	{{--<!-- /.modal-dialog -->--}}
-{{--</div>--}}
 
 	<div class="modal fade" tabindex="-1" role="dialog" id="storeAdjust">
 		<div class="modal-dialog" role="document" style="width: 90%">

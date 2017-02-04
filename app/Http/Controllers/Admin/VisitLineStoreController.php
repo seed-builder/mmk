@@ -69,7 +69,7 @@ class VisitLineStoreController extends AdminController
 		$searchCols = ["fline_id","femp_id"];
 
 		$data = $request->all();
-		if (!empty($data['fname'])||!empty($data['faddress'])||!empty($data['is_allot'])||!empty($data['fnumber'])){
+		if (!empty($data['fname'])||!empty($data['faddress'])||!empty($data['fnumber'])||!empty($data['is_allot'])){
             $request['queryBuilder']=$this->readyAllotStoreQuery($data);
         }
 
@@ -80,7 +80,7 @@ class VisitLineStoreController extends AdminController
 	public function readyAllotStoreQuery($data){
         $query = VisitLineStore::query();
         if (!empty($data['fname'])){
-            $stores = Store::query()->where('fname','like','%'.$data['fname'].'%')->get();
+            $stores = Store::query()->where('ffullname','like','%'.$data['fname'].'%')->get();
             $ids = [];
             foreach ($stores as $s){
                 $ids[] = $s->id;
@@ -96,12 +96,24 @@ class VisitLineStoreController extends AdminController
             $query->whereIn('fstore_id',$ids);
         }
         if (!empty($data['fnumber'])){
-            $lines = Line::query()->where('fnumber','like','%'.$data['fnumber'].'%')->get();
+            $lines = VisitLine::query()->where('fnumber','like','%'.$data['fnumber'].'%')->get();
             $ids = [];
             foreach ($lines as $l){
                 $ids[] = $l->id;
             }
             $query->whereIn('fline_id',$ids);
+        }
+        if (!empty($data['is_allot'])){
+            $stores = Store::query()->where('femp_id',$data['femp_id'])->get();
+            $ids = [];
+            foreach ($stores as $s){
+                $ids[] = $s->id;
+            }
+            if ($data['is_allot']==1){
+                $query->whereIn('fstore_id',$ids)->where('femp_id',$data['femp_id']);
+            }else if ($data['is_allot']==2){
+                $query->whereNotIn('fstore_id',$ids)->where('femp_id',$data['femp_id']);
+            }
         }
 
         return $query;
