@@ -43,7 +43,7 @@ class ModelUpdatedHandler implements ShouldQueue
 //	        LogSvr::Sync()->info('ModelUpdatedHandler result: ' .  json_encode( $result ));
 
 	        $dataSync = app('dataSync');
-	        $dataSync->send($map->foreign_table, 1,  $event->model);
+	        $dataSync->send($map->foreign_table, 1,  $event->model->toArray());
 
         }
     }

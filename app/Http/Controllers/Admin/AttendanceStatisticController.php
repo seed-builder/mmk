@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Busi\AttendanceStatistic;
+use App\Models\Busi\Employee;
 
 class AttendanceStatisticController extends AdminController
 {
@@ -27,7 +28,8 @@ class AttendanceStatisticController extends AdminController
 	 * @return \Illuminate\Http\JsonResponse
 	 */
 	public function pagination(Request $request, $searchCols = []){
-		$searchCols = ['femp_id','fday'];
+		$emp = Employee::query();
+		$searchCols = ['femp_id','fday',[[$emp,'fname','femp_id']]];
 		return parent::pagination($request, $searchCols);
 	}
 

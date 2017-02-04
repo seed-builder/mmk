@@ -5,7 +5,7 @@ define(function(require, exports, module) {
     
     var zhCN = require('datatableZh');
 
-    exports.index = function ($, tableId) {
+    exports.index = function ($, tableId,treeId,mapId) {
 
         var editor = new $.fn.dataTable.Editor({
             ajax: {
@@ -62,7 +62,15 @@ define(function(require, exports, module) {
                 				return "";
                 	}
                 },
+                {"data": "flongitude"},
+                {"data": "flatitude"},
                 
+            ],
+            columnDefs: [
+                {
+                    "targets": [7,8],
+                    "visible": false
+                }
             ],
             buttons: [
                 // { text: '新增', action: function () { }  },
@@ -84,13 +92,112 @@ define(function(require, exports, module) {
             ]
         });
 
-        // table.on( 'select', checkBtn).on( 'deselect', checkBtn);
-        //
-        // function checkBtn(e, dt, type, indexes) {
-        //     var count = table.rows( { selected: true } ).count();
-        //     table.buttons( ['.edit', '.delete'] ).enable(count > 0);
-        // }
+        table.on( 'xhr', function () {
+            map.clearOverlays();
+            var data = table.ajax.json();
+            for(var i=0;i<data['data'].length;i++){
+                var st = data['data'][i];
 
+                mapAddOverlay(st.flongitude,st.flatitude,st);
+            }
+
+
+        });
+
+        table.on( 'select', rowselect);
+
+        var map = new BMap.Map(mapId);
+
+        var mapShow = function(){
+            // 百度地图API功能
+            map.centerAndZoom(new BMap.Point(),14);
+            map.enableScrollWheelZoom(true);
+
+            var geolocation = new BMap.Geolocation();
+            geolocation.getCurrentPosition(function(r){
+                if(this.getStatus() == BMAP_STATUS_SUCCESS){
+                    var mk = new BMap.Marker(r.point);
+                    map.panTo(r.point);
+                }
+                else {
+                    alert('获取地图失败'+this.getStatus());
+                }
+            },{enableHighAccuracy: true})
+        }
+
+        var mapAddOverlay = function(longitude,latitude,data){
+            var point = new BMap.Point(longitude,latitude);
+            var marker = new BMap.Marker(point);  // 创建标注
+            map.addOverlay(marker);              // 将标注添加到地图中
+            map.panTo(point);
+
+            infoWindow(marker,data);
+        }
+
+        var getTreeData = function () {
+            $.ajax({
+                url: "../../admin/employee/employeeTree",
+                type: "POST",
+                data: {
+                    '_token':$('meta[name="_token"]').attr('content'),
+                    'dept_select':true
+                },
+                dataType:'json',
+                success:function(data){
+                    $("#" + treeId).treeview({
+                        color: "#428bca",
+                        enableLinks: true,
+                        levels: 99,
+                        data: data,
+                        onNodeSelected: function(event, data) {
+                            searchtable(data.dataid);
+                        },
+                        onSearchComplete: function(event, data) {
+                            if (JSON.stringify(data)!="{}"){
+
+                            }
+                        }
+                    });
+                },
+            });
+        }
+
+        var searchtable = function(emp_id){
+            table.columns( 6 ).search( emp_id )
+                .draw();
+        }
+
+        //信息窗口
+        function infoWindow(element,data) {
+
+            var content = "<h3>"+data.ffullname+"</h3>"+
+                "<p>地址："+data.faddress+"</p>"+
+                "<p>负责人人："+data.fcontracts+"</p>"+
+                "<p>电话："+data.ftelephone+"</p>"+
+                "<p>负责业代："+data.employee.fname+"</p>"
+
+            var infoWindow = new BMap.InfoWindow(content)  // 创建信息窗口对象
+
+            element.addEventListener("click", function(){
+                this.openInfoWindow(infoWindow);
+            });
+        }
+
+        //单点地图标注
+        function rowselect() {
+            map.clearOverlays();
+            var data = table.rows('.selected').data()[0];
+
+            mapAddOverlay(data.flongitude,data.flatitude,data);
+            var point = new BMap.Point(data.flongitude,data.flatitude,data);
+            map.panTo(point);
+
+        }
+
+
+
+        getTreeData();
+        mapShow();
     }
 
 });

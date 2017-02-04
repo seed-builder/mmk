@@ -36,7 +36,7 @@ class ModelCreatedHandler implements ShouldQueue
         $map = ModelMap::where('table', $event->model->getTable())->first();
         if(!empty($map)){
 	        $dataSync = app('dataSync');
-	        $dataSync->send($map->foreign_table, 0,  $event->model);
+	        $dataSync->send($map->foreign_table, 0,  $event->model->toArray());
 
             //$result = KingdeeSyncData::add($map->foreign_table, $event->model);
 

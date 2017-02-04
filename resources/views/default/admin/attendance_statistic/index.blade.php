@@ -29,6 +29,7 @@
 			<div class="box">
 				<div class="box-header">
 					<h3 class="box-title">组织架构信息</h3>
+					<input type="text" class="form-control pull-right" id="treeSearch" placeholder="搜索">
 				</div>
 				<!-- /.box-header -->
 				<div class="box-body">
@@ -73,7 +74,11 @@
 									<th>姓名</th>
 									<th>日期</th>
 									<th>签到时间</th>
+									<th>签到地点</th>
+									{{--<th>签到图片</th>--}}
 									<th>签退时间</th>
+									<th>签退地点</th>
+									<th>签到状态</th>
 								</tr>
 							</thead>
 						</table>
@@ -82,6 +87,7 @@
 				</div>
 				<!-- /.box -->
 		</div>
+
 
 </section>
 

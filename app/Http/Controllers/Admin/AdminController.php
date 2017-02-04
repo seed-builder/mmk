@@ -143,14 +143,30 @@ abstract class AdminController extends Controller
 
 		$total = $queryBuilder->count();
 
-		foreach ($conditions as $col => $val) {
-			$queryBuilder->where($col, $val);
-		}
+        if (!empty($request['queryBuilder'])){ //自定义query
+            $queryBuilder = $request['queryBuilder'];
+        }else{
+            foreach ($conditions as $col => $val) {
+                $queryBuilder->where($col, $val);
+            }
+        }
+
 		//模糊查询
 		if(!empty($searchCols) && !empty($search['value'])){
 			$queryBuilder->where(function ($query) use ($search, $searchCols) {
 				foreach ($searchCols  as $sc){
-					$query->orWhere($sc, 'like', '%' . $search['value'] . '%');
+					if(is_array($sc)){//用于其他表查询 [entity,querykey,localkey]
+						foreach ($sc as $s){
+							$entities=$s[0]->where($s[1],'like binary', '%' . $search['value'] . '%')->get();
+							$ids = [];
+							foreach ($entities as $e){
+								$ids[] = $e->id;
+							}
+							$query->orWhereIn($s[2], $ids);
+						}
+					}else{
+						$query->orWhere($sc, 'like binary', '%' . $search['value'] . '%');
+					}
 				}
 			});
 

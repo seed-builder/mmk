@@ -67,6 +67,24 @@ define(function(require, exports, module) {
                 	}
                 },
                 {
+                    "data": 'fbegin_id',
+                    render: function ( data, type, full ) {
+                        if(full.begin_attendance!=null)
+                            return full.begin_attendance.faddress
+                        else
+                            return "";
+                    }
+                },
+                // {
+                //     "data": 'fbegin_id',
+                //     render: function ( data, type, full ) {
+                //         if(full.begin_attendance!=null)
+                //             return '<img src="'+full.begin_attendance.photo.path+'" />'
+                //         else
+                //             return "";
+                //     }
+                // },
+                {
                 	"data": 'fcomplete_id',
                 	render: function ( data, type, full ) {
                 		if(full.complete_attendance!=null)
@@ -75,7 +93,31 @@ define(function(require, exports, module) {
                 				return "";
                 	}
                 },
+                {
+                    "data": 'fcomplete_id',
+                    render: function ( data, type, full ) {
+                        if(full.complete_attendance!=null)
+                            return full.complete_attendance.faddress
+                        else
+                            return "";
+                    }
+                },
+                {
+                    "data": 'id',
+                    render: function ( data, type, full ) {
+                        if(full.fbegin_id==null||full.fcomplete_id==null){
+                            return "<span style='color: red'>异常</span>";
+                        }else {
+                            return "<span style='color: #00a65a'>正常</span>"
+                        }
+                    }
+                },
             ],
+            createdRow: function( row, data, dataIndex ) {
+                if(data.fbegin_id==null||data.fcomplete_id==null){
+                    //$(row).css( 'background','red' );
+                }
+            },
             buttons: [
                 // { text: '新增', action: function () { }  },
                 // { text: '删除', className: 'delete', enabled: false },
@@ -88,7 +130,7 @@ define(function(require, exports, module) {
             ]
         });
 
-        // table.on( 'select', checkBtn).on( 'deselect', checkBtn);
+        table.on( 'select', rowselect);
         //
         // function checkBtn(e, dt, type, indexes) {
         //     var count = table.rows( { selected: true } ).count();
@@ -99,12 +141,15 @@ define(function(require, exports, module) {
             var data = table.ajax.json();
             for(var i=0;i<data['data'].length;i++){
                 var at = data['data'][i];
-                if(at.begin_attendance){
+
+                if(at.begin_attendance!=null){
                     mapAddOverlay(at.begin_attendance.flongitude,at.begin_attendance.flatitude,at);
                 }
-                if(at.complete_attendance){
+                if(at.complete_attendance!=null){
                     mapAddOverlay(at.complete_attendance.flongitude,at.complete_attendance.flatitude,at);
                 }
+
+                line(at);
             }
 
         });
@@ -120,7 +165,6 @@ define(function(require, exports, module) {
         	geolocation.getCurrentPosition(function(r){
         		if(this.getStatus() == BMAP_STATUS_SUCCESS){
         			var mk = new BMap.Marker(r.point);
-//         			map.addOverlay(mk);
         			map.panTo(r.point);
         		}
         		else {
@@ -135,14 +179,7 @@ define(function(require, exports, module) {
 			map.addOverlay(marker);              // 将标注添加到地图中
 			map.panTo(point);
 
-			if(data && data.begin_attendance && data.begin_attendance.ftime) {
-                //添加信息窗口
-                var content = `<h3>` + data.employee.fname + `</h3><p>签到时间：` + data.begin_attendance.ftime + `</p><p>签退时间：` + data.complete_attendance.ftime + `</p>`
-                var infoWindow = new BMap.InfoWindow(content)  // 创建信息窗口对象
-                marker.addEventListener("click", function () {
-                    this.openInfoWindow(infoWindow);
-                });
-            }
+			infoWindow(marker,data);
         }
         
         var getTreeData = function () {
@@ -162,6 +199,11 @@ define(function(require, exports, module) {
 							//alert(data.dataid);
 //                            table.search( data.dataid ).draw();
                         	searchtable(data.dataid);
+                        },
+                        onSearchComplete: function(event, data) {
+                            if (JSON.stringify(data)!="{}"){
+
+                            }
                         }
                     });
                 },
@@ -178,12 +220,79 @@ define(function(require, exports, module) {
         		format:'yyyy-mm-dd',
         		language: 'zh-CN',
         });
+
+        var treeSearch = function () {
+            $("#treeSearch").keyup(function () {
+                searchTreeNode($("#treeSearch").val());
+            })
+        }
         
         datepicker.on('changeDate', function(ev){
         	searchtable($(".node-selected").data('id'));
         });
-    	
-        
+
+        //单点地图标注
+        function rowselect() {
+            map.clearOverlays();
+            var data = table.rows('.selected').data()[0];
+            if (data.begin_attendance!=null){
+                mapAddOverlay(data.begin_attendance.flongitude,data.begin_attendance.flatitude,data);
+            }
+            if (data.complete_attendance!=null){
+                mapAddOverlay(data.complete_attendance.flongitude,data.complete_attendance.flatitude,data);
+            }
+
+            line(data);
+        }
+
+        //签到签退地点连线
+        function line(data) {
+            if (data.begin_attendance!=null&&data.complete_attendance!=null){
+                var polyline = new BMap.Polyline([
+                    new BMap.Point(data.begin_attendance.flongitude, data.begin_attendance.flatitude),
+                    new BMap.Point(data.complete_attendance.flongitude, data.complete_attendance.flatitude),
+                ], {strokeColor:"blue", strokeWeight:6, strokeOpacity:0.5});
+                map.addOverlay(polyline);
+            }
+        }
+
+        //信息窗口
+        function infoWindow(element,data) {
+
+            var begin_time = data.begin_attendance!=null?data.begin_attendance.ftime:'无';
+            var begin_address = data.begin_attendance!=null?data.begin_attendance.faddress:'无';
+            var complete_time = data.complete_attendance!=null?data.complete_attendance.ftime:'无'
+            var complete_address = data.complete_attendance!=null?data.complete_attendance.faddress:'无'
+
+            var content = "<h3>"+data.employee.fname+"</h3>"+
+                "<p>日期："+data.fday+"</p>"+
+                "<p>签到时间："+begin_time+"</p>"+
+                "<p>签到地址："+begin_address+"</p>"+
+                "<p>签退时间："+complete_time+"</p>"+
+                "<p>签退地址："+complete_address+"</p>"
+
+            if (data.begin_attendance==null||data.complete_attendance==null){
+                content+= "<p>签到状态：<span style='color: red;font-weight: bold'>异常</span></p>"
+            }
+
+            var infoWindow = new BMap.InfoWindow(content)  // 创建信息窗口对象
+
+            element.addEventListener("click", function(){
+                this.openInfoWindow(infoWindow);
+            });
+        }
+
+        //组织结构查询
+        function searchTreeNode(keywords) {
+            $("#" + treeId).treeview('search', [ keywords, {
+                ignoreCase: true,     // case insensitive
+                exactMatch: true,    // like or equals
+                revealResults: false,  // reveal matching nodes
+            }]);
+        }
+
+
+        treeSearch();
         mapShow();
     	getTreeData();
     }
