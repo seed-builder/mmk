@@ -8,6 +8,8 @@
 
 namespace App\Services\DataSync;
 
+use App\Services\LogSvr;
+
 
 /**
  * 金蝶数据同步处理
