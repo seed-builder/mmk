@@ -31,6 +31,7 @@
     <script src="/assets/plugins/fastclick/fastclick.js"></script>
     <script src="/assets/plugins/toastr/toastr.min.js"></script>
     <script src="/assets/plugins/layer/layer.js"></script>
+    <script src="/js/jquery.bootstrap.min.js"></script>
     <script src="/assets/sea.js"></script>
     <script src="/assets/sea.config.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

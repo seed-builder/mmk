@@ -179,6 +179,8 @@ abstract class AdminController extends Controller
 			$queryBuilder->orderBy($columns[$index]['data'], $dir);
 		}
 
+
+
 		$entities = $queryBuilder->select($fields)->skip($start)->take($length)->get();
 		$result = [
 			'draw' => $draw,

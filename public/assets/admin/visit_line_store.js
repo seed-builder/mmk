@@ -86,7 +86,10 @@ define(function(require, exports, module) {
             select: true,
             paging: true,
             rowId: "id",
-            ajax: '/admin/visit-line-store/pagination',
+            ajax: {
+                url : '/admin/visit-line-store/pagination',
+                data : {'distinct':'fline_id'}
+            },
             columns: [
                     {  'data': 'id' },
                     {
@@ -349,7 +352,7 @@ define(function(require, exports, module) {
             language: zhCN,
             processing: true,
             serverSide: true,
-            select: false,
+            select: true,
             scrollX: true,
             scrollY: '700px',
             scrollCollapse: true,
@@ -431,7 +434,63 @@ define(function(require, exports, module) {
                     "visible": false
                 }
             ],
-            buttons: []
+            buttons: [
+                { text: '显示线路<i class="fa fa-fw fa-search"></i>', action: function () {
+                    map.clearOverlays();
+                    $("#map_select_id").val("")
+                    var datas = allotTable.rows().data();
+
+                    for (var index=0;index<datas.length;index++){
+                        if (datas[index].store!=null){
+                            mapAddOverlay(datas[index].store.flongitude,datas[index].store.flatitude,datas[index].store);
+                        }
+                    }
+                    line(datas)
+                }  },
+                { text: '删除<i class="fa fa-fw fa-trash"></i>', action: function () {
+                    $.messager.confirm('操作提示','确定删除？',function () {
+                        $.ajax({
+                            type : "GET",
+                            url : "/admin/visit_line_store/destroy/"+allotTable.rows('.selected').data()[0].id,
+                            dataType : "json" ,
+                            data : {
+                                "_token": $('meta[name="_token"]').attr('content')
+                            },
+                            success : function(data) {
+                                readyTable.ajax.reload();
+                                allotTable.ajax.reload();
+                            }
+                        })
+                    })
+
+                }  },
+                { text: '重置<i class="fa fa-fw fa-exchange"></i>', action: function () {
+                    var ids = new Array();
+
+                    var data = allotTable.rows().data();
+                    for (var i=0;i<data.length;i++){
+                        ids.push(data[i].id);
+                    }
+
+                    $.messager.confirm('操作提示','确定重置当前线路上所有门店吗！',function () {
+                        $.ajax({
+                            type : "POST",
+                            url : "/admin/visit_line_store/destroyAll",
+                            dataType : "json" ,
+                            data : {
+                                "ids" : ids,
+                                "_token": $('meta[name="_token"]').attr('content')
+                            },
+                            success : function(data) {
+                                readyTable.ajax.reload();
+                                allotTable.ajax.reload();
+
+                            }
+                        })
+                    });
+
+                }  },
+            ]
         });
 
         //预分配门店 表格查询按钮
@@ -441,7 +500,15 @@ define(function(require, exports, module) {
 
         //预分配门店 表格添加按钮
         $("#tAddBtn").on('click',function () {
-            addAllotStore(readyTable.rows('.selected').data()[0].id);
+            var is_allot = $("#is_allot").find('option:selected').val();
+            if (is_allot==1){
+                $.messager.confirm('操作提示','该门店已分配在其他线路中，是否继续添加？',function () {
+                    addAllotStore(readyTable.rows('.selected').data()[0].id);
+                })
+            }else{
+                addAllotStore(readyTable.rows('.selected').data()[0].id);
+            }
+
         });
 
         //预分配门店 地图查询按钮
@@ -467,6 +534,7 @@ define(function(require, exports, module) {
                     "_token": $('meta[name="_token"]').attr('content')
                 },
                 success : function(data) {
+                    $("#map_select_id").val("")//将地图所选id清空
                     readyTable.ajax.reload();
                     allotTable.ajax.reload();
                     mapQuery();
@@ -492,6 +560,7 @@ define(function(require, exports, module) {
                 },
                 success : function(data) {
                     for (index in data){
+                        data[index]['selectable']=true;
                         mapAddOverlay(data[index]['flongitude'],data[index]['flatitude'],data[index]);
                     }
 
@@ -499,9 +568,23 @@ define(function(require, exports, module) {
             })
         }
 
+        //地点连线
+        function line(datas) {
+
+            var arr = new Array();
+            for (var index=0;index<datas.length;index++){
+                var point = new BMap.Point(datas[index].store.flongitude, datas[index].store.flatitude)
+                arr.push(point)
+            }
+            var polyline = new BMap.Polyline(arr, {strokeColor:"blue", strokeWeight:6, strokeOpacity:0.5});
+            map.addOverlay(polyline);
+
+        }
+
         //窗口关闭时清除地图标注
         $('#storeAdjust').on('hide.bs.modal', function () {
             map.clearOverlays();
+            $("#map_select_id").val("")
         })
 
 
@@ -566,7 +649,6 @@ define(function(require, exports, module) {
 
         //信息窗口
         function infoWindow(element,data) {
-
             var content = "<h3>"+data.ffullname+"</h3>"+
                 "<p>地址："+data.faddress+"</p>"+
                 "<p>负责人人："+data.fcontracts+"</p>"+
@@ -577,7 +659,9 @@ define(function(require, exports, module) {
 
             element.addEventListener("click", function(){
                 this.openInfoWindow(infoWindow);
-                $("#map_select_id").val(data.id);//store_id
+                if (data['selectable']==true){
+                    $("#map_select_id").val(data.id);//store_id
+                }
             });
         }
 

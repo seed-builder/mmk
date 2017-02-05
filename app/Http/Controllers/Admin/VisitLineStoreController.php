@@ -69,12 +69,18 @@ class VisitLineStoreController extends AdminController
 	*/
 	public function pagination(Request $request, $searchCols = []){
 		$searchCols = ["fline_id","femp_id"];
-
 		$data = $request->all();
+		if (!empty($data['distinct'])){
+            //$request->distinct = $data['distinct'];
+        }
+
 
 		return parent::pagination($request, $searchCols);
 	}
 
-
+    public function destroyAll(Request $request){
+	    $data = $request->all();
+	    return VisitLineStore::query()->whereIn('id',$data['ids'])->delete();
+    }
 
 }
