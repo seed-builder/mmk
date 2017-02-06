@@ -25,4 +25,6 @@ class VisitLineStore extends BaseModel
 	 public function store(){
          return $this->hasOne(Store::class, 'id', 'fstore_id');
      }
+
+
 }

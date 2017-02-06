@@ -86,5 +86,19 @@ class EmployeeController extends AdminController
 		
 		return $rs;
 	}
-	
+
+	public function ajaxGetEmployees(Request $request){
+	    $data = $request->all();
+	    $query = Employee::query();
+        if (!empty($data['femp_id'])){
+            $query->where('id',$data['femp_id']);
+        }
+	    if (!empty($data['fdept_id'])){
+            $query->where('fdept_id',$data['fdept_id']);
+        }
+
+        $rs = $query->get();
+
+	    return json_encode($rs);
+    }
 }

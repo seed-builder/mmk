@@ -22,16 +22,21 @@ use Illuminate\Database\Eloquent\Model;
  * @SWG\Property(name="fremark", type="string", description="渠道定义")
  * @SWG\Property(name="fsort", type="integer", description="排序")
  * @SWG\Property(name="id", type="integer", description="")
-  */
+ */
 class Channel extends BaseModel
 {
-	//
-	protected $table = 'bd_channels';
-	protected $guarded = ['id'];
-	
-	protected $with = ['group'];
-	
-public function group(){
+    //
+    protected $table = 'bd_channels';
+    protected $guarded = ['id'];
+
+    protected $with = ['group'];
+
+    public function group()
+    {
         return $this->hasOne(ChannelGroup::class, 'id', 'fgroup_id');
     }
+
+
 }
+
+

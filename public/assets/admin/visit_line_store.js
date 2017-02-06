@@ -152,7 +152,9 @@ define(function(require, exports, module) {
                 	className: 'lineAdjust',
                 	enabled: false,
                 	action: function () {
-                		$('#lineAdjust').modal('show');
+                        intermodulation();
+                        lineStoreTable.ajax.reload();
+                        $('#lineAdjust').modal('show');
                 	}
                 },
                 {
@@ -169,7 +171,6 @@ define(function(require, exports, module) {
                 //{extend: 'colvis', text: '列显示'}
             ]
         });
-
 
         //子表
         var childEditor = new $.fn.dataTable.Editor({
@@ -346,7 +347,7 @@ define(function(require, exports, module) {
         	          buttons: []
         });
 
-        //线路已分配门店列表
+        //线路门店调整 --- 线路已分配门店列表
         var allotTable = $("#allotTable").DataTable({
             dom: "Bfrtip",
             language: zhCN,
@@ -448,6 +449,10 @@ define(function(require, exports, module) {
                     line(datas)
                 }  },
                 { text: '删除<i class="fa fa-fw fa-trash"></i>', action: function () {
+                    if (allotTable.rows('.selected').data().length==0){
+                        layer.alert('请先选择要删除的门店！');
+                        return;
+                    }
                     $.messager.confirm('操作提示','确定删除？',function () {
                         $.ajax({
                             type : "GET",
@@ -493,6 +498,82 @@ define(function(require, exports, module) {
             ]
         });
 
+        //线路门店互调 --- 线路已分配门店列表
+        var lineStoreTable = $("#lineStoreTable").DataTable({
+            dom: "Bfrtip",
+            language: zhCN,
+            processing: true,
+            serverSide: true,
+            select: true,
+            searching:true,
+            paging: true,
+            rowId: "id",
+            ajax: {
+                url : '/admin/visit_line_store/pagination',
+                data : function (data) {
+                    data.columns[1]['search']['value'] = table.rows('.selected').data()[0]!=null?table.rows('.selected').data()[0].femp_id:'';
+                    data.columns[2]['search']['value'] = table.rows('.selected').data()[0]!=null?table.rows('.selected').data()[0].fline_id:'';
+                    // allotTable.columns( 7 ).search( table.rows('.selected').data()[0].fline_id ).draw();
+                }
+            },
+            columns: [
+                {"data": "id"},
+                {
+                    "data": 'femp_id',
+                },
+                {
+                    "data": 'fline_id',
+                },
+                {
+                    "data": 'fstore_id',
+                    render: function ( data, type, full ) {
+                        if(full.store!=null)
+                            return full.store.ffullname
+                        else
+                            return "";
+                    }
+                },
+                {
+                    "data": 'fstore_id',
+                    render: function ( data, type, full ) {
+                        if(full.store!=null)
+                            return full.store.fshortname
+                        else
+                            return "";
+                    }
+                },
+                {
+                    "data": 'fstore_id',
+                    render: function ( data, type, full ) {
+                        if(full.store!=null)
+                            return full.store.faddress
+                        else
+                            return "";
+                    }
+                },
+                {
+                    "data": 'fstore_id',
+                    render: function ( data, type, full ) {
+                        if(full.store.channel!=null)
+                            return full.store.channel.fname
+                        else
+                            return "";
+                    }
+                },
+
+
+            ],
+            columnDefs: [
+                {
+                    "targets": [0,1,2],
+                    "visible": false
+                }
+            ],
+            buttons: [
+
+            ]
+        });
+
         //预分配门店 表格查询按钮
         $("#tQueryBtn").on('click',function () {
             readyTable.ajax.reload();
@@ -501,11 +582,17 @@ define(function(require, exports, module) {
         //预分配门店 表格添加按钮
         $("#tAddBtn").on('click',function () {
             var is_allot = $("#is_allot").find('option:selected').val();
+
+            if (readyTable.rows('.selected').data().length==0){
+                layer.alert('请先选择要添加的门店！');
+                return;
+            }
             if (is_allot==1){
                 $.messager.confirm('操作提示','该门店已分配在其他线路中，是否继续添加？',function () {
                     addAllotStore(readyTable.rows('.selected').data()[0].id);
                 })
             }else{
+
                 addAllotStore(readyTable.rows('.selected').data()[0].id);
             }
 
@@ -680,6 +767,104 @@ define(function(require, exports, module) {
                 .columns( 7 ).search( table.rows('.selected').data()[0].fline_id )
    		 	.draw();
         }
+
+        //线路门店互调 数据展示 方法
+        var intermodulation = function () {
+            dangqian();
+            tongzu();
+            kauzu();
+        }
+
+        //线路门店互调 当前人员
+        var dangqian = function () {
+            $("#femp_current").val(table.rows('.selected').data()[0].employee.fname);
+            $("#fdept_current").val(table.rows('.selected').data()[0].employee.department.fname);
+        }
+
+        //线路门店互调 同组业代
+        var tongzu = function () {
+            $.ajax({
+                type : "GET",
+                url : "/admin/employee/employees",
+                dataType : "json" ,
+                data : {
+                    "fdept_id" : table.rows('.selected').data()[0]!=null?table.rows('.selected').data()[0].employee.fdept_id:'',
+                    "_token": $('meta[name="_token"]').attr('content')
+                },
+                success : function(data) {
+                    var html = "";
+                    for (index in data){
+                        html+= '<option value="'+data[index].id+'">'+data[index].fname+'</option>'
+                    }
+                    $("#femp_group").html(html);
+                    $("#fdept_group").val(table.rows('.selected').data()[0].employee.department.fname);
+
+                }
+            })
+
+        }
+
+        //线路门店互调 跨组业代
+        var kauzu = function () {
+            $.ajax({
+                type : "GET",
+                url : "/admin/employee/employees",
+                dataType : "json" ,
+                data : {
+                    "fdept_id" :  $("#fdept_org").val(),
+                    "_token": $('meta[name="_token"]').attr('content')
+                },
+                success : function(data) {
+                    var html = "";
+
+                    for (index in data){
+                        html+= '<option value="'+data[index].id+'">'+data[index].fname+'</option>'
+                    }
+                    $("#femp_org").html(html);
+
+                }
+            })
+
+        }
+
+        //线路门店互调 保存按钮
+        $("#imlSaveBtn").on('click',function () {
+            var femp_id = $(".tab-content").find(".active").find(".femp_id").val();
+            var fline_id = $(".tab-content").find(".active").find(".fline_id").val();
+
+            var selected = lineStoreTable.rows('.selected').data();
+            if (selected.length==0){
+                layer.alert('请在左边列表中选中门店！');
+                return ;
+            }
+
+            var ids = new Array();
+            for (var i=0;i<selected.length;i++){
+                ids.push(selected[i].id);
+            }
+
+            $.ajax({
+                type : "POST",
+                url : "/admin/visit_line_store/storeLineIml",
+                dataType : "json" ,
+                data : {
+                    "ids" : ids,
+                    "femp_id" : femp_id,
+                    "fline_id" : fline_id,
+                    "_token": $('meta[name="_token"]').attr('content')
+                },
+                success : function(data) {
+                    layer.alert('保存成功！');
+                    table.ajax.reload();
+                    $('#lineAdjust').modal('hide')
+                }
+            })
+        })
+
+        //线路门店互调 选择部门
+        $("#fdept_org").on('change',function () {
+            kauzu();
+        })
 
         $("#province_id").trigger('change');
         mapShow();

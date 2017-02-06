@@ -4,4 +4,5 @@ Route::get('visit_line_store/pagination', ['uses' => 'VisitLineStoreController@p
 Route::get('visit_line_store/destroy/{id}', ['uses' => 'VisitLineStoreController@destroy']);
 Route::post('visit_line_store/destroyAll', ['uses' => 'VisitLineStoreController@destroyAll']);
 Route::get('visit_line_store/index', ['uses' => 'VisitLineStoreController@index']);
+Route::post('visit_line_store/storeLineIml', ['uses' => 'VisitLineStoreController@storeLineIml']);
 Route::resource('visit_line_store', 'VisitLineStoreController');

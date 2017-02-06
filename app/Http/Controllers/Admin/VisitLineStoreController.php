@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Busi\Department;
 use App\Models\Busi\Store;
 use App\Models\City;
 use Illuminate\Http\Request;
@@ -26,7 +27,8 @@ class VisitLineStoreController extends AdminController
 		//
 		$lines = VisitLine::all();
 		$citys = City::query()->where('LevelType',1)->get();
-		return view('admin.visit-line-store.index',compact('lines','citys'));
+		$depts = Department::all();
+		return view('admin.visit-line-store.index',compact('lines','citys','depts'));
 	}
 
 	/**
@@ -70,10 +72,6 @@ class VisitLineStoreController extends AdminController
 	public function pagination(Request $request, $searchCols = []){
 		$searchCols = ["fline_id","femp_id"];
 		$data = $request->all();
-		if (!empty($data['distinct'])){
-            //$request->distinct = $data['distinct'];
-        }
-
 
 		return parent::pagination($request, $searchCols);
 	}
@@ -81,6 +79,26 @@ class VisitLineStoreController extends AdminController
     public function destroyAll(Request $request){
 	    $data = $request->all();
 	    return VisitLineStore::query()->whereIn('id',$data['ids'])->delete();
+    }
+
+    //门店线路互调
+    public function storeLineIml(Request $request){
+        $data = $request->all();
+        $query = VisitLineStore::query();
+
+        $update = [];
+        if (!empty($data['ids'])){
+            $query->whereIn('id',$data['ids']);
+        }
+        if (!empty($data['fline_id'])){
+            $update['fline_id'] = $data['fline_id'];
+        }
+        if (!empty($data['femp_id'])){
+            $update['femp_id'] = $data['femp_id'];
+        }
+
+        return $query->update($update);
+
     }
 
 }

@@ -98,7 +98,7 @@
 
     
 <div class="modal fade" tabindex="-1" role="dialog" id="lineAdjust">
-	<div class="modal-dialog" role="document" style="width: 30%">
+	<div class="modal-dialog" role="document" style="width: 50%">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal"
@@ -107,44 +107,135 @@
 				</button>
 				<h4 class="modal-title">线路调整</h4>
 			</div>
-			<form class="form-horizontal">
-				<div class="modal-body">
-					<div class="box-body">
-		                <label class="col-md-4">
-		                  <input type="radio" name="r1" checked> 当前人员
-		                </label>
-		                <label class="col-md-4">
-		                  <input type="radio" name="r1" > 同组业代
-		                </label>
-		                <label class="col-md-4">
-		                  <input type="radio" name="r1" > 跨组业代
-		                </label>
-							                
+			<div class="modal-body" style="height: 500px">
+				<div class="col-md-6 ">
+					<div class="box">
+						<div class="box-header">
+							<h3 class="box-title">门店列表</h3>
+						</div>
+						<div class="box-body">
+
+							<table id="lineStoreTable" class="table table-bordered table-hover">
+								<thead>
+								<tr style="white-space: nowrap;">
+									<th>id</th>
+									<th>femp_id</th>
+									<th>fline_id</th>
+									<th>门店全称</th>
+									<th>门店简称</th>
+									<th>详细地址</th>
+									<th>渠道</th>
+								</tr>
+								</thead>
+							</table>
+
+						</div>
 					</div>
-					<div class="box-body">
-						<div class="form-group">
-		                  <label>所属组织</label>
-		                  <input type="text" class="form-control" >
-		                </div>
-						<div class="form-group">
-		                  <label>所属人员</label>
-		                  <input type="text" class="form-control" >
-		                </div>
-						<div class="form-group">
-		                  <label>线路代码</label>
-		                  <select class="form-control">
-								@foreach($lines as $l)
-								<option value="{{$l->id}}">{{$l->fname}}</option>
-								@endforeach
-							</select>
-		                </div>
+
+				</div>
+
+				<div class="col-md-6 ">
+					<div class="box">
+						<div class="box-header">
+							<h3 class="box-title">门店互调</h3>
+						</div>
+						<div class="box-body">
+
+							<form class="form-horizontal">
+								<div class="modal-body">
+									<div class="box-body">
+										<div class="nav-tabs-custom">
+											<ul class="nav nav-tabs">
+												<li class="active"><a href="#emp_current" data-toggle="tab" aria-expanded="true">当前人员</a></li>
+												<li class=""><a href="#emp_group" data-toggle="tab" aria-expanded="false">同组业代</a></li>
+												<li class=""><a href="#emp_org" data-toggle="tab" aria-expanded="false">跨组业代</a></li>
+											</ul>
+											<div class="tab-content">
+												<div class="tab-pane active" id="emp_current">
+													<div class="form-group">
+														<label>所属组织</label>
+														<input type="text" class="form-control" id="fdept_current" disabled>
+													</div>
+													<div class="form-group">
+														<label>所属人员</label>
+														<input type="text" class="form-control" id="femp_current" disabled>
+													</div>
+													<div class="form-group">
+														<label>线路代码</label>
+														<select class="form-control fline_id">
+															@foreach($lines as $l)
+																<option value="{{$l->id}}">{{$l->fname}}</option>
+															@endforeach
+														</select>
+													</div>
+												</div>
+												<!-- /.tab-pane -->
+												<div class="tab-pane" id="emp_group">
+													<div class="form-group">
+														<label>所属组织</label>
+														<input type="text" class="form-control" id="fdept_group" disabled>
+													</div>
+													<div class="form-group">
+														<label>所属人员</label>
+														<select class="form-control femp_id" id="femp_group">
+
+														</select>
+													</div>
+													<div class="form-group">
+														<label>线路代码</label>
+														<select class="form-control fline_id">
+															@foreach($lines as $l)
+																<option value="{{$l->id}}">{{$l->fname}}</option>
+															@endforeach
+														</select>
+													</div>
+												</div>
+												<!-- /.tab-pane -->
+
+												<div class="tab-pane" id="emp_org">
+													<div class="form-group">
+														<label>所属组织</label>
+														<select class="form-control" id="fdept_org">
+															@foreach($depts as $d)
+																<option value="{{$d->id}}">{{$d->fname}}</option>
+															@endforeach
+														</select>
+													</div>
+													<div class="form-group">
+														<label>所属人员</label>
+														<select class="form-control femp_id" id="femp_org"></select>
+													</div>
+													<div class="form-group">
+														<label>线路代码</label>
+														<select class="form-control fline_id">
+															@foreach($lines as $l)
+																<option value="{{$l->id}}">{{$l->fname}}</option>
+															@endforeach
+														</select>
+													</div>
+												</div>
+												<!-- /.tab-pane -->
+											</div>
+											<!-- /.tab-content -->
+										</div>
+									</div>
+								</div>
+
+							</form>
+
+
+
+						</div>
 					</div>
+
 				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-					<button type="button" class="btn btn-primary">保存</button>
-				</div>
-			</form>
+
+			</div>
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				<button type="button" class="btn btn-primary" id="imlSaveBtn">保存</button>
+			</div>
 		</div>
 		<!-- /.modal-content -->
 	</div>
