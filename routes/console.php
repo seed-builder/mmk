@@ -43,7 +43,7 @@ Artisan::command('push-store', function () {
 	$dataSync = app('dataSync');
 	$stores = Store::all();
 	foreach ($stores as $store) {
-		$dataSync->send('st_stores', 1, $store->toArray());
+		$dataSync->send('st_stores', 0, $store->toArray());
 		$this->comment('complete send store: ' . $store->ffullname);
 	}
 	$this->comment('end ...');

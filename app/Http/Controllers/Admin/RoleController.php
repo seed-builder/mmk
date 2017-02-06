@@ -67,14 +67,6 @@ class RoleController extends AdminController
 		return parent::pagination($request, $searchCols);
 	}
 
-	public function setUser(Request $request, $id){
-		if($request->isMethod('get')){
-			return view('admin.role.user');
-		}else{
-
-		}
-	}
-
 	public function setPermission(Request $request, $id){
 		if($request->isMethod('get')){
 			return view('admin.role.permission');

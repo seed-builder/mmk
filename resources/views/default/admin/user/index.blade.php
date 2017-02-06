@@ -32,10 +32,11 @@
                             <thead>
                             <tr>
                                 <th>id</th>
-                                <th>name</th>
-                                <th>email</th>
-                                <th>created_at</th>
-                                <th>updated_at</th>
+                                <th>名称</th>
+                                <th>Email</th>
+                                <th>创建时间</th>
+                                <th>修改时间</th>
+                                <th>操作</th>
                             </tr>
                             </thead>
                         </table>

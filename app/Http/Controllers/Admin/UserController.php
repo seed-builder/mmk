@@ -68,5 +68,13 @@ class UserController extends AdminController
 		return parent::pagination($request, $searchCols);
 	}
 
+	public function setRole(Request $request, $id){
+		if($request->isMethod('get')){
+			return view('admin.user.role');
+		}else{
+
+		}
+	}
+
 
 }
