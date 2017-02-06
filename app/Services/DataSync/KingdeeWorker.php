@@ -38,7 +38,7 @@ class KingdeeWorker extends DbWorker
 	{
 		$table = $name;
 		if(empty($this->cookie_jar)) {
-			$cookie_jar = tempnam('./tmp', 'CloudSession');
+			$this->cookie_jar = tempnam('./tmp', 'CloudSession');
 			$re = $this->login($this->cookie_jar);
 			LogSvr::KingdeeSync()->info('login result : ' . $re);
 			//if(!empty($re))

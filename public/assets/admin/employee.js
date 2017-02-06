@@ -31,6 +31,7 @@ define(function(require, exports, module) {
                 {'label': '姓名', 'name': 'fname',},
                 {'label': '工号', 'name': 'fnumber',},
                 {'label': '电话', 'name': 'fphone',},
+                {'label': '密码', 'name': 'fpassword',},
                 {'label': '地址', 'name': 'faddress',},
                 {'label': '邮箱', 'name': 'femail',},
                 {
