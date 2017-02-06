@@ -52,7 +52,7 @@ define(function(require, exports, module) {
                 {  'data': 'updated_at' },
                 {  'data': 'id', 'render':
                     function (data, type, row, meta) {
-                        return '<a href="/role/'+data+'/set-permission">设置权限</a>'
+                        return '<a href="/admin/role/'+data+'/set-permission">设置权限</a>'
                     }
                 },
             ],

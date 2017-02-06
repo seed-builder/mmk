@@ -20,7 +20,7 @@ class KingdeeWorker extends DbWorker
 {
 	protected $loginUrl = '/k3cloud/Kingdee.BOS.WebApi.ServicesStub.AuthService.ValidateUser.common.kdsvc';
 	protected $dataUrl = '/k3cloud/CYD.ApiService.ServicesStub.CustomBusinessService.Syncdb.common.kdsvc';
-
+	protected $cookie_jar;
 
 	public function __construct()
 	{
@@ -37,16 +37,18 @@ class KingdeeWorker extends DbWorker
 	public function send($name, $op, array $data)
 	{
 		$table = $name;
-		$cookie_jar = tempnam('./tmp','CloudSession');
-		$re = $this->login($cookie_jar);
-		LogSvr::KingdeeSync()->info('login result : ' . $re);
-		//if(!empty($re))
-		$result = $this->sendData($table, $op, $data, $cookie_jar);
+		if(empty($this->cookie_jar)) {
+			$cookie_jar = tempnam('./tmp', 'CloudSession');
+			$re = $this->login($this->cookie_jar);
+			LogSvr::KingdeeSync()->info('login result : ' . $re);
+			//if(!empty($re))
+		}
+		$result = $this->sendData($table, $op, $data, $this->cookie_jar);
 		LogSvr::KingdeeSync()->info('$result  : ' . $result);
 		//return json_decode($result, true);
 	}
 
-	protected function login($cookie_jar = null){
+	protected function login(&$cookie_jar){
 		//{ "parameters": "[\"5826e02fe123a9\",\"Administrator\",\"888888\",2052]" }
 		//5826e02fe123a9,Administrator,888888
 		$str = env('KINGDEE_HOST_LOGIN_DATA');

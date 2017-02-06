@@ -54,7 +54,7 @@ define(function(require, exports, module) {
             "columnDefs": [
                 {
                     "render": function ( data, type, row ) {
-                        return '<a href="/user/'+data+'/set-role">设置角色</a>'
+                        return '<a href="/admin/user/'+data+'/set-role">设置角色</a>'
                         },
                     "targets": 5,
                     "searchable": false,
