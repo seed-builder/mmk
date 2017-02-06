@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Role;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
 use App\Models\User;
@@ -69,11 +70,13 @@ class UserController extends AdminController
 	}
 
 	public function setRole(Request $request, $id){
-		if($request->isMethod('get')){
-			return view('admin.user.role');
-		}else{
-
+		$roles = Role::all();
+		$user = User::find($id);
+		if($request->isMethod('post')){
+			$roleIds = $request->input('roles',[]);
+			$user->roles()->sync($roleIds);
 		}
+		return view('admin.user.role', ['roles' => $roles, 'user' => $user]);
 	}
 
 
