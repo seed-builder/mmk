@@ -20,7 +20,7 @@ class KingdeeWorker extends DbWorker
 {
 	protected $loginUrl = '/k3cloud/Kingdee.BOS.WebApi.ServicesStub.AuthService.ValidateUser.common.kdsvc';
 	protected $dataUrl = '/k3cloud/CYD.ApiService.ServicesStub.CustomBusinessService.Syncdb.common.kdsvc';
-	protected $cookie_jar;
+	//protected $cookie_jar;
 
 	public function __construct()
 	{
@@ -37,14 +37,20 @@ class KingdeeWorker extends DbWorker
 	public function send($name, $op, array $data)
 	{
 		$table = $name;
-		if(empty($this->cookie_jar)) {
-			$this->cookie_jar = tempnam('./tmp', 'CloudSession');
-			$re = $this->login($this->cookie_jar);
-			LogSvr::KingdeeSync()->info('login result : ' . $re);
+
+		LOGIN:
+		$cookie_jar = tempnam('./tmp', 'CloudSession');
+		$re = $this->login($cookie_jar);
+		LogSvr::KingdeeSync()->info('login result : ' . $re);
 			//if(!empty($re))
-		}
-		$result = $this->sendData($table, $op, $data, $this->cookie_jar);
+
+		$result = $this->sendData($table, $op, $data, $cookie_jar);
 		LogSvr::KingdeeSync()->info('$result  : ' . $result);
+		$resArr = json_decode($result, true);
+		if($resArr['Result'] == 0 && $resArr['Msg'] == '请先登录'){
+			LogSvr::KingdeeSync()->info('跳转到登录');
+			goto LOGIN;
+		}
 		//return json_decode($result, true);
 	}
 
