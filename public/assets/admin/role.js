@@ -50,6 +50,11 @@ define(function(require, exports, module) {
                 {  'data': 'description' },
                 {  'data': 'created_at' },
                 {  'data': 'updated_at' },
+                {  'data': 'id', 'render':
+                    function (data, type, row, meta) {
+                        return '<a href="/admin/role/'+data+'/set-permission">设置权限</a>'
+                    }
+                },
             ],
             buttons: [
                 // { text: '新增', action: function () { }  },

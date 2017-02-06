@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Role;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
 use App\Models\User;
@@ -66,6 +67,16 @@ class UserController extends AdminController
 	public function pagination(Request $request, $searchCols = []){
 		$searchCols = ["email","name","password","remember_token"];
 		return parent::pagination($request, $searchCols);
+	}
+
+	public function setRole(Request $request, $id){
+		$roles = Role::all();
+		$user = User::find($id);
+		if($request->isMethod('post')){
+			$roleIds = $request->input('roles',[]);
+			$user->roles()->sync($roleIds);
+		}
+		return view('admin.user.role', ['roles' => $roles, 'user' => $user]);
 	}
 
 

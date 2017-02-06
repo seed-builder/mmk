@@ -55,7 +55,7 @@ class DataSyncSvr
 	/**
 	 * 发送数据
 	 * @param string $name
-	 * @param string $op
+	 * @param string $op | 0-add, 1-update , 2-delete
 	 * @param array $data
 	 */
 	public function send($name, $op, array $data){

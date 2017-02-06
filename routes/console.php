@@ -3,6 +3,7 @@
 use App\Services\CodeBuilder;
 use App\Services\DbHelper;
 use Illuminate\Foundation\Inspiring;
+use App\Models\Busi\Store;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,3 +37,14 @@ Artisan::command('test1', function () {
 	$builder->createFiles();
 	$this->comment('end ...');
 })->describe('philo blade test');
+
+Artisan::command('push-store', function () {
+	$this->comment('begin ...');
+	$dataSync = app('dataSync');
+	$stores = Store::all();
+	foreach ($stores as $store) {
+		$dataSync->send('st_stores', 0, $store->toArray());
+		$this->comment('complete send store: ' . $store->ffullname);
+	}
+	$this->comment('end ...');
+})->describe('push store to cloud');

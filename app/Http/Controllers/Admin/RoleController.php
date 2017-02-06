@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Permission;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
 use App\Models\Role;
@@ -65,6 +66,16 @@ class RoleController extends AdminController
 	public function pagination(Request $request, $searchCols = []){
 		$searchCols = ["description","display_name","name"];
 		return parent::pagination($request, $searchCols);
+	}
+
+	public function setPermission(Request $request, $id){
+		$perms = Permission::all();
+		$role = Role::find($id);
+		if($request->isMethod('post')){
+			$ids = $request->input('perms',[]);
+			$role->perms()->sync($ids);
+		}
+		return view('admin.role.permission', ['perms' => $perms, 'role' => $role]);
 	}
 
 }

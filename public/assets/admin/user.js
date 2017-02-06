@@ -49,6 +49,17 @@ define(function(require, exports, module) {
                 {  'data': 'email' },
                 {  'data': 'created_at' },
                 {  'data': 'updated_at' },
+                {  'data': 'id' },
+            ],
+            "columnDefs": [
+                {
+                    "render": function ( data, type, row ) {
+                        return '<a href="/admin/user/'+data+'/set-role">设置角色</a>'
+                        },
+                    "targets": 5,
+                    "searchable": false,
+                    "sortable": false
+                }
             ],
             buttons: [
                 // { text: '新增', action: function () { }  },
