@@ -7,13 +7,13 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            top module
-            <small>sys_roles</small>
+            用户权限管理
+            <small>角色管理</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="#">top module</a></li>
-            <li class="active">sys_roles</li>
+            <li><a href="#">用户权限管理</a></li>
+            <li class="active">角色管理</li>
         </ol>
     </section>
 

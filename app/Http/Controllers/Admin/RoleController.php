@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Permission;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
 use App\Models\Role;
@@ -68,11 +69,13 @@ class RoleController extends AdminController
 	}
 
 	public function setPermission(Request $request, $id){
-		if($request->isMethod('get')){
-			return view('admin.role.permission');
-		}else{
-
+		$perms = Permission::all();
+		$role = Role::find($id);
+		if($request->isMethod('post')){
+			$ids = $request->input('perms',[]);
+			$role->perms()->sync($ids);
 		}
+		return view('admin.role.permission', ['perms' => $perms, 'role' => $role]);
 	}
 
 }

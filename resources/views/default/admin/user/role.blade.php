@@ -4,8 +4,8 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            top module
-            <small>sys_users</small>
+            用户权限管理
+            <small>设置角色</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -36,15 +36,15 @@
                             </tr>
                             </thead>
                             <tbody>
+                            @forelse($roles as $role)
                             <tr onclick="cbsingle(this)">
-                                @forelse($roles as $role)
                                 <td><input class="cb" type="checkbox" name="roles[]" value="{{$role->id}}" {{$user->hasRole($role->name) ? 'checked':''}}/></td>
                                 <td>{{$role->name}}</td>
                                 <td>{{$role->display_name}}</td>
                                 <td>{{$role->description}}</td>
-                                    @empty
-                                @endforelse
                             </tr>
+                            @empty
+                            @endforelse
                             </tbody>
                         </table>
                             <input class="btn btn-primary" type="submit" value="保存">
