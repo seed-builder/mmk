@@ -178,7 +178,9 @@ abstract class AdminController extends Controller
 			$dir = $o['dir'];
 			$queryBuilder->orderBy($columns[$index]['data'], $dir);
 		}
-
+        if (!empty($request->distinct)){
+            $queryBuilder->groupBy($request->distinct)->distinct();
+        }
 
 
 		$entities = $queryBuilder->select($fields)->skip($start)->take($length)->get();

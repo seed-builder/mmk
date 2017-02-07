@@ -73,6 +73,10 @@ class VisitLineStoreController extends AdminController
 		$searchCols = ["fline_id","femp_id"];
 		$data = $request->all();
 
+		if (!empty($data['distinctfields'])){
+            $request->distinct = $data['distinctfields'];
+        }
+
 		return parent::pagination($request, $searchCols);
 	}
 

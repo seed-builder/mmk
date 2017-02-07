@@ -88,10 +88,12 @@ define(function(require, exports, module) {
             rowId: "id",
             ajax: {
                 url : '/admin/visit-line-store/pagination',
-                data : {'distinct':'fline_id'}
+                data : {
+                    'distinct':['fline_id','femp_id']
+                }
             },
             columns: [
-                    {  'data': 'id' },
+                    {  'data': 'fline_id' },
                     {
     					"data": 'fline_id',
     					render: function ( data, type, full ) {
@@ -137,6 +139,12 @@ define(function(require, exports, module) {
     								return "";
     					}
     				},
+            ],
+            columnDefs: [
+                {
+                    "targets": [0],
+                    "visible": false
+                }
             ],
             buttons: [
                 // { text: '新增', action: function () { }  },
