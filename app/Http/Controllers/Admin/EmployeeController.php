@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Services\DataSync\DefaultFilter;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Busi\Employee;
@@ -101,4 +102,47 @@ class EmployeeController extends AdminController
 
 	    return json_encode($rs);
     }
+
+    public function employeeTree(){
+		$top = Department::where('fpardept_id', 0)->first();
+		$tree = $this->toBootstrapTreeViewData($top,  ['text' => 'fname', 'dataid' => 'id']);
+		$tree['state'] = ['expanded' => true];
+	    return response()->json([$tree]);
+    }
+
+	/**
+	 * 将实体数据转换成树形（bootstrap treeview）数据
+	 * @param $entity
+	 * @param $props 属性映射集合 ['text' => 'name', 'data-id' => 'id']
+	 * @return array
+	 */
+	public function toBootstrapTreeViewData($entity, $props){
+		$data = ['item' => $entity];
+		if(!empty($entity)){
+			foreach ($props as $k => $val){
+				$data[$k] = $entity->{$val};
+				$data['icon'] = 'fa fa-users';
+				$data['state'] = ['expanded' => false];
+			}
+			$nodes = [];
+			if(!empty($entity->children)){
+				foreach ($entity->children as $child){
+					$nodes[] = $this->toBootstrapTreeViewData($child, $props);
+				}
+			}
+			//find employee
+			if(!empty($entity->employees)){
+				foreach ($entity->employees as $employee){
+					$nodes[] = [
+						'text' => $employee->fname,
+						'dataid' => $employee->id,
+						'icon' => 'fa fa-user'
+					];
+				}
+			}
+			if(!empty($nodes))
+				$data['nodes'] = $nodes;
+		}
+		return $data;
+	}
 }

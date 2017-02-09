@@ -184,11 +184,13 @@ define(function(require, exports, module) {
         
         var getTreeData = function () {
         	$.ajax({
-            	url: "../../admin/employee/employeeTree",
+            	url: "/admin/employee/employeeTree",
             	type: "POST",
             	data: {'_token':$('meta[name="_token"]').attr('content')},
             	dataType:'json',
             	success:function(data){
+            	    //alert(data);
+                    console.log(data);
             		$("#" + treeId).treeview({
                         color: "#428bca",
                         enableLinks: true,
