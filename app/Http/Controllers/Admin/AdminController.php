@@ -230,4 +230,28 @@ abstract class AdminController extends Controller
 		Session::flash('error', $msg);
 	}
 
+	/**
+	 * 将实体数据转换成树形（bootstrap treeview）数据
+	 * @param $entity
+	 * @param $props 属性映射集合 ['text' => 'name', 'data-id' => 'id']
+	 * @return array
+	 */
+	public function toBootstrapTreeViewData($entity, $props){
+		$data = ['item' => $entity];
+		if(!empty($entity)){
+			foreach ($props as $k => $val){
+				$data[$k] = $entity->{$val};
+			}
+
+			if(!empty($entity->children)){
+				$nodes = [];
+				foreach ($entity->children as $child){
+					$nodes[] = $this->toBootstrapTreeViewData($child, $props);
+				}
+				if(!empty($nodes))
+					$data['nodes'] = $nodes;
+			}
+		}
+		return $data;
+	}
 }
