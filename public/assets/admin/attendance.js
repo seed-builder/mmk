@@ -44,7 +44,13 @@ define(function(require, exports, module) {
             select: true,
             paging: true,
             rowId: "id",
-            ajax: '/admin/attendance/pagination',
+            ajax: {
+                url:'/admin/attendance/pagination',
+                data : function () {
+                    var selectedNode = $('#'+treeId).treeview('getSelected');
+                    data['nodeid'] = selectedNode.length>0?selectedNode[0]['dataid']:'';
+                }
+            },
             columns: [
                 {"data": "id"},
                 {

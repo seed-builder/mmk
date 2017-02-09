@@ -38,9 +38,10 @@ class StoreController extends AdminController
         $query = Store::query();
         foreach ($data['columns'] as $d) {
             if ($d['data']=='femp_id'&&!empty($d['search']['value'])){
-                $emp_count = Employee::query()->where('id',$d['search']['value'])->count();
-                if ($emp_count==0){
-                    $emps = Employee::query()->where('fdept_id',$d['search']['value'])->get();
+                $emp = Employee::find($d['search']['value']);
+                if (empty($emp)){
+                    $dept = Department::find($d['search']['value']);
+                    $emps = $dept->getAllEmployeeByDept();
                     $ids = [];
                     foreach ($emps as $e){
                         $ids[] = $e->id;
