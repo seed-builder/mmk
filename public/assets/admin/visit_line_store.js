@@ -21,11 +21,19 @@ define(function(require, exports, module) {
                         levels: 99,
                         data: data,
                         onNodeSelected: function(event, data) {
-                            // Your logic goes here
-							//alert(data.dataid);
-//                            table.search( data.dataid ).draw();
-                        	searchtable(data.dataid);
-                        }
+                            if (data.nodetype=='emp'){
+                                table.buttons( ['.makeAllLine'] ).enable(true);
+                            }
+                            table.ajax.reload();
+                            childTable.ajax.reload();
+                        	//searchtable(data.dataid);
+
+                        },
+                        onNodeUnselected: function(event, data) {
+                            table.buttons( ['.makeAllLine'] ).enable(false);
+                            table.ajax.reload();
+                            childTable.ajax.reload();
+                        },
                     });
                 },
             });
@@ -88,8 +96,11 @@ define(function(require, exports, module) {
             rowId: "id",
             ajax: {
                 url : '/admin/visit-line-store/pagination',
-                data : {
-                    'distinct':['fline_id','femp_id']
+                data : function ( data ) {
+                    var selectedNode = $('#'+treeId).treeview('getSelected');
+                    data['nodeid'] = selectedNode.length>0?selectedNode[0]['dataid']:'';
+                    data['distinct'] = ['fline_id','femp_id']
+
                 }
             },
             columns: [
@@ -147,35 +158,63 @@ define(function(require, exports, module) {
                 }
             ],
             buttons: [
-                // { text: '新增', action: function () { }  },
-                // { text: '编辑', className: 'edit', enabled: false },
-                // { text: '删除', className: 'delete', enabled: false },
-                {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: editor},
-                {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: editor},
-                {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
-                {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
-                {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
                 {
-                	text: '线路门店互调<i class="fa fa-fw fa-random"></i>',
-                	className: 'lineAdjust',
-                	enabled: false,
-                	action: function () {
+                    text: '生成员工线路<i class="fa fa-fw fa-recycle"></i></i>',
+                    className: 'makeAllLine',
+                    enabled: false,
+                    action: function () {
+                        layer.confirm('确定生成该员工所有线路（已有线路不会生成）?', function(){
+                            $.ajax({
+                                type : "GET",
+                                url : "/admin/visit_line_store/makeEmpAllLine",
+                                dataType : "json" ,
+                                data : {
+                                    "id" : $(".list-group").find(".node-selected").data('id'),//组织树选中的数据id
+                                    "_token": $('meta[name="_token"]').attr('content')
+                                },
+                                success : function(data) {
+                                    if (data['code']==200)
+                                        table.ajax.reload();
+                                    layer.msg(data['result'])
+                                }
+                            })
+
+                        });
+                    }
+                },
+                {
+                    text: '线路门店互调<i class="fa fa-fw fa-exchange"></i>',
+                    className: 'lineAdjust',
+                    enabled: false,
+                    action: function () {
                         intermodulation();
                         lineStoreTable.ajax.reload();
                         $('#lineAdjust').modal('show');
-                	}
+                    }
                 },
                 {
-                	text: '线路门店调整<i class="fa fa-fw fa-random"></i>',
-                	className: 'storeAdjust',
-                	enabled: false,
-                	action: function () {
+                    text: '线路门店调整<i class="fa fa-fw fa-random"></i>',
+                    className: 'storeAdjust',
+                    enabled: false,
+                    action: function () {
 
                         readyTable.ajax.reload();
                         allotTable.ajax.reload();
-                		$('#storeAdjust').modal('show');
-                	}
+                        $('#storeAdjust').modal('show');
+                    }
                 },
+                // { text: '新增', action: function () {
+                //     $("#newLine").modal('show');
+                // }  },
+                 // { text: '编辑', className: 'edit', enabled: false },
+                // { text: '删除', className: 'delete', enabled: false },
+                // {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: editor},
+                // {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: editor},
+                {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
+                {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
+                {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
+
+
                 //{extend: 'colvis', text: '列显示'}
             ]
         });
@@ -219,7 +258,15 @@ define(function(require, exports, module) {
             select: true,
             paging: true,
             rowId: "id",
-            ajax: '/admin/visit_line_store/pagination',
+            ajax: {
+                url : '/admin/visit-line-store/pagination',
+                data : function ( data ) {
+                    if (table.rows('.selected').data()[0]==null){
+                        var selectedNode = $('#'+treeId).treeview('getSelected');
+                        data['nodeid'] = selectedNode.length>0?selectedNode[0]['dataid']:'';
+                    }
+                }
+            },
             columns: [
                 {"data": "id"},
                 {
@@ -291,13 +338,13 @@ define(function(require, exports, module) {
                 // { text: '新增', action: function () { }  },
                 // { text: '编辑', className: 'edit', enabled: false },
                 // { text: '删除', className: 'delete', enabled: false },
-                {
-                	text: '新增<i class="fa fa-fw fa-plus"></i>',
-                	action: function () {
-                	}
-                },
+                // {
+                // 	text: '新增<i class="fa fa-fw fa-plus"></i>',
+                // 	action: function () {
+                // 	}
+                // },
 //                {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: editor},
-                {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: editor},
+//                 {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: editor},
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
@@ -839,6 +886,11 @@ define(function(require, exports, module) {
         $("#imlSaveBtn").on('click',function () {
             var femp_id = $(".tab-content").find(".active").find(".femp_id").val();
             var fline_id = $(".tab-content").find(".active").find(".fline_id").val();
+
+            if (femp_id==null){
+                layer.alert('请选择一个员工！');
+                return ;
+            }
 
             var selected = lineStoreTable.rows('.selected').data();
             if (selected.length==0){

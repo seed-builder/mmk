@@ -31,26 +31,58 @@ class Department extends BaseModel
 {
     //
     protected $table = 'bd_departments';
-    
+
     protected $with = ['organization'];
-    
-    public $validateRules=['fname' => 'required', 'fnumber' => 'required', 'ffullname' => 'required'];
-    
-    public function organization(){
-    	return $this->hasOne(Organization::class, 'id', 'forg_id');
-    }
-    
-    public function child_depart($id){
-    	return Department::query()
-    					   ->where('fpardept_id',$id)
-    					   ->get();
-    }
-    
-    public function employees(){
-    	return $this->hasMany(Employee::class,'fdept_id','id');
+
+    public $validateRules = ['fname' => 'required', 'fnumber' => 'required', 'ffullname' => 'required'];
+
+    public function organization()
+    {
+        return $this->hasOne(Organization::class, 'id', 'forg_id');
     }
 
-	public function children(){
-		return $this->hasMany(Department::class, 'fpardept_id');
-	}
+    public function child_depart($id)
+    {
+        return Department::query()
+            ->where('fpardept_id', $id)
+            ->get();
+    }
+
+    public function employees()
+    {
+        return $this->hasMany(Employee::class, 'fdept_id', 'id');
+    }
+
+    public function children()
+    {
+        return $this->hasMany(Department::class, 'fpardept_id');
+    }
+
+    //查询部门下的所有员工 包含子部门
+    public function getAllEmployeeByDept()
+    {
+        $id = $this->id;
+        $dept = Department::find($this->id);
+        $ids = $this->getTreeChilds($dept);
+        $ids[] = $dept->id;
+
+        return Employee::query()->whereIn('fdept_id',$ids)->get();
+    }
+
+    public function getTreeChilds($entity)
+    {
+        global $ids;
+        $childs = $entity->children;
+        foreach ($childs as $c) {
+
+            $ids[] = $c->id;
+            if (!empty($c->children)) {
+                $this->getTreeChilds($c);
+            }
+        }
+
+        return $ids;
+    }
+
+
 }
