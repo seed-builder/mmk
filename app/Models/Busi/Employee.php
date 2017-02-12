@@ -75,4 +75,8 @@ class Employee extends BaseModel
         }
         return static::where('fpost_id', $position->senior->id)->first();
     }
+
+    public function visit_line_stores(){
+        return $this->hasMany(VisitLineStore::class, 'femp_id', 'id');
+    }
 }

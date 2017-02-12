@@ -40,19 +40,6 @@ define(function(require, exports, module) {
                 },
             });
         }
-        
-        var makeLineEnable = function () {
-            var count = table.rows( { selected: true } ).count();
-            table.buttons( ['.makeAllLine'] ).enable(count > 0);
-            if(count==0){
-                var treeNode = $('#'+treeId).treeview('getSelected');
-                if (treeNode.length>0){
-                    table.buttons( ['.makeAllLine'] ).enable(treeNode[0].nodetype=='emp');
-                }
-
-            }
-
-        }
 
         //地图初始化
         var map = new BMap.Map(mapId);
@@ -180,17 +167,19 @@ define(function(require, exports, module) {
                     action: function () {
                         var id = $(".list-group").find(".node-selected").data('id')!=null?$(".list-group").find(".node-selected").data('id'):table.rows('.selected').data()[0].femp_id;
                         layer.confirm('确定生成该员工所有线路（已有线路不会生成）?', function(){
+                            var load = layer.load(1);
                             $.ajax({
                                 type : "GET",
                                 url : "/admin/visit_line_store/makeEmpAllLine",
                                 dataType : "json" ,
                                 data : {
-                                    "id" : $(".list-group").find(".node-selected").data('id'),//组织树选中的数据id
+                                    "id" : id,//组织树选中的数据id
                                     "_token": $('meta[name="_token"]').attr('content')
                                 },
                                 success : function(data) {
                                     if (data['code']==200)
                                         table.ajax.reload();
+                                    layer.close(load);
                                     layer.msg(data['result'])
                                 }
                             })
@@ -217,6 +206,32 @@ define(function(require, exports, module) {
                         readyTable.ajax.reload();
                         allotTable.ajax.reload();
                         $('#storeAdjust').modal('show');
+                    }
+                },
+                {
+                    text: '一键生成所有员工线路<i class="fa fa-fw fa-recycle"></i></i>',
+                    className: 'makeAllEmpLine',
+                    action: function () {
+                        layer.confirm('确定生成所有员工所有线路（已有线路不会生成），请谨慎操作！', function(){
+                            var load = layer.load(1);
+
+                            $.ajax({
+                                type : "GET",
+                                url : "/admin/visit_line_store/makeEmpAllLine",
+                                dataType : "json" ,
+                                data : {
+                                    "id" : $(".list-group").find(".node-selected").data('id'),//组织树选中的数据id
+                                    "_token": $('meta[name="_token"]').attr('content')
+                                },
+                                success : function(data) {
+                                    if (data['code']==200)
+                                        table.ajax.reload();
+                                    layer.close(load);
+                                    layer.msg(data['result'])
+                                }
+                            })
+
+                        });
                     }
                 },
                 // { text: '新增', action: function () {
@@ -678,6 +693,20 @@ define(function(require, exports, module) {
         $("#mAddBtn").on('click',function () {
             addAllotStore($("#map_select_id").val());
         })
+
+        //设置生成员工路线按钮是否可用
+        var makeLineEnable = function () {
+            var count = table.rows( { selected: true } ).count();
+            table.buttons( ['.makeAllLine'] ).enable(count > 0);
+            if(count==0){
+                var treeNode = $('#'+treeId).treeview('getSelected');
+                if (treeNode.length>0){
+                    table.buttons( ['.makeAllLine'] ).enable(treeNode[0].nodetype=='emp');
+                }
+
+            }
+
+        }
 
         //添加门店至已分配门店列表方法
         var addAllotStore = function (store_id) {
