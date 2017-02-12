@@ -84,12 +84,9 @@ class VisitLineStoreController extends AdminController
             $emp = Employee::find($data['nodeid']);
             if (empty($emp)){
                 $dept = Department::find($data['nodeid']);
-                $emps = $dept->getAllEmployeeByDept();
-                $ids = [];
-                foreach ($emps as $e){
-                    $ids[] = $e->id;
-                }
-                $request['queryBuilder'] = $query->whereIn('femp_id',$ids);
+                $emp_ids = $dept->getAllEmployeeByDept()->pluck('id')->toArray();
+
+                $request['queryBuilder'] = $query->whereIn('femp_id',$emp_ids);
             }else{
                 $request['queryBuilder'] = $query->where('femp_id',$data['nodeid']);
             }
