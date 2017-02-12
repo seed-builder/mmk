@@ -208,32 +208,32 @@ define(function(require, exports, module) {
                         $('#storeAdjust').modal('show');
                     }
                 },
-                {
-                    text: '一键生成所有员工线路<i class="fa fa-fw fa-recycle"></i></i>',
-                    className: 'makeAllEmpLine',
-                    action: function () {
-                        layer.confirm('确定生成所有员工所有线路（已有线路不会生成），请谨慎操作！', function(){
-                            var load = layer.load(1);
-
-                            $.ajax({
-                                type : "GET",
-                                url : "/admin/visit_line_store/makeEmpAllLine",
-                                dataType : "json" ,
-                                data : {
-                                    "id" : $(".list-group").find(".node-selected").data('id'),//组织树选中的数据id
-                                    "_token": $('meta[name="_token"]').attr('content')
-                                },
-                                success : function(data) {
-                                    if (data['code']==200)
-                                        table.ajax.reload();
-                                    layer.close(load);
-                                    layer.msg(data['result'])
-                                }
-                            })
-
-                        });
-                    }
-                },
+                // {
+                //     text: '一键生成所有员工线路<i class="fa fa-fw fa-recycle"></i></i>',
+                //     className: 'makeAllEmpLine',
+                //     action: function () {
+                //         layer.confirm('确定生成所有员工所有线路（已有线路不会生成），请谨慎操作！', function(){
+                //             var load = layer.load(1);
+                //
+                //             $.ajax({
+                //                 type : "GET",
+                //                 url : "/admin/visit_line_store/makeEmpAllLine",
+                //                 dataType : "json" ,
+                //                 data : {
+                //                     "id" : $(".list-group").find(".node-selected").data('id'),//组织树选中的数据id
+                //                     "_token": $('meta[name="_token"]').attr('content')
+                //                 },
+                //                 success : function(data) {
+                //                     if (data['code']==200)
+                //                         table.ajax.reload();
+                //                     layer.close(load);
+                //                     layer.msg(data['result'])
+                //                 }
+                //             })
+                //
+                //         });
+                //     }
+                // },
                 // { text: '新增', action: function () {
                 //     $("#newLine").modal('show');
                 // }  },
