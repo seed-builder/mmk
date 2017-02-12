@@ -21,22 +21,37 @@ define(function(require, exports, module) {
                         levels: 99,
                         data: data,
                         onNodeSelected: function(event, data) {
-                            if (data.nodetype=='emp'){
-                                table.buttons( ['.makeAllLine'] ).enable(true);
-                            }
+                            // if (data.nodetype=='emp'){
+                            //     table.buttons( ['.makeAllLine'] ).enable(true);
+                            // }
+                            makeLineEnable();
                             table.ajax.reload();
                             childTable.ajax.reload();
                         	//searchtable(data.dataid);
 
                         },
                         onNodeUnselected: function(event, data) {
-                            table.buttons( ['.makeAllLine'] ).enable(false);
+                            //table.buttons( ['.makeAllLine'] ).enable(false);
+                            makeLineEnable();
                             table.ajax.reload();
                             childTable.ajax.reload();
                         },
                     });
                 },
             });
+        }
+        
+        var makeLineEnable = function () {
+            var count = table.rows( { selected: true } ).count();
+            table.buttons( ['.makeAllLine'] ).enable(count > 0);
+            if(count==0){
+                var treeNode = $('#'+treeId).treeview('getSelected');
+                if (treeNode.length>0){
+                    table.buttons( ['.makeAllLine'] ).enable(treeNode[0].nodetype=='emp');
+                }
+
+            }
+
         }
 
         //地图初始化
@@ -163,6 +178,7 @@ define(function(require, exports, module) {
                     className: 'makeAllLine',
                     enabled: false,
                     action: function () {
+                        var id = $(".list-group").find(".node-selected").data('id')!=null?$(".list-group").find(".node-selected").data('id'):table.rows('.selected').data()[0].femp_id;
                         layer.confirm('确定生成该员工所有线路（已有线路不会生成）?', function(){
                             $.ajax({
                                 type : "GET",
@@ -814,6 +830,7 @@ define(function(require, exports, module) {
         function checkBtn(e, dt, type, indexes) {
              var count = table.rows( { selected: true } ).count();
              table.buttons( ['.storeAdjust','.lineAdjust'] ).enable(count > 0);
+            makeLineEnable();
          }
 
         function reloadChildTable(){
