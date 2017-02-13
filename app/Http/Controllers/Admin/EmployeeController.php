@@ -123,6 +123,7 @@ class EmployeeController extends AdminController
 				$data[$k] = $entity->{$val};
 				$data['icon'] = 'fa fa-users';
 				$data['state'] = ['expanded' => false];
+				$data['nodetype'] = 'dept';
 			}
 			$nodes = [];
 			if(!empty($entity->children)){
@@ -136,7 +137,8 @@ class EmployeeController extends AdminController
 					$nodes[] = [
 						'text' => $employee->fname,
 						'dataid' => $employee->id,
-						'icon' => 'fa fa-user'
+						'icon' => 'fa fa-user',
+                        'nodetype' => 'emp',
 					];
 				}
 			}

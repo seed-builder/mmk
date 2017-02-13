@@ -38,14 +38,12 @@ class StoreController extends AdminController
         $query = Store::query();
         foreach ($data['columns'] as $d) {
             if ($d['data']=='femp_id'&&!empty($d['search']['value'])){
-                $emp_count = Employee::query()->where('id',$d['search']['value'])->count();
-                if ($emp_count==0){
-                    $emps = Employee::query()->where('fdept_id',$d['search']['value'])->get();
-                    $ids = [];
-                    foreach ($emps as $e){
-                        $ids[] = $e->id;
-                    }
-                    $query->whereIn('femp_id',$ids);
+                $emp = Employee::find($d['search']['value']);
+                if (empty($emp)){
+                    $dept = Department::find($d['search']['value']);
+                    $emp_ids = $dept->getAllEmployeeByDept()->pluck('id')->toArray();
+
+                    $query->whereIn('femp_id',$emp_ids);
                 }else{
                     $query->where('femp_id',$d['search']['value']);
                 }
@@ -69,13 +67,8 @@ class StoreController extends AdminController
         $query->where('femp_id',$data['femp_id']);
 
         //预分配门店列表 过滤掉该线路中已存在的门店
-        $vls1 = VisitLineStore::query()->where('fline_id',$data['fline_id'])->get();
-        $ids1 = [];
-        foreach ($vls1 as $s){
-            $ids1[] = $s->fstore_id;
-        }
-        $query->whereNotIn('id',$ids1);
-
+        $exist_ids = VisitLineStore::query()->where('fline_id',$data['fline_id'])->pluck('fstore_id')->toArray();
+        $query->whereNotIn('id',$exist_ids);
 
         if (!empty($data['fname'])){
             $query->where('ffullname','like','%'.$data['fname'].'%')->get();
@@ -85,25 +78,13 @@ class StoreController extends AdminController
         }
 
         if (!empty($data['fnumber'])){
-            $lines = VisitLine::query()->where('fnumber','like','%'.$data['fnumber'].'%')->get();
-            $ids = [];
-            foreach ($lines as $l){
-                $ids[] = $l->id;
-            }
-            $vls=VisitLineStore::query()->where('femp_id',$data['femp_id'])->whereIn('fline_id',$ids)->get();
-            $vlids = [];
-            foreach ($vls as $s){
-                $vlids[] = $s->fstore_id;
-            }
+            $line_ids = VisitLine::query()->where('fnumber','like','%'.$data['fnumber'].'%')->pluck('id')->toArray();
+            $vls_ids = VisitLineStore::query()->where('femp_id',$data['femp_id'])->whereIn('fline_id',$line_ids)->pluck('id')->toArray();
 
-            $query->whereIn('id',$vlids);
+            $query->whereIn('id',$vls_ids);
         }
         if (!empty($data['is_allot'])){
-            $vls = VisitLineStore::query()->where('femp_id',$data['femp_id'])->get();
-            $ids = [];
-            foreach ($vls as $s){
-                $ids[] = $s->fstore_id;
-            }
+            $ids = VisitLineStore::query()->where('femp_id',$data['femp_id'])->pluck('fstore_id')->toArray();
 
             if ($data['is_allot']==1){
                 $query->whereIn('id',$ids);
@@ -120,11 +101,8 @@ class StoreController extends AdminController
         $data = $request->all();
         $query = Store::query();
         //预分配门店列表 过滤掉该线路中已存在的门店
-        $vls1 = VisitLineStore::query()->where('fline_id',$data['fline_id'])->get();
-        $ids1 = [];
-        foreach ($vls1 as $s){
-            $ids1[] = $s->fstore_id;
-        }
+        $ids1 = VisitLineStore::query()->where('fline_id',$data['fline_id'])->pluck('fstore_id')->toArray();
+
         $query->whereNotIn('id',$ids1);
 
         if (!empty($data['fprovince'])){

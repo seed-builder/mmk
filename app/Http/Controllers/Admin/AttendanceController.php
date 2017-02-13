@@ -28,6 +28,7 @@ class AttendanceController extends AdminController
 	 */
 	public function pagination(Request $request, $searchCols = []){
 		$searchCols = ['femp_id'];
+
 		return parent::pagination($request, $searchCols);
 	}
 
