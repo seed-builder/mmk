@@ -26,7 +26,7 @@ class SysDicsController extends AdminController
 	 * @param array $searchCols
 	 * @return \Illuminate\Http\JsonResponse
 	 */
-	public function pagination(Request $request, $searchCols = []){
+	public function pagination(Request $request, $searchCols = [], $with = []){
 		$searchCols = ['type', 'value'];
 		return parent::pagination($request, $searchCols);
 	}
