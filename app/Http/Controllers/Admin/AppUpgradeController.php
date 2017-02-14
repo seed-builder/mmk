@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Busi\Resources;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
 use App\Models\Busi\AppUpgrade;
@@ -73,17 +74,26 @@ class AppUpgradeController extends AdminController
 
         if($file->isValid())
         {
-            $path = $file->store('upload/apk');
+	        $name = date('YmdHis') . $file->getClientOriginalExtension();
+            $path = $file->storeAs('upload/apk', $name);
 
-            if($path){
-                $res = AppUpgrade::create([
-                    'version_code' => date('Ymd'),
-                    'version_name' => $data['version_name'],
-                    'url' => 'app/' . $path ,
-                    'content' => $data['content'],
-                    'upgrade_date' => date('Y-m-d H:i:s')
-                ]);
-            }
+	        if($path){
+		        $res = Resources::create([
+			        'name' => $file->getClientOriginalName(),
+			        'ext' => $file->getClientOriginalExtension(),
+			        'size' => $file->getSize(),
+			        'path' => 'app/' . $path ,
+			        'mimetype' => $file->getMimeType(),
+		        ]);
+		        $sign = api_sign(['id' => $res->id]);
+		        $app = AppUpgrade::create([
+			        'version_code' => date('Ymd'),
+			        'version_name' => $data['version_name'],
+			        'url' => url('/api/utl/download-file?id=' . $res->id . '&_sign=' . $sign),
+			        'content' => $data['content'],
+			        'upgrade_date' => date('Y-m-d H:i:s')
+		        ]);
+	        }
 
             return response()->json([
                 'code' => 200,

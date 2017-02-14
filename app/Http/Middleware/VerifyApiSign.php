@@ -25,20 +25,20 @@ class VerifyApiSign
             return response('Fail: the sign is empty! ', 401);
         }
         $_sign = $data['_sign'];
-        unset($data['_sign']);
-        ksort($data);
-        $arr = [];
-        foreach($data as $k => $v) {
-            if($request->hasFile($k))
-                continue;
-            $arr[] = $k .'=' . $v;
-        }
-        $str =  implode('&', $arr). env('APP_KEY');
-        $sign = md5($str);
+//        unset($data['_sign']);
+//        ksort($data);
+//        $arr = [];
+//        foreach($data as $k => $v) {
+//            if($request->hasFile($k))
+//                continue;
+//            $arr[] = $k .'=' . $v;
+//        }
+//        $str =  implode('&', $arr). env('APP_KEY');
+        $sign = api_sign($data, $request);// md5($str);
         if($_sign == $sign) {
             return $next($request);
         }else{
-            return response('Fail: the sign is wrong!  the correct sign is: '.$sign.'=md5("'.$str.'")' , 401);
+            return response('Fail: the sign is wrong!  the correct sign is: '.$sign. ' , 401');
         }
 
     }

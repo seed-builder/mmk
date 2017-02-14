@@ -49,3 +49,23 @@ if(!function_exists('snake_case2')){
 		return snake_case($str, '-');
 	}
 }
+
+if(!function_exists('api_sign')){
+
+	function api_sign($data, $request = null){
+		//$data = $request->all();
+		//$_sign = $data['_sign'];
+		unset($data['_sign']);
+		ksort($data);
+		$arr = [];
+		foreach($data as $k => $v) {
+			if($request != null && $request->hasFile($k))
+				continue;
+			$arr[] = $k .'=' . $v;
+		}
+		$str =  implode('&', $arr). env('APP_KEY');
+		$sign = md5($str);
+		return $sign;
+	}
+
+}

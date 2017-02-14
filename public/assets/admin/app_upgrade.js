@@ -79,7 +79,7 @@ define(function(require, exports, module) {
 
         $("#apk").fileinput({
             overwriteInitial: true,
-            maxFileSize: 10000,
+            //maxFileSize: 10000,
             showClose: false,
             showCaption: false,
             showBrowse: false,
