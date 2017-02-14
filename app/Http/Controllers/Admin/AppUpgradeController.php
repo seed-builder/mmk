@@ -74,7 +74,7 @@ class AppUpgradeController extends AdminController
 
         if($file->isValid())
         {
-	        $name = date('YmdHis') . $file->getClientOriginalExtension();
+	        $name = date('YmdHis') . '.' . $file->getClientOriginalExtension();
             $path = $file->storeAs('upload/apk', $name);
 
 	        if($path){
