@@ -28,12 +28,20 @@ define(function(require, exports, module) {
             table: "#" + tableId,
             idSrc: 'id',
             fields: [
-                { 'label':  'version_code', 'name': 'version_code', },
-                { 'label':  'version_name', 'name': 'version_name', },
-                { 'label':  'url', 'name': 'url', },
-                { 'label':  'content', 'name': 'content', 'type': 'textarea'},
-                { 'label':  'enforce', 'name': 'enforce', },
-                { 'label':  'upgrade_date', 'name': 'upgrade_date', },
+                { 'label':  '版本号', 'name': 'version_code', },
+                { 'label':  '版本名', 'name': 'version_name', },
+                { 'label':  'url', 'name': 'url','type':"readonly" },
+                { 'label':  '更新内容', 'name': 'content', 'type': 'textarea'},
+                {
+                    label: "是否强制更新:",
+                    name:  "enforce",
+                    type:  "select",
+                    options: [
+                        { label: "否", value: "0" },
+                        { label: "是", value: "1" },
+                    ]
+                },
+
             ]
         });
 

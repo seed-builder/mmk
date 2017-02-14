@@ -87,8 +87,9 @@ class AppUpgradeController extends AdminController
 		        ]);
 		        $sign = api_sign(['id' => $res->id]);
 		        $app = AppUpgrade::create([
-			        'version_code' => date('Ymd'),
+			        'version_code' => $data['version_code'],
 			        'version_name' => $data['version_name'],
+                    'enforce' => $data['enforce'],
 			        'url' => url('/api/utl/download-file?id=' . $res->id . '&_sign=' . $sign),
 			        'content' => $data['content'],
 			        'upgrade_date' => date('Y-m-d H:i:s')

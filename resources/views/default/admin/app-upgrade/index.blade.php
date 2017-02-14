@@ -71,8 +71,19 @@
                                 <input type="text" class="form-control" name="version_name">
                             </div>
                             <div class="form-group">
+                                <label>版本号</label>
+                                <input type="text" class="form-control" name="version_code">
+                            </div>
+                            <div class="form-group">
+                                <label>是否强制更新</label>
+                                <select class="form-control" name="enforce">
+                                    <option value="0">否</option>
+                                    <option value="1">是</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 <label>更新内容</label>
-                                <input type="text" class="form-control" name="content">
+                                <textarea class="form-control" name="content"></textarea>
                             </div>
                             <div class="form-group">
                                 <label>安装包上传</label>
