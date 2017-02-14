@@ -56,10 +56,12 @@ define(function(require, exports, module) {
                 {  'data': 'upgrade_date' },
             ],
             buttons: [
-                // { text: '新增', action: function () { }  },
+                { text: '上传安装包<i class="fa fa-fw fa-cloud-upload"></i>', action: function () {
+                    $("#appModal").modal('show');
+                }  },
                 // { text: '编辑', className: 'edit', enabled: false },
                 // { text: '删除', className: 'delete', enabled: false },
-                {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: editor},
+                // {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: editor},
                 {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: editor},
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
@@ -75,6 +77,47 @@ define(function(require, exports, module) {
         //     table.buttons( ['.edit', '.delete'] ).enable(count > 0);
         // }
 
+        $("#apk").fileinput({
+            overwriteInitial: true,
+            maxFileSize: 10000,
+            showClose: false,
+            showCaption: false,
+            showBrowse: false,
+            browseOnZoneClick: true,
+            removeLabel: '',
+            removeIcon: '<i class="glyphicon glyphicon-remove"></i>',
+            removeTitle: '删除',
+            browseLabel: '',
+            browseIcon: '<i class="fa fa-fw fa-cloud-upload"></i>',
+            browseTitle: '选择你要上传的文件',
+            elErrorContainer: '#kv-avatar-errors-2',
+            msgErrorClass: 'alert alert-block alert-danger',
+            defaultPreviewContent: '',
+            layoutTemplates: {main2: '{preview} ' + ' {remove} {browse}'},
+            allowedFileExtensions: ["apk"]
+        });
+        
+        $("#appUpload").on('click',function () {
+            var formData = new FormData($( "#appForm" )[0]);
+            console.log($("#apk").val());
+            $.ajax({
+                url: "/admin/app-upgrade/upload",
+                type: "POST",
+                data: formData,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success:function(data){
+                    layer.msg(data['result'])
+                    if (data['code']==200){
+                        $("#appModal").modal('hide');
+                        table.ajax.reload();
+                    }
+
+                },
+            });
+        })
     }
 
 });

@@ -51,9 +51,54 @@
         <!-- /.row -->
     </section>
 
+    <div class="modal fade" tabindex="-1" role="dialog" id="appModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">安装包上传</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="box-body">
+
+                        <form class="form-horizontal" id="appForm" enctype="multipart/form-data">
+                            {{ csrf_field() }}
+                            <div class="form-group">
+                                <label>版本名称</label>
+                                <input type="text" class="form-control" name="version_name">
+                            </div>
+                            <div class="form-group">
+                                <label>更新内容</label>
+                                <input type="text" class="form-control" name="content">
+                            </div>
+                            <div class="form-group">
+                                <label>安装包上传</label>
+                                <input id="apk" type="file" name="appfile">
+                            </div>
+
+                        </form>
+                    </div>
+
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="appUpload">保存</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 @endsection
 @section('js')
     @include('admin.layout.datatable-js')
+    <script src="/assets/plugins/bootstrap-fileinput/js/fileinput.min.js"></script>
+    <script src="/assets/plugins/bootstrap-fileinput/js/fileinput_locale_zh_CN.js"></script>
     <script type="text/javascript">
         $(function () {
             seajs.use('admin/app_upgrade.js', function (app) {

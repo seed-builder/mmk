@@ -67,4 +67,36 @@ class AppUpgradeController extends AdminController
 		return parent::pagination($request, $searchCols);
 	}
 
+	public function upload(Request $request){
+        $data = $request->all();
+        $file = $request->file('appfile');
+
+        if($file->isValid())
+        {
+            $path = $file->store('upload/apk');
+
+            if($path){
+                $res = AppUpgrade::create([
+                    'version_code' => date('Ymd'),
+                    'version_name' => $data['version_name'],
+                    'url' => 'app/' . $path ,
+                    'content' => $data['content'],
+                    'upgrade_date' => date('Y-m-d H:i:s')
+                ]);
+            }
+
+            return response()->json([
+                'code' => 200,
+                'result' => '上传成功！'
+            ]);
+        }else {
+            return response()->json([
+                'code' => 200,
+                'result' => '上传失败！'
+            ]);
+        }
+
+
+    }
+
 }
