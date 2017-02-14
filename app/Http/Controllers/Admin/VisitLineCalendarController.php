@@ -25,7 +25,7 @@ class VisitLineCalendarController extends AdminController
 	 * @param array $searchCols
 	 * @return \Illuminate\Http\JsonResponse
 	 */
-	public function pagination(Request $request, $searchCols = []){
+	public function pagination(Request $request, $searchCols = [], $with = []){
 		$searchCols = ['fline_id', 'femp_id'];
 		return parent::pagination($request, $searchCols);
 	}

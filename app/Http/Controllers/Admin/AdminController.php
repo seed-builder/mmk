@@ -121,9 +121,10 @@ abstract class AdminController extends Controller
 	 * Datatables UI page
 	 * @param Request $request
 	 * @param array $searchCols
+	 * @param array $with
 	 * @return \Illuminate\Http\JsonResponse
 	 */
-	public function pagination(Request $request, $searchCols = []){
+	public function pagination(Request $request, $searchCols = [], $with = []){
 		$start =  $request->input('start', 0);
 		$length = $request->input('length', 10);
 		$columns = $request->input('columns',[]);
@@ -132,6 +133,9 @@ abstract class AdminController extends Controller
 		$draw = $request->input('draw', 0);
 
 		$queryBuilder = $this->newEntity()->newQuery();
+		if(!empty($with)){
+			$queryBuilder->with($with);
+		}
 		$fields = [];
 		$conditions = [];
 		foreach ($columns as $column){
