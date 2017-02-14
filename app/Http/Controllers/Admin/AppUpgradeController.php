@@ -91,7 +91,7 @@ class AppUpgradeController extends AdminController
             ]);
         }else {
             return response()->json([
-                'code' => 200,
+                'code' => 500,
                 'result' => '上传失败！'
             ]);
         }
