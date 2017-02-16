@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Busi\Employee;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Busi\Attendance as Entity;
@@ -26,7 +27,10 @@ class AttendanceController extends ApiController
 		$data = $request->all();
 		unset($data['_sign']);
 		$data['ftime'] = date('Y-m-d H:i:s');
-
+		$employee = Employee::find($data['femp_id']);
+		if(!empty($employee)){
+			$data['fdept_id'] = $employee->fdept_id;
+		}
 		$entity = $this->newEntity($data);
 		//$entity = Entity::create($data);
 		$re = $entity->save();
