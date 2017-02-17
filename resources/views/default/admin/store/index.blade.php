@@ -91,7 +91,7 @@
                                     <div class="form-group">
                                         <label class="control-label col-md-3 text-red">门店名称</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="ffullname" required >
+                                            <input type="text" class="form-control form-data" name="ffullname" required >
                                         </div>
                                     </div>
                                 </div>
@@ -99,7 +99,7 @@
                                     <div class="form-group">
                                         <label class="control-label col-md-3">门店简称</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="fshortname">
+                                            <input type="text" class="form-control form-data" name="fshortname">
                                         </div>
                                     </div>
                                 </div>
@@ -107,7 +107,7 @@
                                     <div class="form-group">
                                         <label class="control-label col-md-3">法人</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control">
+                                            <input type="text" class="form-control form-data">
                                         </div>
                                     </div>
                                 </div>
@@ -115,7 +115,7 @@
                                     <div class="form-group">
                                         <label class="control-label col-md-3 text-red">负责人</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="fcontracts" required>
+                                            <input type="text" class="form-control form-data" name="fcontracts" required>
                                         </div>
                                     </div>
                                 </div>
@@ -123,7 +123,7 @@
                                     <div class="form-group">
                                         <label class="control-label col-md-3 text-red">联系电话</label>
                                         <div class="col-md-9">
-                                            <input type="tel" class="form-control" name="ftelephone" required >
+                                            <input type="tel" class="form-control form-data" name="ftelephone" required >
                                         </div>
                                     </div>
                                 </div>
@@ -131,7 +131,7 @@
                                     {{--<div class="form-group">--}}
                                         {{--<label class="control-label col-md-3 text-red">门店编码</label>--}}
                                         {{--<div class="col-md-9">--}}
-                                            {{--<input type="text" class="form-control"  required>--}}
+                                            {{--<input type="text" class="form-control form-data"  required>--}}
                                         {{--</div>--}}
                                     {{--</div>--}}
                                 {{--</div>--}}
@@ -141,7 +141,7 @@
                                         <div class="col-md-9">
                                             <select class="form-control" id="province_id" name="fprovince">
                                                 @foreach($citys as $c)
-                                                    <option value="{{$c->id}}">{{$c->Name}}</option>
+                                                    <option text="{{$c->Name}}" value="{{$c->id}}">{{$c->Name}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -171,7 +171,7 @@
                                     <div class="form-group">
                                         <label class="control-label col-md-3 text-red">街道/乡/镇</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="fstreet" required >
+                                            <input type="text" class="form-control form-data" name="fstreet" required >
                                         </div>
                                     </div>
                                 </div>
@@ -179,7 +179,7 @@
                                     <div class="form-group">
                                         <label class="control-label col-md-3 text-red">客户详址</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="faddress" required>
+                                            <input type="text" class="form-control form-data" name="faddress" required>
                                         </div>
                                     </div>
                                 </div>
@@ -187,7 +187,7 @@
                                     <div class="form-group">
                                         <label class="control-label col-md-3 text-red">邮政编码</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="fpostalcode" required>
+                                            <input type="text" class="form-control form-data" name="fpostalcode" required>
                                         </div>
                                     </div>
                                 </div>
@@ -205,7 +205,7 @@
                                     <div class="form-group">
                                         <label class="control-label col-md-3 text-red">渠道分类</label>
                                         <div class="col-md-9">
-                                            <select class="form-control" name="fchannel">
+                                            <select class="form-control form-data" name="fchannel">
                                                 @foreach($channels as $f)
                                                     <option value="{{$f->id}}">{{$f->fname}}</option>
                                                 @endforeach
@@ -217,7 +217,7 @@
                                     <div class="form-group">
                                         <label class="control-label col-md-3 text-red">客户分级</label>
                                         <div class="col-md-9">
-                                            <select class="form-control" name="fcust_id">
+                                            <select class="form-control form-data" name="fcust_id">
                                                 @foreach($cus as $c)
                                                     <option value="{{$c->id}}">{{$c->fname}}</option>
                                                 @endforeach
@@ -233,7 +233,7 @@
                                     <div class="form-group">
                                         <label class="control-label col-md-3 text-red">营业执照</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="fbusslicense" required>
+                                            <input type="text" class="form-control form-data" name="fbusslicense" required>
                                         </div>
                                     </div>
                                 </div>
@@ -241,7 +241,7 @@
                                     <div class="form-group">
                                         <label class="control-label col-md-3">税号</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="fdutyparagraphe">
+                                            <input type="text" class="form-control form-data" name="fdutyparagraphe">
                                         </div>
                                     </div>
                                 </div>
@@ -249,7 +249,7 @@
                                     <div class="form-group">
                                         <label class="control-label col-md-3">开户银行</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="fbankaccount">
+                                            <input type="text" class="form-control form-data" name="fbankaccount">
                                         </div>
                                     </div>
                                 </div>
@@ -257,7 +257,7 @@
                                     <div class="form-group">
                                         <label class="control-label col-md-3">账号</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="faccountnum">
+                                            <input type="text" class="form-control form-data" name="faccountnum">
                                         </div>
                                     </div>
                                 </div>
@@ -265,7 +265,7 @@
                                     <div class="form-group">
                                         <label class="control-label col-md-3">备注</label>
                                         <div class="col-md-9">
-                                            <textarea class="form-control" name="fremark"></textarea>
+                                            <textarea class="form-control form-data" name="fremark"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -273,7 +273,7 @@
                                     <div class="form-group">
                                         <label class="control-label col-md-3">门店图片</label>
                                         <div class="col-md-9">
-                                            <input id="storepic" type="file" name="storephoto">
+                                            <input class="form-data" id="storepic" type="file" name="storephoto">
                                         </div>
                                     </div>
                                 </div>
@@ -286,8 +286,8 @@
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                         <button type="submit" class="btn btn-primary" id="storeSave">保存</button>
                     </div>
-                    <input type="hidden" name="femp_id" id="femp_id">
-                    <input type="hidden" name="id" id="store_id">
+                    <input class="form-data" type="hidden" name="femp_id" id="femp_id">
+                    <input class="form-data" type="hidden" name="id" id="store_id">
                 </form>
             </div>
             <!-- /.modal-content -->

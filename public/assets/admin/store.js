@@ -115,13 +115,15 @@ define(function (require, exports, module) {
                                 "_token": $('meta[name="_token"]').attr('content')
                             },
                             success: function (data) {
-
-                                $("#storeInfoForm").find('input').each(function (index, element){
+                                $("#storeInfoForm").find('.form-data').each(function (index, element){
                                     var name = $(element).attr('name');
-                                    if (name=='_token'){
-                                        return ;
-                                    }
-                                    $(element).val(eval("data."+name));
+
+                                    var c = eval("data."+name);
+
+                                    $(element).val(c);
+                                    //$(element).text(c);
+                                    $(element).find("option[text='"+c+"']").attr("selected",true);
+                                    $(element).find("option[value='"+c+"']").attr("selected",true);
 
                                     //地图标注
                                     var point = new BMap.Point(data.flongitude, data.flatitude);
@@ -130,16 +132,16 @@ define(function (require, exports, module) {
                                     smap.panTo(point);
                                 });
 
-                                $("#storeInfoForm").find('select').each(function (index, element){
-                                    var name = $(element).attr('name');
-                                    if (name=='_token'){
-                                        return ;
-                                    }
-                                    var c = eval("data."+name);
-
-                                    $(element).find("option[text='"+c+"']").attr("selected",true);
-                                    $(element).find("option[value='"+c+"']").attr("selected",true);
-                                })
+                                // $("#storeInfoForm").find('select').each(function (index, element){
+                                //     var name = $(element).attr('name');
+                                //     if (name=='_token'){
+                                //         return ;
+                                //     }
+                                //     var c = eval("data."+name);
+                                //
+                                //     $(element).find("option[text='"+c+"']").attr("selected",true);
+                                //     $(element).find("option[value='"+c+"']").attr("selected",true);
+                                // })
 
                                 $("#storeInfoForm").find('textarea').text(data.fremark);
 
@@ -228,7 +230,7 @@ define(function (require, exports, module) {
             map.centerAndZoom(new BMap.Point(), 14);
             map.enableScrollWheelZoom(true);
 
-            smap.centerAndZoom(new BMap.Point(), 14);
+            smap.centerAndZoom(new BMap.Point(), 13);
             smap.enableScrollWheelZoom(true);
 
             var geolocation = new BMap.Geolocation();
@@ -328,8 +330,7 @@ define(function (require, exports, module) {
             // $("#storeinfo").removeData("bs.modal");
             smap.clearOverlays();
             $(".fileinput-remove-button").trigger('click')
-            $("#storeInfoForm").find("input").val("");
-            $("#storeInfoForm").find("textarea").val("");
+            $("#storeInfoForm").find(".form-data").val("");
         });
 
         //信息窗口
@@ -376,7 +377,7 @@ define(function (require, exports, module) {
                 success: function (data) {
                     var html = "";
                     for (index in data) {
-                        html += '<option value="' + data[index].id + '">' + data[index].Name + '</option>';
+                        html += '<option text="' + data[index].Name + '" value="' + data[index].id + '">' + data[index].Name + '</option>';
                     }
 
                     $("#city_id").html(html)
@@ -398,7 +399,7 @@ define(function (require, exports, module) {
                 success: function (data) {
                     var html = "";
                     for (index in data) {
-                        html += '<option value="' + data[index].id + '">' + data[index].Name + '</option>';
+                        html += '<option text="' + data[index].Name + '" value="' + data[index].id + '">' + data[index].Name + '</option>';
                     }
                     $("#country_id").html(html)
                     $("#country_id").trigger('change');
