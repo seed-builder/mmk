@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Busi\Channel;
+use App\Models\Busi\Customer;
 use App\Models\Busi\Department;
 use App\Models\Busi\Employee;
 use App\Models\Busi\VisitLineStore;
@@ -9,6 +11,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Busi\Store;
 use App\Models\Busi\VisitLine;
+use App\Models\City;
+use App\Models\Busi\Resources;
+use Image;
 use Illuminate\Http\Response;
 
 class StoreController extends AdminController
@@ -23,7 +28,10 @@ class StoreController extends AdminController
 
 	public function index()
 	{
-		return view('admin.store.index');
+        $citys = City::query()->where('LevelType',1)->get();
+        $channels = Channel::all();
+        $cus = Customer::all();
+		return view('admin.store.index',compact('citys','channels','cus'));
 	}
 
 	/**
@@ -121,4 +129,104 @@ class StoreController extends AdminController
         return json_encode($query->get());
     }
 
+
+    //门店添加
+    public function createStore(Request $request){
+        $result = $this->saveData($request->all(),'create');
+
+        return response()->json($result);
+    }
+
+    //门店编辑
+    public function editStore(Request $request){
+        $result = $this->saveData($request->all(),'edit');
+
+        return response()->json($result);
+    }
+
+    //数据保存
+    public function saveData($data,$action){
+
+        //图片保存
+        if (!empty($data['storephoto'])){
+            //$file = $request->file('storephoto');
+            $file = $data['storephoto'];
+            //var_dump($file);
+            if($file->isValid())
+            {
+                $path = $file->store('upload/images');
+                if($path){
+                    $res = Resources::create([
+                        'name' => $file->getClientOriginalName(),
+                        'ext' => $file->getClientOriginalExtension(),
+                        'size' => $file->getSize(),
+                        'path' => 'app/' . $path ,
+                        'mimetype' => $file->getMimeType(),
+                    ]);
+                    $data['fphoto'] = $res->id;
+                }
+            }
+        }
+
+        //数据处理
+
+        $data['fprovince'] = City::find($data['fprovince'])->Name;
+        $data['fcity'] = City::find($data['fcity'])->Name;
+        $data['fcountry'] = City::find($data['fcountry'])->Name;
+
+        $postalcode = City::getPostalCode($data['fprovince'], $data['fcity'], $data['fcountry']);
+        if($postalcode){
+            $fn = Store::where('fpostalcode', $postalcode)->max('fnumber');
+            if($fn){
+                $fn++;
+                $data['fnumber'] = $fn;
+            }else{
+                $data['fnumber'] = $postalcode . sprintf('%05d', 1);
+            }
+            $data['fpostalcode'] = $postalcode;
+        }
+        unset($data['_token'],$data['storephoto']);
+
+        if ($action=='create'){
+            $entity = $this->newEntity($data);
+            //$entity = Entity::create($data);
+            $re = $entity->save();
+
+            if ($re){
+                return [
+                    'code' => 200,
+                    'result' => '添加门店成功！'
+                ];
+            }else{
+                return [
+                    'code' => 500,
+                    'result' => '添加门店失败！'
+                ];
+            }
+        }else {
+            $re = Store::query()->where('id',$data['id'])->update($data);
+
+            if ($re){
+                return [
+                    'code' => 200,
+                    'result' => '修改门店成功！'
+                ];
+            }else{
+                return [
+                    'code' => 500,
+                    'result' => '修改门店失败！'
+                ];
+            }
+        }
+
+
+    }
+
+    //获取门店信息
+    public function getStore($id){
+        $store = Store::find($id);
+
+        $store->image = '/admin/show-image?imageId='.$store->fphoto;
+        return response()->json($store);
+    }
 }

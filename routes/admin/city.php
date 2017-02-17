@@ -10,15 +10,10 @@ Route::get('city/list', function (\Illuminate\Http\Request $request){
     $citys = \App\Models\City::query()->where('ParentId',$data['parent_id'])->get();
     return json_encode($citys);
 });
-
-Route::get('city/citys', function (\Illuminate\Http\Request $request){
+Route::get('city/getCity', function (\Illuminate\Http\Request $request){
     $data = $request->all();
-    $citys = \App\Models\City::query()->where('ParentId',$data['parent_id'])->get();
-    return json_encode($citys);
+    $entity = \App\Models\City::find($data['id']);
+
+    return json_encode($entity);
 });
 
-Route::get('city/countrys', function (\Illuminate\Http\Request $request){
-    $data = $request->all();
-    $citys = \App\Models\City::query()->where('ParentId',$data['parent_id'])->get();
-    return json_encode($citys);
-});

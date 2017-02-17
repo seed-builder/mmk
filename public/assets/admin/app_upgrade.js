@@ -107,7 +107,6 @@ define(function(require, exports, module) {
         
         $("#appUpload").on('click',function () {
             var formData = new FormData($( "#appForm" )[0]);
-            console.log($("#apk").val());
             $.ajax({
                 url: "/admin/app-upgrade/upload",
                 type: "POST",

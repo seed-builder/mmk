@@ -60,7 +60,7 @@ class Store extends BaseModel
     //
     protected $table = 'st_stores';
     
-    protected $with = ['employee','customer', 'lines','channel'];
+    protected $with = ['employee','customer', 'lines','channel','photo'];
     
     public $validateRules=[
     		'ffullname' => 'required',
@@ -83,6 +83,10 @@ class Store extends BaseModel
     }
     public function channel(){
         return $this->hasOne(Channel::class, 'id', 'fchannel');
+    }
+
+    public function photo(){
+        return $this->hasOne(Resources::class, 'id', 'fphoto');
     }
 
     protected static function boot()
