@@ -471,9 +471,16 @@ define(function (require, exports, module) {
         function setPlace(){
             smap.clearOverlays();    //清除地图上所有覆盖物
             function myFun(){
-                var pp = local.getResults().getPoi(0).point;    //获取第一个智能搜索的结果
-                smap.centerAndZoom(pp, 18);
-                smap.addOverlay(new BMap.Marker(pp));    //添加标注
+                var point = local.getResults().getPoi(0).point;    //获取第一个智能搜索的结果
+                smap.centerAndZoom(point, 18);
+                // smap.addOverlay(new BMap.Marker(point));    //添加标注
+                //
+                // console.log(point);
+                $("#flongitude").val(point.lng);
+                $("#flatitude").val(point.lat);
+
+                var marker = new BMap.Marker(point);  // 创建标注
+                smap.addOverlay(marker);
             }
             var local = new BMap.LocalSearch(smap, { //智能搜索
                 onSearchComplete: myFun

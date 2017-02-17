@@ -44,7 +44,8 @@
                     </div>
                     <!-- /.box-body -->
                 </div>
-                <div class="box">
+
+                <div class="box ui-widget-content">
                     <div class="box-header">
                         <h3 class="box-title">门店基础信息</h3>
                     </div>
@@ -346,6 +347,7 @@
             seajs.use('app-store', function (store) {
                 store.index($, 'moduleTable', 'tree', 'allmap','smap');
             });
+
             $("#storepic").fileinput({
                 overwriteInitial: true,
                 maxFileSize: 1500,
