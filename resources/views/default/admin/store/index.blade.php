@@ -1,5 +1,9 @@
 @extends('admin.layout.collapsed-sidebar') @section('styles')
-
+    <style>
+        .tangram-suggestion-main {
+            z-index: 9999;
+        }
+    </style>
     @include('admin.layout.datatable-css') @endsection @section('content')
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -308,6 +312,15 @@
                 </div>
                 <div class="modal-body">
                     <div class="box-body">
+
+                        <div class="input-group input-group-sm" style="margin-bottom: 20px">
+                            <input class="form-control" id="suggestId" size="20" value="百度" >
+                            <span class="input-group-btn">
+                              <button type="button" class="btn btn-info btn-flat"><i class="fa fa-fw fa-search"></i></button>
+                            </span>
+                            <div id="searchResultPanel" style="border:1px solid #C0C0C0;width:150px;height:auto; display:none;"></div>
+                        </div>
+
                         <div id="smap" style="height: 500px"></div>
 
                     </div>
