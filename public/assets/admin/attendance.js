@@ -103,13 +103,25 @@ define(function(require, exports, module) {
                     }
                 },
                 {
-                    "data": 'id',
+                    "data": 'fstatus',
                     render: function ( data, type, full ) {
-                        if(full.fbegin_id==null||full.fcomplete_id==null){
-                            return "<span style='color: red'>异常</span>";
+                        if(data==0){
+                            return "<span style='color: red'>未完成</span>";
+                        }else if(data==1){
+                            return "<span style='color: greenyellow'>正常</span>"
+                        }else if(data==2){
+                            return "<span style='color: red'>异常</span>"
+                        }else if(data==3){
+                            return "<span style='color: purple'>请假</span>"
                         }else {
-                            return "<span style='color: #00a65a'>正常</span>"
+                            return "<span style='color: orange'>数据异常</span>"
                         }
+                    }
+                },
+                {
+                    "data": 'id',
+                    render: function (data, type, full) {
+                        return '<a href="/admin/attendance/attendanceInfo/'+data+'" data-target="#attendanceInfo" data-toggle="modal"><i class="fa fa-fw fa-search"></i></a>';
                     }
                 },
             ],

@@ -33,4 +33,19 @@ class AttendanceStatisticController extends AdminController
 		return parent::pagination($request, $searchCols);
 	}
 
+	public function attendanceInfo($id){
+        $att = AttendanceStatistic::find($id);
+
+
+        if (!empty($att->beginAttendance)){
+            $att->begin_img = '/admin/show-image?imageId='.$att->beginAttendance->fphoto;
+        }
+
+        if (!empty($att->completeAttendance)){
+            $att->complete_img = '/admin/show-image?imageId='.$att->completeAttendance->fphoto;
+        }
+
+        return view('admin.attendance_statistic.info',compact('att'));
+    }
+
 }

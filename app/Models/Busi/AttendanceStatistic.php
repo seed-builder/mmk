@@ -47,4 +47,38 @@ class AttendanceStatistic extends BaseModel
 	public function employee(){
 		return $this->belongsTo(Employee::class, 'femp_id');
 	}
+
+	public function begin_status(){
+	    switch ($this->fbegin_status){
+            case 0:
+                return '未完成';
+            case 1:
+                return '正常';
+            case 2:
+                return '迟到';
+        }
+    }
+    public function complete_status(){
+	    switch ($this->fcomplete_status){
+            case 0:
+                return '未完成';
+            case 1:
+                return '正常';
+            case 2:
+                return '迟到';
+        }
+    }
+
+    public function status(){
+        switch ($this->fstatus){
+            case 0:
+                return '未完成';
+            case 1:
+                return '正常';
+            case 2:
+                return '异常';
+            case 3:
+                return '请假';
+        }
+    }
 }

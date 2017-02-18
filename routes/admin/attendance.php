@@ -8,5 +8,6 @@
 
 Route::get('attendance/pagination', ['uses' => 'AttendanceStatisticController@pagination']);
 Route::get('attendance/index', ['uses' => 'AttendanceStatisticController@index']);
+Route::get('attendance/attendanceInfo/{id}', ['uses' => 'AttendanceStatisticController@attendanceInfo']);
 Route::resource('attendance', 'AttendanceStatisticController');
 

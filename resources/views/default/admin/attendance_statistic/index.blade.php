@@ -79,6 +79,7 @@
 									<th>签退时间</th>
 									<th>签退地点</th>
 									<th>签到状态</th>
+									<th>操作</th>
 								</tr>
 							</thead>
 						</table>
@@ -90,6 +91,14 @@
 
 
 </section>
+
+<div id="attendanceInfo" class="modal fade modal-scroll" role="dialog" tabindex="-1" data-replace="true">
+	<div class="modal-dialog" style="width: 50%">
+		<div class="modal-content">
+		</div>
+	</div>
+</div>
+
 
 @endsection 
 @section('js') 
