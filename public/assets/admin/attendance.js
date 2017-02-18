@@ -108,7 +108,7 @@ define(function(require, exports, module) {
                         if(data==0){
                             return "<span style='color: red'>未完成</span>";
                         }else if(data==1){
-                            return "<span style='color: greenyellow'>正常</span>"
+                            return "<span style='color: green'>正常</span>"
                         }else if(data==2){
                             return "<span style='color: red'>异常</span>"
                         }else if(data==3){
