@@ -64,7 +64,9 @@
                                 <th>负责业代</th>
                                 <th>flongitude</th>
                                 <th>flatitude</th>
+                                <th>操作</th>
                             </tr>
+
                             </thead>
                         </table>
                     </div>
@@ -76,6 +78,7 @@
         </div>
         <!-- /.row -->
     </section>
+
 
     <div class="modal fade" tabindex="-1" role="dialog" id="storeinfo">
         <div class="modal-dialog" role="document" style="width: 90%">
@@ -332,6 +335,12 @@
         <!-- /.modal-dialog -->
     </div>
 
+    <div id="storeDetail" class="modal fade modal-scroll" role="dialog" tabindex="-1" data-replace="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            </div>
+        </div>
+    </div>
 
 @endsection
 @section('js')

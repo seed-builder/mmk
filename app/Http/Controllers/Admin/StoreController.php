@@ -229,4 +229,13 @@ class StoreController extends AdminController
         $store->image = '/admin/show-image?imageId='.$store->fphoto;
         return response()->json($store);
     }
+
+    //获取门店信息
+    public function storeInfo($id){
+        $store = Store::find($id);
+
+        $store->image = '/admin/show-image?imageId='.$store->fphoto;
+
+        return view('admin.store.info',compact('store'));
+    }
 }

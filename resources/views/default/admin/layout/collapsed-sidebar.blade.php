@@ -264,6 +264,10 @@
             }
         })
     })
+
+    $('body').on('hidden.bs.modal', '.modal:not(.modal-cached)', function () {
+        $(this).removeData('bs.modal');
+    });
 </script>
 @yield('js')
 @include('admin.layout.toastr-message')

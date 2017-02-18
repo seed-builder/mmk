@@ -74,7 +74,12 @@ define(function (require, exports, module) {
                 },
                 {"data": "flongitude"},
                 {"data": "flatitude"},
-
+                {
+                    "data": 'id',
+                    render: function (data, type, full) {
+                        return '<a href="/admin/store/storeInfo/'+data+'" data-target="#storeDetail" data-toggle="modal"><i class="fa fa-fw fa-search"></i></a>';
+                    }
+                },
             ],
             columnDefs: [
                 {
