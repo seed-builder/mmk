@@ -58,6 +58,17 @@ class Department extends BaseModel
         return $this->hasMany(Department::class, 'fpardept_id');
     }
 
+    //查询部门下的所有部门
+    public function getAllChildDept()
+    {
+        $id = $this->id;
+        $dept = Department::find($this->id);
+        $ids = $this->getTreeChilds($dept);
+        $ids[] = $dept->id;
+
+        return Department::query()->whereIn('id',$ids)->get();
+    }
+
     //查询部门下的所有员工 包含子部门
     public function getAllEmployeeByDept()
     {

@@ -5,9 +5,11 @@ namespace App\Models\Busi;
 use Illuminate\Database\Eloquent\Model;
 
 /**
+ * model description
  * Class DisplayPolicy
- * @package App\Models\Busi
- * @author xrs
+ * @package  App\Models
+ *
+ * @author  xrs
  * @SWG\Model(id="DisplayPolicy")
  * @SWG\Property(name="fbill_no", type="string", description="bill no")
  * @SWG\Property(name="fcaption", type="string", description="陈列主题")
@@ -22,7 +24,7 @@ use Illuminate\Database\Eloquent\Model;
  * @SWG\Property(name="fmodify_id", type="integer", description="修改人")
  * @SWG\Property(name="forg_id", type="integer", description="组织id")
  * @SWG\Property(name="frequire", type="string", description="陈列要求")
- * @SWG\Property(name="freward_amount", type="string", description="奖励金额")
+ * @SWG\Property(name="freward_amount", type="number", description="奖励金额")
  * @SWG\Property(name="freward_method", type="string", description="奖励方式")
  * @SWG\Property(name="fstart_date", type="string", description="执行开始日期")
  * @SWG\Property(name="fstatus", type="integer", description="执行状态：0 未执行，1执行中 2已执行")
@@ -30,14 +32,10 @@ use Illuminate\Database\Eloquent\Model;
  * @SWG\Property(name="fvalid_begin", type="string", description="有效期起")
  * @SWG\Property(name="fvalid_end", type="string", description="有效期止")
  * @SWG\Property(name="id", type="integer", description="")
- */
+  */
 class DisplayPolicy extends BaseModel
 {
-    //
+	//
 	protected $table = 'exp_display_policy';
-	protected $with = ['entries'];
-
-	public function entries(){
-		return $this->hasMany(DisplayPolicyEntry::class, 'fdisplay_policy_id');
-	}
+	protected $guarded = ['id'];
 }

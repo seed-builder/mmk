@@ -23,7 +23,18 @@
     <!-- Main content -->
     <section class="content">
         <div class="row">
-            <div class="col-xs-12">
+            <div class="col-md-3" >
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">组织架构信息</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div id="tree"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-9">
                 <div class="box">
                     <div class="box-header">
                         <h3 class="box-title">角色列表</h3>
@@ -61,13 +72,14 @@
 
 @section('js')
     @include('admin.layout.datatable-js')
+    <script src="/assets/plugins/bootstrap-treeview/bootstrap-treeview.min.js"></script>
     <script type="text/javascript">
 
         $(function () {
 
             var orgs = {!! json_encode($orgs) !!}
             seajs.use('app-employee', function (employee) {
-            	employee.index($, 'moduleTable', orgs);
+            	employee.index($, 'moduleTable','tree', orgs);
             });
             
         });

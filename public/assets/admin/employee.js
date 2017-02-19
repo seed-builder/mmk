@@ -5,7 +5,31 @@ define(function(require, exports, module) {
     
     var zhCN = require('datatableZh');
 
-    exports.index = function ($, tableId, orgs) {
+    exports.index = function ($, tableId,treeId, orgs) {
+
+        //组织结构初始化
+        var getTreeData = function () {
+            $.ajax({
+                url: "../../admin/department/departmentTree",
+                type: "POST",
+                data: {'_token':$('meta[name="_token"]').attr('content')},
+                dataType:'json',
+                success:function(data){
+                    $("#" + treeId).treeview({
+                        color: "#428bca",
+                        enableLinks: true,
+                        levels: 99,
+                        data: data,
+                        onNodeSelected: function(event, data) {
+                            table.ajax.reload();
+                        },
+                        onNodeUnselected: function(event, data) {
+                            table.ajax.reload();
+                        },
+                    });
+                },
+            });
+        }
 
         var editor = new $.fn.dataTable.Editor({
             ajax: {
@@ -52,7 +76,13 @@ define(function(require, exports, module) {
             select: true,
             paging: true,
             rowId: "id",
-            ajax: '/admin/employee/pagination',
+            ajax: {
+                url : '/admin/employee/pagination',
+                data : function (data) {
+                    var selectedNode = $('#'+treeId).treeview('getSelected');
+                    data['nodeid'] = selectedNode.length>0?selectedNode[0]['dataid']:'';
+                }
+            },
             columns: [
                 {"data": "id"},
                 {"data": "fname"},
@@ -121,6 +151,8 @@ define(function(require, exports, module) {
         //     var count = table.rows( { selected: true } ).count();
         //     table.buttons( ['.edit', '.delete'] ).enable(count > 0);
         // }
+
+        getTreeData();
 
     }
 

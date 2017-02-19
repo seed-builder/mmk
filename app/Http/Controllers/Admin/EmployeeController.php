@@ -37,6 +37,16 @@ class EmployeeController extends AdminController
 	 */
 	public function pagination(Request $request, $searchCols = [], $with = []){
 		$searchCols = ['fname', 'fnumber', 'fphone'];
+
+		$data = $request->all();
+        if(!empty($data['nodeid'])){//组织树点击查询
+            $query = Employee::query();
+            $dept = Department::find($data['nodeid']);
+            $deptids = $dept->getAllChildDept()->pluck('id')->toArray();
+
+            $request['queryBuilder'] = $query->whereIn('fdept_id',$deptids);
+        }
+
 		return parent::pagination($request, $searchCols);
 	}
 	
