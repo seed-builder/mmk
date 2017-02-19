@@ -44,7 +44,7 @@ class VisitStoreCalendar extends BaseModel
 	}
 
 	public function store(){
-        return $this->belongsTo(Store::class, 'fstore_id');
+        return $this->hasOne(Store::class, 'id','fstore_id');
     }
 
     public function employee(){

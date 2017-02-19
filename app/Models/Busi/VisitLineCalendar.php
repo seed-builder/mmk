@@ -41,4 +41,6 @@ class VisitLineCalendar extends BaseModel
     public function line(){
     	return $this->hasOne(VisitLine::class, 'id', 'fline_id');
     }
+
+
 }

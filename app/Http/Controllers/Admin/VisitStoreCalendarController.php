@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Busi\VisitStoreCalendar;
+use App\Models\Busi\Employee;
+use App\Models\Busi\Department;
 
 class VisitStoreCalendarController extends AdminController
 {
@@ -25,7 +27,25 @@ class VisitStoreCalendarController extends AdminController
 	 * @return \Illuminate\Http\JsonResponse
 	 */
 	public function pagination(Request $request, $searchCols = [], $with = []){
-		$searchCols = ['fdate', 'forg_id','femp_id','fstore_id','fstatus'];
+		$searchCols = ['fdate', 'forg_id','femp_id','fstore_id','fstatus','fline_calendar_id'];
+
+        $data = $request->all();
+        $query = VisitStoreCalendar::query();
+        if(!empty($data['nodeid'])){//组织树点击查询
+            $emp = Employee::find($data['nodeid']);
+
+            if (empty($emp)){
+                $dept = Department::find($data['nodeid']);
+                $emp_ids = $dept->getAllEmployeeByDept()->pluck('id')->toArray();
+
+                $request['queryBuilder'] = $query->whereIn('femp_id',$emp_ids);
+            }else{
+                $request['queryBuilder'] = $query->where('femp_id',$data['nodeid']);
+            }
+        }
+        if(!empty($data['fline_calendar_id'])){
+
+        }
 		return parent::pagination($request, $searchCols);
 	}
 }

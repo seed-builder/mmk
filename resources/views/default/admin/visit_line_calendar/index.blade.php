@@ -23,10 +23,21 @@
     <!-- Main content -->
     <section class="content">
         <div class="row">
-            <div class="col-xs-12">
+            <div class="col-md-3" >
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">拜访日历</h3>
+                        <h3 class="box-title">组织架构信息</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div id="tree"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-9">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">线路巡访日历</h3>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
@@ -38,7 +49,7 @@
                                 <th>线路代码</th>
                                 <th>线路名称</th>
                                 <th>负责业代</th>
-                                <th>所属组织</th>
+                                <th>巡访日期</th>
                                 <th>巡访状态</th>
                                 <th>创建时间</th>
                             </tr>
@@ -48,6 +59,29 @@
                     <!-- /.box-body -->
                 </div>
                 <!-- /.box -->
+
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">线路门店巡访日历</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <table id="storeTable" class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>fline_calendar_id</th>
+                                <th>门店名称</th>
+                                <th>负责业代</th>
+                                <th>巡访日期</th>
+                                <th>巡访状态</th>
+                                <th>拜访时间</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
             </div>
             <!-- /.col -->
         </div>
@@ -58,13 +92,13 @@
 
 @section('js')
     @include('admin.layout.datatable-js')
+    <script src="/assets/plugins/bootstrap-treeview/bootstrap-treeview.min.js"></script>
     <script type="text/javascript">
 
         $(function () {
             seajs.use('app-visit-line-calendar', function (visitline) {
-            	visitline.index($, 'moduleTable');
+            	visitline.index($, 'moduleTable','storeTable','tree');
             });
-
             
         });
 
