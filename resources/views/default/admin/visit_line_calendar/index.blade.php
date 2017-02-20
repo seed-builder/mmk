@@ -76,6 +76,7 @@
                                 <th>巡访日期</th>
                                 <th>巡访状态</th>
                                 <th>拜访时间</th>
+                                <th>操作</th>
                             </tr>
                             </thead>
                         </table>
@@ -87,6 +88,13 @@
         </div>
         <!-- /.row -->
     </section>
+
+    <div id="todoInfo" class="modal fade modal-scroll" role="dialog" tabindex="-1" data-replace="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            </div>
+        </div>
+    </div>
     	
 @endsection
 

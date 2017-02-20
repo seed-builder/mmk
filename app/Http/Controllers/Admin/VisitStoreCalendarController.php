@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Busi\VisitStoreTodo;
+use App\Models\Busi\VisitTodoCalendar;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Busi\VisitStoreCalendar;
@@ -48,4 +50,11 @@ class VisitStoreCalendarController extends AdminController
         }
 		return parent::pagination($request, $searchCols);
 	}
+
+	public function visitStoreCalendarInfo($id){
+        $todos = VisitTodoCalendar::query()->where('fstore_calendar_id',$id)->get();
+        $sc = VisitStoreCalendar::find($id);
+
+        return view('admin.visit_store_calendar.info',compact('todos','sc'));
+    }
 }

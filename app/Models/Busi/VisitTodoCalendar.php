@@ -43,4 +43,21 @@ class VisitTodoCalendar extends BaseModel
     public function todo(){
     	return $this->belongsTo(VisitStoreTodo::class, 'ftodo_id');
     }
+
+    public function employee(){
+        return $this->belongsTo(Employee::class, 'femp_id');
+    }
+
+    public function status(){
+        switch ($this->fstatus){
+            case 1:
+                return '未开始';
+            case 2:
+                return '进行中';
+            case 3:
+                return '已完成';
+            default:
+                return '系统异常';
+        }
+    }
 }

@@ -239,6 +239,12 @@ define(function(require, exports, module) {
                     }
                 },
                 {"data": "fdate"},
+                {
+                    "data": "id",
+                    render: function ( data, type, full ) {
+                        return '<a href="/admin/visit_store_calendar/visitStoreCalendarInfo/'+data+'" data-target="#todoInfo" data-toggle="modal"><i class="fa fa-fw fa-search"></i></a>';
+                    }
+                },
             ],
             columnDefs: [
                 {
