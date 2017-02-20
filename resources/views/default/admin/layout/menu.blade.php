@@ -102,9 +102,9 @@ $user = Auth::user();
 
                     {{--<li><a href="{{url('admin/display-policy/index')}}"><i class="fa fa-circle-o"></i></i> 费用陈列</a></li>--}}
 
-                    @if($user->can('visit_store_calendar_index'))
-                    <li><a href="{{url('admin/visit_store_calendar/index')}}"><i class="fa fa-circle-o"></i></i> 门店拜访查看</a></li>
-                    @endif
+                    {{--@if($user->can('visit_store_calendar_index'))--}}
+                    {{--<li><a href="{{url('admin/visit_store_calendar/index')}}"><i class="fa fa-circle-o"></i></i> 门店拜访查看</a></li>--}}
+                    {{--@endif--}}
 
 
                 </ul>
