@@ -6,6 +6,7 @@ use App\Models\City;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Busi\Store;
+use Illuminate\Database\Eloquent\Builder;
 
 class StoreController extends ApiController
 {
