@@ -29,12 +29,17 @@ class CustomerController extends ApiController
 					$fempId = $v;
 					$employee = Employee::find($fempId);
 					$subs = $employee->getSubordinates();
-					$ids = [$fempId];
+					$ids=[];
+					//var_dump($subs);
 					if(!empty($subs)){
-						array_map(function ($item)use($ids){
-							$ids[] = $item->id;
+						$ids = array_map(function ($item)use($ids){
+							return $item->id;
 						}, $subs);
 					}
+					$ids[] = [$fempId];
+					//var_dump($ids);
+					$query->distinct();
+					$query->select('bd_customers.*');
 					$query->join('st_stores', 'bd_customers.id', '=', 'st_stores.fcust_id');
 					$query->whereIn('st_stores.femp_id', $ids);
 				}else {
