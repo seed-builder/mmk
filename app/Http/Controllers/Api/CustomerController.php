@@ -15,4 +15,6 @@ class CustomerController extends ApiController
         // TODO: Implement newEntity() method.
         return new Customer($attributes);
     }
+
+
 }

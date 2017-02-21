@@ -3,6 +3,7 @@
 namespace App\Models\Busi;
 
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 /**
  * Class Employee
@@ -78,5 +79,19 @@ class Employee extends BaseModel
 
     public function visit_line_stores(){
         return $this->hasMany(VisitLineStore::class, 'femp_id', 'id');
+    }
+
+	/**
+	 * 获取下属
+	 * @return array
+	 */
+    public function getSubordinates(){
+	    $subs = [];
+	    if(!empty($this->position)) {
+		    $fnumber = $this->position->fnumber;
+		    $sql = "select e.* from bd_employees e, bd_positions p where e.fpost_id = p.id and p.fnumber like '{$fnumber}_%'";
+		    $subs = DB::select($sql);
+	    }
+	    return $subs;
     }
 }

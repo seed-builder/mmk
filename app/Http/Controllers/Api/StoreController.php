@@ -60,4 +60,30 @@ class StoreController extends ApiController
         // TODO: Implement newEntity() method.
         return new Store($attributes);
     }
+
+	public function fillQueryForIndex(Request $request, Builder &$query){
+		$search = $request->input('search', '{}');
+		$conditions = json_decode($search, true);
+		if(!empty($conditions)) {
+			//dump($conditions);
+			foreach ($conditions as $k => $v) {
+				$tmp = explode(' ', $k);
+				if($tmp[0] == 'femp_id'){
+					$fempId = $v;
+					$employee = Employee::find($fempId);
+					$subs = $employee->getSubordinates();
+					if(!empty($subs)){
+						$ids = [];
+						array_map(function ($item)use($ids){
+							$ids[] = $item->id;
+						}, $subs);
+						$query->whereIn('femp_id', $ids);
+					}
+				}else {
+					$query->where($tmp[0], isset($tmp[1]) ? $tmp[1] : '=', $v);
+				}
+			}
+		}
+		//return $query;
+	}
 }
