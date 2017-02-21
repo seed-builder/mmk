@@ -29,13 +29,13 @@ class AttendanceReportController extends ApiController
 					$fempId = $v;
 					$employee = Employee::find($fempId);
 					$subs = $employee->getSubordinates();
+					$ids = [$fempId];
 					if(!empty($subs)){
-						$ids = [];
 						array_map(function ($item)use($ids){
 							$ids[] = $item->id;
 						}, $subs);
-						$query->whereIn('femp_id', $ids);
 					}
+					$query->whereIn('femp_id', $ids);
 
 //					if(!empty($employee->position)){
 //						$fnumber = $employee->position->fnumber;

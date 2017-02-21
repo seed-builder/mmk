@@ -72,13 +72,13 @@ class StoreController extends ApiController
 					$fempId = $v;
 					$employee = Employee::find($fempId);
 					$subs = $employee->getSubordinates();
+					$ids = [$fempId];
 					if(!empty($subs)){
-						$ids = [];
 						array_map(function ($item)use($ids){
 							$ids[] = $item->id;
 						}, $subs);
-						$query->whereIn('femp_id', $ids);
 					}
+					$query->whereIn('femp_id', $ids);
 				}else {
 					$query->where($tmp[0], isset($tmp[1]) ? $tmp[1] : '=', $v);
 				}
