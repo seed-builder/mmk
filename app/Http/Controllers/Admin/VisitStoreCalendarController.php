@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Busi\VisitPzbz;
 use App\Models\Busi\VisitStoreTodo;
 use App\Models\Busi\VisitTodoCalendar;
 use Illuminate\Http\Request;
@@ -54,6 +55,21 @@ class VisitStoreCalendarController extends AdminController
 	public function visitStoreCalendarInfo($id){
         $todos = VisitTodoCalendar::query()->where('fstore_calendar_id',$id)->get();
         $sc = VisitStoreCalendar::find($id);
+
+        foreach ($todos as $t){
+            $pzs = VisitPzbz::where('flog_id', $t->id)->first();
+
+            if (!empty($pzs)){
+                $imageIds=explode(",", $pzs->fphotos);
+
+                $images = [];
+                foreach ($imageIds as $i){
+                    $images[] = '/admin/show-image?imageId='.$i;
+                }
+                $t->images = $images;
+            }
+        }
+
 
         return view('admin.visit_store_calendar.info',compact('todos','sc'));
     }
