@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Busi\Employee;
 use App\Models\City;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
