@@ -1,10 +1,5 @@
 <?php
-/**
- * @SWG\Resource(
- *  resourcePath="/utl",
- *  description="公共"
- * )
- */
+
 Route::post('/upload-image', ['uses' => 'UtlController@uploadImage']);
 Route::get('/show-image', ['uses' => 'UtlController@showImage']);
 Route::post('/sync-db', ['uses' => 'UtlController@syncDB']);
