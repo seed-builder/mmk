@@ -111,6 +111,19 @@ $user = Auth::user();
             </li>
             @endif
 
+            <li class="treeview active">
+                <a href="#">
+                    <i class="fa fa-fw fa-eyedropper"></i>
+                    <span>申报管理</span>
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="{{url('/admin/leave')}}"><i class="fa fa-fw fa-calendar-minus-o"></i>请假管理</a></li>
+                </ul>
+            </li>
+
             @if($user->can(['user_index','role_index','permission_index']))
             <li class="treeview active">
                 <a href="#">
