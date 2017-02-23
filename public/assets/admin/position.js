@@ -97,7 +97,8 @@ define(function(require, exports, module) {
                         else
                             return "";
                     }
-                }
+                },
+                {'data': 'fremark'}
             ],
             columnDefs: [
                 {
@@ -106,11 +107,25 @@ define(function(require, exports, module) {
                 }
             ],
             buttons: [
-                // { text: '新增', action: function () { }  },
-                // { text: '编辑', className: 'edit', enabled: false },
+                { text: '新增<i class="fa fa-fw fa-plus"></i>', action: function () {
+                    $("#positionModal").modal('show')
+                    $("#positionForm").attr('data-action','add');
+                }  },
+                { text: '编辑<i class="fa fa-fw fa-pencil"></i>', className: 'edit', enabled: false ,action:function () {
+                    var data = table.rows('.selected').data()[0];
+
+                    $("#positionForm").find('.form-control').each(function (index, element){
+                        var name = $(element).attr('name');
+                        $(element).val(eval("data."+name));
+                        $(element).find("option[value='"+eval("data."+name)+"']").attr("selected",true);
+                    })
+
+                    $("#positionModal").modal('show')
+                    $("#positionForm").attr('data-action','edit');
+                }},
                 // { text: '删除', className: 'delete', enabled: false },
-                {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: editor},
-                {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: editor},
+                // {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: editor},
+                // {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: editor},
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
@@ -118,12 +133,49 @@ define(function(require, exports, module) {
             ]
         });
 
-        // table.on( 'select', checkBtn).on( 'deselect', checkBtn);
-        //
-        // function checkBtn(e, dt, type, indexes) {
-        //     var count = table.rows( { selected: true } ).count();
-        //     table.buttons( ['.edit', '.delete'] ).enable(count > 0);
-        // }
+        $("#positionForm").on('submit', function () {
+            var formData = new FormData($("#positionForm")[0]);
+            var action = $("#positionForm").data('action');
+            var url = "";
+
+
+            if (action=='add'){
+                url= "/admin/position/createPos"
+            }else {
+                var id = table.rows('.selected').data()[0].id
+                url= "/admin/position/updatePos/"+id
+            }
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: formData,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    layer.msg(data['result'])
+                    if (data['code'] == 200) {
+                        $("#positionForm").modal('hide');
+                        table.ajax.reload();
+                    }
+
+                },
+            });
+
+            return false;//防止表单同步提交
+        })
+
+        $("#positionModal").on("hidden.bs.modal", function () {
+            $("#positionForm").find(".form-data").val("");
+        });
+
+        table.on( 'select', checkBtn).on( 'deselect', checkBtn);
+
+        function checkBtn(e, dt, type, indexes) {
+            var count = table.rows( { selected: true } ).count();
+            table.buttons( ['.edit', '.delete'] ).enable(count > 0);
+        }
 
         getTreeData();
     }

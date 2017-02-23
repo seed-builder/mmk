@@ -22,7 +22,9 @@ class PositionController extends AdminController
 	public function index()
 	{
 		//
-		return view('admin.position.index');
+        $depts = Department::all();
+        $positions = Position::all();
+		return view('admin.position.index',compact('depts','positions'));
 	}
 
 	/**
@@ -79,5 +81,28 @@ class PositionController extends AdminController
 
 		return parent::pagination($request, $searchCols,$with);
 	}
+
+
+	public function createPos(Request $request)
+    {
+        $data = $request->except('_token');
+        Position::create($data);
+
+        return response()->json([
+            'code' => 200,
+            'result' => '创建职位成功！'
+        ]);
+    }
+
+    public function updatePos($id,Request $request)
+    {
+        $data = $request->except('_token');
+        Position::query()->where('id',$id)->update($data);
+
+        return response()->json([
+            'code' => 200,
+            'result' => '修改职位信息成功！'
+        ]);
+    }
 
 }
