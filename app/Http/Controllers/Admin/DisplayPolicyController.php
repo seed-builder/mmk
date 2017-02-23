@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Admin\AdminController;
 use App\Models\Busi\DisplayPolicy;
 
 class DisplayPolicyController extends AdminController
@@ -57,12 +58,13 @@ class DisplayPolicyController extends AdminController
 	}
 
 	/**
-	* @param  Request $request
-	* @param  array $searchCols
-	* @return  \Illuminate\Http\JsonResponse
-	*/
-	public function pagination(Request $request, $searchCols = [], $with = []){
-		$searchCols = ["fbill_no","fcaption","fdocument_status","frequire","freward_method"];
+	 * @param  Request $request
+	 * @param  array $searchCols
+	 * @param array $with
+	 * @return \Illuminate\Http\JsonResponse
+	 */
+	public function pagination(Request $request, $searchCols = [],$with=[]){
+		$searchCols = ["fbill_no","fexp_type","fsketch"];
 		return parent::pagination($request, $searchCols);
 	}
 
