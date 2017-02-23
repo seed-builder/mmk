@@ -53,22 +53,11 @@ define(function(require, exports, module) {
             table: "#" + tableId,
             idSrc: 'id',
             fields: [
-            { 'label':  'fauditor_id', 'name': 'fauditor_id', },
-                { 'label':  'faudit_date', 'name': 'faudit_date', },
-                { 'label':  'fcreate_date', 'name': 'fcreate_date', },
-                { 'label':  'fcreator_id', 'name': 'fcreator_id', },
-                { 'label':  'fdept_id', 'name': 'fdept_id', },
-                { 'label':  'fdocument_status', 'name': 'fdocument_status', },
-                { 'label':  'fforbidder_id', 'name': 'fforbidder_id', },
-                { 'label':  'fforbid_date', 'name': 'fforbid_date', },
-                { 'label':  'fforbid_status', 'name': 'fforbid_status', },
-                { 'label':  'fis_main', 'name': 'fis_main', },
-                { 'label':  'fmodify_date', 'name': 'fmodify_date', },
-                { 'label':  'fmodify_id', 'name': 'fmodify_id', },
-                { 'label':  'fname', 'name': 'fname', },
-                { 'label':  'fnumber', 'name': 'fnumber', },
-                { 'label':  'fparpost_id', 'name': 'fparpost_id', },
-                { 'label':  'fremark', 'name': 'fremark', },
+                { 'label':  '职位名称', 'name': 'fname', },
+                { 'label':  '职位编号', 'name': 'fnumber', },
+                { 'label':  '上级', 'name': 'fparpost_id', },
+                { 'label':  '所属部门', 'name': 'fdept_id', },
+                { 'label':  '备注', 'name': 'fremark', },
         ]
         });
 
