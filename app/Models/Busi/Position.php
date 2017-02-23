@@ -36,4 +36,8 @@ class Position extends BaseModel
     public function senior(){
         return $this->hasOne(Position::class, 'id', 'fparpost_id');
     }
+
+    public function department(){
+        return $this->hasOne(Department::class, 'id', 'fdept_id');
+    }
 }
