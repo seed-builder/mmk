@@ -13,8 +13,8 @@ Route::group(['prefix' => 'display-policy', 'middleware' => 'api.sign'], functio
      *     @SWG\Operation(
      *      method="GET",
      *      nickname="display-policy-list",
-     *      summary="陈列信息列表",
-     *      notes="陈列信息列表",
+     *      summary="陈列费用政策信息列表",
+     *      notes="陈列费用政策信息列表",
      *      type="array",
      *     items="$ref:DisplayPolicy",
      *      @SWG\Parameters(
@@ -35,8 +35,8 @@ Route::group(['prefix' => 'display-policy', 'middleware' => 'api.sign'], functio
      *     @SWG\Operation(
      *      method="GET",
      *      nickname="display-policy-show",
-     *      summary="陈列信息详情",
-     *      notes="陈列信息详情",
+     *      summary="陈列费用政策信息详情",
+     *      notes="陈列费用政策信息详情",
      *      type="DisplayPolicy",
      *      @SWG\Parameters(
      *          @SWG\Parameter(name="id", description="id", required=true, type="integer", paramType="path", defaultValue="1"),
@@ -53,8 +53,8 @@ Route::group(['prefix' => 'display-policy', 'middleware' => 'api.sign'], functio
      *     @SWG\Operation(
      *      method="POST",
      *      nickname="display-policy-store",
-     *      summary="新增陈列信息",
-     *      notes="新增陈列信息",
+     *      summary="新增陈列费用政策信息",
+     *      notes="新增陈列费用政策信息",
      *      type="",
      *      @SWG\Parameters(
      *          @SWG\Parameter(name="fbill_no", description="bill no", required=true,type="string", paramType="form", defaultValue="" ),
@@ -85,8 +85,8 @@ Route::group(['prefix' => 'display-policy', 'middleware' => 'api.sign'], functio
      *     @SWG\Operation(
      *      method="POST",
      *      nickname="display-policy-update",
-     *      summary="陈列信息更新",
-     *      notes="陈列信息更新",
+     *      summary="陈列费用政策信息更新",
+     *      notes="陈列费用政策信息更新",
      *      type="",
      *      @SWG\Parameters(
      *          @SWG\Parameter(name="fbill_no", description="bill no", required=true,type="string", paramType="form", defaultValue="" ),
@@ -118,8 +118,8 @@ Route::group(['prefix' => 'display-policy', 'middleware' => 'api.sign'], functio
      *     @SWG\Operation(
      *      method="DELETE",
      *      nickname="DisplayPolicy-delete",
-     *      summary="陈列信息删除",
-     *      notes="陈列信息删除",
+     *      summary="陈列费用政策信息删除",
+     *      notes="陈列费用政策信息删除",
      *      type="",
      *      @SWG\Parameters(
      *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="1" ),

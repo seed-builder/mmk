@@ -2,7 +2,7 @@
 /**
  * @SWG\Resource(
  *  resourcePath="/display-policy-entry",
- *  description="陈列品项"
+ *  description="陈列费用政策品项"
  * )
  */
 Route::group(['prefix' => 'display-policy-entry', 'middleware' => 'api.sign'], function () {
@@ -13,8 +13,8 @@ Route::group(['prefix' => 'display-policy-entry', 'middleware' => 'api.sign'], f
      *     @SWG\Operation(
      *      method="GET",
      *      nickname="display-policy-entry-list",
-     *      summary="陈列品项列表",
-     *      notes="陈列品项列表",
+     *      summary="陈列费用政策品项列表",
+     *      notes="陈列费用政策品项列表",
      *      type="array",
      *     items="$ref:DisplayPolicyEntry",
      *      @SWG\Parameters(
@@ -35,8 +35,8 @@ Route::group(['prefix' => 'display-policy-entry', 'middleware' => 'api.sign'], f
      *     @SWG\Operation(
      *      method="GET",
      *      nickname="display-policy-entry-show",
-     *      summary="陈列品项详情",
-     *      notes="陈列品项详情",
+     *      summary="陈列费用政策品项详情",
+     *      notes="陈列费用政策品项详情",
      *      type="DisplayPolicyEntry",
      *      @SWG\Parameters(
      *          @SWG\Parameter(name="id", description="id", required=true, type="integer", paramType="path", defaultValue="1"),
@@ -53,8 +53,8 @@ Route::group(['prefix' => 'display-policy-entry', 'middleware' => 'api.sign'], f
      *     @SWG\Operation(
      *      method="POST",
      *      nickname="display-policy-entry-store",
-     *      summary="新增陈列品项",
-     *      notes="新增陈列品项",
+     *      summary="新增陈列费用政策品项",
+     *      notes="新增陈列费用政策品项",
      *      type="",
      *      @SWG\Parameters(
      *          @SWG\Parameter(name="fdisplay_policy_id", description="exp_display_policy id", required=true,type="integer", paramType="form", defaultValue="" ),
@@ -73,8 +73,8 @@ Route::group(['prefix' => 'display-policy-entry', 'middleware' => 'api.sign'], f
      *     @SWG\Operation(
      *      method="POST",
      *      nickname="display-policy-entry-update",
-     *      summary="陈列品项更新",
-     *      notes="陈列品项更新",
+     *      summary="陈列费用政策品项更新",
+     *      notes="陈列费用政策品项更新",
      *      type="",
      *      @SWG\Parameters(
      *          @SWG\Parameter(name="fdisplay_policy_id", description="exp_display_policy id", required=true,type="integer", paramType="form", defaultValue="" ),
@@ -94,8 +94,8 @@ Route::group(['prefix' => 'display-policy-entry', 'middleware' => 'api.sign'], f
      *     @SWG\Operation(
      *      method="DELETE",
      *      nickname="DisplayPolicyEntry-delete",
-     *      summary="陈列品项删除",
-     *      notes="陈列品项删除",
+     *      summary="陈列费用政策品项删除",
+     *      notes="陈列费用政策品项删除",
      *      type="",
      *      @SWG\Parameters(
      *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="1" ),
