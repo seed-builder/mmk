@@ -17,10 +17,10 @@ class CreateTableSysUserPosition extends Migration
 	    Schema::create('sys_user_position', function (Blueprint $table) {
 		    $table->integer('user_id');
 		    $table->integer('position_id');
-		    $table->foreign('user_id')->references('id')->on('sys_users')
-			    ->onUpdate('cascade')->onDelete('cascade');
-		    $table->foreign('position_id')->references('id')->on('bd_positions')
-			    ->onUpdate('cascade')->onDelete('cascade');
+//		    $table->foreign('user_id')->references('id')->on('sys_users')
+//			    ->onUpdate('cascade')->onDelete('cascade');
+//		    $table->foreign('position_id')->references('id')->on('bd_positions')
+//			    ->onUpdate('cascade')->onDelete('cascade');
 
 		    $table->primary(['user_id', 'position_id']);
 	    });
