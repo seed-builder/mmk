@@ -2,7 +2,7 @@
 /**
 * @SWG\Resource(
 *  resourcePath="/display-policy",
-*  description="DisplayPolicy"
+*  description="陈列费用政策"
 * )
 */
 Route::group(['prefix' => 'display-policy', 'middleware' => 'api.sign'], function () {
@@ -13,8 +13,8 @@ Route::group(['prefix' => 'display-policy', 'middleware' => 'api.sign'], functio
     *     @SWG\Operation(
     *      method="GET",
     *      nickname="display-policy-list",
-    *      summary="page list",
-    *      notes="page list",
+    *      summary="陈列费用政策列表",
+    *      notes="陈列费用政策列表",
     *      type="array",
     *     items="$ref:DisplayPolicy",
     *      @SWG\Parameters(
@@ -35,8 +35,8 @@ Route::group(['prefix' => 'display-policy', 'middleware' => 'api.sign'], functio
     *     @SWG\Operation(
     *      method="GET",
     *      nickname="display-policy-show",
-    *      summary="信息详情",
-    *      notes="信息详情",
+    *      summary="陈列费用政策信息详情",
+    *      notes="陈列费用政策信息详情",
     *      type="Attendance",
     *      @SWG\Parameters(
     *          @SWG\Parameter(name="id", description="id", required=true, type="integer", paramType="path", defaultValue="1"),
@@ -53,31 +53,21 @@ Route::group(['prefix' => 'display-policy', 'middleware' => 'api.sign'], functio
     *     @SWG\Operation(
     *      method="POST",
     *      nickname="display-policy-store",
-    *      summary="新增",
-    *      notes="新增",
+    *      summary="新增陈列费用政策",
+    *      notes="新增陈列费用政策",
     *      type="",
     *      @SWG\Parameters(
-    *          @SWG\Parameter(name="fbill_no", description="bill no", required=false,type="string", paramType="form", defaultValue="" ),
-    *          @SWG\Parameter(name="fcaption", description="陈列主题", required=false,type="string", paramType="form", defaultValue="" ),
-    *          @SWG\Parameter(name="fcreate_date", description="创建时间", required=true,type="string", paramType="form", defaultValue="" ),
-    *          @SWG\Parameter(name="fcreator_id", description="创建人", required=false,type="integer", paramType="form", defaultValue="0" ),
-    *          @SWG\Parameter(name="fcust_id", description="客户 id", required=false,type="integer", paramType="form", defaultValue="0" ),
-    *          @SWG\Parameter(name="fdays", description="天数", required=false,type="integer", paramType="form", defaultValue="0" ),
-    *          @SWG\Parameter(name="fdocument_status", description="数据状态", required=false,type="string", paramType="form", defaultValue="A" ),
-    *          @SWG\Parameter(name="ffinish_date", description="执行结束日期 ", required=true,type="string", paramType="form", defaultValue="" ),
-    *          @SWG\Parameter(name="flog_id", description="visit_todo_calendar id", required=false,type="integer", paramType="form", defaultValue="0" ),
-    *          @SWG\Parameter(name="fmodify_date", description="修改时间", required=true,type="string", paramType="form", defaultValue="" ),
-    *          @SWG\Parameter(name="fmodify_id", description="修改人", required=false,type="integer", paramType="form", defaultValue="0" ),
+    *          @SWG\Parameter(name="fact_store_num", description="执行门店总数", required=false,type="integer", paramType="form", defaultValue="0" ),
+    *          @SWG\Parameter(name="famount", description="总金额", required=false,type="number", paramType="form", defaultValue="0.00" ),
+    *          @SWG\Parameter(name="fcost_dept_id", description="应用区域(部门 id)", required=false,type="integer", paramType="form", defaultValue="0" ),
+    *          @SWG\Parameter(name="fend_date", description="执行结束日期 ", required=true,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="fexp_type", description="费用类别", required=false,type="string", paramType="form", defaultValue="" ),
     *          @SWG\Parameter(name="forg_id", description="组织id", required=false,type="integer", paramType="form", defaultValue="0" ),
-    *          @SWG\Parameter(name="frequire", description="陈列要求", required=false,type="string", paramType="form", defaultValue="" ),
-    *          @SWG\Parameter(name="freward_amount", description="奖励金额", required=false,type="number", paramType="form", defaultValue="0.00" ),
-    *          @SWG\Parameter(name="freward_method", description="奖励方式", required=false,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="fsign_amount", description="已签约总金额", required=false,type="integer", paramType="form", defaultValue="0" ),
+    *          @SWG\Parameter(name="fsign_store_num", description="已签约门店总数", required=false,type="integer", paramType="form", defaultValue="0" ),
+    *          @SWG\Parameter(name="fsketch", description="项目简述", required=false,type="string", paramType="form", defaultValue="" ),
     *          @SWG\Parameter(name="fstart_date", description="执行开始日期", required=true,type="string", paramType="form", defaultValue="" ),
-    *          @SWG\Parameter(name="fstatus", description="执行状态：0 未执行，1执行中 2已执行", required=false,type="integer", paramType="form", defaultValue="0" ),
-    *          @SWG\Parameter(name="fstore_id", description="门店 id", required=false,type="integer", paramType="form", defaultValue="0" ),
-    *          @SWG\Parameter(name="fvalid_begin", description="有效期起", required=true,type="string", paramType="form", defaultValue="" ),
-    *          @SWG\Parameter(name="fvalid_end", description="有效期止", required=true,type="string", paramType="form", defaultValue="" ),
-    *          @SWG\Parameter(name="id", description="", required=false,type="integer", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="fstore_cost_limit", description="单个门店费用上限", required=false,type="number", paramType="form", defaultValue="0.00" ),
     *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
     *      )
     *  )
@@ -91,32 +81,23 @@ Route::group(['prefix' => 'display-policy', 'middleware' => 'api.sign'], functio
     *     @SWG\Operation(
     *      method="PUT",
     *      nickname="display-policy-update",
-    *      summary="更新",
-    *      notes="更新",
+    *      summary="更新陈列费用政策",
+    *      notes="更新陈列费用政策",
     *      type="",
     *      @SWG\Parameters(
+    *          @SWG\Parameter(name="fact_store_num", description="执行门店总数", required=false,type="integer", paramType="form", defaultValue="0" ),
+    *          @SWG\Parameter(name="famount", description="总金额", required=false,type="number", paramType="form", defaultValue="0.00" ),
     *          @SWG\Parameter(name="fbill_no", description="bill no", required=false,type="string", paramType="form", defaultValue="" ),
-    *          @SWG\Parameter(name="fcaption", description="陈列主题", required=false,type="string", paramType="form", defaultValue="" ),
-    *          @SWG\Parameter(name="fcreate_date", description="创建时间", required=false,type="string", paramType="form", defaultValue="" ),
-    *          @SWG\Parameter(name="fcreator_id", description="创建人", required=false,type="integer", paramType="form", defaultValue="0" ),
-    *          @SWG\Parameter(name="fcust_id", description="客户 id", required=false,type="integer", paramType="form", defaultValue="0" ),
-    *          @SWG\Parameter(name="fdays", description="天数", required=false,type="integer", paramType="form", defaultValue="0" ),
-    *          @SWG\Parameter(name="fdocument_status", description="数据状态", required=false,type="string", paramType="form", defaultValue="A" ),
-    *          @SWG\Parameter(name="ffinish_date", description="执行结束日期 ", required=false,type="string", paramType="form", defaultValue="" ),
-    *          @SWG\Parameter(name="flog_id", description="visit_todo_calendar id", required=false,type="integer", paramType="form", defaultValue="0" ),
-    *          @SWG\Parameter(name="fmodify_date", description="修改时间", required=false,type="string", paramType="form", defaultValue="" ),
-    *          @SWG\Parameter(name="fmodify_id", description="修改人", required=false,type="integer", paramType="form", defaultValue="0" ),
+    *          @SWG\Parameter(name="fcost_dept_id", description="应用区域(部门 id)", required=false,type="integer", paramType="form", defaultValue="0" ),
+    *          @SWG\Parameter(name="fend_date", description="执行结束日期 ", required=false,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="fexp_type", description="费用类别", required=false,type="string", paramType="form", defaultValue="" ),
     *          @SWG\Parameter(name="forg_id", description="组织id", required=false,type="integer", paramType="form", defaultValue="0" ),
-    *          @SWG\Parameter(name="frequire", description="陈列要求", required=false,type="string", paramType="form", defaultValue="" ),
-    *          @SWG\Parameter(name="freward_amount", description="奖励金额", required=false,type="number", paramType="form", defaultValue="0.00" ),
-    *          @SWG\Parameter(name="freward_method", description="奖励方式", required=false,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="fsign_amount", description="已签约总金额", required=false,type="integer", paramType="form", defaultValue="0" ),
+    *          @SWG\Parameter(name="fsign_store_num", description="已签约门店总数", required=false,type="integer", paramType="form", defaultValue="0" ),
+    *          @SWG\Parameter(name="fsketch", description="项目简述", required=false,type="string", paramType="form", defaultValue="" ),
     *          @SWG\Parameter(name="fstart_date", description="执行开始日期", required=false,type="string", paramType="form", defaultValue="" ),
-    *          @SWG\Parameter(name="fstatus", description="执行状态：0 未执行，1执行中 2已执行", required=false,type="integer", paramType="form", defaultValue="0" ),
-    *          @SWG\Parameter(name="fstore_id", description="门店 id", required=false,type="integer", paramType="form", defaultValue="0" ),
-    *          @SWG\Parameter(name="fvalid_begin", description="有效期起", required=false,type="string", paramType="form", defaultValue="" ),
-    *          @SWG\Parameter(name="fvalid_end", description="有效期止", required=false,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="fstore_cost_limit", description="单个门店费用上限", required=false,type="number", paramType="form", defaultValue="0.00" ),
     *          @SWG\Parameter(name="id", description="", required=false,type="integer", paramType="form", defaultValue="" ),
-    *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="" ),
     *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
     *      )
     *  )
@@ -130,8 +111,8 @@ Route::group(['prefix' => 'display-policy', 'middleware' => 'api.sign'], functio
     *     @SWG\Operation(
     *      method="DELETE",
     *      nickname="display-policy-delete",
-    *      summary="删除",
-    *      notes="删除",
+    *      summary="删除陈列费用政策",
+    *      notes="删除陈列费用政策",
     *      type="",
     *      @SWG\Parameters(
     *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="1" ),

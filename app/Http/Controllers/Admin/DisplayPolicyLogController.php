@@ -1,26 +1,16 @@
-<?php echo $BEGIN_PHP; ?>
-
 <?php
-		$searchCols = [];
-		foreach ($columns as $col){
-			if($col->data_type == 'string'){
-				$searchCols[] = $col->name;
-			}
-		}
-
-?>
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
-use App\Models\Busi\<?php echo e($model); ?>;
+use App\Models\Busi\DisplayPolicyLog;
 
-class <?php echo e($model); ?>Controller extends AdminController
+class DisplayPolicyLogController extends AdminController
 {
 	public function newEntity(array $attributes = [])
 	{
 		// TODO: Implement newEntity() method.
-		return new <?php echo e($model); ?>($attributes);
+		return new DisplayPolicyLog($attributes);
 	}
 
 	/**
@@ -31,7 +21,7 @@ class <?php echo e($model); ?>Controller extends AdminController
 	public function index()
 	{
 		//
-		return view('admin.<?php echo e(snake_case($model,'-')); ?>.index');
+		return view('admin.display-policy-log.index');
 	}
 
 	/**
@@ -41,7 +31,7 @@ class <?php echo e($model); ?>Controller extends AdminController
 	*/
 	public function create()
 	{
-		return view('admin.<?php echo e(snake_case($model,'-')); ?>.create');
+		return view('admin.display-policy-log.create');
 	}
 
 	/**
@@ -52,8 +42,8 @@ class <?php echo e($model); ?>Controller extends AdminController
 	*/
 	public function edit($id)
 	{
-		$entity = <?php echo e($model); ?>::find($id);
-		return view('admin.<?php echo e(snake_case($model,'-')); ?>.edit', ['entity' => $entity]);
+		$entity = DisplayPolicyLog::find($id);
+		return view('admin.display-policy-log.edit', ['entity' => $entity]);
 	}
 
 	/**
@@ -73,7 +63,7 @@ class <?php echo e($model); ?>Controller extends AdminController
 	* @return  \Illuminate\Http\JsonResponse
 	*/
 	public function pagination(Request $request, $searchCols = [],$with=[]){
-		$searchCols = <?php echo json_encode($searchCols); ?>;
+		$searchCols = ["fdocument_status","fphotos","fremark"];
 		return parent::pagination($request, $searchCols);
 	}
 

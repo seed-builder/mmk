@@ -22,6 +22,7 @@ class CreateTableWorkFlows extends Migration
 		    $table->string('table')->nullable()->comment('数据表');
 		    $table->integer('data_id')->nullable()->comment('数据 id');
 		    $table->integer('approver_id')->nullable()->comment('审批人id（user id）');
+		    $table->integer('status')->default(0)->comment('状态(0-审批中,1-结束)');
 		    $table->timestamps();
 	    });
     }
