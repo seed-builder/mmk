@@ -29,4 +29,9 @@ class VisitStoreTodo extends BaseModel
 {
     //
     protected $table = 'visit_store_todo';
+
+    public function children()
+    {
+        return $this->hasMany(VisitStoreTodo::class, 'fparent_id');
+    }
 }

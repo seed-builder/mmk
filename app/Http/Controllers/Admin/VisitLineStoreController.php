@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Busi\Department;
 use App\Models\Busi\Employee;
 use App\Models\Busi\Store;
+use App\Models\Busi\VisitLineCalendar;
+use App\Models\Busi\VisitStoreTodo;
 use App\Models\City;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
@@ -30,7 +32,8 @@ class VisitLineStoreController extends AdminController
 		$lines = VisitLine::all();
 		$citys = City::query()->where('LevelType',1)->get();
 		$depts = Department::all();
-		return view('admin.visit-line-store.index',compact('lines','citys','depts'));
+		$todos = VisitStoreTodo::all();
+		return view('admin.visit-line-store.index',compact('lines','citys','depts','todos'));
 	}
 
 	/**
@@ -130,12 +133,8 @@ class VisitLineStoreController extends AdminController
 
             $datas = [];
             foreach ($emps as $e){
-                if (!empty($this->makeEmpLine($e->id))){
-                    $datas[] = $this->makeEmpLine($e->id);
-                }
+                $this->makeEmpLine($e->id);
             }
-
-            $this->insertLineList($datas);
 
             return response()->json([
                 'code' => 200,
@@ -151,7 +150,7 @@ class VisitLineStoreController extends AdminController
                 ]);
             }
 
-            $this->insertLineList($this->makeEmpLine($data['id']));
+            $this->makeEmpLine($data['id']);
 
             return response()->json([
                 'code' => 200,
@@ -177,29 +176,22 @@ class VisitLineStoreController extends AdminController
 
         if (!empty($random_store)){ //若该员工无负责门店 则生成失败
 
-            $datas = [];
             foreach ($lines as $l){
-                $datas[] = [
+
+                $vls = VisitLineStore::create([
                     'fline_id' => $l->id,
                     'fstore_id' => $random_store->id,
                     'femp_id' => $emp_id,
                     'fweek_day' => $l->fnumber,
-                    'fcreate_date' => date('Y-m-d H:i:s'),
-                    'fmodify_date' => date('Y-m-d H:i:s'),
-                ];
+                ]);
+
             }
-            return $datas;
 
         }
 
-
     }
 
-    /*
-     * 批量插入员工路线
-     */
-    public function insertLineList($data){
-        DB::table('visit_line_store')->insert($data);
-    }
+
+
 
 }

@@ -60,4 +60,34 @@ class VisitTodoCalendar extends BaseModel
                 return '系统异常';
         }
     }
+
+    /*
+     * 生成拜访具体工作日志
+     * 参数 fdate femp_id fstore_calendar_id
+     */
+    public function makeCalendar($fdate,$femp_id,$fstore_calendar_id){
+        $todos = VisitStoreTodo::query()->where('fparent_id',0)->get();
+
+        foreach ($todos as $t){
+            $vtc = VisitTodoCalendar::create([
+                'fparent_id' => 0,
+                'fdate' => $fdate,
+                'femp_id' => $femp_id,
+                'fstore_calendar_id' => $fstore_calendar_id,
+                'ftodo_id' => $t->id
+            ]);
+
+            if (!empty($t->children)){
+                foreach ($t->children as $child){
+                    VisitTodoCalendar::create([
+                        'fparent_id' => $vtc->id,
+                        'fdate' => $fdate,
+                        'femp_id' => $femp_id,
+                        'fstore_calendar_id' => $fstore_calendar_id,
+                        'ftodo_id' => $child->id
+                    ]);
+                }
+            }
+        }
+    }
 }

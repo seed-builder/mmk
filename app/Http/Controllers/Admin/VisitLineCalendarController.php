@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Busi\VisitLine;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use PhpParser\Node\Scalar\MagicConst\Line;
 use Swagger\Annotations\Items;
 use App\Models\Busi\VisitLineCalendar;
 use App\Models\Busi\Employee;
@@ -46,4 +48,28 @@ class VisitLineCalendarController extends AdminController
         }
 		return parent::pagination($request, $searchCols);
 	}
+
+    /*
+     * 生成线路拜访日历
+     * 参数 week femp_id
+     */
+    public function makeVisitLineCalendar(Request $request){
+        $data = $request->all();
+        $week = $data['week'];
+
+        $model = new VisitLineCalendar();
+
+        $fday = date("w")+1;
+        $line = VisitLine::query()->where('fnumber',date("w"))->first();
+
+        for ($i=0;$i<=$week*7;$i++){
+
+            $fday=$fday==8?1:$fday;
+//            dump(date("Y-m-d",strtotime("+".($i+1)." day")));
+//            dump($fday);
+            $model->makeCalendar($data['femp_id'],$line->id,date("Y-m-d",strtotime("+".($i+1)." day")));
+
+            $fday++;
+        }
+    }
 }

@@ -40,4 +40,9 @@ class Position extends BaseModel
     public function department(){
         return $this->hasOne(Department::class, 'id', 'fdept_id');
     }
+
+    public function children()
+    {
+        return $this->hasMany(Position::class, 'fparpos_id');
+    }
 }

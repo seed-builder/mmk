@@ -166,6 +166,7 @@ define(function(require, exports, module) {
                     enabled: false,
                     action: function () {
                         var id = $(".list-group").find(".node-selected").data('id')!=null?$(".list-group").find(".node-selected").data('id'):table.rows('.selected').data()[0].femp_id;
+
                         layer.confirm('确定生成该员工所有线路（已有线路不会生成）?', function(){
                             var load = layer.load(1);
                             $.ajax({
@@ -973,6 +974,15 @@ define(function(require, exports, module) {
         })
 
         $("#province_id").trigger('change');
+
+        $("#todos").select2()
+        
+        $("#makeLineBtn").on('click',function () {
+            $("#todos").find("option").trigger('click')
+            var todos = $("#todos").val();
+            console.log(todos);
+        })
+
         mapShow();
         getTreeData();
 

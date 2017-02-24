@@ -42,5 +42,26 @@ class VisitLineCalendar extends BaseModel
     	return $this->hasOne(VisitLine::class, 'id', 'fline_id');
     }
 
+    /*
+     * 生成线路拜访日历
+     * 参数 femp_id fline_id fdate
+     */
+    public function makeCalendar($femp_id,$fline_id,$fdate){
+        $vlc = VisitLineCalendar::create([
+            'fdate' => date('Y-m-d H:i:s',strtotime($fdate)),
+            'femp_id' => $femp_id,
+            'fline_id' => $fline_id,
+        ]);
+
+        $model = new VisitStoreCalendar();
+
+        $vls = VisitLineStore::query()->where('fline_id',$fline_id)->get();
+        foreach ($vls as $v){
+            $model->makeCalendar($femp_id,$v->fstore_id,$vlc->id,$fdate);
+        }
+
+
+    }
+
 
 }

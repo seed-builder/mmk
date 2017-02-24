@@ -50,4 +50,20 @@ class VisitStoreCalendar extends BaseModel
     public function employee(){
         return $this->belongsTo(Employee::class, 'femp_id');
     }
+
+    /*
+     * 生成门店拜访日历
+     * 参数 femp_id fstore_id fline_calendar_id fdate
+     */
+    public function makeCalendar($femp_id,$fstore_id,$fline_calendar_id,$fdate){
+        $vsc = VisitStoreCalendar::create([
+            'fdate' => $fdate,
+            'femp_id' => $femp_id,
+            'fline_calendar_id' => $fline_calendar_id,
+            'fstore_id' => $fstore_id,
+        ]);
+
+        $model = new VisitTodoCalendar();
+        $model->makeCalendar($fdate,$femp_id,$vsc->id);
+    }
 }

@@ -1,6 +1,7 @@
 @extends('admin.layout.collapsed-sidebar')
 @section('styles')
     @include('admin.layout.datatable-css')
+	<link rel="stylesheet" href="/assets/plugins/select2/select2.css">
     <style>
 		.modal label {
 			font-size: 10px;
@@ -419,9 +420,11 @@
 	</div>
 
 
+
 @endsection
 @section('js')
 	<script src="/assets/plugins/bootstrap-treeview/bootstrap-treeview.min.js"></script>
+	<script src="/assets/plugins/select2/select2.js"></script>
 	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=D4Bi3270ydgA5HsnWDnmBVwF3zaPdoMC"></script>
     @include('admin.layout.datatable-js')
     <script type="text/javascript">
