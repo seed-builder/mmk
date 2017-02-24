@@ -49,7 +49,7 @@ define(function(require, exports, module) {
         });
 
         var table = $("#" + tableId).DataTable({
-            dom: "Bfrtip",
+            dom: "lBfrtip",
             language: zhCN,
             processing: true,
             serverSide: true,
