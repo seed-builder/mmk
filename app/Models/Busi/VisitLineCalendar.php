@@ -48,14 +48,14 @@ class VisitLineCalendar extends BaseModel
      */
     public function makeCalendar($femp_id,$fline_id,$fdate){
         $vlc = VisitLineCalendar::create([
-            'fdate' => date('Y-m-d H:i:s',strtotime($fdate)),
+            'fdate' => $fdate,
             'femp_id' => $femp_id,
             'fline_id' => $fline_id,
         ]);
 
         $model = new VisitStoreCalendar();
 
-        $vls = VisitLineStore::query()->where('fline_id',$fline_id)->get();
+        $vls = VisitLineStore::query()->where('fline_id',$fline_id)->where('femp_id',$femp_id)->get();
         foreach ($vls as $v){
             $model->makeCalendar($femp_id,$v->fstore_id,$vlc->id,$fdate);
         }

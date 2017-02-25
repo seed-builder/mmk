@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Busi\VisitLine;
+use App\Models\Busi\VisitStoreCalendar;
+use App\Models\Busi\VisitTodoCalendar;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use PhpParser\Node\Scalar\MagicConst\Line;
@@ -60,16 +62,33 @@ class VisitLineCalendarController extends AdminController
         $model = new VisitLineCalendar();
 
         $fday = date("w")+1;
-        $line = VisitLine::query()->where('fnumber',date("w"))->first();
 
         for ($i=0;$i<=$week*7;$i++){
 
             $fday=$fday==8?1:$fday;
-//            dump(date("Y-m-d",strtotime("+".($i+1)." day")));
-//            dump($fday);
-            $model->makeCalendar($data['femp_id'],$line->id,date("Y-m-d",strtotime("+".($i+1)." day")));
+
+            $fdate = date("Y-m-d",strtotime("+".($i+1)." day"))." 00:00:00";
+
+            //删除原有数据
+            VisitLineCalendar::query()
+                ->where('femp_id',$data['femp_id'])
+                ->where('fdate',$fdate)
+                ->delete();
+            VisitStoreCalendar::query()
+                ->where('femp_id',$data['femp_id'])
+                ->where('fdate',$fdate)
+                ->delete();
+            VisitTodoCalendar::query()
+                ->where('femp_id',$data['femp_id'])
+                ->where('fdate',$fdate)
+                ->delete();
+            $line = VisitLine::query()->where('fnumber',$fday)->first();
+
+            $model->makeCalendar($data['femp_id'],$line->id,$fdate);
 
             $fday++;
         }
+
+        return redirect('admin/visit_line_calendar');
     }
 }

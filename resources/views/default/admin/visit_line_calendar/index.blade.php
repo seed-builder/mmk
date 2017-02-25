@@ -95,6 +95,44 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="makeCalendarModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">生成拜访日历</h4>
+                </div>
+                <form class="form-horizontal" action="{{url('/admin/visit_line_calendar/makeVisitLineCalendar')}}">
+                <div class="modal-body">
+                    <div class="box-body">
+                            <div class="form-group">
+                                <label>生成周期</label>
+                                <select class="form-control" name="week" id="week">
+                                    <option value="1">未来一周</option>
+                                    <option value="2">未来两周</option>
+                                </select>
+                            </div>
+
+                    </div>
+
+
+                </div>
+
+                <div class="modal-footer">
+                    <input type="hidden" name="femp_id" id="femp_id">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="submit" class="btn btn-primary" id="makeBtn">保存</button>
+                </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
     	
 @endsection
 
