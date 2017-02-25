@@ -106,7 +106,7 @@
                     </button>
                     <h4 class="modal-title">生成拜访日历</h4>
                 </div>
-                <form class="form-horizontal" action="{{url('/admin/visit_line_calendar/makeVisitLineCalendar')}}">
+                <form class="form-horizontal" id="makeCalendarForm" action="{{url('/admin/visit_line_calendar/makeVisitLineCalendar')}}">
                 <div class="modal-body">
                     <div class="box-body">
                             <div class="form-group">

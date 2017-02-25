@@ -272,6 +272,12 @@ define(function(require, exports, module) {
                 //{extend: 'colvis', text: '列显示'}
             ]
         });
+        
+        $("#makeCalendarForm").on('submit',function () {
+            $("#makeBtn").val('正在生成中，请稍后....')
+            $("#makeBtn").attr('disabled',true);
+
+        })
 
         getTreeData();
 
