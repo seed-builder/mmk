@@ -123,6 +123,7 @@ $user = Auth::user();
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="{{url('/admin/leave')}}"><i class="fa fa-fw fa-calendar-minus-o"></i>请假管理</a></li>
+                    <li><a href="{{url('/admin/display-policy')}}"><i class="fa fa-fw fa-tasks"></i>陈列费用政策管理</a></li>
                 </ul>
             </li>
 

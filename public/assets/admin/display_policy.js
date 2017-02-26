@@ -1,11 +1,11 @@
 /**
-*
-*/
-define(function(require, exports, module) {
+ *
+ */
+define(function (require, exports, module) {
 
     var zhCN = require('datatableZh');
     var editorCN = require('i18n');
-    exports.index = function ($, tableId) {
+    exports.index = function ($, tableId,depts) {
         var editor = new $.fn.dataTable.Editor({
             ajax: {
                 create: {
@@ -28,24 +28,30 @@ define(function(require, exports, module) {
             table: "#" + tableId,
             idSrc: 'id',
             fields: [
-            { 'label':  'fact_store_num', 'name': 'fact_store_num', },
-                { 'label':  'famount', 'name': 'famount', },
-                { 'label':  'fbill_no', 'name': 'fbill_no', },
-                { 'label':  'fcost_dept_id', 'name': 'fcost_dept_id', },
-                { 'label':  'fcreate_date', 'name': 'fcreate_date', },
-                { 'label':  'fcreator_id', 'name': 'fcreator_id', },
-                { 'label':  'fdocument_status', 'name': 'fdocument_status', },
-                { 'label':  'fend_date', 'name': 'fend_date', },
-                { 'label':  'fexp_type', 'name': 'fexp_type', },
-                { 'label':  'fmodify_date', 'name': 'fmodify_date', },
-                { 'label':  'fmodify_id', 'name': 'fmodify_id', },
-                { 'label':  'forg_id', 'name': 'forg_id', },
-                { 'label':  'fsign_amount', 'name': 'fsign_amount', },
-                { 'label':  'fsign_store_num', 'name': 'fsign_store_num', },
-                { 'label':  'fsketch', 'name': 'fsketch', },
-                { 'label':  'fstart_date', 'name': 'fstart_date', },
-                { 'label':  'fstore_cost_limit', 'name': 'fstore_cost_limit', },
-        ]
+                {'label': '费用类型', 'name': 'fexp_type',},
+                {
+                    label: '执行开始日期',
+                    name:  'fstart_date',
+                    type:  'datetime',
+                    def:   function () { return new Date(); }
+                },
+                {
+                    label: '执行结束日期',
+                    name:  'fend_date',
+                    type:  'datetime',
+                    def:   function () { return new Date(); }
+                },
+                {
+                    'label': '应用区域',
+                    'name': 'fcost_dept_id',
+                    'type': 'select',
+                    'options': depts
+                },
+                {'label': '总金额', 'name': 'famount',},
+                {'label': '项目简述', 'name': 'fsketch',},
+                {'label': '执行门店总数', 'name': 'fact_store_num',},
+                {'label': '单个门店费用上限', 'name': 'fstore_cost_limit',},
+            ]
         });
 
         var table = $("#" + tableId).DataTable({
@@ -58,24 +64,19 @@ define(function(require, exports, module) {
             rowId: "id",
             ajax: '/admin/display-policy/pagination',
             columns: [
-                    {  'data': 'fact_store_num' },
-                    {  'data': 'famount' },
-                    {  'data': 'fbill_no' },
-                    {  'data': 'fcost_dept_id' },
-                    {  'data': 'fcreate_date' },
-                    {  'data': 'fcreator_id' },
-                    {  'data': 'fdocument_status' },
-                    {  'data': 'fend_date' },
-                    {  'data': 'fexp_type' },
-                    {  'data': 'fmodify_date' },
-                    {  'data': 'fmodify_id' },
-                    {  'data': 'forg_id' },
-                    {  'data': 'fsign_amount' },
-                    {  'data': 'fsign_store_num' },
-                    {  'data': 'fsketch' },
-                    {  'data': 'fstart_date' },
-                    {  'data': 'fstore_cost_limit' },
-                    {  'data': 'id' },
+                {'data': 'id'},
+                {'data': 'fbill_no'},
+                {'data': 'fexp_type'},
+                {'data': 'fstart_date'},
+                {'data': 'fend_date'},
+                {'data': 'fcost_dept_id'},
+                {'data': 'famount'},
+                {'data': 'fsketch'},
+                {'data': 'fact_store_num'},
+                {'data': 'fstore_cost_limit'},
+                {'data': 'fsign_store_num'},
+                {'data': 'fsign_amount'},
+
             ],
             buttons: [
                 // { text: '新增', action: function () { }  },

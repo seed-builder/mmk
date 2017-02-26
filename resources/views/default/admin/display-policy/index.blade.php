@@ -23,7 +23,7 @@
             <div class="col-xs-12">
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">exp_display_policy列表</h3>
+                        <h3 class="box-title">陈列费用政策列表</h3>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
@@ -31,24 +31,19 @@
                         <table id="moduleTable" class="table table-bordered table-hover">
                             <thead>
                             <tr>
-                                <th>fact_store_num</th>
-                                <th>famount</th>
-                                <th>fbill_no</th>
-                                <th>fcost_dept_id</th>
-                                <th>fcreate_date</th>
-                                <th>fcreator_id</th>
-                                <th>fdocument_status</th>
-                                <th>fend_date</th>
-                                <th>fexp_type</th>
-                                <th>fmodify_date</th>
-                                <th>fmodify_id</th>
-                                <th>forg_id</th>
-                                <th>fsign_amount</th>
-                                <th>fsign_store_num</th>
-                                <th>fsketch</th>
-                                <th>fstart_date</th>
-                                <th>fstore_cost_limit</th>
                                 <th>id</th>
+                                <th>序号</th>
+                                <th>费用类型</th>
+                                <th>执行开始日期</th>
+                                <th>执行结束日期</th>
+                                <th>应用区域</th>
+                                <th>总金额</th>
+                                <th>项目简述</th>
+                                <th>执行门店总数</th>
+                                <th>单个门店费用上限</th>
+                                <th>已签约门店总数</th>
+                                <th>已签约总金额</th>
+
                             </tr>
                             </thead>
                         </table>
@@ -67,8 +62,9 @@
     @include('admin.layout.datatable-js')
     <script type="text/javascript">
         $(function () {
+            var depts = {!! json_encode($depts) !!}
             seajs.use('admin/display_policy.js', function (app) {
-                app.index($, 'moduleTable');
+                app.index($, 'moduleTable',depts);
             });
         });
     </script>

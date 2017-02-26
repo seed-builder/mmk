@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Busi\Department;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
 use App\Models\Busi\DisplayPolicy;
@@ -21,7 +22,11 @@ class DisplayPolicyController extends AdminController
 	public function index()
 	{
 		//
-		return view('admin.display-policy.index');
+        $all = Department::all();
+        $depts = $all->map(function ($item){
+            return ['label' => $item->fname, 'value' => $item->id];
+        });
+		return view('admin.display-policy.index',compact('depts'));
 	}
 
 	/**
