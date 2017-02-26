@@ -121,6 +121,12 @@ define(function (require, exports, module) {
                 {'data': 'fsign_amount'},
 
             ],
+            columnDefs: [
+                {
+                    "targets": [0],
+                    "visible": false
+                }
+            ],
             buttons: [
                 // { text: '新增', action: function () { }  },
                 // { text: '编辑', className: 'edit', enabled: false },
@@ -196,8 +202,8 @@ define(function (require, exports, module) {
                             return "";
                     }
                 },
-                {'data': 'famount'},
-                {'data': 'fsketch'},
+                // {'data': 'famount'},
+                // {'data': 'fsketch'},
                 {'data': 'fstore_id'},
                 {'data': 'fsign_amount'},
                 {'data': 'fcheck_amount'},
@@ -208,7 +214,7 @@ define(function (require, exports, module) {
             ],
             columnDefs: [
                 {
-                    "targets": [0],
+                    "targets": [0,6],
                     "visible": false
                 }
             ],
