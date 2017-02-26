@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Busi\Department;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
 use App\Models\Busi\DisplayPolicyStore;
@@ -64,7 +65,15 @@ class DisplayPolicyStoreController extends AdminController
 	*/
 	public function pagination(Request $request, $searchCols = [],$with=[]){
 		$searchCols = ["fbill_no","fdocument_status","fsketch"];
-		return parent::pagination($request, $searchCols);
+        $data = $request->all();
+        if(!empty($data['nodeid'])){//组织树点击查询
+            $query = DisplayPolicyStore::query();
+            $dept = Department::find($data['nodeid']);
+            $deptids = $dept->getAllChildDept()->pluck('id')->toArray();
+
+            $request['queryBuilder'] = $query->whereIn('fcost_dept_id',$deptids);
+        }
+		return parent::pagination($request, $searchCols,$with=['policy','employee','department']);
 	}
 
 }

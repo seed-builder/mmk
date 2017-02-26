@@ -23,7 +23,7 @@
             <div class="col-xs-12">
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">exp_display_policy_store列表</h3>
+                        <h3 class="box-title">陈列费用签约门店列表</h3>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
@@ -31,27 +31,21 @@
                         <table id="moduleTable" class="table table-bordered table-hover">
                             <thead>
                             <tr>
-                                <th>famount</th>
-                                <th>fbill_no</th>
-                                <th>fcheck_amount</th>
-                                <th>fcheck_status</th>
-                                <th>fcost_dept_id</th>
-                                <th>fcreate_date</th>
-                                <th>fcreator_id</th>
-                                <th>fdate</th>
-                                <th>fdocument_status</th>
-                                <th>femp_id</th>
-                                <th>fend_date</th>
-                                <th>fmodify_date</th>
-                                <th>fmodify_id</th>
-                                <th>forg_id</th>
-                                <th>fpolicy_id</th>
-                                <th>fsign_amount</th>
-                                <th>fsketch</th>
-                                <th>fstart_date</th>
-                                <th>fstatus</th>
-                                <th>fstore_id</th>
                                 <th>id</th>
+                                <th>编号</th>
+                                <th>方案名称</th>
+                                <th>负责业代</th>
+                                <th>门店方案执行开始日期</th>
+                                <th>门店方案执行结束日期</th>
+                                <th>应用区域</th>
+                                <th>费用总金额</th>
+                                <th>项目简述</th>
+                                <th>签约门店</th>
+                                <th>签约金额</th>
+                                <th>核定签约金额</th>
+                                <th>验证状态</th>
+                                <th>签约状态</th>
+                                <th>签约日期</th>
                             </tr>
                             </thead>
                         </table>

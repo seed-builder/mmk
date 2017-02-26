@@ -70,6 +70,15 @@ class DisplayPolicyController extends AdminController
 	 */
 	public function pagination(Request $request, $searchCols = [],$with=[]){
 		$searchCols = ["fbill_no","fexp_type","fsketch"];
+        $data = $request->all();
+        if(!empty($data['nodeid'])){//组织树点击查询
+            $query = DisplayPolicy::query();
+            $dept = Department::find($data['nodeid']);
+            $deptids = $dept->getAllChildDept()->pluck('id')->toArray();
+
+            $request['queryBuilder'] = $query->whereIn('fcost_dept_id',$deptids);
+        }
+
 		return parent::pagination($request, $searchCols,$with=['department']);
 	}
 

@@ -38,4 +38,16 @@ class DisplayPolicyStore extends BaseModel
 	//
 	protected $table = 'exp_display_policy_store';
 	protected $guarded = ['id'];
+
+	public function policy(){
+        return $this->hasOne(DisplayPolicy::class, 'id', 'fpolicy_id');
+    }
+
+    public function employee(){
+        return $this->hasOne(Employee::class, 'id', 'femp_id');
+    }
+
+    public function department(){
+        return $this->hasOne(Department::class, 'id', 'fcost_dept_id');
+    }
 }
