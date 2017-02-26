@@ -35,4 +35,8 @@ class DisplayPolicy extends BaseModel
 	//
 	protected $table = 'exp_display_policy';
 	protected $guarded = ['id'];
+
+	public function department(){
+        return $this->hasOne(Department::class, 'id', 'fcost_dept_id');
+    }
 }

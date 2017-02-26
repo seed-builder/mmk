@@ -70,7 +70,7 @@ class DisplayPolicyController extends AdminController
 	 */
 	public function pagination(Request $request, $searchCols = [],$with=[]){
 		$searchCols = ["fbill_no","fexp_type","fsketch"];
-		return parent::pagination($request, $searchCols);
+		return parent::pagination($request, $searchCols,$with=['department']);
 	}
 
 }

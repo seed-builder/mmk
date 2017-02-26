@@ -70,7 +70,15 @@ define(function (require, exports, module) {
                 {'data': 'fexp_type'},
                 {'data': 'fstart_date'},
                 {'data': 'fend_date'},
-                {'data': 'fcost_dept_id'},
+                {
+                    'data': 'fcost_dept_id',
+                    render: function (data, type, full) {
+                        if (full.department != null)
+                            return full.department.fname
+                        else
+                            return "无";
+                    }
+                },
                 {'data': 'famount'},
                 {'data': 'fsketch'},
                 {'data': 'fact_store_num'},
