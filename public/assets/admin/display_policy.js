@@ -28,6 +28,7 @@ define(function (require, exports, module) {
             table: "#" + tableId,
             idSrc: 'id',
             fields: [
+                {'label': '编号', 'name': 'fbill_no',},
                 {'label': '费用类型', 'name': 'fexp_type',},
                 {
                     label: '执行开始日期',
