@@ -2,6 +2,9 @@
 
 namespace App\Console;
 
+use App\Models\Busi\VisitLine;
+use App\Models\Busi\VisitLineCalendar;
+use App\Models\Busi\VisitLineStore;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -35,6 +38,17 @@ class Kernel extends ConsoleKernel
 	    $schedule->command('command:attendance_polling')->cron('10 18-23/1 * * *');
 	    $schedule->command('gen:att-stc')->dailyAt('22:00');
 	    $schedule->command('gen:att-rpt')->dailyAt('23:00');
+
+	    //每天00:00点执行 生成拜访日记
+        $schedule->call(function(VisitLineCalendar $calendar){
+            $fnumber = date("w");
+            $line = VisitLine::query()->where('fnumber',$fnumber)->first();
+            $vls = VisitLineStore::query()->where('fline_id',$line->id)->get();
+            foreach ($vls as $v){
+                $calendar->makeCalendar($v->femp_id,$line->id,date('Y-m-d H:i:s'));
+            }
+
+        })->dailyAt('00:00');
     }
 
     /**
