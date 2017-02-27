@@ -14,9 +14,9 @@ class CreateTableWorkFlowLinks extends Migration
     public function up()
     {
         //
-	    Schema::create('work_flow_steps', function (Blueprint $table) {
+	    Schema::create('work_flow_links', function (Blueprint $table) {
 		    $table->increments('id');
-		    $table->integer('work_flow_template_id');
+		    $table->integer('work_flow_id');
 		    $table->integer('source_node_id')->nullable()->comment('上一步节点');
 		    $table->integer('target_node_id')->nullable()->comment('下一步节点');
 		    $table->string('condition')->nullable()->comment('条件');
@@ -33,5 +33,6 @@ class CreateTableWorkFlowLinks extends Migration
     public function down()
     {
         //
+	    Schema::dropIfExists('work_flow_links');
     }
 }

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Busi\Store;
 use Illuminate\Database\Eloquent\Builder;
+use DB;
 
 class StoreController extends ApiController
 {
@@ -88,4 +89,10 @@ class StoreController extends ApiController
 		}
 		//return $query;
 	}
+
+	public function noSignedList(){
+		$stores = DB::select('select st.* from st_stores st where not EXISTS (select * from exp_display_policy_store ep where st.id = ep.fstore_id)');
+		return response($stores, 200);
+	}
+
 }

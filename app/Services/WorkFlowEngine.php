@@ -18,24 +18,43 @@ class WorkFlowEngine
 	public const Action = ['agree', 'disagree', 'back'];
 
 	/**
-	 * 同意
-	 * @param $workflow
+	 * 开启工作流实例
+	 * @param $workFlow
+	 * @param $table
+	 * @param $id
 	 */
-	public function agree($workflow){
+	public function start($workFlow, $table, $id){
+
+	}
+
+	/**
+	 * 同意
+	 * @param $instance
+	 */
+	public function agree($instance){
 
 	}
 
 	/**
 	 * 不同意
+	 * @param $instance
 	 */
-	public function disagree($workflow){
+	public function disagree($instance){
 
 	}
 
 	/**
 	 * 驳回
 	 */
-	public function back($workflow){
+	public function back($instance){
+
+	}
+
+	/**
+	 * 结束工作流
+	 * @param $instance
+	 */
+	public function end($instance){
 
 	}
 

@@ -29,6 +29,24 @@ Route::group(['prefix' => 'store', 'middleware' => 'api.sign'], function () {
      */
     Route::get('/', ['as' => 'store.index', 'uses' => 'StoreController@index']);
 
+	/**
+	 * @SWG\Api(
+	 *     path="/api/store/no-signed-list",
+	 *     @SWG\Operation(
+	 *      method="GET",
+	 *      nickname="no-signed-list",
+	 *      summary="未签约门店列表",
+	 *      notes="未签约门店列表",
+	 *      type="array",
+	 *      items="$ref:Store",
+	 *      @SWG\Parameters(
+	 *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="query", defaultValue="****")
+	 *      )
+	 *  )
+	 * )
+	 */
+	Route::get('/no-signed-list', ['as' => 'store.noSignedList', 'uses' => 'StoreController@noSignedList']);
+
     /**
      * @SWG\Api(
      *     path="/api/store/{id}",
@@ -165,6 +183,8 @@ Route::group(['prefix' => 'store', 'middleware' => 'api.sign'], function () {
      * )
      */
     Route::delete('/{id}', ['as' => 'store.delete', 'uses' => 'StoreController@destroy']);
+
+
 
 
 });
