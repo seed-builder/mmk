@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Busi\Store;
 use Illuminate\Database\Eloquent\Builder;
+use DB;
 
 class StoreController extends ApiController
 {
@@ -74,12 +75,13 @@ class StoreController extends ApiController
 					$fempId = $v;
 					$employee = Employee::find($fempId);
 					$subs = $employee->getSubordinates();
-					$ids = [$fempId];
+					$ids = [];
 					if(!empty($subs)){
-						array_map(function ($item)use($ids){
-							$ids[] = $item->id;
+						$ids = array_map(function ($item)use($ids){
+							return $item->id;
 						}, $subs);
 					}
+					$ids[] = $fempId;
 					$query->whereIn('femp_id', $ids);
 				}else {
 					$query->where($tmp[0], isset($tmp[1]) ? $tmp[1] : '=', $v);
@@ -88,4 +90,28 @@ class StoreController extends ApiController
 		}
 		//return $query;
 	}
+
+	/**
+	 *
+	 * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+	 */
+	public function noSignedList(Request $request, $femp_id){
+
+		$sql = 'select st.* from st_stores st where not EXISTS (select * from exp_display_policy_store ep where st.id = ep.fstore_id)';
+		if($femp_id) {
+			$employee = Employee::find($femp_id);
+			$subs = $employee->getSubordinates();
+			$ids = [];
+			if(!empty($subs)){
+				$ids = array_map(function ($item)use($ids){
+					return $item->id;
+				}, $subs);
+			}
+			$ids[] = $femp_id;
+			$sql = $sql . ' and st.femp_id in( '.implode(',', $ids).' )';
+		}
+		$stores = DB::select($sql);
+		return response($stores, 200);
+	}
+
 }

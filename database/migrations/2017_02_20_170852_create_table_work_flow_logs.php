@@ -17,7 +17,7 @@ class CreateTableWorkFlowLogs extends Migration
 	    Schema::create('work_flow_logs', function (Blueprint $table) {
 		    $table->increments('id');
 		    $table->integer('work_flow_id');
-		    $table->integer('work_flow_template_id');
+		    $table->integer('work_flow_instance_id');
 		    $table->string('node_id')->nullable()->comment('审批节点');
 		    $table->integer('approver_id')->nullable()->comment('审批人id（user id）');
 		    $table->string('action')->nullable()->comment('审批动作');
