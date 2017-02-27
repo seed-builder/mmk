@@ -97,10 +97,10 @@ $user = Auth::user();
                     @endif
 
                     @if($user->can('visit_line_calendar_index'))
-                    <li><a href="{{url('admin/visit_line_calendar/index')}}"><i class="fa fa-circle-o"></i></i> 拜访日记</a></li>
+                    <li><a href="{{url('admin/visit_line_calendar/index')}}"><i class="fa fa-circle-o"></i></i> 拜访日历</a></li>
                     @endif
 
-                    <li><a href="#"><i class="fa fa-circle-o"></i></i> 拜访工作纪录</a></li>
+                    {{--<li><a href="#"><i class="fa fa-circle-o"></i></i> 拜访工作纪录</a></li>--}}
 
                     {{--<li><a href="{{url('admin/display-policy/index')}}"><i class="fa fa-circle-o"></i></i> 费用陈列</a></li>--}}
 

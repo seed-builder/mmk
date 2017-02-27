@@ -23,11 +23,13 @@ define(function(require, exports, module) {
                         onNodeSelected: function(event, data) {
 							table.ajax.reload();
 							storeTable.ajax.reload();
+                            button_enable();
 
                         },
                         onNodeUnselected: function(event, data) {
                             table.ajax.reload();
                             storeTable.ajax.reload();
+                            button_enable();
                         },
                     });
                 },
@@ -130,9 +132,11 @@ define(function(require, exports, module) {
             buttons: [
                 {
                     text: '生成拜访日历<i class="fa fa-fw fa-calendar"></i>',
+                    className: 'create',
+                    enabled: false,
                     action: function () {
                         var selectedNode = $('#'+treeId).treeview('getSelected');
-                        var femp_id = selectedNode.length>0?selectedNode[0]['dataid']:''
+                        var femp_id = selectedNode.length>0?selectedNode[0]['dataid']:table.rows('.selected').data()[0].femp_id
                         $("#femp_id").val(femp_id);
                         $("#makeCalendarModal").modal('show');
                         //window.location.href = "/admin/visit_store_calendar/makeVisitLineCalendar?week="+week+"&femp_id="+femp_id
@@ -151,8 +155,21 @@ define(function(require, exports, module) {
 
         table.on( 'select', rowSelect).on( 'deselect', rowSelect);
 
+        function button_enable() {
+            var count = table.rows( { selected: true } ).count();
+            table.buttons( ['.create'] ).enable(count > 0);
+
+            if(count==0){
+                var treeNode = $('#'+treeId).treeview('getSelected');
+                if (treeNode.length>0){
+                    table.buttons( ['.create'] ).enable(treeNode[0].nodetype=='emp');
+                }
+
+            }
+        }
 
         function rowSelect() {
+            button_enable();
             storeTable.ajax.reload();
         }
 
