@@ -15,7 +15,8 @@ class CreateTableWorkFlowInstances extends Migration
     {
         Schema::create('work_flow_instances', function (Blueprint $table) {
 	        $table->increments('id');
-	        $table->integer('work_flow_template_id');
+	        $table->integer('work_flow_id');
+	        $table->string('title')->nullable()->comment('标题');
 	        $table->string('sponsor')->nullable()->comment('发起人');
 	        $table->string('node_id')->nullable()->comment('当前所处审批节点');
 	        $table->string('table')->nullable()->comment('数据表');
