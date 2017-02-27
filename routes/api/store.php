@@ -31,7 +31,7 @@ Route::group(['prefix' => 'store', 'middleware' => 'api.sign'], function () {
 
 	/**
 	 * @SWG\Api(
-	 *     path="/api/store/no-signed-list",
+	 *     path="/api/store/no-signed-list/{femp_id}",
 	 *     @SWG\Operation(
 	 *      method="GET",
 	 *      nickname="no-signed-list",
@@ -40,12 +40,13 @@ Route::group(['prefix' => 'store', 'middleware' => 'api.sign'], function () {
 	 *      type="array",
 	 *      items="$ref:Store",
 	 *      @SWG\Parameters(
+	 *          @SWG\Parameter(name="femp_id", description="femp_id", required=true, type="integer", paramType="path", defaultValue="1"),
 	 *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="query", defaultValue="****")
 	 *      )
 	 *  )
 	 * )
 	 */
-	Route::get('/no-signed-list', ['as' => 'store.noSignedList', 'uses' => 'StoreController@noSignedList']);
+	Route::get('/no-signed-list/{femp_id}', ['as' => 'store.noSignedList', 'uses' => 'StoreController@noSignedList']);
 
     /**
      * @SWG\Api(

@@ -30,7 +30,7 @@ define(function(require, exports, module) {
             fields: [
                 { 'label':  '名称', 'name': 'name', },
                 { 'label':  'table', 'name': 'table', },
-                { 'label':  '状态', 'name': 'status', 'options':[{'label': '禁用', 'value': 0},{'label':'启用', 'value': 1}]},
+                { 'label':  '状态', 'name': 'status', 'type':'select', 'options':[{'label':'启用', 'value': 1},{'label': '禁用', 'value': 0}], 'def': 1},
             ]
         });
 
