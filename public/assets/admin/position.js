@@ -107,11 +107,11 @@ define(function(require, exports, module) {
                         notEmpty: {},
                     }
                 },
-                fparpost_id: {
-                    validators: {
-                        notEmpty: {},
-                    }
-                },
+                // fparpost_id: {
+                //     validators: {
+                //         notEmpty: {},
+                //     }
+                // },
                 fdept_id: {
                     validators: {
                         notEmpty: {},
