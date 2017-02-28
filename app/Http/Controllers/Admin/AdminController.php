@@ -238,19 +238,21 @@ abstract class AdminController extends Controller
 	 * 将实体数据转换成树形（bootstrap treeview）数据
 	 * @param $entity
 	 * @param $props 属性映射集合 ['text' => 'name', 'data-id' => 'id']
+	 * @param bool $expanded
 	 * @return array
 	 */
-	public function toBootstrapTreeViewData($entity, $props){
+	public function toBootstrapTreeViewData($entity, $props, $expanded = true){
 		$data = ['item' => $entity];
 		if(!empty($entity)){
 			foreach ($props as $k => $val){
 				$data[$k] = $entity->{$val};
+				$data['state']['expanded'] = $expanded;
 			}
 
 			if(!empty($entity->children)){
 				$nodes = [];
 				foreach ($entity->children as $child){
-					$nodes[] = $this->toBootstrapTreeViewData($child, $props);
+					$nodes[] = $this->toBootstrapTreeViewData($child, $props, $expanded);
 				}
 				if(!empty($nodes))
 					$data['nodes'] = $nodes;

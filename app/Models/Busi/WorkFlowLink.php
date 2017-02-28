@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @SWG\Property(name="updated_at", type="string", description="")
  * @SWG\Property(name="work_flow_id", type="integer", description="")
   */
-class WorkFlowLink extends BaseModel
+class WorkFlowLink extends Model
 {
 	//
 	protected $table = 'work_flow_links';

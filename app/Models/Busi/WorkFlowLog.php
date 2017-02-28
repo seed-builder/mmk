@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\Model;
  * @SWG\Property(name="updated_at", type="string", description="")
  * @SWG\Property(name="id", type="integer", description="")
   */
-class WorkFlowLog extends BaseModel
+class WorkFlowLog extends Model
 {
 	//
 	protected $table = 'work_flow_logs';

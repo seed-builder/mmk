@@ -43,6 +43,6 @@ class Position extends BaseModel
 
     public function children()
     {
-        return $this->hasMany(Position::class, 'fparpos_id');
+        return $this->hasMany(Position::class, 'fparpost_id');
     }
 }

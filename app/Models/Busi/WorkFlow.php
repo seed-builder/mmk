@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  * @SWG\Property(name="updated_at", type="string", description="")
  * @SWG\Property(name="id", type="integer", description="")
   */
-class WorkFlow extends BaseModel
+class WorkFlow extends Model
 {
 	//
 	protected $table = 'work_flows';

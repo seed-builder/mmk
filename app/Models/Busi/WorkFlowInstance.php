@@ -23,7 +23,7 @@ use Illuminate\Database\Eloquent\Model;
  * @SWG\Property(name="work_flow_id", type="integer", description="")
  * @SWG\Property(name="id", type="integer", description="")
   */
-class WorkFlowInstance extends BaseModel
+class WorkFlowInstance extends Model
 {
 	//
 	protected $table = 'work_flow_instances';

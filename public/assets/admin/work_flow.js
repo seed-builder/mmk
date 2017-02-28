@@ -47,7 +47,9 @@ define(function(require, exports, module) {
                 {  'data': 'id' },
                 {  'data': 'name' },
                 {  'data': 'table' },
-                {  'data': 'status' },
+                {  'data': 'status', 'render': function (data) {
+                    return data == 1 ? '启用':'禁用';
+                } },
                 {  'data': 'created_at' },
                 {  'data': 'updated_at' },
             ],
