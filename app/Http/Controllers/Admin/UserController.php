@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Busi\Position;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
@@ -77,6 +78,16 @@ class UserController extends AdminController
 			$user->roles()->sync($roleIds);
 		}
 		return view('admin.user.role', ['roles' => $roles, 'user' => $user]);
+	}
+
+	public function setPosition(Request $request, $id){
+		$positions = Position::all();
+		$user = User::find($id);
+		if($request->isMethod('post')){
+			$positions = $request->input('positions',[]);
+			$user->positions()->sync($positions);
+		}
+		return view('admin.user.position', ['positions' => $positions, 'user' => $user]);
 	}
 
 

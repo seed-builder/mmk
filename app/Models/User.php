@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Busi\Position;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
@@ -49,4 +50,19 @@ class User extends Authenticatable
 	    	$user->password = bcrypt($user->password);
 	    });
     }
+
+    public function hasPosition($positionId){
+    	if($this->positions){
+    		foreach ($this->positions as $position){
+    			if($position->id == $positionId)
+    				return true;
+		    }
+	    }
+    	return false;
+    }
+
+    public function positions(){
+    	return $this->belongsToMany(Position::class, 'sys_user_position', 'user_id', 'position_id');
+    }
+
 }

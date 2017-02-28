@@ -2,6 +2,7 @@
 
 namespace App\Models\Busi;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -45,4 +46,8 @@ class Position extends BaseModel
     {
         return $this->hasMany(Position::class, 'fparpost_id');
     }
+
+	public function users(){
+		return $this->belongsToMany(User::class, 'sys_user_position', 'position_id', 'user_id');
+	}
 }
