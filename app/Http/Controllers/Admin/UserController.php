@@ -84,8 +84,8 @@ class UserController extends AdminController
 		$positions = Position::all();
 		$user = User::find($id);
 		if($request->isMethod('post')){
-			$positions = $request->input('positions',[]);
-			$user->positions()->sync($positions);
+			$positionIds = $request->input('positions',[]);
+			$user->positions()->sync($positionIds);
 		}
 		return view('admin.user.position', ['positions' => $positions, 'user' => $user]);
 	}
