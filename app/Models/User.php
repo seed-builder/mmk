@@ -61,6 +61,10 @@ class User extends Authenticatable
     	return false;
     }
 
+	/**
+	 * 职位
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+	 */
     public function positions(){
     	return $this->belongsToMany(Position::class, 'sys_user_position', 'user_id', 'position_id');
     }
