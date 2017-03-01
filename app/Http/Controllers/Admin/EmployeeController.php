@@ -115,7 +115,7 @@ class EmployeeController extends AdminController
 
     public function employeeTree(){
 		$top = Department::where('fpardept_id', 0)->first();
-		$tree = $this->toBootstrapTreeViewData($top,  ['text' => 'fname', 'dataid' => 'id']);
+		$tree = $this->toBootstrapTreeViewData($top,  ['text' => 'fname', 'dataid' => 'id'], false);
 		$tree['state'] = ['expanded' => true];
 	    return response()->json([$tree]);
     }
@@ -133,13 +133,13 @@ class EmployeeController extends AdminController
 			foreach ($props as $k => $val){
 				$data[$k] = $entity->{$val};
 				$data['icon'] = 'fa fa-users';
-				$data['state'] = ['expanded' => false];
+				$data['state'] = ['expanded' => $expanded];
 				$data['nodetype'] = 'dept';
 			}
 			$nodes = [];
 			if(!empty($entity->children)){
 				foreach ($entity->children as $child){
-					$nodes[] = $this->toBootstrapTreeViewData($child, $props);
+					$nodes[] = $this->toBootstrapTreeViewData($child, $props, $expanded);
 				}
 			}
 			//find employee

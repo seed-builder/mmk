@@ -24,6 +24,7 @@ class AttendanceController extends AdminController
 	/**
 	 * @param Request $request
 	 * @param array $searchCols
+	 * @param array $with
 	 * @return \Illuminate\Http\JsonResponse
 	 */
 	public function pagination(Request $request, $searchCols = [], $with = []){

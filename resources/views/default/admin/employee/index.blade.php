@@ -16,7 +16,7 @@
         <ol class="breadcrumb">
             <li><a href="/admin/"><i class="fa fa-dashboard"></i> Home</a></li>
             <li><a href="#">用户权限管理</a></li>
-            <li class="active">角色管理</li>
+            <li class="active">员工管理</li>
         </ol>
     </section>
     
@@ -24,7 +24,7 @@
     <section class="content">
         <div class="row">
             <div class="col-md-3" >
-                <div class="box">
+                <div class="box box-primary">
                     <div class="box-header">
                         <h3 class="box-title">组织架构信息</h3>
                     </div>
@@ -35,9 +35,9 @@
                 </div>
             </div>
             <div class="col-xs-9">
-                <div class="box">
+                <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">角色列表</h3>
+                        <h3 class="box-title">员工列表</h3>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
