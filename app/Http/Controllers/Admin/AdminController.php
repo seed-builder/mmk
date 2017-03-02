@@ -149,6 +149,9 @@ abstract class AdminController extends Controller
 
 		$total = $queryBuilder->count();
 
+		if($request['queryBuilder']){
+			$queryBuilder = $request['queryBuilder'];
+		}
 		if ($conditionCall != null && is_callable($conditionCall)) {
 			$conditionCall($queryBuilder);
 		}

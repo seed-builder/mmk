@@ -15,6 +15,9 @@ use App\Models\City;
 use App\Models\Busi\Resources;
 use Image;
 use Illuminate\Http\Response;
+use DB;
+use Auth;
+use SysConfigRepo;
 
 class StoreController extends AdminController
 {
@@ -57,8 +60,6 @@ class StoreController extends AdminController
                 }else{
                     $query->where('femp_id',$d['search']['value']);
                 }
-
-
                 $request['queryBuilder'] = $query;
             }
         }
@@ -68,7 +69,28 @@ class StoreController extends AdminController
             $request['queryBuilder']=$this->readyAllotStoreQuery($data);
         }
 
-		return parent::pagination($request, $searchCols);
+		return parent::pagination($request, $searchCols, $with, function ($queryBuilder){
+			$empQuery = DB::table('bd_employees');//,[[$emp,'fname','femp_id']]
+			$curUser = Auth::user();
+			if(!$curUser->isAdmin()) {
+				if (SysConfigRepo::isMgtDataIsolate()) {
+					$fnumbers = $curUser->positions->pluck('fnumber')->all();
+					if(!empty($fnumbers)) {
+						$empQuery->join('bd_positions', 'bd_employees.fpost_id', '=', 'bd_positions.id');
+						foreach ($fnumbers as $fnumber){
+							$empQuery->where('bd_positions.fnumber', 'like', $fnumber. '%');
+						}
+					}
+				}
+			}
+			$entities = $empQuery->select('bd_employees.id')->get();
+			$ids = $entities->pluck('id')->all(); //array_map(function ($item){	return $item->id;}, $entities);
+			//var_dump($ids);
+			if(!empty($ids))
+			{
+				$queryBuilder->whereIn('femp_id', $ids);
+			}
+		});
 	}
 
     //门店路线规划 预分配门店查询
