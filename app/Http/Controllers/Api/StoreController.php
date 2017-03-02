@@ -73,16 +73,21 @@ class StoreController extends ApiController
 				$tmp = explode(' ', $k);
 				if($tmp[0] == 'femp_id'){
 					$fempId = $v;
-					$employee = Employee::find($fempId);
-					$subs = $employee->getSubordinates();
-					$ids = [];
-					if(!empty($subs)){
-						$ids = array_map(function ($item)use($ids){
-							return $item->id;
-						}, $subs);
+					$repo = app(ISysConfigRepo::class);
+					if($repo->isAppDataIsolate()) {
+						$employee = Employee::find($fempId);
+						if ($employee->isDataIsolate()) {
+							$subs = $employee->getSubordinates();
+							$ids = [];
+							if (!empty($subs)) {
+								$ids = array_map(function ($item) use ($ids) {
+									return $item->id;
+								}, $subs);
+							}
+							$ids[] = $fempId;
+							$query->whereIn('femp_id', $ids);
+						}
 					}
-					$ids[] = $fempId;
-					$query->whereIn('femp_id', $ids);
 				}else {
 					$query->where($tmp[0], isset($tmp[1]) ? $tmp[1] : '=', $v);
 				}

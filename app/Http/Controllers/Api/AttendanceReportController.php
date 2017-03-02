@@ -27,28 +27,21 @@ class AttendanceReportController extends ApiController
 				$tmp = explode(' ', $k);
 				if($tmp[0] == 'femp_id'){
 					$fempId = $v;
-					$employee = Employee::find($fempId);
-					$subs = $employee->getSubordinates();
-					$ids = [$fempId];
-					if(!empty($subs)){
-						array_map(function ($item)use($ids){
-							$ids[] = $item->id;
-						}, $subs);
+					$repo = app(ISysConfigRepo::class);
+					if($repo->isAppDataIsolate()) {
+						$employee = Employee::find($fempId);
+						if ($employee->isDataIsolate()) {
+							$subs = $employee->getSubordinates();
+							$ids = [];
+							if (!empty($subs)) {
+								$ids = array_map(function ($item) {
+									return  $item->id;
+								}, $subs);
+							}
+							$ids[]= $fempId;
+							$query->whereIn('femp_id', $ids);
+						}
 					}
-					$query->whereIn('femp_id', $ids);
-
-//					if(!empty($employee->position)){
-//						$fnumber = $employee->position->fnumber;
-//						$sql = "select e.id from bd_employees e, bd_positions p where e.fpost_id = p.id and p.fnumber like '$fnumber%'";
-//						$ids = DB::select($sql);
-//						if(!empty($ids)){
-//							$arr = [];
-//							foreach ($ids as $item){
-//								$arr[] = $item->id;
-//							}
-//							$query->whereIn('femp_id', $arr);
-//						}
-//					}
 				}else {
 					$query->where($tmp[0], isset($tmp[1]) ? $tmp[1] : '=', $v);
 				}

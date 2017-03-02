@@ -69,4 +69,13 @@ class User extends Authenticatable
     	return $this->belongsToMany(Position::class, 'sys_user_position', 'user_id', 'position_id');
     }
 
+	/**
+	 * 是否管理员
+	 * 不受数据隔离限制
+	 * @return bool
+	 */
+    public function isAdmin(){
+    	return $this->hasRole('admin');
+    }
+
 }

@@ -122,53 +122,61 @@ abstract class AdminController extends Controller
 	 * @param Request $request
 	 * @param array $searchCols
 	 * @param array $with
+	 * @param null $conditionCall
 	 * @return \Illuminate\Http\JsonResponse
 	 */
-	public function pagination(Request $request, $searchCols = [], $with = []){
-		$start =  $request->input('start', 0);
+	public function pagination(Request $request, $searchCols = [], $with = [], $conditionCall = null)
+	{
+		$start = $request->input('start', 0);
 		$length = $request->input('length', 10);
-		$columns = $request->input('columns',[]);
+		$columns = $request->input('columns', []);
 		$order = $request->input('order', []);
 		$search = $request->input('search', []);
 		$draw = $request->input('draw', 0);
 
 		$queryBuilder = $this->newEntity()->newQuery();
-		if(!empty($with)){
+		if (!empty($with)) {
 			$queryBuilder->with($with);
 		}
 		$fields = [];
 		$conditions = [];
-		foreach ($columns as $column){
+		foreach ($columns as $column) {
 			$fields[] = $column['data'];
-			if(!empty($column['search']['value'])){
+			if (!empty($column['search']['value'])) {
 				$conditions[$column['data']] = $column['search']['value'];
 			}
 		}
 
 		$total = $queryBuilder->count();
 
-        if (!empty($request['queryBuilder'])){ //自定义query
-            $queryBuilder = $request['queryBuilder'];
-        }else{
-            foreach ($conditions as $col => $val) {
-                $queryBuilder->where($col, $val);
-            }
-        }
+		if ($conditionCall != null && is_callable($conditionCall)) {
+			$conditionCall($queryBuilder);
+		}
+		foreach ($conditions as $col => $val) {
+			$queryBuilder->where($col, $val);
+		}
+//        if (!empty($request['queryBuilder'])){ //自定义query
+//            $queryBuilder = $request['queryBuilder'];
+//        }else{
+//            foreach ($conditions as $col => $val) {
+//                $queryBuilder->where($col, $val);
+//            }
+//        }
 
 		//模糊查询
-		if(!empty($searchCols) && !empty($search['value'])){
+		if (!empty($searchCols) && !empty($search['value'])) {
 			$queryBuilder->where(function ($query) use ($search, $searchCols) {
-				foreach ($searchCols  as $sc){
-					if(is_array($sc)){//用于其他表查询 [entity,querykey,localkey]
-						foreach ($sc as $s){
-							$entities=$s[0]->where($s[1],'like binary', '%' . $search['value'] . '%')->get();
+				foreach ($searchCols as $sc) {
+					if (is_array($sc)) {//用于其他表查询 [entity,querykey,localkey]
+						foreach ($sc as $s) {
+							$entities = $s[0]->where($s[1], 'like binary', '%' . $search['value'] . '%')->get();
 							$ids = [];
-							foreach ($entities as $e){
+							foreach ($entities as $e) {
 								$ids[] = $e->id;
 							}
 							$query->orWhereIn($s[2], $ids);
 						}
-					}else{
+					} else {
 						$query->orWhere($sc, 'like binary', '%' . $search['value'] . '%');
 					}
 				}
@@ -177,14 +185,14 @@ abstract class AdminController extends Controller
 		}
 		$filterCount = $queryBuilder->count();
 
-		foreach ($order as $o){
+		foreach ($order as $o) {
 			$index = $o['column'];
 			$dir = $o['dir'];
 			$queryBuilder->orderBy($columns[$index]['data'], $dir);
 		}
-        if (!empty($request->distinct)){
-            $queryBuilder->groupBy($request->distinct)->distinct();
-        }
+		if (!empty($request->distinct)) {
+			$queryBuilder->groupBy($request->distinct)->distinct();
+		}
 
 
 		$entities = $queryBuilder->select($fields)->skip($start)->take($length)->get();

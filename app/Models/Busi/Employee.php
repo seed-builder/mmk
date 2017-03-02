@@ -2,7 +2,11 @@
 
 namespace App\Models\Busi;
 
+use App\Models\SysConfig;
+use App\Repositories\ISysConfigRepo;
+use App\Repositories\SysConfigRepo;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 use DB;
 
 /**
@@ -94,4 +98,14 @@ class Employee extends BaseModel
 	    }
 	    return $subs;
     }
+
+	/**
+	 * 是否数据隔离限制
+	 * @return bool
+	 */
+    public function isDataIsolate(){
+	    $ids = app(ISysConfigRepo::class)->noDataIsolateEmployees();
+    	return !str_contains($ids, $this->id);
+    }
+
 }

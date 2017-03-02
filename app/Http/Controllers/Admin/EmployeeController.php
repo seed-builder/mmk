@@ -33,85 +33,22 @@ class EmployeeController extends AdminController
 	/**
 	 * @param Request $request
 	 * @param array $searchCols
+	 * @param array $with
+	 * @param null $conditionCall
 	 * @return \Illuminate\Http\JsonResponse
 	 */
-	public function pagination(Request $request, $searchCols = [], $with = []){
+	public function pagination(Request $request, $searchCols = [], $with = [], $conditionCall = null){
 		$searchCols = ['fname', 'fnumber', 'fphone'];
-
 		$data = $request->all();
-        if(!empty($data['nodeid'])){//组织树点击查询
-            $query = Employee::query();
-            $dept = Department::find($data['nodeid']);
-            $deptids = $dept->getAllChildDept()->pluck('id')->toArray();
+		return parent::pagination($request, $searchCols, $with, function($queryBuilder)use($data){
+			if(!empty($data['nodeid'])){//组织树点击查询
+				$dept = Department::find($data['nodeid']);
+				$deptids = $dept->getAllChildDept()->pluck('id')->toArray();
 
-            $request['queryBuilder'] = $query->whereIn('fdept_id',$deptids);
-        }
-
-		return parent::pagination($request, $searchCols);
-	}
-	
-	public function ajaxEmployeeTree(Request $request){
-		$orgs = Organization::all();
-		$req = $request->all();
-		$datas = [];
-		
-		
-		foreach ($orgs as $ok=>$ov){
-			$pardepts = $ov->departments($ov->id);
-			$par_dept = $this->toTextArray($pardepts, !empty($req['dept_select'])?true:false); //组织下的所有父部门
-			
-			foreach ($pardepts as $dk=>$dv){
-				$childdepts = $dv->child_depart($dv->id);
-				$child_dept = $this->toTextArray($childdepts, !empty($req['dept_select'])?true:false); //部门下的子部门
-				
-				foreach ($childdepts as $cdk=>$cdv){
-					$emps = $cdv->employees()->get();
-					$emp = $this->toTextArray($emps); //部门下的员工
-					
-					$child_dept[$cdk]['text'] = $cdv->fname;
-					$child_dept[$cdk]['nodes'] = $emp;
-				}
-				
-				$par_dept[$dk]['text'] = $dv->fname;
-				$par_dept[$dk]['nodes'] = $child_dept;
-				
+				$queryBuilder->whereIn('fdept_id',$deptids);
 			}
-			
-			$org = $this->toTextArray($orgs, false);
-			$org[$ok]['nodes'] = $par_dept;
-		}
-			
-		
-		return json_encode($par_dept);
+		});
 	}
-
-	protected function toTextArray($datas, $selectable = true){
-		$rs = [];
-		foreach ($datas as $d){
-			$rs[]=array(
-				'text' => $d->fname,
-				'dataid' => $d->id,
-				'selectable' => $selectable
-			);
-		}
-		
-		return $rs;
-	}
-
-	public function ajaxGetEmployees(Request $request){
-	    $data = $request->all();
-	    $query = Employee::query();
-        if (!empty($data['femp_id'])){
-            $query->where('id',$data['femp_id']);
-        }
-	    if (!empty($data['fdept_id'])){
-            $query->where('fdept_id',$data['fdept_id']);
-        }
-
-        $rs = $query->get();
-
-	    return json_encode($rs);
-    }
 
     public function employeeTree(){
 		$top = Department::where('fpardept_id', 0)->first();
