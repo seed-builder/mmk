@@ -20,4 +20,10 @@ interface ISysConfigRepo
 	 * @return bool
 	 */
 	public function isMgtDataIsolate();
+
+	/**
+	 * 不受数据隔离限制的员工 id 字符串
+	 * @return string
+	 */
+	public function noDataIsolateEmployees();
 }

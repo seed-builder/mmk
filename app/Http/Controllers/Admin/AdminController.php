@@ -155,30 +155,25 @@ abstract class AdminController extends Controller
 		foreach ($conditions as $col => $val) {
 			$queryBuilder->where($col, $val);
 		}
-//        if (!empty($request['queryBuilder'])){ //自定义query
-//            $queryBuilder = $request['queryBuilder'];
-//        }else{
-//            foreach ($conditions as $col => $val) {
-//                $queryBuilder->where($col, $val);
-//            }
-//        }
+
 
 		//模糊查询
 		if (!empty($searchCols) && !empty($search['value'])) {
 			$queryBuilder->where(function ($query) use ($search, $searchCols) {
 				foreach ($searchCols as $sc) {
-					if (is_array($sc)) {//用于其他表查询 [entity,querykey,localkey]
-						foreach ($sc as $s) {
-							$entities = $s[0]->where($s[1], 'like binary', '%' . $search['value'] . '%')->get();
-							$ids = [];
-							foreach ($entities as $e) {
-								$ids[] = $e->id;
-							}
-							$query->orWhereIn($s[2], $ids);
-						}
-					} else {
-						$query->orWhere($sc, 'like binary', '%' . $search['value'] . '%');
-					}
+					$query->orWhere($sc, 'like binary', '%' . $search['value'] . '%');
+//					if (is_array($sc)) {//用于其他表查询 [entity,querykey,localkey]
+//						foreach ($sc as $s) {
+//							$entities = $s[0]->where($s[1], 'like binary', '%' . $search['value'] . '%')->get();
+//							$ids = [];
+//							foreach ($entities as $e) {
+//								$ids[] = $e->id;
+//							}
+//							$query->orWhereIn($s[2], $ids);
+//						}
+//					} else {
+//						$query->orWhere($sc, 'like binary', '%' . $search['value'] . '%');
+//					}
 				}
 			});
 
@@ -193,9 +188,8 @@ abstract class AdminController extends Controller
 		if (!empty($request->distinct)) {
 			$queryBuilder->groupBy($request->distinct)->distinct();
 		}
-
-
 		$entities = $queryBuilder->select($fields)->skip($start)->take($length)->get();
+		//var_dump($queryBuilder->toSql());
 		$result = [
 			'draw' => $draw,
 			'recordsTotal' => $total,

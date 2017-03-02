@@ -231,6 +231,7 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'Uuid' => Webpatser\Uuid\Uuid::class,
         'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
+	    'SysConfigRepo' => \App\Facades\SysConfigFacade::class,
     ],
 
 ];

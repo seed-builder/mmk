@@ -5,6 +5,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Models\ModelMap;
 use App\Services\KingdeeSyncData;
+use SysConfigRepo;
 
 class ExampleTest extends TestCase
 {
@@ -35,9 +36,11 @@ class ExampleTest extends TestCase
 //	    $zip = \App\Models\City::getPostalCode('福建省','厦门市','湖里区');
 //	    var_dump($zip);
 //	    $this->assertNotNull($zip);
-	    $employee = \App\Models\Busi\Employee::find(215551);
-	    $subs = $employee->getSubordinates();
-	    var_dump($subs);
-	    $this->assertNotNull($subs);
+//	    $employee = \App\Models\Busi\Employee::find(215551);
+//	    $subs = $employee->getSubordinates();
+//	    var_dump($subs);
+//	    $this->assertNotNull($subs);
+	     $isolate = SysConfigRepo::isMgtDataIsolate();
+	     $this->assertTrue($isolate);
     }
 }
