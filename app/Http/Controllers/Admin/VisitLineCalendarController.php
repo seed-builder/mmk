@@ -25,13 +25,15 @@ class VisitLineCalendarController extends AdminController
 	{
 		return view('admin.visit_line_calendar.index');
 	}
-	
+
 	/**
 	 * @param Request $request
 	 * @param array $searchCols
+	 * @param array $with
+	 * @param null $conditionCall
 	 * @return \Illuminate\Http\JsonResponse
 	 */
-	public function pagination(Request $request, $searchCols = [], $with = []){
+	public function pagination(Request $request, $searchCols = [], $with = [], $conditionCall = null){
 		$searchCols = ['fline_id', 'femp_id'];
 
         $data = $request->all();

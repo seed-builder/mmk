@@ -66,9 +66,10 @@ class DisplayPolicyController extends AdminController
 	 * @param  Request $request
 	 * @param  array $searchCols
 	 * @param array $with
+	 * @param null $conditionCall
 	 * @return \Illuminate\Http\JsonResponse
 	 */
-	public function pagination(Request $request, $searchCols = [],$with=[]){
+	public function pagination(Request $request, $searchCols = [], $with=[], $conditionCall = null){
 		$searchCols = ["fbill_no","fexp_type","fsketch"];
         $with=['department'];
         $data = $request->all();

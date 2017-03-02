@@ -25,9 +25,11 @@ class AttendanceStatisticController extends AdminController
 	/**
 	 * @param Request $request
 	 * @param array $searchCols
+	 * @param array $with
+	 * @param null $conditionCall
 	 * @return \Illuminate\Http\JsonResponse
 	 */
-	public function pagination(Request $request, $searchCols = [], $with = []){
+	public function pagination(Request $request, $searchCols = [], $with = [], $conditionCall = null){
 		$emp = Employee::query();
 		$searchCols = ['femp_id','fday',[[$emp,'fname','femp_id']]];
 		return parent::pagination($request, $searchCols);

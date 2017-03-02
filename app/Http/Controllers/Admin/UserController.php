@@ -61,11 +61,13 @@ class UserController extends AdminController
 	}
 
 	/**
-	* @param  Request $request
-	* @param  array $searchCols
-	* @return  \Illuminate\Http\JsonResponse
-	*/
-	public function pagination(Request $request, $searchCols = [], $with = []){
+	 * @param  Request $request
+	 * @param  array $searchCols
+	 * @param array $with
+	 * @param null $conditionCall
+	 * @return \Illuminate\Http\JsonResponse
+	 */
+	public function pagination(Request $request, $searchCols = [], $with = [], $conditionCall = null){
 		$searchCols = ["email","name","password","remember_token"];
 		return parent::pagination($request, $searchCols);
 	}

@@ -23,13 +23,15 @@ class VisitStoreCalendarController extends AdminController
 	{
 		return view('admin.visit_store_calendar.index');
 	}
-	
+
 	/**
 	 * @param Request $request
 	 * @param array $searchCols
+	 * @param array $with
+	 * @param null $conditionCall
 	 * @return \Illuminate\Http\JsonResponse
 	 */
-	public function pagination(Request $request, $searchCols = [], $with = []){
+	public function pagination(Request $request, $searchCols = [], $with = [], $conditionCall = null){
 		$searchCols = ['fdate', 'forg_id','femp_id','fstore_id','fstatus','fline_calendar_id'];
 
         $data = $request->all();
