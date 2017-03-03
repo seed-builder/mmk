@@ -30,6 +30,7 @@ class CreateTableExpDisplayPolicyStore extends Migration
 	        $table->integer('fcheck_status')->default(0)->comment('验证状态');
 	        $table->integer('fstatus')->default(0)->comment('签约状态');
 	        $table->timestamp('fdate')->nullable()->comment('签约日期');
+	        $table->string('fphotos')->nullable()->comment('图片id 集合， 逗号隔开');
 
 	        $table->integer('fcreator_id')->default(0)->comment('创建人');
 	        $table->timestamp('fcreate_date')->nullable()->comment('创建时间');

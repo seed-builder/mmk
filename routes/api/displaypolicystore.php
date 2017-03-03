@@ -72,6 +72,7 @@ Route::group(['prefix' => 'display-policy-store', 'middleware' => 'api.sign'], f
     *          @SWG\Parameter(name="fstart_date", description="门店方案执行开始日期", required=true,type="string", paramType="form", defaultValue="" ),
     *          @SWG\Parameter(name="fstatus", description="签约状态", required=false,type="integer", paramType="form", defaultValue="0" ),
     *          @SWG\Parameter(name="fstore_id", description="门店id", required=false,type="integer", paramType="form", defaultValue="0" ),
+    *          @SWG\Parameter(name="fphotos", description="图片id 集合， 逗号隔开", required=false,type="string", paramType="form", defaultValue="" ),
     *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
     *      )
     *  )
@@ -109,7 +110,7 @@ Route::group(['prefix' => 'display-policy-store', 'middleware' => 'api.sign'], f
     *          @SWG\Parameter(name="fstart_date", description="门店方案执行开始日期", required=false,type="string", paramType="form", defaultValue="" ),
     *          @SWG\Parameter(name="fstatus", description="签约状态", required=false,type="integer", paramType="form", defaultValue="0" ),
     *          @SWG\Parameter(name="fstore_id", description="门店id", required=false,type="integer", paramType="form", defaultValue="0" ),
-    *          @SWG\Parameter(name="id", description="", required=false,type="integer", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="fphotos", description="图片id 集合， 逗号隔开", required=false,type="string", paramType="form", defaultValue="" ),
     *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="" ),
     *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
     *      )
