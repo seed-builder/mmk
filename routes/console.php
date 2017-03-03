@@ -23,8 +23,8 @@ Artisan::command('inspire', function () {
 Artisan::command('test', function () {
 	$this->comment('begin ...');
 	$db = new DbHelper();
-	$columns = $db->getColumns('exp_display_policy_log');
-	$builder = new CodeBuilder('DisplayPolicyLog', 'exp_display_policy_log', $columns);
+	$columns = $db->getColumns('st_stocks');
+	$builder = new CodeBuilder('Stock', 'st_stocks', $columns);
 	$builder->createFiles();
 	$this->comment('end ...');
 })->describe('philo blade test');
