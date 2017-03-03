@@ -26,7 +26,7 @@
             <div class="col-md-3" >
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">组织架构信息</h3>
+                        <h3 class="box-title">部门架构信息</h3>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
@@ -48,10 +48,9 @@
                                 <th>顺序</th>
                                 <th>姓名</th>
                                 <th>工号</th>
-                                <th>所属组织</th>
                                 <th>所属部门</th>
                                 <th>职位</th>
-                                <th>个人手机号</th>
+                                <th>手机号</th>
                                 <th>邮箱</th>
                                 <th>设备</th>
                                 <th>设备号</th>
@@ -78,8 +77,10 @@
         $(function () {
 
             var orgs = {!! json_encode($orgs) !!}
+            var depts = {!! json_encode($deptOptions) !!}
+            var postions = {!! json_encode($positOptions) !!}
             seajs.use('app-employee', function (employee) {
-            	employee.index($, 'moduleTable','tree', orgs);
+            	employee.index($, 'moduleTable','tree', orgs, depts, postions);
             });
             
         });

@@ -265,4 +265,32 @@ abstract class AdminController extends Controller
 		}
 		return $data;
 	}
+
+	/**
+	 *
+	 * @param $entity
+	 * @param $props
+	 * @param $options
+	 * @param string $prefix
+	 */
+	public function toSelectOption($entity, $props, &$options, $prefix = '|--'){
+		//$options = [];
+		if(!empty($entity)) {
+			$data= [];
+			foreach ($props as $k => $val) {
+				if($k == 'label'){
+					$data[$k] = $prefix . ' ' .$entity->{$val};
+				}else{
+					$data[$k] = $entity->{$val};
+				}
+			}
+			$options[] = $data;
+			if(!empty($entity->children)){
+				foreach ($entity->children as $child){
+					$this->toSelectOption($child, $props, $options, $prefix . '-----|--');
+				}
+			}
+		}
+		//return $options;
+	}
 }

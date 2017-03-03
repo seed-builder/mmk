@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Busi\Position;
 use App\Repositories\ISysConfigRepo;
 use App\Services\DataSync\DefaultFilter;
 use Illuminate\Http\Request;
@@ -24,14 +25,28 @@ class EmployeeController extends AdminController
 		return new Employee($attributes);
 	}
 
+	/**
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+	 */
 	public function index()
 	{
 		$all = Organization::all();
 		$orgs = $all->map(function ($item){
 			return ['label' => $item->fname, 'value' => $item->id];
 		});
-		
-		return view('admin.employee.index',compact('orgs'));
+		//department options
+		$topDepts = Department::where('fpardept_id', 0)->get();
+		$deptOptions = [];
+		foreach ($topDepts as $dept){
+			$this->toSelectOption($dept, ['label' => 'fname', 'value' => 'id'], $deptOptions);
+		}
+		//position options
+		$topPositions = Position::where('fparpost_id',0)->get();
+		$positOptions = [];
+		foreach ($topPositions as $position){
+			$this->toSelectOption($position, ['label' => 'fname', 'value' => 'id'], $positOptions);
+		}
+		return view('admin.employee.index',compact('orgs','deptOptions', 'positOptions'));
 	}
 
 //	/**
@@ -164,7 +179,12 @@ class EmployeeController extends AdminController
 					}
 				}
 			}
+		}else{
+			$queryBuilder->leftJoin('bd_positions', 'bd_employees.fpost_id', '=', 'bd_positions.id');
 		}
+		$queryBuilder->leftJoin('bd_departments', 'bd_employees.fdept_id', '=', 'bd_departments.id');
+		$fields[] = 'bd_positions.fname as position_name';
+		$fields[] = 'bd_departments.fname as dept_name';
 
 		foreach ($conditions as $col => $val) {
 			$queryBuilder->where($col, $val);

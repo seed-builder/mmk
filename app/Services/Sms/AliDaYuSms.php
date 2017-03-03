@@ -33,7 +33,7 @@ class AliDaYuSms implements ISmsSvr
 	 */
 	public function verify($phone){
 		$code = $this->verifyCode(6);
-		$resp = $this->send('SMS_41630103',['code'=> $code], [$phone]);
+		$resp = $this->send('SMS_52265167',['code'=> $code], [$phone]);
 		$cacheKey = static::CACHE_PREFIX . $phone;
 		$expiresAt = Carbon::now()->addMinutes(15);
 		Cache::put($cacheKey, $code, $expiresAt);

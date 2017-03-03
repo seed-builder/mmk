@@ -54,10 +54,22 @@
                 <div class="box box-primary">
                     <div class="box-header">
                         <h3 class="box-title">职位详情</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
                     </div>
-                    <!-- /.box-header -->
                     <div class="box-body">
-                        <form class="form-horizontal" id="positionForm" action="{{route('position.store')}}">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#moduleDetail" aria-controls="moduleDetail" role="tab" data-toggle="tab">职位编辑</a></li>
+                            <li role="presentation"><a href="#moduleFiles" aria-controls="moduleFiles" role="tab" data-toggle="tab">职位员工列表</a></li>
+                        </ul>
+                        <!-- Tab panes -->
+                        <div class="tab-content" style="padding-top: 10px;">
+                            <div role="tabpanel" class="tab-pane active" id="moduleDetail">
+                                <form class="form-horizontal" id="positionForm" action="{{route('position.store')}}">
                             {{ csrf_field() }}
                             <input type="hidden" id="id" name="id" />
                             <div class="modal-body">
@@ -110,7 +122,26 @@
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-primary" >保存</button>
                             </div>
-                        </form>
+                                </form>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="moduleFiles">
+                                <table id="moduleTable" class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>顺序</th>
+                                        <th>姓名</th>
+                                        <th>工号</th>
+                                        <th>所属部门</th>
+                                        <th>职位</th>
+                                        <th>手机号</th>
+                                        <th>邮箱</th>
+                                        <th>设备</th>
+                                        <th>设备号</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                     <!-- /.box-body -->
                 </div>

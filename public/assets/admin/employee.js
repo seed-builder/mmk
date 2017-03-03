@@ -5,7 +5,7 @@ define(function(require, exports, module) {
     
     var zhCN = require('datatableZh');
     var editorCN = require('i18n');
-    exports.index = function ($, tableId,treeId, orgs) {
+    exports.index = function ($, tableId,treeId, orgs, depts, postions) {
 
         //组织结构初始化
         var getTreeData = function () {
@@ -58,12 +58,9 @@ define(function(require, exports, module) {
                 {'label': '电话', 'name': 'fphone',},
                 {'label': '地址', 'name': 'faddress',},
                 {'label': '邮箱', 'name': 'femail',},
-                {
-                	'label': '组织', 
-                	'name': 'forg_id',
-                	'type': 'select',
-                    'options': orgs
-                },
+                { 'label': '组织', 'name': 'forg_id', 'type': 'select', 'options': orgs},
+                { 'label': '部门', 'name': 'fdept_id', 'type': 'select', 'options': depts},
+                { 'label': '职位', 'name': 'fpost_id', 'type': 'select', 'options': postions},
                 {'label': '设备', 'name': 'device',},
                 {'label': '设备号', 'name': 'device_sn',},
             ]
@@ -81,7 +78,9 @@ define(function(require, exports, module) {
                 url : '/admin/employee/pagination',
                 data : function (data) {
                     var selectedNode = $('#'+treeId).treeview('getSelected');
-                    data['nodeid'] = selectedNode.length>0?selectedNode[0]['dataid']:'';
+                    if(selectedNode) {
+                        data['nodeid'] = selectedNode.length > 0 ? selectedNode[0]['dataid'] : '';
+                    }
                 }
             },
             columns: [
@@ -89,30 +88,15 @@ define(function(require, exports, module) {
                 {"data": "fname"},
                 {"data": "fnumber"},
                 {
-                	"data": 'forg_id',
-                    render: function ( data, type, full ) {
-                    	if(full.organization!=null)
-                    		return full.organization.fname
-                    	else
-                    		return "";
-                    }
-                },
-                {
                 	"data": 'fdept_id',
                     render: function ( data, type, full ) {
-                    	if(full.department!=null)
-                    		return full.department.fname
-                    	else
-                    		return "";
+                    		return full.dept_name;
                     }
                 },
                 {
                 	"data": 'fpost_id',
                     render: function ( data, type, full ) {
-                    	if(full.position!=null)
-                    		return full.position.fname
-                    	else
-                    		return "";
+                    	 return full.position_name;
                     }
                 },
                 {"data": "fphone"},
@@ -123,15 +107,10 @@ define(function(require, exports, module) {
             ],
             "columnDefs": [
                 {
-                    "targets": [ 8 ],
+                    "targets": [ 7,8 ],
                     "visible": false,
                     "searchable": false
                 },
-                {
-                    "targets": [ 9 ],
-                    "visible": false,
-                    "searchable": false
-                }
             ],
             buttons: [
                 // { text: '新增', action: function () { }  },
@@ -142,7 +121,7 @@ define(function(require, exports, module) {
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
-                //{extend: 'colvis', text: '列显示'}
+                {extend: 'colvis', text: '列显示'}
             ]
         });
         
