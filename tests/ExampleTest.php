@@ -5,7 +5,6 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Models\ModelMap;
 use App\Services\KingdeeSyncData;
-use SysConfigRepo;
 
 class ExampleTest extends TestCase
 {
@@ -40,7 +39,9 @@ class ExampleTest extends TestCase
 //	    $subs = $employee->getSubordinates();
 //	    var_dump($subs);
 //	    $this->assertNotNull($subs);
-	     $isolate = SysConfigRepo::isMgtDataIsolate();
-	     $this->assertTrue($isolate);
+		$svr = new \App\Services\Sms\AliDaYuSms();
+		$resp = $svr->verify('13860453820');
+		var_dump($resp);
+	    $this->assertNotNull($resp);
     }
 }

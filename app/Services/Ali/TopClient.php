@@ -1,6 +1,8 @@
 <?php
 namespace App\Services\Ali;
 
+require("TopSdk.php");
+
 class TopClient
 {
 	public $appkey;
