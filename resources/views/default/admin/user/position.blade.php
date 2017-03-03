@@ -37,9 +37,9 @@
                                 <tbody>
                                 @forelse($positions as $position)
                                     <tr onclick="cbsingle(this)">
-                                        <td><input class="cb" type="checkbox" name="positions[]" value="{{$position->id}}" {{$user->hasPosition($position->id) ? 'checked':''}}/></td>
-                                        <td>{{$position->fname}}</td>
-                                        <td>{{$position->fnumber}}</td>
+                                        <td><input class="cb" type="checkbox" name="positions[]" value="{{$position['value']}}" {{$user->hasPosition($position['value']) ? 'checked':''}}/></td>
+                                        <td>{{$position['label']}}</td>
+                                        <td>{{$position['fnumber']}}</td>
 
                                     </tr>
                                 @empty

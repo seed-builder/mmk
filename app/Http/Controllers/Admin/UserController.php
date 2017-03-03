@@ -83,7 +83,14 @@ class UserController extends AdminController
 	}
 
 	public function setPosition(Request $request, $id){
-		$positions = Position::all();
+		//$positions = Position::all();
+		//position options
+		$topPositions = Position::where('fparpost_id',0)->get();
+		$positions = [];
+		foreach ($topPositions as $position){
+			$this->toSelectOption($position, ['label' => 'fname', 'value' => 'id', 'fnumber' => 'fnumber'], $positions);
+		}
+
 		$user = User::find($id);
 		if($request->isMethod('post')){
 			$positionIds = $request->input('positions',[]);
