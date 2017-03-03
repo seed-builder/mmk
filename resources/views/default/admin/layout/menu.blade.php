@@ -50,6 +50,7 @@ $user = Auth::user();
                     <li><a href="{{url('admin/channel/index')}}"><i class="fa fa-circle-o"></i></i> 渠道信息</a></li>
                     @endif
                     <li><a href="{{url('admin/position')}}"><i class="fa fa-circle-o"></i></i> 职位信息</a></li>
+                    <li><a href="{{url('admin/material')}}"><i class="fa fa-circle-o"></i></i> 商品信息</a></li>
 
 <!--                     <li><a href="#"><i class="fa fa-circle-o"></i></i> 区域经营品项</a></li> -->
 <!--                     <li><a href="#"><i class="fa fa-circle-o"></i></i> 主竞品</a></li> -->
