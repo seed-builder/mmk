@@ -67,7 +67,7 @@ class DisplayPolicyStoreController extends AdminController
 	 */
 	public function pagination(Request $request, $searchCols = [], $with=[], $conditionCall = null){
 		$searchCols = ["fbill_no","fdocument_status","fsketch"];
-        $with=['department'];
+        $with=['department','employee','policy'];
         $data = $request->all();
         if(!empty($data['nodeid'])){//组织树点击查询
             $query = DisplayPolicyStore::query();
