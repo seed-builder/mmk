@@ -13,8 +13,8 @@ Route::group(['prefix' => 'stock', 'middleware' => 'api.sign'], function () {
     *     @SWG\Operation(
     *      method="GET",
     *      nickname="stock-list",
-    *      summary="page list",
-    *      notes="page list",
+    *      summary="库存列表",
+    *      notes="库存列表",
     *      type="array",
     *     items="$ref:Stock",
     *      @SWG\Parameters(
@@ -35,8 +35,8 @@ Route::group(['prefix' => 'stock', 'middleware' => 'api.sign'], function () {
     *     @SWG\Operation(
     *      method="GET",
     *      nickname="stock-show",
-    *      summary="信息详情",
-    *      notes="信息详情",
+    *      summary="库存信息详情",
+    *      notes="库存信息详情",
     *      type="Attendance",
     *      @SWG\Parameters(
     *          @SWG\Parameter(name="id", description="id", required=true, type="integer", paramType="path", defaultValue="1"),
@@ -53,8 +53,8 @@ Route::group(['prefix' => 'stock', 'middleware' => 'api.sign'], function () {
     *     @SWG\Operation(
     *      method="POST",
     *      nickname="stock-store",
-    *      summary="新增",
-    *      notes="新增",
+    *      summary="新增库存",
+    *      notes="新增库存",
     *      type="",
     *      @SWG\Parameters(
     *          @SWG\Parameter(name="fbase_eqty", description="库存基本单位数量（瓶）", required=false,type="number", paramType="form", defaultValue="0.00" ),
@@ -84,8 +84,8 @@ Route::group(['prefix' => 'stock', 'middleware' => 'api.sign'], function () {
     *     @SWG\Operation(
     *      method="PUT",
     *      nickname="stock-update",
-    *      summary="更新",
-    *      notes="更新",
+    *      summary="更新库存",
+    *      notes="更新库存",
     *      type="",
     *      @SWG\Parameters(
     *          @SWG\Parameter(name="fbase_eqty", description="库存基本单位数量（瓶）", required=false,type="number", paramType="form", defaultValue="0.00" ),
@@ -116,8 +116,8 @@ Route::group(['prefix' => 'stock', 'middleware' => 'api.sign'], function () {
     *     @SWG\Operation(
     *      method="DELETE",
     *      nickname="stock-delete",
-    *      summary="删除",
-    *      notes="删除",
+    *      summary="删除库存",
+    *      notes="删除库存",
     *      type="",
     *      @SWG\Parameters(
     *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="1" ),
