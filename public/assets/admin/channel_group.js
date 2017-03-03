@@ -4,6 +4,7 @@
 define(function(require, exports, module) {
 
     var zhCN = require('datatableZh');
+    var editorCN = require('i18n');
 
     exports.index = function ($, tableId) {
         var editor = new $.fn.dataTable.Editor({
@@ -26,6 +27,7 @@ define(function(require, exports, module) {
             },
             table: "#" + tableId,
             idSrc: 'id',
+            i18n: editorCN,
             fields: [
             { 'label':  'fcreate_date', 'name': 'fcreate_date', },
                 { 'label':  'fcreator_id', 'name': 'fcreator_id', },

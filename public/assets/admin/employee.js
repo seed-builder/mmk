@@ -103,21 +103,25 @@ define(function(require, exports, module) {
                 {"data": "femail"},
                 {"data": "device"},
                 {"data": "device_sn"},
+                {"data": "fdocument_status"},
 
             ],
             "columnDefs": [
                 {
-                    "targets": [ 7,8 ],
+                    "targets": [ 7,8,9 ],
                     "visible": false,
                     "searchable": false
                 },
             ],
+            createdRow: function( row, data, dataIndex ) {
+
+            },
             buttons: [
                 // { text: '新增', action: function () { }  },
                 // { text: '编辑', className: 'edit', enabled: false },
                 // { text: '删除', className: 'delete', enabled: false },
                 {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: editor},
-                {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: editor},
+                {extend: "edit",className: 'edit', text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: editor},
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
@@ -125,7 +129,16 @@ define(function(require, exports, module) {
             ]
         });
         
-        // table.on( 'select', checkBtn).on( 'deselect', checkBtn);
+        table.on( 'select', rowSelect).on( 'deselect', rowSelect);
+        function rowSelect() {
+            var count = table.rows( { selected: true } ).count();
+            var row = table.rows('.selected').data()[0];
+            if (count>0&&row.fdocument_status=="A"){
+                table.buttons( ['.edit'] ).enable(true);
+            }else {
+                table.buttons( ['.edit'] ).enable(false);
+            }
+        }
         //
         // function checkBtn(e, dt, type, indexes) {
         //     var count = table.rows( { selected: true } ).count();

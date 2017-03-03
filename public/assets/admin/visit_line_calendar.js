@@ -4,6 +4,7 @@
 define(function(require, exports, module) {
     
     var zhCN = require('datatableZh');
+    var editorCN = require('i18n');
 
     exports.index = function ($, tableId,storeTableId,treeId) {
 
@@ -56,6 +57,7 @@ define(function(require, exports, module) {
             },
             table: "#" + tableId,
             idSrc: 'id',
+            i18n: editorCN,
 //            fields: [
 //                {'label': '线路名称', 'name': 'fname',},
 //                {'label': '线路代码', 'name': 'fnumber',},

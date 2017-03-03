@@ -272,6 +272,7 @@ define(function(require, exports, module) {
             },
             table: "#" + childTableId,
             idSrc: 'id',
+            i18n: editorCN,
             fields: [
                 {'label': '门店全称', 'name': 'ffullname'},
                 {'label': '门店简称', 'name': 'fshortname'},

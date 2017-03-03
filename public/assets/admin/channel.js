@@ -4,6 +4,7 @@
 define(function (require, exports, module) {
 
     var zhCN = require('datatableZh');
+    var editorCN = require('i18n');
 
     exports.index = function ($, tableId, groupTableId, treeId, groups) {
         var editor = new $.fn.dataTable.Editor({
@@ -25,6 +26,7 @@ define(function (require, exports, module) {
                 }
             },
             table: "#" + tableId,
+            i18n: editorCN,
             idSrc: 'id',
             fields: [
                 {'label': '渠道代码', 'name': 'fnumber',},
@@ -94,6 +96,7 @@ define(function (require, exports, module) {
                 }
             },
             table: "#" + groupTableId,
+            i18n: editorCN,
             idSrc: 'id',
             fields: [
                 {'label': '渠道代码', 'name': 'fnumber',},

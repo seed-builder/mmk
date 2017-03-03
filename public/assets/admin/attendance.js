@@ -4,6 +4,7 @@
 define(function(require, exports, module) {
     
     var zhCN = require('datatableZh');
+    var editorCN = require('i18n');
 
     exports.index = function ($, tableId,treeId,mapId) {
 
@@ -27,6 +28,7 @@ define(function(require, exports, module) {
                 }
             },
             table: "#" + tableId,
+            i18n: editorCN,
             idSrc: 'id',
 //            fields: [
 //                {'label': 'name', 'name': 'name',},
