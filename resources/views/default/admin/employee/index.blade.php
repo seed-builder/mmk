@@ -54,6 +54,7 @@
                                 <th>邮箱</th>
                                 <th>设备</th>
                                 <th>设备号</th>
+                                <th>审核状态</th>
                             </tr>
                             </thead>
                         </table>

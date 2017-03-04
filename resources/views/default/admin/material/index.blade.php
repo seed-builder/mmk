@@ -36,6 +36,7 @@
                                 <th>商品名称</th>
                                 <th>商品单位</th>
                                 <th>创建时间</th>
+                                <th>审核状态</th>
                             </tr>
                             </thead>
                         </table>

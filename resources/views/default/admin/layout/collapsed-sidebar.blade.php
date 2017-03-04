@@ -268,6 +268,35 @@
     $('body').on('hidden.bs.modal', '.modal:not(.modal-cached)', function () {
         $(this).removeData('bs.modal');
     });
+
+
+    /*
+     * 根据审核状态判断是否可编辑
+     */
+    function checkEditEnabble(table,buttonClass) {
+        var count = table.rows( { selected: true } ).count();
+        var row = table.rows('.selected').data()[0];
+        if (count>0&&row.fdocument_status=="A"){
+            table.buttons( [buttonClass] ).enable(true);
+        }else {
+            table.buttons( [buttonClass] ).enable(false);
+        }
+    }
+    
+    /*
+     * 获取审核状态
+     */
+    function document_status(status) {
+        if (status=="A"){
+            return '未审核';
+        }else if(status=="B"){
+            return '审核中';
+        }else if(status=="C"){
+            return '已审核';
+        }else {
+            return '状态异常';
+        }
+    }
 </script>
 @yield('js')
 @include('admin.layout.toastr-message')

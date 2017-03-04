@@ -35,7 +35,7 @@ class ChannelGroup extends BaseModel
 		'children_count' => 'integer',
 		'channel_count' => 'integer',
 	];
-	protected $visible = ['id', 'fnumber', 'fname', 'fparent_id', 'fsort', 'children_count', 'channel_count'];
+	protected $visible = ['id', 'fnumber', 'fname', 'fparent_id', 'fsort','fdocument_status', 'children_count', 'channel_count'];
 	protected $appends = ['children_count', 'channel_count'];
 	
 

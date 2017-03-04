@@ -40,6 +40,7 @@
                                 <th>部门全称</th>
                                 <th>所属组织</th>
                                 <th>创建时间</th>
+                                <th>审核状态</th>
                             </tr>
                             </thead>
                         </table>

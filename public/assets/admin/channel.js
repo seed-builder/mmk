@@ -63,13 +63,19 @@ define(function (require, exports, module) {
                     }
                 },
                 {'data': 'fremark'},
+                {
+                    "data": "fdocument_status",
+                    render: function ( data, type, full ) {
+                        return document_status(data);
+                    }
+                },
             ],
             buttons: [
                 // { text: '新增', action: function () { }  },
                 // { text: '编辑', className: 'edit', enabled: false },
                 // { text: '删除', className: 'delete', enabled: false },
                 {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: editor},
-                {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: editor},
+                {extend: "edit",className: 'tableEdit', text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: editor},
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
@@ -133,13 +139,19 @@ define(function (require, exports, module) {
                             return "无";
                     }
                 },
+                {
+                    "data": "fdocument_status",
+                    render: function ( data, type, full ) {
+                        return document_status(data);
+                    }
+                },
             ],
             buttons: [
                 // { text: '新增', action: function () { }  },
                 // { text: '编辑', className: 'edit', enabled: false },
                 // { text: '删除', className: 'delete', enabled: false },
                 {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: groupEditor},
-                {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: groupEditor},
+                {extend: "edit",className: 'groupTableEdit', text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: groupEditor},
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: groupEditor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
@@ -188,6 +200,17 @@ define(function (require, exports, module) {
                 .draw();
         }
 
+        table.on( 'select', tableRowSelect).on( 'deselect', tableRowSelect);
+
+        groupTable.on( 'select', groupTableRowSelect).on( 'deselect', groupTableRowSelect);
+
+        function tableRowSelect() {
+            checkEditEnabble(table,'.tableEdit');
+        }
+
+        function groupTableRowSelect() {
+            checkEditEnabble(groupTable,'.groupTableEdit');
+        }
 
         getTreeData();
 

@@ -48,6 +48,7 @@
                                 <th>渠道代码</th>
                                 <th>渠道名称</th>
                                 <th>上级渠道</th>
+                                <th>审核状态</th>
                             </tr>
                             </thead>
                         </table>
@@ -70,6 +71,7 @@
                                 <th>渠道名称</th>
                                 <th>所属渠道组</th>
                                 <th>备注</th>
+                                <th>审核状态</th>
                             </tr>
                             </thead>
                         </table>

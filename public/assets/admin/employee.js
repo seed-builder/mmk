@@ -103,12 +103,17 @@ define(function(require, exports, module) {
                 {"data": "femail"},
                 {"data": "device"},
                 {"data": "device_sn"},
-                {"data": "fdocument_status"},
+                {
+                    "data": "fdocument_status",
+                    render: function ( data, type, full ) {
+                        return document_status(data);
+                    }
+                },
 
             ],
             "columnDefs": [
                 {
-                    "targets": [ 7,8,9 ],
+                    "targets": [ 7,8 ],
                     "visible": false,
                     "searchable": false
                 },
@@ -130,14 +135,10 @@ define(function(require, exports, module) {
         });
         
         table.on( 'select', rowSelect).on( 'deselect', rowSelect);
+
+
         function rowSelect() {
-            var count = table.rows( { selected: true } ).count();
-            var row = table.rows('.selected').data()[0];
-            if (count>0&&row.fdocument_status=="A"){
-                table.buttons( ['.edit'] ).enable(true);
-            }else {
-                table.buttons( ['.edit'] ).enable(false);
-            }
+            checkEditEnabble(table,'.edit');
         }
         //
         // function checkBtn(e, dt, type, indexes) {
