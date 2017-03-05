@@ -130,6 +130,8 @@ define(function(require, exports, module) {
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
+                { text: '审核<i class="fa fa-fw fa-paperclip"></i>',className: 'check', enabled: false },
+                { text: '反审核<i class="fa fa-fw fa-unlink"></i>',className: 'uncheck', enabled: false },
                 {extend: 'colvis', text: '列显示'}
             ]
         });
@@ -138,8 +140,17 @@ define(function(require, exports, module) {
 
 
         function rowSelect() {
-            checkEditEnabble(table,'.edit');
+            checkEditEnabble(table,['.edit','.check'],['.uncheck']);
         }
+
+        //审核
+        $(".check").on('click',function () {
+            dataCheck(table,'/admin/employee/check');
+        })
+
+        $(".uncheck").on('click',function () {
+            dataCheck(table,'/admin/employee/uncheck');
+        })
         //
         // function checkBtn(e, dt, type, indexes) {
         //     var count = table.rows( { selected: true } ).count();

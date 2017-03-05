@@ -84,14 +84,25 @@ define(function(require, exports, module) {
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
+                { text: '审核<i class="fa fa-fw fa-paperclip"></i>',className: 'check', enabled: false },
+                { text: '反审核<i class="fa fa-fw fa-unlink"></i>',className: 'uncheck', enabled: false },
                 //{extend: 'colvis', text: '列显示'}
             ]
         });
 
         function rowSelect() {
-            checkEditEnabble(table,'.edit');
+            checkEditEnabble(table,['.edit','.check'],['.uncheck']);
         }
-        // table.on( 'select', checkBtn).on( 'deselect', checkBtn);
+
+        //审核
+        $(".check").on('click',function () {
+            dataCheck(table,'/admin/department/check');
+        })
+
+        $(".uncheck").on('click',function () {
+            dataCheck(table,'/admin/department/uncheck');
+        })
+        table.on( 'select', rowSelect).on( 'deselect', rowSelect);
         //
         // function checkBtn(e, dt, type, indexes) {
         //     var count = table.rows( { selected: true } ).count();

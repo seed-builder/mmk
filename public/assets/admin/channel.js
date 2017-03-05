@@ -79,6 +79,8 @@ define(function (require, exports, module) {
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
+                { text: '审核<i class="fa fa-fw fa-paperclip"></i>',className: 'tableCheck', enabled: false },
+                { text: '反审核<i class="fa fa-fw fa-unlink"></i>',className: 'tableUncheck', enabled: false },
                 //{extend: 'colvis', text: '列显示'}
             ]
         });
@@ -155,6 +157,8 @@ define(function (require, exports, module) {
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: groupEditor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
+                { text: '审核<i class="fa fa-fw fa-paperclip"></i>',className: 'groupTableCheck', enabled: false },
+                { text: '反审核<i class="fa fa-fw fa-unlink"></i>',className: 'groupTableUncheck', enabled: false },
                 //{extend: 'colvis', text: '列显示'}
             ],
             columnDefs: [
@@ -205,12 +209,30 @@ define(function (require, exports, module) {
         groupTable.on( 'select', groupTableRowSelect).on( 'deselect', groupTableRowSelect);
 
         function tableRowSelect() {
-            checkEditEnabble(table,'.tableEdit');
+            checkEditEnabble(table,['.tableEdit','.tableCheck'],['.tableUncheck']);
         }
 
         function groupTableRowSelect() {
-            checkEditEnabble(groupTable,'.groupTableEdit');
+            checkEditEnabble(groupTable,['.groupTableEdit','.groupTableCheck'],['.groupTableUncheck']);
         }
+
+        //渠道审核
+        $(".tableCheck").on('click',function () {
+            dataCheck(table,'/admin/channel/check');
+        })
+
+        $(".tableUncheck").on('click',function () {
+            dataCheck(table,'/admin/channel/uncheck');
+        })
+
+        //渠道组审核
+        $(".groupTableCheck").on('click',function () {
+            dataCheck(groupTable,'/admin/channel-group/check');
+        })
+
+        $(".groupTableUncheck").on('click',function () {
+            dataCheck(groupTable,'/admin/channel-group/uncheck');
+        })
 
         getTreeData();
 

@@ -293,4 +293,34 @@ abstract class AdminController extends Controller
 		}
 		//return $options;
 	}
+
+	/*
+	 * 审核
+	 */
+	public function check($id){
+        $entity = $this->newEntity()->newQuery()->find($id);
+        $entity->fdocument_status="B";
+
+        $entity->save();
+
+        return response()->json([
+            'code' => 200,
+            'result' => '审核成功！'
+        ]);
+    }
+
+    /*
+     * 反审核
+     */
+    public function unCheck($id){
+        $entity = $this->newEntity()->newQuery()->find($id);
+        $entity->fdocument_status="A";
+
+        $entity->save();
+
+        return response()->json([
+            'code' => 200,
+            'result' => '反审核成功！'
+        ]);
+    }
 }

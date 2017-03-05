@@ -273,14 +273,19 @@
     /*
      * 根据审核状态判断是否可编辑
      */
-    function checkEditEnabble(table,buttonClass) {
+    function checkEditEnabble(table,enableButtonClass,disableButtonClass) {
         var count = table.rows( { selected: true } ).count();
         var row = table.rows('.selected').data()[0];
-        if (count>0&&row.fdocument_status=="A"){
-            table.buttons( [buttonClass] ).enable(true);
-        }else {
-            table.buttons( [buttonClass] ).enable(false);
+        if (count>0){
+            if (row.fdocument_status=="A"){
+                table.buttons( enableButtonClass ).enable(true);
+                table.buttons( disableButtonClass ).enable(false);
+            }else {
+                table.buttons( enableButtonClass ).enable(false);
+                table.buttons( disableButtonClass ).enable(true);
+            }
         }
+
     }
     
     /*
@@ -296,6 +301,51 @@
         }else {
             return '状态异常';
         }
+    }
+
+    /*
+     * 数据审核 反审核
+     */
+    function dataCheck(table,baseurl) {
+        var row = table.rows('.selected').data()[0];
+        var url = baseurl+"/"+row.id;
+        ajaxLink(url,function () {
+            table.ajax.reload();
+        });
+    }
+
+    /*
+     * ajaxLink
+     */
+    function ajaxLink(url,callback){
+        // load the form via ajax
+        $.ajax({
+            type: 'GET',
+            data: {},
+            //async: true,
+            cache: false,
+            url: url,
+            dataType: "json",
+            timeout: 10000,
+            success: function(res)
+            {
+                layer.msg(res.result);
+                if (res.redirect_url){
+                    window.location.href = res.redirect_url;
+                }
+
+                if(callback !== undefined ){
+                    callback();
+                }
+            },
+
+            error: function(jqXHR, textStatus, errorThrown)
+            {
+                layer.msg(jqXHR.responseText);
+            },
+
+        });
+
     }
 </script>
 @yield('js')
