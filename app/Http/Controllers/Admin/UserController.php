@@ -84,22 +84,54 @@ class UserController extends AdminController
 	}
 
 	public function setPosition(Request $request, $id){
-		//$positions = Position::all();
-		//position options
-		$topPositions = Position::where('fparpost_id',0)->get();
-		$positions = [];
-		foreach ($topPositions as $position){
-			$this->toSelectOption($position, ['label' => 'fname', 'value' => 'id', 'fnumber' => 'fnumber'], $positions);
-		}
-
 		$user = User::find($id);
+		//var_dump($user->positions);
 		if($request->isMethod('post')){
 			$positionIds = $request->input('positions',[]);
 			$user->positions()->sync($positionIds);
 			$this->flash_success('设置成功!');
 		}
+
+		$tops = Position::where('fparpost_id',0)->get();
+		$positions = [];
+		foreach ($tops as $top) {
+			$positions[] = $this->toBootstrapTreeViewData2($top, ['text' => 'fname', 'dataid' => 'id'], false, $user);
+		}
 		return view('admin.user.position', ['positions' => $positions, 'user' => $user]);
 	}
 
+	/**
+	 * 将实体数据转换成树形（bootstrap treeview）数据
+	 * @param $entity
+	 * @param $props 属性映射集合 ['text' => 'name', 'data-id' => 'id']
+	 * @param bool $expanded
+	 * @param null $user
+	 * @return array
+	 */
+	public function toBootstrapTreeViewData2($entity, $props, $expanded = true, &$user = null){
+		$data = ['item' => $entity];
+		if(!empty($entity)){
+			foreach ($props as $k => $val){
+				$data[$k] = $entity->{$val};
+				$data['state']['expanded'] = $expanded;
+				//$data['state']['checked'] = true;
+			}
+			if($user->hasPosition($entity->id)){
+				//var_dump($entity);
+				$data['state']['checked'] = true;
+			}else{
+				$data['state']['checked'] = false;
+			}
+			if(!empty($entity->children)){
+				$nodes = [];
+				foreach ($entity->children as $child){
+					$nodes[] = $this->toBootstrapTreeViewData2($child, $props, $expanded, $user);
+				}
+				if(!empty($nodes))
+					$data['nodes'] = $nodes;
+			}
+		}
+		return $data;
+	}
 
 }

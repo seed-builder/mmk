@@ -109,12 +109,12 @@ class PositionController extends AdminController
 
     public function tree(){
 		$tops = Position::where('fparpost_id',0)->get();
-		$tree = ['text' => '公司职位', 'dataid' => 0, 'state' => ['expanded' => false], 'nodes' => [], 'selectable' => false,];
+		$tree = [];
 		foreach ($tops as $top) {
-			$tree['nodes'][] = $this->toBootstrapTreeViewData($top, ['text' => 'fname', 'dataid' => 'id'], false);
+			$tree[] = $this->toBootstrapTreeViewData($top, ['text' => 'fname', 'dataid' => 'id'], false);
 		}
 	    //$tree['state'] = ['expanded' => true];
-	    return response()->json([$tree]);
+	    return response()->json($tree);
     }
 
 	/**
