@@ -80,13 +80,6 @@ define(function(require, exports, module) {
             });
         });
 
-        $('#btnOpen').click(function () {
-            $('#' + treeId).treeview('expandAll');
-        });
-
-        $('#btnCollapse').click(function () {
-            $('#' + treeId).treeview('collapseAll');
-        });
 
         getTreeData();
 

@@ -313,6 +313,15 @@
     /*
      * treeview
      */
+    $('#btnOpen').click(function () {
+        var tree = $(this).parents('.box').find(".treeview");
+        tree.treeview('expandAll');
+    });
+
+    $('#btnCollapse').click(function () {
+        var tree = $(this).parents('.box').find(".treeview");
+        tree.treeview('collapseAll');
+    });
 </script>
 @yield('js')
 @include('admin.layout.toastr-message')
