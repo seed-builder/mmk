@@ -20,7 +20,7 @@ define(function(require, exports, module) {
             submit: "提交",
             confirm: {
                 _: "确认删除行 %d ?",
-                1: "确认删除行 1 行?"
+                1: "确认删除所选行 ?"
             }
         },
         error: {
