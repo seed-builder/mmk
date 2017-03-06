@@ -51,7 +51,14 @@ class VisitStoreCalendarController extends AdminController
         if(!empty($data['fline_calendar_id'])){
 
         }
-		return parent::pagination($request, $searchCols);
+		return parent::pagination($request, $searchCols, $with, function ($queryBuilder){
+			$ids = $this->getCurUsersEmployeeIds();
+			//var_dump($ids);
+			if(!empty($ids))
+			{
+				$queryBuilder->whereIn('femp_id', $ids);
+			}
+		});
 	}
 
 	public function visitStoreCalendarInfo($id){

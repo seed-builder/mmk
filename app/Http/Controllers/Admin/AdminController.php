@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Validator;
+use Session;
+use App\Services\LogSvr;
 
 abstract class AdminController extends Controller
 {
@@ -168,21 +170,8 @@ abstract class AdminController extends Controller
 			$queryBuilder->where(function ($query) use ($search, $searchCols) {
 				foreach ($searchCols as $sc) {
 					$query->orWhere($sc, 'like binary', '%' . $search['value'] . '%');
-//					if (is_array($sc)) {//用于其他表查询 [entity,querykey,localkey]
-//						foreach ($sc as $s) {
-//							$entities = $s[0]->where($s[1], 'like binary', '%' . $search['value'] . '%')->get();
-//							$ids = [];
-//							foreach ($entities as $e) {
-//								$ids[] = $e->id;
-//							}
-//							$query->orWhereIn($s[2], $ids);
-//						}
-//					} else {
-//						$query->orWhere($sc, 'like binary', '%' . $search['value'] . '%');
-//					}
 				}
 			});
-
 		}
 		$filterCount = $queryBuilder->count();
 
@@ -195,7 +184,7 @@ abstract class AdminController extends Controller
 			$queryBuilder->groupBy($request->distinct)->distinct();
 		}
 		$entities = $queryBuilder->select($fields)->skip($start)->take($length)->get();
-		//var_dump($queryBuilder->toSql());
+		LogSvr::sql()->info($queryBuilder->toSql());
 		$result = [
 			'draw' => $draw,
 			'recordsTotal' => $total,
@@ -340,9 +329,14 @@ abstract class AdminController extends Controller
 			    $flags = $curUser->positions->pluck('flag')->all();
 			    if(!empty($flags)) {
 				    $empQuery->join('bd_positions', 'bd_employees.fpost_id', '=', 'bd_positions.id');
-				    foreach ($flags as $flag){
-					    $empQuery->orWhere('bd_positions.flag', 'like', $flag. '%');
-				    }
+//				    foreach ($flags as $flag){
+//					    $empQuery->orWhere('bd_positions.flag', 'like', $flag. '%');
+//				    }
+				    $empQuery->where(function ($empQuery) use ($flags){
+					    foreach ($flags as $flag){
+						    $empQuery->orWhere('bd_positions.flag', 'like', $flag. '%');
+					    }
+				    });
 			    }
 		    }
 	    }
