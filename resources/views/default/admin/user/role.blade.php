@@ -10,6 +10,7 @@
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
             <li><a href="#">用户权限管理</a></li>
+            <li><a href="/admin/user">用户管理</a></li>
             <li class="active">设置角色</li>
         </ol>
     </section>

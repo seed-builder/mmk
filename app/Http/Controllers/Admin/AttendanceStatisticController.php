@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Services\LogSvr;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Busi\AttendanceStatistic;
@@ -33,7 +34,7 @@ class AttendanceStatisticController extends AdminController
 	 * @return \Illuminate\Http\JsonResponse
 	 */
 	public function pagination(Request $request, $searchCols = [], $with = [], $conditionCall = null){
-		$searchCols = ['femp_id','fday'];
+		$searchCols = [];
 		return parent::pagination($request, $searchCols, $with, function ($queryBuilder)use($request){
 			$search = $request->input('search', []);
 			$empQuery = DB::table('bd_employees');//,[[$emp,'fname','femp_id']]
@@ -46,15 +47,18 @@ class AttendanceStatisticController extends AdminController
 					$flags = $curUser->positions->pluck('flag')->all();
 					if(!empty($flags)) {
 						$empQuery->join('bd_positions', 'bd_employees.fpost_id', '=', 'bd_positions.id');
-						foreach ($flags as $flag){
-							$empQuery->orWhere('bd_positions.flag', 'like', $flag. '%');
-						}
+						$empQuery->where(function ($empQuery) use ($flags){
+							foreach ($flags as $flag){
+								$empQuery->orWhere('bd_positions.flag', 'like', $flag. '%');
+							}
+						});
 					}
 				}
 			}
 			$entities = $empQuery->select('bd_employees.id')->get();
+			LogSvr::sql()->info($empQuery->toSql());
 		    $ids = $entities->pluck('id')->all(); //array_map(function ($item){	return $item->id;}, $entities);
-			//var_dump($ids);
+			LogSvr::sql()->info(json_encode($ids));
 			if(!empty($ids))
 			{
 				$queryBuilder->whereIn('femp_id', $ids);
