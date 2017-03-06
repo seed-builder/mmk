@@ -40,9 +40,10 @@
                     <!-- /.box-header -->
                     <div class="box-body">
                         <div id="positionTree"></div>
-                        <form method="post" action="#" >
+                        <form method="post" action="#" id="saveForm">
                             {!! csrf_field() !!}
-                            <input class="btn btn-primary" type="submit" value="保存">
+                            <input type="hidden" id="positions" name="positions" value="" />
+                            <input class="btn btn-primary" type="button" value="保存" onclick="saveData();">
                         </form>
                     </div>
                     <!-- /.box-body -->
@@ -87,6 +88,17 @@
         $('#btnCollapse').click(function () {
             $('#positionTree').treeview('collapseAll');
         });
+
+        function saveData() {
+            var nodes = $('#positionTree').treeview('getChecked');
+            console.log(nodes);
+            var ids = [];
+            for(var i = 0; i < nodes.length; i++){
+                ids[ids.length] = nodes[i]['dataid'];
+            }
+            $('#positions').val(ids);
+            $('#saveForm').submit();
+        }
 
         $(function () {
             $("#positionTree").treeview({

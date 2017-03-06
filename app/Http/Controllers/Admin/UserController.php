@@ -87,8 +87,10 @@ class UserController extends AdminController
 		$user = User::find($id);
 		//var_dump($user->positions);
 		if($request->isMethod('post')){
-			$positionIds = $request->input('positions',[]);
-			$user->positions()->sync($positionIds);
+			$positionIds = $request->input('positions');
+			$ids = explode(',', $positionIds);
+			//var_dump($positionIds);
+			$user->positions()->sync($ids);
 			$this->flash_success('设置成功!');
 		}
 
