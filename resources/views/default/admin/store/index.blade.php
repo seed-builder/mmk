@@ -74,6 +74,7 @@
                                 <th>负责业代</th>
                                 <th>flongitude</th>
                                 <th>flatitude</th>
+                                <th>是否签约</th>
                                 <th>操作</th>
                             </tr>
 

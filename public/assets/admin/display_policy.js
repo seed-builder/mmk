@@ -204,7 +204,15 @@ define(function (require, exports, module) {
                 },
                 // {'data': 'famount'},
                 // {'data': 'fsketch'},
-                {'data': 'fstore_id'},
+                {
+                    'data': 'fstore_id',
+                    render: function ( data, type, full ) {
+                        if(full.store!=null)
+                            return full.store.ffullname
+                        else
+                            return "";
+                    }
+                },
                 {'data': 'fsign_amount'},
                 {'data': 'fcheck_amount'},
                 {'data': 'fcheck_status'},

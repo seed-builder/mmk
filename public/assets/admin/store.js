@@ -77,6 +77,16 @@ define(function (require, exports, module) {
                 {"data": "flongitude"},
                 {"data": "flatitude"},
                 {
+                    "data": "fis_signed",
+                    render: function (data, type, full) {
+                        if (data==0){
+                            return '未签约';
+                        }else {
+                            return '已签约';
+                        }
+                    }
+                },
+                {
                     "data": 'id',
                     render: function (data, type, full) {
                         return '<a href="/admin/store/storeInfo/'+data+'" data-target="#storeDetail" data-toggle="modal"><i class="fa fa-fw fa-search"></i></a>';
@@ -99,10 +109,15 @@ define(function (require, exports, module) {
                     enabled: false,
                     action: function () {
                         var treeNode = $('#' + treeId).treeview('getSelected');
+                        var row = table.rows('.selected').data()[0];
+                        if (treeNode.length>0||row!=null){
+                            $("#femp_id").val(treeNode.length>0?treeNode[0].dataid:row.femp_id);
+                            $("#storeInfoForm").attr('data-action','add')
+                            $('#storeinfo').modal('show');
+                        }else {
+                            layer.msg("请先选择一个业代！")
+                        }
 
-                        $("#femp_id").val(treeNode[0].dataid);
-                        $("#storeInfoForm").attr('data-action','add')
-                        $('#storeinfo').modal('show');
                     }
                 },
                 {
@@ -358,8 +373,10 @@ define(function (require, exports, module) {
 
         //表格单行选择事件 单点地图标注
         function rowselect() {
-            var count = table.rows({selected: true}).count();
-            table.buttons(['.edit']).enable(count > 0);
+            // var count = table.rows({selected: true}).count();
+            // table.buttons(['.edit']).enable(count > 0);
+            addEnable();
+            editEnable();
 
             map.clearOverlays();
             var data = table.rows('.selected').data()[0];

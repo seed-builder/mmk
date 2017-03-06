@@ -275,6 +275,44 @@
         });
 
     }
+
+    /*
+     *  ajax submit form
+     */
+    function ajaxForm(form_id,callback){
+        // load the form via ajax
+        $.ajax({
+            type: 'POST',
+            data: $(form_id).serialize(),
+            //async: true,
+            cache: false,
+            url: $(form_id).attr('action'),
+            dataType: "json",
+            timeout: 10000,
+            success: function(res)
+            {
+                layer.msg(res.result);
+                if (res.redirect_url){
+                    window.location.href = res.redirect_url;
+                }
+
+                if(callback !== undefined ){
+                    callback();
+                }
+            },
+
+            error: function(jqXHR, textStatus, errorThrown)
+            {
+                layer.msg(jqXHR.responseText);
+            },
+
+        });
+
+    }
+
+    /*
+     * treeview
+     */
 </script>
 @yield('js')
 @include('admin.layout.toastr-message')

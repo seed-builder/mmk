@@ -70,6 +70,27 @@
                         <th>备注:</th>
                         <td>{{$store->fremark}}</td>
                     </tr>
+                    @if(count($store->displayPolicies)>0)
+                        <tr>
+                            <th>签约门店方案:</th>
+                        </tr>
+                        <table class="table table-bordered">
+                            <tbody>
+                            <tr>
+                                <th>方案名称</th>
+                                <th>签约金额</th>
+                            </tr>
+                            @foreach($store->displayPolicies as $p)
+                                <tr>
+                                    <td>{{$p->policy->fsketch}}</td>
+                                    <td>{{$p->fsign_amount}}</td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+
+                    @endif
+
 
                     </tbody>
                 </table>
