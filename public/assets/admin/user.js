@@ -28,9 +28,9 @@ define(function(require, exports, module) {
             table: "#" + tableId,
             idSrc: 'id',
             fields: [
-                { 'label':  'name', 'name': 'name', },
-                { 'label':  'email', 'name': 'email', },
-                { 'label':  'password', 'name': 'password', },
+                { 'label':  '用户名', 'name': 'name', },
+                { 'label':  'Email', 'name': 'email', },
+                { 'label':  '密码', 'name': 'password', 'type':'password'},
             ]
         });
 
