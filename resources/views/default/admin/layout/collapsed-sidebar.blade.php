@@ -34,6 +34,8 @@
     <script src="/js/jquery.bootstrap.min.js"></script>
     <script src="/assets/sea.js"></script>
     <script src="/assets/sea.config.js"></script>
+    <!-- jquery UI -->
+    <script src="/assets/plugins/jQueryUI/jquery-ui.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -185,8 +187,15 @@
         })
     })
 
+    /*
+     *  modal
+     */
     $('body').on('hidden.bs.modal', '.modal:not(.modal-cached)', function () {
         $(this).removeData('bs.modal');
+    });
+    $('body').on("show.bs.modal", ".modal", function(){
+        $(this).find(".modal-dialog").draggable();
+        $(this).css("overflow", "hidden");
     });
 
 
