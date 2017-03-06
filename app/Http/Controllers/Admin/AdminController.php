@@ -313,7 +313,8 @@ abstract class AdminController extends Controller
 
         return response()->json([
             'code' => 200,
-            'result' => '审核成功！'
+            'result' => '审核成功！',
+            'data' => $entitys
         ]);
     }
 
@@ -333,7 +334,8 @@ abstract class AdminController extends Controller
 
         return response()->json([
             'code' => 200,
-            'result' => '反审核成功！'
+            'result' => '反审核成功！',
+            'data' => $entitys
         ]);
     }
 

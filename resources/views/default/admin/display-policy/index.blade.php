@@ -87,6 +87,7 @@
                                 <th>验证状态</th>
                                 <th>签约状态</th>
                                 <th>签约日期</th>
+                                <th>审核状态</th>
                             </tr>
                             </thead>
                         </table>

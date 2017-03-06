@@ -210,6 +210,12 @@ define(function (require, exports, module) {
                 {'data': 'fcheck_status'},
                 {'data': 'fstatus'},
                 {'data': 'fdate'},
+                {
+                    "data": "fdocument_status",
+                    render: function ( data, type, full ) {
+                        return document_status(data);
+                    }
+                },
 
             ],
             columnDefs: [
@@ -227,9 +233,25 @@ define(function (require, exports, module) {
                 // {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
+                { text: '审核<i class="fa fa-fw fa-paperclip"></i>',className: 'check', enabled: false },
+                { text: '反审核<i class="fa fa-fw fa-unlink"></i>',className: 'uncheck', enabled: false },
                 //{extend: 'colvis', text: '列显示'}
             ]
         });
+        chlidTable.on( 'select', chlidRowSelect).on( 'deselect', chlidRowSelect);
+
+        function chlidRowSelect() {
+            checkEditEnabble(chlidTable,['.edit','.check'],['.uncheck']);
+        }
+
+        //审核
+        $(".check").on('click',function () {
+            dataCheck(chlidTable,'/admin/display-policy-store/check');
+        })
+
+        $(".uncheck").on('click',function () {
+            dataCheck(chlidTable,'/admin/display-policy-store/uncheck');
+        })
 
     }
 
