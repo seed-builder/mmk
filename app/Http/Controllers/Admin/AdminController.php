@@ -297,11 +297,16 @@ abstract class AdminController extends Controller
 	/*
 	 * 审核
 	 */
-	public function check($id){
-        $entity = $this->newEntity()->newQuery()->find($id);
-        $entity->fdocument_status="B";
+	public function check(Request $request){
+	    $data = $request->all();
+	    $ids = explode(",",$data['ids']);
+        $entitys = $this->newEntity()->newQuery()->whereIn('id',$ids)->get();
 
-        $entity->save();
+        foreach ($entitys as $entity){
+            $entity->fdocument_status="B";
+
+            $entity->save();
+        }
 
         return response()->json([
             'code' => 200,
@@ -312,11 +317,16 @@ abstract class AdminController extends Controller
     /*
      * 反审核
      */
-    public function unCheck($id){
-        $entity = $this->newEntity()->newQuery()->find($id);
-        $entity->fdocument_status="A";
+    public function unCheck(Request $request){
+        $data = $request->all();
+        $ids = explode(",",$data['ids']);
+        $entitys = $this->newEntity()->newQuery()->whereIn('id',$ids)->get();
 
-        $entity->save();
+        foreach ($entitys as $entity){
+            $entity->fdocument_status="A";
+
+            $entity->save();
+        }
 
         return response()->json([
             'code' => 200,
