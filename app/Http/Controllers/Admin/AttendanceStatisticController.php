@@ -65,7 +65,6 @@ class AttendanceStatisticController extends AdminController
 	public function attendanceInfo($id){
         $att = AttendanceStatistic::find($id);
 
-
         if (!empty($att->beginAttendance)){
             $att->begin_img = '/admin/show-image?imageId='.$att->beginAttendance->fphoto;
         }

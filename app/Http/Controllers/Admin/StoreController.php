@@ -70,21 +70,8 @@ class StoreController extends AdminController
         }
 
 		return parent::pagination($request, $searchCols, $with, function ($queryBuilder){
-			$empQuery = DB::table('bd_employees');//,[[$emp,'fname','femp_id']]
-			$curUser = Auth::user();
-			if(!$curUser->isAdmin()) {
-				if (SysConfigRepo::isMgtDataIsolate()) {
-					$flags = $curUser->positions->pluck('flag')->all();
-					if(!empty($flags)) {
-						$empQuery->join('bd_positions', 'bd_employees.fpost_id', '=', 'bd_positions.id');
-						foreach ($flags as $flag){
-							$empQuery->orWhere('bd_positions.flag', 'like', $flag. '%');
-						}
-					}
-				}
-			}
-			$entities = $empQuery->select('bd_employees.id')->get();
-			$ids = $entities->pluck('id')->all(); //array_map(function ($item){	return $item->id;}, $entities);
+
+			$ids = $this->getCurUsersEmployeeIds();//$entities->pluck('id')->all(); //array_map(function ($item){	return $item->id;}, $entities);
 			//var_dump($ids);
 			if(!empty($ids))
 			{
