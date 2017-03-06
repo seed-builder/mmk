@@ -32,10 +32,15 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-9">
+            <div class="col-xs-9">
                 <div class="box">
                     <div class="box-header">
                         <h3 class="box-title">门店地图定位</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
@@ -45,9 +50,14 @@
                     <!-- /.box-body -->
                 </div>
 
-                <div class="box ui-widget-content">
+                <div class="box">
                     <div class="box-header">
                         <h3 class="box-title">门店基础信息</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
