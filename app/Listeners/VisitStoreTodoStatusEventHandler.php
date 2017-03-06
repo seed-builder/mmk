@@ -10,9 +10,9 @@ use App\Models\Busi\VisitTodoCalendar;
 use App\Models\Busi\VisitStoreTodo;
 
 
-class VisitStoreTodoStatusEventHandler  implements ShouldQueue
+class VisitStoreTodoStatusEventHandler  //implements ShouldQueue
 {
-	use InteractsWithQueue;
+	//use InteractsWithQueue;
     /**
      * Create the event listener.
      *

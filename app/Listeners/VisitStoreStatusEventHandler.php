@@ -9,9 +9,9 @@ use App\Models\Busi\VisitStoreCalendar;
 use App\Models\Busi\VisitLineCalendar;
 use Log;
 
-class VisitStoreStatusEventHandler implements ShouldQueue
+class VisitStoreStatusEventHandler //implements ShouldQueue
 {
-	use InteractsWithQueue;
+	//use InteractsWithQueue;
     /**
      * Create the event listener.
      *
