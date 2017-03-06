@@ -295,9 +295,7 @@
         if (status=="A"){
             return '未审核';
         }else if(status=="B"){
-            return '审核中';
-        }else if(status=="C"){
-            return '已审核';
+            return '审核成功';
         }else {
             return '状态异常';
         }
@@ -307,8 +305,15 @@
      * 数据审核 反审核
      */
     function dataCheck(table,baseurl) {
-        var row = table.rows('.selected').data()[0];
-        var url = baseurl+"/"+row.id;
+        var row = table.rows('.selected').data();
+
+        var ids = new Array();
+        for (var i=0;i<row.length;i++){
+            ids.push(row[i].id);
+        }
+
+        var url = baseurl+"?ids="+ids;
+
         ajaxLink(url,function () {
             table.ajax.reload();
         });
