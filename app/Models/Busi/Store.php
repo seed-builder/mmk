@@ -53,6 +53,7 @@ use App\Services\LogSvr;
  * @SWG\Property(name="ftelephone", type="string", description="联系人电话")
  * @SWG\Property(name="ftitle", type="string", description="联系人职位")
  * @SWG\Property(name="ftran_cust_id", type="integer", description="配送商id")
+ * @SWG\Property(name="fis_signed", type="integer", description="是否签约")
  * @SWG\Property(name="id", type="integer", description="")
  */
 class Store extends BaseModel
@@ -88,6 +89,10 @@ class Store extends BaseModel
     public function photo(){
         return $this->hasOne(Resources::class, 'id', 'fphoto');
     }
+
+	public function displayPolicies(){
+		return $this->hasMany(DisplayPolicyStore::class, 'fstore_id', 'id');
+	}
 
     protected static function boot()
     {

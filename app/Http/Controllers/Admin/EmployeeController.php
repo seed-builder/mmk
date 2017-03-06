@@ -168,20 +168,21 @@ class EmployeeController extends AdminController
 			$deptids = $dept->getAllChildDept()->pluck('id')->toArray();
 			$queryBuilder->whereIn('bd_employees.fdept_id',$deptids);
 		}
-		$curUser = Auth::user();
-		if(!$curUser->isAdmin()) {
-			if (SysConfigRepo::isMgtDataIsolate()) {
-				$fnumbers = $curUser->positions->pluck('fnumber')->all();
-				if(!empty($fnumbers)) {
-					$queryBuilder->join('bd_positions', 'bd_employees.fpost_id', '=', 'bd_positions.id');
-					foreach ($fnumbers as $fnumber){
-						$queryBuilder->where('bd_positions.fnumber', 'like binary', $fnumber. '%');
-					}
-				}
-			}
-		}else{
-			$queryBuilder->leftJoin('bd_positions', 'bd_employees.fpost_id', '=', 'bd_positions.id');
-		}
+//		$curUser = Auth::user();
+//		if(!$curUser->isAdmin()) {
+//			if (SysConfigRepo::isMgtDataIsolate()) {
+//				$fnumbers = $curUser->positions->pluck('fnumber')->all();
+//				if(!empty($fnumbers)) {
+//					$queryBuilder->join('bd_positions', 'bd_employees.fpost_id', '=', 'bd_positions.id');
+//					foreach ($fnumbers as $fnumber){
+//						$queryBuilder->where('bd_positions.fnumber', 'like binary', $fnumber. '%');
+//					}
+//				}
+//			}
+//		}else{
+//			$queryBuilder->leftJoin('bd_positions', 'bd_employees.fpost_id', '=', 'bd_positions.id');
+//		}
+		$queryBuilder->leftJoin('bd_positions', 'bd_employees.fpost_id', '=', 'bd_positions.id');
 		$queryBuilder->leftJoin('bd_departments', 'bd_employees.fdept_id', '=', 'bd_departments.id');
 		$fields[] = 'bd_positions.fname as position_name';
 		$fields[] = 'bd_departments.fname as dept_name';

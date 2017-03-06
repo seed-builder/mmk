@@ -43,11 +43,11 @@ class AttendanceStatisticController extends AdminController
 			$curUser = Auth::user();
 			if(!$curUser->isAdmin()) {
 				if (SysConfigRepo::isMgtDataIsolate()) {
-					$fnumbers = $curUser->positions->pluck('fnumber')->all();
-					if(!empty($fnumbers)) {
+					$flags = $curUser->positions->pluck('flag')->all();
+					if(!empty($flags)) {
 						$empQuery->join('bd_positions', 'bd_employees.fpost_id', '=', 'bd_positions.id');
-						foreach ($fnumbers as $fnumber){
-							$empQuery->where('bd_positions.fnumber', 'like', $fnumber. '%');
+						foreach ($flags as $flag){
+							$empQuery->orWhere('bd_positions.flag', 'like', $flag. '%');
 						}
 					}
 				}
@@ -64,7 +64,6 @@ class AttendanceStatisticController extends AdminController
 
 	public function attendanceInfo($id){
         $att = AttendanceStatistic::find($id);
-
 
         if (!empty($att->beginAttendance)){
             $att->begin_img = '/admin/show-image?imageId='.$att->beginAttendance->fphoto;

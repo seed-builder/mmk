@@ -10,7 +10,7 @@ define(function(require, exports, module) {
         //组织结构初始化
     	var getTreeData = function () {
         	$.ajax({
-            	url: "../../admin/employee/employeeTree",
+            	url: "/admin/employee/employeeTree",
             	type: "POST",
             	data: {'_token':$('meta[name="_token"]').attr('content')},
             	dataType:'json',

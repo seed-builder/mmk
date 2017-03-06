@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use SysConfigRepo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Validator;
 
 abstract class AdminController extends Controller
@@ -332,5 +335,29 @@ abstract class AdminController extends Controller
             'code' => 200,
             'result' => '反审核成功！'
         ]);
+    }
+
+	/**
+	 * 获取当前登陆用户所能操作的员工id 集合
+	 * @return mixed
+	 */
+    public function getCurUsersEmployeeIds()
+    {
+	    $empQuery = DB::table('bd_employees');//,[[$emp,'fname','femp_id']]
+	    $curUser = Auth::user();
+	    if(!$curUser->isAdmin()) {
+		    if (SysConfigRepo::isMgtDataIsolate()) {
+			    $flags = $curUser->positions->pluck('flag')->all();
+			    if(!empty($flags)) {
+				    $empQuery->join('bd_positions', 'bd_employees.fpost_id', '=', 'bd_positions.id');
+				    foreach ($flags as $flag){
+					    $empQuery->orWhere('bd_positions.flag', 'like', $flag. '%');
+				    }
+			    }
+		    }
+	    }
+	    $entities = $empQuery->select('bd_employees.id')->get();
+	    $ids = $entities->pluck('id')->all();
+	    return $ids;
     }
 }

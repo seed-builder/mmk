@@ -48,3 +48,25 @@ Artisan::command('push-store', function () {
 	}
 	$this->comment('end ...');
 })->describe('push store to cloud');
+
+Artisan::command('create-position-flag', function () {
+	$this->comment('begin ...');
+	$tops = \App\Models\Busi\Position::where('fparpost_id', 0)->get();
+	foreach ($tops as $position) {
+		createPositionFlag($position, '');
+		//$this->comment('complete send store: ' . $store->ffullname);
+	}
+	$this->comment('end ...');
+})->describe('push store to cloud');
+
+function createPositionFlag($position, $pflag){
+	$position->flag = $pflag . $position->id;
+	$position->save();
+	echo $position->flag;
+	if($position->children){
+		foreach ($position->children as $child) {
+			createPositionFlag($child, $position->flag . '-');
+
+		}
+	}
+}

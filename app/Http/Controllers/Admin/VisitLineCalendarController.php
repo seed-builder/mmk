@@ -50,7 +50,14 @@ class VisitLineCalendarController extends AdminController
                 $request['queryBuilder'] = $query->where('femp_id',$data['nodeid']);
             }
         }
-		return parent::pagination($request, $searchCols);
+		return parent::pagination($request, $searchCols, $with, function ($queryBuilder){
+			$ids = $this->getCurUsersEmployeeIds();
+			//var_dump($ids);
+			if(!empty($ids))
+			{
+				$queryBuilder->whereIn('femp_id', $ids);
+			}
+		});
 	}
 
     /*

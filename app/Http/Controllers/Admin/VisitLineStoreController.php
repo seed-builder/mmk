@@ -97,7 +97,14 @@ class VisitLineStoreController extends AdminController
             }
         }
 
-		return parent::pagination($request, $searchCols);
+		return parent::pagination($request, $searchCols, $with, function ($queryBuilder){
+			$ids = $this->getCurUsersEmployeeIds();
+			//var_dump($ids);
+			if(!empty($ids))
+			{
+				$queryBuilder->whereIn('femp_id', $ids);
+			}
+		});
 	}
 
     public function destroyAll(Request $request){
@@ -131,11 +138,12 @@ class VisitLineStoreController extends AdminController
 
         if (empty($data['id'])){//生成所有员工路线
 
-            $emps = Employee::all();
+            //$emps = Employee::all();
+			$ids = $this->getCurUsersEmployeeIds();
 
             $datas = [];
-            foreach ($emps as $e){
-                $this->makeEmpLine($e->id);
+            foreach ($ids as $id){
+                $this->makeEmpLine($id);
             }
 
             return response()->json([
