@@ -92,8 +92,8 @@ class Employee extends BaseModel
     public function getSubordinates(){
 	    $subs = [];
 	    if(!empty($this->position)) {
-		    $fnumber = $this->position->fnumber;
-		    $sql = "select e.* from bd_employees e, bd_positions p where e.fpost_id = p.id and p.fnumber like '{$fnumber}_%'";
+		    $flag = $this->position->flag;
+		    $sql = "select e.* from bd_employees e, bd_positions p where e.fpost_id = p.id and p.flag like '{$flag}_%'";
 		    $subs = DB::select($sql);
 	    }
 	    return $subs;

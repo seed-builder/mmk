@@ -32,8 +32,8 @@
                             <thead>
                             <tr>
                                 <th>id</th>
-                                <th>名称</th>
-                                <th>显示名称</th>
+                                <th>英文名称</th>
+                                <th>中文名称</th>
                                 <th>描述</th>
                                 <th>创建时间</th>
                                 <th>修改时间</th>

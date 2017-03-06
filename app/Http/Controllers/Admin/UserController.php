@@ -78,6 +78,7 @@ class UserController extends AdminController
 		if($request->isMethod('post')){
 			$roleIds = $request->input('roles',[]);
 			$user->roles()->sync($roleIds);
+			$this->flash_success('设置成功!');
 		}
 		return view('admin.user.role', ['roles' => $roles, 'user' => $user]);
 	}
@@ -95,6 +96,7 @@ class UserController extends AdminController
 		if($request->isMethod('post')){
 			$positionIds = $request->input('positions',[]);
 			$user->positions()->sync($positionIds);
+			$this->flash_success('设置成功!');
 		}
 		return view('admin.user.position', ['positions' => $positions, 'user' => $user]);
 	}

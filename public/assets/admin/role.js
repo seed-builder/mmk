@@ -28,8 +28,8 @@ define(function(require, exports, module) {
             table: "#" + tableId,
             idSrc: 'id',
             fields: [
-                { 'label':  '名称', 'name': 'name', },
-                { 'label':  '显示名称', 'name': 'display_name', },
+                { 'label':  '英文名称', 'name': 'name', },
+                { 'label':  '中文名称', 'name': 'display_name', },
                 { 'label':  '描述', 'name': 'description', 'type': 'textarea' }
             ]
         });
