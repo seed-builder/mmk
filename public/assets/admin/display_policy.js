@@ -246,11 +246,16 @@ define(function (require, exports, module) {
 
         //审核
         $(".check").on('click',function () {
-            dataCheck(chlidTable,'/admin/display-policy-store/check');
+            dataCheck(chlidTable,'/admin/display-policy-store/check',function () {
+                table.ajax.reload();
+            });
+
         })
 
         $(".uncheck").on('click',function () {
-            dataCheck(chlidTable,'/admin/display-policy-store/uncheck');
+            dataCheck(chlidTable,'/admin/display-policy-store/uncheck',function () {
+                table.ajax.reload();
+            });
         })
 
     }

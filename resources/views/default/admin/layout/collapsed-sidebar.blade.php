@@ -224,7 +224,7 @@
     /*
      * 数据审核 反审核
      */
-    function dataCheck(table,baseurl) {
+    function dataCheck(table,baseurl,extraFun) {
         var row = table.rows('.selected').data();
 
         var ids = new Array();
@@ -236,6 +236,9 @@
 
         ajaxLink(url,function () {
             table.ajax.reload();
+            if(extraFun !== undefined ){
+                extraFun();
+            }
         });
     }
 
