@@ -54,11 +54,30 @@ define(function(require, exports, module) {
                 {  'data': 'updated_at' },
             ],
             buttons: [
-                // { text: '新增', action: function () { }  },
-                // { text: '编辑', className: 'edit', enabled: false },
+                { text: '新增<i class="fa fa-fw fa-plus"></i>', action: function (e, dt, type, indexes) {
+                    window.location.href='/admin/work-flow/create';
+                }  },
+                { text: '编辑<i class="fa fa-fw fa-pencil"></i>', className: 'edit', enabled: false , action: function (e, dt, type, indexes) {
+                    //console.log(e);
+                    var rows = table.rows( { selected: true } ).data();
+                    console.log(rows[0]);
+                    if(rows && rows[0]){
+                        //弹出即全屏
+                        var index = layer.open({
+                            title:'工作流编辑',
+                            type: 2,
+                            content: '/admin/work-flow/'+ rows[0]['id']+'/edit' ,
+                            area: ['800px', '600px'],
+                            maxmin: true
+                        });
+                        layer.full(index);s
+                        //window.location.href='/admin/work-flow/'+ rows[0]['id'] ;
+                    }
+                    //
+                } },
                 // { text: '删除', className: 'delete', enabled: false },
-                {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: editor},
-                {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: editor},
+                // {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: editor},
+                // {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: editor},
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
@@ -66,12 +85,12 @@ define(function(require, exports, module) {
             ]
         });
 
-        // table.on( 'select', checkBtn).on( 'deselect', checkBtn);
-        //
-        // function checkBtn(e, dt, type, indexes) {
-        //     var count = table.rows( { selected: true } ).count();
-        //     table.buttons( ['.edit', '.delete'] ).enable(count > 0);
-        // }
+        table.on( 'select', checkBtn).on( 'deselect', checkBtn);
+
+        function checkBtn(e, dt, type, indexes) {
+            var count = table.rows( { selected: true } ).count();
+            table.buttons( ['.edit', '.delete'] ).enable(count > 0);
+        }
 
     }
 
