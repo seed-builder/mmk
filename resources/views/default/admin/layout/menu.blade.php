@@ -176,6 +176,20 @@ $user = Auth::user();
                 </ul>
             </li>
             @endif
+
+            <li class="treeview active">
+                <a href="#">
+                    <i class="fa fa-anchor"></i>
+                    <span>工作流</span>
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="{{url('/admin/work-flow')}}"><i class="fa fa-cogs"></i>配置管理</a></li>
+                </ul>
+            </li>
+
         </ul>
     </section>
     <!-- /.sidebar -->

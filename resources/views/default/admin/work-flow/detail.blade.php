@@ -1,7 +1,4 @@
 @extends('admin.layout.collapsed-sidebar')
-@section('styles')
-    @include('admin.layout.datatable-css')
-@endsection
 
 @section('content')
     <!-- Content Header (Page header) -->
@@ -13,7 +10,8 @@
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
             <li><a href="#">工作流</a></li>
-            <li class="active">配置管理</li>
+            <li><a href="/admin/work-flow">配置管理</a></li>
+            <li class="active">配置详情</li>
         </ol>
     </section>
 
@@ -23,7 +21,7 @@
             <div class="col-xs-12">
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">工作流配置列表</h3>
+                        <h3 class="box-title">工作流配置</h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                             </button>
@@ -32,27 +30,11 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-
-                        <table id="moduleTable" class="table table-bordered table-hover">
-                            <thead>
-                            <tr>
-                                <th>id</th>
-                                <th>名称</th>
-                                <th>相关表</th>
-                                <th>状态</th>
-                                <th>创建时间</th>
-                                <th>修改时间</th>
-                            </tr>
-                            </thead>
-                        </table>
+                         <iframe src="/admin/work-flow/{{$id}}/edit" style="width: 100%; height: 600px;" frameborder="0"></iframe>
                     </div>
-                    <!-- /.box-body -->
                 </div>
-                <!-- /.box -->
             </div>
-            <!-- /.col -->
         </div>
-        <!-- /.row -->
     </section>
 
 @endsection
