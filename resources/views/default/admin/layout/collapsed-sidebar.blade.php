@@ -224,7 +224,11 @@
         if (status=="A"){
             return '未审核';
         }else if(status=="B"){
-            return '审核成功';
+            return '审核中';
+        }else if(status=="C"){
+            return '已审核';
+        }else if(status=="D"){
+            return '重新审核';
         }else {
             return '状态异常';
         }

@@ -295,7 +295,7 @@ abstract class AdminController extends Controller
         $entitys = $this->newEntity()->newQuery()->whereIn('id',$ids)->get();
 
         foreach ($entitys as $entity){
-            $entity->fdocument_status="B";
+            $entity->fdocument_status="C";
 
             $entity->save();
         }
