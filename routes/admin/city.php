@@ -8,12 +8,20 @@
 Route::get('city/list', function (\Illuminate\Http\Request $request){
     $data = $request->all();
     $citys = \App\Models\City::query()->where('ParentId',$data['parent_id'])->get();
-    return json_encode($citys);
+    return response()->json([
+        'code' => 200,
+        'result' => 'success',
+        'data' => $citys
+    ]);
 });
 Route::get('city/getCity', function (\Illuminate\Http\Request $request){
     $data = $request->all();
     $entity = \App\Models\City::find($data['id']);
 
-    return json_encode($entity);
+    return response()->json([
+        'code' => 200,
+        'result' => 'success',
+        'data' => $entity
+    ]);
 });
 

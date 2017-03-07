@@ -112,7 +112,7 @@ define(function (require, exports, module) {
                         var row = table.rows('.selected').data()[0];
                         if (treeNode.length>0||row!=null){
                             $("#femp_id").val(treeNode.length>0?treeNode[0].dataid:row.femp_id);
-                            $("#storeInfoForm").attr('data-action','add')
+                            $("#storeInfoForm").attr('action','/admin/store/createStore')
                             $('#storeinfo').modal('show');
                         }else {
                             layer.msg("请先选择一个业代！")
@@ -126,57 +126,40 @@ define(function (require, exports, module) {
                     enabled: false,
                     action: function () {
                         var id = table.rows('.selected').data()[0].id;
-                        $("#storeInfoForm").attr('data-action','edit')
+                        $("#storeInfoForm").attr('action','/admin/store/editStore')
                         $("#store_id").val(id);
+                        ajaxGetData("/admin/store/getStore/" + id,function (data) {
+                            $("#storeInfoForm").find('.form-data').each(function (index, element){
+                                var name = $(element).attr('name');
 
-                        $.ajax({
-                            type: "GET",
-                            url: "/admin/store/getStore/" + id,
-                            dataType: "json",
-                            data: {
-                                "_token": $('meta[name="_token"]').attr('content')
-                            },
-                            success: function (data) {
-                                $("#storeInfoForm").find('.form-data').each(function (index, element){
-                                    var name = $(element).attr('name');
+                                var c = eval("data."+name);
 
-                                    var c = eval("data."+name);
+                                $(element).val(c);
+                                //$(element).text(c);
+                                //$("select[name='fcity']").find("option[text='"+data.fcity+"']").attr("selected",true);
+                                $(element).find("option[value='"+c+"']").attr("selected",true);
 
-                                    $(element).val(c);
-                                    //$(element).text(c);
-                                    $(element).find("option[text='"+c+"']").attr("selected",true);
-                                    $(element).find("option[value='"+c+"']").attr("selected",true);
+                                //地图标注
+                                var point = new BMap.Point(data.flongitude, data.flatitude);
+                                var marker = new BMap.Marker(point);  // 创建标注
+                                smap.addOverlay(marker);
+                                smap.panTo(point);
+                            });
 
-                                    //地图标注
-                                    var point = new BMap.Point(data.flongitude, data.flatitude);
-                                    var marker = new BMap.Marker(point);  // 创建标注
-                                    smap.addOverlay(marker);
-                                    smap.panTo(point);
-                                });
 
-                                // $("#storeInfoForm").find('select').each(function (index, element){
-                                //     var name = $(element).attr('name');
-                                //     if (name=='_token'){
-                                //         return ;
-                                //     }
-                                //     var c = eval("data."+name);
-                                //
-                                //     $(element).find("option[text='"+c+"']").attr("selected",true);
-                                //     $(element).find("option[value='"+c+"']").attr("selected",true);
-                                // })
+                            $("#storeInfoForm").find('textarea').text(data.fremark);
 
-                                $("#storeInfoForm").find('textarea').text(data.fremark);
+                            //初始化门店图片
+                            $('#storepic').fileinput('refresh', {
+                                initialPreview: [ //预览图片的设置
+                                    "<img src='" + data.image + "' class='file-preview-image'style='width: 260px;height: 160px'>",
+                                ],
+                            });
 
-                                //初始化门店图片
-                                $('#storepic').fileinput('refresh', {
-                                    initialPreview: [ //预览图片的设置
-                                        "<img src='" + data.image + "' class='file-preview-image'style='width: 260px;height: 160px'>",
-                                    ],
-                                });
-                            }
-                        })
+                            $('#storeinfo').modal('show');
+                        });
 
-                        $('#storeinfo').modal('show');
+
                     }
                 },
 //                {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: editor},
@@ -318,30 +301,10 @@ define(function (require, exports, module) {
         //门店添加
 
         $("#storeInfoForm").on('submit', function () {
-            var formData = new FormData($("#storeInfoForm")[0]);
-            var action = $("#storeInfoForm").data('action');
-            var url = "";
-            if (action=='add'){
-                url= "/admin/store/createStore"
-            }else {
-                url= "/admin/store/editStore"
-            }
-            $.ajax({
-                url: url,
-                type: "POST",
-                data: formData,
-                async: false,
-                cache: false,
-                contentType: false,
-                processData: false,
-                success: function (data) {
-                    layer.msg(data['result'])
-                    if (data['code'] == 200) {
-                        $("#storeinfo").modal('hide');
-                        table.ajax.reload();
-                    }
 
-                },
+            ajaxForm("#storeInfoForm",function () {
+                $("#storeinfo").modal('hide');
+                table.ajax.reload();
             });
 
             return false;//防止表单同步提交
@@ -390,61 +353,36 @@ define(function (require, exports, module) {
 
         //城市区域联动
         $("#province_id").on('change', function () {
-            $.ajax({
-                type: "GET",
-                url: "/admin/city/list",
-                dataType: "json",
-                data: {
-                    "parent_id": $("#province_id").val(),
-                    "_token": $('meta[name="_token"]').attr('content')
-                },
-                success: function (data) {
-                    var html = "";
-                    for (index in data) {
-                        html += '<option text="' + data[index].Name + '" value="' + data[index].id + '">' + data[index].Name + '</option>';
-                    }
 
-                    $("#city_id").html(html)
-                    $("#city_id").trigger('change');
+            ajaxGetData("/admin/city/list?parent_id="+$("#province_id").val(),function (data) {
+                var html = "";
+                for (index in data) {
+                    html += '<option text="' + data[index].Name + '" value="' + data[index].id + '">' + data[index].Name + '</option>';
                 }
-            })
 
+                $("#city_id").html(html)
+                $("#city_id").trigger('change');
+            })
         })
 
         $("#city_id").on('change', function () {
-            $.ajax({
-                type: "GET",
-                url: "/admin/city/list",
-                dataType: "json",
-                data: {
-                    "parent_id": $("#city_id").val(),
-                    "_token": $('meta[name="_token"]').attr('content')
-                },
-                success: function (data) {
-                    var html = "";
-                    for (index in data) {
-                        html += '<option text="' + data[index].Name + '" value="' + data[index].id + '">' + data[index].Name + '</option>';
-                    }
-                    $("#country_id").html(html)
-                    $("#country_id").trigger('change');
+            ajaxGetData("/admin/city/list?parent_id="+$("#city_id").val(),function (data) {
+                var html = "";
+                for (index in data) {
+                    html += '<option text="' + data[index].Name + '" value="' + data[index].id + '">' + data[index].Name + '</option>';
                 }
+                $("#country_id").html(html)
+                $("#country_id").trigger('change');
             })
+
         })
 
         $("#country_id").on('change', function () {
-            $.ajax({
-                type: "GET",
-                url: "/admin/city/getCity",
-                dataType: "json",
-                data: {
-                    "id": $("#country_id").val(),
-                    "_token": $('meta[name="_token"]').attr('content')
-                },
-                success: function (data) {
-                    var point = new BMap.Point(data.lng, data.Lat);
-                    smap.panTo(point);
-                }
+            ajaxGetData('/admin/city/getCity?id='+$("#country_id").val(),function (data) {
+                var point = new BMap.Point(data.lng, data.Lat);
+                smap.panTo(point);
             })
+
         })
 
         $("#province_id").trigger('change');
