@@ -70,7 +70,7 @@ define(function(require, exports, module) {
                             area: ['800px', '600px'],
                             maxmin: true
                         });
-                        layer.full(index);s
+                        layer.full(index);
                         //window.location.href='/admin/work-flow/'+ rows[0]['id'] ;
                     }
                     //
