@@ -62,7 +62,16 @@ define(function(require, exports, module) {
                     var rows = table.rows( { selected: true } ).data();
                     console.log(rows[0]);
                     if(rows && rows[0]){
-                        window.location.href='/admin/work-flow/'+ rows[0]['id'] ;
+                        //弹出即全屏
+                        var index = layer.open({
+                            title:'工作流编辑',
+                            type: 2,
+                            content: '/admin/work-flow/'+ rows[0]['id']+'/edit' ,
+                            area: ['800px', '600px'],
+                            maxmin: true
+                        });
+                        layer.full(index);s
+                        //window.location.href='/admin/work-flow/'+ rows[0]['id'] ;
                     }
                     //
                 } },
