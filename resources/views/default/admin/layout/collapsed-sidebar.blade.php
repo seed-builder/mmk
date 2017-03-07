@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="/assets/plugins/AdminLTE/dist/css/skins/_all-skins.min.css">
 
     <link rel="stylesheet" href="/assets/plugins/toastr/toastr.min.css">
+
     @yield('styles')
     <!-- jQuery 2.2.3 -->
     <script src="/assets/plugins//jQuery/jquery-2.2.3.min.js"></script>
@@ -31,6 +32,7 @@
     <script src="/assets/plugins/fastclick/fastclick.js"></script>
     <script src="/assets/plugins/toastr/toastr.min.js"></script>
     <script src="/assets/plugins/layer/layer.js"></script>
+
     <script src="/js/jquery.bootstrap.min.js"></script>
     <script src="/assets/sea.js"></script>
     <script src="/assets/sea.config.js"></script>

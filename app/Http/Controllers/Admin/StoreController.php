@@ -238,6 +238,10 @@ class StoreController extends AdminController
         $store = Store::find($id);
 
         $store->image = '/admin/show-image?imageId='.$store->fphoto;
+        $store->fprovince =  City::query()->where('Name',$store->fprovince)->first()->id;
+        $store->fcity =  City::query()->where('Name',$store->fcity)->first()->id;
+        $store->fcountry =  City::query()->where('Name',$store->fcountry)->first()->id;
+
         return response()->json([
             'code' => 200,
             'result' => 'success',

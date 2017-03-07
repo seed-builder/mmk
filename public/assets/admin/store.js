@@ -109,9 +109,18 @@ define(function (require, exports, module) {
                     enabled: false,
                     action: function () {
                         var treeNode = $('#' + treeId).treeview('getSelected');
-                        var row = table.rows('.selected').data()[0];
-                        if (treeNode.length>0||row!=null){
-                            $("#femp_id").val(treeNode.length>0?treeNode[0].dataid:row.femp_id);
+                        var row = table.rows('.selected').data();
+                        if (treeNode[0]!="undefined"||row!=null){
+                            var femp_id;
+                            if (row.length>0){
+                                femp_id = row[0].femp_id
+                            }else if(treeNode[0].nodetype=="emp"){
+                                femp_id = treeNode[0].dataid
+                            }else{
+                                layer.msg("请先选择一个业代！")
+                                return false;
+                            }
+
                             $("#storeInfoForm").attr('action','/admin/store/createStore')
                             $('#storeinfo').modal('show');
                         }else {
@@ -129,15 +138,12 @@ define(function (require, exports, module) {
                         $("#storeInfoForm").attr('action','/admin/store/editStore')
                         $("#store_id").val(id);
                         ajaxGetData("/admin/store/getStore/" + id,function (data) {
-                            $("#storeInfoForm").find('.form-data').each(function (index, element){
+                            $("#storeInfoForm").find(".layui-input").each(function (index, element){
                                 var name = $(element).attr('name');
 
                                 var c = eval("data."+name);
 
                                 $(element).val(c);
-                                //$(element).text(c);
-                                //$("select[name='fcity']").find("option[text='"+data.fcity+"']").attr("selected",true);
-                                $(element).find("option[value='"+c+"']").attr("selected",true);
 
                                 //地图标注
                                 var point = new BMap.Point(data.flongitude, data.flatitude);
@@ -145,6 +151,25 @@ define(function (require, exports, module) {
                                 smap.addOverlay(marker);
                                 smap.panTo(point);
                             });
+
+                            $("#storeInfoForm").find("select").each(function (index, element){
+                                var name = $(element).attr('name');
+
+                                var c = eval("data."+name);
+
+                                $(element).val(c);
+                                form.render('select')
+                            });
+
+                            $("#province_id").val(data.fprovince);
+                            regionFun($("#province_id").val(),"#city_id",function () {
+                                $("#city_id").val(data.fcity);
+
+                                regionFun($("#city_id").val(),"#country_id",function () {
+                                    $("#country_id").val(data.fcountry);
+                                    form.render('select')
+                                })
+                            })
 
 
                             $("#storeInfoForm").find('textarea').text(data.fremark);
@@ -283,24 +308,12 @@ define(function (require, exports, module) {
                 .draw();
         }
 
-        //门店添加
-
-        $("#storeInfoForm").on('submit', function () {
-
-            ajaxForm("#storeInfoForm",function () {
-                $("#storeinfo").modal('hide');
-                table.ajax.reload();
-            });
-
-            return false;//防止表单同步提交
-        })
 
         //modal关闭时数据清空
         $("#storeinfo").on("hidden.bs.modal", function () {
-            // $("#storeinfo").removeData("bs.modal");
             smap.clearOverlays();
             $(".fileinput-remove-button").trigger('click')
-            $("#storeInfoForm").find(".form-data").val("");
+            $("#storeInfoForm").find(".layui-input").val("");
         });
 
         //信息窗口
@@ -335,42 +348,61 @@ define(function (require, exports, module) {
 
         }
 
+        layui.use(['layer', 'form'], function () {
+             layer = layui.layer
+                , form = layui.form();
 
-        //城市区域联动
-        $("#province_id").on('change', function () {
-
-            ajaxGetData("/admin/city/list?parent_id="+$("#province_id").val(),function (data) {
-                var html = "";
-                for (index in data) {
-                    html += '<option text="' + data[index].Name + '" value="' + data[index].id + '">' + data[index].Name + '</option>';
+            form.verify({
+                map: function(){
+                    if($("#flongitude").val()==""||$("#flatitude").val()==""){
+                        return '请在地图中标注出门店的位置！';
+                    }
                 }
-
-                $("#city_id").html(html)
-                $("#city_id").trigger('change');
             })
-        })
+            form.on('select(fprovince)', function(data){
+                regionFun(data.value,"#city_id",function () {
+                    $("#city_id").trigger('change');
 
-        $("#city_id").on('change', function () {
-            ajaxGetData("/admin/city/list?parent_id="+$("#city_id").val(),function (data) {
-                var html = "";
-                for (index in data) {
-                    html += '<option text="' + data[index].Name + '" value="' + data[index].id + '">' + data[index].Name + '</option>';
-                }
-                $("#country_id").html(html)
-                $("#country_id").trigger('change');
-            })
+                    regionFun($("#city_id").val(),"#country_id",function () {
+                        $("#country_id").trigger('change');
+                        countryMapPanTo()
+                        form.render('select')
+                    })
+                })
 
-        })
+            });
 
-        $("#country_id").on('change', function () {
+            form.on('select(fcity)', function(data){
+                regionFun(data.value,"#country_id",function () {
+                    $("#country_id").trigger('change');
+                    countryMapPanTo()
+                    form.render('select')
+                })
+            });
+
+            form.on('select(fcountry)', function(data){
+                countryMapPanTo();
+            });
+
+            form.on('submit(storeInfoForm)', function (data) {
+                ajaxForm("#storeInfoForm",function () {
+                    $("#storeinfo").modal('hide');
+                    table.ajax.reload();
+                });
+                return false;
+            });
+
+        });
+
+        //选择完区域以后 地图定位到该区域
+        var countryMapPanTo = function () {
             ajaxGetData('/admin/city/getCity?id='+$("#country_id").val(),function (data) {
                 var point = new BMap.Point(data.lng, data.Lat);
                 smap.panTo(point);
             })
+        }
 
-        })
 
-        $("#province_id").trigger('change');
         mapClick();
         getTreeData();
 

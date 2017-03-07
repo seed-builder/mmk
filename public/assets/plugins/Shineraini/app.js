@@ -217,3 +217,20 @@ var mapInit = function(map,params) {
         }
     }, {enableHighAccuracy: true})
 }
+
+/*
+ * 区域联动
+ */
+var regionFun = function (parent_id,element,callback) {
+    ajaxGetData("/admin/city/list?parent_id="+parent_id,function (data) {
+        var html = "";
+        for (index in data) {
+            html += '<option text="' + data[index].Name + '" value="' + data[index].id + '">' + data[index].Name + '</option>';
+        }
+
+        $(element).html(html)
+        if(callback !== undefined ){
+            callback();
+        }
+    })
+}
