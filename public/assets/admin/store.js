@@ -230,26 +230,11 @@ define(function (require, exports, module) {
         var smap = new BMap.Map(smapId, {enableMapClick: false});
 
         //地图展示
-        var mapShow = function () {
-            // 百度地图API功能
-            map.centerAndZoom(new BMap.Point(), 14);
-            map.enableScrollWheelZoom(true);
-
-            smap.centerAndZoom(new BMap.Point(), 13);
-            smap.enableScrollWheelZoom(true);
-
-            var geolocation = new BMap.Geolocation();
-            geolocation.getCurrentPosition(function (r) {
-                if (this.getStatus() == BMAP_STATUS_SUCCESS) {
-                    map.panTo(r.point);
-                    smap.panTo(r.point);
-                }
-                else {
-                    alert('获取地图失败' + this.getStatus());
-                }
-            }, {enableHighAccuracy: true})
-
+        var params = {
+            'zoom': 14,
         }
+        mapInit(map,params);
+        mapInit(smap,params);
 
         //地图点击事件
         var mapClick = function () {
@@ -388,7 +373,6 @@ define(function (require, exports, module) {
         $("#province_id").trigger('change');
         mapClick();
         getTreeData();
-        mapShow();
 
         /*
          *   地图关键字搜索

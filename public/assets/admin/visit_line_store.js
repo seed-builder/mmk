@@ -44,14 +44,11 @@ define(function(require, exports, module) {
         //地图初始化
         var map = new BMap.Map(mapId);
 
-        var mapShow = function(){
-            // 百度地图API功能
-            map.centerAndZoom("厦门", 12);
-            map.enableScrollWheelZoom();   //启用滚轮放大缩小，默认禁用
-            map.enableContinuousZoom();    //启用地图惯性拖拽，默认禁用
-            map.enableInertialDragging();
-
+        var params = {
+            'zoom': 14,
+            'location': '厦门'
         }
+        mapInit(map,params);
 
         //各表初始化
         var editor = new $.fn.dataTable.Editor({
@@ -784,45 +781,29 @@ define(function(require, exports, module) {
 
         //城市区域联动
         $("#province_id").on('change',function () {
-            $.ajax({
-                type : "GET",
-                url : "/admin/city/list",
-                dataType : "json" ,
-                data : {
-                    "parent_id":$("#province_id").val(),
-                    "_token": $('meta[name="_token"]').attr('content')
-                },
-                success : function(data) {
-                    var html = "";
-                    for (index in data){
-                        html+='<option value="'+data[index].id+'">'+data[index].Name+'</option>';
-                    }
-
-                    $("#city_id").html(html)
-                    $("#city_id").trigger('change');
+            ajaxGetData("/admin/city/list?parent_id="+$("#province_id").val(),function (data) {
+                var html = "";
+                for (index in data){
+                    html+='<option value="'+data[index].id+'">'+data[index].Name+'</option>';
                 }
+
+                $("#city_id").html(html)
+                $("#city_id").trigger('change');
             })
+
 
         })
 
         $("#city_id").on('change',function () {
-            $.ajax({
-                type : "GET",
-                url : "/admin/city/list",
-                dataType : "json" ,
-                data : {
-                    "parent_id":$("#city_id").val(),
-                    "_token": $('meta[name="_token"]').attr('content')
-                },
-                success : function(data) {
-                    var html = "";
-                    for (index in data){
-                        html+='<option value="'+data[index].id+'">'+data[index].Name+'</option>';
-                    }
-                    $("#country_id").html(html)
-                    mapQuery();
+            ajaxGetData("/admin/city/list?parent_id="+$("#city_id").val(),function (data) {
+                var html = "";
+                for (index in data){
+                    html+='<option value="'+data[index].id+'">'+data[index].Name+'</option>';
                 }
+                $("#country_id").html(html)
+                mapQuery();
             })
+
         })
 
         //地图标注方法
@@ -981,10 +962,8 @@ define(function(require, exports, module) {
         $("#makeLineBtn").on('click',function () {
             $("#todos").find("option").trigger('click')
             var todos = $("#todos").val();
-            console.log(todos);
         })
 
-        mapShow();
         getTreeData();
 
     }

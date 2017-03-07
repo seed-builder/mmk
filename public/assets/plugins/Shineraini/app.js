@@ -198,3 +198,22 @@ $('#btnCollapse').click(function () {
     var tree = $(this).parents('.box').find(".treeview");
     tree.treeview('collapseAll');
 });
+
+/*
+ * map
+ */
+var mapInit = function(map,params) {
+    var location = params.location!=null?params.location:new BMap.Point()
+    map.centerAndZoom(location, params['zoom']);
+    map.enableScrollWheelZoom(true);
+
+    var geolocation = new BMap.Geolocation();
+    geolocation.getCurrentPosition(function (r) {
+        if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+            map.panTo(r.point);
+        }
+        else {
+            alert('获取地图失败' + this.getStatus());
+        }
+    }, {enableHighAccuracy: true})
+}
