@@ -235,6 +235,14 @@ var mapInit = function(map,params) {
     });
     map.addControl(geolocationControl);
 
+    //缩略图
+    var overView = new BMap.OverviewMapControl({isOpen:true, anchor: BMAP_ANCHOR_BOTTOM_RIGHT});
+    map.addControl(overView);
+
+    //地图 卫星图
+    var mapType1 = new BMap.MapTypeControl({mapTypes: [BMAP_NORMAL_MAP,BMAP_HYBRID_MAP]});
+    map.addControl(mapType1);
+
     var geolocation = new BMap.Geolocation();
     geolocation.getCurrentPosition(function (r) {
         if (this.getStatus() == BMAP_STATUS_SUCCESS) {
