@@ -1,19 +1,19 @@
 /**
- *	根据当前url选中菜单
- *	设置导航栏
+ *    根据当前url选中菜单
+ *    设置导航栏
  **/
-$(".treeview-menu").each(function(i,obj){
-    $(obj).find("a").each(function(j,a){
+$(".treeview-menu").each(function (i, obj) {
+    $(obj).find("a").each(function (j, a) {
         var node_url = $(a).attr("href");//菜单url
         var cur_url = $("#cur_url").val();//当前页url
 
-        if(node_url==cur_url){
+        if (node_url == cur_url) {
             $(this).parent().addClass("active")
             var node = $(obj).prev();
             var node_i = $(node).find("i").prop("outerHTML");
             var node_span = $(node).find("span").prop("outerHTML");
             var node_text = $(node).find("span").text();
-            var title = "<h1>"+node_text+" <small>"+$(this).text()+"</small></h1><ol class=\"breadcrumb\"><li>"+node_i+"  "+node_span+"</li><li>"+$(this).text()+"</li></ol>"
+            var title = "<h1>" + node_text + " <small>" + $(this).text() + "</small></h1><ol class=\"breadcrumb\"><li>" + node_i + "  " + node_span + "</li><li>" + $(this).text() + "</li></ol>"
 
             $(".content-header").html(title);
         }
@@ -26,7 +26,7 @@ $(".treeview-menu").each(function(i,obj){
 $('body').on('hidden.bs.modal', '.modal:not(.modal-cached)', function () {
     $(this).removeData('bs.modal');
 });
-$('body').on("show.bs.modal", ".modal", function(){
+$('body').on("show.bs.modal", ".modal", function () {
     $(this).find(".modal-dialog").draggable({
         handle: ".modal-header"
     });
@@ -37,16 +37,16 @@ $('body').on("show.bs.modal", ".modal", function(){
 /*
  * 根据审核状态判断是否可编辑
  */
-function checkEditEnabble(table,enableButtonClass,disableButtonClass) {
-    var count = table.rows( { selected: true } ).count();
+function checkEditEnabble(table, enableButtonClass, disableButtonClass) {
+    var count = table.rows({selected: true}).count();
     var row = table.rows('.selected').data()[0];
-    if (count>0){
-        if (row.fdocument_status=="A"){
-            table.buttons( enableButtonClass ).enable(true);
-            table.buttons( disableButtonClass ).enable(false);
-        }else {
-            table.buttons( enableButtonClass ).enable(false);
-            table.buttons( disableButtonClass ).enable(true);
+    if (count > 0) {
+        if (row.fdocument_status == "A") {
+            table.buttons(enableButtonClass).enable(true);
+            table.buttons(disableButtonClass).enable(false);
+        } else {
+            table.buttons(enableButtonClass).enable(false);
+            table.buttons(disableButtonClass).enable(true);
         }
     }
 
@@ -56,15 +56,15 @@ function checkEditEnabble(table,enableButtonClass,disableButtonClass) {
  * 获取审核状态
  */
 function document_status(status) {
-    if (status=="A"){
+    if (status == "A") {
         return '未审核';
-    }else if(status=="B"){
+    } else if (status == "B") {
         return '审核中';
-    }else if(status=="C"){
+    } else if (status == "C") {
         return '已审核';
-    }else if(status=="D"){
+    } else if (status == "D") {
         return '重新审核';
-    }else {
+    } else {
         return '状态异常';
     }
 }
@@ -72,19 +72,19 @@ function document_status(status) {
 /*
  * 数据审核 反审核
  */
-function dataCheck(table,baseurl,extraFun) {
+function dataCheck(table, baseurl, extraFun) {
     var row = table.rows('.selected').data();
 
     var ids = new Array();
-    for (var i=0;i<row.length;i++){
+    for (var i = 0; i < row.length; i++) {
         ids.push(row[i].id);
     }
 
-    var url = baseurl+"?ids="+ids;
+    var url = baseurl + "?ids=" + ids;
 
-    ajaxLink(url,function () {
+    ajaxLink(url, function () {
         table.ajax.reload();
-        if(extraFun !== undefined ){
+        if (extraFun !== undefined) {
             extraFun();
         }
     });
@@ -93,7 +93,7 @@ function dataCheck(table,baseurl,extraFun) {
 /*
  * ajaxLink
  */
-function ajaxLink(url,callback){
+function ajaxLink(url, callback) {
     // load the form via ajax
     $.ajax({
         type: 'GET',
@@ -103,20 +103,18 @@ function ajaxLink(url,callback){
         url: url,
         dataType: "json",
         timeout: 10000,
-        success: function(res)
-        {
+        success: function (res) {
             layer.msg(res.result);
-            if (res.redirect_url){
+            if (res.redirect_url) {
                 window.location.href = res.redirect_url;
             }
 
-            if(callback !== undefined ){
+            if (callback !== undefined) {
                 callback();
             }
         },
 
-        error: function(jqXHR, textStatus, errorThrown)
-        {
+        error: function (jqXHR, textStatus, errorThrown) {
             layer.msg(jqXHR.responseText);
         },
 
@@ -127,7 +125,7 @@ function ajaxLink(url,callback){
 /*
  *  ajax submit form
  */
-function ajaxForm(form_id,callback){
+function ajaxForm(form_id, callback) {
     // load the form via ajax
     $.ajax({
         type: 'POST',
@@ -137,20 +135,18 @@ function ajaxForm(form_id,callback){
         url: $(form_id).attr('action'),
         dataType: "json",
         timeout: 10000,
-        success: function(res)
-        {
+        success: function (res) {
             layer.msg(res.result);
-            if (res.redirect_url){
+            if (res.redirect_url) {
                 window.location.href = res.redirect_url;
             }
 
-            if(callback !== undefined ){
+            if (callback !== undefined) {
                 callback();
             }
         },
 
-        error: function(jqXHR, textStatus, errorThrown)
-        {
+        error: function (jqXHR, textStatus, errorThrown) {
             layer.msg(jqXHR.responseText);
         },
 
@@ -161,7 +157,7 @@ function ajaxForm(form_id,callback){
 /*
  *  ajaxGet
  */
-function ajaxGetData(url,callback) {
+function ajaxGetData(url, callback) {
     $.ajax({
         type: 'GET',
         data: {},
@@ -170,18 +166,16 @@ function ajaxGetData(url,callback) {
         url: url,
         dataType: "json",
         timeout: 10000,
-        success: function(res)
-        {
-            if(callback !== undefined ){
+        success: function (res) {
+            if (callback !== undefined) {
                 callback(res.data);
             }
-            if(res.code==200&&res.data!=null){
+            if (res.code == 200 && res.data != null) {
                 return res.data
             }
         },
 
-        error: function(jqXHR, textStatus, errorThrown)
-        {
+        error: function (jqXHR, textStatus, errorThrown) {
             layer.msg(jqXHR.responseText);
         },
 
@@ -204,8 +198,8 @@ $('#btnCollapse').click(function () {
 /*
  * map
  */
-var mapInit = function(map,params) {
-    var location = params.location!=null?params.location:new BMap.Point()
+var mapInit = function (map, params) {
+    var location = params.location != null ? params.location : new BMap.Point()
     map.centerAndZoom(location, params['zoom']);
     map.enableScrollWheelZoom(true);
 
@@ -220,7 +214,7 @@ var mapInit = function(map,params) {
 
     map.addControl(navigationControl);
     var geolocationControl = new BMap.GeolocationControl();
-    geolocationControl.addEventListener("locationSuccess", function(e){
+    geolocationControl.addEventListener("locationSuccess", function (e) {
         // 定位成功事件
         var address = '';
         address += e.addressComponent.province;
@@ -229,18 +223,18 @@ var mapInit = function(map,params) {
         address += e.addressComponent.street;
         address += e.addressComponent.streetNumber;
     });
-    geolocationControl.addEventListener("locationError",function(e){
+    geolocationControl.addEventListener("locationError", function (e) {
         // 定位失败事件
         alert(e.message);
     });
     map.addControl(geolocationControl);
 
     //缩略图
-    var overView = new BMap.OverviewMapControl({isOpen:true, anchor: BMAP_ANCHOR_BOTTOM_RIGHT});
+    var overView = new BMap.OverviewMapControl({isOpen: true, anchor: BMAP_ANCHOR_BOTTOM_RIGHT});
     map.addControl(overView);
 
     //地图 卫星图
-    var mapType1 = new BMap.MapTypeControl({mapTypes: [BMAP_NORMAL_MAP,BMAP_HYBRID_MAP]});
+    var mapType1 = new BMap.MapTypeControl({mapTypes: [BMAP_NORMAL_MAP, BMAP_HYBRID_MAP]});
     map.addControl(mapType1);
 
     var geolocation = new BMap.Geolocation();
@@ -254,18 +248,35 @@ var mapInit = function(map,params) {
     }, {enableHighAccuracy: true})
 }
 
+function mapWindow(element, data, callback) {
+    var content = "<h3>" + data.title + "</h3>" ;
+    for (var i=0;i<data.attrs.length;i++) {
+        content += '<p>'+data.attrs[i].name+ "：" + data.attrs[i].value+'</p>'
+    }
+
+    var infoWindow = new BMap.InfoWindow(content)  // 创建信息窗口对象
+
+    element.addEventListener("click", function () {
+        this.openInfoWindow(infoWindow);
+
+        if (callback !== undefined) {
+            callback();
+        }
+    });
+}
+
 /*
  * 区域联动
  */
-var regionFun = function (parent_id,element,callback) {
-    ajaxGetData("/admin/city/list?parent_id="+parent_id,function (data) {
+var regionFun = function (parent_id, element, callback) {
+    ajaxGetData("/admin/city/list?parent_id=" + parent_id, function (data) {
         var html = "";
         for (index in data) {
             html += '<option text="' + data[index].Name + '" value="' + data[index].id + '">' + data[index].Name + '</option>';
         }
 
         $(element).html(html)
-        if(callback !== undefined ){
+        if (callback !== undefined) {
             callback();
         }
     })
@@ -274,22 +285,22 @@ var regionFun = function (parent_id,element,callback) {
 /*
  * 数据
  */
-var fempId = function (treeId,table) {
+var fempId = function (treeId, table) {
     var treeNode = $('#' + treeId).treeview('getSelected');
     var row = table.rows('.selected').data();
 
     var femp_id;
 
-    if (treeNode[0]!==undefined||row.length>0){
-        if (row.length>0){
+    if (treeNode[0] !== undefined || row.length > 0) {
+        if (row.length > 0) {
             femp_id = row[0].femp_id
-        }else if(treeNode[0].nodetype=="emp"){
+        } else if (treeNode[0].nodetype == "emp") {
             femp_id = treeNode[0].dataid
-        }else{
-            return "" ;
+        } else {
+            return "";
         }
-    }else {
-        return null ;
+    } else {
+        return null;
     }
 
     return femp_id;

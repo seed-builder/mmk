@@ -721,6 +721,7 @@ define(function (require, exports, module) {
             $("#map_select_id").val("")
         })
 
+
         //城市区域联动
         $("#province_id").on('change', function () {
             regionFun($("#province_id").val(),"#city_id",function () {

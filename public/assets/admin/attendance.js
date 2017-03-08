@@ -262,28 +262,22 @@ define(function(require, exports, module) {
 
         //信息窗口
         function infoWindow(element,data) {
-
             var begin_time = data.begin_attendance!=null?data.begin_attendance.ftime:'无';
             var begin_address = data.begin_attendance!=null?data.begin_attendance.faddress:'无';
             var complete_time = data.complete_attendance!=null?data.complete_attendance.ftime:'无'
             var complete_address = data.complete_attendance!=null?data.complete_attendance.faddress:'无'
 
-            var content = "<h3>"+data.employee.fname+"</h3>"+
-                "<p>日期："+data.fday+"</p>"+
-                "<p>签到时间："+begin_time+"</p>"+
-                "<p>签到地址："+begin_address+"</p>"+
-                "<p>签退时间："+complete_time+"</p>"+
-                "<p>签退地址："+complete_address+"</p>"
-
+            var attrs = new Array();
+            attrs.push({"name":"日期","value":data.fday})
+            attrs.push({"name":"签到时间","value":begin_time})
+            attrs.push({"name":"签到地址","value":begin_address})
+            attrs.push({"name":"签退时间","value":complete_time})
+            attrs.push({"name":"签退地址","value":complete_address})
             if (data.begin_attendance==null||data.complete_attendance==null){
-                content+= "<p>签到状态：<span style='color: red;font-weight: bold'>异常</span></p>"
+                attrs.push({"name":"签到状态","value":"<span style='color: red;font-weight: bold'>异常</span>"})
             }
-
-            var infoWindow = new BMap.InfoWindow(content)  // 创建信息窗口对象
-
-            element.addEventListener("click", function(){
-                this.openInfoWindow(infoWindow);
-            });
+            var obj = {"title":data.employee.fname,"attrs":attrs};
+            mapWindow(element,obj);
         }
 
         //组织结构查询
