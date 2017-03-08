@@ -957,13 +957,6 @@ define(function(require, exports, module) {
 
         $("#province_id").trigger('change');
 
-        $("#todos").select2()
-        
-        $("#makeLineBtn").on('click',function () {
-            $("#todos").find("option").trigger('click')
-            var todos = $("#todos").val();
-        })
-
         getTreeData();
 
     }

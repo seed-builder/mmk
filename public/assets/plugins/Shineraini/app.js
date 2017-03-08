@@ -27,7 +27,9 @@ $('body').on('hidden.bs.modal', '.modal:not(.modal-cached)', function () {
     $(this).removeData('bs.modal');
 });
 $('body').on("show.bs.modal", ".modal", function(){
-    $(this).find(".modal-dialog").draggable();
+    $(this).find(".modal-dialog").draggable({
+        handle: ".modal-header"
+    });
     $(this).css("overflow", "hidden");
 });
 
@@ -206,6 +208,32 @@ var mapInit = function(map,params) {
     var location = params.location!=null?params.location:new BMap.Point()
     map.centerAndZoom(location, params['zoom']);
     map.enableScrollWheelZoom(true);
+
+    var navigationControl = new BMap.NavigationControl({
+        // 靠左上角位置
+        anchor: BMAP_ANCHOR_TOP_LEFT,
+        // LARGE类型
+        type: BMAP_NAVIGATION_CONTROL_LARGE,
+        // 启用显示定位
+        enableGeolocation: true
+    });
+
+    map.addControl(navigationControl);
+    var geolocationControl = new BMap.GeolocationControl();
+    geolocationControl.addEventListener("locationSuccess", function(e){
+        // 定位成功事件
+        var address = '';
+        address += e.addressComponent.province;
+        address += e.addressComponent.city;
+        address += e.addressComponent.district;
+        address += e.addressComponent.street;
+        address += e.addressComponent.streetNumber;
+    });
+    geolocationControl.addEventListener("locationError",function(e){
+        // 定位失败事件
+        alert(e.message);
+    });
+    map.addControl(geolocationControl);
 
     var geolocation = new BMap.Geolocation();
     geolocation.getCurrentPosition(function (r) {

@@ -22,6 +22,12 @@
     <link rel="stylesheet" href="/assets/plugins/toastr/toastr.min.css">
 
     @yield('styles')
+    <style>
+
+        .modal-header{
+            cursor: move;
+        }
+    </style>
     <!-- jQuery 2.2.3 -->
     <script src="/assets/plugins//jQuery/jquery-2.2.3.min.js"></script>
     <!-- Bootstrap 3.3.6 -->
