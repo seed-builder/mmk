@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Repositories\ISysConfigRepo;
 use Illuminate\Database\Eloquent\Builder;
 use App\Models\Busi\AttendanceReport;
 use App\Models\Busi\Employee;
