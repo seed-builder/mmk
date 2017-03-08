@@ -108,14 +108,14 @@ define(function (require, exports, module) {
                     className: 'add',
                     enabled: false,
                     action: function () {
-                        var treeNode = $('#' + treeId).treeview('getSelected');
-                        var row = table.rows('.selected').data()[0];
-                        if (treeNode.length>0||row!=null){
-                            $("#femp_id").val(treeNode.length>0?treeNode[0].dataid:row.femp_id);
-                            $("#storeInfoForm").attr('data-action','add')
-                            $('#storeinfo').modal('show');
-                        }else {
+
+                        var femp_id = fempId(treeId,table);
+                        if (femp_id==null){
                             layer.msg("请先选择一个业代！")
+                            return false;
+                        }else {
+                            $("#storeInfoForm").attr('action','/admin/store/createStore')
+                            $('#storeinfo').modal('show');
                         }
 
                     }
@@ -126,57 +126,56 @@ define(function (require, exports, module) {
                     enabled: false,
                     action: function () {
                         var id = table.rows('.selected').data()[0].id;
-                        $("#storeInfoForm").attr('data-action','edit')
+                        $("#storeInfoForm").attr('action','/admin/store/editStore')
                         $("#store_id").val(id);
+                        ajaxGetData("/admin/store/getStore/" + id,function (data) {
+                            $("#storeInfoForm").find(".layui-input").each(function (index, element){
+                                var name = $(element).attr('name');
 
-                        $.ajax({
-                            type: "GET",
-                            url: "/admin/store/getStore/" + id,
-                            dataType: "json",
-                            data: {
-                                "_token": $('meta[name="_token"]').attr('content')
-                            },
-                            success: function (data) {
-                                $("#storeInfoForm").find('.form-data').each(function (index, element){
-                                    var name = $(element).attr('name');
+                                var c = eval("data."+name);
 
-                                    var c = eval("data."+name);
+                                $(element).val(c);
 
-                                    $(element).val(c);
-                                    //$(element).text(c);
-                                    $(element).find("option[text='"+c+"']").attr("selected",true);
-                                    $(element).find("option[value='"+c+"']").attr("selected",true);
+                                //地图标注
+                                var point = new BMap.Point(data.flongitude, data.flatitude);
+                                var marker = new BMap.Marker(point);  // 创建标注
+                                smap.addOverlay(marker);
+                                smap.panTo(point);
+                            });
 
-                                    //地图标注
-                                    var point = new BMap.Point(data.flongitude, data.flatitude);
-                                    var marker = new BMap.Marker(point);  // 创建标注
-                                    smap.addOverlay(marker);
-                                    smap.panTo(point);
-                                });
+                            $("#storeInfoForm").find("select").each(function (index, element){
+                                var name = $(element).attr('name');
 
-                                // $("#storeInfoForm").find('select').each(function (index, element){
-                                //     var name = $(element).attr('name');
-                                //     if (name=='_token'){
-                                //         return ;
-                                //     }
-                                //     var c = eval("data."+name);
-                                //
-                                //     $(element).find("option[text='"+c+"']").attr("selected",true);
-                                //     $(element).find("option[value='"+c+"']").attr("selected",true);
-                                // })
+                                var c = eval("data."+name);
 
-                                $("#storeInfoForm").find('textarea').text(data.fremark);
+                                $(element).val(c);
+                                form.render('select')
+                            });
 
-                                //初始化门店图片
-                                $('#storepic').fileinput('refresh', {
-                                    initialPreview: [ //预览图片的设置
-                                        "<img src='" + data.image + "' class='file-preview-image'style='width: 260px;height: 160px'>",
-                                    ],
-                                });
-                            }
-                        })
+                            $("#province_id").val(data.fprovince);
+                            regionFun($("#province_id").val(),"#city_id",function () {
+                                $("#city_id").val(data.fcity);
 
-                        $('#storeinfo').modal('show');
+                                regionFun($("#city_id").val(),"#country_id",function () {
+                                    $("#country_id").val(data.fcountry);
+                                    form.render('select')
+                                })
+                            })
+
+
+                            $("#storeInfoForm").find('textarea').text(data.fremark);
+
+                            //初始化门店图片
+                            $('#storepic').fileinput('refresh', {
+                                initialPreview: [ //预览图片的设置
+                                    "<img src='" + data.image + "' class='file-preview-image'style='width: 260px;height: 160px'>",
+                                ],
+                            });
+
+                            $('#storeinfo').modal('show');
+                        });
+
+
                     }
                 },
 //                {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: editor},
@@ -247,26 +246,11 @@ define(function (require, exports, module) {
         var smap = new BMap.Map(smapId, {enableMapClick: false});
 
         //地图展示
-        var mapShow = function () {
-            // 百度地图API功能
-            map.centerAndZoom(new BMap.Point(), 14);
-            map.enableScrollWheelZoom(true);
-
-            smap.centerAndZoom(new BMap.Point(), 13);
-            smap.enableScrollWheelZoom(true);
-
-            var geolocation = new BMap.Geolocation();
-            geolocation.getCurrentPosition(function (r) {
-                if (this.getStatus() == BMAP_STATUS_SUCCESS) {
-                    map.panTo(r.point);
-                    smap.panTo(r.point);
-                }
-                else {
-                    alert('获取地图失败' + this.getStatus());
-                }
-            }, {enableHighAccuracy: true})
-
+        var params = {
+            'zoom': 14,
         }
+        mapInit(map,params);
+        mapInit(smap,params);
 
         //地图点击事件
         var mapClick = function () {
@@ -315,44 +299,12 @@ define(function (require, exports, module) {
                 .draw();
         }
 
-        //门店添加
-
-        $("#storeInfoForm").on('submit', function () {
-            var formData = new FormData($("#storeInfoForm")[0]);
-            var action = $("#storeInfoForm").data('action');
-            var url = "";
-            if (action=='add'){
-                url= "/admin/store/createStore"
-            }else {
-                url= "/admin/store/editStore"
-            }
-            $.ajax({
-                url: url,
-                type: "POST",
-                data: formData,
-                async: false,
-                cache: false,
-                contentType: false,
-                processData: false,
-                success: function (data) {
-                    layer.msg(data['result'])
-                    if (data['code'] == 200) {
-                        $("#storeinfo").modal('hide');
-                        table.ajax.reload();
-                    }
-
-                },
-            });
-
-            return false;//防止表单同步提交
-        })
 
         //modal关闭时数据清空
         $("#storeinfo").on("hidden.bs.modal", function () {
-            // $("#storeinfo").removeData("bs.modal");
             smap.clearOverlays();
             $(".fileinput-remove-button").trigger('click')
-            $("#storeInfoForm").find(".form-data").val("");
+            $("#storeInfoForm").find(".layui-input").val("");
         });
 
         //信息窗口
@@ -387,70 +339,63 @@ define(function (require, exports, module) {
 
         }
 
+        layui.use(['layer', 'form'], function () {
+             layer = layui.layer
+                , form = layui.form();
 
-        //城市区域联动
-        $("#province_id").on('change', function () {
-            $.ajax({
-                type: "GET",
-                url: "/admin/city/list",
-                dataType: "json",
-                data: {
-                    "parent_id": $("#province_id").val(),
-                    "_token": $('meta[name="_token"]').attr('content')
-                },
-                success: function (data) {
-                    var html = "";
-                    for (index in data) {
-                        html += '<option text="' + data[index].Name + '" value="' + data[index].id + '">' + data[index].Name + '</option>';
+            form.verify({
+                map: function(){
+                    if($("#flongitude").val()==""||$("#flatitude").val()==""){
+                        return '请在地图中标注出门店的位置！';
                     }
-
-                    $("#city_id").html(html)
+                }
+            })
+            form.on('select(fprovince)', function(data){
+                regionFun(data.value,"#city_id",function () {
                     $("#city_id").trigger('change');
-                }
-            })
 
-        })
+                    regionFun($("#city_id").val(),"#country_id",function () {
+                        $("#country_id").trigger('change');
+                        countryMapPanTo()
+                        form.render('select')
+                    })
+                })
 
-        $("#city_id").on('change', function () {
-            $.ajax({
-                type: "GET",
-                url: "/admin/city/list",
-                dataType: "json",
-                data: {
-                    "parent_id": $("#city_id").val(),
-                    "_token": $('meta[name="_token"]').attr('content')
-                },
-                success: function (data) {
-                    var html = "";
-                    for (index in data) {
-                        html += '<option text="' + data[index].Name + '" value="' + data[index].id + '">' + data[index].Name + '</option>';
-                    }
-                    $("#country_id").html(html)
+            });
+
+            form.on('select(fcity)', function(data){
+                regionFun(data.value,"#country_id",function () {
                     $("#country_id").trigger('change');
-                }
-            })
-        })
+                    countryMapPanTo()
+                    form.render('select')
+                })
+            });
 
-        $("#country_id").on('change', function () {
-            $.ajax({
-                type: "GET",
-                url: "/admin/city/getCity",
-                dataType: "json",
-                data: {
-                    "id": $("#country_id").val(),
-                    "_token": $('meta[name="_token"]').attr('content')
-                },
-                success: function (data) {
-                    var point = new BMap.Point(data.lng, data.Lat);
-                    smap.panTo(point);
-                }
-            })
-        })
+            form.on('select(fcountry)', function(data){
+                countryMapPanTo();
+            });
 
-        $("#province_id").trigger('change');
+            form.on('submit(storeInfoForm)', function (data) {
+                ajaxForm("#storeInfoForm",function () {
+                    $("#storeinfo").modal('hide');
+                    table.ajax.reload();
+                });
+                return false;
+            });
+
+        });
+
+        //选择完区域以后 地图定位到该区域
+        var countryMapPanTo = function () {
+            ajaxGetData('/admin/city/getCity?id='+$("#country_id").val(),function (data) {
+                var point = new BMap.Point(data.lng, data.Lat);
+                smap.panTo(point);
+            })
+        }
+
+
         mapClick();
         getTreeData();
-        mapShow();
 
         /*
          *   地图关键字搜索

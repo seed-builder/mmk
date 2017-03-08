@@ -8,7 +8,7 @@
 <div class="modal-body">
     <div class="box-body">
 
-        <div class="col-xs-12">
+        <div class="col-xs-6">
 
 
             <div class="table-responsive">
@@ -54,6 +54,16 @@
                         <th>税号:</th>
                         <td>{{$store->fdutyparagraphe}}</td>
                     </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-xs-6">
+
+
+            <div class="table-responsive">
+                <table class="table">
+                    <tbody>
                     <tr>
                         <th>开户银行:</th>
                         <td>{{$store->fbankaccount}}</td>
@@ -91,10 +101,10 @@
 
                     @endif
 
-
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
+

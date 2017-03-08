@@ -19,6 +19,10 @@ class CustomerController extends ApiController
         return new Customer($attributes);
     }
 
+	/**
+	 * @param Request $request
+	 * @param Builder $query
+	 */
 	public function fillQueryForIndex(Request $request, Builder &$query){
 		$search = $request->input('search', '{}');
 		$conditions = json_decode($search, true);

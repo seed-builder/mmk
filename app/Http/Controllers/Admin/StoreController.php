@@ -238,7 +238,15 @@ class StoreController extends AdminController
         $store = Store::find($id);
 
         $store->image = '/admin/show-image?imageId='.$store->fphoto;
-        return response()->json($store);
+        $store->fprovince =  City::query()->where('Name',$store->fprovince)->first()->id;
+        $store->fcity =  City::query()->where('Name',$store->fcity)->first()->id;
+        $store->fcountry =  City::query()->where('Name',$store->fcountry)->first()->id;
+
+        return response()->json([
+            'code' => 200,
+            'result' => 'success',
+            'data' => $store
+        ]);
     }
 
     //获取门店信息

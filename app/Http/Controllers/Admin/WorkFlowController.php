@@ -31,7 +31,7 @@ class WorkFlowController extends AdminController
 	*/
 	public function create()
 	{
-		return view('admin.work-flow.create');
+		return view('admin.work-flow.detail');
 	}
 
 	/**
@@ -55,6 +55,7 @@ class WorkFlowController extends AdminController
 	public function show($id)
 	{
 		//
+		return view('admin.work-flow.detail', compact('id'));
 	}
 
 	/**

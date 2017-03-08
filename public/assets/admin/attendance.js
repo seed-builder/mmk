@@ -169,23 +169,11 @@ define(function(require, exports, module) {
         });
 
         var map = new BMap.Map(mapId);
-        
-        var mapShow = function(){
-        	// 百度地图API功能 
-        	map.centerAndZoom(new BMap.Point(),14);
-        	map.enableScrollWheelZoom(true);
 
-        	var geolocation = new BMap.Geolocation();
-        	geolocation.getCurrentPosition(function(r){
-        		if(this.getStatus() == BMAP_STATUS_SUCCESS){
-        			var mk = new BMap.Marker(r.point);
-        			map.panTo(r.point);
-        		}
-        		else {
-        			alert('获取地图失败'+this.getStatus());
-        		}        
-        	},{enableHighAccuracy: true})
+        var params = {
+            'zoom': 14
         }
+        mapInit(map,params);
         
         var mapAddOverlay = function(longitude,latitude,data){
         	var point = new BMap.Point(longitude,latitude);
@@ -309,7 +297,6 @@ define(function(require, exports, module) {
 
 
         treeSearch();
-        mapShow();
     	getTreeData();
     }
     

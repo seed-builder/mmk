@@ -7,13 +7,13 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            系统管理
-            <small>工作流</small>
+            工作流
+            <small>配置管理</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="#">系统管理</a></li>
-            <li class="active">工作流</li>
+            <li><a href="#">工作流</a></li>
+            <li class="active">配置管理</li>
         </ol>
     </section>
 
@@ -23,7 +23,12 @@
             <div class="col-xs-12">
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">工作流列表</h3>
+                        <h3 class="box-title">工作流配置列表</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
