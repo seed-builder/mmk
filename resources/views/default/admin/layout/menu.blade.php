@@ -179,7 +179,7 @@ $user = Auth::user();
 
             <li class="treeview active">
                 <a href="#">
-                    <i class="fa fa-anchor"></i>
+                    <i class="fa fa-arrows"></i>
                     <span>工作流</span>
                     <span class="pull-right-container">
                       <i class="fa fa-angle-left pull-right"></i>
