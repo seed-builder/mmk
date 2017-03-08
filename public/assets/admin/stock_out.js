@@ -92,8 +92,8 @@ define(function (require, exports, module) {
                 {
                     'data': 'fuser_id',
                     render: function (data, type, full) {
-                        if (full.employee != null)
-                            return full.employee.fname
+                        if (full.user != null)
+                            return full.user.name
                         else
                             return "";
                     }
@@ -110,9 +110,9 @@ define(function (require, exports, module) {
                 {
                     'data': 'frec_status',
                     render: function (data, type, full) {
-                        if (data=0)
+                        if (data==0)
                             return '未到货'
-                        else if(data=1){
+                        else if(data==1){
                             return '未到货'
                         }else {
                             return "";

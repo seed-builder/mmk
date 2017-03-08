@@ -130,6 +130,7 @@ $user = Auth::user();
                     <li><a href="{{url('/admin/stock')}}"><i class="fa fa-fw fa-inbox"></i>门店库存盘点</a></li>
                     <li><a href="{{url('/admin/sale-order')}}"><i class="fa fa-fw fa-reorder"></i>门店订单管理</a></li>
                     <li><a href="{{url('/admin/stock-out')}}"><i class="fa fa-fw fa-outdent"></i>出库管理</a></li>
+                    <li><a href="{{url('/admin/stock-in')}}"><i class="fa fa-fw fa-indent"></i>入库管理</a></li>
                 </ul>
             </li>
 

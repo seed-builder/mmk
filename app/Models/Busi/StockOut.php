@@ -2,6 +2,7 @@
 
 namespace App\Models\Busi;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -39,5 +40,9 @@ class StockOut extends BaseModel
 
     public function customer(){
         return $this->hasOne(Customer::class,'id','fcust_id');
+    }
+
+    public function user(){
+        return $this->hasOne(User::class,'id','fuser_id');
     }
 }
