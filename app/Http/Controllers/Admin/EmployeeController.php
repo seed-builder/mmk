@@ -244,7 +244,10 @@ class EmployeeController extends AdminController
 
         $rs = $query->get();
 
-        return json_encode($rs);
+        return response()->json([
+            'code' => 200,
+            'data' => $rs
+        ]);
     }
 
 }

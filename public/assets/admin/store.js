@@ -108,23 +108,14 @@ define(function (require, exports, module) {
                     className: 'add',
                     enabled: false,
                     action: function () {
-                        var treeNode = $('#' + treeId).treeview('getSelected');
-                        var row = table.rows('.selected').data();
-                        if (treeNode[0]!="undefined"||row!=null){
-                            var femp_id;
-                            if (row.length>0){
-                                femp_id = row[0].femp_id
-                            }else if(treeNode[0].nodetype=="emp"){
-                                femp_id = treeNode[0].dataid
-                            }else{
-                                layer.msg("请先选择一个业代！")
-                                return false;
-                            }
 
+                        var femp_id = fempId(treeId,table);
+                        if (femp_id==null){
+                            layer.msg("请先选择一个业代！")
+                            return false;
+                        }else {
                             $("#storeInfoForm").attr('action','/admin/store/createStore')
                             $('#storeinfo').modal('show');
-                        }else {
-                            layer.msg("请先选择一个业代！")
                         }
 
                     }
