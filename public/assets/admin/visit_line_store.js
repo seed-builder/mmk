@@ -21,13 +21,9 @@ define(function (require, exports, module) {
                         levels: 99,
                         data: data,
                         onNodeSelected: function (event, data) {
-                            // if (data.nodetype=='emp'){
-                            //     table.buttons( ['.makeAllLine'] ).enable(true);
-                            // }
                             makeLineEnable();
                             table.ajax.reload();
                             childTable.ajax.reload();
-                            //searchtable(data.dataid);
 
                         },
                         onNodeUnselected: function (event, data) {
@@ -162,24 +158,13 @@ define(function (require, exports, module) {
                     className: 'makeAllLine',
                     enabled: false,
                     action: function () {
-                        var id = $(".list-group").find(".node-selected").data('id') != null ? $(".list-group").find(".node-selected").data('id') : table.rows('.selected').data()[0].femp_id;
+                        var id = fempId(treeId,table);
 
                         layer.confirm('确定生成该员工所有线路（已有线路不会生成）?', function () {
                             var load = layer.load(1);
-                            $.ajax({
-                                type: "GET",
-                                url: "/admin/visit_line_store/makeEmpAllLine",
-                                dataType: "json",
-                                data: {
-                                    "id": id,//组织树选中的数据id
-                                    "_token": $('meta[name="_token"]').attr('content')
-                                },
-                                success: function (data) {
-                                    if (data['code'] == 200)
-                                        table.ajax.reload();
-                                    layer.close(load);
-                                    layer.msg(data['result'])
-                                }
+                            ajaxLink("/admin/visit_line_store/makeEmpAllLine?id="+id,function () {
+                                table.ajax.reload();
+                                layer.close(load);
                             })
 
                         });
@@ -368,8 +353,8 @@ define(function (require, exports, module) {
             ajax: {
                 url: '/admin/store/pagination',
                 data: function (data) {
-                    data.columns[5]['search']['value'] = table.rows('.selected').data()[0] != null ? table.rows('.selected').data()[0].femp_id : '';
-                    data['femp_id'] = table.rows('.selected').data()[0] != null ? table.rows('.selected').data()[0].femp_id : '';
+                    data.columns[5]['search']['value'] = fempId(treeId,table);
+                    data['femp_id'] = fempId(treeId,table);
                     data['fname'] = $("#fname").val();
                     data['faddress'] = $("#faddress").val();
                     data['is_allot'] = $("#is_allot").val();
@@ -416,7 +401,7 @@ define(function (require, exports, module) {
             ajax: {
                 url: '/admin/visit_line_store/pagination',
                 data: function (data) {
-                    data.columns[6]['search']['value'] = table.rows('.selected').data()[0] != null ? table.rows('.selected').data()[0].femp_id : '';
+                    data.columns[6]['search']['value'] = fempId(treeId,table);
                     data.columns[7]['search']['value'] = table.rows('.selected').data()[0] != null ? table.rows('.selected').data()[0].fline_id : '';
                     // allotTable.columns( 7 ).search( table.rows('.selected').data()[0].fline_id ).draw();
                 }
@@ -570,7 +555,7 @@ define(function (require, exports, module) {
             ajax: {
                 url: '/admin/visit_line_store/pagination',
                 data: function (data) {
-                    data.columns[1]['search']['value'] = table.rows('.selected').data()[0] != null ? table.rows('.selected').data()[0].femp_id : '';
+                    data.columns[1]['search']['value'] = fempId(treeId,table);
                     data.columns[2]['search']['value'] = table.rows('.selected').data()[0] != null ? table.rows('.selected').data()[0].fline_id : '';
                     // allotTable.columns( 7 ).search( table.rows('.selected').data()[0].fline_id ).draw();
                 }
@@ -667,16 +652,7 @@ define(function (require, exports, module) {
 
         //设置生成员工路线按钮是否可用
         var makeLineEnable = function () {
-            var count = table.rows({selected: true}).count();
-            table.buttons(['.makeAllLine']).enable(count > 0);
-            if (count == 0) {
-                var treeNode = $('#' + treeId).treeview('getSelected');
-                if (treeNode.length > 0) {
-                    table.buttons(['.makeAllLine']).enable(treeNode[0].nodetype == 'emp');
-                }
-
-            }
-
+            table.buttons(['.makeAllLine']).enable(fempId(treeId,table) != null);
         }
 
         //添加门店至已分配门店列表方法
@@ -688,7 +664,7 @@ define(function (require, exports, module) {
                     "action": "create",
                     "data[0][fline_id]": table.rows('.selected').data()[0].fline_id,
                     "data[0][fstore_id]": store_id,
-                    "data[0][femp_id]": table.rows('.selected').data()[0].femp_id,
+                    "data[0][femp_id]": fempId(treeId,table),
                     "_token": $('meta[name="_token"]').attr('content')
                 },
                 success: function (data) {
@@ -712,7 +688,7 @@ define(function (require, exports, module) {
                     "fprovince": $("#province_id").find("option:selected").text(),
                     "fcity": $("#city_id").find("option:selected").text(),
                     "fcountry": $("#country_id").find("option:selected").text(),
-                    "femp_id": table.rows('.selected').data()[0] != null ? table.rows('.selected').data()[0].femp_id : '',
+                    "femp_id": fempId(treeId,table),
                     'fline_id': table.rows('.selected').data()[0] != null ? table.rows('.selected').data()[0].fline_id : '',
                     "_token": $('meta[name="_token"]').attr('content')
                 },
@@ -745,37 +721,17 @@ define(function (require, exports, module) {
             $("#map_select_id").val("")
         })
 
-
-        var searchtable = function (emp_id) {
-            table.columns(2).search(emp_id)
-                .draw();
-        }
-
         //城市区域联动
         $("#province_id").on('change', function () {
-            ajaxGetData("/admin/city/list?parent_id=" + $("#province_id").val(), function (data) {
-                var html = "";
-                for (index in data) {
-                    html += '<option value="' + data[index].id + '">' + data[index].Name + '</option>';
-                }
-
-                $("#city_id").html(html)
+            regionFun($("#province_id").val(),"#city_id",function () {
                 $("#city_id").trigger('change');
-            })
-
-
+            });
         })
 
         $("#city_id").on('change', function () {
-            ajaxGetData("/admin/city/list?parent_id=" + $("#city_id").val(), function (data) {
-                var html = "";
-                for (index in data) {
-                    html += '<option value="' + data[index].id + '">' + data[index].Name + '</option>';
-                }
-                $("#country_id").html(html)
+            regionFun($("#city_id").val(),"#country_id",function () {
                 mapQuery();
-            })
-
+            });
         })
 
         //地图标注方法
@@ -818,8 +774,8 @@ define(function (require, exports, module) {
         }
 
         function reloadChildTable() {
-            var selected_emp_id = table.rows('.selected').data()[0].femp_id
-            childTable.columns(6).search(table.rows('.selected').data()[0].femp_id)
+            var selected_emp_id = fempId(treeId,table)
+            childTable.columns(6).search(fempId(treeId,table))
                 .columns(7).search(table.rows('.selected').data()[0].fline_id)
                 .draw();
         }
@@ -839,53 +795,39 @@ define(function (require, exports, module) {
 
         //线路门店互调 同组业代
         var tongzu = function () {
-            $.ajax({
-                type: "GET",
-                url: "/admin/employee/employees",
-                dataType: "json",
-                data: {
-                    "fdept_id": table.rows('.selected').data()[0] != null ? table.rows('.selected').data()[0].employee.fdept_id : '',
-                    "_token": $('meta[name="_token"]').attr('content')
-                },
-                success: function (data) {
-                    var html = "";
-                    for (index in data) {
-                        html += '<option value="' + data[index].id + '">' + data[index].fname + '</option>'
-                    }
-                    $("#femp_group").html(html);
-                    $("#fdept_group").val(table.rows('.selected').data()[0].employee.department.fname);
-
+            var fdept_id = table.rows('.selected').data()[0] != null ? table.rows('.selected').data()[0].employee.fdept_id : '';
+            ajaxGetData("/admin/employee/employees?fdept_id="+fdept_id,function (data) {
+                var html = "";
+                for (index in data) {
+                    html += '<option value="' + data[index].id + '">' + data[index].fname + '</option>'
                 }
+                $("#femp_group").html(html);
+                $("#fdept_group").val(table.rows('.selected').data()[0].employee.department.fname);
             })
-
         }
 
         //线路门店互调 跨组业代
         var kauzu = function () {
-            $.ajax({
-                type: "GET",
-                url: "/admin/employee/employees",
-                dataType: "json",
-                data: {
-                    "fdept_id": $("#fdept_org").val(),
-                    "_token": $('meta[name="_token"]').attr('content')
-                },
-                success: function (data) {
-                    var html = "";
+            ajaxGetData("/admin/employee/employees?fdept_id="+$("#fdept_org").val(),function (data) {
+                var html = "";
 
-                    for (index in data) {
-                        html += '<option value="' + data[index].id + '">' + data[index].fname + '</option>'
-                    }
-                    $("#femp_org").html(html);
-
+                for (index in data) {
+                    html += '<option value="' + data[index].id + '">' + data[index].fname + '</option>'
                 }
+                $("#femp_org").html(html);
             })
-
         }
 
         //线路门店互调 保存按钮
         $("#imlSaveBtn").on('click', function () {
-            var femp_id = $(".tab-content").find(".active").find(".femp_id").val();
+            var active = $(".tab-content").find(".active").attr("id")
+            if (active=="emp_current"){
+                var femp_id = fempId(treeId,table)
+            }else {
+                var femp_id = $(".tab-content").find(".active").find(".femp_id").val();
+            }
+
+
             var fline_id = $(".tab-content").find(".active").find(".fline_id").val();
 
             if (femp_id == null) {

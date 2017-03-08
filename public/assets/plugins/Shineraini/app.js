@@ -270,3 +270,27 @@ var regionFun = function (parent_id,element,callback) {
         }
     })
 }
+
+/*
+ * 数据
+ */
+var fempId = function (treeId,table) {
+    var treeNode = $('#' + treeId).treeview('getSelected');
+    var row = table.rows('.selected').data();
+
+    var femp_id;
+
+    if (treeNode[0]!==undefined||row.length>0){
+        if (row.length>0){
+            femp_id = row[0].femp_id
+        }else if(treeNode[0].nodetype=="emp"){
+            femp_id = treeNode[0].dataid
+        }else{
+            return "" ;
+        }
+    }else {
+        return null ;
+    }
+
+    return femp_id;
+}
