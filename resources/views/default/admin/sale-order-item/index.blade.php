@@ -8,12 +8,12 @@
     <section class="content-header">
         <h1>
             top module
-            <small>st_stocks</small>
+            <small>st_sale_order_items</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
             <li><a href="#">top module</a></li>
-            <li class="active">st_stocks</li>
+            <li class="active">st_sale_order_items</li>
         </ol>
     </section>
 
@@ -23,7 +23,7 @@
             <div class="col-xs-12">
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">库存信息列表</h3>
+                        <h3 class="box-title">订单明细列表</h3>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
@@ -32,20 +32,14 @@
                             <thead>
                             <tr>
                                 <th>id</th>
-                                <th>门店编码</th>
-                                <th>门店名称</th>
-                                <th>盘点日期</th>
-                                <th>业务员编码</th>
-                                <th>业务员名称</th>
-                                <th>商品编码</th>
+                                <th>订单号</th>
                                 <th>商品名称</th>
-                                <th>规格型号</th>
-                                <th>箱数量</th>
-                                <th>瓶数量</th>
-                                <th> 库存基本单位数量（瓶）</th>
-                                <th>建议销售数量(箱)</th>
-                                <th>上次盘点库存基本单位数量（瓶）</th>
-
+                                <th>销售单位</th>
+                                <th>基本单位</th>
+                                <th>订单数量</th>
+                                <th>销售基本单位数量</th>
+                                <th>发货数量</th>
+                                <th>发货基本单位数量</th>
                             </tr>
                             </thead>
                         </table>
@@ -64,7 +58,7 @@
     @include('admin.layout.datatable-js')
     <script type="text/javascript">
         $(function () {
-            seajs.use('admin/stock.js', function (app) {
+            seajs.use('admin/sale_order_item.js', function (app) {
                 app.index($, 'moduleTable');
             });
         });

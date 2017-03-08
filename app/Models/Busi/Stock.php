@@ -32,4 +32,12 @@ class Stock extends BaseModel
 	//
 	protected $table = 'st_stocks';
 	protected $guarded = ['id'];
+
+	public function store(){
+	    return $this->hasOne(Store::class,'id','fstore_id');
+    }
+
+    public function meterial(){
+        return $this->hasOne(Material::class,'id','fmeterial_id');
+    }
 }

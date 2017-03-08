@@ -10,17 +10,17 @@ define(function (require, exports, module) {
             ajax: {
                 create: {
                     type: 'POST',
-                    url: '/admin/stock',
+                    url: '/admin/sale-order-item',
                     data: {_token: $('meta[name="_token"]').attr('content')},
                 },
                 edit: {
                     type: 'PUT',
-                    url: '/admin/stock/_id_',
+                    url: '/admin/sale-order-item/_id_',
                     data: {_token: $('meta[name="_token"]').attr('content')},
                 },
                 remove: {
                     type: 'DELETE',
-                    url: '/admin/stock/_id_',
+                    url: '/admin/sale-order-item/_id_',
                     data: {_token: $('meta[name="_token"]').attr('content')},
                 }
             },
@@ -28,20 +28,19 @@ define(function (require, exports, module) {
             table: "#" + tableId,
             idSrc: 'id',
             fields: [
-                {'label': 'fbase_eqty', 'name': 'fbase_eqty',},
+                {'label': 'fbase_qty', 'name': 'fbase_qty',},
+                {'label': 'fbase_unit', 'name': 'fbase_unit',},
                 {'label': 'fcreate_date', 'name': 'fcreate_date',},
                 {'label': 'fcreator_id', 'name': 'fcreator_id',},
                 {'label': 'fdocument_status', 'name': 'fdocument_status',},
-                {'label': 'feqty', 'name': 'feqty',},
-                {'label': 'fhqty', 'name': 'fhqty',},
-                {'label': 'flog_id', 'name': 'flog_id',},
                 {'label': 'fmeterial_id', 'name': 'fmeterial_id',},
                 {'label': 'fmodify_date', 'name': 'fmodify_date',},
                 {'label': 'fmodify_id', 'name': 'fmodify_id',},
-                {'label': 'fold_eqty', 'name': 'fold_eqty',},
-                {'label': 'fsale_hqty', 'name': 'fsale_hqty',},
-                {'label': 'fstore_id', 'name': 'fstore_id',},
-                {'label': 'ftime', 'name': 'ftime',},
+                {'label': 'fqty', 'name': 'fqty',},
+                {'label': 'fsale_order_id', 'name': 'fsale_order_id',},
+                {'label': 'fsale_unit', 'name': 'fsale_unit',},
+                {'label': 'fsend_base_qty', 'name': 'fsend_base_qty',},
+                {'label': 'fsend_qty', 'name': 'fsend_qty',},
             ]
         });
 
@@ -53,42 +52,14 @@ define(function (require, exports, module) {
             select: true,
             paging: true,
             rowId: "id",
-            ajax: '/admin/stock/pagination',
+            ajax: '/admin/sale-order-item/pagination',
             columns: [
                 {'data': 'id'},
                 {
-                    'data': 'fstore_id',
+                    'data': 'fsale_order_id',
                     render: function (data, type, full) {
-                        if (full.store != null)
-                            return full.store.fnumber
-                        else
-                            return "";
-                    }
-                },
-                {
-                    'data': 'fstore_id',
-                    render: function (data, type, full) {
-                        if (full.store != null)
-                            return full.store.ffullname
-                        else
-                            return "";
-                    }
-                },
-                {'data': 'ftime'},
-                {
-                    'data': 'fstore_id',
-                    render: function (data, type, full) {
-                        if (full.store.employee != null)
-                            return full.store.employee.fnumber
-                        else
-                            return "";
-                    }
-                },
-                {
-                    'data': 'fstore_id',
-                    render: function (data, type, full) {
-                        if (full.store.employee != null)
-                            return full.store.employee.fname
+                        if (full.order != null)
+                            return full.order.fbill_no
                         else
                             return "";
                     }
@@ -96,35 +67,19 @@ define(function (require, exports, module) {
                 {
                     'data': 'fmeterial_id',
                     render: function (data, type, full) {
-                        if (full.material != null)
-                            return full.material.fnumber
+                        if (full.meterial != null)
+                            return full.meterial.fname
                         else
                             return "";
                     }
                 },
-                {
-                    'data': 'fmeterial_id',
-                    render: function (data, type, full) {
-                        if (full.material != null)
-                            return full.material.fname
-                        else
-                            return "";
-                    }
-                },
-                {
-                    'data': 'fmeterial_id',
-                    render: function (data, type, full) {
-                        if (full.material != null)
-                            return full.material.funit
-                        else
-                            return "";
-                    }
-                },
-                {'data': 'fhqty'},
-                {'data': 'feqty'},
-                {'data': 'fbase_eqty'},
-                {'data': 'fsale_hqty'},
-                {'data': 'fold_eqty'},
+                {'data': 'fsale_unit'},
+                {'data': 'fbase_unit'},
+                {'data': 'fqty'},
+                {'data': 'fbase_qty'},
+                {'data': 'fsend_qty'},
+                {'data': 'fsend_base_qty'},
+
             ],
             columnDefs: [
                 {

@@ -3,14 +3,14 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
-use App\Models\Busi\Material;
+use App\Models\Busi\SaleOrderItem;
 
-class MaterialController extends AdminController
+class SaleOrderItemController extends AdminController
 {
 	public function newEntity(array $attributes = [])
 	{
 		// TODO: Implement newEntity() method.
-		return new Material($attributes);
+		return new SaleOrderItem($attributes);
 	}
 
 	/**
@@ -21,7 +21,7 @@ class MaterialController extends AdminController
 	public function index()
 	{
 		//
-		return view('admin.material.index');
+		return view('admin.sale-order-item.index');
 	}
 
 	/**
@@ -31,7 +31,7 @@ class MaterialController extends AdminController
 	*/
 	public function create()
 	{
-		return view('admin.material.create');
+		return view('admin.sale-order-item.create');
 	}
 
 	/**
@@ -42,8 +42,8 @@ class MaterialController extends AdminController
 	*/
 	public function edit($id)
 	{
-		$entity = Material::find($id);
-		return view('admin.material.edit', ['entity' => $entity]);
+		$entity = SaleOrderItem::find($id);
+		return view('admin.sale-order-item.edit', ['entity' => $entity]);
 	}
 
 	/**
@@ -65,8 +65,9 @@ class MaterialController extends AdminController
 	* @return  \Illuminate\Http\JsonResponse
 	*/
 	public function pagination(Request $request, $searchCols = [], $with=[], $conditionCall = null){
-		$searchCols = ["fdocument_status","fname","fnumber","funit"];
-        $with = ['store','meterial'];
+		$searchCols = ["fbase_unit","fdocument_status","fsale_unit"];
+
+        $with=['order','meterial'];
 		return parent::pagination($request, $searchCols,$with);
 	}
 

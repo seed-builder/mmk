@@ -100,16 +100,6 @@ $user = Auth::user();
                     @if($user->can('visit_line_calendar_index'))
                     <li><a href="{{url('admin/visit_line_calendar/index')}}"><i class="fa fa-circle-o"></i></i> 拜访日历</a></li>
                     @endif
-
-                    {{--<li><a href="#"><i class="fa fa-circle-o"></i></i> 拜访工作纪录</a></li>--}}
-
-                    {{--<li><a href="{{url('admin/display-policy/index')}}"><i class="fa fa-circle-o"></i></i> 费用陈列</a></li>--}}
-
-                    {{--@if($user->can('visit_store_calendar_index'))--}}
-                    {{--<li><a href="{{url('admin/visit_store_calendar/index')}}"><i class="fa fa-circle-o"></i></i> 门店拜访查看</a></li>--}}
-                    {{--@endif--}}
-
-
                 </ul>
             </li>
             @endif
@@ -125,6 +115,20 @@ $user = Auth::user();
                 <ul class="treeview-menu">
                     <li><a href="{{url('/admin/leave')}}"><i class="fa fa-fw fa-calendar-minus-o"></i>请假管理</a></li>
                     <li><a href="{{url('/admin/display-policy')}}"><i class="fa fa-fw fa-tasks"></i>陈列费用政策管理</a></li>
+                </ul>
+            </li>
+
+            <li class="treeview active">
+                <a href="#">
+                    <i class="fa fa-fw fa-sitemap"></i>
+                    <span>经销商门户</span>
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="{{url('/admin/stock')}}"><i class="fa fa-fw fa-inbox"></i>门店库存盘点</a></li>
+                    <li><a href="{{url('/admin/sale-order')}}"><i class="fa fa-fw fa-reorder"></i>门店订单管理</a></li>
                 </ul>
             </li>
 
