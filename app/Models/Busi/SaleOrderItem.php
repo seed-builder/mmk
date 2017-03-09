@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @SWG\Property(name="fcreate_date", type="string", description="创建时间")
  * @SWG\Property(name="fcreator_id", type="integer", description="创建人")
  * @SWG\Property(name="fdocument_status", type="string", description="审核状态")
- * @SWG\Property(name="fmeterial_id", type="integer", description="物料内码id")
+ * @SWG\Property(name="fmaterial_id", type="integer", description="物料内码id")
  * @SWG\Property(name="fmodify_date", type="string", description="修改时间")
  * @SWG\Property(name="fmodify_id", type="integer", description="修改人")
  * @SWG\Property(name="fqty", type="number", description="订单数量")
@@ -36,6 +36,6 @@ class SaleOrderItem extends BaseModel
         return $this->hasOne(SaleOrder::class,'id','fsale_order_id');
     }
     public function meterial(){
-        return $this->hasOne(Material::class,'id','fmeterial_id');
+        return $this->hasOne(Material::class,'id','fmaterial_id');
     }
 }

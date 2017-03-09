@@ -35,7 +35,7 @@ define(function (require, exports, module) {
                 {'label': 'feqty', 'name': 'feqty',},
                 {'label': 'fhqty', 'name': 'fhqty',},
                 {'label': 'flog_id', 'name': 'flog_id',},
-                {'label': 'fmeterial_id', 'name': 'fmeterial_id',},
+                {'label': 'fmaterial_id', 'name': 'fmaterial_id',},
                 {'label': 'fmodify_date', 'name': 'fmodify_date',},
                 {'label': 'fmodify_id', 'name': 'fmodify_id',},
                 {'label': 'fold_eqty', 'name': 'fold_eqty',},
@@ -94,7 +94,7 @@ define(function (require, exports, module) {
                     }
                 },
                 {
-                    'data': 'fmeterial_id',
+                    'data': 'fmaterial_id',
                     render: function (data, type, full) {
                         if (full.material != null)
                             return full.material.fnumber
@@ -103,7 +103,7 @@ define(function (require, exports, module) {
                     }
                 },
                 {
-                    'data': 'fmeterial_id',
+                    'data': 'fmaterial_id',
                     render: function (data, type, full) {
                         if (full.material != null)
                             return full.material.fname
@@ -112,7 +112,7 @@ define(function (require, exports, module) {
                     }
                 },
                 {
-                    'data': 'fmeterial_id',
+                    'data': 'fmaterial_id',
                     render: function (data, type, full) {
                         if (full.material != null)
                             return full.material.funit

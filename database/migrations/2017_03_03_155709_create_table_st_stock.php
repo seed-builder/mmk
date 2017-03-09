@@ -17,7 +17,7 @@ class CreateTableStStock extends Migration
             $table->increments('id');
 	        $table->integer('fstore_id')->default(0)->comment('门店id');
 	        $table->integer('flog_id')->default(0)->comment('拜访执行明细visit_todo_calendar id');
-	        $table->integer('fmeterial_id')->default(0)->comment('物料内码id');
+	        $table->integer('fmaterial_id')->default(0)->comment('物料内码id');
 	        $table->decimal('fhqty')->default(0)->comment('箱数量');
 	        $table->decimal('feqty')->default(0)->comment('瓶数量');
 	        $table->decimal('fbase_eqty')->default(0)->comment('库存基本单位数量（瓶）');

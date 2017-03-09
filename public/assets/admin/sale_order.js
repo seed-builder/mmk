@@ -145,7 +145,7 @@ define(function (require, exports, module) {
                 {'label': 'fcreate_date', 'name': 'fcreate_date',},
                 {'label': 'fcreator_id', 'name': 'fcreator_id',},
                 {'label': 'fdocument_status', 'name': 'fdocument_status',},
-                {'label': 'fmeterial_id', 'name': 'fmeterial_id',},
+                {'label': 'fmaterial_id', 'name': 'fmaterial_id',},
                 {'label': 'fmodify_date', 'name': 'fmodify_date',},
                 {'label': 'fmodify_id', 'name': 'fmodify_id',},
                 {'label': 'fqty', 'name': 'fqty',},
@@ -177,7 +177,7 @@ define(function (require, exports, module) {
                     }
                 },
                 {
-                    'data': 'fmeterial_id',
+                    'data': 'fmaterial_id',
                     render: function (data, type, full) {
                         if (full.meterial != null)
                             return full.meterial.fname

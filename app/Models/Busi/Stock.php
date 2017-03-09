@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  * @SWG\Property(name="feqty", type="number", description="瓶数量")
  * @SWG\Property(name="fhqty", type="number", description="箱数量")
  * @SWG\Property(name="flog_id", type="integer", description="拜访执行明细visit_todo_calendar id")
- * @SWG\Property(name="fmeterial_id", type="integer", description="物料内码id")
+ * @SWG\Property(name="fmaterial_id", type="integer", description="物料内码id")
  * @SWG\Property(name="fmodify_date", type="string", description="修改时间")
  * @SWG\Property(name="fmodify_id", type="integer", description="修改人")
  * @SWG\Property(name="fold_eqty", type="number", description="上次盘点库存基本单位数量(瓶)")
@@ -38,6 +38,6 @@ class Stock extends BaseModel
     }
 
     public function meterial(){
-        return $this->hasOne(Material::class,'id','fmeterial_id');
+        return $this->hasOne(Material::class,'id','fmaterial_id');
     }
 }

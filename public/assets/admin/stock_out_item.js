@@ -56,7 +56,7 @@ define(function (require, exports, module) {
                     }
                 },
                 {
-                    'data': 'fmeterial_id',
+                    'data': 'fmaterial_id',
                     render: function (data, type, full) {
                         if (full.material != null)
                             return full.material.fname

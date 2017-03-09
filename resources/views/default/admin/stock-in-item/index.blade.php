@@ -36,7 +36,7 @@
                                 <th>fcreate_date</th>
                                 <th>fcreator_id</th>
                                 <th>fdocument_status</th>
-                                <th>fmeterial_id</th>
+                                <th>fmaterial_id</th>
                                 <th>fmodify_date</th>
                                 <th>fmodify_id</th>
                                 <th>fqty</th>
