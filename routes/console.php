@@ -34,7 +34,7 @@ Artisan::command('test1', function () {
 	$db = new DbHelper();
 	$columns = $db->getColumns('bd_materials');
 	$builder = new CodeBuilder('Material', 'bd_materials', $columns);
-	$builder->createFiles('admin');
+	$builder->createFiles('api');
 	$this->comment('end ...');
 })->describe('philo blade test');
 
