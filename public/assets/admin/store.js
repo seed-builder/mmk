@@ -53,7 +53,7 @@ define(function (require, exports, module) {
                 data : function (data) {
                     var treeNode = $('#'+treeId).treeview('getSelected');
                     if (treeNode.length>0){
-                        data.columns[6]['search']['value'] = treeNode[0].dataid;
+                        data['nodeid'] = treeNode[0].dataid;
                     }
 
                 }

@@ -7,83 +7,7 @@ define(function (require, exports, module) {
     var editorCN = require('i18n');
 
     exports.index = function ($, tableId, groupTableId, treeId, groups) {
-        var editor = new $.fn.dataTable.Editor({
-            ajax: {
-                create: {
-                    type: 'POST',
-                    url: '/admin/channel',
-                    data: {_token: $('meta[name="_token"]').attr('content')},
-                },
-                edit: {
-                    type: 'PUT',
-                    url: '/admin/channel/_id_',
-                    data: {_token: $('meta[name="_token"]').attr('content')},
-                },
-                remove: {
-                    type: 'DELETE',
-                    url: '/admin/channel/_id_',
-                    data: {_token: $('meta[name="_token"]').attr('content')},
-                }
-            },
-            table: "#" + tableId,
-            i18n: editorCN,
-            idSrc: 'id',
-            fields: [
-                {'label': '渠道代码', 'name': 'fnumber',},
-                {'label': '渠道名称', 'name': 'fname',},
-                {
-                    'label': '所属渠道组',
-                    'name': 'fgroup_id',
-                    'type': 'select',
-                    'options': groups
-                },
-            ]
-        });
 
-        var table = $("#" + tableId).DataTable({
-            dom: "lBfrtip",
-            language: zhCN,
-            processing: true,
-            serverSide: true,
-            select: true,
-            paging: true,
-            rowId: "id",
-            ajax: '/admin/channel/pagination',
-            columns: [
-                {'data': 'id'},
-                {'data': 'fnumber'},
-                {'data': 'fname'},
-                {
-                    "data": 'fgroup_id',
-                    render: function (data, type, full) {
-                        if (full.group != null)
-                            return full.group.fname
-                        else
-                            return "";
-                    }
-                },
-                {'data': 'fremark'},
-                {
-                    "data": "fdocument_status",
-                    render: function ( data, type, full ) {
-                        return document_status(data);
-                    }
-                },
-            ],
-            buttons: [
-                // { text: '新增', action: function () { }  },
-                // { text: '编辑', className: 'edit', enabled: false },
-                // { text: '删除', className: 'delete', enabled: false },
-                {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: editor},
-                {extend: "edit",className: 'tableEdit', text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: editor},
-                {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
-                {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
-                {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
-                { text: '审核<i class="fa fa-fw fa-paperclip"></i>',className: 'tableCheck', enabled: false },
-                { text: '反审核<i class="fa fa-fw fa-unlink"></i>',className: 'tableUncheck', enabled: false },
-                //{extend: 'colvis', text: '列显示'}
-            ]
-        });
 
         var groupEditor = new $.fn.dataTable.Editor({
             ajax: {
@@ -127,7 +51,15 @@ define(function (require, exports, module) {
             select: true,
             paging: true,
             rowId: "id",
-            ajax: '/admin/channel-group/pagination',
+            ajax: {
+                url: '/admin/channel-group/pagination',
+                data: function (data) {
+                    var treeNode = $('#'+treeId).treeview('getSelected');
+                    if (treeNode.length>0){
+                        data['nodeid'] = treeNode[0].dataid;
+                    }
+                }
+            },
             columns: [
                 {'data': 'id'},
                 {'data': 'fnumber'},
@@ -143,7 +75,7 @@ define(function (require, exports, module) {
                 },
                 {
                     "data": "fdocument_status",
-                    render: function ( data, type, full ) {
+                    render: function (data, type, full) {
                         return document_status(data);
                     }
                 },
@@ -153,12 +85,17 @@ define(function (require, exports, module) {
                 // { text: '编辑', className: 'edit', enabled: false },
                 // { text: '删除', className: 'delete', enabled: false },
                 {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: groupEditor},
-                {extend: "edit",className: 'groupTableEdit', text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: groupEditor},
+                {
+                    extend: "edit",
+                    className: 'groupTableEdit',
+                    text: '编辑<i class="fa fa-fw fa-pencil"></i>',
+                    editor: groupEditor
+                },
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: groupEditor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
-                { text: '审核<i class="fa fa-fw fa-paperclip"></i>',className: 'groupTableCheck', enabled: false },
-                { text: '反审核<i class="fa fa-fw fa-unlink"></i>',className: 'groupTableUncheck', enabled: false },
+                {text: '审核<i class="fa fa-fw fa-paperclip"></i>', className: 'groupTableCheck', enabled: false},
+                {text: '反审核<i class="fa fa-fw fa-unlink"></i>', className: 'groupTableUncheck', enabled: false},
                 //{extend: 'colvis', text: '列显示'}
             ],
             columnDefs: [
@@ -169,13 +106,96 @@ define(function (require, exports, module) {
             ]
         });
 
-        groupTable.on('select', searchChannelTable);
+        groupTable.on('select', function () {
+            table.ajax.reload();
+        });
 
-        function searchChannelTable() {
-            var selected_group_id = groupTable.rows('.selected').data()[0].id
-            table.columns(3).search(selected_group_id)
-                .draw();
-        }
+        var editor = new $.fn.dataTable.Editor({
+            ajax: {
+                create: {
+                    type: 'POST',
+                    url: '/admin/channel',
+                    data: {_token: $('meta[name="_token"]').attr('content')},
+                },
+                edit: {
+                    type: 'PUT',
+                    url: '/admin/channel/_id_',
+                    data: {_token: $('meta[name="_token"]').attr('content')},
+                },
+                remove: {
+                    type: 'DELETE',
+                    url: '/admin/channel/_id_',
+                    data: {_token: $('meta[name="_token"]').attr('content')},
+                }
+            },
+            table: "#" + tableId,
+            i18n: editorCN,
+            idSrc: 'id',
+            fields: [
+                {'label': '渠道代码', 'name': 'fnumber',},
+                {'label': '渠道名称', 'name': 'fname',},
+                {
+                    'label': '所属渠道组',
+                    'name': 'fgroup_id',
+                    'type': 'select',
+                    'options': groups
+                },
+            ]
+        });
+
+        var table = $("#" + tableId).DataTable({
+            dom: "lBfrtip",
+            language: zhCN,
+            processing: true,
+            serverSide: true,
+            select: true,
+            paging: true,
+            rowId: "id",
+            ajax: {
+                url : '/admin/channel/pagination',
+                data : function (data) {
+                    var treeNode = $('#'+treeId).treeview('getSelected');
+                    if (treeNode.length>0){
+                        data['nodeid'] = treeNode[0].dataid;
+                    }
+                    data.columns[3]['search']['value'] = groupTable.rows('.selected').data()[0] != null ? groupTable.rows('.selected').data()[0].id : '';
+                }
+            },
+            columns: [
+                {'data': 'id'},
+                {'data': 'fnumber'},
+                {'data': 'fname'},
+                {
+                    "data": 'fgroup_id',
+                    render: function (data, type, full) {
+                        if (full.group != null)
+                            return full.group.fname
+                        else
+                            return "";
+                    }
+                },
+                {'data': 'fremark'},
+                {
+                    "data": "fdocument_status",
+                    render: function (data, type, full) {
+                        return document_status(data);
+                    }
+                },
+            ],
+            buttons: [
+                // { text: '新增', action: function () { }  },
+                // { text: '编辑', className: 'edit', enabled: false },
+                // { text: '删除', className: 'delete', enabled: false },
+                {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: editor},
+                {extend: "edit", className: 'tableEdit', text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: editor},
+                {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
+                {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
+                {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
+                {text: '审核<i class="fa fa-fw fa-paperclip"></i>', className: 'tableCheck', enabled: false},
+                {text: '反审核<i class="fa fa-fw fa-unlink"></i>', className: 'tableUncheck', enabled: false},
+                //{extend: 'colvis', text: '列显示'}
+            ]
+        });
 
         var getTreeData = function () {
             $.ajax({
@@ -190,48 +210,43 @@ define(function (require, exports, module) {
                         levels: 99,
                         data: data,
                         onNodeSelected: function (event, data) {
-                            searchGroupTable(data.dataid);
+                            groupTable.ajax.reload();
+                            table.ajax.reload();
                         }
                     });
                 },
             });
         }
 
-        var searchGroupTable = function (id) {
-            groupTable.columns(0).search(id)
-                .draw();
-            table.columns(3).search(id)
-                .draw();
-        }
 
-        table.on( 'select', tableRowSelect).on( 'deselect', tableRowSelect);
+        table.on('select', tableRowSelect).on('deselect', tableRowSelect);
 
-        groupTable.on( 'select', groupTableRowSelect).on( 'deselect', groupTableRowSelect);
+        groupTable.on('select', groupTableRowSelect).on('deselect', groupTableRowSelect);
 
         function tableRowSelect() {
-            checkEditEnabble(table,['.tableEdit','.tableCheck'],['.tableUncheck']);
+            checkEditEnabble(table, ['.tableEdit', '.tableCheck'], ['.tableUncheck']);
         }
 
         function groupTableRowSelect() {
-            checkEditEnabble(groupTable,['.groupTableEdit','.groupTableCheck'],['.groupTableUncheck']);
+            checkEditEnabble(groupTable, ['.groupTableEdit', '.groupTableCheck'], ['.groupTableUncheck']);
         }
 
         //渠道审核
-        $(".tableCheck").on('click',function () {
-            dataCheck(table,'/admin/channel/check');
+        $(".tableCheck").on('click', function () {
+            dataCheck(table, '/admin/channel/check');
         })
 
-        $(".tableUncheck").on('click',function () {
-            dataCheck(table,'/admin/channel/uncheck');
+        $(".tableUncheck").on('click', function () {
+            dataCheck(table, '/admin/channel/uncheck');
         })
 
         //渠道组审核
-        $(".groupTableCheck").on('click',function () {
-            dataCheck(groupTable,'/admin/channel-group/check');
+        $(".groupTableCheck").on('click', function () {
+            dataCheck(groupTable, '/admin/channel-group/check');
         })
 
-        $(".groupTableUncheck").on('click',function () {
-            dataCheck(groupTable,'/admin/channel-group/uncheck');
+        $(".groupTableUncheck").on('click', function () {
+            dataCheck(groupTable, '/admin/channel-group/uncheck');
         })
 
         getTreeData();

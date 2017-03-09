@@ -68,43 +68,24 @@ class ChannelGroupController extends AdminController
 		$searchCols = ["fdocument_status","fname","fnumber","ftype","fparent_id","id"];
 
         $data = $request->all();
-        $query = ChannelGroup::query();
-        foreach ($data['columns'] as $d) {
-            if ($d['data']=='id'&&!empty($d['search']['value'])){
-                $cg = ChannelGroup::find($d['search']['value']);
-                $request['queryBuilder'] = $cg->queryChildren($query,$cg);
+
+		return parent::pagination($request, $searchCols,$with,function ($queryBuilder) use ($data) {
+            if (!empty($data['nodeid'])) {
+                $channelGroup = ChannelGroup::find($data['nodeid']);
+                $ids = $channelGroup->getChildrenIds($data['nodeid']);
+                $queryBuilder->whereIn('id', $ids);
             }
+        });
+	}
+
+    public function channelGroupTree(){
+        $all = ChannelGroup::where('fparent_id', 0)->get();
+        foreach ($all as $top){
+            $tree[] = $this->toBootstrapTreeViewData($top,  ['text' => 'fname', 'dataid' => 'id'], false);
         }
-		return parent::pagination($request, $searchCols);
-	}
+
+        return response()->json($tree);
+    }
 	
-	public function ajaxGetChannelGroups(){
-		$groups = ChannelGroup::query()->where('fparent_id',0)->get();
-		$gp_datas = $this->toTextArray($groups);
-		
-		return $gp_datas;
-	}
-	
-	protected function toTextArray($datas, $selectable = true){
-		$rs = [];
-		foreach ($datas as $d){
-			if($d->getChildrenCountAttribute()>0){
-				$rs[]=array(
-						'text' => $d->fname,
-						'dataid' => $d->id,
-						'selectable' => $selectable,
-						'nodes' => $this->toTextArray($d->childrenGroup())
-				);
-			}else{
-				$rs[]=array(
-						'text' => $d->fname,
-						'dataid' => $d->id,
-						'selectable' => $selectable
-				);
-			}
-		}
-	
-		return $rs;
-	}
 
 }

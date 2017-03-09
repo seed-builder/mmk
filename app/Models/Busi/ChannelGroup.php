@@ -49,18 +49,18 @@ class ChannelGroup extends BaseModel
 		return $c;
 	}
 
+    public function children()
+    {
+        return $this->hasMany(ChannelGroup::class, 'fparent_id');
+    }
+
 	public function childrenGroup(){
 		return ChannelGroup::query()->where('fparent_id',$this->id)->get();
 	}
 
-	public function parentGroup(){
-// 		return ChannelGroup::query()->where('id',$this->fparent_id)->first();
-// 		return $this->hasOne(self::class, 'id', 'fparent_id');
-	}
-
-	public function getChildrenIds($id){
+	public function getChildrenIds(){
 	    $query = ChannelGroup::query();
-        $cg = ChannelGroup::find($id);
+        $cg = ChannelGroup::find($this->id);
         $query = $this->queryChildren($query,$cg);
 
         $data = $query->get();
