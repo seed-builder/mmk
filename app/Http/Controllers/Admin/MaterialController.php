@@ -66,7 +66,7 @@ class MaterialController extends AdminController
 	*/
 	public function pagination(Request $request, $searchCols = [], $with=[], $conditionCall = null){
 		$searchCols = ["fdocument_status","fname","fnumber","funit"];
-        $with = ['store','meterial'];
+        //$with = ['store','meterial'];
 		return parent::pagination($request, $searchCols,$with);
 	}
 

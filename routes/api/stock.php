@@ -57,16 +57,13 @@ Route::group(['prefix' => 'stock', 'middleware' => 'api.sign'], function () {
     *      notes="新增库存",
     *      type="",
     *      @SWG\Parameters(
-    *          @SWG\Parameter(name="fbase_eqty", description="库存基本单位数量（瓶）", required=false,type="number", paramType="form", defaultValue="0.00" ),
+    *          @SWG\Parameter(name="flog_id", description="拜访执行明细visit_todo_calendar id", required=false,type="integer", paramType="form", defaultValue="0" ),
     *          @SWG\Parameter(name="femp_id", description="当前员工id", required=false,type="integer", paramType="form", defaultValue="0" ),
+    *          @SWG\Parameter(name="fmaterial_id", description="物料内码id", required=false,type="integer", paramType="form", defaultValue="0" ),
     *          @SWG\Parameter(name="feqty", description="瓶数量", required=false,type="number", paramType="form", defaultValue="0.00" ),
     *          @SWG\Parameter(name="fhqty", description="箱数量", required=false,type="number", paramType="form", defaultValue="0.00" ),
-    *          @SWG\Parameter(name="flog_id", description="拜访执行明细visit_todo_calendar id", required=false,type="integer", paramType="form", defaultValue="0" ),
-    *          @SWG\Parameter(name="fmaterial_id", description="物料内码id", required=false,type="integer", paramType="form", defaultValue="0" ),
-    *          @SWG\Parameter(name="fold_eqty", description="上次盘点库存基本单位数量(瓶)", required=false,type="number", paramType="form", defaultValue="0.00" ),
     *          @SWG\Parameter(name="fsale_hqty", description="建议销售数量(箱)", required=false,type="number", paramType="form", defaultValue="0.00" ),
     *          @SWG\Parameter(name="fstore_id", description="门店id", required=false,type="integer", paramType="form", defaultValue="0" ),
-    *          @SWG\Parameter(name="ftime", description="盘点时间", required=true,type="string", paramType="form", defaultValue="" ),
     *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
     *      )
     *  )
@@ -84,17 +81,10 @@ Route::group(['prefix' => 'stock', 'middleware' => 'api.sign'], function () {
     *      notes="更新库存",
     *      type="",
     *      @SWG\Parameters(
-    *          @SWG\Parameter(name="fbase_eqty", description="库存基本单位数量（瓶）", required=false,type="number", paramType="form", defaultValue="0.00" ),
-    *          @SWG\Parameter(name="fcreate_date", description="创建时间", required=false,type="string", paramType="form", defaultValue="" ),
-    *          @SWG\Parameter(name="fcreator_id", description="创建人", required=false,type="integer", paramType="form", defaultValue="0" ),
-    *          @SWG\Parameter(name="fdocument_status", description="审核状态", required=false,type="string", paramType="form", defaultValue="A" ),
     *          @SWG\Parameter(name="feqty", description="瓶数量", required=false,type="number", paramType="form", defaultValue="0.00" ),
     *          @SWG\Parameter(name="fhqty", description="箱数量", required=false,type="number", paramType="form", defaultValue="0.00" ),
     *          @SWG\Parameter(name="flog_id", description="拜访执行明细visit_todo_calendar id", required=false,type="integer", paramType="form", defaultValue="0" ),
     *          @SWG\Parameter(name="fmaterial_id", description="物料内码id", required=false,type="integer", paramType="form", defaultValue="0" ),
-    *          @SWG\Parameter(name="fmodify_date", description="修改时间", required=false,type="string", paramType="form", defaultValue="" ),
-    *          @SWG\Parameter(name="fmodify_id", description="修改人", required=false,type="integer", paramType="form", defaultValue="0" ),
-    *          @SWG\Parameter(name="fold_eqty", description="上次盘点库存基本单位数量(瓶)", required=false,type="number", paramType="form", defaultValue="0.00" ),
     *          @SWG\Parameter(name="fsale_hqty", description="建议销售数量(箱)", required=false,type="number", paramType="form", defaultValue="0.00" ),
     *          @SWG\Parameter(name="fstore_id", description="门店id", required=false,type="integer", paramType="form", defaultValue="0" ),
     *          @SWG\Parameter(name="ftime", description="盘点时间", required=false,type="string", paramType="form", defaultValue="" ),

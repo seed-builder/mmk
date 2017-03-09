@@ -20,9 +20,9 @@ class CreateTableStStock extends Migration
 	        $table->integer('fmaterial_id')->default(0)->comment('物料内码id');
 	        $table->decimal('fhqty')->default(0)->comment('箱数量');
 	        $table->decimal('feqty')->default(0)->comment('瓶数量');
-	        $table->decimal('fbase_eqty')->default(0)->comment('库存基本单位数量（瓶）');
+	        //$table->decimal('fbase_eqty')->default(0)->comment('库存基本单位数量（瓶）');
 	        $table->decimal('fsale_hqty')->default(0)->comment('建议销售数量(箱)');
-	        $table->decimal('fold_eqty')->default(0)->comment('上次盘点库存基本单位数量(瓶)');
+	        //$table->decimal('fold_eqty')->default(0)->comment('上次盘点库存基本单位数量(瓶)');
 	        $table->timestamp('ftime')->nullable()->comment('盘点时间');
 
 	        $table->integer('fcreator_id')->default(0)->comment('创建人');
