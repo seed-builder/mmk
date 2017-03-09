@@ -28,7 +28,7 @@ define(function (require, exports, module) {
             table: "#" + itemTableId,
             idSrc: 'id',
             fields: [
-                { 'label': '商品', 'name': 'fmeterial_id', 'type': 'select', 'options': materials},
+                { 'label': '商品', 'name': 'fmaterial_id', 'type': 'select', 'options': materials},
                 {'label': '销售单位', 'name': 'fsale_unit',},
                 {'label': '基本单位', 'name': 'fbase_unit',},
                 {'label': '订单数量', 'name': 'fqty',},
