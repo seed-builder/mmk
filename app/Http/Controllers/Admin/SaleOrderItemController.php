@@ -67,7 +67,7 @@ class SaleOrderItemController extends AdminController
 	public function pagination(Request $request, $searchCols = [], $with=[], $conditionCall = null){
 		$searchCols = ["fbase_unit","fdocument_status","fsale_unit"];
 
-        $with=['order','meterial'];
+        $with=['order','material'];
 		return parent::pagination($request, $searchCols,$with);
 	}
 
