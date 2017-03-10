@@ -118,6 +118,7 @@ $user = Auth::user();
                 </ul>
             </li>
 
+            @if($user->can(['customer_index','stock_index','sale-order_index','stock-out_index','stock-in_index','view-customer-stock-statistic_index']))
             <li class="treeview active">
                 <a href="#">
                     <i class="fa fa-fw fa-sitemap"></i>
@@ -127,14 +128,27 @@ $user = Auth::user();
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="{{url('/admin/customer')}}"><i class="fa fa-fw fa-inbox"></i>经销商</a></li>
+                    @if($user->can('customer_index'))
+                    <li><a href="{{url('/admin/customer')}}"><i class="fa fa-fw fa-user"></i>经销商</a></li>
+                    @endif
+                    @if($user->can('stock_index'))
                     <li><a href="{{url('/admin/stock')}}"><i class="fa fa-fw fa-inbox"></i>门店库存盘点</a></li>
+                    @endif
+                    @if($user->can('sale-order_index'))
                     <li><a href="{{url('/admin/sale-order')}}"><i class="fa fa-fw fa-reorder"></i>门店订单管理</a></li>
+                    @endif
+                    @if($user->can('stock-out_index'))
                     <li><a href="{{url('/admin/stock-out')}}"><i class="fa fa-fw fa-outdent"></i>出库管理</a></li>
+                    @endif
+                    @if($user->can('stock-in_index'))
                     <li><a href="{{url('/admin/stock-in')}}"><i class="fa fa-fw fa-indent"></i>入库管理</a></li>
+                    @endif
+                    @if($user->can('view-customer-stock-statistic_index'))
                     <li><a href="{{url('/admin/view-customer-stock-statistic')}}"><i class="fa fa-fw fa-table"></i>库存余额报表</a></li>
+                    @endif
                 </ul>
             </li>
+            @endif
 
             @if($user->can(['user_index','role_index','permission_index']))
             <li class="treeview active">
