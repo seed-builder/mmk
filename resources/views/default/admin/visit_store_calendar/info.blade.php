@@ -30,7 +30,7 @@
                                 <div class="timeline-item">
                                     <span class="time"><i class="fa fa-fw fa-calendar-o"></i> {{$t->status()}}</span>
 
-                                    <h3 class="timeline-header">{{$t->todo->fname}}</h3>
+                                    <h3 class="timeline-header">{{!empty($t->todo->fname)?$t->todo->fname:'无'}}</h3>
 
                                     <div class="timeline-body">
                                         @if(!empty($t->images))

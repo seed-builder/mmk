@@ -76,11 +76,13 @@ class StoreController extends AdminController
     //门店路线规划 预分配门店查询
     public function readyAllotStoreQuery($data,$query)
     {
-        $query->where('femp_id', $data['femp_id']);
+        if (!empty($data['femp_id'])){
+            $query->where('femp_id', $data['femp_id']);
 
-        //预分配门店列表 过滤掉该线路中已存在的门店
-        $exist_ids = VisitLineStore::query()->where('fline_id', $data['fline_id'])->pluck('fstore_id')->toArray();
-        $query->whereNotIn('id', $exist_ids);
+            //预分配门店列表 过滤掉该线路中已存在的门店
+            $exist_ids = VisitLineStore::query()->where('fline_id', $data['fline_id'])->pluck('fstore_id')->toArray();
+            $query->whereNotIn('id', $exist_ids);
+        }
 
         if (!empty($data['fname'])) {
             $query->where('ffullname', 'like', '%' . $data['fname'] . '%')->get();

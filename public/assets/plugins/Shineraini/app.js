@@ -30,7 +30,7 @@ $('body').on("show.bs.modal", ".modal", function () {
     $(this).find(".modal-dialog").draggable({
         handle: ".modal-header"
     });
-    $(this).css("overflow", "hidden");
+    //$(this).css("overflow", "hidden");
 });
 
 

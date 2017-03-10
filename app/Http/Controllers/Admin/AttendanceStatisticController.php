@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Busi\Department;
 use App\Services\LogSvr;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -35,12 +36,30 @@ class AttendanceStatisticController extends AdminController
 	 */
 	public function pagination(Request $request, $searchCols = [], $with = [], $conditionCall = null){
 		$searchCols = [];
+
 		return parent::pagination($request, $searchCols, $with, function ($queryBuilder)use($request){
 			$search = $request->input('search', []);
+            $data = $request->all();
+
 			$empQuery = DB::table('bd_employees');//,[[$emp,'fname','femp_id']]
 			if (!empty($search['value'])) {
 				$empQuery->where('bd_employees.fname', 'like binary', '%' . $search['value'] . '%');
 			}
+
+            if (!empty($data['nodeid'])) {
+                $emp = Employee::find($data['nodeid']);
+                if (empty($emp)) {
+                    $dept = Department::find($data['nodeid']);
+                    $emp_ids = $dept->getAllEmployeeByDept()->pluck('id')->toArray();
+
+                    $queryBuilder->whereIn('femp_id', $emp_ids);
+                } else {
+                    $queryBuilder->where('femp_id', $data['nodeid']);
+                }
+            }
+            if (!empty($data['fdate'])){
+                $queryBuilder->where('fday','like', '%' . $data['fdate'] . '%');
+            }
 			$curUser = Auth::user();
 			if(!$curUser->isAdmin()) {
 				if (SysConfigRepo::isMgtDataIsolate()) {
