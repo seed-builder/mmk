@@ -679,6 +679,8 @@ define(function (require, exports, module) {
         //地图查询方法
         var mapQuery = function () {
             map.clearOverlays();
+            console.log($("#country_id").find("option[selected='selected']").text());
+            map.centerAndZoom($("#country_id").find("option:selected").text(), params['zoom']);
 
             $.ajax({
                 type: "GET",
@@ -693,6 +695,10 @@ define(function (require, exports, module) {
                     "_token": $('meta[name="_token"]').attr('content')
                 },
                 success: function (data) {
+                    if (data.length==0){
+                        layer.msg("当前人员在该区域内没有所负责的门店！")
+                        return ;
+                    }
                     for (index in data) {
                         data[index]['selectable'] = true;
                         mapAddOverlay(data[index]['flongitude'], data[index]['flatitude'], data[index]);

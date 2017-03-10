@@ -132,7 +132,7 @@ class StoreController extends AdminController
             $query->where('femp_id', $data['femp_id']);
         }
 
-        return json_encode($query->get());
+        return response()->json($query->get());
     }
 
 
