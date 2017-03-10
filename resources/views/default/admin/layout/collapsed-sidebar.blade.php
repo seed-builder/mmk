@@ -126,7 +126,7 @@
             </div>
         </nav>
     </header>
-	<input type="hidden" id="cur_url" value="{{url( Route::getCurrentRoute()->getPath() )}}">
+	<input type="hidden" id="cur_url" value="{{url( Route::getCurrentRoute()->uri() )}}">
     <!-- =============================================== -->
 
     @include('admin.layout.menu')
