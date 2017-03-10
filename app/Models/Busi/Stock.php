@@ -48,48 +48,48 @@ class Stock extends BaseModel
 		static::creating(function ($model){
 			$model->ftime = date('Y-m-d H:i:s');
 		});
-		static::created(function ($model){
-			 //创建订单
-			DB::transaction(function () use($model) {
-				$order = SaleOrder::where('flog_id', $model->flog_id)
-					->where('fstore_id', $model->fstore_id)
-					->first();
-				if (empty($order)) {
-					$store = Store::find($model->fstore_id);
-					$order = SaleOrder::create([
-						'fstore_id' => $model->fstore_id,
-						'flog_id' => $model->flog_id,
-						'fbill_no' => $store->fnumber . date('Ymd'),
-						'fdate' => date('Ymd'),
-						'femp_id' => $model->femp_id,
-						'fcust_id' => $store->fcust_id,
-					]);
-				}
-				SaleOrderItem::create([
-					'fstock_id' => $model->id,
-					'fsale_order_id' => $order->id,
-					'fmaterial_id' => $model->fmaterial_id,
-					'fsale_unit' => $model->material->fsale_unit,
-					'fbase_unit' => $model->material->fbase_unit,
-					'fqty' => $model->fsale_hqty,
-					'fbase_qty' => $model->fsale_hqty * $model->material->fratio,
-				]);
-			});
-		});
-		static::deleted(function ($model){
-			//删除订单item
-			$orderItems = SaleOrderItem::where('fstock_id', $model->id)->get();
-			foreach ($orderItems as $item)
-				$item->delete();
-		});
-		static::updated(function ($model){
-			//更新订单
-			$orderItem = SaleOrderItem::where('fstock_id', $model->id)->first();
-			if(!empty($orderItem) && $orderItem->fqty != $model->fsale_hqty){
-				$orderItem->fqty = $model->fsale_hqty;
-				$orderItem->fbase_qty = $model->fsale_hqty * $model->material->fratio;
-				$orderItem->save();
-			}
-		});
+//		static::created(function ($model){
+//			 //创建订单
+//			DB::transaction(function () use($model) {
+//				$order = SaleOrder::where('flog_id', $model->flog_id)
+//					->where('fstore_id', $model->fstore_id)
+//					->first();
+//				if (empty($order)) {
+//					$store = Store::find($model->fstore_id);
+//					$order = SaleOrder::create([
+//						'fstore_id' => $model->fstore_id,
+//						'flog_id' => $model->flog_id,
+//						'fbill_no' => $store->fnumber . date('Ymd'),
+//						'fdate' => date('Ymd'),
+//						'femp_id' => $model->femp_id,
+//						'fcust_id' => $store->fcust_id,
+//					]);
+//				}
+//				SaleOrderItem::create([
+//					'fstock_id' => $model->id,
+//					'fsale_order_id' => $order->id,
+//					'fmaterial_id' => $model->fmaterial_id,
+//					'fsale_unit' => $model->material->fsale_unit,
+//					'fbase_unit' => $model->material->fbase_unit,
+//					'fqty' => $model->fsale_hqty,
+//					'fbase_qty' => $model->fsale_hqty * $model->material->fratio,
+//				]);
+//			});
+//		});
+//		static::deleted(function ($model){
+//			//删除订单item
+//			$orderItems = SaleOrderItem::where('fstock_id', $model->id)->get();
+//			foreach ($orderItems as $item)
+//				$item->delete();
+//		});
+//		static::updated(function ($model){
+//			//更新订单
+//			$orderItem = SaleOrderItem::where('fstock_id', $model->id)->first();
+//			if(!empty($orderItem) && $orderItem->fqty != $model->fsale_hqty){
+//				$orderItem->fqty = $model->fsale_hqty;
+//				$orderItem->fbase_qty = $model->fsale_hqty * $model->material->fratio;
+//				$orderItem->save();
+//			}
+//		});
 	}
 }
