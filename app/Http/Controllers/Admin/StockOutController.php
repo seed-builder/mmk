@@ -73,7 +73,7 @@ class StockOutController extends AdminController
 		//
 	}
 
-	public function store(Request $request,$extraFields=[])
+	public function store(Request $request, $extraFields=[])
     {
         $data = $request->input('data', []);
         $props = current($data);
@@ -82,7 +82,7 @@ class StockOutController extends AdminController
             'fuser_id' => Auth::user()->id,
             'fbill_no' => Store::find($props['fstore_id'])->fnumber.date("Ymd")
         ];
-        return parent::store($request,$extraFields);
+        return parent::store($request, $extraFields);
     }
 
 	/**
@@ -95,7 +95,7 @@ class StockOutController extends AdminController
 	public function pagination(Request $request, $searchCols = [], $with=[], $conditionCall = null){
 		$searchCols = ["fbill_no","fdocument_status","fsbill_no"];
         $with=['customer','store','user'];
-		return parent::pagination($request, $searchCols,$with);
+		return parent::pagination($request, $searchCols, $with);
 	}
 
 }

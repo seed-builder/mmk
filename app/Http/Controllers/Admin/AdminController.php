@@ -42,10 +42,11 @@ abstract class AdminController extends Controller
 	/**
 	 * Store a newly created resource in storage.
 	 *
-	 * @param  \Illuminate\Http\Request  $request
+	 * @param  \Illuminate\Http\Request $request
+	 * @param array $extraFields
 	 * @return \Illuminate\Http\Response
 	 */
-	public function store(Request $request,$extraFields=[])
+	public function store(Request $request, $extraFields=[])
 	{
 		$data = $request->input('data', []);
 		if(empty($data))
@@ -88,11 +89,12 @@ abstract class AdminController extends Controller
 	/**
 	 * Update the specified resource in storage.
 	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @param  int  $id
+	 * @param  \Illuminate\Http\Request $request
+	 * @param  int $id
+	 * @param array $extraFields
 	 * @return \Illuminate\Http\Response
 	 */
-	public function update(Request $request, $id,$extraFields=[])
+	public function update(Request $request, $id, $extraFields=[])
 	{
 		//
 		$data = $request->input('data', []);

@@ -79,7 +79,7 @@ class StockInController extends AdminController
 		return parent::pagination($request, $searchCols,$with);
 	}
 
-    public function store(Request $request,$extraFields=[])
+    public function store(Request $request, $extraFields=[])
     {
         $data = $request->input('data', []);
         $props = current($data);
