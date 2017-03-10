@@ -46,11 +46,11 @@ define(function(require, exports, module) {
             table: "#" + tableId,
             idSrc: 'id',
             fields: [
-<?php $__empty_1 = true; $__currentLoopData = $columns; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $col): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); $__empty_1 = false; ?>
+<?php $__empty_1 = true; $__currentLoopData = $columns; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $col): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
     <?php if(!exclude($col)): ?>
         { 'label':  '<?php echo e($col->display); ?>', 'name': '<?php echo e($col->name); ?>',<?=showEditorType($col)?> },
     <?php endif; ?>
-<?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); if ($__empty_1): ?>
+<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
 <?php endif; ?>
 ]
         });
@@ -65,9 +65,9 @@ define(function(require, exports, module) {
             rowId: "id",
             ajax: '/admin/<?php echo e(snake_case($model,'-')); ?>/pagination',
             columns: [
-        <?php $__empty_1 = true; $__currentLoopData = $columns; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $col): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); $__empty_1 = false; ?>
+        <?php $__empty_1 = true; $__currentLoopData = $columns; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $col): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
             {  'data': '<?php echo e($col->name); ?>' },
-        <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); if ($__empty_1): ?>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
         <?php endif; ?>
     ],
             buttons: [
