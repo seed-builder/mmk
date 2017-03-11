@@ -61,7 +61,7 @@ class Store extends BaseModel
     //
     protected $table = 'st_stores';
     
-    protected $with = ['employee','customer', 'lines','channel','photo'];
+    //protected $with = ['employee','customer', 'lines','channel','photo'];
     
     public $validateRules=[
     		'ffullname' => 'required',
