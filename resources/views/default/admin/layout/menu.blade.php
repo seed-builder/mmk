@@ -29,7 +29,7 @@ $user = Auth::user();
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
-            @if($user->can(['employee_index','department_index','channel_index','position_index','material_index','visit_store_todo_index','visit_store_todo_index']))
+            @if($user->can(['employee_index','department_index','channel_index','position_index','material_index','customer_index']))
                 <li class="treeview active">
                     <a href="#">
                         <i class="fa fa-fw fa-tv"></i>
@@ -58,13 +58,10 @@ $user = Auth::user();
                         @if($user->can('material_index'))
                             <li><a href="{{url('admin/material')}}"><i class="fa fa-circle-o"></i></i> 商品信息</a></li>
                         @endif
-                        @if($user->can('visit_funciton_index'))
-                            <li><a href="{{url('admin/visit-function')}}"><i class="fa fa-circle-o"></i></i> 拜访定制功能</a>
-                            </li>
+                        @if($user->can('customer_index'))
+                                <li><a href="{{url('/admin/customer')}}"><i class="fa fa-circle-o"></i></i>经销商信息</a></li>
                         @endif
-                        @if($user->can('visit_store_todo_index'))
-                            <li><a href="{{url('admin/visit-store-todo')}}"><i class="fa fa-circle-o"></i></i> 拜访事项</a></li>
-                        @endif
+
 
 
                     <!--                     <li><a href="#"><i class="fa fa-circle-o"></i></i> 区域经营品项</a></li> -->
@@ -136,7 +133,7 @@ $user = Auth::user();
                 </ul>
             </li>
 
-            @if($user->can(['customer_index','stock_index','sale-order_index','stock-out_index','stock-in_index','view-customer-stock-statistic_index']))
+            @if($user->can(['stock_index','sale-order_index','stock-out_index','stock-in_index','view-customer-stock-statistic_index']))
                 <li class="treeview active">
                     <a href="#">
                         <i class="fa fa-fw fa-sitemap"></i>
@@ -146,9 +143,6 @@ $user = Auth::user();
                     </span>
                     </a>
                     <ul class="treeview-menu">
-                        @if($user->can('customer_index'))
-                            <li><a href="{{url('/admin/customer')}}"><i class="fa fa-fw fa-user"></i>经销商信息</a></li>
-                        @endif
                         @if($user->can('stock_index'))
                             <li><a href="{{url('/admin/stock')}}"><i class="fa fa-fw fa-inbox"></i>门店库存</a></li>
                         @endif
@@ -193,7 +187,7 @@ $user = Auth::user();
                 </li>
             @endif
 
-            @if($user->can(['sys-config_index','sys-dics_index','app-upgrade_index','message-template_index']))
+            @if($user->can(['sys-config_index','sys-dics_index','app-upgrade_index','message-template_index','visit_funciton_index','visit_store_todo_index']))
                 <li class="treeview active">
                     <a href="#">
                         <i class="fa fa-anchor"></i>
@@ -215,6 +209,14 @@ $user = Auth::user();
                         @endif
                         @if($user->can('message-template_index'))
                             <li><a href="{{url('/admin/message-template')}}"><i class="fa fa-fw fa-paper-plane"></i>消息模板</a>
+                            </li>
+                        @endif
+                        @if($user->can('visit_funciton_index'))
+                            <li><a href="{{url('admin/visit-function')}}"><i class="fa fa-circle-o"></i></i> 拜访功能</a>
+                            </li>
+                        @endif
+                        @if($user->can('visit_store_todo_index'))
+                            <li><a href="{{url('admin/visit-store-todo')}}"><i class="fa fa-circle-o"></i></i> 拜访配置</a>
                             </li>
                         @endif
                     </ul>
