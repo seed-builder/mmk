@@ -1,6 +1,5 @@
 @extends('admin.layout.collapsed-sidebar')
 @section('styles')
-    <link rel="stylesheet" href="{{url('assets')}}/plugins/layui/css/layui.css">
     <style>
         .tangram-suggestion-main {
             z-index: 9999;
@@ -316,7 +315,6 @@
     <script src="/assets/plugins/bootstrap-treeview/bootstrap-treeview.min.js"></script>
     <script type="text/javascript"
             src="http://api.map.baidu.com/api?v=2.0&ak=D4Bi3270ydgA5HsnWDnmBVwF3zaPdoMC"></script>
-    <script src="{{url('assets')}}/plugins/layui/layui.js"></script>
     @include('admin.layout.datatable-js')
     <script type="text/javascript">
 
