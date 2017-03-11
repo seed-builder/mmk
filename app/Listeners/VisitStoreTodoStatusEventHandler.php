@@ -62,7 +62,9 @@ class VisitStoreTodoStatusEventHandler  //implements ShouldQueue
 			    $parent->save();
 		    }elseif($todoCalendar->fstatus == 3){
 			    if($parent->todo->fchildren_calculate == 'and') {
-				    $count = VisitTodoCalendar::where('fparent_id', $todoCalendar->fparent_id)->where('fstatus', '<', 3)->count();
+				    $count = VisitTodoCalendar::where('fparent_id', $todoCalendar->fparent_id)
+					    ->where()
+					    ->where('fstatus', '<', 3)->count();
 				    if ($count == 0) {
 					    $parent->fstatus = 3;
 				    } else {
