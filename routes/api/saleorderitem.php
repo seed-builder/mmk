@@ -58,19 +58,14 @@ Route::group(['prefix' => 'sale-order-item', 'middleware' => 'api.sign'], functi
     *      type="",
     *      @SWG\Parameters(
     *          @SWG\Parameter(name="fbase_qty", description="销售基本单位数量（瓶）(订单数量*商品表FRotio)", required=false,type="number", paramType="form", defaultValue="0.00" ),
-            *          @SWG\Parameter(name="fbase_unit", description="基本单位", required=true,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="fcreate_date", description="创建时间", required=true,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="fcreator_id", description="创建人", required=false,type="integer", paramType="form", defaultValue="0" ),
-            *          @SWG\Parameter(name="fdocument_status", description="审核状态", required=false,type="string", paramType="form", defaultValue="A" ),
-            *          @SWG\Parameter(name="fmaterial_id", description="物料内码id", required=false,type="integer", paramType="form", defaultValue="0" ),
-            *          @SWG\Parameter(name="fmodify_date", description="修改时间", required=true,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="fmodify_id", description="修改人", required=false,type="integer", paramType="form", defaultValue="0" ),
-            *          @SWG\Parameter(name="fqty", description="订单数量", required=false,type="number", paramType="form", defaultValue="0.00" ),
-            *          @SWG\Parameter(name="fsale_order_id", description="", required=false,type="integer", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="fsale_unit", description="销售单位", required=true,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="fsend_base_qty", description="发货基本单位数量", required=false,type="number", paramType="form", defaultValue="0.00" ),
-            *          @SWG\Parameter(name="fsend_qty", description="发货数量", required=false,type="number", paramType="form", defaultValue="0.00" ),
-                *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
+    *          @SWG\Parameter(name="fbase_unit", description="基本单位", required=true,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="fmaterial_id", description="物料内码id", required=false,type="integer", paramType="form", defaultValue="0" ),
+    *          @SWG\Parameter(name="fqty", description="订单数量", required=false,type="number", paramType="form", defaultValue="0.00" ),
+    *          @SWG\Parameter(name="fsale_order_id", description="", required=false,type="integer", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="fsale_unit", description="销售单位", required=true,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="fsend_base_qty", description="发货基本单位数量", required=false,type="number", paramType="form", defaultValue="0.00" ),
+    *          @SWG\Parameter(name="fsend_qty", description="发货数量", required=false,type="number", paramType="form", defaultValue="0.00" ),
+    *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
     *      )
     *  )
     * )
@@ -88,19 +83,14 @@ Route::group(['prefix' => 'sale-order-item', 'middleware' => 'api.sign'], functi
     *      type="",
     *      @SWG\Parameters(
     *          @SWG\Parameter(name="fbase_qty", description="销售基本单位数量（瓶）(订单数量*商品表FRotio)", required=false,type="number", paramType="form", defaultValue="0.00" ),
-            *          @SWG\Parameter(name="fbase_unit", description="基本单位", required=false,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="fcreate_date", description="创建时间", required=false,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="fcreator_id", description="创建人", required=false,type="integer", paramType="form", defaultValue="0" ),
-            *          @SWG\Parameter(name="fdocument_status", description="审核状态", required=false,type="string", paramType="form", defaultValue="A" ),
-            *          @SWG\Parameter(name="fmaterial_id", description="物料内码id", required=false,type="integer", paramType="form", defaultValue="0" ),
-            *          @SWG\Parameter(name="fmodify_date", description="修改时间", required=false,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="fmodify_id", description="修改人", required=false,type="integer", paramType="form", defaultValue="0" ),
-            *          @SWG\Parameter(name="fqty", description="订单数量", required=false,type="number", paramType="form", defaultValue="0.00" ),
-            *          @SWG\Parameter(name="fsale_order_id", description="", required=false,type="integer", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="fsale_unit", description="销售单位", required=false,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="fsend_base_qty", description="发货基本单位数量", required=false,type="number", paramType="form", defaultValue="0.00" ),
-            *          @SWG\Parameter(name="fsend_qty", description="发货数量", required=false,type="number", paramType="form", defaultValue="0.00" ),
-                *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="" ),
+    *          @SWG\Parameter(name="fbase_unit", description="基本单位", required=false,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="fmaterial_id", description="物料内码id", required=false,type="integer", paramType="form", defaultValue="0" ),
+    *          @SWG\Parameter(name="fqty", description="订单数量", required=false,type="number", paramType="form", defaultValue="0.00" ),
+    *          @SWG\Parameter(name="fsale_order_id", description="", required=false,type="integer", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="fsale_unit", description="销售单位", required=false,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="fsend_base_qty", description="发货基本单位数量", required=false,type="number", paramType="form", defaultValue="0.00" ),
+    *          @SWG\Parameter(name="fsend_qty", description="发货数量", required=false,type="number", paramType="form", defaultValue="0.00" ),
+    *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="" ),
     *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
     *      )
     *  )

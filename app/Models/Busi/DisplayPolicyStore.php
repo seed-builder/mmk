@@ -29,6 +29,7 @@ use Illuminate\Database\Eloquent\Model;
  * @SWG\Property(name="fsign_amount", type="number", description="签约金额")
  * @SWG\Property(name="fsketch", type="string", description="项目简述")
  * @SWG\Property(name="fstart_date", type="string", description="门店方案执行开始日期")
+ * @SWG\Property(name="fphotos", type="string", description="图片id 集合， 逗号隔开")
  * @SWG\Property(name="fstatus", type="integer", description="签约状态")
  * @SWG\Property(name="fstore_id", type="integer", description="门店id")
  * @SWG\Property(name="id", type="integer", description="")

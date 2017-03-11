@@ -16,7 +16,7 @@ class CreateTableStSaleOrderItems extends Migration
         Schema::create('st_sale_order_items', function (Blueprint $table) {
 	        $table->increments('id');
 	        $table->integer('fsale_order_id');
-	        $table->integer('fstock_id')->default(0)->comment('库存内码id');
+	        //$table->integer('fstock_id')->default(0)->comment('库存内码id');
 	        $table->integer('fmaterial_id')->default(0)->comment('物料内码id');
 	        $table->string('fsale_unit')->nullable()->comment('销售单位');
 	        $table->string('fbase_unit')->nullable()->comment('基本单位');
