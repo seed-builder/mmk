@@ -100,6 +100,12 @@ define(function (require, exports, module) {
                             return "";
                     }
                 },
+                {
+                    "data": "fdocument_status",
+                    render: function ( data, type, full ) {
+                        return document_status(data);
+                    }
+                },
             ],
             columnDefs: [
                 {
@@ -112,10 +118,12 @@ define(function (require, exports, module) {
                 // { text: '编辑', className: 'edit', enabled: false },
                 // { text: '删除', className: 'delete', enabled: false },
                 {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: editor},
-                {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: editor},
+                {extend: "edit",className: 'edit', text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: editor},
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
+                { text: '到货确认<i class="fa fa-fw fa-paperclip"></i>',className: 'check', enabled: false },
+                { text: '到货修改<i class="fa fa-fw fa-unlink"></i>',className: 'uncheck', enabled: false },
                 //{extend: 'colvis', text: '列显示'}
             ]
         });
@@ -194,6 +202,12 @@ define(function (require, exports, module) {
                 {'data': 'fbase_unit'},
                 {'data': 'fqty'},
                 {'data': 'fbase_qty'},
+                {
+                    "data": "fdocument_status",
+                    render: function ( data, type, full ) {
+                        return document_status(data);
+                    }
+                },
             ],
             columnDefs: [
                 {
@@ -206,18 +220,36 @@ define(function (require, exports, module) {
                 // { text: '编辑', className: 'edit', enabled: false },
                 // { text: '删除', className: 'delete', enabled: false },
                 {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: itemEditor},
-                {extend: "edit", text: '入库情况确认<i class="fa fa-fw fa-pencil"></i>', editor: itemEditor},
+                {extend: "edit",className: 'edit', text: '入库情况确认<i class="fa fa-fw fa-pencil"></i>', editor: itemEditor},
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: itemEditor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
-                //{extend: 'colvis', text: '列显示'}
+                {extend: 'colvis', text: '列显示'},
+
             ]
         });
 
         table.on( 'select', rowSelect).on( 'deselect', rowSelect);
         function rowSelect() {
+            checkEditEnabble(table,['.edit','.check'],['.uncheck']);
             itemTable.ajax.reload();
         }
+        itemTable.on( 'select', itemRowSelect).on( 'deselect', itemRowSelect);
+
+        function itemRowSelect() {
+            checkEditEnabble(itemTable,['.edit','.check'],['.uncheck']);
+        }
+
+
+        //审核
+        $(".check").on('click',function () {
+            dataCheck(table,'/admin/stock-in/check');
+        })
+
+        $(".uncheck").on('click',function () {
+            dataCheck(table,'/admin/stock-in/uncheck');
+        })
+        table.on( 'select', rowSelect).on( 'deselect', rowSelect);
 
     }
 

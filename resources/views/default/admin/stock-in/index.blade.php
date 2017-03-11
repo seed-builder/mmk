@@ -24,6 +24,12 @@
                 <div class="box box-primary">
                     <div class="box-header">
                         <h3 class="box-title">入库列表</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
+
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
@@ -38,6 +44,7 @@
                                 <th>经销商</th>
                                 <th>发货状态</th>
                                 <th>到货确认人</th>
+                                <th>审核状态</th>
                             </tr>
                             </thead>
                         </table>
@@ -50,6 +57,11 @@
                 <div class="box box-primary">
                     <div class="box-header">
                         <h3 class="box-title">入库明细列表</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
@@ -64,6 +76,7 @@
                                 <th>基本单位</th>
                                 <th>订单数量</th>
                                 <th>销售基本单位数量</th>
+                                <th>审核状态</th>
                             </tr>
                             </thead>
                         </table>

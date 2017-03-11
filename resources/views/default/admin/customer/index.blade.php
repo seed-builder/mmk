@@ -35,6 +35,7 @@
                                 <th>名称</th>
                                 <th>地址</th>
                                 <th>联系电话</th>
+                                <th>审核状态</th>
                             </tr>
                             </thead>
                         </table>
