@@ -133,6 +133,9 @@ class VisitLineStoreController extends AdminController
         }
         if (!empty($data['fline_id'])) {
             $update['fline_id'] = $data['fline_id'];
+            Store::query()->whereIn('id',$data['ids'])->update([
+                'fline_id' => $data['fline_id']
+            ]);
         }
         if (!empty($data['femp_id'])) {
             $update['femp_id'] = $data['femp_id'];

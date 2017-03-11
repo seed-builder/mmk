@@ -34,7 +34,8 @@ class StoreController extends AdminController
         $citys = City::query()->where('LevelType', 1)->get();
         $channels = Channel::all();
         $cus = Customer::all();
-        return view('admin.store.index', compact('citys', 'channels', 'cus'));
+        $lines = VisitLine::all();
+        return view('admin.store.index', compact('citys', 'channels', 'cus','lines'));
     }
 
     /**

@@ -27,6 +27,10 @@
                         <td>{{$store->fnumber}}</td>
                     </tr>
                     <tr>
+                        <th>拜访周期:</th>
+                        <td>{{$store->line->fname}}</td>
+                    </tr>
+                    <tr>
                         <th>地址:</th>
                         <td>{{$store->fprovince.$store->fprovince.$store->fcity.$store->fcountry.$store->fstreet.$store->faddress}}</td>
                     </tr>

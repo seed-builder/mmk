@@ -155,6 +155,17 @@
                                     </div>
 
                                     <div class="layui-form-item">
+                                        <label class="layui-form-label">拜访周期</label>
+                                        <div class="layui-input-block">
+                                            <select name="fline_id" lay-filter="fline">
+                                                @foreach($lines as $l)
+                                                    <option value="{{$l->id}}">{{$l->fname}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="layui-form-item">
                                         <label class="layui-form-label">省份</label>
                                         <div class="layui-input-block">
                                             <select id="province_id" name="fprovince" lay-filter="fprovince">
