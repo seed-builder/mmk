@@ -59,13 +59,17 @@ class DisplayPolicyStore extends BaseModel
 	/**
 	 * 门店是否在陈列政策有效期内
 	 * @param $storeId
+	 * @param null $date | 默认当天
 	 * @return bool
 	 */
-    public static function isTodayValid($storeId){
-    	$today = date('Y-m-d');
+    public static function check($storeId, $date = null){
+    	if($date == null)
+		    $date = date('Y-m-d');
+
 	    $count =  static::where('fstore_id', $storeId)
-		    ->where('fstart_date', '<=', $today)
-		    ->where('fend_date', '>=', $today)
+		    ->where('fstart_date', '<=', $date)
+		    ->where('fend_date', '>=', $date)
+		    ->where('fstatus', 1)
 		    ->count();
 	    return $count > 0;
     }
