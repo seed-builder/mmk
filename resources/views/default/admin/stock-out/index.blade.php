@@ -41,7 +41,6 @@
                                 <th>到货确认人</th>
                                 <th>经销商</th>
                                 <th>到货状态</th>
-                                <th>操作</th>
                             </tr>
                             </thead>
                         </table>
@@ -50,52 +49,37 @@
                 </div>
                 <!-- /.box -->
             </div>
-            <!-- /.col -->
+            <div class="col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <h3 class="box-title">出库明细列表</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+
+                        <table id="itemTable" class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>id</th>
+                                <th>出库单号</th>
+                                <th>出库商品</th>
+                                <th>销售单位</th>
+                                <th>基本单位</th>
+                                <th>订单数量</th>
+                                <th>销售基本单位数量</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
         </div>
         <!-- /.row -->
     </section>
 
-    <div id="itemModal" class="modal fade modal-scroll" role="dialog" tabindex="-1" data-replace="true">
-        <div class="modal-dialog" style="width: 50%;">
-            <div class="modal-content" style="height: 500px">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"
-                            aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title">出库明细</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="col-xs-12">
-                        <div class="box box-primary">
-                            <div class="box-header">
-                                <h3 class="box-title">出库明细列表</h3>
-                            </div>
-                            <!-- /.box-header -->
-                            <div class="box-body">
 
-                                <table id="itemTable" class="table table-bordered table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th>id</th>
-                                        <th>出库单号</th>
-                                        <th>出库商品</th>
-                                        <th>销售单位</th>
-                                        <th>基本单位</th>
-                                        <th>订单数量</th>
-                                        <th>销售基本单位数量</th>
-                                    </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                            <!-- /.box-body -->
-                        </div>
-                        <!-- /.box -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection
 @section('js')
     @include('admin.layout.datatable-js')
