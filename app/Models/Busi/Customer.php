@@ -50,7 +50,7 @@ use Illuminate\Database\Eloquent\Model;
  * @SWG\Property(name="fzip", type="string", description="邮政编码")
  * @SWG\Property(name="id", type="integer", description="")
  */
-class Customer extends Model
+class Customer extends BaseModel
 {
     //
     protected $table = 'bd_customers';
