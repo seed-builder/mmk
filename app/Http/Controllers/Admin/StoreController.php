@@ -50,7 +50,7 @@ class StoreController extends AdminController
 
         $data = $request->all();
 
-        return parent::pagination($request, $searchCols, $with, function ($queryBuilder) use ($data) {
+        return parent::pagination($request, $searchCols, ['employee'], function ($queryBuilder) use ($data) {
 
             if (!empty($data['nodeid'])) {
                 $emp = Employee::find($data['nodeid']);
