@@ -106,21 +106,28 @@ class StoreController extends ApiController
 	 * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
 	 */
 	public function noSignedList(Request $request, $femp_id){
-
-		$sql = 'select st.* from st_stores st where not EXISTS (select * from exp_display_policy_store ep where st.id = ep.fstore_id)';
+		$entity = $this->newEntity();
+		$query = $entity->query();
+		$query->where('fis_signed', 0);
+		//$sql = 'select st.* from st_stores st where not EXISTS (select * from exp_display_policy_store ep where st.id = ep.fstore_id)';
 		if($femp_id) {
-			$employee = Employee::find($femp_id);
-			$subs = $employee->getSubordinates();
-			$ids = [];
-			if(!empty($subs)){
-				$ids = array_map(function ($item)use($ids){
-					return $item->id;
-				}, $subs);
+			$repo = app(ISysConfigRepo::class);
+			if($repo->isAppDataIsolate()) {
+				$employee = Employee::find($femp_id);
+				if ($employee->isDataIsolate()) {
+					$subs = $employee->getSubordinates();
+					$ids = [];
+					if (!empty($subs)) {
+						$ids = array_map(function ($item) use ($ids) {
+							return $item->id;
+						}, $subs);
+					}
+					$ids[] = $femp_id;
+					$query->whereIn('femp_id', $ids);
+				}
 			}
-			$ids[] = $femp_id;
-			$sql = $sql . ' and st.femp_id in( '.implode(',', $ids).' )';
 		}
-		$stores = DB::select($sql);
+		$stores = $query->get(); //DB::select($sql);
 		return response($stores, 200);
 	}
 
