@@ -106,9 +106,14 @@ class StoreController extends ApiController
 	 * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
 	 */
 	public function noSignedList(Request $request, $femp_id){
-		$entity = $this->newEntity();
-		$query = $entity->query();
-		$query->where('fis_signed', 0);
+		//$entity = $this->newEntity();
+		$query = DB::table('st_stores'); //$entity->query();
+		$query->where('st_stores.fis_signed', 0);
+		$query->whereNotExists(function ($query) {
+			$query->select(DB::raw(1))
+				->from('exp_display_policy_store')
+				->whereRaw('exp_display_policy_store.fstore_id = st_stores.id');
+		});
 		//$sql = 'select st.* from st_stores st where not EXISTS (select * from exp_display_policy_store ep where st.id = ep.fstore_id)';
 		if($femp_id) {
 			$repo = app(ISysConfigRepo::class);
@@ -123,7 +128,7 @@ class StoreController extends ApiController
 						}, $subs);
 					}
 					$ids[] = $femp_id;
-					$query->whereIn('femp_id', $ids);
+					$query->whereIn('st_stores.femp_id', $ids);
 				}
 			}
 		}

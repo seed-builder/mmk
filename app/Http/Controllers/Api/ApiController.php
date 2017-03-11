@@ -37,22 +37,22 @@ use App\Services\LogSvr;
     public function index(Request $request)
     {
         //
-        $page = $request->input('page', 1);
-        $pageSize = $request->input('pageSize', 10);
-        $sort = $request->input('sort', 'id asc');
-        $entity = $this->newEntity();
-        $query = $entity->query();
-        $this->fillQueryForIndex($request, $query);
-        $count = $query->count();
+	    $page = $request->input('page', 1);
+	    $pageSize = $request->input('pageSize', 10);
+	    $sort = $request->input('sort', 'id asc');
+	    $entity = $this->newEntity();
+	    $query = $entity->query();
+	    $this->fillQueryForIndex($request, $query);
+	    $count = $query->count();
 	    $arr = explode(',', $sort);
 	    //var_dump($arr);
 	    foreach ($arr as $order){
-	    	$tmpArr = explode(' ', trim($order));
+		    $tmpArr = explode(' ', trim($order));
 		    $query->orderBy($tmpArr[0], $tmpArr[1]);
 	    }
-        $data = $query->take($pageSize)->skip(($page-1)*$pageSize)->get();
+	    $data = $query->take($pageSize)->skip(($page-1)*$pageSize)->get();
 	    //LogSvr::apiSql()->info($query->toSql());
-        return response(['count' => $count, 'list' => $data, 'page' => $page, 'pageSize' => $pageSize], 200);
+	    return response(['count' => $count, 'list' => $data, 'page' => $page, 'pageSize' => $pageSize], 200);
     }
 
     /**
