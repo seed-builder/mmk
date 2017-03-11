@@ -19,35 +19,35 @@ class EmployeeController extends AdminController
 {
 
     //
-	public function newEntity(array $attributes = [])
-	{
-		// TODO: Implement newEntity() method.
-		return new Employee($attributes);
-	}
+    public function newEntity(array $attributes = [])
+    {
+        // TODO: Implement newEntity() method.
+        return new Employee($attributes);
+    }
 
-	/**
-	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-	 */
-	public function index()
-	{
-		$all = Organization::all();
-		$orgs = $all->map(function ($item){
-			return ['label' => $item->fname, 'value' => $item->id];
-		});
-		//department options
-		$topDepts = Department::where('fpardept_id', 0)->get();
-		$deptOptions = [];
-		foreach ($topDepts as $dept){
-			$this->toSelectOption($dept, ['label' => 'fname', 'value' => 'id'], $deptOptions);
-		}
-		//position options
-		$topPositions = Position::where('fparpost_id',0)->get();
-		$positOptions = [];
-		foreach ($topPositions as $position){
-			$this->toSelectOption($position, ['label' => 'fname', 'value' => 'id'], $positOptions);
-		}
-		return view('admin.employee.index',compact('orgs','deptOptions', 'positOptions'));
-	}
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function index()
+    {
+        $all = Organization::all();
+        $orgs = $all->map(function ($item) {
+            return ['label' => $item->fname, 'value' => $item->id];
+        });
+        //department options
+        $topDepts = Department::where('fpardept_id', 0)->get();
+        $deptOptions = [];
+        foreach ($topDepts as $dept) {
+            $this->toSelectOption($dept, ['label' => 'fname', 'value' => 'id'], $deptOptions);
+        }
+        //position options
+        $topPositions = Position::where('fparpost_id', 0)->get();
+        $positOptions = [];
+        foreach ($topPositions as $position) {
+            $this->toSelectOption($position, ['label' => 'fname', 'value' => 'id'], $positOptions);
+        }
+        return view('admin.employee.index', compact('orgs', 'deptOptions', 'positOptions'));
+    }
 
 //	/**
 //	 * @param Request $request
@@ -82,92 +82,96 @@ class EmployeeController extends AdminController
 //		});
 //	}
 
-    public function employeeTree(){
-		$top = Department::where('fpardept_id', 0)->first();
-		$tree = $this->toBootstrapTreeViewData($top,  ['text' => 'fname', 'dataid' => 'id'], false);
-		$tree['state'] = ['expanded' => true];
-	    return response()->json([$tree]);
+    public function employeeTree()
+    {
+        $top = Department::where('fpardept_id', 0)->first();
+        $emp_ids = $this->getCurUsersEmployeeIds();
+        $tree = $this->toBootstrapTreeViewData2($top, ['text' => 'fname', 'dataid' => 'id'], false, $emp_ids);
+        $tree['state'] = ['expanded' => true];
+        return response()->json([$tree]);
     }
 
-	/**
-	 * 将实体数据转换成树形（bootstrap treeview）数据
-	 * @param $entity
-	 * @param $props 属性映射集合 ['text' => 'name', 'data-id' => 'id']
-	 * @param bool $expanded
-	 * @return array
-	 */
-	public function toBootstrapTreeViewData($entity, $props, $expanded = true){
-		$data = ['item' => $entity];
-		if(!empty($entity)){
-			foreach ($props as $k => $val){
-				$data[$k] = $entity->{$val};
-				$data['icon'] = 'fa fa-users';
-				$data['state'] = ['expanded' => $expanded];
-				$data['nodetype'] = 'dept';
-			}
-			$nodes = [];
-			if(!empty($entity->children)){
-				foreach ($entity->children as $child){
-					$nodes[] = $this->toBootstrapTreeViewData($child, $props, $expanded);
-				}
-			}
-			//find employee
-			if(!empty($entity->employees)){
-				foreach ($entity->employees as $employee){
-					$nodes[] = [
-						'text' => $employee->fname,
-						'dataid' => $employee->id,
-						'icon' => 'fa fa-user',
+    /**
+     * 将实体数据转换成树形（bootstrap treeview）数据
+     * @param $entity
+     * @param $props 属性映射集合 ['text' => 'name', 'data-id' => 'id']
+     * @param bool $expanded
+     * @return array
+     */
+    public function toBootstrapTreeViewData2($entity, $props, $expanded = true, $emp_ids)
+    {
+        $data = ['item' => $entity];
+        if (!empty($entity)) {
+            foreach ($props as $k => $val) {
+                $data[$k] = $entity->{$val};
+                $data['icon'] = 'fa fa-users';
+                $data['state'] = ['expanded' => $expanded];
+                $data['nodetype'] = 'dept';
+            }
+            $nodes = [];
+            if (!empty($entity->children)) {
+                foreach ($entity->children as $child) {
+                    $nodes[] = $this->toBootstrapTreeViewData2($child, $props, $expanded, $emp_ids);
+                }
+            }
+            //find employee
+            $employees = Employee::query()->where('fdept_id', $entity->id)->whereIn('id', $emp_ids)->get();
+            if (!empty($employees)) {
+                foreach ($employees as $employee) {
+                    $nodes[] = [
+                        'text' => $employee->fname,
+                        'dataid' => $employee->id,
+                        'icon' => 'fa fa-user',
                         'nodetype' => 'emp',
-					];
-				}
-			}
-			if(!empty($nodes))
-				$data['nodes'] = $nodes;
-		}
-		return $data;
-	}
+                    ];
+                }
+            }
+            if (!empty($nodes))
+                $data['nodes'] = $nodes;
+        }
+        return $data;
+    }
 
-	/**
-	 * Datatables UI page
-	 * @param Request $request
-	 * @param array $searchCols
-	 * @param array $with
-	 * @param null $conditionCall
-	 * @return \Illuminate\Http\JsonResponse
-	 */
-	public function pagination(Request $request, $searchCols = [], $with = [], $conditionCall = null)
-	{
-		$searchCols = ['bd_employees.fname', 'bd_employees.fnumber', 'bd_employees.fphone'];
-		$data = $request->all();
+    /**
+     * Datatables UI page
+     * @param Request $request
+     * @param array $searchCols
+     * @param array $with
+     * @param null $conditionCall
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function pagination(Request $request, $searchCols = [], $with = [], $conditionCall = null)
+    {
+        $searchCols = ['bd_employees.fname', 'bd_employees.fnumber', 'bd_employees.fphone'];
+        $data = $request->all();
 
-		$start = $request->input('start', 0);
-		$length = $request->input('length', 10);
-		$columns = $request->input('columns', []);
-		$order = $request->input('order', []);
-		$search = $request->input('search', []);
-		$draw = $request->input('draw', 0);
+        $start = $request->input('start', 0);
+        $length = $request->input('length', 10);
+        $columns = $request->input('columns', []);
+        $order = $request->input('order', []);
+        $search = $request->input('search', []);
+        $draw = $request->input('draw', 0);
 
-		$queryBuilder = DB::table('bd_employees');//$this->newEntity()->newQuery();
-		if (!empty($with)) {
-			$queryBuilder->with($with);
-		}
-		$fields = [];
-		$conditions = [];
-		foreach ($columns as $column) {
-			$fields[] = 'bd_employees.' . $column['data'];
-			if (!empty($column['search']['value'])) {
-				$conditions['bd_employees.' . $column['data']] = $column['search']['value'];
-			}
-		}
+        $queryBuilder = DB::table('bd_employees');//$this->newEntity()->newQuery();
+        if (!empty($with)) {
+            $queryBuilder->with($with);
+        }
+        $fields = [];
+        $conditions = [];
+        foreach ($columns as $column) {
+            $fields[] = 'bd_employees.' . $column['data'];
+            if (!empty($column['search']['value'])) {
+                $conditions['bd_employees.' . $column['data']] = $column['search']['value'];
+            }
+        }
 
-		$total = $queryBuilder->count();
+        $total = $queryBuilder->count();
 
-		if(!empty($data['nodeid'])){//组织树点击查询
-			$dept = Department::find($data['nodeid']);
-			$deptids = $dept->getAllChildDept()->pluck('id')->toArray();
-			$queryBuilder->whereIn('bd_employees.fdept_id',$deptids);
-		}
+        if (!empty($data['nodeid'])) {//组织树点击查询
+            $dept = Department::find($data['nodeid']);
+            $deptids = $dept->getAllChildDept()->pluck('id')->toArray();
+            $queryBuilder->whereIn('bd_employees.fdept_id', $deptids);
+        }
 //		$curUser = Auth::user();
 //		if(!$curUser->isAdmin()) {
 //			if (SysConfigRepo::isMgtDataIsolate()) {
@@ -182,64 +186,65 @@ class EmployeeController extends AdminController
 //		}else{
 //			$queryBuilder->leftJoin('bd_positions', 'bd_employees.fpost_id', '=', 'bd_positions.id');
 //		}
-		$queryBuilder->leftJoin('bd_positions', 'bd_employees.fpost_id', '=', 'bd_positions.id');
-		$queryBuilder->leftJoin('bd_departments', 'bd_employees.fdept_id', '=', 'bd_departments.id');
-		$fields[] = 'bd_positions.fname as position_name';
-		$fields[] = 'bd_departments.fname as dept_name';
+        $queryBuilder->leftJoin('bd_positions', 'bd_employees.fpost_id', '=', 'bd_positions.id');
+        $queryBuilder->leftJoin('bd_departments', 'bd_employees.fdept_id', '=', 'bd_departments.id');
+        $fields[] = 'bd_positions.fname as position_name';
+        $fields[] = 'bd_departments.fname as dept_name';
 
-		foreach ($conditions as $col => $val) {
-			$queryBuilder->where($col, $val);
-		}
+        foreach ($conditions as $col => $val) {
+            $queryBuilder->where($col, $val);
+        }
 
-		//模糊查询
-		if (!empty($searchCols) && !empty($search['value'])) {
-			$queryBuilder->where(function ($query) use ($search, $searchCols) {
-				foreach ($searchCols as $sc) {
-					if (is_array($sc)) {//用于其他表查询 [entity,querykey,localkey]
-						foreach ($sc as $s) {
-							$entities = $s[0]->where($s[1], 'like binary', '%' . $search['value'] . '%')->get();
-							$ids = [];
-							foreach ($entities as $e) {
-								$ids[] = $e->id;
-							}
-							$query->orWhereIn($s[2], $ids);
-						}
-					} else {
-						$query->orWhere($sc, 'like binary', '%' . $search['value'] . '%');
-					}
-				}
-			});
+        //模糊查询
+        if (!empty($searchCols) && !empty($search['value'])) {
+            $queryBuilder->where(function ($query) use ($search, $searchCols) {
+                foreach ($searchCols as $sc) {
+                    if (is_array($sc)) {//用于其他表查询 [entity,querykey,localkey]
+                        foreach ($sc as $s) {
+                            $entities = $s[0]->where($s[1], 'like binary', '%' . $search['value'] . '%')->get();
+                            $ids = [];
+                            foreach ($entities as $e) {
+                                $ids[] = $e->id;
+                            }
+                            $query->orWhereIn($s[2], $ids);
+                        }
+                    } else {
+                        $query->orWhere($sc, 'like binary', '%' . $search['value'] . '%');
+                    }
+                }
+            });
 
-		}
-		$filterCount = $queryBuilder->count();
+        }
+        $filterCount = $queryBuilder->count();
 
-		foreach ($order as $o) {
-			$index = $o['column'];
-			$dir = $o['dir'];
-			$queryBuilder->orderBy($columns[$index]['data'], $dir);
-		}
-		if (!empty($request->distinct)) {
-			$queryBuilder->groupBy($request->distinct)->distinct();
-		}
+        foreach ($order as $o) {
+            $index = $o['column'];
+            $dir = $o['dir'];
+            $queryBuilder->orderBy($columns[$index]['data'], $dir);
+        }
+        if (!empty($request->distinct)) {
+            $queryBuilder->groupBy($request->distinct)->distinct();
+        }
 
-		$entities = $queryBuilder->select($fields)->skip($start)->take($length)->get();
-		$result = [
-			'draw' => $draw,
-			'recordsTotal' => $total,
-			'recordsFiltered' => $filterCount,
-			'data' => $entities
-		];
-		return response()->json($result);
-	}
+        $entities = $queryBuilder->select($fields)->skip($start)->take($length)->get();
+        $result = [
+            'draw' => $draw,
+            'recordsTotal' => $total,
+            'recordsFiltered' => $filterCount,
+            'data' => $entities
+        ];
+        return response()->json($result);
+    }
 
-    public function ajaxGetEmployees(Request $request){
+    public function ajaxGetEmployees(Request $request)
+    {
         $data = $request->all();
         $query = Employee::query();
-        if (!empty($data['femp_id'])){
-            $query->where('id',$data['femp_id']);
+        if (!empty($data['femp_id'])) {
+            $query->where('id', $data['femp_id']);
         }
-        if (!empty($data['fdept_id'])){
-            $query->where('fdept_id',$data['fdept_id']);
+        if (!empty($data['fdept_id'])) {
+            $query->where('fdept_id', $data['fdept_id']);
         }
 
         $rs = $query->get();
