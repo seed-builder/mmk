@@ -119,12 +119,6 @@ define(function (require, exports, module) {
                         }
                     }
                 },
-                {
-                    'data': 'id',
-                    render: function (data, type, full) {
-                        return '<a style="cursor: pointer" data-target="#itemModal" data-toggle="modal"><i class="fa fa-fw fa-list"></i></a>'
-                    }
-                },
 
             ],
             columnDefs: [
@@ -145,6 +139,11 @@ define(function (require, exports, module) {
                 //{extend: 'colvis', text: '列显示'}
             ]
         });
+
+        table.on( 'select', rowSelect).on( 'deselect', rowSelect);
+        function rowSelect() {
+            itemTable.ajax.reload();
+        }
 
         var itemEditor = new $.fn.dataTable.Editor({
             ajax: {
@@ -169,8 +168,8 @@ define(function (require, exports, module) {
             idSrc: 'id',
             fields: [
                 { 'label': '商品', 'name': 'fmaterial_id', 'type': 'select', 'options': materials},
-                {'label': '销售单位', 'name': 'fsale_unit',},
-                {'label': '基本单位', 'name': 'fbase_unit',},
+                {'label': '销售单位','type':"readonly", 'name': 'fsale_unit',},
+                {'label': '基本单位','type':"readonly", 'name': 'fbase_unit',},
                 {'label': '订单数量', 'name': 'fqty',},
                 {
                     'name': "fstock_out_id",
@@ -239,10 +238,6 @@ define(function (require, exports, module) {
                 //{extend: 'colvis', text: '列显示'}
             ]
         });
-
-        $('#itemModal').on('show.bs.modal', function () {
-            itemTable.ajax.reload();
-        })
 
     }
 

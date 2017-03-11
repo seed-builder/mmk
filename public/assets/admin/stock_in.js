@@ -100,12 +100,6 @@ define(function (require, exports, module) {
                             return "";
                     }
                 },
-                {
-                    'data': 'id',
-                    render: function (data, type, full) {
-                        return '<a style="cursor: pointer" data-target="#itemModal" data-toggle="modal"><i class="fa fa-fw fa-list"></i></a>'
-                    }
-                },
             ],
             columnDefs: [
                 {
@@ -149,9 +143,9 @@ define(function (require, exports, module) {
             idSrc: 'id',
             fields: [
                 { 'label': '商品', 'name': 'fmaterial_id', 'type': 'select', 'options': materials},
-                {'label': '销售单位', 'name': 'fsale_unit',},
-                {'label': '基本单位', 'name': 'fbase_unit',},
-                {'label': '订单数量', 'name': 'fqty',},
+                {'label': '销售单位','type':"readonly", 'name': 'fsale_unit',},
+                {'label': '基本单位','type':"readonly",  'name': 'fbase_unit',},
+                {'label': '订单数量（箱）', 'name': 'fqty',},
                 {
                     'name': "fstock_in_id",
                     'def': function () {
@@ -212,7 +206,7 @@ define(function (require, exports, module) {
                 // { text: '编辑', className: 'edit', enabled: false },
                 // { text: '删除', className: 'delete', enabled: false },
                 {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: itemEditor},
-                {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: itemEditor},
+                {extend: "edit", text: '入库情况确认<i class="fa fa-fw fa-pencil"></i>', editor: itemEditor},
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: itemEditor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
@@ -220,9 +214,10 @@ define(function (require, exports, module) {
             ]
         });
 
-        $('#itemModal').on('show.bs.modal', function () {
+        table.on( 'select', rowSelect).on( 'deselect', rowSelect);
+        function rowSelect() {
             itemTable.ajax.reload();
-        })
+        }
 
     }
 
