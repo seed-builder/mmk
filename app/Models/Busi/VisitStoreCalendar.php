@@ -26,12 +26,22 @@ use Log;
  * @SWG\Property(name="fdocument_status", type="string", description="审核状态")
  * @SWG\Property(name="fmodify_date", type="string", description="修改时间")
  * @SWG\Property(name="fmodify_id", type="integer", description="修改人")
+ * @SWG\Property(name="is_store_signed", type="boolean", description="门店在该天是否签约陈列费用协议")
  */
 class VisitStoreCalendar extends BaseModel
 {
     //
     protected $table = 'visit_store_calendar';
 	protected $with = ['store','employee'];
+
+	//protected $visible = ['id', 'fdate', 'femp_id', 'fline_calendar_id', 'fstore_id','fstatus', 'is_store_signed'];
+	protected $appends = ['is_store_signed'];
+
+
+	public function getIsStoreSignedAttribute(){
+		$c = DisplayPolicyStore::check($this->fstore_id, $this->fdate);
+		return $c;
+	}
 
 	public static function boot()
 	{
@@ -50,6 +60,7 @@ class VisitStoreCalendar extends BaseModel
     public function employee(){
         return $this->belongsTo(Employee::class, 'femp_id');
     }
+
 
     /*
      * 生成门店拜访日历
