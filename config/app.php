@@ -180,6 +180,7 @@ return [
         Latrell\Swagger\SwaggerServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Zizaco\Entrust\EntrustServiceProvider::class,
+	    Laravel\Tinker\TinkerServiceProvider::class,
 
     ],
 

@@ -38,6 +38,9 @@ class VisitStoreCalendar extends BaseModel
 	protected $appends = ['is_store_signed'];
 
 
+	/**
+	 * @return bool
+	 */
 	public function getIsStoreSignedAttribute(){
 		$c = DisplayPolicyStore::check($this->fstore_id, $this->fdate);
 		return $c;
