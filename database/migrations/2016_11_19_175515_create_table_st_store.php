@@ -54,7 +54,7 @@ class CreateTableStStore extends Migration
             $table->timestamp('fmodify_date')->nullable()->comment('修改时间');
             $table->integer('fauditor_id')->default(0)->comment('审核人');
             $table->timestamp('faudit_date')->nullable()->comment('审核日期');
-            $table->string('fdocument_status')->default('A')->comment('审核状态');
+            $table->string('fdocument_status')->default('C')->comment('审核状态');
             $table->integer('fforbidder_id')->default(0)->comment('禁用人');
             $table->timestamp('fforbid_date')->nullable()->comment('禁用日期');
             $table->string('fforbid_status')->default('A')->comment('禁用状态');
