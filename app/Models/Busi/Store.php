@@ -82,6 +82,7 @@ class Store extends BaseModel
     public function lines(){
     	return $this->belongsToMany(VisitLine::class, 'visit_line_store', 'fstore_id', 'fline_id');
     }
+
     public function channel(){
         return $this->hasOne(Channel::class, 'id', 'fchannel');
     }
