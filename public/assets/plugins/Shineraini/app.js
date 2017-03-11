@@ -238,8 +238,9 @@ var mapInit = function (map, params) {
     map.addControl(mapType1);
 
     //全景图
+    map.addTileLayer(new BMap.PanoramaCoverageLayer());
     var stCtrl = new BMap.PanoramaControl(); //构造全景控件
-    stCtrl.setOffset(new BMap.Size(20, 50));
+    stCtrl.setOffset(new BMap.Size(20, 20));
     map.addControl(stCtrl);//添加全景控件
 
     var geolocation = new BMap.Geolocation();

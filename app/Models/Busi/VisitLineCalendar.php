@@ -47,6 +47,20 @@ class VisitLineCalendar extends BaseModel
      * 参数 femp_id fline_id fdate
      */
     public function makeCalendar($femp_id,$fline_id,$fdate){
+        //删除原有数据
+        VisitLineCalendar::query()
+            ->where('femp_id', $femp_id)
+            ->where('fdate', $fdate)
+            ->delete();
+        VisitStoreCalendar::query()
+            ->where('femp_id', $femp_id)
+            ->where('fdate', $fdate)
+            ->delete();
+        VisitTodoCalendar::query()
+            ->where('femp_id', $femp_id)
+            ->where('fdate', $fdate)
+            ->delete();
+
         $vlc = VisitLineCalendar::create([
             'fdate' => $fdate,
             'femp_id' => $femp_id,

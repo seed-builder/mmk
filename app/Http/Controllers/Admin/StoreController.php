@@ -179,9 +179,9 @@ class StoreController extends AdminController
 
         //数据处理
 
-        $data['fprovince'] = City::find($data['fprovince'])->Name;
-        $data['fcity'] = City::find($data['fcity'])->Name;
-        $data['fcountry'] = City::find($data['fcountry'])->Name;
+//        $data['fprovince'] = City::find($data['fprovince'])->Name;
+//        $data['fcity'] = City::find($data['fcity'])->Name;
+//        $data['fcountry'] = City::find($data['fcountry'])->Name;
 
         $postalcode = City::getPostalCode($data['fprovince'], $data['fcity'], $data['fcountry']);
         if ($postalcode) {
@@ -201,6 +201,14 @@ class StoreController extends AdminController
             //$entity = Entity::create($data);
             $re = $entity->save();
 
+            //生成路线
+            VisitLineStore::create([
+                'fline_id' => $data['fline_id'],
+                'fstore_id' => $entity->id,
+                'femp_id' => $data['femp_id'],
+                'fweek_day' => VisitLine::find($data['fline_id'])->fnumber,
+            ]);
+
             if ($re) {
                 return [
                     'code' => 200,
@@ -214,6 +222,11 @@ class StoreController extends AdminController
             }
         } else {
             $re = Store::query()->where('id', $data['id'])->update($data);
+
+            VisitLineStore::query()->where('fstore_id',$data['id'])->where('femp_id',$data['femp_id'])->update([
+                'fline_id' => $data['fline_id'],
+                'fweek_day' => VisitLine::find($data['fline_id'])->fnumber,
+            ]);
 
             if ($re) {
                 return [
@@ -237,9 +250,6 @@ class StoreController extends AdminController
         $store = Store::find($id);
 
         $store->image = '/admin/show-image?imageId=' . $store->fphoto;
-        $store->fprovince = City::query()->where('Name', $store->fprovince)->first()->id;
-        $store->fcity = City::query()->where('Name', $store->fcity)->first()->id;
-        $store->fcountry = City::query()->where('Name', $store->fcountry)->first()->id;
 
         return response()->json([
             'code' => 200,
