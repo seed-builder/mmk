@@ -30,7 +30,7 @@ use Illuminate\Database\Eloquent\Model;
  * @SWG\Property(name="fsketch", type="string", description="项目简述")
  * @SWG\Property(name="fstart_date", type="string", description="门店方案执行开始日期")
  * @SWG\Property(name="fphotos", type="string", description="图片id 集合， 逗号隔开")
- * @SWG\Property(name="fstatus", type="integer", description="签约状态")
+ * @SWG\Property(name="fstatus", type="integer", description="签约状态(0-未签约,1-已经签约)")
  * @SWG\Property(name="fstore_id", type="integer", description="门店id")
  * @SWG\Property(name="id", type="integer", description="")
   */
@@ -54,5 +54,19 @@ class DisplayPolicyStore extends BaseModel
 
     public function store(){
     	return $this->belongsTo(Store::class, 'fstore_id');
+    }
+
+	/**
+	 * 门店是否在陈列政策有效期内
+	 * @param $storeId
+	 * @return bool
+	 */
+    public static function isTodayValid($storeId){
+    	$today = date('Y-m-d');
+	    $count =  static::where('fstore_id', $storeId)
+		    ->where('fstart_date', '<=', $today)
+		    ->where('fend_date', '>=', $today)
+		    ->count();
+	    return $count > 0;
     }
 }
