@@ -120,7 +120,7 @@ define(function (require, exports, module) {
                 // { text: '删除', className: 'delete', enabled: false },
                 {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: editor},
                 {extend: "edit",className: 'edit', text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: editor},
-                {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
+                {extend: "remove",className: 'remove', text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
                 { text: '到货确认<i class="fa fa-fw fa-paperclip"></i>',className: 'check', enabled: false },
@@ -218,9 +218,9 @@ define(function (require, exports, module) {
                 // { text: '新增', action: function () { }  },
                 // { text: '编辑', className: 'edit', enabled: false },
                 // { text: '删除', className: 'delete', enabled: false },
-                {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: itemEditor},
+                {extend: "create",className: 'create', text: '新增<i class="fa fa-fw fa-plus"></i>', editor: itemEditor, enabled: false},
                 {extend: "edit",className: 'edit', text: '入库情况确认<i class="fa fa-fw fa-pencil"></i>', editor: itemEditor},
-                {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: itemEditor},
+                {extend: "remove",className: 'remove', text: '删除<i class="fa fa-fw fa-trash"></i>', editor: itemEditor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
                 {extend: 'colvis', text: '列显示'},
@@ -230,13 +230,14 @@ define(function (require, exports, module) {
 
         table.on( 'select', rowSelect).on( 'deselect', rowSelect);
         function rowSelect() {
-            checkEditEnabble(table,['.edit','.check'],['.uncheck']);
+            checkEditEnabble(table,['.edit','.check','.remove'],['.uncheck']);
+            checkEditEnabble(itemTable,['.edit','.check','.create','.remove'],['.uncheck']);
             itemTable.ajax.reload();
         }
         itemTable.on( 'select', itemRowSelect).on( 'deselect', itemRowSelect);
 
         function itemRowSelect() {
-            checkEditEnabble(itemTable,['.edit','.check'],['.uncheck']);
+            checkEditEnabble(itemTable,['.edit','.check','.create','.remove'],['.uncheck']);
         }
 
 
