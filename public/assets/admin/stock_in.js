@@ -5,6 +5,7 @@ define(function (require, exports, module) {
 
     var zhCN = require('datatableZh');
     var editorCN = require('i18n');
+    editorCN.edit.title = "入库情况确认";
     exports.index = function ($, tableId,itemTableId,customers,materials) {
         var editor = new $.fn.dataTable.Editor({
             ajax: {
@@ -153,7 +154,7 @@ define(function (require, exports, module) {
                 { 'label': '商品', 'name': 'fmaterial_id', 'type': 'select', 'options': materials},
                 {'label': '销售单位','type':"readonly", 'name': 'fsale_unit',},
                 {'label': '基本单位','type':"readonly",  'name': 'fbase_unit',},
-                {'label': '订单数量（箱）', 'name': 'fqty',},
+                {'label': '到货 数量（箱）', 'name': 'fqty',},
                 {
                     'name': "fstock_in_id",
                     'def': function () {
