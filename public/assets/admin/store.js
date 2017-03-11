@@ -61,7 +61,7 @@ define(function (require, exports, module) {
             columns: [
                 {"data": "id"},
                 {"data": "ffullname"},
-                {"data": "fshortname"},
+                // {"data": "fshortname"},
                 {"data": "faddress"},
                 {"data": "fcontracts"},
                 {"data": "ftelephone"},
