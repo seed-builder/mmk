@@ -44,7 +44,7 @@ define(function (require, exports, module) {
         });
 
         var orderTable = $("#" + orderTableId).DataTable({
-            dom: "Bfrtip",
+            dom: "lBfrtip",
             language: zhCN,
             processing: true,
             serverSide: true,

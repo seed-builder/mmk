@@ -6,7 +6,7 @@ define(function(require, exports, module) {
     exports.index = function ($, tableId) {
 
         var table = $("#" + tableId).DataTable({
-            dom: "Bfrtip",
+            dom: "lBfrtip",
             language: zhCN,
             processing: true,
             serverSide: true,

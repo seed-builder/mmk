@@ -166,7 +166,7 @@ define(function (require, exports, module) {
         });
 
         var itemTable = $("#" + itemTableId).DataTable({
-            dom: "Bfrtip",
+            dom: "lBfrtip",
             language: zhCN,
             processing: true,
             serverSide: true,
