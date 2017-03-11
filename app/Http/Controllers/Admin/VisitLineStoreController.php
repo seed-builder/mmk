@@ -95,6 +95,13 @@ class VisitLineStoreController extends AdminController
                 }
             }
 
+            if (!empty($data['femp_id'])){
+                $queryBuilder->where('femp_id', $data['femp_id']);
+            }
+            if (!empty($data['fline_id'])){
+                $queryBuilder->where('fline_id', $data['fline_id']);
+            }
+
             if (!empty($data['distinctfields'])) {
                 $queryBuilder->groupBy($data['distinctfields'])->distinct();
             }

@@ -344,16 +344,14 @@ define(function (require, exports, module) {
             processing: true,
             serverSide: true,
             select: true,
-            scrollX: true,
-            scrollY: '350px',
             scrollCollapse: true,
-            searching: true,
+            searching: false,
             paging: true,
             rowId: "id",
             ajax: {
                 url: '/admin/store/pagination',
                 data: function (data) {
-                    data.columns[5]['search']['value'] = fempId(treeId,table);
+                    // data.columns[5]['search']['value'] = fempId(treeId,table);
                     data['femp_id'] = fempId(treeId,table);
                     data['fname'] = $("#fname").val();
                     data['faddress'] = $("#faddress").val();
@@ -365,10 +363,8 @@ define(function (require, exports, module) {
             columns: [
                 {"data": "id"},
                 {"data": "ffullname"},
-                {"data": "fshortname"},
                 {"data": "faddress"},
                 {"data": "fcontracts"},
-
                 {
                     "data": 'femp_id',
                     render: function (data, type, full) {
@@ -382,6 +378,12 @@ define(function (require, exports, module) {
 
 
             ],
+            columnDefs: [
+                {
+                    "targets": [0],
+                    "visible": false
+                }
+            ],
             buttons: []
         });
 
@@ -392,18 +394,14 @@ define(function (require, exports, module) {
             processing: true,
             serverSide: true,
             select: true,
-            scrollX: true,
-            scrollY: '700px',
-            scrollCollapse: true,
-            searching: true,
+            searching: false,
             paging: true,
             rowId: "id",
             ajax: {
                 url: '/admin/visit_line_store/pagination',
                 data: function (data) {
-                    data.columns[6]['search']['value'] = fempId(treeId,table);
-                    data.columns[7]['search']['value'] = table.rows('.selected').data()[0] != null ? table.rows('.selected').data()[0].fline_id : '';
-                    // allotTable.columns( 7 ).search( table.rows('.selected').data()[0].fline_id ).draw();
+                    data['femp_id'] = fempId(treeId,table);
+                    data['fline_id'] = table.rows('.selected').data()[0] != null ? table.rows('.selected').data()[0].fline_id : '';
                 }
             },
             columns: [
@@ -413,15 +411,6 @@ define(function (require, exports, module) {
                     render: function (data, type, full) {
                         if (full.store != null)
                             return full.store.ffullname
-                        else
-                            return "";
-                    }
-                },
-                {
-                    "data": 'fstore_id',
-                    render: function (data, type, full) {
-                        if (full.store != null)
-                            return full.store.fshortname
                         else
                             return "";
                     }
@@ -464,12 +453,18 @@ define(function (require, exports, module) {
                 },
                 {
                     "data": 'fline_id',
+                    render: function (data, type, full) {
+                        if (full.line != null)
+                            return full.line.fname
+                        else
+                            return "";
+                    }
                 },
 
             ],
             columnDefs: [
                 {
-                    "targets": [7],
+                    "targets": [0],
                     "visible": false
                 }
             ],
@@ -671,9 +666,10 @@ define(function (require, exports, module) {
                 },
                 success: function (data) {
                     $("#map_select_id").val("")//将地图所选id清空
+                    map.clearOverlays();
                     readyTable.ajax.reload();
                     allotTable.ajax.reload();
-                    mapQuery();
+                    layer.closeAll();
                 }
             })
         }
@@ -681,7 +677,6 @@ define(function (require, exports, module) {
         //地图查询方法
         var mapQuery = function () {
             map.clearOverlays();
-            map.centerAndZoom($("#country_id").find("option:selected").text(), params['zoom']);
 
             $.ajax({
                 type: "GET",
@@ -738,8 +733,12 @@ define(function (require, exports, module) {
 
         $("#city_id").on('change', function () {
             regionFun($("#city_id").val(),"#country_id",function () {
-                mapQuery();
+                $("#country_id").trigger('change')
             });
+        })
+
+        $("#country_id").on('change', function () {
+            map.centerAndZoom($("#country_id").find("option:selected").text(), params['zoom']);
         })
 
         //地图标注方法

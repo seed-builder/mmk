@@ -266,7 +266,7 @@
 
 
 	<div class="modal fade" tabindex="-1" role="dialog" id="storeAdjust">
-		<div class="modal-dialog" role="document" style="width: 90%">
+		<div class="modal-dialog" role="document" style="width: 70%">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
@@ -276,136 +276,133 @@
 					<h4 class="modal-title">门店调整</h4>
 				</div>
 				<div class="modal-body" style="height: 750px">
-					<div class="col-md-4 ">
-						<div class="box">
-							<div class="box-header">
-								<h3 class="box-title">预分配的门店</h3>
+					<div class="nav-tabs-custom col-md-6">
+						<ul class="nav nav-tabs">
+							<li class="active"><a href="#list_tab" data-toggle="tab">列表选择</a></li>
+							<li><a href="#map_tab" data-toggle="tab">地图选择</a></li>
+						</ul>
+						<div class="tab-content">
+							<div class="active tab-pane" id="list_tab">
+								<div class="box-body">
+									<form class="form-horizontal">
+										<div class="box-body">
+											<div class="form-group">
+												<label class="col-sm-2 control-label">门店名称</label>
+
+												<div class="col-sm-4">
+													<input type="text" class="form-control" id="fname">
+												</div>
+
+												<label class="col-sm-2 control-label">客户详址</label>
+
+												<div class="col-sm-4">
+													<input type="text" class="form-control" id="faddress">
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">客户分级</label>
+
+												<div class="col-sm-4">
+													<input type="text" class="form-control" >
+												</div>
+
+												<label class="col-sm-2 control-label">分配线路</label>
+
+												<div class="col-sm-4">
+													<select class="form-control" id="is_allot">
+														<option value="1">已分配线路</option>
+														<option value="2">未分配线路</option>
+													</select>
+												</div>
+											</div>
+
+											<div class="form-group">
+												<label class="col-sm-2 control-label">线路代码</label>
+
+												<div class="col-sm-4">
+													<input type="text" class="form-control" id="fnumber">
+												</div>
+
+												<div class="col-sm-6">
+													<button type="button" class="btn btn-info" id="tQueryBtn"><i class="fa fa-fw fa-search"></i>查询</button>
+													<button type="button" class="btn btn-info" id="tAddBtn"><i class="fa fa-fw fa-plus"></i>添加</button>
+												</div>
+											</div>
+
+
+										</div>
+
+									</form>
+									<table id="readyTable" class="table table-bordered table-hover">
+										<thead>
+										<tr style="white-space: nowrap;">
+											<th>序号</th>
+											<th width="15%">门店全称</th>
+											<th width="15%">详细地址</th>
+											<th width="15%">负责人</th>
+											<th width="15%">负责业代</th>
+											<th width="15%">联系电话</th>
+										</tr>
+										</thead>
+									</table>
+
+								</div>
 							</div>
-							<div class="box-body">
-								<form class="form-horizontal">
-									<div class="box-body">
-										<div class="form-group">
-											<label class="col-sm-2 control-label">门店名称</label>
+							<div class="tab-pane" id="map_tab">
+								<div class="box-body">
+									<form class="form-horizontal" id="mapForm">
+										<div class="box-body">
 
-											<div class="col-sm-4">
-												<input type="text" class="form-control" id="fname">
+											<div class="form-group">
+												<label class="col-sm-2 control-label">省份</label>
+
+												<div class="col-sm-4">
+													<select class="form-control" id="province_id">
+														@foreach($citys as $c)
+															<option value="{{$c->id}}">{{$c->Name}}</option>
+														@endforeach
+													</select>
+												</div>
+
+												<label class="col-sm-2 control-label">城市</label>
+
+												<div class="col-sm-4">
+													<select class="form-control" id="city_id">
+
+													</select>
+												</div>
 											</div>
 
-											<label class="col-sm-2 control-label">客户详址</label>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">区域</label>
 
-											<div class="col-sm-4">
-												<input type="text" class="form-control" id="faddress">
-											</div>
-										</div>
-										<div class="form-group">
-											<label class="col-sm-2 control-label">客户分级</label>
+												<div class="col-sm-4">
+													<select class="form-control" id="country_id">
 
-											<div class="col-sm-4">
-												<input type="text" class="form-control" >
-											</div>
+													</select>
+												</div>
 
-											<label class="col-sm-2 control-label">分配线路</label>
-
-											<div class="col-sm-4">
-												<select class="form-control" id="is_allot">
-													<option value="1">已分配线路</option>
-													<option value="2">未分配线路</option>
-												</select>
-											</div>
-										</div>
-
-										<div class="form-group">
-											<label class="col-sm-2 control-label">线路代码</label>
-
-											<div class="col-sm-4">
-												<input type="text" class="form-control" id="fnumber">
+												<div class="col-sm-6">
+													<input type="hidden" value="" id="map_select_id">
+													<button type="button" class="btn btn-info" id="mQueryBtn"><i class="fa fa-fw fa-search"></i>查询</button>
+													<button type="button" class="btn btn-info" id="mAddBtn"><i class="fa fa-fw fa-plus"></i>添加</button>
+												</div>
 											</div>
 
-											<div class="col-sm-6">
-												<button type="button" class="btn btn-info" id="tQueryBtn"><i class="fa fa-fw fa-search"></i>查询</button>
-												<button type="button" class="btn btn-info" id="tAddBtn"><i class="fa fa-fw fa-plus"></i>添加</button>
-											</div>
+
 										</div>
 
-
-									</div>
-
-								</form>
-								<table id="readyTable" class="table table-bordered table-hover">
-									<thead>
-									<tr style="white-space: nowrap;">
-										<th>序号</th>
-										<th width="15%">门店全称</th>
-										<th width="15%">门店简称</th>
-										<th width="15%">详细地址</th>
-										<th width="15%">负责人</th>
-										<th width="15%">负责业代</th>
-										<th width="15%">联系电话</th>
-									</tr>
-									</thead>
-								</table>
-
+									</form>
+									<div id="map" style="height: 500px"></div>
+								</div>
 							</div>
+
+
 						</div>
-
+						<!-- /.tab-content -->
 					</div>
 
-					<div class="col-md-4 ">
-						<div class="box">
-							<div class="box-header">
-								<h3 class="box-title">预分配的门店</h3>
-							</div>
-							<div class="box-body">
-								<form class="form-horizontal" id="mapForm">
-									<div class="box-body">
-
-										<div class="form-group">
-											<label class="col-sm-2 control-label">省份</label>
-
-											<div class="col-sm-4">
-												<select class="form-control" id="province_id">
-													@foreach($citys as $c)
-														<option value="{{$c->id}}">{{$c->Name}}</option>
-													@endforeach
-												</select>
-											</div>
-
-											<label class="col-sm-2 control-label">城市</label>
-
-											<div class="col-sm-4">
-												<select class="form-control" id="city_id">
-
-												</select>
-											</div>
-										</div>
-
-										<div class="form-group">
-											<label class="col-sm-2 control-label">区域</label>
-
-											<div class="col-sm-4">
-												<select class="form-control" id="country_id">
-
-												</select>
-											</div>
-
-											<div class="col-sm-6">
-												<input type="hidden" value="" id="map_select_id">
-												<button type="button" class="btn btn-info" id="mQueryBtn"><i class="fa fa-fw fa-search"></i>查询</button>
-												<button type="button" class="btn btn-info" id="mAddBtn"><i class="fa fa-fw fa-plus"></i>添加</button>
-											</div>
-										</div>
-
-
-									</div>
-
-								</form>
-								<div id="map" style="height: 500px"></div>
-							</div>
-						</div>
-
-					</div>
-
-					<div class="col-md-4 ">
+					<div class="col-md-6 ">
 						<div class="box">
 							<div class="box-header">
 								<h3 class="box-title">已分配的门店</h3>
@@ -417,12 +414,11 @@
 									<tr style="white-space: nowrap;">
 										<th>序号</th>
 										<th width="15%">门店全称</th>
-										<th width="15%">门店简称</th>
 										<th width="15%">详细地址</th>
 										<th width="15%">负责人</th>
-										<th width="15%">负责业代</th>
 										<th width="15%">联系电话</th>
-										<th>line_id</th>
+										<th width="15%">负责业代</th>
+										<th>当前线路</th>
 									</tr>
 									</thead>
 								</table>
