@@ -6,6 +6,7 @@ use App\Repositories\ISysConfigRepo;
 use App\Repositories\SysConfigRepo;
 use App\Services\DataSync\DataSyncSvr;
 use App\Services\DataSync\DefaultFilter;
+use App\Services\DataSync\DisplayPolicyStoreFilter;
 use App\Services\DataSync\KingdeeWorker;
 use App\Services\Sms\AliDaYuSms;
 use App\Services\Sms\ISmsSvr;
@@ -35,6 +36,7 @@ class AppServiceProvider extends ServiceProvider
 	    $this->app->singleton('dataSync', function($app){
 	    	$svr = new DataSyncSvr();
 	    	$svr->registerFilter(DefaultFilter::class);
+	    	$svr->registerFilter(DisplayPolicyStoreFilter::class, 'exp_display_policy_store');
 	    	$svr->registerWorker(KingdeeWorker::class);
 	    	return $svr;
 	    });
