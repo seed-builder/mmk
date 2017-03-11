@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="/assets/plugins/datepicker/datepicker3.css">
 <style type="text/css">
 #allmap {
-	height: 500px;
+	height: 300px;
 	width: 100%;
 }
 

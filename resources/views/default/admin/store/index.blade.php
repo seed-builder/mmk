@@ -62,7 +62,7 @@
                     <!-- /.box-header -->
                     <div class="box-body">
 
-                        <div id="allmap" style="height: 500px;"></div>
+                        <div id="allmap" style="height: 300px;"></div>
                     </div>
                     <!-- /.box-body -->
                 </div>
