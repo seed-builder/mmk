@@ -26,7 +26,7 @@ use Log;
  * @SWG\Property(name="fdocument_status", type="string", description="审核状态")
  * @SWG\Property(name="fmodify_date", type="string", description="修改时间")
  * @SWG\Property(name="fmodify_id", type="integer", description="修改人")
- * @SWG\Property(name="is_store_signed", type="boolen", description="门店在该天是否签约陈列费用协议")
+ * @SWG\Property(name="is_store_signed", type="boolean", description="门店在该天是否签约陈列费用协议")
  */
 class VisitStoreCalendar extends BaseModel
 {
