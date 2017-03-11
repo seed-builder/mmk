@@ -78,21 +78,8 @@ class VisitLineCalendarController extends AdminController
 
             $fday = $fday == 8 ? 1 : $fday;
 
-            $fdate = date("Y-m-d", strtotime("+" . ($i + 1) . " day")) . " 00:00:00";
+            $fdate = date("Y-m-d", strtotime("+" . ($i + 1) . " day"));
 
-            //删除原有数据
-            VisitLineCalendar::query()
-                ->where('femp_id', $data['femp_id'])
-                ->where('fdate', $fdate)
-                ->delete();
-            VisitStoreCalendar::query()
-                ->where('femp_id', $data['femp_id'])
-                ->where('fdate', $fdate)
-                ->delete();
-            VisitTodoCalendar::query()
-                ->where('femp_id', $data['femp_id'])
-                ->where('fdate', $fdate)
-                ->delete();
             $line = VisitLine::query()->where('fnumber', $fday)->first();
 
             $model->makeCalendar($data['femp_id'], $line->id, $fdate);

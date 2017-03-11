@@ -115,6 +115,7 @@ define(function (require, exports, module) {
                             return false;
                         }else {
                             $("#storeInfoForm").attr('action','/admin/store/createStore')
+                            $("#femp_id").val(femp_id)
                             $('#storeinfo').modal('show');
                         }
 
@@ -151,16 +152,6 @@ define(function (require, exports, module) {
                                 $(element).val(c);
                                 form.render('select')
                             });
-
-                            $("#province_id").val(data.fprovince);
-                            regionFun($("#province_id").val(),"#city_id",function () {
-                                $("#city_id").val(data.fcity);
-
-                                regionFun($("#city_id").val(),"#country_id",function () {
-                                    $("#country_id").val(data.fcountry);
-                                    form.render('select')
-                                })
-                            })
 
 
                             $("#storeInfoForm").find('textarea').text(data.fremark);
@@ -255,13 +246,28 @@ define(function (require, exports, module) {
         var mapClick = function () {
             smap.addEventListener("click", function (e) {
                 smap.clearOverlays();
-                $("#flongitude").val(e.point.lng);
-                $("#flatitude").val(e.point.lat);
                 var point = new BMap.Point(e.point.lng, e.point.lat);
                 var marker = new BMap.Marker(point);  // 创建标注
                 smap.addOverlay(marker);
+
+                map_address(point);
+
             });
         }
+
+        var map_address = function (point) {
+            var gc = new BMap.Geocoder();//地址解析类
+            gc.getLocation(point, function(rs){
+                $("#fprovince").val(rs.addressComponents.province);
+                $("#fcity").val(rs.addressComponents.city);
+                $("#fcountry").val(rs.addressComponents.district);
+                $("#fstreet").val(rs.addressComponents.street);
+                $("#flongitude").val(point.lng);
+                $("#flatitude").val(point.lat);
+            });
+        }
+
+
 
         var mapAddOverlay = function (longitude, latitude, data) {
             var point = new BMap.Point(longitude, latitude);
@@ -326,30 +332,6 @@ define(function (require, exports, module) {
                     }
                 }
             })
-            form.on('select(fprovince)', function(data){
-                regionFun(data.value,"#city_id",function () {
-                    $("#city_id").trigger('change');
-
-                    regionFun($("#city_id").val(),"#country_id",function () {
-                        $("#country_id").trigger('change');
-                        countryMapPanTo()
-                        form.render('select')
-                    })
-                })
-
-            });
-
-            form.on('select(fcity)', function(data){
-                regionFun(data.value,"#country_id",function () {
-                    $("#country_id").trigger('change');
-                    countryMapPanTo()
-                    form.render('select')
-                })
-            });
-
-            form.on('select(fcountry)', function(data){
-                countryMapPanTo();
-            });
 
             form.on('submit(storeInfoForm)', function (data) {
                 ajaxForm("#storeInfoForm",function () {
@@ -360,14 +342,6 @@ define(function (require, exports, module) {
             });
 
         });
-
-        //选择完区域以后 地图定位到该区域
-        var countryMapPanTo = function () {
-            ajaxGetData('/admin/city/getCity?id='+$("#country_id").val(),function (data) {
-                var point = new BMap.Point(data.lng, data.Lat);
-                smap.panTo(point);
-            })
-        }
 
 
         mapClick();
@@ -421,8 +395,7 @@ define(function (require, exports, module) {
                 // smap.addOverlay(new BMap.Marker(point));    //添加标注
                 //
                 // console.log(point);
-                $("#flongitude").val(point.lng);
-                $("#flatitude").val(point.lat);
+                map_address(point);
 
                 var marker = new BMap.Marker(point);  // 创建标注
                 smap.addOverlay(marker);

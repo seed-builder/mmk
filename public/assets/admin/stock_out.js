@@ -168,8 +168,7 @@ define(function (require, exports, module) {
             idSrc: 'id',
             fields: [
                 { 'label': '商品', 'name': 'fmaterial_id', 'type': 'select', 'options': materials},
-                {'label': '销售单位','type':"readonly", 'name': 'fsale_unit',},
-                {'label': '基本单位','type':"readonly", 'name': 'fbase_unit',},
+
                 {'label': '订单数量', 'name': 'fqty',},
                 {
                     'name': "fstock_out_id",

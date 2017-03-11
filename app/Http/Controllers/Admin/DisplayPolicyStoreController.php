@@ -88,6 +88,7 @@ class DisplayPolicyStoreController extends AdminController
         $entity = DisplayPolicyStore::find($data['id']);
         $entity->fdocument_status="C";
         $entity->fcheck_amount = $data['fcheck_amount'];
+        $entity->status = 1;
 
         $policy = DisplayPolicy::find($entity->fpolicy_id);
 
@@ -108,9 +109,9 @@ class DisplayPolicyStoreController extends AdminController
         $policy->fsign_amount = $policy->fsign_amount+$entity->fcheck_amount;
         $policy->fsign_store_num = $policy->fsign_store_num+1;
 
-        Store::query()->where('id',$entity->fstore_id)->update([
-            'fis_signed' => 1
-        ]);
+//        Store::query()->where('id',$entity->fstore_id)->update([
+//            'fis_signed' => 1
+//        ]);
         $entity->save();
         $policy->save();
 

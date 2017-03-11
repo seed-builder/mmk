@@ -44,22 +44,9 @@ class Kernel extends ConsoleKernel
             for ($fnumber=1;$fnumber<=7;$fnumber++){
                 $line = VisitLine::query()->where('fnumber',$fnumber)->first();
                 $vls = VisitLineStore::query()->where('fline_id',$line->id)->get();
-                $fdate = date('Y-m-d H:i:s',strtotime('+'.$fnumber.' day'));
+                $fdate = date('Y-m-d',strtotime('+'.$fnumber.' day'));
 
                 foreach ($vls as $v){
-                    //删除原有数据
-                    VisitLineCalendar::query()
-                        ->where('femp_id', $v->femp_id)
-                        ->where('fdate', $fdate)
-                        ->delete();
-                    VisitStoreCalendar::query()
-                        ->where('femp_id', $v->femp_id)
-                        ->where('fdate', $fdate)
-                        ->delete();
-                    VisitTodoCalendar::query()
-                        ->where('femp_id', $v->femp_id)
-                        ->where('fdate', $fdate)
-                        ->delete();
                     $calendar->makeCalendar($v->femp_id,$line->id,$fdate);
                 }
             }

@@ -165,41 +165,41 @@
                                         </div>
                                     </div>
 
-                                    <div class="layui-form-item">
-                                        <label class="layui-form-label">省份</label>
-                                        <div class="layui-input-block">
-                                            <select id="province_id" name="fprovince" lay-filter="fprovince">
-                                                @foreach($citys as $c)
-                                                    <option text="{{$c->Name}}" value="{{$c->id}}">{{$c->Name}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
+                                    {{--<div class="layui-form-item">--}}
+                                        {{--<label class="layui-form-label">省份</label>--}}
+                                        {{--<div class="layui-input-block">--}}
+                                            {{--<select id="province_id" name="fprovince" lay-filter="fprovince">--}}
+                                                {{--@foreach($citys as $c)--}}
+                                                    {{--<option text="{{$c->Name}}" value="{{$c->id}}">{{$c->Name}}</option>--}}
+                                                {{--@endforeach--}}
+                                            {{--</select>--}}
+                                        {{--</div>--}}
+                                    {{--</div>--}}
 
-                                    <div class="layui-form-item">
-                                        <label class="layui-form-label">城市</label>
-                                        <div class="layui-input-block">
-                                            <select  id="city_id" name="fcity" lay-filter="fcity">
-                                                <option>未选择</option>
-                                            </select>
-                                        </div>
-                                    </div>
+                                    {{--<div class="layui-form-item">--}}
+                                        {{--<label class="layui-form-label">城市</label>--}}
+                                        {{--<div class="layui-input-block">--}}
+                                            {{--<select  id="city_id" name="fcity" lay-filter="fcity">--}}
+                                                {{--<option>未选择</option>--}}
+                                            {{--</select>--}}
+                                        {{--</div>--}}
+                                    {{--</div>--}}
 
-                                    <div class="layui-form-item">
-                                        <label class="layui-form-label">县/区</label>
-                                        <div class="layui-input-block">
-                                            <select  id="country_id" name="fcountry" lay-filter="fcountry">
-                                                <option>未选择</option>
-                                            </select>
-                                        </div>
-                                    </div>
+                                    {{--<div class="layui-form-item">--}}
+                                        {{--<label class="layui-form-label">县/区</label>--}}
+                                        {{--<div class="layui-input-block">--}}
+                                            {{--<select  id="country_id" name="fcountry" lay-filter="fcountry">--}}
+                                                {{--<option>未选择</option>--}}
+                                            {{--</select>--}}
+                                        {{--</div>--}}
+                                    {{--</div>--}}
 
-                                    <div class="layui-form-item">
-                                        <label class="layui-form-label col-sm-3">街道/乡/镇</label>
-                                        <div class="layui-input-block">
-                                            <input type="text" name="fstreet" required lay-verify="required" autocomplete="off" class="layui-input">
-                                        </div>
-                                    </div>
+                                    {{--<div class="layui-form-item">--}}
+                                        {{--<label class="layui-form-label col-sm-3">街道/乡/镇</label>--}}
+                                        {{--<div class="layui-input-block">--}}
+                                            {{--<input type="text" name="fstreet" required lay-verify="required" autocomplete="off" class="layui-input">--}}
+                                        {{--</div>--}}
+                                    {{--</div>--}}
                                     <div class="layui-form-item">
                                         <label class="layui-form-label col-sm-3">客户详址</label>
                                         <div class="layui-input-block">
@@ -299,6 +299,10 @@
 
                         <input type="hidden" name="femp_id" id="femp_id" class="layui-input">
                         <input type="hidden" name="id" id="store_id" class="layui-input">
+                        <input type="hidden" name="fprovince" id="fprovince" class="layui-input">
+                        <input type="hidden" name="fcity" id="fcity" class="layui-input">
+                        <input type="hidden" name="fcountry" id="fcountry" class="layui-input">
+                        <input type="hidden" name="fstreet" id="fstreet" class="layui-input">
 
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                         {{--<button type="submit" class="btn btn-primary" id="storeSave">保存</button>--}}
