@@ -16,7 +16,7 @@ class CreateTableStSaleOrders extends Migration
         Schema::create('st_sale_orders', function (Blueprint $table) {
             $table->increments('id');
 	        $table->integer('fstore_id')->default(0)->comment('门店id');
-	        $table->integer('flog_id')->default(0)->comment('拜访执行明细visit_todo_calendar id');
+	        //$table->integer('flog_id')->default(0)->comment('拜访执行明细visit_todo_calendar id');
 	        $table->string('fbill_no')->default('')->comment('订单单号(门店编码+日期)');
 	        $table->timestamp('fdate')->nullable()->comment('下单日期');
 	        $table->integer('femp_id')->default(0)->comment('业务员id');
