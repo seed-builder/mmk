@@ -45,6 +45,12 @@ define(function(require, exports, module) {
             ]
         });
 
+        editor.on( 'open', function ( e, type ) {
+            // Type is 'main', 'bubble' or 'inline'
+            console.log(e);
+            alert( 'Editor '+type+' form shown' );
+        } );
+
         var table = $("#" + tableId).DataTable({
             dom: "lBfrtip",
             language: zhCN,
