@@ -23,7 +23,12 @@
             <div class="col-xs-12">
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">st_stocks列表</h3>
+                        <h3 class="box-title">库存信息列表</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
@@ -31,21 +36,19 @@
                         <table id="moduleTable" class="table table-bordered table-hover">
                             <thead>
                             <tr>
-                                <th>fbase_eqty</th>
-                                <th>fcreate_date</th>
-                                <th>fcreator_id</th>
-                                <th>fdocument_status</th>
-                                <th>feqty</th>
-                                <th>fhqty</th>
-                                <th>flog_id</th>
-                                <th>fmeterial_id</th>
-                                <th>fmodify_date</th>
-                                <th>fmodify_id</th>
-                                <th>fold_eqty</th>
-                                <th>fsale_hqty</th>
-                                <th>fstore_id</th>
-                                <th>ftime</th>
                                 <th>id</th>
+                                <th>门店编码</th>
+                                <th>门店名称</th>
+                                <th>盘点日期</th>
+                                <th>业务员编码</th>
+                                <th>业务员名称</th>
+                                <th>商品编码</th>
+                                <th>商品名称</th>
+                                <th>规格型号</th>
+                                <th>箱数量</th>
+                                <th>瓶数量</th>
+                                <th>建议销售数量(箱)</th>
+
                             </tr>
                             </thead>
                         </table>

@@ -1,26 +1,16 @@
-<?php echo $BEGIN_PHP; ?>
-
 <?php
-		$searchCols = [];
-		foreach ($columns as $col){
-			if($col->data_type == 'string'){
-				$searchCols[] = $col->name;
-			}
-		}
-
-?>
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\DataTableController;
-use App\Models\<?php echo e($model); ?>;
+use App\Http\Controllers\Admin\AdminController;
+use App\Models\Busi\VisitFunction;
 
-class <?php echo e($model); ?>Controller extends DataTableController
+class VisitFunctionController extends AdminController
 {
 	public function newEntity(array $attributes = [])
 	{
 		// TODO: Implement newEntity() method.
-		return new <?php echo e($model); ?>($attributes);
+		return new VisitFunction($attributes);
 	}
 
 	/**
@@ -31,7 +21,7 @@ class <?php echo e($model); ?>Controller extends DataTableController
 	public function index()
 	{
 		//
-		return view('admin.<?php echo e(snake_case($model,'-')); ?>.index');
+		return view('admin.visit-function.index');
 	}
 
 	/**
@@ -41,7 +31,7 @@ class <?php echo e($model); ?>Controller extends DataTableController
 	*/
 	public function create()
 	{
-		return view('admin.<?php echo e(snake_case($model,'-')); ?>.create');
+		return view('admin.visit-function.create');
 	}
 
 	/**
@@ -52,8 +42,8 @@ class <?php echo e($model); ?>Controller extends DataTableController
 	*/
 	public function edit($id)
 	{
-		$entity = <?php echo e($model); ?>::find($id);
-		return view('admin.<?php echo e(snake_case($model,'-')); ?>.edit', ['entity' => $entity]);
+		$entity = VisitFunction::find($id);
+		return view('admin.visit-function.edit', ['entity' => $entity]);
 	}
 
 	/**
@@ -70,10 +60,12 @@ class <?php echo e($model); ?>Controller extends DataTableController
 	/**
 	* @param  Request $request
 	* @param  array $searchCols
+	* @param  array $with
+	* @param  null $conditionCall
 	* @return  \Illuminate\Http\JsonResponse
 	*/
-	public function pagination(Request $request, $searchCols = []){
-		$searchCols = <?php echo json_encode($searchCols); ?>;
+	public function pagination(Request $request, $searchCols = [], $with=[], $conditionCall = null){
+		$searchCols = ["fdocument_status","fname","fnumber"];
 		return parent::pagination($request, $searchCols);
 	}
 

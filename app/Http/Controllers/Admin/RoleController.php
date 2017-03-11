@@ -76,6 +76,7 @@ class RoleController extends AdminController
 		if($request->isMethod('post')){
 			$ids = $request->input('perms',[]);
 			$role->perms()->sync($ids);
+			$this->flash_success('设置权限成功！');
 		}
 		return view('admin.role.permission', ['perms' => $perms, 'role' => $role]);
 	}

@@ -120,10 +120,11 @@ class PositionController extends AdminController
 	/**
 	 * Store a newly created resource in storage.
 	 *
-	 * @param  \Illuminate\Http\Request  $request
+	 * @param  \Illuminate\Http\Request $request
+	 * @param array $extraFields
 	 * @return \Illuminate\Http\Response
 	 */
-	public function store(Request $request)
+	public function store(Request $request, $extraFields=[])
 	{
 		//
 		$data = $request->all();

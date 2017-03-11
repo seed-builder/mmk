@@ -30,12 +30,15 @@ define(function (require, exports, module) {
             fields: [
                 {'label': '商品名称', 'name': 'fname',},
                 {'label': '商品编号', 'name': 'fnumber',},
-                {'label': '单位', 'name': 'funit',},
+                {'label': '销售单位', 'name': 'fsale_unit',},
+                {'label': '基本单位', 'name': 'fbase_unit',},
+                {'label': '乘数', 'name': 'fratio',},
+                {'label': '规格', 'name': 'fspecification',},
             ]
         });
 
         var table = $("#" + tableId).DataTable({
-            dom: "Bfrtip",
+            dom: "lBfrtip",
             language: zhCN,
             processing: true,
             serverSide: true,
@@ -47,7 +50,9 @@ define(function (require, exports, module) {
                 {'data': 'id'},
                 {'data': 'fnumber'},
                 {'data': 'fname'},
-                {'data': 'funit'},
+                {'data': 'fsale_unit'},
+                {'data': 'fbase_unit'},
+                {'data': 'fspecification'},
                 {'data': 'fcreate_date'},
                 {
                     "data": "fdocument_status",

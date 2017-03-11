@@ -16,7 +16,7 @@ class CreateTableStStockInItems extends Migration
         Schema::create('st_stock_in_items', function (Blueprint $table) {
             $table->increments('id');
 	        $table->integer('fstock_in_id')->default(0)->comment('入库ID');
-	        $table->integer('fmeterial_id')->default(0)->comment('物料内码id');
+	        $table->integer('fmaterial_id')->default(0)->comment('物料内码id');
 	        $table->string('fsale_unit')->nullable()->comment('销售单位');
 	        $table->string('fbase_unit')->nullable()->comment('基本单位');
 	        $table->decimal('fqty')->default(0)->comment('订单数量');

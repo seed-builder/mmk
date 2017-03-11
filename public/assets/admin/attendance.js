@@ -46,7 +46,16 @@ define(function(require, exports, module) {
             select: true,
             paging: true,
             rowId: "id",
-            ajax: '/admin/attendance/pagination',
+            ajax: {
+                url : '/admin/attendance/pagination',
+                data : function (data) {
+                    var treeNode = $('#'+treeId).treeview('getSelected');
+                    if (treeNode.length>0){
+                        data['nodeid'] = treeNode[0].dataid;
+                    }
+                    data['fdate'] = $('#datepicker').val()
+                }
+            },
             columns: [
                 {"data": "id"},
                 {
@@ -77,15 +86,6 @@ define(function(require, exports, module) {
                             return "";
                     }
                 },
-                // {
-                //     "data": 'fbegin_id',
-                //     render: function ( data, type, full ) {
-                //         if(full.begin_attendance!=null)
-                //             return '<img src="'+full.begin_attendance.photo.path+'" />'
-                //         else
-                //             return "";
-                //     }
-                // },
                 {
                 	"data": 'fcomplete_id',
                 	render: function ( data, type, full ) {
@@ -145,11 +145,7 @@ define(function(require, exports, module) {
         });
 
         table.on( 'select', rowselect);
-        //
-        // function checkBtn(e, dt, type, indexes) {
-        //     var count = table.rows( { selected: true } ).count();
-        //     table.buttons( ['.edit', '.delete'] ).enable(count > 0);
-        // }
+
         table.on( 'xhr', function () {
         	map.clearOverlays();
             var data = table.ajax.json();
@@ -199,10 +195,10 @@ define(function(require, exports, module) {
                         levels: 99,
                         data: data,
                         onNodeSelected: function(event, data) {
-                            // Your logic goes here
-							//alert(data.dataid);
-//                            table.search( data.dataid ).draw();
-                        	searchtable(data.dataid);
+                            table.ajax.reload();
+                        },
+                        onNodeUnselected: function (event, data) {
+                            table.ajax.reload();
                         },
                         onSearchComplete: function(event, data) {
                             if (JSON.stringify(data)!="{}"){
@@ -212,12 +208,6 @@ define(function(require, exports, module) {
                     });
                 },
             });
-        }
-        
-        var searchtable = function(emp_id){
-        	table.columns( 1 ).search( emp_id )
-        		 .columns( 2 ).search( $('#datepicker').val() )
-        		 .draw();
         }
         
         var datepicker = $( "#datepicker" ).datepicker({
@@ -232,7 +222,7 @@ define(function(require, exports, module) {
         }
         
         datepicker.on('changeDate', function(ev){
-        	searchtable($(".node-selected").data('id'));
+            table.ajax.reload();
         });
 
         //单点地图标注
@@ -262,28 +252,22 @@ define(function(require, exports, module) {
 
         //信息窗口
         function infoWindow(element,data) {
-
             var begin_time = data.begin_attendance!=null?data.begin_attendance.ftime:'无';
             var begin_address = data.begin_attendance!=null?data.begin_attendance.faddress:'无';
             var complete_time = data.complete_attendance!=null?data.complete_attendance.ftime:'无'
             var complete_address = data.complete_attendance!=null?data.complete_attendance.faddress:'无'
 
-            var content = "<h3>"+data.employee.fname+"</h3>"+
-                "<p>日期："+data.fday+"</p>"+
-                "<p>签到时间："+begin_time+"</p>"+
-                "<p>签到地址："+begin_address+"</p>"+
-                "<p>签退时间："+complete_time+"</p>"+
-                "<p>签退地址："+complete_address+"</p>"
-
+            var attrs = new Array();
+            attrs.push({"name":"日期","value":data.fday})
+            attrs.push({"name":"签到时间","value":begin_time})
+            attrs.push({"name":"签到地址","value":begin_address})
+            attrs.push({"name":"签退时间","value":complete_time})
+            attrs.push({"name":"签退地址","value":complete_address})
             if (data.begin_attendance==null||data.complete_attendance==null){
-                content+= "<p>签到状态：<span style='color: red;font-weight: bold'>异常</span></p>"
+                attrs.push({"name":"签到状态","value":"<span style='color: red;font-weight: bold'>异常</span>"})
             }
-
-            var infoWindow = new BMap.InfoWindow(content)  // 创建信息窗口对象
-
-            element.addEventListener("click", function(){
-                this.openInfoWindow(infoWindow);
-            });
+            var obj = {"title":data.employee.fname,"attrs":attrs};
+            mapWindow(element,obj);
         }
 
         //组织结构查询

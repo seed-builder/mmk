@@ -53,7 +53,7 @@ define(function (require, exports, module) {
                 data : function (data) {
                     var treeNode = $('#'+treeId).treeview('getSelected');
                     if (treeNode.length>0){
-                        data.columns[6]['search']['value'] = treeNode[0].dataid;
+                        data['nodeid'] = treeNode[0].dataid;
                     }
 
                 }
@@ -61,7 +61,7 @@ define(function (require, exports, module) {
             columns: [
                 {"data": "id"},
                 {"data": "ffullname"},
-                {"data": "fshortname"},
+                // {"data": "fshortname"},
                 {"data": "faddress"},
                 {"data": "fcontracts"},
                 {"data": "ftelephone"},
@@ -95,7 +95,7 @@ define(function (require, exports, module) {
             ],
             columnDefs: [
                 {
-                    "targets": [7, 8],
+                    "targets": [6, 7],
                     "visible": false
                 }
             ],
@@ -207,7 +207,6 @@ define(function (require, exports, module) {
                         onNodeSelected: function (event, data) {
                             addEnable();
                             editEnable();
-                            // searchtable(data.dataid);
                             table.ajax.reload();
                         },
                         onNodeUnselected: function (event, data) {
@@ -276,16 +275,7 @@ define(function (require, exports, module) {
 
         //设置添加门店按钮是否可用
         var addEnable = function () {
-            var count = table.rows({selected: true}).count();
-            table.buttons(['.add']).enable(count > 0);
-            if (count == 0) {
-                var treeNode = $('#' + treeId).treeview('getSelected');
-                if (treeNode.length > 0) {
-                    table.buttons(['.add']).enable(treeNode[0].nodetype == 'emp');
-                }
-
-            }
-
+            table.buttons(['.add']).enable(fempId(treeId,table)!=null);
         }
 
         //设置编辑门店按钮是否可用
@@ -293,12 +283,6 @@ define(function (require, exports, module) {
             var count = table.rows({selected: true}).count();
             table.buttons(['.edit']).enable(count > 0);
         }
-
-        var searchtable = function (emp_id) {
-            table.columns(6).search(emp_id)
-                .draw();
-        }
-
 
         //modal关闭时数据清空
         $("#storeinfo").on("hidden.bs.modal", function () {
@@ -310,23 +294,18 @@ define(function (require, exports, module) {
         //信息窗口
         function infoWindow(element, data) {
 
-            var content = "<h3>" + data.ffullname + "</h3>" +
-                "<p>地址：" + data.faddress + "</p>" +
-                "<p>负责人人：" + data.fcontracts + "</p>" +
-                "<p>电话：" + data.ftelephone + "</p>" +
-                "<p>负责业代：" + data.employee.fname + "</p>"
+            var attrs = new Array();
+            attrs.push({"name":"地址","value":data.faddress})
+            attrs.push({"name":"负责人","value":data.fcontracts})
+            attrs.push({"name":"地址","value":data.ftelephone})
+            attrs.push({"name":"负责业代","value":data.employee.fname})
+            var obj = {"title":data.ffullname,"attrs":attrs};
 
-            var infoWindow = new BMap.InfoWindow(content)  // 创建信息窗口对象
-
-            element.addEventListener("click", function () {
-                this.openInfoWindow(infoWindow);
-            });
+            mapWindow(element,obj);
         }
 
         //表格单行选择事件 单点地图标注
         function rowselect() {
-            // var count = table.rows({selected: true}).count();
-            // table.buttons(['.edit']).enable(count > 0);
             addEnable();
             editEnable();
 
@@ -334,9 +313,6 @@ define(function (require, exports, module) {
             var data = table.rows('.selected').data()[0];
 
             mapAddOverlay(data.flongitude, data.flatitude, data);
-            var point = new BMap.Point(data.flongitude, data.flatitude, data);
-            map.panTo(point);
-
         }
 
         layui.use(['layer', 'form'], function () {

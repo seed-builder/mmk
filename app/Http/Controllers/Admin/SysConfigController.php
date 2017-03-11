@@ -64,7 +64,7 @@ class SysConfigController extends AdminController
 	 * @param null $conditionCall
 	 * @return \Illuminate\Http\JsonResponse
 	 */
-	public function pagination(Request $request, $searchCols = [],$with=[], $conditionCall = null){
+	public function pagination(Request $request, $searchCols = [], $with=[], $conditionCall = null){
 		$searchCols = ["desc","name","value"];
 		return parent::pagination($request, $searchCols);
 	}

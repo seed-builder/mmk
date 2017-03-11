@@ -74,7 +74,8 @@ class VisitTodoCalendar extends BaseModel
                 'fdate' => $fdate,
                 'femp_id' => $femp_id,
                 'fstore_calendar_id' => $fstore_calendar_id,
-                'ftodo_id' => $t->id
+                'ftodo_id' => $t->id,
+	            'fis_must_visit' => $t->fis_must_visit
             ]);
 
             if (!empty($t->children)){
@@ -84,7 +85,8 @@ class VisitTodoCalendar extends BaseModel
                         'fdate' => $fdate,
                         'femp_id' => $femp_id,
                         'fstore_calendar_id' => $fstore_calendar_id,
-                        'ftodo_id' => $child->id
+                        'ftodo_id' => $child->id,
+	                    'fis_must_visit' => $child->fis_must_visit
                     ]);
                 }
             }

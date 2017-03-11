@@ -1,6 +1,6 @@
 @extends('admin.layout.collapsed-sidebar')
 @section('styles')
-    <link rel="stylesheet" href="{{url('assets')}}/plugins/layui/css/layui.css">
+
     <style>
         .tangram-suggestion-main {
             z-index: 9999;
@@ -62,7 +62,7 @@
                     <!-- /.box-header -->
                     <div class="box-body">
 
-                        <div id="allmap" style="height: 500px;"></div>
+                        <div id="allmap" style="height: 300px;"></div>
                     </div>
                     <!-- /.box-body -->
                 </div>
@@ -84,7 +84,7 @@
                             <tr>
                                 <th>序号</th>
                                 <th>门店全称</th>
-                                <th>门店简称</th>
+                                {{--<th>门店简称</th>--}}
                                 <th>详细地址</th>
                                 <th>负责人</th>
                                 <th>联系电话</th>
@@ -316,7 +316,7 @@
     <script src="/assets/plugins/bootstrap-treeview/bootstrap-treeview.min.js"></script>
     <script type="text/javascript"
             src="http://api.map.baidu.com/api?v=2.0&ak=D4Bi3270ydgA5HsnWDnmBVwF3zaPdoMC"></script>
-    <script src="{{url('assets')}}/plugins/layui/layui.js"></script>
+
     @include('admin.layout.datatable-js')
     <script type="text/javascript">
 

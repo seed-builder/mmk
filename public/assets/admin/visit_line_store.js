@@ -494,20 +494,15 @@ define(function (require, exports, module) {
                         layer.alert('请先选择要删除的门店！');
                         return;
                     }
-                    $.messager.confirm('操作提示', '确定删除？', function () {
-                        $.ajax({
-                            type: "GET",
-                            url: "/admin/visit_line_store/destroy/" + allotTable.rows('.selected').data()[0].id,
-                            dataType: "json",
-                            data: {
-                                "_token": $('meta[name="_token"]').attr('content')
-                            },
-                            success: function (data) {
-                                readyTable.ajax.reload();
-                                allotTable.ajax.reload();
-                            }
+                    layer.confirm('确定删除？', function () {
+                        var load = layer.load(1);
+                        ajaxLink("/admin/visit_line_store/destroy/" + allotTable.rows('.selected').data()[0].id,function () {
+                            readyTable.ajax.reload();
+                            allotTable.ajax.reload();
+                            layer.close(load);
                         })
-                    })
+
+                    });
 
                 }
                 },
@@ -520,7 +515,10 @@ define(function (require, exports, module) {
                         ids.push(data[i].id);
                     }
 
-                    $.messager.confirm('操作提示', '确定重置当前线路上所有门店吗！', function () {
+                    layer.confirm('确定重置当前线路上所有门店吗！', function () {
+                        var load = layer.load(1);
+
+
                         $.ajax({
                             type: "POST",
                             url: "/admin/visit_line_store/destroyAll",
@@ -532,7 +530,7 @@ define(function (require, exports, module) {
                             success: function (data) {
                                 readyTable.ajax.reload();
                                 allotTable.ajax.reload();
-
+                                layer.closeAll();
                             }
                         })
                     });
@@ -623,16 +621,20 @@ define(function (require, exports, module) {
 
         //预分配门店 表格添加按钮
         $("#tAddBtn").on('click', function () {
+
             var is_allot = $("#is_allot").find('option:selected').val();
 
             if (readyTable.rows('.selected').data().length == 0) {
                 layer.alert('请先选择要添加的门店！');
                 return;
             }
+
             if (is_allot == 1) {
-                $.messager.confirm('操作提示', '该门店已分配在其他线路中，是否继续添加？', function () {
+                layer.confirm('该门店已在其他线路中分配，确定继续？', function () {
+                    var load = layer.load(1);
+                    layer.close(load)
                     addAllotStore(readyTable.rows('.selected').data()[0].id);
-                })
+                });
             } else {
 
                 addAllotStore(readyTable.rows('.selected').data()[0].id);
@@ -679,6 +681,7 @@ define(function (require, exports, module) {
         //地图查询方法
         var mapQuery = function () {
             map.clearOverlays();
+            map.centerAndZoom($("#country_id").find("option:selected").text(), params['zoom']);
 
             $.ajax({
                 type: "GET",
@@ -693,6 +696,10 @@ define(function (require, exports, module) {
                     "_token": $('meta[name="_token"]').attr('content')
                 },
                 success: function (data) {
+                    if (data.length==0){
+                        layer.msg("当前人员在该区域内没有所负责的门店！")
+                        return ;
+                    }
                     for (index in data) {
                         data[index]['selectable'] = true;
                         mapAddOverlay(data[index]['flongitude'], data[index]['flatitude'], data[index]);
@@ -720,6 +727,7 @@ define(function (require, exports, module) {
             map.clearOverlays();
             $("#map_select_id").val("")
         })
+
 
         //城市区域联动
         $("#province_id").on('change', function () {

@@ -23,155 +23,152 @@ class StoreController extends AdminController
 {
 
     //
-	public function newEntity(array $attributes = [])
-	{
-		// TODO: Implement newEntity() method.
-		return new Store($attributes);
-	}
+    public function newEntity(array $attributes = [])
+    {
+        // TODO: Implement newEntity() method.
+        return new Store($attributes);
+    }
 
-	public function index()
-	{
-        $citys = City::query()->where('LevelType',1)->get();
+    public function index()
+    {
+        $citys = City::query()->where('LevelType', 1)->get();
         $channels = Channel::all();
         $cus = Customer::all();
-		return view('admin.store.index',compact('citys','channels','cus'));
-	}
+        return view('admin.store.index', compact('citys', 'channels', 'cus'));
+    }
 
-	/**
-	 * @param Request $request
-	 * @param array $searchCols
-	 * @param array $with
-	 * @param null $conditionCall
-	 * @return \Illuminate\Http\JsonResponse
-	 */
-	public function pagination(Request $request, $searchCols = [], $with = [], $conditionCall = null){
-		$searchCols = ['fnumber', 'ffullname', 'fshortname','faddress','fcontracts'];
+    /**
+     * @param Request $request
+     * @param array $searchCols
+     * @param array $with
+     * @param null $conditionCall
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function pagination(Request $request, $searchCols = [], $with = [], $conditionCall = null)
+    {
+        $searchCols = ['fnumber', 'ffullname', 'fshortname', 'faddress', 'fcontracts'];
 
         $data = $request->all();
-        $query = Store::query();
-        foreach ($data['columns'] as $d) {
-            if ($d['data']=='femp_id'&&!empty($d['search']['value'])){
-                $emp = Employee::find($d['search']['value']);
-                if (empty($emp)){
-                    $dept = Department::find($d['search']['value']);
+
+        return parent::pagination($request, $searchCols, $with, function ($queryBuilder) use ($data) {
+
+            if (!empty($data['nodeid'])) {
+                $emp = Employee::find($data['nodeid']);
+                if (empty($emp)) {
+                    $dept = Department::find($data['nodeid']);
                     $emp_ids = $dept->getAllEmployeeByDept()->pluck('id')->toArray();
-
-                    $query->whereIn('femp_id',$emp_ids);
+                    $queryBuilder->whereIn('femp_id', $emp_ids);
                 }else{
-                    $query->where('femp_id',$d['search']['value']);
+                    $queryBuilder->where('femp_id', $data['nodeid']);
                 }
-                $request['queryBuilder'] = $query;
             }
-        }
 
-        //门店路线规划 预分配门店查询
-        if (!empty($data['fname'])||!empty($data['faddress'])||!empty($data['fnumber'])||!empty($data['is_allot'])){
-            $request['queryBuilder']=$this->readyAllotStoreQuery($data);
-        }
+            $this->readyAllotStoreQuery($data,$queryBuilder);
 
-		return parent::pagination($request, $searchCols, $with, function ($queryBuilder){
-
-			$ids = $this->getCurUsersEmployeeIds();//$entities->pluck('id')->all(); //array_map(function ($item){	return $item->id;}, $entities);
-			//var_dump($ids);
-			if(!empty($ids))
-			{
-				$queryBuilder->whereIn('femp_id', $ids);
-			}
-		});
-	}
+            $ids = $this->getCurUsersEmployeeIds();//$entities->pluck('id')->all(); //array_map(function ($item){	return $item->id;}, $entities);
+            //var_dump($ids);
+            if (!empty($ids)) {
+                $queryBuilder->whereIn('femp_id', $ids);
+            }
+        });
+    }
 
     //门店路线规划 预分配门店查询
-    public function readyAllotStoreQuery($data){
-        $query = Store::query();
-        $query->where('femp_id',$data['femp_id']);
+    public function readyAllotStoreQuery($data,$query)
+    {
+        if (!empty($data['femp_id'])){
+            $query->where('femp_id', $data['femp_id']);
 
-        //预分配门店列表 过滤掉该线路中已存在的门店
-        $exist_ids = VisitLineStore::query()->where('fline_id',$data['fline_id'])->pluck('fstore_id')->toArray();
-        $query->whereNotIn('id',$exist_ids);
-
-        if (!empty($data['fname'])){
-            $query->where('ffullname','like','%'.$data['fname'].'%')->get();
-        }
-        if (!empty($data['faddress'])){
-            $query->where('faddress','like','%'.$data['faddress'].'%')->get();
+            //预分配门店列表 过滤掉该线路中已存在的门店
+            $exist_ids = VisitLineStore::query()->where('fline_id', $data['fline_id'])->pluck('fstore_id')->toArray();
+            $query->whereNotIn('id', $exist_ids);
         }
 
-        if (!empty($data['fnumber'])){
-            $line_ids = VisitLine::query()->where('fnumber','like','%'.$data['fnumber'].'%')->pluck('id')->toArray();
-            $vls_ids = VisitLineStore::query()->where('femp_id',$data['femp_id'])->whereIn('fline_id',$line_ids)->pluck('id')->toArray();
-
-            $query->whereIn('id',$vls_ids);
+        if (!empty($data['fname'])) {
+            $query->where('ffullname', 'like', '%' . $data['fname'] . '%')->get();
         }
-        if (!empty($data['is_allot'])){
-            $ids = VisitLineStore::query()->where('femp_id',$data['femp_id'])->pluck('fstore_id')->toArray();
+        if (!empty($data['faddress'])) {
+            $query->where('faddress', 'like', '%' . $data['faddress'] . '%')->get();
+        }
 
-            if ($data['is_allot']==1){
-                $query->whereIn('id',$ids);
-            }else if ($data['is_allot']==2){
-                $query->whereNotIn('id',$ids);
+        if (!empty($data['fnumber'])) {
+            $line_ids = VisitLine::query()->where('fnumber', 'like', '%' . $data['fnumber'] . '%')->pluck('id')->toArray();
+            $vls_ids = VisitLineStore::query()->where('femp_id', $data['femp_id'])->whereIn('fline_id', $line_ids)->pluck('id')->toArray();
+
+            $query->whereIn('id', $vls_ids);
+        }
+        if (!empty($data['is_allot'])) {
+            $ids = VisitLineStore::query()->where('femp_id', $data['femp_id'])->pluck('fstore_id')->toArray();
+
+            if ($data['is_allot'] == 1) {
+                $query->whereIn('id', $ids);
+            } else if ($data['is_allot'] == 2) {
+                $query->whereNotIn('id', $ids);
             }
         }
 
-        return $query;
     }
 
     //自定义查询
-    public function diyquery(Request $request){
+    public function diyquery(Request $request)
+    {
         $data = $request->all();
         $query = Store::query();
         //预分配门店列表 过滤掉该线路中已存在的门店
-        $ids1 = VisitLineStore::query()->where('fline_id',$data['fline_id'])->pluck('fstore_id')->toArray();
+        $ids1 = VisitLineStore::query()->where('fline_id', $data['fline_id'])->pluck('fstore_id')->toArray();
 
-        $query->whereNotIn('id',$ids1);
+        $query->whereNotIn('id', $ids1);
 
-        if (!empty($data['fprovince'])){
-            $query->where('fprovince',$data['fprovince']);
+        if (!empty($data['fprovince'])) {
+            $query->where('fprovince', $data['fprovince']);
         }
-        if (!empty($data['fcity'])){
-            $query->where('fcity',$data['fcity']);
+        if (!empty($data['fcity'])) {
+            $query->where('fcity', $data['fcity']);
         }
-        if (!empty($data['fcountry'])){
-            $query->where('fcountry',$data['fcountry']);
+        if (!empty($data['fcountry'])) {
+            $query->where('fcountry', $data['fcountry']);
         }
-        if (!empty($data['femp_id'])){
-            $query->where('femp_id',$data['femp_id']);
+        if (!empty($data['femp_id'])) {
+            $query->where('femp_id', $data['femp_id']);
         }
 
-        return json_encode($query->get());
+        return response()->json($query->get());
     }
 
 
     //门店添加
-    public function createStore(Request $request){
-        $result = $this->saveData($request->all(),'create');
+    public function createStore(Request $request)
+    {
+        $result = $this->saveData($request->all(), 'create');
 
         return response()->json($result);
     }
 
     //门店编辑
-    public function editStore(Request $request){
-        $result = $this->saveData($request->all(),'edit');
+    public function editStore(Request $request)
+    {
+        $result = $this->saveData($request->all(), 'edit');
 
         return response()->json($result);
     }
 
     //数据保存
-    public function saveData($data,$action){
+    public function saveData($data, $action)
+    {
 
         //图片保存
-        if (!empty($data['storephoto'])){
+        if (!empty($data['storephoto'])) {
             //$file = $request->file('storephoto');
             $file = $data['storephoto'];
             //var_dump($file);
-            if($file->isValid())
-            {
+            if ($file->isValid()) {
                 $path = $file->store('upload/images');
-                if($path){
+                if ($path) {
                     $res = Resources::create([
                         'name' => $file->getClientOriginalName(),
                         'ext' => $file->getClientOriginalExtension(),
                         'size' => $file->getSize(),
-                        'path' => 'app/' . $path ,
+                        'path' => 'app/' . $path,
                         'mimetype' => $file->getMimeType(),
                     ]);
                     $data['fphoto'] = $res->id;
@@ -186,43 +183,43 @@ class StoreController extends AdminController
         $data['fcountry'] = City::find($data['fcountry'])->Name;
 
         $postalcode = City::getPostalCode($data['fprovince'], $data['fcity'], $data['fcountry']);
-        if($postalcode){
+        if ($postalcode) {
             $fn = Store::where('fpostalcode', $postalcode)->max('fnumber');
-            if($fn){
+            if ($fn) {
                 $fn++;
                 $data['fnumber'] = $fn;
-            }else{
+            } else {
                 $data['fnumber'] = $postalcode . sprintf('%05d', 1);
             }
             $data['fpostalcode'] = $postalcode;
         }
-        unset($data['_token'],$data['storephoto']);
+        unset($data['_token'], $data['storephoto']);
 
-        if ($action=='create'){
+        if ($action == 'create') {
             $entity = $this->newEntity($data);
             //$entity = Entity::create($data);
             $re = $entity->save();
 
-            if ($re){
+            if ($re) {
                 return [
                     'code' => 200,
                     'result' => '添加门店成功！'
                 ];
-            }else{
+            } else {
                 return [
                     'code' => 500,
                     'result' => '添加门店失败！'
                 ];
             }
-        }else {
-            $re = Store::query()->where('id',$data['id'])->update($data);
+        } else {
+            $re = Store::query()->where('id', $data['id'])->update($data);
 
-            if ($re){
+            if ($re) {
                 return [
                     'code' => 200,
                     'result' => '修改门店成功！'
                 ];
-            }else{
+            } else {
                 return [
                     'code' => 500,
                     'result' => '修改门店失败！'
@@ -234,13 +231,14 @@ class StoreController extends AdminController
     }
 
     //获取门店信息
-    public function getStore($id){
+    public function getStore($id)
+    {
         $store = Store::find($id);
 
-        $store->image = '/admin/show-image?imageId='.$store->fphoto;
-        $store->fprovince =  City::query()->where('Name',$store->fprovince)->first()->id;
-        $store->fcity =  City::query()->where('Name',$store->fcity)->first()->id;
-        $store->fcountry =  City::query()->where('Name',$store->fcountry)->first()->id;
+        $store->image = '/admin/show-image?imageId=' . $store->fphoto;
+        $store->fprovince = City::query()->where('Name', $store->fprovince)->first()->id;
+        $store->fcity = City::query()->where('Name', $store->fcity)->first()->id;
+        $store->fcountry = City::query()->where('Name', $store->fcountry)->first()->id;
 
         return response()->json([
             'code' => 200,
@@ -250,11 +248,12 @@ class StoreController extends AdminController
     }
 
     //获取门店信息
-    public function storeInfo($id){
+    public function storeInfo($id)
+    {
         $store = Store::find($id);
 
-        $store->image = '/admin/show-image?imageId='.$store->fphoto;
+        $store->image = '/admin/show-image?imageId=' . $store->fphoto;
 
-        return view('admin.store.info',compact('store'));
+        return view('admin.store.info', compact('store'));
     }
 }

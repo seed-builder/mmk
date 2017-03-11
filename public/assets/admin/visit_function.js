@@ -1,25 +1,7 @@
-<?php
-
-function exclude($column){
-	$arr = ['id', 'created_at', 'updated_at'];
-	return in_array($column->name , $arr);
-}
-function showEditorType($column){
-	if(empty($column))
-		return '';
-
-	switch ($column->name){
-		case 'created_at':
-		case 'updated_at':
-			return "'type':'datetime'";
-	}
-}
-?>
-
 /**
-*
-*/
-define(function(require, exports, module) {
+ *
+ */
+define(function (require, exports, module) {
 
     var zhCN = require('datatableZh');
     var editorCN = require('i18n');
@@ -28,17 +10,17 @@ define(function(require, exports, module) {
             ajax: {
                 create: {
                     type: 'POST',
-                    url: '/admin/<?php echo e(snake_case($model,'-')); ?>',
+                    url: '/admin/visit-function',
                     data: {_token: $('meta[name="_token"]').attr('content')},
                 },
                 edit: {
                     type: 'PUT',
-                    url: '/admin/<?php echo e(snake_case($model,'-')); ?>/_id_',
+                    url: '/admin/visit-function/_id_',
                     data: {_token: $('meta[name="_token"]').attr('content')},
                 },
                 remove: {
                     type: 'DELETE',
-                    url: '/admin/<?php echo e(snake_case($model,'-')); ?>/_id_',
+                    url: '/admin/visit-function/_id_',
                     data: {_token: $('meta[name="_token"]').attr('content')},
                 }
             },
@@ -46,30 +28,32 @@ define(function(require, exports, module) {
             table: "#" + tableId,
             idSrc: 'id',
             fields: [
-<?php $__empty_1 = true; $__currentLoopData = $columns; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $col): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); $__empty_1 = false; ?>
-    <?php if(!exclude($col)): ?>
-        { 'label':  '<?php echo e($col->display); ?>', 'name': '<?php echo e($col->name); ?>',<?=showEditorType($col)?> },
-    <?php endif; ?>
-<?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); if ($__empty_1): ?>
-<?php endif; ?>
-]
+                {'label': '编号', 'name': 'fnumber',},
+                {'label': '名称', 'name': 'fname',},
+            ]
         });
 
         var table = $("#" + tableId).DataTable({
-            dom: "Bfrtip",
+            dom: "lBfrtip",
             language: zhCN,
             processing: true,
             serverSide: true,
             select: true,
             paging: true,
             rowId: "id",
-            ajax: '/admin/<?php echo e(snake_case($model,'-')); ?>/pagination',
+            ajax: '/admin/visit-function/pagination',
             columns: [
-        <?php $__empty_1 = true; $__currentLoopData = $columns; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $col): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); $__empty_1 = false; ?>
-            {  'data': '<?php echo e($col->name); ?>' },
-        <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); if ($__empty_1): ?>
-        <?php endif; ?>
-    ],
+                {'data': 'id'},
+                {'data': 'fnumber'},
+                {'data': 'fname'},
+                {'data': 'fcreate_date'},
+            ],
+            columnDefs: [
+                {
+                    "targets": [0],
+                    "visible": false
+                }
+            ],
             buttons: [
                 // { text: '新增', action: function () { }  },
                 // { text: '编辑', className: 'edit', enabled: false },
@@ -79,7 +63,7 @@ define(function(require, exports, module) {
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
-                //{extend: 'colvis', text: '列显示'}
+                {extend: 'colvis', text: '列显示'}
             ]
         });
 

@@ -42,10 +42,11 @@ abstract class AdminController extends Controller
 	/**
 	 * Store a newly created resource in storage.
 	 *
-	 * @param  \Illuminate\Http\Request  $request
+	 * @param  \Illuminate\Http\Request $request
+	 * @param array $extraFields
 	 * @return \Illuminate\Http\Response
 	 */
-	public function store(Request $request)
+	public function store(Request $request, $extraFields=[])
 	{
 		$data = $request->input('data', []);
 		if(empty($data))
@@ -55,6 +56,9 @@ abstract class AdminController extends Controller
 		if(!empty($fieldErrors)){
 			return $this->fail('validate error', $fieldErrors);
 		} else {
+		    if (!empty($extraFields)){
+                $props+=$extraFields;
+            }
 			$entity = $this->newEntity($props);
 			$entity->save();
 			return $this->success($entity);
@@ -85,11 +89,12 @@ abstract class AdminController extends Controller
 	/**
 	 * Update the specified resource in storage.
 	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @param  int  $id
+	 * @param  \Illuminate\Http\Request $request
+	 * @param  int $id
+	 * @param array $extraFields
 	 * @return \Illuminate\Http\Response
 	 */
-	public function update(Request $request, $id)
+	public function update(Request $request, $id, $extraFields=[])
 	{
 		//
 		$data = $request->input('data', []);
@@ -101,6 +106,9 @@ abstract class AdminController extends Controller
 		if(!empty($fieldErrors)){
 			return $this->fail('validate error', $fieldErrors);
 		} else {
+            if (!empty($extraFields)){
+                $props+=$extraFields;
+            }
 			$entity = $this->newEntity()->newQuery()->find($id);
 			$entity->fill($props);
 			$entity->save();
@@ -184,7 +192,7 @@ abstract class AdminController extends Controller
 			$queryBuilder->groupBy($request->distinct)->distinct();
 		}
 		$entities = $queryBuilder->select($fields)->skip($start)->take($length)->get();
-		LogSvr::sql()->info($queryBuilder->toSql());
+		//LogSvr::sql()->info($queryBuilder->toSql());
 		$result = [
 			'draw' => $draw,
 			'recordsTotal' => $total,

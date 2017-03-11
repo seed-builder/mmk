@@ -1,23 +1,22 @@
-<?php echo $BEGIN_PHP; ?>
-
+<?php
 /**
 * @SWG\Resource(
-*  resourcePath="/<?php echo e(snake_case($model,'-')); ?>",
-*  description="<?php echo e($model); ?>"
+*  resourcePath="/sale-order",
+*  description="SaleOrder"
 * )
 */
-Route::group(['prefix' => '<?php echo e(snake_case($model,'-')); ?>'], function () {
+Route::group(['prefix' => 'sale-order', 'middleware' => 'api.sign'], function () {
 
     /**
     * @SWG\Api(
-    *     path="/api/<?php echo e(snake_case($model,'-')); ?>",
+    *     path="/api/sale-order",
     *     @SWG\Operation(
     *      method="GET",
-    *      nickname="<?php echo e(snake_case($model,'-')); ?>-list",
+    *      nickname="sale-order-list",
     *      summary="page list",
     *      notes="page list",
     *      type="array",
-    *     items="$ref:<?php echo e($model); ?>",
+    *     items="$ref:SaleOrder",
     *      @SWG\Parameters(
     *          @SWG\Parameter(name="page", description="当前页", required=false, type="integer", paramType="query", defaultValue="1"),
     *          @SWG\Parameter(name="pageSize", description="页大小", required=false, type="integer", paramType="query", defaultValue="10"),
@@ -28,14 +27,14 @@ Route::group(['prefix' => '<?php echo e(snake_case($model,'-')); ?>'], function 
     *    )
     * )
     */
-    Route::get('/', ['as' => '<?php echo e($model); ?>.index', 'uses' => '<?php echo e($model); ?>Controller@index']);
+    Route::get('/', ['as' => 'SaleOrder.index', 'uses' => 'SaleOrderController@index']);
 
     /**
     * @SWG\Api(
-    *     path="/api/<?php echo e(snake_case($model,'-')); ?>/{id}",
+    *     path="/api/sale-order/{id}",
     *     @SWG\Operation(
     *      method="GET",
-    *      nickname="<?php echo e(snake_case($model,'-')); ?>-show",
+    *      nickname="sale-order-show",
     *      summary="信息详情",
     *      notes="信息详情",
     *      type="Attendance",
@@ -46,57 +45,61 @@ Route::group(['prefix' => '<?php echo e(snake_case($model,'-')); ?>'], function 
     *  )
     * )
     */
-    Route::get('/{id}', ['as' => '<?php echo e($model); ?>.show', 'uses' => '<?php echo e($model); ?>Controller@show']);
+    Route::get('/{id}', ['as' => 'SaleOrder.show', 'uses' => 'SaleOrderController@show']);
 
     /**
     * @SWG\Api(
-    *     path="/api/<?php echo e(snake_case($model,'-')); ?>",
+    *     path="/api/sale-order",
     *     @SWG\Operation(
     *      method="POST",
-    *      nickname="<?php echo e(snake_case($model,'-')); ?>-store",
+    *      nickname="sale-order-store",
     *      summary="新增",
     *      notes="新增",
     *      type="",
     *      @SWG\Parameters(
-<?php $__empty_1 = true; $__currentLoopData = $columns; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $col): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); $__empty_1 = false; ?>
-    *          @SWG\Parameter(name="<?php echo e($col->name); ?>", description="<?php echo e($col->comment); ?>", required='<?php echo e($col->is_nullable ? 'true':'false'); ?>',type="<?php echo e($col->data_type); ?>", paramType="form", defaultValue="<?php echo e($col->default_value); ?>" ),';
-<?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); if ($__empty_1): ?>
-<?php endif; ?>
+    *          @SWG\Parameter(name="fbill_no", description="订单单号(门店编码+日期)", required=false,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="fcust_id", description="经销商ID", required=false,type="integer", paramType="form", defaultValue="0" ),
+    *          @SWG\Parameter(name="fdate", description="下单日期", required=true,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="femp_id", description="业务员id", required=false,type="integer", paramType="form", defaultValue="0" ),
+    *          @SWG\Parameter(name="fsend_status", description="发货状态(A-未发货，B-发货中，C-已到货)", required=false,type="string", paramType="form", defaultValue="A" ),
+    *          @SWG\Parameter(name="fstore_id", description="门店id", required=false,type="integer", paramType="form", defaultValue="0" ),
     *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
     *      )
     *  )
     * )
     */
-    Route::post('/', ['as' => '<?php echo e($model); ?>.store', 'uses' => '<?php echo e($model); ?>Controller@store']);
+    Route::post('/', ['as' => 'SaleOrder.store', 'uses' => 'SaleOrderController@store']);
 
     /**
     * @SWG\Api(
-    *     path="/api/<?php echo e(snake_case($model,'-')); ?>/{id}",
+    *     path="/api/sale-order/{id}",
     *     @SWG\Operation(
     *      method="PUT",
-    *      nickname="<?php echo e(snake_case($model,'-')); ?>-update",
+    *      nickname="sale-order-update",
     *      summary="更新",
     *      notes="更新",
     *      type="",
     *      @SWG\Parameters(
-<?php $__empty_1 = true; $__currentLoopData = $columns; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $col): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); $__empty_1 = false; ?>
-    *          @SWG\Parameter(name="<?php echo e($col->name); ?>", description="<?php echo e($col->comment); ?>", required='false',type="<?php echo e($col->data_type); ?>", paramType="form", defaultValue="<?php echo e($col->default_value); ?>" ),';
-<?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); if ($__empty_1): ?>
-<?php endif; ?>
+    *          @SWG\Parameter(name="fbill_no", description="订单单号(门店编码+日期)", required=false,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="fcust_id", description="经销商ID", required=false,type="integer", paramType="form", defaultValue="0" ),
+    *          @SWG\Parameter(name="fdate", description="下单日期", required=false,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="femp_id", description="业务员id", required=false,type="integer", paramType="form", defaultValue="0" ),
+    *          @SWG\Parameter(name="fsend_status", description="发货状态(A-未发货，B-发货中，C-已到货)", required=false,type="string", paramType="form", defaultValue="A" ),
+    *          @SWG\Parameter(name="fstore_id", description="门店id", required=false,type="integer", paramType="form", defaultValue="0" ),
     *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="" ),
     *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
     *      )
     *  )
     * )
     */
-    Route::post('/{id}', ['as' => '<?php echo e($model); ?>.update', 'uses' => '<?php echo e($model); ?>Controller@update']);
+    Route::put('/{id}', ['as' => 'SaleOrder.update', 'uses' => 'SaleOrderController@update']);
 
     /**
     * @SWG\Api(
-    *     path="/api/<?php echo e(snake_case($model,'-')); ?>/{id}",
+    *     path="/api/sale-order/{id}",
     *     @SWG\Operation(
     *      method="DELETE",
-    *      nickname="<?php echo e(snake_case($model,'-')); ?>-delete",
+    *      nickname="sale-order-delete",
     *      summary="删除",
     *      notes="删除",
     *      type="",
@@ -107,6 +110,6 @@ Route::group(['prefix' => '<?php echo e(snake_case($model,'-')); ?>'], function 
     *  )
     * )
     */
-    Route::delete('/{id}', ['as' => '<?php echo e($model); ?>.delete', 'uses' => '<?php echo e($model); ?>Controller@destroy']);
+    Route::delete('/{id}', ['as' => 'SaleOrder.delete', 'uses' => 'SaleOrderController@destroy']);
 
 });

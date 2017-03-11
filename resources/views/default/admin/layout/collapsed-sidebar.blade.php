@@ -21,6 +21,8 @@
 
     <link rel="stylesheet" href="/assets/plugins/toastr/toastr.min.css">
 
+    <link rel="stylesheet" href="{{url('assets')}}/plugins/layui/css/layui.css">
+
     @yield('styles')
     <style>
 
@@ -38,6 +40,7 @@
     <script src="/assets/plugins/fastclick/fastclick.js"></script>
     <script src="/assets/plugins/toastr/toastr.min.js"></script>
     <script src="/assets/plugins/layer/layer.js"></script>
+    <script src="{{url('assets')}}/plugins/layui/layui.js"></script>
 
     <script src="/js/jquery.bootstrap.min.js"></script>
     <script src="/assets/sea.js"></script>
@@ -126,7 +129,7 @@
             </div>
         </nav>
     </header>
-	<input type="hidden" id="cur_url" value="{{url( Route::getCurrentRoute()->getPath() )}}">
+	<input type="hidden" id="cur_url" value="{{url( Route::getCurrentRoute()->uri() )}}">
     <!-- =============================================== -->
 
     @include('admin.layout.menu')
