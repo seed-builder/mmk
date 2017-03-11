@@ -46,12 +46,12 @@ class VisitTodoCalendarController extends ApiController
 			if($parent->todo->fname == '陈列管理'){
 				$storeCalendar = VisitStoreCalendar::find($conditions['fstore_calendar_id']);
 				if($storeCalendar->store->fis_signed){
-					$data = $data->reject(function($item){
-						return empty($item->todo) || $item->todo->fname == '正常陈列';
+					$data = $data->filter(function($item){
+						return isset($item->todo) && $item->todo->fname == '陈列费用政策';
 					});
 				}else{
-					$data = $data->reject(function($item){
-						return empty($item->todo) ||  $item->todo->fname == '陈列费用政策';
+					$data = $data->filter(function($item){
+						return isset($item->todo) &&  $item->todo->fname == '正常陈列';
 					});
 				}
 			}
