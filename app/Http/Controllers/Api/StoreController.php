@@ -105,33 +105,36 @@ class StoreController extends ApiController
 	 *
 	 * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
 	 */
-	public function noSignedList(Request $request, $femp_id){
+	public function noSignedList(Request $request){
+		$femp_id = $request->input('femp_id');
+		$fpolicy_id = $request->input('fpolicy_id');
 		//$entity = $this->newEntity();
 		$query = DB::table('st_stores'); //$entity->query();
-		$query->where('st_stores.fis_signed', 0);
-		$query->whereNotExists(function ($query) {
+		$query->where('st_stores.femp_id', $femp_id);
+		//$query->where('st_stores.fis_signed', 0);
+		$query->whereNotExists(function ($query) use($fpolicy_id) {
 			$query->select(DB::raw(1))
 				->from('exp_display_policy_store')
-				->whereRaw('exp_display_policy_store.fstore_id = st_stores.id');
+				->whereRaw('exp_display_policy_store.fstore_id = st_stores.id and exp_display_policy_store.fpolicy_id=' . $fpolicy_id);
 		});
 		//$sql = 'select st.* from st_stores st where not EXISTS (select * from exp_display_policy_store ep where st.id = ep.fstore_id)';
-		if($femp_id) {
-			$repo = app(ISysConfigRepo::class);
-			if($repo->isAppDataIsolate()) {
-				$employee = Employee::find($femp_id);
-				if ($employee->isDataIsolate()) {
-					$subs = $employee->getSubordinates();
-					$ids = [];
-					if (!empty($subs)) {
-						$ids = array_map(function ($item) use ($ids) {
-							return $item->id;
-						}, $subs);
-					}
-					$ids[] = $femp_id;
-					$query->whereIn('st_stores.femp_id', $ids);
-				}
-			}
-		}
+//		if($femp_id) {
+//			$repo = app(ISysConfigRepo::class);
+//			if($repo->isAppDataIsolate()) {
+//				$employee = Employee::find($femp_id);
+//				if ($employee->isDataIsolate()) {
+//					$subs = $employee->getSubordinates();
+//					$ids = [];
+//					if (!empty($subs)) {
+//						$ids = array_map(function ($item) use ($ids) {
+//							return $item->id;
+//						}, $subs);
+//					}
+//					$ids[] = $femp_id;
+//					$query->whereIn('st_stores.femp_id', $ids);
+//				}
+//			}
+//		}
 		$stores = $query->get(); //DB::select($sql);
 		return response($stores, 200);
 	}

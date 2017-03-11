@@ -49,6 +49,17 @@ Artisan::command('push-store', function () {
 	$this->comment('end ...');
 })->describe('push store to cloud');
 
+Artisan::command('push-sign-store', function () {
+	$this->comment('begin ...');
+	$dataSync = app('dataSync');
+	$stores = \App\Models\Busi\DisplayPolicyStore::take(1)->get();
+	foreach ($stores as $store) {
+		$dataSync->send('exp_display_policy_store', 0, $store->toArray());
+		$this->comment('complete send store: ' . $store->ffullname);
+	}
+	$this->comment('end ...');
+})->describe('push store to cloud');
+
 Artisan::command('create-position-flag', function () {
 	$this->comment('begin ...');
 	$tops = \App\Models\Busi\Position::where('fparpost_id', 0)->get();
