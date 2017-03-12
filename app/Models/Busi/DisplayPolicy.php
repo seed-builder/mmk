@@ -18,6 +18,7 @@ use DB;
  * @SWG\Property(name="fsketch", type="string", description="项目简述")
  * @SWG\Property(name="fact_store_num", type="integer", description="执行门店总数")
  * @SWG\Property(name="famount", type="number", description="总金额")
+ * @SWG\Property(name="freeze_amount", type="number", description="冻结金额")
  * @SWG\Property(name="fstore_cost_limit", type="number", description="单个门店费用上限")
  * @SWG\Property(name="fcost_dept_id", type="integer", description="应用区域(部门 id)")
  * @SWG\Property(name="fend_date", type="string", description="执行结束日期 ")
