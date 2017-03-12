@@ -3,6 +3,7 @@
 namespace App\Models\Busi;
 
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 /**
  * 陈列费用政策
@@ -35,12 +36,18 @@ class DisplayPolicy extends BaseModel
 	//
 	protected $table = 'exp_display_policy';
 	protected $guarded = ['id'];
+	protected $appends = ['freeze_amount'];
 
 	public function department(){
         return $this->hasOne(Department::class, 'id', 'fcost_dept_id');
     }
 
     public function getFreezeAmountAttribute(){
-
+	    $ps = DB::table('exp_display_policy_store')
+		    ->select(DB::raw('SUM(fsign_amount) as freeze_amount'))
+		    ->where('fstatus', 0)
+		    ->where('fpolicy_id', $this->id)
+		    ->first();
+	    return $ps->freeze_amount;
     }
 }
