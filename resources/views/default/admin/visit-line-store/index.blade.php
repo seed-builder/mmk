@@ -162,62 +162,69 @@
 							<h3 class="box-title">门店互调</h3>
 						</div>
 						<div class="box-body">
-
-							<form class="form-horizontal">
-								<div class="modal-body">
-									<div class="box-body">
-										<div class="nav-tabs-custom">
-											<ul class="nav nav-tabs">
-												<li class="active"><a href="#emp_current" data-toggle="tab" aria-expanded="true">当前人员</a></li>
-												<li class=""><a href="#emp_group" data-toggle="tab" aria-expanded="false">同组业代</a></li>
-												<li class=""><a href="#emp_org" data-toggle="tab" aria-expanded="false">跨组业代</a></li>
-											</ul>
-											<div class="tab-content">
-												<div class="tab-pane active" id="emp_current">
+							<div class="modal-body">
+								<div class="box-body">
+									<div class="nav-tabs-custom">
+										<ul class="nav nav-tabs">
+											<li class="active"><a href="#emp_current" data-toggle="tab" aria-expanded="true">当前人员</a></li>
+											<li class=""><a href="#emp_group" data-toggle="tab" aria-expanded="false">同组业代</a></li>
+											<li class=""><a href="#emp_org" data-toggle="tab" aria-expanded="false">跨组业代</a></li>
+										</ul>
+										<div class="tab-content">
+											<div class="tab-pane active" id="emp_current">
+												<form class="adjustForm form-horizontal" id="form1" action="{{url('admin/visit_line_store/storeLineIml')}}" method="post">
+													{{ csrf_field() }}
 													<div class="form-group">
 														<label>所属组织</label>
-														<input type="text" class="form-control" id="fdept_current" disabled>
+														<input type="text" class="form-control fdept" disabled>
 													</div>
 													<div class="form-group">
 														<label>所属人员</label>
-														<input type="text" class="form-control" id="femp_current" disabled>
+														<input type="text" class="form-control femp" disabled>
 													</div>
 													<div class="form-group">
 														<label>线路代码</label>
-														<select class="form-control fline_id">
+														<select class="form-control" name="fline_id">
 															@foreach($lines as $l)
 																<option value="{{$l->id}}">{{$l->fname}}</option>
 															@endforeach
 														</select>
 													</div>
-												</div>
-												<!-- /.tab-pane -->
-												<div class="tab-pane" id="emp_group">
+												</form>
+
+											</div>
+											<!-- /.tab-pane -->
+											<div class="tab-pane" id="emp_group">
+												<form class="adjustForm form-horizontal" id="form2" action="{{url('admin/visit_line_store/storeLineIml')}}" method="post">
+													{{ csrf_field() }}
 													<div class="form-group">
 														<label>所属组织</label>
-														<input type="text" class="form-control" id="fdept_group" disabled>
+														<input type="text" class="form-control fdept" disabled>
 													</div>
 													<div class="form-group">
 														<label>所属人员</label>
-														<select class="form-control femp_id" id="femp_group">
+														<select class="form-control femp" name="femp_id">
 
 														</select>
 													</div>
 													<div class="form-group">
 														<label>线路代码</label>
-														<select class="form-control fline_id">
+														<select class="form-control" name="fline_id">
 															@foreach($lines as $l)
 																<option value="{{$l->id}}">{{$l->fname}}</option>
 															@endforeach
 														</select>
 													</div>
-												</div>
-												<!-- /.tab-pane -->
+												</form>
+											</div>
+											<!-- /.tab-pane -->
 
-												<div class="tab-pane" id="emp_org">
+											<div class="tab-pane" id="emp_org">
+												<form class="adjustForm form-horizontal" id="form3" action="{{url('admin/visit_line_store/storeLineIml')}}" method="post">
+													{{ csrf_field() }}
 													<div class="form-group">
 														<label>所属组织</label>
-														<select class="form-control" id="fdept_org">
+														<select class="form-control fdept">
 															@foreach($depts as $d)
 																<option value="{{$d->id}}">{{$d->fname}}</option>
 															@endforeach
@@ -225,28 +232,25 @@
 													</div>
 													<div class="form-group">
 														<label>所属人员</label>
-														<select class="form-control femp_id" id="femp_org"></select>
+														<select class="form-control femp" name="femp_id"></select>
 													</div>
 													<div class="form-group">
 														<label>线路代码</label>
-														<select class="form-control fline_id">
+														<select class="form-control" name="fline_id">
 															@foreach($lines as $l)
 																<option value="{{$l->id}}">{{$l->fname}}</option>
 															@endforeach
 														</select>
 													</div>
-												</div>
-												<!-- /.tab-pane -->
+												</form>
+
 											</div>
-											<!-- /.tab-content -->
+											<!-- /.tab-pane -->
 										</div>
+										<!-- /.tab-content -->
 									</div>
 								</div>
-
-							</form>
-
-
-
+							</div>
 						</div>
 					</div>
 

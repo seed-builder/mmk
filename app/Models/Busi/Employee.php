@@ -46,7 +46,7 @@ class Employee extends BaseModel
     //
     protected $table = 'bd_employees';
     
-    //protected $with = ['organization','department','position'];
+    protected $with = ['department'];
     
     public $validateRules=['fname' => 'required', 'fphone' => 'required'];
 

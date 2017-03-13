@@ -80,6 +80,7 @@ class VisitLineStoreController extends AdminController
     {
         $searchCols = ["fline_id", "femp_id"];
         $data = $request->all();
+        $with = ['employee','line','store'];
 
         return parent::pagination($request, $searchCols, $with, function ($queryBuilder) use ($data) {
             if (!empty($data['nodeid'])) {//组织树点击查询
@@ -128,23 +129,27 @@ class VisitLineStoreController extends AdminController
         $query = VisitLineStore::query();
 
         $update = [];
-        if (!empty($data['ids'])) {
-            $query->whereIn('id', $data['ids']);
-        }
+        $store_ids = explode(",",$data['ids']);
+
+        $query->whereIn('id', $store_ids);
+
         if (!empty($data['fline_id'])) {
             $update['fline_id'] = $data['fline_id'];
-            Store::query()->whereIn('id',$data['ids'])->update([
+            Store::query()->whereIn('id',$store_ids)->update([
                 'fline_id' => $data['fline_id']
             ]);
         }
         if (!empty($data['femp_id'])) {
             $update['femp_id'] = $data['femp_id'];
-            Store::query()->whereIn('id',$data['ids'])->update([
+            Store::query()->whereIn('id',$store_ids)->update([
                 'femp_id' => $data['femp_id']
             ]);
         }
-
-        return $query->update($update);
+        if ($query->update($update))
+            return response()->json([
+                'code' => 200,
+                'result' => '线路调整成功！'
+            ]);
 
     }
 

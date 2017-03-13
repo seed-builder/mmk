@@ -789,39 +789,38 @@ define(function (require, exports, module) {
 
         //线路门店互调 数据展示 方法
         var intermodulation = function () {
-            dangqian();
+            var femp = table.rows('.selected').data()[0].employee.fname;
+            var fdept = table.rows('.selected').data()[0].employee.department.fname;
+            $("input[class='form-control fdept']").val(femp)
+            $("input[class='form-control femp']").val(fdept)
+
             tongzu();
             kauzu();
         }
 
-        //线路门店互调 当前人员
-        var dangqian = function () {
-            $("#femp_current").val(table.rows('.selected').data()[0].employee.fname);
-            $("#fdept_current").val(table.rows('.selected').data()[0].employee.department.fname);
-        }
 
         //线路门店互调 同组业代
         var tongzu = function () {
             var fdept_id = table.rows('.selected').data()[0] != null ? table.rows('.selected').data()[0].employee.fdept_id : '';
-            ajaxGetData("/admin/employee/employees?fdept_id="+fdept_id,function (data) {
-                var html = "";
-                for (index in data) {
-                    html += '<option value="' + data[index].id + '">' + data[index].fname + '</option>'
-                }
-                $("#femp_group").html(html);
-                $("#fdept_group").val(table.rows('.selected').data()[0].employee.department.fname);
-            })
+            getEmployees(fdept_id,'#form2')
         }
 
         //线路门店互调 跨组业代
         var kauzu = function () {
-            ajaxGetData("/admin/employee/employees?fdept_id="+$("#fdept_org").val(),function (data) {
+            getEmployees($('#form3').find(".fdept").val(),'#form3')
+        }
+        
+        var getEmployees = function (fdept_id,form_id) {
+
+            ajaxGetData("/admin/employee/employees?fdept_id="+fdept_id,function (data) {
                 var html = "";
 
                 for (index in data) {
                     html += '<option value="' + data[index].id + '">' + data[index].fname + '</option>'
                 }
-                $("#femp_org").html(html);
+                
+
+                $(form_id).find("select[name='femp_id']").html(html);
             })
         }
 
@@ -831,11 +830,9 @@ define(function (require, exports, module) {
             if (active=="emp_current"){
                 var femp_id = fempId(treeId,table)
             }else {
-                var femp_id = $(".tab-content").find(".active").find(".femp_id").val();
+                var femp_id = $(".tab-content").find(".active").find(".femp").val();
             }
 
-
-            var fline_id = $(".tab-content").find(".active").find(".fline_id").val();
 
             if (femp_id == null) {
                 layer.alert('请选择一个员工！');
@@ -853,26 +850,17 @@ define(function (require, exports, module) {
                 ids.push(selected[i].id);
             }
 
-            $.ajax({
-                type: "POST",
-                url: "/admin/visit_line_store/storeLineIml",
-                dataType: "json",
-                data: {
-                    "ids": ids,
-                    "femp_id": femp_id,
-                    "fline_id": fline_id,
-                    "_token": $('meta[name="_token"]').attr('content')
-                },
-                success: function (data) {
-                    layer.alert('保存成功！');
-                    table.ajax.reload();
-                    $('#lineAdjust').modal('hide')
-                }
+            var form = $(".tab-content").find(".active").find(".adjustForm");
+            form.append("<input type='hidden' name='ids' value='"+ids+"' />");
+            ajaxForm('#'+form.attr('id'),function () {
+                table.ajax.reload();
+                $('#lineAdjust').modal('hide')
             })
+
         })
 
         //线路门店互调 选择部门
-        $("#fdept_org").on('change', function () {
+        $(".fdept").on('change', function () {
             kauzu();
         })
 
