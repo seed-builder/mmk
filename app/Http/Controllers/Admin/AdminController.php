@@ -146,6 +146,7 @@ abstract class AdminController extends Controller
 		$order = $request->input('order', []);
 		$search = $request->input('search', []);
 		$draw = $request->input('draw', 0);
+		$filter = $request->input('filter', []);
 
 		$queryBuilder = $this->newEntity()->newQuery();
 		if (!empty($with)) {
@@ -162,12 +163,14 @@ abstract class AdminController extends Controller
 
 		$total = $queryBuilder->count();
 
-		if($request['queryBuilder']){
-			$queryBuilder = $request['queryBuilder'];
-		}
 		if ($conditionCall != null && is_callable($conditionCall)) {
 			$conditionCall($queryBuilder);
 		}
+
+		if (!empty($filter)){
+		    $this->filter($queryBuilder,$filter);
+        }
+
 		foreach ($conditions as $col => $val) {
 			$queryBuilder->where($col, $val);
 		}
@@ -363,5 +366,21 @@ abstract class AdminController extends Controller
 	    $entities = $empQuery->select('bd_employees.id')->get();
 	    $ids = $entities->pluck('id')->all();
 	    return $ids;
+    }
+
+    /*
+     * 查询过滤器
+     */
+    public function filter($queryBuilder,$filterdata){
+        foreach ($filterdata as $f){
+            if (!empty($f['value'])){
+                $operator = !empty($f['operator'])?$f['operator']:'=';
+
+                if ($operator=='like')
+                    $queryBuilder->where($f['name'],$operator,'%'.$f['value'].'%');
+                else
+                    $queryBuilder->where($f['name'],$operator,$f['value']);
+            }
+        }
     }
 }

@@ -255,9 +255,9 @@ var mapInit = function (map, params) {
 }
 
 function mapWindow(element, data, callback) {
-    var content = "<h3>" + data.title + "</h3>" ;
-    for (var i=0;i<data.attrs.length;i++) {
-        content += '<p>'+data.attrs[i].name+ "：" + data.attrs[i].value+'</p>'
+    var content = "<h3>" + data.title + "</h3>";
+    for (var i = 0; i < data.attrs.length; i++) {
+        content += '<p>' + data.attrs[i].name + "：" + data.attrs[i].value + '</p>'
     }
 
     var infoWindow = new BMap.InfoWindow(content)  // 创建信息窗口对象
@@ -311,3 +311,37 @@ var fempId = function (treeId, table) {
 
     return femp_id;
 }
+
+/*
+ * 查询过滤器
+ */
+var filter = function(ele){
+    var filter = ele.parents(".filter");
+    var tableId = $(filter).attr('filter-table')
+    var table = $(tableId).dataTable({
+        "retrieve": true
+    });
+    var filter_params = {
+        'filter': {}
+    }
+
+    $(filter).find(".filter-condition").each(function (index,obj) {
+
+        filter_params['filter'][index] = {
+            'name': $(obj).attr('filter-name'),
+            'operator': $(obj).attr('filter-operator'),
+            'value': $(obj).val(),
+        }
+    })
+
+
+    table.api().settings()[0].ajax.data = filter_params
+    table.api().ajax.reload();
+}
+
+
+$(".filter-submit").on('click',function () {
+    filter($(this));
+})
+
+
