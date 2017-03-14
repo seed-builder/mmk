@@ -36,8 +36,8 @@ class Kernel extends ConsoleKernel
         //          ->hourly();
 	    //下午18点开始每小时执行一次
 	    $schedule->command('command:attendance_polling')->cron('10 18-23/1 * * *');
-	    $schedule->command('gen:att-stc')->dailyAt('22:00');
-	    $schedule->command('gen:att-rpt')->dailyAt('23:00');
+	    $schedule->command('gen:att-stc')->dailyAt('01:00');
+	    $schedule->command('gen:att-rpt')->dailyAt('02:00');
 
 	    //每周日00:00执行 生成下一周的拜访日记
         $schedule->call(function(VisitLineCalendar $calendar){

@@ -10,6 +10,7 @@ use App\Services\DataSync\DisplayPolicyStoreFilter;
 use App\Services\DataSync\KingdeeWorker;
 use App\Services\Sms\AliDaYuSms;
 use App\Services\Sms\ISmsSvr;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +24,24 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+	    $request = Request::instance();
+	    $path = $request->path();
+	    //LogSvr::routeSvr()->info($path);
+	    if(preg_match('/^api/', $path)) {
+	    }
+	    if(preg_match('/^\//', $path)) {
+	    }
+	    if(preg_match('/^admin/', $path)) {
+		    config([
+			    'auth.model' => User::class,
+		    ]);
+	    }
+	    if(preg_match('/^customer/', $path)) {
+		    config([
+			    'auth.defaults.guard' => 'customer',
+			    'auth.model' => Customer::class,
+		    ]);
+	    }
     }
 
     /**

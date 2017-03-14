@@ -41,6 +41,11 @@ return [
             'provider' => 'users',
         ],
 
+	    'customer' => [
+		    'driver' => 'session',
+		    'provider' => 'customer',
+	    ],
+
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
@@ -69,7 +74,10 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-
+	    'customer' => [
+		    'driver' => 'eloquent',
+		    'model' => App\Models\Busi\Customer::class,
+	    ],
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
@@ -101,4 +109,18 @@ return [
 
 	'model' => App\Models\User::class,
 
+	/*
+	 * login url belong to the guard
+	 */
+	'login_url' => [
+		'web' => '/admin/login',
+		'customer' => '/customer/login',
+	],
+	/**
+	 * index url redirect to if authenticated, belong to the guard
+	 */
+	'index_url' => [
+		'web' => '/admin',
+		'customer' => '/customer',
+	]
 ];

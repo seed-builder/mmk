@@ -2,8 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\Busi\Customer;
+use App\Models\User;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use App\Services\LogSvr;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -35,11 +39,21 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map()
     {
-        $this->mapApiRoutes();
-
-        $this->mapWebRoutes();
-
-        $this->mapAdminRoutes();
+    	$request = Request::instance();
+	    $path = $request->path();
+	    //LogSvr::routeSvr()->info($path);
+		if(preg_match('/^api/', $path)) {
+			$this->mapApiRoutes();
+		}
+	    if(preg_match('/^\//', $path)) {
+		    $this->mapWebRoutes();
+	    }
+	    if(preg_match('/^admin/', $path)) {
+		    $this->mapAdminRoutes();
+	    }
+	    if(preg_match('/^customer/', $path)) {
+		    $this->mapCustomerRoutes();
+	    }
         //
     }
 
@@ -97,6 +111,25 @@ class RouteServiceProvider extends ServiceProvider
             $this->load_routes(base_path('routes/admin'));
         });
     }
+
+	/**
+	 * Define the "api" routes for the application.
+	 *
+	 * These routes are typically stateless.
+	 *
+	 * @return void
+	 */
+	protected function mapCustomerRoutes()
+	{
+		Route::group([
+			'middleware' => 'customer',
+			'namespace' => $this->namespace . '\Customer',
+			'prefix' => 'customer',
+		], function ($router) {
+			//require base_path('routes/admin.php');
+			$this->load_routes(base_path('routes/customer'));
+		});
+	}
 
 
     protected function load_routes($dir)

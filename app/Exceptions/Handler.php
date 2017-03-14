@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\Http\Middleware\CustomerAuth;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
@@ -54,12 +55,12 @@ class Handler extends ExceptionHandler
      * @param  \Illuminate\Auth\AuthenticationException  $exception
      * @return \Illuminate\Http\Response
      */
-    protected function unauthenticated($request, AuthenticationException $exception)
+    protected function unauthenticated($request, $exception)
     {
-        if ($request->expectsJson()) {
-            return response()->json(['error' => 'Unauthenticated.'], 401);
-        }
-
-        return redirect()->guest('/admin/login');
+	    if ($request->expectsJson()) {
+		    return response()->json(['error' => 'Unauthenticated.'], 401);
+	    }
+	    $loginUrl = config('auth.login_url.' . config('auth.defaults.guard'));
+	    return redirect()->guest($loginUrl);
     }
 }

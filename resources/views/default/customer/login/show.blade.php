@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>移动营销系统登陆</title>
+    <title>经销商门户系统登陆</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.6 -->
@@ -27,16 +27,16 @@
 <body class="hold-transition login-page">
 <div class="login-box">
     <div class="login-logo">
-        <b>管理系统登陆</b>
+        <b>经销商门户系统登陆</b>
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
         <p class="login-box-msg">Sign in to start your session</p>
         @include('admin.layout.flash-message')
-        <form action="/admin/login" method="post">
+        <form action="/customer/login" method="post">
             {!! csrf_field() !!}
             <div class="form-group has-feedback">
-                <input type="text" name="name" class="form-control" placeholder="user name">
+                <input type="text" name="login_name" class="form-control" placeholder="user name">
                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">
