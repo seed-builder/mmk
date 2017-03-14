@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\DatatablesController;
 use SysConfigRepo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -11,7 +12,7 @@ use Validator;
 use Session;
 use App\Services\LogSvr;
 
-abstract class AdminController extends Controller
+abstract class AdminController extends DatatablesController
 {
 	public function __construct()
 	{
@@ -92,21 +93,5 @@ abstract class AdminController extends Controller
 	    $entities = $empQuery->select('bd_employees.id')->get();
 	    $ids = $entities->pluck('id')->all();
 	    return $ids;
-    }
-
-    /*
-     * 查询过滤器
-     */
-    public function filter($queryBuilder,$filterdata){
-        foreach ($filterdata as $f){
-            if (!empty($f['value'])){
-                $operator = !empty($f['operator'])?$f['operator']:'=';
-
-                if ($operator=='like')
-                    $queryBuilder->where($f['name'],$operator,'%'.$f['value'].'%');
-                else
-                    $queryBuilder->where($f['name'],$operator,$f['value']);
-            }
-        }
     }
 }
