@@ -69,4 +69,33 @@ class CustomerController extends AdminController
 		return parent::pagination($request, $searchCols);
 	}
 
+	/**
+	 * 开通经销商门户后台登陆
+	 * @param Request $request
+	 * @param $id
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+	 */
+	public function open(Request $request, $id){
+		$customer =	Customer::find($id);
+		if($request->isMethod('POST')){
+			$this->validate($request, [
+				'login_name' => 'required|max:255',
+				'password' => 'required',
+			]);
+			$customer->login_name = $request->input('login_name');
+			$customer->password = bcrypt($request->input('password'));
+			$customer->save();
+			return $this->success($customer);
+		}else{
+			return view('admin.customer.open', compact('customer'));
+		}
+	}
+
+	public function unique(Request $request, $id){
+		$login_name = $request->input('login_name');
+		$count = Customer::where('login_name',$login_name)->where('id', '<>', $id)->count();
+		$valid = $count == 0 ;
+		return response(['valid' => $valid, 'message' => '该名称已存在'], 200);
+	}
+
 }

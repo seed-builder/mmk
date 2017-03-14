@@ -66,7 +66,7 @@ define(function (require, exports, module) {
                     }
                 },
                 {
-                    'data': 'fstore_id',
+                    'data': 'femp_id',
                     render: function (data, type, full) {
                         if (full.store != null)
                             return full.store.ffullname
@@ -85,7 +85,7 @@ define(function (require, exports, module) {
                     }
                 },
                 {
-                    'data': 'fstore_id',
+                    'data': 'flog_id',
                     render: function (data, type, full) {
                         if (full.store.employee != null)
                             return full.store.employee.fname
@@ -103,7 +103,7 @@ define(function (require, exports, module) {
                     }
                 },
                 {
-                    'data': 'fmaterial_id',
+                    'data': 'fcreator_id',
                     render: function (data, type, full) {
                         if (full.material != null)
                             return full.material.fname
@@ -112,10 +112,10 @@ define(function (require, exports, module) {
                     }
                 },
                 {
-                    'data': 'fmaterial_id',
+                    'data': 'fmodify_id',
                     render: function (data, type, full) {
                         if (full.material != null)
-                            return full.material.funit
+                            return full.material.fspecification
                         else
                             return "";
                     }

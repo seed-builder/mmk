@@ -78,6 +78,12 @@ define(function (require, exports, module) {
                         return document_status(data);
                     }
                 },
+                {
+                    "data": "login_name",
+                    render: function ( data, type, full ) {
+                        return data ? '' : '<a href="/admin/customer/'+full.id+'/open" data-target="#customerInfo" data-toggle="modal">开通后台</a>';
+                    }
+                },
             ],
             buttons: [
                 // { text: '新增', action: function () { }  },

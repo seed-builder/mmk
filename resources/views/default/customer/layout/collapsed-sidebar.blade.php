@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>经销商门户</title>
+    <title>经销商门户系统</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <meta name="_token" content="{{csrf_token()}}">
@@ -64,9 +64,9 @@
         <!-- Logo -->
         <a href="/assets/plugins/AdminLTE/index2.html" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini"><b>经销商</b></span>
+            <span class="logo-mini"><b>经销商</b>门户系统</span>
             <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><b>经销商</b>门户</span>
+            <span class="logo-lg"><b>经销商</b>门户系统</span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top">
@@ -83,7 +83,7 @@
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <img src="/assets/plugins/AdminLTE/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                            <span class="hidden-xs">test</span>
+                            <span class="hidden-xs">{{Auth::user()->fname}}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
@@ -91,8 +91,8 @@
                                 <img src="/assets/plugins/AdminLTE/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                                 <p>
-                                    test
-                                    <small>teset</small>
+                                    {{Auth::user()->fname}}
+                                    <small>{{Auth::user()->fcreate_date}}</small>
                                 </p>
                             </li>
                             <!-- Menu Body -->
