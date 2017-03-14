@@ -339,9 +339,33 @@ var filter = function(ele){
     table.api().ajax.reload();
 }
 
+var filter_reset = function(ele){
+    var filter = ele.parents(".filter");
+    var tableId = $(filter).attr('filter-table')
+    var table = $(tableId).dataTable({
+        "retrieve": true
+    });
+    var filter_params = {
+        'filter': {}
+    }
+
+    $(filter).find(".filter-condition").each(function (index,obj) {
+
+        $(obj).val("")
+    })
+
+
+    table.api().settings()[0].ajax.data = filter_params
+    table.api().ajax.reload();
+}
+
 
 $(".filter-submit").on('click',function () {
     filter($(this));
+})
+
+$(".filter-reset").on('click',function () {
+    filter_reset($(this));
 })
 
 

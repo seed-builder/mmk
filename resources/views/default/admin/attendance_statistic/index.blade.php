@@ -94,6 +94,7 @@
                         </div>
                         <div class="box-footer">
                             <button type="button" class="btn pull-right btn-info filter-submit">查询</button>
+                            <button type="button" class="btn pull-right btn-default filter-reset">重置</button>
                         </div>
                     </form>
                 </div>
