@@ -120,6 +120,14 @@ abstract class DatatablesController extends Controller
 	}
 
 	/**
+	 * 实体的查询
+	 * @return  \Illuminate\Database\Eloquent\Builder
+	 */
+	public function entityQuery(){
+		return $this->newEntity()->newQuery();
+	}
+
+	/**
 	 * Datatables UI page
 	 * @param Request $request
 	 * @param array $searchCols
@@ -136,7 +144,7 @@ abstract class DatatablesController extends Controller
 		$search = $request->input('search', []);
 		$draw = $request->input('draw', 0);
 
-		$queryBuilder = $this->newEntity()->newQuery();
+		$queryBuilder = $this->entityQuery(); //$this->newEntity()->newQuery();
 		if (!empty($with)) {
 			$queryBuilder->with($with);
 		}

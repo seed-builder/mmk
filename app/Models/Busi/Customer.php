@@ -90,4 +90,25 @@ class Customer extends Authenticatable
 			event(new ModelUpdatedEvent($model));
 		});
 	}
+
+	public function stores(){
+		return $this->hasMany(Store::class, 'fcust_id');
+	}
+
+	public function orders(){
+		return $this->hasManyThrough(SaleOrder::class, Store::class, 'fcust_id', 'fstore_id');
+	}
+
+	public function stocks(){
+		return $this->hasManyThrough(Stock::class, Store::class, 'fcust_id', 'fstore_id');
+	}
+
+	public function stock_ins(){
+		return $this->hasManyThrough(StockIn::class, Store::class, 'fcust_id', 'fstore_id');
+	}
+
+	public function stock_outs(){
+		return $this->hasManyThrough(StockOut::class, Store::class, 'fcust_id', 'fstore_id');
+	}
+
 }

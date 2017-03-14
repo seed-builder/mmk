@@ -66,7 +66,7 @@ class StockController extends BaseController
 	*/
 	public function pagination(Request $request, $searchCols = [], $with=[], $conditionCall = null){
 		$searchCols = ["fdocument_status"];
-		return parent::pagination($request, $searchCols, ['store','material']);
+		return parent::pagination($request, $searchCols, ['store.employee','material']);
 	}
 
 }
