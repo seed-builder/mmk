@@ -191,7 +191,7 @@ define(function (require, exports, module) {
             ajax: {
                 url : '/customer/stock-out-item/pagination',
                 data : function (data) {
-                    data.columns[1]['search']['value'] = table.rows('.selected').data().length>0?table.rows('.selected').data()[0].id:null;
+                    data.columns[1]['search']['value'] = table.rows('.selected').data().length>0?table.rows('.selected').data()[0].id:-1;
                 }
             },
             columns: [
