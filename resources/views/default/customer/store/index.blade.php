@@ -29,30 +29,8 @@
     <!-- Main content -->
     <section class="content">
         <div class="row">
-            <div class="col-md-3">
-                <div class="box">
-                    <div class="box-header">
-                        <h3 class="box-title">组织架构信息</h3>
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                            </button>
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
-                                    <i class="fa fa-wrench"></i></button>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="#" id="btnOpen"><i class="fa fa-folder-open"></i>展开</a></li>
-                                    <li><a href="#" id="btnCollapse"><i class="fa fa-folder"></i>折叠</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.box-header -->
-                    <div class="box-body">
-                        <div id="tree"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-9">
+
+            <div class="col-xs-12">
                 <div class="box">
                     <div class="box-header">
                         <h3 class="box-title">门店地图定位</h3>
@@ -339,10 +317,9 @@
     <script type="text/javascript">
 
         $(function () {
-            seajs.use('app-store', function (store) {
+            seajs.use('customer/store.js', function (store) {
                 store.index($, 'moduleTable', 'tree', 'allmap','smap');
             });
-
 
             $("#storepic").fileinput({
                 overwriteInitial: true,

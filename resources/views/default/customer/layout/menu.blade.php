@@ -39,6 +39,7 @@ $user = Auth::user();
                     </span>
                     </a>
                     <ul class="treeview-menu">
+                        <li><a href="{{url('/customer/store')}}"><i class="fa fa-fw fa-inbox"></i>门店</a></li>
                         <li><a href="{{url('/customer/stock')}}"><i class="fa fa-fw fa-inbox"></i>门店库存</a></li>
                         <li><a href="{{url('/customer/sale-order')}}"><i class="fa fa-fw fa-reorder"></i>门店订单管理</a></li>
                         <li><a href="{{url('/customer/stock-out')}}"><i class="fa fa-fw fa-outdent"></i>出库管理</a></li>

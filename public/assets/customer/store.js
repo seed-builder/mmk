@@ -49,14 +49,7 @@ define(function (require, exports, module) {
             paging: true,
             rowId: "id",
             ajax: {
-                url : '/customer/store/pagination',
-                data : function (data) {
-                    var treeNode = $('#'+treeId).treeview('getSelected');
-                    if (treeNode.length>0){
-                        data['nodeid'] = treeNode[0].dataid;
-                    }
-
-                }
+                url : '/customer/store/pagination'
             },
             columns: [
                 {"data": "id"},
@@ -179,41 +172,6 @@ define(function (require, exports, module) {
             ]
         });
 
-        //组织架构
-        var getTreeData = function () {
-            $.ajax({
-                url: "../../customer/employee/employeeTree",
-                type: "POST",
-                data: {
-                    '_token': $('meta[name="_token"]').attr('content'),
-                    'dept_select': true
-                },
-                dataType: 'json',
-                success: function (data) {
-                    $("#" + treeId).treeview({
-                        color: "#428bca",
-                        enableLinks: true,
-                        levels: 99,
-                        data: data,
-                        onNodeSelected: function (event, data) {
-                            addEnable();
-                            editEnable();
-                            table.ajax.reload();
-                        },
-                        onNodeUnselected: function (event, data) {
-                            editEnable();
-                            addEnable();
-                            table.ajax.reload();
-                        },
-                        onSearchComplete: function (event, data) {
-                            if (JSON.stringify(data) != "{}") {
-
-                            }
-                        }
-                    });
-                },
-            });
-        }
 
         table.on('xhr', function () {
             map.clearOverlays();
@@ -345,7 +303,6 @@ define(function (require, exports, module) {
 
 
         mapClick();
-        getTreeData();
 
         /*
          *   地图关键字搜索
