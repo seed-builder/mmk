@@ -47,14 +47,7 @@ define(function(require, exports, module) {
             paging: true,
             rowId: "id",
             ajax: {
-                url : '/admin/attendance/pagination',
-                data : function (data) {
-                    var treeNode = $('#'+treeId).treeview('getSelected');
-                    if (treeNode.length>0){
-                        data['nodeid'] = treeNode[0].dataid;
-                    }
-                    data['fdate'] = $('#datepicker').val()
-                }
+                url : '/admin/attendance/pagination'
             },
             columns: [
                 {"data": "id"},
@@ -195,10 +188,10 @@ define(function(require, exports, module) {
                         levels: 99,
                         data: data,
                         onNodeSelected: function(event, data) {
-                            table.ajax.reload();
+                            treeNodeSelect(treeId,table);
                         },
                         onNodeUnselected: function (event, data) {
-                            table.ajax.reload();
+                            treeNodeUnSelect(treeId,table);
                         },
                         onSearchComplete: function(event, data) {
                             if (JSON.stringify(data)!="{}"){

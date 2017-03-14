@@ -47,15 +47,16 @@ class AttendanceStatisticController extends AdminController
 				$empQuery->where('bd_employees.fname', 'like binary', '%' . $search['value'] . '%');
 			}
 
-            if (!empty($data['nodeid'])) {
-                $emp = Employee::find($data['nodeid']);
+			$nodeid = !empty($data['tree']['nodeid'])?$data['tree']['nodeid']:0;
+            if (!empty($nodeid)) {
+                $emp = Employee::find($nodeid);
                 if (empty($emp)) {
-                    $dept = Department::find($data['nodeid']);
+                    $dept = Department::find($nodeid);
                     $emp_ids = $dept->getAllEmployeeByDept()->pluck('id')->toArray();
 
                     $queryBuilder->whereIn('femp_id', $emp_ids);
                 } else {
-                    $queryBuilder->where('femp_id', $data['nodeid']);
+                    $queryBuilder->where('femp_id', $nodeid);
                 }
             }
             if (!empty($data['fdate'])){

@@ -195,6 +195,25 @@ $('#btnCollapse').click(function () {
     tree.treeview('collapseAll');
 });
 
+var filter_params = {
+    'tree': {},
+    'filter': {}
+}
+
+var treeNodeSelect = function(treeId,table){
+
+    var treeNode = $('#'+treeId).treeview('getSelected');
+    if (treeNode.length>0){
+        filter_params['tree']['nodeid'] = treeNode[0].dataid;
+    }
+    table.settings()[0].ajax.data = filter_params;
+    table.ajax.reload();
+};
+var treeNodeUnSelect = function (treeId,table) {
+    filter_params['tree'] = {};
+    table.settings()[0].ajax.data = filter_params;
+    table.ajax.reload();
+}
 /*
  * map
  */
@@ -321,9 +340,6 @@ var filter = function(ele){
     var table = $(tableId).dataTable({
         "retrieve": true
     });
-    var filter_params = {
-        'filter': {}
-    }
 
     $(filter).find(".filter-condition").each(function (index,obj) {
 
@@ -345,9 +361,8 @@ var filter_reset = function(ele){
     var table = $(tableId).dataTable({
         "retrieve": true
     });
-    var filter_params = {
-        'filter': {}
-    }
+
+    filter_params['filter'] = {}
 
     $(filter).find(".filter-condition").each(function (index,obj) {
 
