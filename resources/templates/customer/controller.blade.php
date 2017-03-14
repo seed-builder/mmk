@@ -30,7 +30,7 @@ class {{$model}}Controller extends BaseController
 	public function index()
 	{
 		//
-		return view('admin.{{snake_case($model,'-')}}.index');
+		return view('customer.{{snake_case($model,'-')}}.index');
 	}
 
 	/**
@@ -40,7 +40,7 @@ class {{$model}}Controller extends BaseController
 	*/
 	public function create()
 	{
-		return view('admin.{{snake_case($model,'-')}}.create');
+		return view('customer.{{snake_case($model,'-')}}.create');
 	}
 
 	/**
@@ -52,7 +52,7 @@ class {{$model}}Controller extends BaseController
 	public function edit($id)
 	{
 		$entity = {{$model}}::find($id);
-		return view('admin.{{snake_case($model,'-')}}.edit', ['entity' => $entity]);
+		return view('customer.{{snake_case($model,'-')}}.edit', ['entity' => $entity]);
 	}
 
 	/**
@@ -71,9 +71,10 @@ class {{$model}}Controller extends BaseController
 	* @param array $searchCols
 	* @param array $with
 	* @param null $conditionCall
+	* @param bool $all_columns
 	* @return \Illuminate\Http\JsonResponse
 	*/
-	public function pagination(Request $request, $searchCols = [], $with=[], $conditionCall = null){
+	public function pagination(Request $request, $searchCols = [], $with=[], $conditionCall = null, $all_columns = false){
 		$searchCols = {!! json_encode($searchCols) !!};
 		return parent::pagination($request, $searchCols);
 	}

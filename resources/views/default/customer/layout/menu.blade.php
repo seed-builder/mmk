@@ -44,6 +44,7 @@ $user = Auth::user();
                         <li><a href="{{url('/customer/sale-order')}}"><i class="fa fa-fw fa-reorder"></i>门店订单管理</a></li>
                         <li><a href="{{url('/customer/stock-out')}}"><i class="fa fa-fw fa-outdent"></i>出库管理</a></li>
                         <li><a href="{{url('/customer/stock-in')}}"><i class="fa fa-fw fa-indent"></i>入库管理</a></li>
+                        <li><a href="{{url('/customer/display-policy')}}"><i class="fa fa-fw fa-indent"></i>陈列费用政策</a></li>
                         <li><a href="{{url('/customer/view-customer-stock-statistic')}}"><i class="fa fa-fw fa-table"></i>库存余额</a></li>
                     </ul>
                 </li>
