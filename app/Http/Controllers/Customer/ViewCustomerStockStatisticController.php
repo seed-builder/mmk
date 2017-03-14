@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Customer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
 use App\Models\Busi\ViewCustomerStockStatistic;
+use Illuminate\Support\Facades\Auth;
 
 class ViewCustomerStockStatisticController extends BaseController
 {
@@ -67,7 +68,10 @@ class ViewCustomerStockStatisticController extends BaseController
 	 */
 	public function pagination(Request $request, $searchCols = [], $with=[], $conditionCall = null, $all_columns = false){
 		$searchCols = ["cust_name","fbase_unit","fsale_unit","material_name","material_specification"];
-		return parent::pagination($request, $searchCols);
+		return parent::pagination($request, $searchCols, $with, function ($queryBuilder){
+			$customer = Auth::user();
+			$queryBuilder->where('cust_id', $customer->id);
+		});
 	}
 
 }

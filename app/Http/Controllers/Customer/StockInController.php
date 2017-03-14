@@ -78,7 +78,7 @@ class StockInController extends BaseController
 	public function pagination(Request $request, $searchCols = [], $with=[], $conditionCall = null, $all_columns = false){
 		$searchCols = ["fbill_no","fdocument_status","fsend_status"];
         $with = ['customer','user'];
-		return parent::pagination($request, $searchCols,$with);
+		return parent::pagination($request, $searchCols, $with, $conditionCall, true);
 	}
 
 	public function entityQuery()
