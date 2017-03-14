@@ -49,7 +49,7 @@ class AttStatisticGen extends Command
 	    $end = $this->option('end');
 	    $empId = $this->option('emp');
 	    if(empty($begin)){
-	    	$begin = date('Y-m-d');
+	    	$begin = date("Y-m-d",strtotime("-1 day"));//date('Y-m-d');
 	    }
 	    if(empty($end)){
 	    	$end = date('Y-m-d');

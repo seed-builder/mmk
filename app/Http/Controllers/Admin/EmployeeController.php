@@ -132,15 +132,16 @@ class EmployeeController extends AdminController
         return $data;
     }
 
-    /**
-     * Datatables UI page
-     * @param Request $request
-     * @param array $searchCols
-     * @param array $with
-     * @param null $conditionCall
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function pagination(Request $request, $searchCols = [], $with = [], $conditionCall = null)
+	/**
+	 * Datatables UI page
+	 * @param Request $request
+	 * @param array $searchCols
+	 * @param array $with
+	 * @param null $conditionCall
+	 * @param bool $all_columns
+	 * @return \Illuminate\Http\JsonResponse
+	 */
+    public function pagination(Request $request, $searchCols = [], $with = [], $conditionCall = null, $all_columns = false)
     {
         $searchCols = ['bd_employees.fname', 'bd_employees.fnumber', 'bd_employees.fphone'];
         $data = $request->all();

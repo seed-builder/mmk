@@ -36,6 +36,7 @@
                                 <th>地址</th>
                                 <th>联系电话</th>
                                 <th>审核状态</th>
+                                <th>操作</th>
                             </tr>
                             </thead>
                         </table>
@@ -49,6 +50,12 @@
         <!-- /.row -->
     </section>
 
+    <div id="customerInfo" class="modal fade modal-scroll" role="dialog" tabindex="-1" data-replace="true">
+        <div class="modal-dialog" style="width: 50%">
+            <div class="modal-content">
+            </div>
+        </div>
+    </div>
 @endsection
 @section('js')
     @include('admin.layout.datatable-js')
