@@ -96,11 +96,20 @@ class Customer extends Authenticatable
 	}
 
 	public function orders(){
-		return $this->hasManyThrough(SaleOrder::class, Store::class, 'fcust_id', 'fstore_id');
+		return $this->hasMany(SaleOrder::class, 'fcust_id');
 	}
 
 	public function stocks(){
-		return $this->hasManyThrough(Stock::class, Store::class, 'fcust_id', 'fstore_id');
+		return $this->hasManyThrough(Stock::class, Store::class, 'fcust_id', 'fstore_id')
+			->select(['st_stocks.id',
+				'st_stocks.fstore_id',
+				'st_stocks.femp_id',
+				'st_stocks.ftime',
+				'st_stocks.fmaterial_id',
+				'st_stocks.fhqty',
+				'st_stocks.feqty',
+				'st_stocks.fsale_hqty',
+			]);
 	}
 
 	public function stock_ins(){

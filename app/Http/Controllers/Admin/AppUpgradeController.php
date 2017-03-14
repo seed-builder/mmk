@@ -63,9 +63,10 @@ class AppUpgradeController extends AdminController
 	 * @param  array $searchCols
 	 * @param array $with
 	 * @param null $conditionCall
+	 * @param bool $all_columns
 	 * @return \Illuminate\Http\JsonResponse
 	 */
-	public function pagination(Request $request, $searchCols = [], $with = [], $conditionCall = null){
+	public function pagination(Request $request, $searchCols = [], $with = [], $conditionCall = null, $all_columns = false){
 		$searchCols = ["content","upgrade_date","url","version_code","version_name"];
 		return parent::pagination($request, $searchCols);
 	}

@@ -116,7 +116,7 @@
                                     {{--<a href="#" class="btn btn-default btn-flat">Profile</a>--}}
                                 {{--</div>--}}
                                 <div class="pull-right">
-                                    <a href="/admin/logout" class="btn btn-default btn-flat">注销</a>
+                                    <a href="/customer/logout" class="btn btn-default btn-flat">注销</a>
                                 </div>
                             </li>
                         </ul>

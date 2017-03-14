@@ -69,9 +69,10 @@ class ChannelController extends AdminController
 	 * @param  array $searchCols
 	 * @param array $with
 	 * @param null $conditionCall
+	 * @param bool $all_columns
 	 * @return \Illuminate\Http\JsonResponse
 	 */
-	public function pagination(Request $request, $searchCols = [], $with = [], $conditionCall = null){
+	public function pagination(Request $request, $searchCols = [], $with = [], $conditionCall = null, $all_columns = false){
 		$searchCols = ["fdocument_status","fname","fnumber","fremark"];
         $data = $request->all();
 

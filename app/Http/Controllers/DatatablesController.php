@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\LogSvr;
 use Illuminate\Http\Request;
 
 abstract class DatatablesController extends Controller
@@ -133,9 +134,16 @@ abstract class DatatablesController extends Controller
 	 * @param array $searchCols
 	 * @param array $with
 	 * @param null $conditionCall
+	 * @param bool $all_columns
 	 * @return \Illuminate\Http\JsonResponse
+	 * @internal param array $columns
 	 */
-	public function pagination(Request $request, $searchCols = [], $with = [], $conditionCall = null)
+	public function pagination(Request $request,
+	                           $searchCols = [],
+	                           $with = [],
+	                           $conditionCall = null,
+	                           $all_columns = false
+							)
 	{
 		$start = $request->input('start', 0);
 		$length = $request->input('length', 10);
@@ -151,7 +159,8 @@ abstract class DatatablesController extends Controller
 		$fields = [];
 		$conditions = [];
 		foreach ($columns as $column) {
-			$fields[] = $column['data'];
+			if(!$all_columns)
+				$fields[] = $column['data'];
 			if (!empty($column['search']['value'])) {
 				$conditions[$column['data']] = $column['search']['value'];
 			}
@@ -188,7 +197,11 @@ abstract class DatatablesController extends Controller
 		if (!empty($request->distinct)) {
 			$queryBuilder->groupBy($request->distinct)->distinct();
 		}
-		$entities = $queryBuilder->select($fields)->skip($start)->take($length)->get();
+		if(!empty($fields)){
+			$queryBuilder->select($fields);
+		}
+		$entities = $queryBuilder->skip($start)->take($length)->get();
+		//$entities = $queryBuilder->skip($start)->take($length)->get();
 		//LogSvr::sql()->info($queryBuilder->toSql());
 		$result = [
 			'draw' => $draw,

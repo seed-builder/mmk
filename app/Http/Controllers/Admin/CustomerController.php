@@ -58,13 +58,14 @@ class CustomerController extends AdminController
 	}
 
 	/**
-	* @param  Request $request
-	* @param  array $searchCols
-	* @param  array $with
-	* @param  null $conditionCall
-	* @return  \Illuminate\Http\JsonResponse
-	*/
-	public function pagination(Request $request, $searchCols = [], $with=[], $conditionCall = null){
+	 * @param  Request $request
+	 * @param  array $searchCols
+	 * @param  array $with
+	 * @param  null $conditionCall
+	 * @param bool $all_columns
+	 * @return \Illuminate\Http\JsonResponse
+	 */
+	public function pagination(Request $request, $searchCols = [], $with=[], $conditionCall = null, $all_columns = false){
 		$searchCols = ["faddress","farea","fbusiness_mode","fcity","fcompany_nature","fcompany_scale","fcountry","fcust_type_id","fdiscount_list_id","ffax","fgroup","finvoice_type","fmode_transport","fname","fprice_list_id","fprovince","fsale_depart","fseller","fservice_depart","fshort_name","ftax_rate","ftax_register_code","ftax_type","ftel","ftrading_curr_id","fwebsite","fzip"];
 		return parent::pagination($request, $searchCols);
 	}
