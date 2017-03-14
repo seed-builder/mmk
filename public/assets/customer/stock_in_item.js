@@ -1,21 +1,3 @@
-<?php
-
-function exclude($column){
-	$arr = ['id', 'created_at', 'updated_at'];
-	return in_array($column->name , $arr);
-}
-function showEditorType($column){
-	if(empty($column))
-		return '';
-
-	switch ($column->name){
-		case 'created_at':
-		case 'updated_at':
-			return "'type':'datetime'";
-	}
-}
-?>
-
 /**
 *
 */
@@ -28,17 +10,17 @@ define(function(require, exports, module) {
             ajax: {
                 create: {
                     type: 'POST',
-                    url: '/customer/{{snake_case($model,'-')}}',
+                    url: '/customer/stock-in-item',
                     data: {_token: $('meta[name="_token"]').attr('content')},
                 },
                 edit: {
                     type: 'PUT',
-                    url: '/customer/{{snake_case($model,'-')}}/_id_',
+                    url: '/customer/stock-in-item/_id_',
                     data: {_token: $('meta[name="_token"]').attr('content')},
                 },
                 remove: {
                     type: 'DELETE',
-                    url: '/customer/{{snake_case($model,'-')}}/_id_',
+                    url: '/customer/stock-in-item/_id_',
                     data: {_token: $('meta[name="_token"]').attr('content')},
                 }
             },
@@ -46,30 +28,43 @@ define(function(require, exports, module) {
             table: "#" + tableId,
             idSrc: 'id',
             fields: [
-@forelse($columns as $col)
-    @if(!exclude($col))
-        { 'label':  '{{$col->display}}', 'name': '{{$col->name}}',<?=showEditorType($col)?> },
-    @endif
-@empty
-@endforelse
-]
+            { 'label':  'fbase_qty', 'name': 'fbase_qty', },
+                { 'label':  'fbase_unit', 'name': 'fbase_unit', },
+                { 'label':  'fcreate_date', 'name': 'fcreate_date', },
+                { 'label':  'fcreator_id', 'name': 'fcreator_id', },
+                { 'label':  'fdocument_status', 'name': 'fdocument_status', },
+                { 'label':  'fmaterial_id', 'name': 'fmaterial_id', },
+                { 'label':  'fmodify_date', 'name': 'fmodify_date', },
+                { 'label':  'fmodify_id', 'name': 'fmodify_id', },
+                { 'label':  'fqty', 'name': 'fqty', },
+                { 'label':  'fsale_unit', 'name': 'fsale_unit', },
+                { 'label':  'fstock_in_id', 'name': 'fstock_in_id', },
+        ]
         });
 
         var table = $("#" + tableId).DataTable({
-            dom: "lBfrtip",
+            dom: "Bfrtip",
             language: zhCN,
             processing: true,
             serverSide: true,
             select: true,
             paging: true,
             rowId: "id",
-            ajax: '/customer/{{snake_case($model,'-')}}/pagination',
+            ajax: '/customer/stock-in-item/pagination',
             columns: [
-        @forelse($columns as $col)
-            {  'data': '{{$col->name}}' },
-        @empty
-        @endforelse
-    ],
+                    {  'data': 'fbase_qty' },
+                    {  'data': 'fbase_unit' },
+                    {  'data': 'fcreate_date' },
+                    {  'data': 'fcreator_id' },
+                    {  'data': 'fdocument_status' },
+                    {  'data': 'fmaterial_id' },
+                    {  'data': 'fmodify_date' },
+                    {  'data': 'fmodify_id' },
+                    {  'data': 'fqty' },
+                    {  'data': 'fsale_unit' },
+                    {  'data': 'fstock_in_id' },
+                    {  'data': 'id' },
+            ],
             buttons: [
                 // { text: '新增', action: function () { }  },
                 // { text: '编辑', className: 'edit', enabled: false },
@@ -79,7 +74,7 @@ define(function(require, exports, module) {
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
-                {extend: 'colvis', text: '列显示'}
+                //{extend: 'colvis', text: '列显示'}
             ]
         });
 

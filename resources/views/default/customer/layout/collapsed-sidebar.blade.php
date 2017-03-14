@@ -83,7 +83,7 @@
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <img src="/assets/plugins/AdminLTE/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                            <span class="hidden-xs">{{Auth::user()->name}}</span>
+                            <span class="hidden-xs">test</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
@@ -91,8 +91,8 @@
                                 <img src="/assets/plugins/AdminLTE/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                                 <p>
-                                    {{Auth::user()->name}}
-                                    <small>{{Auth::user()->created_at}}</small>
+                                    test
+                                    <small>teset</small>
                                 </p>
                             </li>
                             <!-- Menu Body -->
@@ -132,7 +132,7 @@
 	<input type="hidden" id="cur_url" value="{{url( Route::getCurrentRoute()->uri() )}}">
     <!-- =============================================== -->
 
-    @include('admin.layout.menu')
+    @include('customer.layout.menu')
 
     <!-- =============================================== -->
 
@@ -150,7 +150,7 @@
         reserved.
     </footer>
 
-    @include('admin.layout.sidebar')
+    @include('customer.layout.sidebar')
 </div>
 <!-- ./wrapper -->
 
@@ -180,7 +180,7 @@
 
 </script>
 @yield('js')
-@include('admin.layout.toastr-message')
+@include('customer.layout.toastr-message')
 
 </body>
 </html>
