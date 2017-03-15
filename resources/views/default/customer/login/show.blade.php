@@ -32,7 +32,7 @@
     <!-- /.login-logo -->
     <div class="login-box-body">
         <p class="login-box-msg">Sign in to start your session</p>
-        @include('admin.layout.flash-message')
+        @include('customer.layout.flash-message')
         <form action="/customer/login" method="post">
             {!! csrf_field() !!}
             <div class="form-group has-feedback">
