@@ -269,7 +269,7 @@ define(function (require, exports, module) {
             attrs.push({"name":"地址","value":data.faddress})
             attrs.push({"name":"负责人","value":data.fcontracts})
             attrs.push({"name":"地址","value":data.ftelephone})
-            if(data.employee.fname)
+            if(data.employee)
                 attrs.push({"name":"负责业代","value":data.employee.fname});
             var obj = {"title":data.ffullname,"attrs":attrs};
 
