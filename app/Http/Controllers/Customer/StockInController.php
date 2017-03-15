@@ -25,9 +25,9 @@ class StockInController extends BaseController
 	*/
 	public function index()
 	{
-        $customers = Customer::all()->map(function ($item){
-            return ['label' => $item->fname, 'value' => $item->id];
-        });
+		$customer = Auth::user();
+		$customers[] = ['label' => $customer->fname, 'value' => $customer->id];
+
         $materials = Material::all()->map(function ($item){
             return ['label' => $item->fname, 'value' => $item->id];
         });

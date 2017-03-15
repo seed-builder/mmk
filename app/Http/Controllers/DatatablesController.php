@@ -139,12 +139,7 @@ abstract class DatatablesController extends Controller
      * @return \Illuminate\Http\JsonResponse
      * @internal param array $columns
      */
-    public function pagination(Request $request,
-                               $searchCols = [],
-                               $with = [],
-                               $conditionCall = null,
-                               $all_columns = false
-    )
+    public function pagination(Request $request, $searchCols = [], $with = [], $conditionCall = null, $all_columns = false)
     {
         $start = $request->input('start', 0);
         $length = $request->input('length', 10);
@@ -179,7 +174,6 @@ abstract class DatatablesController extends Controller
         foreach ($conditions as $col => $val) {
             $queryBuilder->where($col, $val);
         }
-
 
         //模糊查询
         if (!empty($searchCols) && !empty($search['value'])) {

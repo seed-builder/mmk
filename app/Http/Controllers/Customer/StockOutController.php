@@ -25,13 +25,10 @@ class StockOutController extends BaseController
 	*/
 	public function index()
 	{
+		$customer = Auth::user();
+        $customers[] = ['label' => $customer->fname, 'value' => $customer->id];
 
-        $all = Customer::all();
-        $customers = $all->map(function ($item){
-            return ['label' => $item->fname, 'value' => $item->id];
-        });
-
-        $stores = Store::all()->map(function ($item){
+        $stores = $customer->stores->map(function ($item){
             return ['label' => $item->ffullname, 'value' => $item->id];
         });
         $materials = Material::all()->map(function ($item){
