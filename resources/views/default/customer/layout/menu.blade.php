@@ -33,7 +33,7 @@ $user = Auth::user();
                 <li class="treeview active">
                     <a href="#">
                         <i class="fa fa-fw fa-sitemap"></i>
-                        <span>经销商门户</span>
+                        <span>经销商</span>
                         <span class="pull-right-container">
                       <i class="fa fa-angle-left pull-right"></i>
                     </span>
