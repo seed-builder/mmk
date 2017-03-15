@@ -122,41 +122,33 @@ define(function (require, exports, module) {
         }
 
         function bindEvt() {
-
-            /**
-             * 禁用
-             */
             $('.btnForbid').on("click", function () {
-                var token = '';//$('meta[name=_token]').attr('content');
+                var token = $('meta[name=_token]').attr('content');
                 var id = $(this).attr('data-id');
                 var entity = [];
-                entity[id]=['fforbid_status'];
-                entity[id]['fforbid_status'] = 'A';
+                entity[0]={'fforbid_status': 'B'};
                 console.log(entity);
                 layer.confirm('确定禁用该客户的后台管理功能 ?', {icon: 3, title:'提示'}, function () {
-                    $.post('/admin/customer/'+id, { data: entity, _method:'PUT', _token: token }, function (result) {
-                        if (result['code'] == 200) {
+                    $.post('/admin/customer/'+id, { data: entity , _method:'PUT', _token: token }, function (result) {
+                        if (result.data) {
                             // You can reload the current location
                             layer.msg('禁用成功！');
-                            //table.ajax.reload();
+                            table.ajax.reload();
                         } else {
                             layer.msg('禁用失败！');
                         }
                     }, 'json');
                 });
             });
-
-            /**
-             * 启用
-             */
             $('.btnNoForbid').on("click", function () {
                 var token = $('meta[name=_token]').attr('content');
                 var id = $(this).attr('data-id');
                 var entity = [];
-                entity[id]['fforbid_status'] = 'A';
+                entity[0]={'fforbid_status': 'A'};
+                console.log(entity);
                 layer.confirm('确定启用该客户的后台管理功能 ?', {icon: 3, title:'提示'}, function () {
                     $.post('/admin/customer/'+id, { data: entity, _method:'PUT', _token: token }, function (result) {
-                        if (result['code'] == 200) {
+                        if (result.data == 200) {
                             // You can reload the current location
                             layer.msg('启用成功！');
                             table.ajax.reload();
@@ -173,7 +165,6 @@ define(function (require, exports, module) {
             bindEvt();
         } );
         bindEvt();
-
 
         //审核
         $(".check").on('click',function () {

@@ -15,13 +15,13 @@
                 <div class="form-group">
                     <label for="login_name" class="col-sm-2 control-label">登陆名称</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="login_name" placeholder="登陆名称" name="login_name" value="{{$customer->login_name}}" autocomplete="off">
+                        <input type="text" class="form-control" id="login_name" placeholder="登陆名称" name="login_name" value="{{$customer->login_name or 'C'.$customer->id}}" autocomplete="off">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputPassword3" class="col-sm-2 control-label">密码</label>
                     <div class="col-sm-10">
-                        <input type="password" class="form-control" id="inputPassword3" placeholder="Password" name="password" value="{{$customer->password}}" autocomplete="off">
+                        <input type="password" class="form-control" id="inputPassword3" placeholder="密码" name="password" value="{{$customer->password}}" autocomplete="off">
                     </div>
                 </div>
                 <div class="form-group">
