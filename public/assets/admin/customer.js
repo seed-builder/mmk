@@ -103,7 +103,7 @@ define(function (require, exports, module) {
         table.on( 'select', rowSelect).on( 'deselect', rowSelect);
         function rowSelect() {
             checkEditEnabble(table,['.edit','.check'],['.uncheck']);
-            table.ajax.reload();
+            //table.ajax.reload();
         }
 
         //审核
