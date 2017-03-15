@@ -61,9 +61,9 @@ class AttendanceStatisticController extends AdminController
 				}
 			}
 			$entities = $empQuery->select('bd_employees.id')->get();
-			LogSvr::sql()->info($empQuery->toSql());
+			//LogSvr::sql()->info($empQuery->toSql());
 		    $ids = $entities->pluck('id')->all(); //array_map(function ($item){	return $item->id;}, $entities);
-			LogSvr::sql()->info(json_encode($ids));
+			//LogSvr::sql()->info(json_encode($ids));
 			if(!empty($ids))
 			{
 				$queryBuilder->whereIn('femp_id', $ids);

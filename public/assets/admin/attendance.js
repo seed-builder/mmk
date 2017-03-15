@@ -8,7 +8,6 @@ define(function(require, exports, module) {
 
     exports.index = function ($, tableId,treeId,mapId) {
 
-    	
         var editor = new $.fn.dataTable.Editor({
             ajax: {
                 create: {
