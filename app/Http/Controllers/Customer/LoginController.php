@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Customer;
 
+use App\Models\Busi\Customer;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
@@ -74,6 +76,17 @@ class LoginController extends Controller
 		$request->session()->regenerate();
 
 		return redirect('/customer/login');
+	}
+
+	protected function validateLogin(Request $request)
+	{
+		$this->validate($request, [
+			$this->username() => 'required', 'password' => 'required',
+		]);
+		$forbid = Customer::where('login_name', $request->input('login_name'))->where('fforbid_status', 'B')->count();
+		if($forbid){
+			throw new ValidationException(null, redirect('/customer/login')->withErrors(['该用户已经被禁用, 请联系管理员']));
+		}
 	}
 
 }

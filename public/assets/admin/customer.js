@@ -89,9 +89,11 @@ define(function (require, exports, module) {
                     render: function ( data, type, full ) {
                         if(full.fdocument_status == 'C'){
                             if(data){
-                                return full.fforbid_status =='A' ?
+                                var btn =  '<a href="/admin/customer/'+full.id+'/open" data-target="#customerInfo" data-toggle="modal">登陆信息</a> &nbsp;&nbsp;';
+                                btn += full.fforbid_status =='A' ?
                                     '<a href="javascript:void" class="btnForbid" data-id="'+full.id+'">禁用</a>':
                                     '<a href="javascript:void" class="btnNoForbid" data-id="'+full.id+'">启用</a>' ;
+                                return btn;
                             } else {
                                 return '<a href="/admin/customer/'+full.id+'/open" data-target="#customerInfo" data-toggle="modal">开通后台</a>'
                             }
@@ -122,18 +124,15 @@ define(function (require, exports, module) {
         }
 
         function bindEvt() {
-
-            /**
-             * 禁用
-             */
             $('.btnForbid').on("click", function () {
                 var token = $('meta[name=_token]').attr('content');
                 var id = $(this).attr('data-id');
                 var entity = [];
-                entity[id]['fforbid_status'] = 'A';
+                entity[0]={'fforbid_status': 'B'};
+                console.log(entity);
                 layer.confirm('确定禁用该客户的后台管理功能 ?', {icon: 3, title:'提示'}, function () {
-                    $.post('/admin/customer/'+id, {data: entity, _method:'PUT', _token: token }, function (result) {
-                        if (result['code'] == 200) {
+                    $.post('/admin/customer/'+id, { data: entity , _method:'PUT', _token: token }, function (result) {
+                        if (result.data) {
                             // You can reload the current location
                             layer.msg('禁用成功！');
                             table.ajax.reload();
@@ -143,18 +142,15 @@ define(function (require, exports, module) {
                     }, 'json');
                 });
             });
-
-            /**
-             * 启用
-             */
             $('.btnNoForbid').on("click", function () {
                 var token = $('meta[name=_token]').attr('content');
                 var id = $(this).attr('data-id');
                 var entity = [];
-                entity[id]['fforbid_status'] = 'A';
+                entity[0]={'fforbid_status': 'A'};
+                console.log(entity);
                 layer.confirm('确定启用该客户的后台管理功能 ?', {icon: 3, title:'提示'}, function () {
                     $.post('/admin/customer/'+id, { data: entity, _method:'PUT', _token: token }, function (result) {
-                        if (result['code'] == 200) {
+                        if (result.data) {
                             // You can reload the current location
                             layer.msg('启用成功！');
                             table.ajax.reload();
@@ -171,7 +167,6 @@ define(function (require, exports, module) {
             bindEvt();
         } );
         bindEvt();
-
 
         //审核
         $(".check").on('click',function () {
