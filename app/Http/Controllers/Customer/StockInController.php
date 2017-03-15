@@ -93,6 +93,7 @@ class StockInController extends BaseController
         $props = current($data);
 
         $extraFields=[
+            'fcust_id' => Auth::user()->id,
             'fuser_id' => Auth::user()->id,
             'fbill_no' => rand(10000,99999).date("YmdHis")
         ];

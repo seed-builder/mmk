@@ -179,7 +179,7 @@ class StoreController extends BaseController
             $data['fpostalcode'] = $postalcode;
         }
         unset($data['_token'], $data['storephoto']);
-
+		$data['fcust_id'] =  Auth::user()->id;
         if ($action == 'create') {
             $entity = $this->newEntity($data);
             //$entity = Entity::create($data);
