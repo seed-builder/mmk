@@ -3,6 +3,7 @@
 namespace App\Models\Busi;
 
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 /**
  * model description
@@ -29,6 +30,7 @@ class SaleOrder extends BaseModel
 	//
 	protected $table = 'st_sale_orders';
 	protected $guarded = ['id'];
+	protected $appends = ['total_qty'];
 
     public function store(){
         return $this->hasOne(Store::class,'id','fstore_id');
@@ -47,6 +49,14 @@ class SaleOrder extends BaseModel
     }
 
 	/**
+	 * 总的订单数量
+	 */
+    public function getTotalQtyAttribute(){
+		$total = DB::table('st_sale_order_items')->where('fsale_order_id', $this->id)->sum('fqty');
+		return $total;
+    }
+
+	/**
 	 *
 	 */
 	protected static function boot()
@@ -62,4 +72,5 @@ class SaleOrder extends BaseModel
 		});
 
 	}
+
 }
