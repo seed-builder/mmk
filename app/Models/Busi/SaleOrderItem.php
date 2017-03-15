@@ -15,6 +15,8 @@ use Illuminate\Database\Eloquent\Model;
  * @SWG\Property(name="fsale_order_id", type="integer", description="")
  * @SWG\Property(name="fstock_id", type="integer", description="库存内码id")
  * @SWG\Property(name="fmaterial_id", type="integer", description="物料内码id")
+ * @SWG\Property(name="box_qty", type="number", description="箱数量")
+ * @SWG\Property(name="bottle_qty", type="number", description="瓶数量")
  * @SWG\Property(name="fqty", type="number", description="订单数量")
  * @SWG\Property(name="fsale_unit", type="string", description="销售单位")
  * @SWG\Property(name="fbase_unit", type="string", description="基本单位")
