@@ -6,6 +6,7 @@ use App\Models\Busi\Channel;
 use App\Models\Busi\Customer;
 use App\Models\Busi\Department;
 use App\Models\Busi\Employee;
+use App\Models\Busi\VisitLineCalendar;
 use App\Models\Busi\VisitLineStore;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -198,6 +199,7 @@ class StoreController extends AdminController
         unset($data['_token'], $data['storephoto']);
 
         if ($action == 'create') {
+
             $entity = $this->newEntity($data);
             //$entity = Entity::create($data);
             $re = $entity->save();
@@ -209,6 +211,11 @@ class StoreController extends AdminController
                 'femp_id' => $data['femp_id'],
                 'fweek_day' => VisitLine::find($data['fline_id'])->fnumber,
             ]);
+
+            $diffday = VisitLine::find($data['fline_id'])->fnumber-date("w");
+            $calendar = new VisitLineCalendar();
+            $calendar->makeCalendar($data['femp_id'],$data['fline_id'],date('Y-m-d',strtotime('+'.$diffday.' day')));
+
 
             if ($re) {
                 return [
