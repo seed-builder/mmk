@@ -17,6 +17,7 @@ use DB;
  * @SWG\Property(name="fcust_id", type="integer", description="经销商ID")
  * @SWG\Property(name="fdate", type="string", description="下单日期")
  * @SWG\Property(name="femp_id", type="integer", description="业务员id")
+ * @SWG\Property(name="total_qty", type="integer", description="总的订单数量（箱）")
  * @SWG\Property(name="fmodify_date", type="string", description="修改时间")
  * @SWG\Property(name="fmodify_id", type="integer", description="修改人")
  * @SWG\Property(name="fcreate_date", type="string", description="创建时间")
