@@ -89,9 +89,11 @@ define(function (require, exports, module) {
                     render: function ( data, type, full ) {
                         if(full.fdocument_status == 'C'){
                             if(data){
-                                return full.fforbid_status =='A' ?
+                                var btn =  '<a href="/admin/customer/'+full.id+'/open" data-target="#customerInfo" data-toggle="modal">登陆信息</a> &nbsp;&nbsp;';
+                                btn += full.fforbid_status =='A' ?
                                     '<a href="javascript:void" class="btnForbid" data-id="'+full.id+'">禁用</a>':
                                     '<a href="javascript:void" class="btnNoForbid" data-id="'+full.id+'">启用</a>' ;
+                                return btn;
                             } else {
                                 return '<a href="/admin/customer/'+full.id+'/open" data-target="#customerInfo" data-toggle="modal">开通后台</a>'
                             }

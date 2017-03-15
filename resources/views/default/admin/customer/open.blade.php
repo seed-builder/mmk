@@ -5,7 +5,7 @@
             aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
-    <h4 class="modal-title">开通经销商门户后台登陆功能</h4>
+    <h4 class="modal-title">经销商门户后台登陆用户信息</h4>
 </div>
 <div class="modal-body">
     <div class="box-body">
