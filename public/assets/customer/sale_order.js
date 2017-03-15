@@ -164,7 +164,13 @@ define(function (require, exports, module) {
             select: true,
             paging: true,
             rowId: "id",
-            ajax: '/customer/sale-order-item/pagination',
+            ajax: {
+                url : '/customer/sale-order-item/pagination',
+                data : function (data) {
+                    var order = orderTable.rows('.selected').data();
+                    data.columns[1]['search']['value'] = order.length > 0 ? order[0].id : -1;
+                }
+            },
             columns: [
                 {'data': 'id'},
                 {
