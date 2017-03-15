@@ -49,7 +49,14 @@ define(function (require, exports, module) {
             paging: true,
             rowId: "id",
             ajax: {
-                url : '/customer/store/pagination'
+                url : '/customer/store/pagination',
+                data : function (data) {
+                    var treeNode = $('#'+treeId).treeview('getSelected');
+                    if (treeNode.length>0){
+                        data['nodeid'] = treeNode[0].dataid;
+                    }
+
+                }
             },
             columns: [
                 {"data": "id"},
@@ -262,7 +269,8 @@ define(function (require, exports, module) {
             attrs.push({"name":"地址","value":data.faddress})
             attrs.push({"name":"负责人","value":data.fcontracts})
             attrs.push({"name":"地址","value":data.ftelephone})
-            attrs.push({"name":"负责业代","value":data.employee.fname})
+            if(data.employee.fname)
+                attrs.push({"name":"负责业代","value":data.employee.fname});
             var obj = {"title":data.ffullname,"attrs":attrs};
 
             mapWindow(element,obj);
