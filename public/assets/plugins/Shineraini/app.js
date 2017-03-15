@@ -70,6 +70,20 @@ function document_status(status) {
 }
 
 /*
+ * 获取禁用状态
+ */
+function forbid_status(status) {
+    if (status == "A") {
+        return '启用';
+    } else if (status == "B") {
+        return '禁用';
+    } else {
+        return '状态异常';
+    }
+}
+
+
+/*
  * 数据审核 反审核
  */
 function dataCheck(table, baseurl, extraFun) {

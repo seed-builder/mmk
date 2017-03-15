@@ -79,9 +79,24 @@ define(function (require, exports, module) {
                     }
                 },
                 {
+                    "data": "fforbid_status",
+                    render: function ( data, type, full ) {
+                        return forbid_status(data);
+                    }
+                },
+                {
                     "data": "login_name",
                     render: function ( data, type, full ) {
-                        return data ? '' : '<a href="/admin/customer/'+full.id+'/open" data-target="#customerInfo" data-toggle="modal">开通后台</a>';
+                        if(full.fdocument_status == 'C'){
+                            if(data){
+                                return full.fforbid_status =='A' ?
+                                    '<a href="javascript:void" class="btnForbid" data-id="'+full.id+'">禁用</a>':
+                                    '<a href="javascript:void" class="btnNoForbid" data-id="'+full.id+'">启用</a>' ;
+                            } else {
+                                return '<a href="/admin/customer/'+full.id+'/open" data-target="#customerInfo" data-toggle="modal">开通后台</a>'
+                            }
+                        }
+                        return '';
                     }
                 },
             ],
@@ -105,6 +120,58 @@ define(function (require, exports, module) {
             checkEditEnabble(table,['.edit','.check'],['.uncheck']);
             //table.ajax.reload();
         }
+
+        function bindEvt() {
+
+            /**
+             * 禁用
+             */
+            $('.btnForbid').on("click", function () {
+                var token = $('meta[name=_token]').attr('content');
+                var id = $(this).attr('data-id');
+                var entity = [];
+                entity[id]['fforbid_status'] = 'A';
+                layer.confirm('确定禁用该客户的后台管理功能 ?', {icon: 3, title:'提示'}, function () {
+                    $.post('/admin/customer/'+id, {data: entity, _method:'PUT', _token: token }, function (result) {
+                        if (result['code'] == 200) {
+                            // You can reload the current location
+                            layer.msg('禁用成功！');
+                            table.ajax.reload();
+                        } else {
+                            layer.msg('禁用失败！');
+                        }
+                    }, 'json');
+                });
+            });
+
+            /**
+             * 启用
+             */
+            $('.btnNoForbid').on("click", function () {
+                var token = $('meta[name=_token]').attr('content');
+                var id = $(this).attr('data-id');
+                var entity = [];
+                entity[id]['fforbid_status'] = 'A';
+                layer.confirm('确定启用该客户的后台管理功能 ?', {icon: 3, title:'提示'}, function () {
+                    $.post('/admin/customer/'+id, { data: entity, _method:'PUT', _token: token }, function (result) {
+                        if (result['code'] == 200) {
+                            // You can reload the current location
+                            layer.msg('启用成功！');
+                            table.ajax.reload();
+                        } else {
+                            layer.msg('启用失败！');
+                        }
+                    }, 'json');
+                });
+            });
+        }
+
+        table.on( 'draw', function () {
+            //alert( 'Table redrawn' );
+            bindEvt();
+        } );
+        bindEvt();
+
 
         //审核
         $(".check").on('click',function () {
