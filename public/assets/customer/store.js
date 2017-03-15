@@ -103,75 +103,7 @@ define(function (require, exports, module) {
                 // { text: '新增', action: function () { }  },
                 // { text: '编辑', className: 'edit', enabled: false },
                 // { text: '删除', className: 'delete', enabled: false },
-                {
-                    text: '新增<i class="fa fa-fw fa-plus"></i>',
-                    className: 'add',
-                    enabled: false,
-                    action: function () {
-
-                        var femp_id = fempId(treeId,table);
-                        if (femp_id==null){
-                            layer.msg("请先选择一个业代！")
-                            return false;
-                        }else {
-                            $("#storeInfoForm").attr('action','/customer/store/createStore')
-                            $("#femp_id").val(femp_id)
-                            $('#storeinfo').modal('show');
-                        }
-
-                    }
-                },
-                {
-                    text: '编辑<i class="fa fa-fw fa-pencil"></i>',
-                    className: 'edit',
-                    enabled: false,
-                    action: function () {
-                        var id = table.rows('.selected').data()[0].id;
-                        $("#storeInfoForm").attr('action','/customer/store/editStore')
-                        $("#store_id").val(id);
-                        ajaxGetData("/customer/store/getStore/" + id,function (data) {
-                            $("#storeInfoForm").find(".layui-input").each(function (index, element){
-                                var name = $(element).attr('name');
-
-                                var c = eval("data."+name);
-
-                                $(element).val(c);
-
-                                //地图标注
-                                var point = new BMap.Point(data.flongitude, data.flatitude);
-                                var marker = new BMap.Marker(point);  // 创建标注
-                                smap.addOverlay(marker);
-                                smap.panTo(point);
-                            });
-
-                            $("#storeInfoForm").find("select").each(function (index, element){
-                                var name = $(element).attr('name');
-
-                                var c = eval("data."+name);
-
-                                $(element).val(c);
-                                form.render('select')
-                            });
-
-
-                            $("#storeInfoForm").find('textarea').text(data.fremark);
-
-                            //初始化门店图片
-                            $('#storepic').fileinput('refresh', {
-                                initialPreview: [ //预览图片的设置
-                                    "<img src='" + data.image + "' class='file-preview-image'style='width: 260px;height: 160px'>",
-                                ],
-                            });
-
-                            $('#storeinfo').modal('show');
-                        });
-
-
-                    }
-                },
-//                {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: editor},
-//                 {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: editor},
-                {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
+                 
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
 
