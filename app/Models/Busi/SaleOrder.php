@@ -54,7 +54,7 @@ class SaleOrder extends BaseModel
 	 */
     public function getTotalQtyAttribute(){
 		$qty = DB::table('st_sale_order_items')->where('fsale_order_id', $this->id)->sum('fqty');
-		$baseQty = DB::table('st_sale_order_items')->where('fsale_order_id', $this->id)->sum('fbase_qty');
+		//$baseQty = DB::table('st_sale_order_items')->where('fsale_order_id', $this->id)->sum('fbase_qty');
 		return $qty;
     }
 
