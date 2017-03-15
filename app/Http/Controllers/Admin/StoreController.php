@@ -236,6 +236,10 @@ class StoreController extends AdminController
                 'fweek_day' => VisitLine::find($data['fline_id'])->fnumber,
             ]);
 
+            $diffday = VisitLine::find($data['fline_id'])->fnumber-date("w");
+            $calendar = new VisitLineCalendar();
+            $calendar->makeCalendar($data['femp_id'],$data['fline_id'],date('Y-m-d',strtotime('+'.$diffday.' day')));
+
             if ($re) {
                 return [
                     'code' => 200,
