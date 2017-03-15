@@ -48,7 +48,7 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <div id="tree"></div>
+                        <div id="tree" tree-type="employee-tree"></div>
                     </div>
                 </div>
             </div>
@@ -63,33 +63,32 @@
                         </div>
                     </div>
 
-                    <form class="form-horizontal">
+                    <form class="layui-form">
                         <div class="box-body">
-                            <div class="form-group">
-
-                                <label class="col-sm-1 control-label">开始时间</label>
-
-                                <div class="col-sm-2">
-                                    <input type="date" class="form-control filter-condition" filter-name="fday" filter-operator=">=">
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">开始时间</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" class="layui-input filter-condition" filter-name="fday" filter-operator=">=" onclick="layui.laydate({elem: this})">
+                                    </div>
                                 </div>
-
-                                <label class="col-sm-1 control-label">结束时间</label>
-
-                                <div class="col-sm-2">
-                                    <input type="date" class="form-control filter-condition" filter-name="fday" filter-operator="<=">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">结束时间</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" class="layui-input filter-condition" filter-name="fday" filter-operator="<=" onclick="layui.laydate({elem: this})">
+                                    </div>
                                 </div>
-
-                                <label class="col-sm-1 control-label">签到状态</label>
-
-                                <div class="col-sm-2">
-                                    <select class="form-control filter-condition" filter-name="fstatus">
-                                        <option value="0">未完成</option>
-                                        <option value="1">正常</option>
-                                        <option value="2">异常</option>
-                                        <option value="3">请假</option>
-                                    </select>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">考勤状态</label>
+                                    <div class="layui-input-inline">
+                                        <select class="layui-input filter-condition" filter-name="fstatus">
+                                            <option value="0">未完成</option>
+                                            <option value="1">正常</option>
+                                            <option value="2">异常</option>
+                                            <option value="3">请假</option>
+                                        </select>
+                                    </div>
                                 </div>
-
                             </div>
                         </div>
                         <div class="box-footer">

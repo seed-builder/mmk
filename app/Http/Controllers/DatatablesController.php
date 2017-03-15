@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Busi\Department;
+use App\Models\Busi\Employee;
 use App\Services\LogSvr;
 use Illuminate\Http\Request;
 
@@ -148,6 +150,7 @@ abstract class DatatablesController extends Controller
         $search = $request->input('search', []);
         $draw = $request->input('draw', 0);
         $filter = $request->input('filter', []);
+        $tree = $request->input('tree', []);
 
         $queryBuilder = $this->entityQuery(); //$this->newEntity()->newQuery();
         if (!empty($with)) {
@@ -167,6 +170,9 @@ abstract class DatatablesController extends Controller
 
         if (!empty($filter)) {
             $this->filter($queryBuilder,$filter);
+        }
+        if (!empty($tree)){
+            $this->tree($queryBuilder,$tree);
         }
         if ($conditionCall != null && is_callable($conditionCall)) {
             $conditionCall($queryBuilder);
@@ -321,6 +327,33 @@ abstract class DatatablesController extends Controller
                 else
                     $queryBuilder->where($f['name'],$operator,$f['value']);
             }
+        }
+    }
+
+    /*
+     * tree select
+     */
+    public function tree($queryBuilder,$treeData){
+        switch ($treeData['type']){
+            case 'employee-tree':{
+                $emp = Employee::find($treeData['nodeid']);
+                if (empty($emp)) {
+                    $dept = Department::find($treeData['nodeid']);
+                    $emp_ids = $dept->getAllEmployeeByDept()->pluck('id')->toArray();
+
+                    $queryBuilder->whereIn('femp_id', $emp_ids);
+                } else {
+                    $queryBuilder->where('femp_id', $treeData['nodeid']);
+                }
+                break;
+            }
+            case 'department-tree':{
+
+            }
+            case 'channel-tree' : {
+
+            }
+
         }
     }
 }

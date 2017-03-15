@@ -25,7 +25,9 @@
 
     @yield('styles')
     <style>
-
+        .layui-form-label{
+            width: 100px;
+        }
         .modal-header{
             cursor: move;
         }
@@ -62,7 +64,7 @@
 
     <header class="main-header">
         <!-- Logo -->
-        <a href="/assets/plugins/AdminLTE/index2.html" class="logo">
+        <a href="#" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>移动营销</b>管理系统</span>
             <!-- logo for regular state and mobile devices -->
