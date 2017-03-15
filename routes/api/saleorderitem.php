@@ -58,7 +58,7 @@ Route::group(['prefix' => 'sale-order-item', 'middleware' => 'api.sign'], functi
     *      type="",
     *      @SWG\Parameters(
     *          @SWG\Parameter(name="box_qty", description="箱数量", required=false,type="number", paramType="form", defaultValue="0.00" ),
-    *          @SWG\Parameter(name="bottle_qty", description="箱数量", required=false,type="number", paramType="form", defaultValue="0.00" ),
+    *          @SWG\Parameter(name="bottle_qty", description="瓶数量", required=false,type="number", paramType="form", defaultValue="0.00" ),
     *          @SWG\Parameter(name="fmaterial_id", description="物料内码id", required=false,type="integer", paramType="form", defaultValue="0" ),
     *          @SWG\Parameter(name="fsale_order_id", description="", required=false,type="integer", paramType="form", defaultValue="" ),
     *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
@@ -79,7 +79,7 @@ Route::group(['prefix' => 'sale-order-item', 'middleware' => 'api.sign'], functi
     *      type="",
     *      @SWG\Parameters(
     *          @SWG\Parameter(name="box_qty", description="箱数量", required=false,type="number", paramType="form", defaultValue="0.00" ),
-    *          @SWG\Parameter(name="bottle_qty", description="箱数量", required=false,type="number", paramType="form", defaultValue="0.00" ),
+    *          @SWG\Parameter(name="bottle_qty", description="瓶数量", required=false,type="number", paramType="form", defaultValue="0.00" ),
     *          @SWG\Parameter(name="fmaterial_id", description="物料内码id", required=false,type="integer", paramType="form", defaultValue="0" ),
     *          @SWG\Parameter(name="fsale_order_id", description="", required=false,type="integer", paramType="form", defaultValue="" ),
     *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="" ),
