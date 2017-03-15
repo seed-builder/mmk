@@ -219,6 +219,7 @@ var treeNodeSelect = function(treeId,table){
     var treeNode = $('#'+treeId).treeview('getSelected');
     if (treeNode.length>0){
         filter_params['tree']['nodeid'] = treeNode[0].dataid;
+        filter_params['tree']['type'] = $('#'+treeId).attr('tree-type');
     }
     table.settings()[0].ajax.data = filter_params;
     table.ajax.reload();
@@ -398,3 +399,9 @@ $(".filter-reset").on('click',function () {
 })
 
 
+/*
+ * layui
+ */
+layui.use(['form', 'layedit', 'laydate'], function(){
+
+});

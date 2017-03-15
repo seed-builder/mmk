@@ -40,28 +40,12 @@ class AttendanceStatisticController extends AdminController
 
 		return parent::pagination($request, $searchCols, $with, function ($queryBuilder)use($request){
 			$search = $request->input('search', []);
-            $data = $request->all();
 
 			$empQuery = DB::table('bd_employees');//,[[$emp,'fname','femp_id']]
 			if (!empty($search['value'])) {
 				$empQuery->where('bd_employees.fname', 'like binary', '%' . $search['value'] . '%');
 			}
 
-			$nodeid = !empty($data['tree']['nodeid'])?$data['tree']['nodeid']:0;
-            if (!empty($nodeid)) {
-                $emp = Employee::find($nodeid);
-                if (empty($emp)) {
-                    $dept = Department::find($nodeid);
-                    $emp_ids = $dept->getAllEmployeeByDept()->pluck('id')->toArray();
-
-                    $queryBuilder->whereIn('femp_id', $emp_ids);
-                } else {
-                    $queryBuilder->where('femp_id', $nodeid);
-                }
-            }
-            if (!empty($data['fdate'])){
-                $queryBuilder->where('fday','like', '%' . $data['fdate'] . '%');
-            }
 			$curUser = Auth::user();
 			if(!$curUser->isAdmin()) {
 				if (SysConfigRepo::isMgtDataIsolate()) {
