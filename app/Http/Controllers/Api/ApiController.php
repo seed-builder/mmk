@@ -83,7 +83,9 @@ use App\Services\LogSvr;
     public function show($id)
     {
         //
-        $entity =$this->newEntity()->newQuery()->find($id);
+	    //var_dump($id);
+        $entity = $this->newEntity()->newQuery()->find($id);
+	    // var_dump($entity);
         return response($entity, 200);
     }
 
