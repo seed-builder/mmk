@@ -13,8 +13,9 @@ class AlterTableBdCustomer extends Migration
      */
     public function up()
     {
-        Schema::table('bd_customer', function (Blueprint $table) {
+        Schema::table('bd_customers', function (Blueprint $table) {
             //
+	        $table->integer('fsale_area_id')->default(0)->comment('所属销售片区');
         });
     }
 
@@ -25,8 +26,9 @@ class AlterTableBdCustomer extends Migration
      */
     public function down()
     {
-        Schema::table('bd_customer', function (Blueprint $table) {
+        Schema::table('bd_customers', function (Blueprint $table) {
             //
+	        $table->dropColumn('fsale_area_id');
         });
     }
 }
