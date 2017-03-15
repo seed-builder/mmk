@@ -148,7 +148,7 @@ define(function (require, exports, module) {
                 console.log(entity);
                 layer.confirm('确定启用该客户的后台管理功能 ?', {icon: 3, title:'提示'}, function () {
                     $.post('/admin/customer/'+id, { data: entity, _method:'PUT', _token: token }, function (result) {
-                        if (result.data == 200) {
+                        if (result.data) {
                             // You can reload the current location
                             layer.msg('启用成功！');
                             table.ajax.reload();
