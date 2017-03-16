@@ -206,7 +206,7 @@ abstract class DatatablesController extends Controller
         }
         $entities = $queryBuilder->skip($start)->take($length)->get();
         //$entities = $queryBuilder->skip($start)->take($length)->get();
-        //LogSvr::sql()->info($queryBuilder->toSql());
+        LogSvr::sql()->info($queryBuilder->toSql());
         $result = [
             'draw' => $draw,
             'recordsTotal' => $total,
