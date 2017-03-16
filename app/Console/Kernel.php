@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Models\Busi\Store;
 use App\Models\Busi\VisitLine;
 use App\Models\Busi\VisitLineCalendar;
 use App\Models\Busi\VisitLineStore;
@@ -63,6 +64,24 @@ class Kernel extends ConsoleKernel
 //            }
 //
 //        })->dailyAt('00:00');
+
+	    //每天01:00点执行, 检查更新门店每天的签约状态
+        $schedule->call(function(){
+        	Store::update(['fis_signed' => 0]);
+        	$now = date('Y-m-d');
+        	//取得当前有效的签约
+	        $policies = DisplayPolicyStore::where('fstatus', 1)
+		        ->where('fstart_date', '<=', $now)
+		        ->where('fend_date', '>=', $now)
+		        ->get();
+	        if(!empty($policies)){
+		        foreach ($policies as $policy) {
+		        	$store = $policy->store;
+			        $store->fis_signed = 1;
+			        $store->save();
+	        	}
+	        }
+        })->dailyAt('01:00');
     }
 
     /**
