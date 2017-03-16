@@ -72,7 +72,7 @@ class Employee extends BaseModel
     }
 
     public function attendance_statistics(){
-        return $this->hasMany(AttendanceStatistic::class, 'femp_id','id');
+        return $this->hasMany(AttendanceStatistic::class, 'femp_id')->select('attendance_statistics.*');;
     }
 
     public function getSenior(){

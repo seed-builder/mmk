@@ -55,6 +55,42 @@
                     <!-- /.box-body -->
                 </div>
                 <!-- /.box -->
+
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <h3 class="box-title">陈列费用签约门店列表</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+
+                        <table id="childTable" class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>id</th>
+                                <th>编号</th>
+                                <th>方案名称</th>
+                                <th>负责业代</th>
+                                <th>开始日期</th>
+                                <th>结束日期</th>
+                                <th>应用区域</th>
+                                <th>签约门店</th>
+                                <th>签约金额</th>
+                                <th>核定签约金额</th>
+                                <th>验证状态</th>
+                                <th>签约状态</th>
+                                <th>签约日期</th>
+                                <th>审核状态</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
             </div>
             <!-- /.col -->
         </div>
@@ -67,7 +103,7 @@
     <script type="text/javascript">
         $(function () {
             seajs.use('customer/display_policy.js', function (app) {
-                app.index($, 'moduleTable');
+                app.index($, 'moduleTable','childTable');
             });
         });
     </script>
