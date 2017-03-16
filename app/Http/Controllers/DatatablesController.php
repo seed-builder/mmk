@@ -198,9 +198,7 @@ abstract class DatatablesController extends Controller
             $dir = $o['dir'];
             $queryBuilder->orderBy($columns[$index]['data'], $dir);
         }
-        if (!empty($request->distinct)) {
-            $queryBuilder->groupBy($request->distinct)->distinct();
-        }
+
         if (!empty($fields)) {
             $queryBuilder->select($fields);
         }

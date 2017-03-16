@@ -46,8 +46,7 @@ class Employee extends BaseModel
     //
     protected $table = 'bd_employees';
     
-    protected $with = ['department'];
-    
+
     public $validateRules=['fname' => 'required', 'fphone' => 'required'];
 
 	protected static function boot()
@@ -70,6 +69,10 @@ class Employee extends BaseModel
 
     public function position(){
         return $this->hasOne(Position::class, 'id', 'fpost_id');
+    }
+
+    public function attendance_statistics(){
+        return $this->hasMany(AttendanceStatistic::class, 'femp_id','id');
     }
 
     public function getSenior(){
