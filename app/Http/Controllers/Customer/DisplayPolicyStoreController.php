@@ -77,6 +77,7 @@ class DisplayPolicyStoreController extends AdminController
             $customer = Auth::user();
             //if($customer->fservice_depart)
             $queryBuilder->where('fcost_dept_id', $customer->fservice_depart);
+            $queryBuilder->where('fcost_dept_id','!=', 0);
         });
 	}
 
