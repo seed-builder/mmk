@@ -31,9 +31,7 @@ class StockOutController extends BaseController
         $stores = $customer->stores->map(function ($item){
             return ['label' => $item->ffullname, 'value' => $item->id];
         });
-        $materials = Material::all()->map(function ($item){
-            return ['label' => $item->fname, 'value' => $item->id];
-        });
+        $materials = Material::all();
 		return view('customer.stock-out.index',compact('customers','stores','materials'));
 	}
 

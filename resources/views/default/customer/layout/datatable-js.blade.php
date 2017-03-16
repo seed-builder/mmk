@@ -12,3 +12,4 @@
 <script src="/assets/plugins/datatables/extensions/Select/js/dataTables.select.min.js"></script>
 <script src="/assets/plugins/datatables/extensions/Editor/js/dataTables.editor.min.js"></script>
 <script src="/assets/plugins/datatables/extensions/Editor/js/editor.bootstrap.min.js"></script>
+<script src="/assets/plugins/jquery-datatables-checkboxes-1.1.3/js/dataTables.checkboxes.min.js"></script>

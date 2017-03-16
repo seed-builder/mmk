@@ -82,6 +82,18 @@ function forbid_status(status) {
     }
 }
 
+//A-待接单，B-已接单，C-已配送, D-部分配送
+function send_status(status) {
+    var txt = '';
+    switch (status){
+        case 'A': txt='待接单';break;
+        case 'B': txt='已接单';break;
+        case 'C': txt='已配送';break;
+        case 'D': txt='部分配送';break;
+        default: txt='状态异常';break;
+    }
+    return txt;
+}
 
 /*
  * 数据审核 反审核
