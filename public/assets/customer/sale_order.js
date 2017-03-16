@@ -34,7 +34,7 @@ define(function (require, exports, module) {
                 {'label': '订单日期', 'name': 'readonly_fdate',  'data': 'fdate', 'type': 'readonly'},
                 {'label': '业务员','name':'readonly_femp_id' , 'data': 'employee.fname',  'type': 'readonly'},
                 {'label': '门店', 'name':'readonly_fstore_id', 'data': 'store.ffullname',  'type': 'readonly'},
-                {'label': 'fsend_status', 'name': 'fsend_status', 'def': 'C', 'type':'select', 'options':[{ 'label': '已收货', value:'C' }]},
+                {'label': '发货状态', 'name': 'fsend_status', 'def': 'C', 'type':'select', 'options':[{ 'label': '已收货', value:'C' }]},
             ]
         });
 
