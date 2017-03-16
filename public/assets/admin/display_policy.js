@@ -245,7 +245,7 @@ define(function (require, exports, module) {
                     var id = chlidTable.rows('.selected').data()[0].id;
                     layer.prompt({title: '请输入核定签约金额', formType: 3}, function(price, index){
                         ajaxLink('/admin/display-policy-store/check?id='+id+'&fcheck_amount='+price,function () {
-                            table.ajax.reload();
+                            chlidTable.ajax.reload();
                         })
                         layer.close(index);
                     });
