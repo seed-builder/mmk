@@ -76,8 +76,8 @@ class DisplayPolicyStoreController extends AdminController
 		return parent::pagination($request, $searchCols,$with,function ($queryBuilder){
             $customer = Auth::user();
             //if($customer->fservice_depart)
-            $queryBuilder->where('fcost_dept_id', $customer->fservice_depart);
-            $queryBuilder->where('fcost_dept_id','!=', 0);
+            $queryBuilder->whereIn('fstore_id', $customer->stores()->pluck('id'));
+
         });
 	}
 
