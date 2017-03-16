@@ -7,6 +7,7 @@ use App\Models\Busi\Store;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
 use App\Models\Busi\DisplayPolicyStore;
+use Illuminate\Support\Facades\Auth;
 
 class DisplayPolicyStoreController extends AdminController
 {
