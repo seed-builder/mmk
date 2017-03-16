@@ -384,11 +384,9 @@ var filter_reset = function(ele){
         $(obj).val("")
     })
 
-
     table.api().settings()[0].ajax.data = filter_params
     table.api().ajax.reload();
 }
-
 
 $(".filter-submit").on('click',function () {
     filter($(this));
