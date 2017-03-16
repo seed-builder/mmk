@@ -48,19 +48,7 @@ define(function (require, exports, module) {
                     def:   function () { return new Date(); }
                 },
                 {'label': '来源单号', 'name': 'fsbill_no',},
-                // { 'label': '到货确认人', 'name': 'fuser_id', 'type': 'select', 'options': customers},
-                { 'label': '经销商', 'name': 'fcust_id', 'type': 'select', 'options': customers},
-                {
-                    label: "到货状态:",
-                    name:  "frec_status",
-                    type:  "select",
-                    options: [
-                        { label: "未到货",value: "0" },
-                        { label: "已到货",value: "1" },
-                    ]
-                },
-
-
+                { 'label': '经销商', 'name': 'fcust_id', 'type': 'select', 'options': customers },
             ]
         });
 

@@ -95,7 +95,7 @@ class StockInController extends BaseController
         $extraFields=[
             'fcust_id' => Auth::user()->id,
             'fuser_id' => Auth::user()->id,
-            'fbill_no' => rand(10000,99999).date("YmdHis")
+            'fbill_no' => Store::find($props['fstore_id'])->fnumber.date("Ymd")
         ];
         return parent::store($request,$extraFields);
     }

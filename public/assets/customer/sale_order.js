@@ -6,6 +6,8 @@ define(function (require, exports, module) {
     var zhCN = require('datatableZh');
     var editorCN = require('i18n');
     exports.index = function ($, orderTableId,orderInfoTableId) {
+        editorCN.edit.title = '确认接单';
+        editorCN.edit.submit = '确认接单';
         var orderEditor = new $.fn.dataTable.Editor({
             ajax: {
                 create: {
@@ -28,18 +30,11 @@ define(function (require, exports, module) {
             table: "#" + orderTableId,
             idSrc: 'id',
             fields: [
-                {'label': 'fbill_no', 'name': 'fbill_no',},
-                {'label': 'fcreate_date', 'name': 'fcreate_date',},
-                {'label': 'fcreator_id', 'name': 'fcreator_id',},
-                {'label': 'fcust_id', 'name': 'fcust_id',},
-                {'label': 'fdate', 'name': 'fdate',},
-                {'label': 'fdocument_status', 'name': 'fdocument_status',},
-                {'label': 'femp_id', 'name': 'femp_id',},
-                {'label': 'flog_id', 'name': 'flog_id',},
-                {'label': 'fmodify_date', 'name': 'fmodify_date',},
-                {'label': 'fmodify_id', 'name': 'fmodify_id',},
-                {'label': 'fsend_status', 'name': 'fsend_status',},
-                {'label': 'fstore_id', 'name': 'fstore_id',},
+                {'label': '订单号', 'name': 'readonly_fbill_no', 'data': 'fbill_no', 'type': 'readonly'},
+                {'label': '订单日期', 'name': 'readonly_fdate',  'data': 'fdate', 'type': 'readonly'},
+                {'label': '业务员','name':'readonly_femp_id' , 'data': 'employee.fname',  'type': 'readonly'},
+                {'label': '门店', 'name':'readonly_fstore_id', 'data': 'store.ffullname',  'type': 'readonly'},
+                {'label': '发货状态', 'name': 'fsend_status', 'def': 'C', 'type':'select', 'options':[{ 'label': '已收货', value:'C' }]},
             ]
         });
 
@@ -110,7 +105,7 @@ define(function (require, exports, module) {
                 // { text: '编辑', className: 'edit', enabled: false },
                 // { text: '删除', className: 'delete', enabled: false },
                 // {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: editor},
-                // {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: editor},
+                {extend: "edit", text: '接单<i class="fa fa-fw fa-pencil"></i>', editor: orderEditor},
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: orderEditor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
@@ -118,6 +113,8 @@ define(function (require, exports, module) {
             ]
         });
 
+        editorCN.edit.title = '确认发货数量';
+        editorCN.edit.submit = '确认';
         var infoEditor = new $.fn.dataTable.Editor({
             ajax: {
                 create: {
@@ -140,19 +137,13 @@ define(function (require, exports, module) {
             table: "#" + orderInfoTableId,
             idSrc: 'id',
             fields: [
-                {'label': 'fbase_qty', 'name': 'fbase_qty',},
-                {'label': 'fbase_unit', 'name': 'fbase_unit',},
-                {'label': 'fcreate_date', 'name': 'fcreate_date',},
-                {'label': 'fcreator_id', 'name': 'fcreator_id',},
-                {'label': 'fdocument_status', 'name': 'fdocument_status',},
-                {'label': 'fmaterial_id', 'name': 'fmaterial_id',},
-                {'label': 'fmodify_date', 'name': 'fmodify_date',},
-                {'label': 'fmodify_id', 'name': 'fmodify_id',},
-                {'label': 'fqty', 'name': 'fqty',},
-                {'label': 'fsale_order_id', 'name': 'fsale_order_id',},
-                {'label': 'fsale_unit', 'name': 'fsale_unit',},
-                {'label': 'fsend_base_qty', 'name': 'fsend_base_qty',},
-                {'label': 'fsend_qty', 'name': 'fsend_qty',},
+                {'label': '商品', 'name': 'readonly_material_fname', 'data': 'material.fname',  'type': 'readonly'},
+                {'label': '销售单位数量', 'name': 'readonly_fqty', 'data': 'fqty', 'type': 'readonly'},
+                {'label': '销售单位', 'name': 'readonly_fsale_unit', 'data': 'fsale_unit', 'type': 'readonly'},
+                {'label': '基本单位数量', 'name': 'readonly_fbase_qty',  'data': 'fbase_qty', 'type': 'readonly'},
+                {'label': '基本单位', 'name': 'readonly_fbase_unit', 'data': 'fbase_unit', 'type': 'readonly'},
+                {'label': '确认销售单位数量', 'name': 'fsend_qty' },
+                {'label': '确认基本单位数量', 'name': 'fsend_base_qty' },
             ]
         });
 
@@ -176,25 +167,25 @@ define(function (require, exports, module) {
                 {
                     'data': 'fsale_order_id',
                     render: function (data, type, full) {
-                        if (full.order != null)
+                        //if (full.order)
                             return full.order.fbill_no
-                        else
-                            return "";
+                        //else
+                        //    return "";
                     }
                 },
                 {
                     'data': 'fmaterial_id',
                     render: function (data, type, full) {
-                        if (full.meterial != null)
-                            return full.meterial.fname
-                        else
-                            return "";
+                        //if (full.meterial)
+                            return full.material.fname;
+                        //else
+                        //    return "";
                     }
                 },
-                {'data': 'fsale_unit'},
-                {'data': 'fbase_unit'},
                 {'data': 'fqty'},
+                {'data': 'fsale_unit'},
                 {'data': 'fbase_qty'},
+                {'data': 'fbase_unit'},
                 {'data': 'fsend_qty'},
                 {'data': 'fsend_base_qty'},
 
@@ -210,7 +201,7 @@ define(function (require, exports, module) {
                 // { text: '编辑', className: 'edit', enabled: false },
                 // { text: '删除', className: 'delete', enabled: false },
                 // {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: infoEditor},
-                // {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: infoEditor},
+                {extend: "edit", text: '发货数量确认<i class="fa fa-fw fa-pencil"></i>', editor: infoEditor},
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: infoEditor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
