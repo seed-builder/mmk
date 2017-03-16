@@ -89,7 +89,7 @@ class DisplayPolicyStoreController extends AdminController
         $entity = DisplayPolicyStore::find($data['id']);
         $entity->fdocument_status="C";
         $entity->fcheck_amount = $data['fcheck_amount'];
-        $entity->status = 1;
+        $entity->fstatus = 1;
 
         $policy = DisplayPolicy::find($entity->fpolicy_id);
 
