@@ -92,7 +92,7 @@ class Customer extends Authenticatable
 	}
 
 	public function stores(){
-		return $this->hasMany(Store::class, 'fcust_id');
+		return $this->hasMany(Store::class, 'fcust_id')->select('st_stores.*');
 	}
 
 	public function orders(){

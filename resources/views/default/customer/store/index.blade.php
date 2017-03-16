@@ -59,14 +59,14 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-
-                        <form class="layui-form filter"  filter-table="#moduleTable">
+                        <div class="panel panel-default">
+                            <form class="layui-form filter "  filter-table="#moduleTable">
                             <div class="box-body">
                                 <div class="layui-form-item">
                                     <div class="layui-inline">
                                         <label class="layui-form-label">负责业代</label>
                                         <div class="layui-input-inline">
-                                            <input type="text" class="layui-input filter-condition" filter-name="fday" filter-operator="=" >
+                                            <input type="text" class="layui-input filter-condition" filter-name="bd_employees.fname" filter-operator="like" >
                                         </div>
                                     </div>
                                     <div class="layui-inline">
@@ -79,14 +79,14 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="layui-inline">
+                                        <button type="button" class="btn btn-info filter-submit">查询</button>&nbsp;&nbsp;&nbsp;
+                                        <button type="button" class="btn btn-default filter-reset">重置</button>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="box-footer" style="text-align: center;">
-                                <button type="button" class="btn btn-info filter-submit">查询</button>&nbsp;&nbsp;&nbsp;
-                                <button type="button" class="btn btn-default filter-reset">重置</button>
-                            </div>
                         </form>
-
+                        </div>
                         <table id="moduleTable" class="table table-bordered table-hover">
                             <thead>
                             <tr>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Busi\DisplayPolicyStore;
 use App\Services\CodeBuilder;
 use App\Services\DbHelper;
 use Illuminate\Foundation\Inspiring;
@@ -22,10 +23,22 @@ Artisan::command('inspire', function () {
 
 Artisan::command('test', function () {
 	$this->comment('begin ...');
-	$db = new DbHelper();
-	$columns = $db->getColumns('st_stocks');
-	$builder = new CodeBuilder('Stock', 'st_stocks', $columns);
-	$builder->createFiles();
+	$affected = DB::update('update st_stores set fis_signed = ?', [0]);
+	$this->comment('update $affected =' . $affected);
+	$now = date('Y-m-d');
+	//取得当前有效的签约
+	$policies = DisplayPolicyStore::where('fstatus', 1)
+		->where('fstart_date', '<=', $now)
+		->where('fend_date', '>=', $now)
+		->get();
+	$this->comment('count = ' . $policies->count());
+	if(!empty($policies)){
+		foreach ($policies as $policy) {
+			$store = $policy->store;
+			$store->fis_signed = 1;
+			$store->save();
+		}
+	}
 	$this->comment('end ...');
 })->describe('philo blade test');
 
