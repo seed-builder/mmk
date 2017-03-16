@@ -62,7 +62,7 @@
 
     <header class="main-header">
         <!-- Logo -->
-        <a href="/assets/plugins/AdminLTE/index2.html" class="logo">
+        <a href="{{url('/customer')}}" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>经销商</b>系统</span>
             <!-- logo for regular state and mobile devices -->
