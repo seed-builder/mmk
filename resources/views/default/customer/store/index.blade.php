@@ -60,6 +60,33 @@
                     <!-- /.box-header -->
                     <div class="box-body">
 
+                        <form class="layui-form filter"  filter-table="#moduleTable">
+                            <div class="box-body">
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label">负责业代</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" class="layui-input filter-condition" filter-name="fday" filter-operator="=" >
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label">是否签约</label>
+                                        <div class="layui-input-inline">
+                                            <select class="layui-input filter-condition" filter-name="fis_signed">
+                                                <option value="">--请选择--</option>
+                                                <option value="0">否</option>
+                                                <option value="1">是</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box-footer" style="text-align: center;">
+                                <button type="button" class="btn btn-info filter-submit">查询</button>&nbsp;&nbsp;&nbsp;
+                                <button type="button" class="btn btn-default filter-reset">重置</button>
+                            </div>
+                        </form>
+
                         <table id="moduleTable" class="table table-bordered table-hover">
                             <thead>
                             <tr>
