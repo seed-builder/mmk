@@ -55,15 +55,15 @@ class Kernel extends ConsoleKernel
         })->weekly();
 
         //每天00:00点执行 生成拜访日记
-//        $schedule->call(function(VisitLineCalendar $calendar){
-//            $fnumber = date("w");
-//            $line = VisitLine::query()->where('fnumber',$fnumber)->first();
-//            $vls = VisitLineStore::query()->where('fline_id',$line->id)->get();
-//            foreach ($vls as $v){
-//                $calendar->makeCalendar($v->femp_id,$line->id,date('Y-m-d H:i:s'));
-//            }
-//
-//        })->dailyAt('00:00');
+        $schedule->call(function(VisitLineCalendar $calendar){
+            $fnumber = date("w");
+            $line = VisitLine::query()->where('fnumber',$fnumber)->first();
+            $vls = VisitLineStore::query()->where('fline_id',$line->id)->get();
+            foreach ($vls as $v){
+                $calendar->makeCalendar($v->femp_id,$line->id,date('Y-m-d H:i:s'));
+            }
+
+        })->dailyAt('00:00');
 
 	    //每天01:00点执行, 检查更新门店每天的签约状态
         $schedule->call(function(){
