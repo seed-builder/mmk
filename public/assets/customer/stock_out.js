@@ -202,10 +202,10 @@ define(function (require, exports, module) {
                             return "";
                     }
                 },
-                {'data': 'fsale_unit'},
-                {'data': 'fbase_unit'},
                 {'data': 'fqty'},
+                {'data': 'fsale_unit'},
                 {'data': 'fbase_qty'},
+                {'data': 'fbase_unit'},
             ],
             columnDefs: [
                 {
@@ -214,17 +214,30 @@ define(function (require, exports, module) {
                 }
             ],
             buttons: [
-                // { text: '新增', action: function () { }  },
-                // { text: '编辑', className: 'edit', enabled: false },
+                { text: '新增', action: function () {
+                    $('#stockFormDialog').modal('show');
+
+                }  },
+                { text: '编辑', className: 'edit', enabled: false,  action: function () {
+                    $('#stockFormDialog').modal('show');
+                    //table.rows('.selected').data()
+                } },
                 // { text: '删除', className: 'delete', enabled: false },
-                {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: itemEditor},
-                {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: itemEditor},
+                // {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: itemEditor},
+                // {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: itemEditor},
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: itemEditor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
                 {extend: 'colvis', text: '列显示'}
             ]
         });
+
+        itemTable.on( 'select', checkBtn).on( 'deselect', checkBtn);
+
+        function checkBtn(e, dt, type, indexes) {
+            var count = dt.rows( { selected: true } ).count();
+            dt.buttons( ['.edit'] ).enable(count > 0);
+        }
 
     }
 

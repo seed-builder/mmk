@@ -81,15 +81,7 @@ define(function (require, exports, module) {
                 {
                     'data': 'fsend_status',
                     render: function (data, type, full) {
-                        if(data=="A"){
-                            return '未发货'
-                        }else if (data=="B"){
-                            return '发货中'
-                        }else if (data=="C"){
-                            return '已到货'
-                        }else{
-                            return '状态异常'
-                        }
+                        return send_status(data);
                     }
                 },
 
@@ -105,8 +97,8 @@ define(function (require, exports, module) {
                 // { text: '编辑', className: 'edit', enabled: false },
                 // { text: '删除', className: 'delete', enabled: false },
                 // {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: editor},
-                {extend: "edit", text: '接单<i class="fa fa-fw fa-pencil"></i>', editor: orderEditor},
-                {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: orderEditor},
+                {extend: "edit", className: 'edit', text: '接单<i class="fa fa-fw fa-pencil"></i>', editor: orderEditor},
+                //{extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: orderEditor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
                 //{extend: 'colvis', text: '列显示'}
@@ -152,7 +144,6 @@ define(function (require, exports, module) {
             language: zhCN,
             processing: true,
             serverSide: true,
-            select: true,
             paging: true,
             rowId: "id",
             ajax: {
@@ -163,23 +154,23 @@ define(function (require, exports, module) {
                 }
             },
             columns: [
-                {'data': 'id'},
+                {
+                    'data': 'id',
+                    render: function (data, type, full) {
+                        return '<input type="checkbox" class="editor-active" value="'+data+'">';
+                    },
+                    className: "dt-body-center"
+                },
                 {
                     'data': 'fsale_order_id',
                     render: function (data, type, full) {
-                        //if (full.order)
                             return full.order.fbill_no
-                        //else
-                        //    return "";
                     }
                 },
                 {
                     'data': 'fmaterial_id',
                     render: function (data, type, full) {
-                        //if (full.meterial)
                             return full.material.fname;
-                        //else
-                        //    return "";
                     }
                 },
                 {'data': 'fqty'},
@@ -188,25 +179,37 @@ define(function (require, exports, module) {
                 {'data': 'fbase_unit'},
                 {'data': 'fsend_qty'},
                 {'data': 'fsend_base_qty'},
-
-            ],
-            columnDefs: [
                 {
-                    "targets": [0],
-                    "visible": false
-                }
+                    'data': 'fsend_status',
+                    render: function (data, type, full) {
+                        return send_status(data);
+                    }
+                },
+
             ],
             buttons: [
                 // { text: '新增', action: function () { }  },
                 // { text: '编辑', className: 'edit', enabled: false },
                 // { text: '删除', className: 'delete', enabled: false },
                 // {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: infoEditor},
-                {extend: "edit", text: '发货数量确认<i class="fa fa-fw fa-pencil"></i>', editor: infoEditor},
-                {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: infoEditor},
+                //{extend: "edit", text: '发货数量确认<i class="fa fa-fw fa-pencil"></i>', editor: infoEditor},
+                //{extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: infoEditor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
                 //{extend: 'colvis', text: '列显示'}
-            ]
+            ],
+            columnDefs: [
+                {
+                    'targets': 0,
+                    'checkboxes': {
+                        'selectRow': true
+                    }
+                }
+            ],
+            select: {
+                'style': 'multi'
+            },
+            order: [[ 1, 'asc' ]]
         });
 
         orderTable.on( 'select', orderTableRowSelect).on( 'deselect', orderTableRowSelect);
@@ -216,6 +219,10 @@ define(function (require, exports, module) {
             var order_id = row.length>0?row[0].id:0;
             infoTable.columns( 1 ).search( order_id ).draw();
         }
+
+        $('#'+orderInfoTableId+' tbody').on( 'click', 'tr', function () {
+            $(this).toggleClass('selected');
+        } );
     }
 
 });

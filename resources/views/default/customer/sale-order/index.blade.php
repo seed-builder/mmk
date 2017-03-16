@@ -24,6 +24,11 @@
                 <div class="box box-primary">
                     <div class="box-header">
                         <h3 class="box-title">订单列表</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
@@ -47,9 +52,14 @@
                 <!-- /.box -->
             </div>
             <div class="col-xs-12">
-                <div class="box box-primary">
+                <div class="box box-success">
                     <div class="box-header">
                         <h3 class="box-title">订单明细列表</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
@@ -57,7 +67,7 @@
                         <table id="orderInfoTable" class="table table-bordered table-hover">
                             <thead>
                             <tr>
-                                <th>id</th>
+                                <th></th>
                                 <th>订单号</th>
                                 <th>商品名称</th>
                                 <th>销售单位数量</th>
@@ -66,6 +76,7 @@
                                 <th>基本单位</th>
                                 <th>发货数量</th>
                                 <th>发货基本单位数量</th>
+                                <th>发货状态</th>
                             </tr>
                             </thead>
                         </table>
