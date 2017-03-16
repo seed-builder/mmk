@@ -93,6 +93,13 @@ class DisplayPolicyStoreController extends AdminController
 
         $policy = DisplayPolicy::find($entity->fpolicy_id);
 
+        if($data['fcheck_amount']>$entity->fsign_amount){//核定签约金额大于签约金额
+            return response()->json([
+                'code' => 500,
+                'result' => '核定签约金额不能大于签约金额，审核失败！'
+            ]);
+        }
+
         if($policy->fstore_cost_limit<$entity->fcheck_amount){//核定签约金额大于方案费用上限
             return response()->json([
                 'code' => 500,
