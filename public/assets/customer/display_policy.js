@@ -192,7 +192,8 @@ define(function(require, exports, module) {
                 { text: '审核<i class="fa fa-fw fa-paperclip"></i>',className: 'check', enabled: false ,action:function(){
                     var id = chlidTable.rows('.selected').data()[0].id;
                     layer.prompt({title: '请输入核定签约金额', formType: 3}, function(price, index){
-                        ajaxLink('/admin/display-policy-store/check?id='+id+'&fcheck_amount='+price,function () {
+                        ajaxLink('/customer/display-policy-store/check?id='+id+'&fcheck_amount='+price,function () {
+                            table.ajax.reload();
                             chlidTable.ajax.reload();
                         })
                         layer.close(index);
@@ -202,6 +203,20 @@ define(function(require, exports, module) {
                 //{extend: 'colvis', text: '列显示'}
             ]
         });
+
+        chlidTable.on( 'select', chlidRowSelect).on( 'deselect', chlidRowSelect);
+
+        function chlidRowSelect() {
+            checkEditEnabble(chlidTable,['.edit','.check'],['.uncheck']);
+        }
+
+
+        $(".uncheck").on('click',function () {
+            dataCheck(chlidTable,'/customer/display-policy-store/uncheck',function () {
+                table.ajax.reload();
+                chlidTable.ajax.reload();
+            });
+        })
     }
 
 });
