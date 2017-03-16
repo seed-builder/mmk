@@ -69,7 +69,7 @@ class SaleOrderItemController extends BaseController
 		$searchCols = ["fbase_unit","fdocument_status","fsale_unit"];
 
         $with=['order','material'];
-		return parent::pagination($request, $searchCols,$with);
+		return parent::pagination($request, $searchCols, $with);
 	}
 
 }
