@@ -67,19 +67,19 @@ class Kernel extends ConsoleKernel
 
 	    //每天01:00点执行, 检查更新门店每天的签约状态
         $schedule->call(function(){
-        	Store::update(['fis_signed' => 0]);
-        	$now = date('Y-m-d');
-        	//取得当前有效的签约
+	        DB::update('update st_stores set fis_signed = ?', [0]);
+	        $now = date('Y-m-d');
+	        //取得当前有效的签约
 	        $policies = DisplayPolicyStore::where('fstatus', 1)
 		        ->where('fstart_date', '<=', $now)
 		        ->where('fend_date', '>=', $now)
 		        ->get();
 	        if(!empty($policies)){
 		        foreach ($policies as $policy) {
-		        	$store = $policy->store;
+			        $store = $policy->store;
 			        $store->fis_signed = 1;
 			        $store->save();
-	        	}
+		        }
 	        }
         })->dailyAt('01:00');
     }
