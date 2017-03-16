@@ -93,6 +93,13 @@ class DisplayPolicyStoreController extends AdminController
 
         $policy = DisplayPolicy::find($entity->fpolicy_id);
 
+        if($entity->fsign_store_num<=$entity->fsign_store_num){//执行门店总数小于或者等于签约门店总数 ！防止超签
+            return response()->json([
+                'code' => 500,
+                'result' => '政策执行门店总数已达到上限，审核失败！'
+            ]);
+        }
+
         if($data['fcheck_amount']>$entity->fsign_amount){//核定签约金额大于签约金额
             return response()->json([
                 'code' => 500,
