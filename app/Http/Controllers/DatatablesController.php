@@ -6,6 +6,7 @@ use App\Models\Busi\Department;
 use App\Models\Busi\Employee;
 use App\Services\LogSvr;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 abstract class DatatablesController extends Controller
 {
