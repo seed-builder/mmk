@@ -255,7 +255,32 @@ define(function (require, exports, module) {
                     className: 'send',
                     enabled: false,
                     action: function (e, dt, node, config) {
+                        layer.confirm('确认配送?', {btn: ['确定', '取消']}, function () {
+                            var orders = dt.rows('.selected').data();
 
+                            if(orders.length > 0){
+                                var ids = [] ;
+                                var orderId = 0
+                                for(var i = 0; i < orders.length; i++){
+                                    ids[ids.length] = orders[i].id;
+                                }
+                                orderId = orders[0].fsale_order_id;
+                                $.post('/customer/sale-order-item/send',
+                                    {_token: $('meta[name="_token"]').attr('content'), ids: ids, order_id: orderId},
+                                    function (result) {
+                                        if(result.data){
+                                            layer.msg('确认配送成功!');
+                                            dt.ajax.reload();
+                                            orderTable.ajax.reload();
+                                        }else{
+                                            layer.msg('确认配送失败, 错误：' + result.error);
+                                        }
+                                    }
+                                )
+                            }
+                        }, function () {
+                            layer.close();
+                        })
                     }
                 },
                 {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: infoEditor, enabled: false},
@@ -345,10 +370,11 @@ define(function (require, exports, module) {
             //var data = $form.serialize();
             //console.log(data);
             $.post($form.attr('action') + '/' + $('#id', '#sureForm').val(), $form.serialize(), function (result) {
-                if(result)
+                if(result.data)
                 {
                     layer.msg('保存成功!');
-                    window.location.reload(true);
+                    infoTable.ajax.reload();
+                    $('#sureFormDialog').modal('hide');
                 }
             }, 'json');
         });

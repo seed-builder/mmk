@@ -79,7 +79,6 @@
                                 <th>发货数量</th>
                                 <th>发货基本单位数量</th>
                                 <th>发货状态</th>
-                                <th>操作</th>
                             </tr>
                             </thead>
                         </table>
