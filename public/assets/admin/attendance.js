@@ -50,52 +50,12 @@ define(function(require, exports, module) {
             },
             columns: [
                 {"data": "id"},
-                {
-                	"data": 'femp_id',
-                	render: function ( data, type, full ) {
-                		if(full.employee!=null)
-                			return full.employee.fname
-                			else
-                				return "";
-                	}
-                },
+                {"data": "fname"},
                 {"data": "fday"},
-                {
-                	"data": 'fbegin_id',
-                	render: function ( data, type, full ) {
-                		if(full.begin_attendance!=null)
-                			return full.begin_attendance.ftime
-                			else
-                				return "";
-                	}
-                },
-                {
-                    "data": 'fbegin_id',
-                    render: function ( data, type, full ) {
-                        if(full.begin_attendance!=null)
-                            return full.begin_attendance.faddress
-                        else
-                            return "";
-                    }
-                },
-                {
-                	"data": 'fcomplete_id',
-                	render: function ( data, type, full ) {
-                		if(full.complete_attendance!=null)
-                			return full.complete_attendance.ftime
-                			else
-                				return "";
-                	}
-                },
-                {
-                    "data": 'fcomplete_id',
-                    render: function ( data, type, full ) {
-                        if(full.complete_attendance!=null)
-                            return full.complete_attendance.faddress
-                        else
-                            return "";
-                    }
-                },
+                {"data": 'fbegin'},
+                {"data": 'bg_address'},
+                {"data": 'fcomplete'},
+                {"data": 'complete_address'},
                 {
                     "data": 'fstatus',
                     render: function ( data, type, full ) {
@@ -144,11 +104,11 @@ define(function(require, exports, module) {
             for(var i=0;i<data['data'].length;i++){
                 var at = data['data'][i];
 
-                if(at.begin_attendance!=null){
-                    mapAddOverlay(at.begin_attendance.flongitude,at.begin_attendance.flatitude,at);
+                if(at.bg_flongitude!=null){
+                    mapAddOverlay(at.bg_flongitude,at.bg_flatitude,at);
                 }
-                if(at.complete_attendance!=null){
-                    mapAddOverlay(at.complete_attendance.flongitude,at.complete_attendance.flatitude,at);
+                if(at.complete_flongitude!=null){
+                    mapAddOverlay(at.complete_flongitude,at.complete_flatitude,at);
                 }
 
                 line(at);
@@ -221,11 +181,11 @@ define(function(require, exports, module) {
         function rowselect() {
             map.clearOverlays();
             var data = table.rows('.selected').data()[0];
-            if (data.begin_attendance!=null){
-                mapAddOverlay(data.begin_attendance.flongitude,data.begin_attendance.flatitude,data);
+            if (data.bg_flongitude!=null){
+                mapAddOverlay(data.bg_flongitude,data.bg_flatitude,data);
             }
-            if (data.complete_attendance!=null){
-                mapAddOverlay(data.complete_attendance.flongitude,data.complete_attendance.flatitude,data);
+            if (data.complete_flongitude!=null){
+                mapAddOverlay(data.complete_flongitude,data.complete_flatitude,data);
             }
 
             line(data);
@@ -233,10 +193,10 @@ define(function(require, exports, module) {
 
         //签到签退地点连线
         function line(data) {
-            if (data.begin_attendance!=null&&data.complete_attendance!=null){
+            if (data.bg_flongitude!=null&&data.complete_flongitude!=null){
                 var polyline = new BMap.Polyline([
-                    new BMap.Point(data.begin_attendance.flongitude, data.begin_attendance.flatitude),
-                    new BMap.Point(data.complete_attendance.flongitude, data.complete_attendance.flatitude),
+                    new BMap.Point(data.bg_flongitude, data.bg_flatitude),
+                    new BMap.Point(data.complete_flongitude, data.complete_flatitude),
                 ], {strokeColor:"blue", strokeWeight:6, strokeOpacity:0.5});
                 map.addOverlay(polyline);
             }
@@ -244,10 +204,10 @@ define(function(require, exports, module) {
 
         //信息窗口
         function infoWindow(element,data) {
-            var begin_time = data.begin_attendance!=null?data.begin_attendance.ftime:'无';
-            var begin_address = data.begin_attendance!=null?data.begin_attendance.faddress:'无';
-            var complete_time = data.complete_attendance!=null?data.complete_attendance.ftime:'无'
-            var complete_address = data.complete_attendance!=null?data.complete_attendance.faddress:'无'
+            var begin_time = data.fbegin ? data.fbegin:'无';
+            var begin_address = data.bg_address ? data.bg_address:'无';
+            var complete_time = data.fcomplete ? data.fcomplete:'无'
+            var complete_address = data.complete_address ? data.complete_address:'无'
 
             var attrs = new Array();
             attrs.push({"name":"日期","value":data.fday})
@@ -255,10 +215,10 @@ define(function(require, exports, module) {
             attrs.push({"name":"签到地址","value":begin_address})
             attrs.push({"name":"签退时间","value":complete_time})
             attrs.push({"name":"签退地址","value":complete_address})
-            if (data.begin_attendance==null||data.complete_attendance==null){
+            if (data.fbegin==null||data.fcomplete==null){
                 attrs.push({"name":"签到状态","value":"<span style='color: red;font-weight: bold'>异常</span>"})
             }
-            var obj = {"title":data.employee.fname,"attrs":attrs};
+            var obj = {"title":data.fname,"attrs":attrs};
             mapWindow(element,obj);
         }
 

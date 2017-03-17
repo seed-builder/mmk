@@ -53,50 +53,6 @@
                 </div>
             </div>
             <div class="col-md-9">
-                <div class="box filter" filter-table="#moduleTable">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">查询过滤器</h3>
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                            </button>
-                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                        </div>
-                    </div>
-
-                    <form class="layui-form">
-                        <div class="box-body">
-                            <div class="layui-form-item">
-                                <div class="layui-inline">
-                                    <label class="layui-form-label">开始时间</label>
-                                    <div class="layui-input-inline">
-                                        <input type="text" class="layui-input filter-condition" filter-name="fday" filter-operator=">=" onclick="layui.laydate({elem: this})">
-                                    </div>
-                                </div>
-                                <div class="layui-inline">
-                                    <label class="layui-form-label">结束时间</label>
-                                    <div class="layui-input-inline">
-                                        <input type="text" class="layui-input filter-condition" filter-name="fday" filter-operator="<=" onclick="layui.laydate({elem: this})">
-                                    </div>
-                                </div>
-                                <div class="layui-inline">
-                                    <label class="layui-form-label">考勤状态</label>
-                                    <div class="layui-input-inline">
-                                        <select class="layui-input filter-condition" filter-name="fstatus">
-                                            <option value="0">未完成</option>
-                                            <option value="1">正常</option>
-                                            <option value="2">异常</option>
-                                            <option value="3">请假</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="box-footer">
-                            <button type="button" class="btn pull-right btn-info filter-submit">查询</button>
-                            <button type="button" class="btn pull-right btn-default filter-reset">重置</button>
-                        </div>
-                    </form>
-                </div>
                 <div class="box">
                     <div class="box-header">
                         <div class="box-header">
@@ -128,6 +84,48 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
+                        <div class="panel panel-default filter" filter-table="#moduleTable">
+                            <form class="layui-form">
+                            <div class="box-body">
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label">姓名</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" class="layui-input filter-condition" filter-name="bd_employees.fname" filter-operator="like" />
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label">考勤状态</label>
+                                        <div class="layui-input-inline">
+                                            <select class="layui-input filter-condition" filter-name="attendance_statistics.fstatus">
+                                                <option value="">--请选择--</option>
+                                                <option value="0">未完成</option>
+                                                <option value="1">正常</option>
+                                                <option value="2">异常</option>
+                                                <option value="3">请假</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label">开始时间</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" class="layui-input filter-condition" filter-name="attendance_statistics.fday" filter-operator=">=" onclick="layui.laydate({elem: this})">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label">结束时间</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" class="layui-input filter-condition" filter-name="attendance_statistics.fday" filter-operator="<=" onclick="layui.laydate({elem: this})">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box-footer" style="text-align: center">
+                                <button type="button" class="btn btn-info filter-submit">查询</button> &nbsp;&nbsp;&nbsp;
+                                <button type="button" class="btn btn-default filter-reset">重置</button>
+                            </div>
+                        </form>
+                        </div>
                         <table id="moduleTable" class="table table-bordered table-hover">
                             <thead>
                             <tr>
