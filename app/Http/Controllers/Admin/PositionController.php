@@ -22,9 +22,21 @@ class PositionController extends AdminController
 	public function index()
 	{
 		//
-        $depts = Department::all();
-        $positions = Position::all();
-		return view('admin.position.index',compact('depts','positions'));
+//        $depts = Department::all();
+//        $positions = Position::all();
+		$topDepts = Department::where('fpardept_id', 0)->get();
+		$deptOptions = [];
+		foreach ($topDepts as $dept) {
+			$this->toSelectOption($dept, ['label' => 'fname', 'value' => 'id'], $deptOptions);
+		}
+		//position options
+		$topPositions = Position::where('fparpost_id', 0)->get();
+		$positOptions = [];
+		foreach ($topPositions as $position) {
+			$this->toSelectOption($position, ['label' => 'fname', 'value' => 'id'], $positOptions);
+		}
+
+		return view('admin.position.index',compact('deptOptions','positOptions'));
 	}
 
 	/**
@@ -108,7 +120,7 @@ class PositionController extends AdminController
         ]);
     }
 
-    public function tree($queryBuilder,$treeData){
+    public function ptree(){
 		$tops = Position::where('fparpost_id',0)->get();
 		$tree = [];
 		foreach ($tops as $top) {

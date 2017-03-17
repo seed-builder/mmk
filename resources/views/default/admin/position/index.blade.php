@@ -92,8 +92,8 @@
                                             <div class="col-md-9">
                                                 <select class="form-control" name="fparpost_id" id="fparpost_id">
                                                     <option value="">--请选择--</option>
-                                                    @foreach($positions as $p)
-                                                        <option value="{{$p->id}}">{{$p->fname}}</option>
+                                                    @foreach($positOptions as $p)
+                                                        <option value="{{$p['value']}}">{{$p['label']}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -103,8 +103,8 @@
                                             <div class="col-md-9">
                                                 <select class="form-control" name="fdept_id" id="fdept_id">
                                                     <option value="">--请选择--</option>
-                                                    @foreach($depts as $d)
-                                                        <option value="{{$d->id}}">{{$d->fname}}</option>
+                                                    @foreach($deptOptions as $d)
+                                                        <option value="{{$d['value']}}">{{$d['label']}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
