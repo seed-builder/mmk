@@ -59,11 +59,13 @@ Route::group(['prefix' => 'visit-todo-calendar', 'middleware' => 'api.sign'], fu
      *      @SWG\Parameters(
      *          @SWG\Parameter(name="fparent_id", description="父级id", required=true,type="integer", paramType="form", defaultValue="0" ),
      *          @SWG\Parameter(name="fdate", description="日期", required=true,type="string", paramType="form", defaultValue="" ),
-                @SWG\Parameter(name="femp_id", description="员工id", required=true,type="integer", paramType="form", defaultValue="0" ),
-                @SWG\Parameter(name="forg_id", description="组织id", required=false,type="integer", paramType="form", defaultValue="0" ),
-                @SWG\Parameter(name="fstatus", description="巡访状态（1-未开始， 2-进行中， 3-已完成）", required=true,type="integer", paramType="form", defaultValue="1" ),
-                @SWG\Parameter(name="fstore_calendar_id", description="线路门店巡防日历id", required=true,type="integer", paramType="form", defaultValue="0" ),
-                @SWG\Parameter(name="ftodo_id", description="门店巡访项目id", required=true,type="integer", paramType="form", defaultValue="0" ),
+     *          @SWG\Parameter(name="femp_id", description="员工id", required=true,type="integer", paramType="form", defaultValue="0" ),
+     *          @SWG\Parameter(name="forg_id", description="组织id", required=false,type="integer", paramType="form", defaultValue="0" ),
+     *          @SWG\Parameter(name="fstatus", description="巡访状态（1-未开始， 2-进行中， 3-已完成）", required=true,type="integer", paramType="form", defaultValue="1" ),
+     *          @SWG\Parameter(name="fstore_calendar_id", description="线路门店巡防日历id", required=true,type="integer", paramType="form", defaultValue="0" ),
+     *          @SWG\Parameter(name="ftodo_id", description="门店巡访项目id", required=true,type="integer", paramType="form", defaultValue="0" ),
+     *          @SWG\Parameter(name="flongitude", description="百度地图经度", required=true,type="string", paramType="form", defaultValue="" ),
+     *          @SWG\Parameter(name="flatitude", description="百度地图纬度", required=true,type="string", paramType="form", defaultValue="" ),
      *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
      *      )
      *  )
@@ -82,7 +84,9 @@ Route::group(['prefix' => 'visit-todo-calendar', 'middleware' => 'api.sign'], fu
      *      type="",
      *      @SWG\Parameters(
      *          @SWG\Parameter(name="fstatus", description="巡访状态（1-未开始， 2-进行中， 3-已完成）", required=true,type="integer", paramType="form", defaultValue="1" ),
-                @SWG\Parameter(name="id", description="", required=true,type="integer", paramType="path", defaultValue="" ),
+     *          @SWG\Parameter(name="flongitude", description="百度地图经度", required=true,type="string", paramType="form", defaultValue="" ),
+     *          @SWG\Parameter(name="flatitude", description="百度地图纬度", required=true,type="string", paramType="form", defaultValue="" ),
+     *          @SWG\Parameter(name="id", description="", required=true,type="integer", paramType="path", defaultValue="" ),
      *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
      *      )
      *  )
