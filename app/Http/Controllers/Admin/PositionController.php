@@ -108,7 +108,7 @@ class PositionController extends AdminController
         ]);
     }
 
-    public function tree(){
+    public function tree($queryBuilder,$treeData){
 		$tops = Position::where('fparpost_id',0)->get();
 		$tree = [];
 		foreach ($tops as $top) {
