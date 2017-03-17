@@ -175,7 +175,7 @@ abstract class DatatablesController extends Controller
             $this->filter($queryBuilder,$filter);
         }
         if (!empty($tree)){
-            $this->tree($queryBuilder,$tree);
+            $this->tree($queryBuilder,$tree,$all_columns);
         }
         if ($conditionCall != null && is_callable($conditionCall)) {
             $conditionCall($queryBuilder);
@@ -334,7 +334,12 @@ abstract class DatatablesController extends Controller
     /*
      * tree select
      */
-    public function tree($queryBuilder,$treeData){
+    public function tree($queryBuilder, $treeData, $tableAlias = false){
+    	if($tableAlias){
+    		$col = 'bd_employees.id';
+	    }else{
+    		$col = 'femp_id';
+	    }
         switch ($treeData['type']){
             case 'employee-tree':{
                 $emp = Employee::find($treeData['nodeid']);
@@ -342,9 +347,9 @@ abstract class DatatablesController extends Controller
                     $dept = Department::find($treeData['nodeid']);
                     $emp_ids = $dept->getAllEmployeeByDept()->pluck('id')->toArray();
 
-                    $queryBuilder->whereIn('femp_id', $emp_ids);
+                    $queryBuilder->whereIn($col, $emp_ids);
                 } else {
-                    $queryBuilder->where('femp_id', $treeData['nodeid']);
+                    $queryBuilder->where($col, $treeData['nodeid']);
                 }
                 break;
             }
