@@ -145,7 +145,6 @@
         <!-- /.modal-dialog -->
     </div>
 
-
 @endsection
 @section('js')
     @include('customer.layout.datatable-js')

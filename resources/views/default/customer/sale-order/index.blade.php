@@ -1,6 +1,7 @@
 @extends('customer.layout.collapsed-sidebar')
 @section('styles')
     @include('customer.layout.datatable-css')
+    <link rel="stylesheet" href="/assets/plugins/bootstrap-validator/css/bootstrapValidator.min.css" />
 @endsection
 
 @section('content')
@@ -43,6 +44,7 @@
                                 <th>业务员</th>
                                 <th>经销商</th>
                                 <th>发货状态</th>
+                                <th>来源</th>
                             </tr>
                             </thead>
                         </table>
@@ -77,6 +79,7 @@
                                 <th>发货数量</th>
                                 <th>发货基本单位数量</th>
                                 <th>发货状态</th>
+                                <th>操作</th>
                             </tr>
                             </thead>
                         </table>
@@ -89,10 +92,65 @@
         </div>
         <!-- /.row -->
     </section>
+    <div class="modal fade" tabindex="-1" role="dialog" id="sureFormDialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">发货数量确认</h4>
+                </div>
+                <form class="form-horizontal" id="sureForm" action="{{url('/customer/sale-order-item/make-sure/')}}" method="post">
+                    {!! csrf_field() !!}
+                    <input type="hidden" id="id" name="id" value="" />
+                    <div class="modal-body">
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">订单号</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="text" id="order_no" readonly/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">商品</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="text"  id="material" readonly/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">单位</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" name="unit" id="unit">
+                                        <option value="">--请选择--</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">数量</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="number" name="qty" id="qty"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="submit" class="btn btn-primary" id="makeBtn">保存</button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 
 @endsection
 @section('js')
     @include('customer.layout.datatable-js')
+    <script src="/assets/plugins/bootstrap-validator/js/bootstrapValidator.min.js"></script>
+    <script src="/assets/plugins/bootstrap-validator/js/language/zh_CN.js"></script>
     <script type="text/javascript">
         $(function () {
             seajs.use('customer/sale_order.js', function (app) {

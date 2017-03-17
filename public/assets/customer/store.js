@@ -95,7 +95,7 @@ define(function (require, exports, module) {
             ],
             columnDefs: [
                 {
-                    "targets": [6, 7],
+                    "targets": [0, 6, 7],
                     "visible": false
                 }
             ],

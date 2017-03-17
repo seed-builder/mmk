@@ -72,4 +72,10 @@ class SaleOrderItemController extends BaseController
 		return parent::pagination($request, $searchCols, $with);
 	}
 
+	public function makeSure(Request $request, $id){
+		$unit = $request->input('unit');
+		$qty = $request->input('qty');
+
+	}
+
 }

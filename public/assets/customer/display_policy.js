@@ -85,6 +85,12 @@ define(function(require, exports, module) {
                 {'data': 'fsign_store_num'},
                 {'data': 'fsign_amount'},
             ],
+            columnDefs: [
+                {
+                    "targets": [2],
+                    "visible": false
+                }
+            ],
             buttons: [
                 // { text: '新增', action: function () { }  },
                 // { text: '编辑', className: 'edit', enabled: false },
