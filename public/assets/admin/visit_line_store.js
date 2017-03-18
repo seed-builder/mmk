@@ -201,6 +201,51 @@ define(function (require, exports, module) {
             ]
         });
 
+        //查询过滤器 （写死） 后期优化//////////////////////////////////////////////////////////
+        $("#vl-filter-form").on('submit',function () {
+
+            $("#vl-filter-form").find('.filter-condition').each(function (index,obj) {
+                filter_params[$(obj).attr('filter-name')] = $(obj).val()
+            })
+            table.settings()[0].ajax.data = filter_params
+            table.ajax.reload();
+
+            return false;
+        })
+        $("#vl-reset").on('click',function () {
+            $("#vl-filter-form").find('.filter-condition').each(function (index,obj) {
+                $(obj).val("")
+            })
+            table.settings()[0].ajax.data.femp = "";
+            table.settings()[0].ajax.data.fline_id = "";
+            table.ajax.reload();
+
+            return false;
+        })
+        $("#vs-filter-form").on('submit',function () {
+
+            $("#vs-filter-form").find('.filter-condition').each(function (index,obj) {
+                filter_params[$(obj).attr('filter-name')] = $(obj).val()
+            })
+            childTable.settings()[0].ajax.data = filter_params
+            childTable.ajax.reload();
+
+            return false;
+        })
+        $("#vs-reset").on('click',function () {
+
+            $("#vs-filter-form").find('.filter-condition').each(function (index,obj) {
+                $(obj).val("")
+            })
+
+            childTable.settings()[0].ajax.data.fstore = "";
+            childTable.settings()[0].ajax.data.fcontracts = "";
+            childTable.ajax.reload();
+
+            return false;
+        })
+        //////////////////////////////////////////////////////////////////////////////////////////
+
         //子表
         var childEditor = new $.fn.dataTable.Editor({
             ajax: {

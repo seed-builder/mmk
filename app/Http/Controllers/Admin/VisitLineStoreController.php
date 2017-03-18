@@ -97,6 +97,18 @@ class VisitLineStoreController extends AdminController
                 }
             }
 
+            if (!empty($data['femp'])){
+                $ids = Employee::query()->where('fname','like','%'.$data['femp'].'%')->pluck('id');
+                $queryBuilder->whereIn('femp_id', $ids);
+            }
+            if (!empty($data['fstore'])){
+                $ids = Store::query()->where('ffullname','like','%'.$data['fstore'].'%')->pluck('id');
+                $queryBuilder->whereIn('fstore_id', $ids);
+            }
+            if (!empty($data['fcontracts'])){
+                $ids = Store::query()->where('fcontracts','like','%'.$data['fcontracts'].'%')->pluck('id');
+                $queryBuilder->whereIn('fstore_id', $ids);
+            }
             if (!empty($data['femp_id'])){
                 $queryBuilder->where('femp_id', $data['femp_id']);
             }
