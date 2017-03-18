@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\DatatablesController;
+use App\Models\Busi\Department;
+use App\Models\Busi\Employee;
 use SysConfigRepo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -93,5 +95,37 @@ abstract class AdminController extends DatatablesController
 	    $entities = $empQuery->select('bd_employees.id')->get();
 	    $ids = $entities->pluck('id')->all();
 	    return $ids;
+    }
+
+    /*
+     * tree select
+     */
+    public function tree($queryBuilder, $treeData, $tableAlias = false){
+        if($tableAlias){
+            $col = 'bd_employees.id';
+        }else{
+            $col = 'femp_id';
+        }
+        switch ($treeData['type']){
+            case 'employee-tree':{
+                $emp = Employee::find($treeData['nodeid']);
+                if (empty($emp)) {
+                    $dept = Department::find($treeData['nodeid']);
+                    $emp_ids = $dept->getAllEmployeeByDept()->pluck('id')->toArray();
+
+                    $queryBuilder->whereIn($col, $emp_ids);
+                } else {
+                    $queryBuilder->where($col, $treeData['nodeid']);
+                }
+                break;
+            }
+            case 'department-tree':{
+
+            }
+            case 'channel-tree' : {
+
+            }
+
+        }
     }
 }

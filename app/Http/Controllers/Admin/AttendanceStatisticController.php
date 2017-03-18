@@ -40,6 +40,12 @@ class AttendanceStatisticController extends AdminController
 
 		return parent::pagination($request, $searchCols, $with, function ($queryBuilder)use($request){
 			$curUser = Auth::user();
+
+            $tree = $request->input('tree',[]);
+            if (!empty($tree)){
+                $this->tree($queryBuilder,$tree,true);
+            }
+
 			if(!$curUser->isAdmin()) {
 				if (SysConfigRepo::isMgtDataIsolate()) {
 					$flags = $curUser->positions->pluck('flag')->all();

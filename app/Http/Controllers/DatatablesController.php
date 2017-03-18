@@ -153,7 +153,6 @@ abstract class DatatablesController extends Controller
         $search = $request->input('search', []);
         $draw = $request->input('draw', 0);
         $filter = $request->input('filter', []);
-        $tree = $request->input('tree', []);
 
         $queryBuilder = $this->entityQuery(); //$this->newEntity()->newQuery();
         if (!empty($with)) {
@@ -173,9 +172,6 @@ abstract class DatatablesController extends Controller
 
         if (!empty($filter)) {
             $this->filter($queryBuilder,$filter);
-        }
-        if (!empty($tree)){
-            $this->tree($queryBuilder,$tree,$all_columns);
         }
         if ($conditionCall != null && is_callable($conditionCall)) {
             $conditionCall($queryBuilder);
@@ -328,38 +324,6 @@ abstract class DatatablesController extends Controller
                 else
                     $queryBuilder->where($f['name'],$operator,$f['value']);
             }
-        }
-    }
-
-    /*
-     * tree select
-     */
-    public function tree($queryBuilder, $treeData, $tableAlias = false){
-    	if($tableAlias){
-    		$col = 'bd_employees.id';
-	    }else{
-    		$col = 'femp_id';
-	    }
-        switch ($treeData['type']){
-            case 'employee-tree':{
-                $emp = Employee::find($treeData['nodeid']);
-                if (empty($emp)) {
-                    $dept = Department::find($treeData['nodeid']);
-                    $emp_ids = $dept->getAllEmployeeByDept()->pluck('id')->toArray();
-
-                    $queryBuilder->whereIn($col, $emp_ids);
-                } else {
-                    $queryBuilder->where($col, $treeData['nodeid']);
-                }
-                break;
-            }
-            case 'department-tree':{
-
-            }
-            case 'channel-tree' : {
-
-            }
-
         }
     }
 
