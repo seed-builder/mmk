@@ -53,17 +53,11 @@ class StoreController extends AdminController
 
         $data = $request->all();
 
-        return parent::pagination($request, $searchCols, ['employee'], function ($queryBuilder) use ($data) {
+        return parent::pagination($request, $searchCols, ['employee'], function ($queryBuilder) use ($data,$request) {
 
-            if (!empty($data['nodeid'])) {
-                $emp = Employee::find($data['nodeid']);
-                if (empty($emp)) {
-                    $dept = Department::find($data['nodeid']);
-                    $emp_ids = $dept->getAllEmployeeByDept()->pluck('id')->toArray();
-                    $queryBuilder->whereIn('femp_id', $emp_ids);
-                }else{
-                    $queryBuilder->where('femp_id', $data['nodeid']);
-                }
+            $tree = $request->input('tree',[]);
+            if (!empty($tree)){
+                $this->tree($queryBuilder,$tree,false);
             }
 
             $this->readyAllotStoreQuery($data,$queryBuilder);

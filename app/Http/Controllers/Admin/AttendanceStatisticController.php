@@ -38,7 +38,7 @@ class AttendanceStatisticController extends AdminController
 	public function pagination(Request $request, $searchCols = [], $with = [], $conditionCall = null, $all_columns = false){
 		$searchCols = ['bd_employees.fname'];
 
-		return parent::pagination($request, $searchCols, $with, function ($queryBuilder)use($request){
+		return parent::pagination($request, $searchCols, $with, function ($queryBuilder)use($request,$all_columns){
 			$curUser = Auth::user();
 
             $tree = $request->input('tree',[]);

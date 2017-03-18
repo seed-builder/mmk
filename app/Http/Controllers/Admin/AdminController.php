@@ -120,7 +120,9 @@ abstract class AdminController extends DatatablesController
                 break;
             }
             case 'department-tree':{
-
+                $dept = Department::find($treeData['nodeid']);
+                $deptids = $dept->getAllChildDept()->pluck('id')->toArray();
+                $queryBuilder->whereIn('fdept_id', $deptids);
             }
             case 'channel-tree' : {
 

@@ -152,11 +152,23 @@ class EmployeeController extends AdminController
         $order = $request->input('order', []);
         $search = $request->input('search', []);
         $draw = $request->input('draw', 0);
+        $filter = $request->input('filter', []);
+        $tree = $request->input('tree',[]);
 
         $queryBuilder = DB::table('bd_employees');//$this->newEntity()->newQuery();
         if (!empty($with)) {
             $queryBuilder->with($with);
         }
+        if (!empty($filter)) {
+            $this->filter($queryBuilder,$filter);
+        }
+
+        if (!empty($tree)){
+            $dept = Department::find($tree['nodeid']);
+            $deptids = $dept->getAllChildDept()->pluck('id')->toArray();
+            $queryBuilder->whereIn('bd_employees.fdept_id', $deptids);
+        }
+
         $fields = [];
         $conditions = [];
         foreach ($columns as $column) {
@@ -168,11 +180,6 @@ class EmployeeController extends AdminController
 
         $total = $queryBuilder->count();
 
-        if (!empty($data['nodeid'])) {//组织树点击查询
-            $dept = Department::find($data['nodeid']);
-            $deptids = $dept->getAllChildDept()->pluck('id')->toArray();
-            $queryBuilder->whereIn('bd_employees.fdept_id', $deptids);
-        }
 //		$curUser = Auth::user();
 //		if(!$curUser->isAdmin()) {
 //			if (SysConfigRepo::isMgtDataIsolate()) {

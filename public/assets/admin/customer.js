@@ -66,7 +66,9 @@ define(function (require, exports, module) {
             select: true,
             paging: true,
             rowId: "id",
-            ajax: '/admin/customer/pagination',
+            ajax: {
+                url : '/admin/customer/pagination'
+            },
             columns: [
                 {'data': 'id'},
                 {'data': 'fname'},

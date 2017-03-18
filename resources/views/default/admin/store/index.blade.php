@@ -45,7 +45,7 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <div id="tree"></div>
+                        <div id="tree" tree-type="employee-tree"></div>
                     </div>
                 </div>
             </div>
@@ -78,7 +78,30 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-
+                        <div class="panel panel-default filter" filter-table="#moduleTable">
+                            <form class="layui-form">
+                                <div class="box-body">
+                                    <div class="layui-form-item">
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">门店名称</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" class="layui-input filter-condition" filter-name="ffullname" filter-operator="like" />
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">负责人</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" class="layui-input filter-condition" filter-name="fcontracts" filter-operator="like" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box-footer" style="text-align: center">
+                                    <button type="button" class="btn btn-info filter-submit">查询</button> &nbsp;&nbsp;&nbsp;
+                                    <button type="button" class="btn btn-default filter-reset">重置</button>
+                                </div>
+                            </form>
+                        </div>
                         <table id="moduleTable" class="table table-bordered table-hover">
                             <thead>
                             <tr>
@@ -165,41 +188,6 @@
                                         </div>
                                     </div>
 
-                                    {{--<div class="layui-form-item">--}}
-                                        {{--<label class="layui-form-label">省份</label>--}}
-                                        {{--<div class="layui-input-block">--}}
-                                            {{--<select id="province_id" name="fprovince" lay-filter="fprovince">--}}
-                                                {{--@foreach($citys as $c)--}}
-                                                    {{--<option text="{{$c->Name}}" value="{{$c->id}}">{{$c->Name}}</option>--}}
-                                                {{--@endforeach--}}
-                                            {{--</select>--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
-
-                                    {{--<div class="layui-form-item">--}}
-                                        {{--<label class="layui-form-label">城市</label>--}}
-                                        {{--<div class="layui-input-block">--}}
-                                            {{--<select  id="city_id" name="fcity" lay-filter="fcity">--}}
-                                                {{--<option>未选择</option>--}}
-                                            {{--</select>--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
-
-                                    {{--<div class="layui-form-item">--}}
-                                        {{--<label class="layui-form-label">县/区</label>--}}
-                                        {{--<div class="layui-input-block">--}}
-                                            {{--<select  id="country_id" name="fcountry" lay-filter="fcountry">--}}
-                                                {{--<option>未选择</option>--}}
-                                            {{--</select>--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
-
-                                    {{--<div class="layui-form-item">--}}
-                                        {{--<label class="layui-form-label col-sm-3">街道/乡/镇</label>--}}
-                                        {{--<div class="layui-input-block">--}}
-                                            {{--<input type="text" name="fstreet" required lay-verify="required" autocomplete="off" class="layui-input">--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
                                     <div class="layui-form-item">
                                         <label class="layui-form-label col-sm-3">客户详址</label>
                                         <div class="layui-input-block">

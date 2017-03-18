@@ -21,10 +21,10 @@ define(function(require, exports, module) {
                         levels: 99,
                         data: data,
                         onNodeSelected: function(event, data) {
-                            table.ajax.reload();
+                            treeNodeSelect(treeId,table);
                         },
                         onNodeUnselected: function(event, data) {
-                            table.ajax.reload();
+                            treeNodeSelect(treeId,table);
                         },
                     });
                 },
@@ -76,12 +76,6 @@ define(function(require, exports, module) {
             rowId: "id",
             ajax: {
                 url : '/admin/employee/pagination',
-                data : function (data) {
-                    var selectedNode = $('#'+treeId).treeview('getSelected');
-                    if(selectedNode) {
-                        data['nodeid'] = selectedNode.length > 0 ? selectedNode[0]['dataid'] : '';
-                    }
-                }
             },
             columns: [
                 {"data": "id"},

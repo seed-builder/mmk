@@ -45,7 +45,9 @@ define(function (require, exports, module) {
             select: true,
             paging: true,
             rowId: "id",
-            ajax: '/admin/material/pagination',
+            ajax: {
+                url : '/admin/material/pagination'
+            },
             columns: [
                 {'data': 'id'},
                 {'data': 'fnumber'},

@@ -50,13 +50,6 @@ define(function (require, exports, module) {
             rowId: "id",
             ajax: {
                 url : '/admin/store/pagination',
-                data : function (data) {
-                    var treeNode = $('#'+treeId).treeview('getSelected');
-                    if (treeNode.length>0){
-                        data['nodeid'] = treeNode[0].dataid;
-                    }
-
-                }
             },
             columns: [
                 {"data": "id"},
@@ -198,12 +191,12 @@ define(function (require, exports, module) {
                         onNodeSelected: function (event, data) {
                             addEnable();
                             editEnable();
-                            table.ajax.reload();
+                            treeNodeSelect(treeId,table);
                         },
                         onNodeUnselected: function (event, data) {
                             editEnable();
                             addEnable();
-                            table.ajax.reload();
+                            treeNodeSelect(treeId,table);
                         },
                         onSearchComplete: function (event, data) {
                             if (JSON.stringify(data) != "{}") {
