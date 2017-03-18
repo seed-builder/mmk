@@ -22,13 +22,13 @@ define(function(require, exports, module) {
                         levels: 99,
                         data: data,
                         onNodeSelected: function(event, data) {
-							table.ajax.reload();
+							treeNodeSelect(treeId,table)
 							storeTable.ajax.reload();
                             button_enable();
 
                         },
                         onNodeUnselected: function(event, data) {
-                            table.ajax.reload();
+                            treeNodeUnSelect(treeId,table)
                             storeTable.ajax.reload();
                             button_enable();
                         },
@@ -80,10 +80,6 @@ define(function(require, exports, module) {
             rowId: "id",
             ajax: {
             	url : '/admin/visit_line_calendar/pagination',
-				data : function (data) {
-                    var selectedNode = $('#'+treeId).treeview('getSelected');
-                    data['nodeid'] = selectedNode.length>0?selectedNode[0]['dataid']:'';
-                }
 			},
             columns: [
 				{"data": "id"},
@@ -174,43 +170,6 @@ define(function(require, exports, module) {
             button_enable();
             storeTable.ajax.reload();
         }
-
-        // function checkBtn(e, dt, type, indexes) {
-        //     var count = table.rows( { selected: true } ).count();
-        //     table.buttons( ['.edit', '.delete'] ).enable(count > 0);
-        // }
-
-//         var storeEditor = new $.fn.dataTable.Editor({
-//             ajax: {
-//                 create: {
-//                     type: 'POST',
-//                     url: '/admin/visit_store_calendar',
-//                     data: {_token: $('meta[name="_token"]').attr('content')},
-//                 },
-//                 edit: {
-//                     type: 'PUT',
-//                     url: '/admin/visit_store_calendar/_id_',
-//                     data: {_token: $('meta[name="_token"]').attr('content')},
-//                 },
-//                 remove: {
-//                     type: 'DELETE',
-//                     url: '/admin/visit_store_calendar/_id_',
-//                     data: {_token: $('meta[name="_token"]').attr('content')},
-//                 }
-//             },
-//             table: "#" + tableId,
-//             idSrc: 'id',
-// //            fields: [
-// //                {'label': '线路名称', 'name': 'fname',},
-// //                {'label': '线路代码', 'name': 'fnumber',},
-// //                {
-// //                	'label': '所属组织',
-// //                	'name': 'forg_id',
-// //                	'type': 'select',
-// //                    'options': orgs
-// //                },
-// //            ]
-//         });
 
         var storeTable = $("#" + storeTableId).DataTable({
             dom: "Bfrtip",

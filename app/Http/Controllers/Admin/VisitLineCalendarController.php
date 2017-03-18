@@ -23,7 +23,8 @@ class VisitLineCalendarController extends AdminController
 
     public function index()
     {
-        return view('admin.visit_line_calendar.index');
+        $lines = VisitLine::all();
+        return view('admin.visit_line_calendar.index',compact('lines'));
     }
 
 	/**
@@ -40,18 +41,10 @@ class VisitLineCalendarController extends AdminController
 
         $data = $request->all();
 
-        return parent::pagination($request, $searchCols, $with, function ($queryBuilder) use ($data) {
-            if (!empty($data['nodeid'])) {//组织树点击查询
-                $emp = Employee::find($data['nodeid']);
-
-                if (empty($emp)) {
-                    $dept = Department::find($data['nodeid']);
-                    $emp_ids = $dept->getAllEmployeeByDept()->pluck('id')->toArray();
-
-                    $queryBuilder->whereIn('femp_id', $emp_ids);
-                } else {
-                    $queryBuilder->where('femp_id', $data['nodeid']);
-                }
+        return parent::pagination($request, $searchCols, $with, function ($queryBuilder) use ($data,$request) {
+            $tree = $request->input('tree',[]);
+            if (!empty($tree)){
+                $this->tree($queryBuilder,$tree,false);
             }
 
             $ids = $this->getCurUsersEmployeeIds();

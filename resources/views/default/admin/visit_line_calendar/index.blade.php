@@ -42,7 +42,7 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <div id="tree"></div>
+                        <div id="tree" tree-type="employee-tree"></div>
                     </div>
                 </div>
             </div>
@@ -58,7 +58,41 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-
+                        <div class="panel panel-default filter" filter-table="#moduleTable">
+                            <form class="layui-form">
+                                <div class="box-body">
+                                    <div class="layui-form-item">
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">开始时间</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" class="layui-input filter-condition" filter-name="fdate" filter-operator=">=" onclick="layui.laydate({elem: this})">
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">结束时间</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" class="layui-input filter-condition" filter-name="fdate" filter-operator="<=" onclick="layui.laydate({elem: this})">
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">线路名称</label>
+                                            <div class="layui-input-inline">
+                                                <select class="layui-input filter-condition" filter-name="fline_id">
+                                                    <option value="">--请选择--</option>
+                                                    @foreach($lines as $l)
+                                                        <option value="{{$l->id}}">{{$l->fname}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box-footer" style="text-align: center">
+                                    <button type="button" class="btn btn-info filter-submit">查询</button> &nbsp;&nbsp;&nbsp;
+                                    <button type="button" class="btn btn-default filter-reset">重置</button>
+                                </div>
+                            </form>
+                        </div>
                         <table id="moduleTable" class="table table-bordered table-hover">
                             <thead>
                             <tr>
