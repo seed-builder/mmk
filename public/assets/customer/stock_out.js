@@ -6,6 +6,15 @@ define(function (require, exports, module) {
     var zhCN = require('datatableZh');
     var editorCN = require('i18n');
     exports.index = function ($, tableId,itemTableId,customers,stores,materials) {
+
+        var tableEditCn = $.extend(editorCN, {
+            create:{
+                title: '新增出库'
+            },
+            edit: {
+                title: '出库编辑'
+            },
+        });
         var editor = new $.fn.dataTable.Editor({
             ajax: {
                 create: {
@@ -24,7 +33,7 @@ define(function (require, exports, module) {
                     data: {_token: $('meta[name="_token"]').attr('content')},
                 }
             },
-            i18n: editorCN,
+            i18n: tableEditCn,
             table: "#" + tableId,
             idSrc: 'id',
             fields: [
@@ -35,18 +44,18 @@ define(function (require, exports, module) {
                     type:  'datetime',
                     def:   function () { return new Date(); }
                 },
-                {
-                    label: '到货确认日期:',
-                    name:  'frec_date',
-                    type:  'datetime',
-                    def:   function () { return new Date(); }
-                },
-                {
-                    label: '预计到货日期:',
-                    name:  'fneed_rec_date',
-                    type:  'datetime',
-                    def:   function () { return new Date(); }
-                },
+                // {
+                //     label: '到货确认日期:',
+                //     name:  'frec_date',
+                //     type:  'datetime',
+                //     def:   function () { return new Date(); }
+                // },
+                // {
+                //     label: '预计到货日期:',
+                //     name:  'fneed_rec_date',
+                //     type:  'datetime',
+                //     def:   function () { return new Date(); }
+                // },
                 {'label': '来源单号', 'name': 'fsbill_no',},
                 { 'label': '经销商', 'name': 'fcust_id', 'type': 'select', 'options': customers },
             ]
@@ -74,8 +83,8 @@ define(function (require, exports, module) {
                     }
                 },
                 {'data': 'fdate'},
-                {'data': 'frec_date'},
-                {'data': 'fneed_rec_date'},
+                // {'data': 'frec_date'},
+                // {'data': 'fneed_rec_date'},
                 {'data': 'fsbill_no'},
                 {
                     'data': 'fuser_id',
@@ -133,6 +142,14 @@ define(function (require, exports, module) {
             itemTable.ajax.reload();
         }
 
+        var itemEditCn = $.extend(editorCN, {
+            create:{
+                title: '新增出库明细'
+            },
+            edit: {
+                title: '出库明细编辑'
+            },
+        });
         var itemEditor = new $.fn.dataTable.Editor({
             ajax: {
                 create: {
@@ -151,7 +168,7 @@ define(function (require, exports, module) {
                     data: {_token: $('meta[name="_token"]').attr('content')},
                 }
             },
-            i18n: editorCN,
+            i18n: itemEditCn,
             table: "#" + itemTableId,
             idSrc: 'id',
             fields: [
@@ -168,6 +185,9 @@ define(function (require, exports, module) {
             ]
         });
 
+        var itemTableCn = $.extend(zhCN, {
+            'sZeroRecords': '您未添加任何出库明细！'
+        })
         var itemTable = $("#" + itemTableId).DataTable({
             dom: "lBfrtip",
             language: zhCN,

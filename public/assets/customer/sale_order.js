@@ -133,9 +133,9 @@ define(function (require, exports, module) {
                         })
                     }
                 },
-                {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: orderEditor},
-                {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: orderEditor},
-                {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: orderEditor},
+                // {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: orderEditor},
+                // {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: orderEditor},
+                // {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: orderEditor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
                 {extend: 'colvis', text: '列显示'}
@@ -283,9 +283,9 @@ define(function (require, exports, module) {
                         })
                     }
                 },
-                {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: infoEditor, enabled: false},
-                {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: infoEditor, enabled: false},
-                {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: infoEditor, enabled: false},
+                // {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: infoEditor, enabled: false},
+                // {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: infoEditor, enabled: false},
+                // {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: infoEditor, enabled: false},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
                 {extend: 'colvis', text: '列显示'}
