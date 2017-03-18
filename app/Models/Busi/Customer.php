@@ -109,6 +109,7 @@ class Customer extends Authenticatable
 				'st_stocks.fhqty',
 				'st_stocks.feqty',
 				'st_stocks.fsale_hqty',
+				'st_stocks.fdocument_status',
 			]);
 	}
 

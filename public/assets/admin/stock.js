@@ -123,6 +123,12 @@ define(function (require, exports, module) {
                 {'data': 'fhqty'},
                 {'data': 'feqty'},
                 {'data': 'fsale_hqty'},
+                {
+                    "data": "fdocument_status",
+                    render: function ( data, type, full ) {
+                        return document_status(data);
+                    }
+                },
             ],
             columnDefs: [
                 {
@@ -139,17 +145,27 @@ define(function (require, exports, module) {
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
-                {extend: 'colvis', text: '列显示'}
+                {extend: 'colvis', text: '列显示'},
+                { text: '审核<i class="fa fa-fw fa-paperclip"></i>',className: 'check', enabled: false },
+                { text: '反审核<i class="fa fa-fw fa-unlink"></i>',className: 'uncheck', enabled: false },
             ]
         });
 
-        // table.on( 'select', checkBtn).on( 'deselect', checkBtn);
-        //
-        // function checkBtn(e, dt, type, indexes) {
-        //     var count = table.rows( { selected: true } ).count();
-        //     table.buttons( ['.edit', '.delete'] ).enable(count > 0);
-        // }
+        table.on( 'select', rowSelect).on( 'deselect', rowSelect);
 
+
+        function rowSelect() {
+            checkEditEnabble(table,['.edit','.check'],['.uncheck']);
+        }
+
+        //审核
+        $(".check").on('click',function () {
+            dataCheck(table,'/admin/stock/check');
+        })
+
+        $(".uncheck").on('click',function () {
+            dataCheck(table,'/admin/stock/uncheck');
+        })
     }
 
 });

@@ -48,7 +48,7 @@
                                 <th>箱数量</th>
                                 <th>瓶数量</th>
                                 <th>建议销售数量(箱)</th>
-
+                                <th>审核状态</th>
                             </tr>
                             </thead>
                         </table>
