@@ -22,15 +22,15 @@ define(function (require, exports, module) {
                         data: data,
                         onNodeSelected: function (event, data) {
                             makeLineEnable();
-                            table.ajax.reload();
-                            childTable.ajax.reload();
+                            treeNodeSelect(treeId,table);
+                            treeNodeSelect(treeId,childTable);
 
                         },
                         onNodeUnselected: function (event, data) {
                             //table.buttons( ['.makeAllLine'] ).enable(false);
                             makeLineEnable();
-                            table.ajax.reload();
-                            childTable.ajax.reload();
+                            treeNodeUnSelect(treeId,table);
+                            treeNodeUnSelect(treeId,childTable);
                         },
                     });
                 },
@@ -91,11 +91,8 @@ define(function (require, exports, module) {
             rowId: "id",
             ajax: {
                 url: '/admin/visit-line-store/pagination',
-                data: function (data) {
-                    var selectedNode = $('#' + treeId).treeview('getSelected');
-                    data['nodeid'] = selectedNode.length > 0 ? selectedNode[0]['dataid'] : '';
-                    data['distinct'] = ['fline_id', 'femp_id']
-
+                data: {
+                    distinct:['fline_id', 'femp_id']
                 }
             },
             columns: [
@@ -288,12 +285,7 @@ define(function (require, exports, module) {
             rowId: "id",
             ajax: {
                 url: '/admin/visit-line-store/pagination',
-                data: function (data) {
-                    if (table.rows('.selected').data()[0] == null) {
-                        var selectedNode = $('#' + treeId).treeview('getSelected');
-                        data['nodeid'] = selectedNode.length > 0 ? selectedNode[0]['dataid'] : '';
-                    }
-                }
+
             },
             columns: [
                 {"data": "id"},

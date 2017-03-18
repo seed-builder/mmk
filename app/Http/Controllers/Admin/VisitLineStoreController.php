@@ -83,17 +83,17 @@ class VisitLineStoreController extends AdminController
         $data = $request->all();
         $with = ['line','store','employee.department'];
 
-        return parent::pagination($request, $searchCols, $with, function ($queryBuilder) use ($data) {
-            if (!empty($data['nodeid'])) {//组织树点击查询
-                $emp = Employee::find($data['nodeid']);
-
+        return parent::pagination($request, $searchCols, $with, function ($queryBuilder) use ($data,$request) {
+            $tree = $request->input('tree',[]);
+            if (!empty($tree['nodeid'])) {//组织树点击查询
+                $emp = Employee::find($tree['nodeid']);
                 if (empty($emp)) {
-                    $dept = Department::find($data['nodeid']);
+                    $dept = Department::find($tree['nodeid']);
                     $emp_ids = $dept->getAllEmployeeByDept()->pluck('id')->toArray();
 
                     $queryBuilder->whereIn('femp_id', $emp_ids);
                 } else {
-                    $queryBuilder->where('femp_id', $data['nodeid']);
+                    $queryBuilder->where('femp_id', $tree['nodeid']);
                 }
             }
 
