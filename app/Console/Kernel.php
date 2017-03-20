@@ -69,7 +69,7 @@ class Kernel extends ConsoleKernel
 	    //每天01:00点执行, 检查更新门店每天的签约状态 及 自动审核库存盘点数据；
         $schedule->call(function(){
 			//自动审核库存盘点数据
-	        DB::update('update st_stocks set fdocument_status = ? where fdocument_status=? ', ['C', 'A']);
+	        DB::update('update st_stocks set fdocument_status=?,fcheck_type=?,fcheck_date=?,fchecker=? where fdocument_status=? ', ['C','A',date('Y-m-d H:i:s'),'system','A']);
 
 	        DB::update('update st_stores set fis_signed = ?', [0]);
 	        $now = date('Y-m-d');

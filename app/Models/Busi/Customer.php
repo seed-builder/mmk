@@ -110,6 +110,9 @@ class Customer extends Authenticatable
 				'st_stocks.feqty',
 				'st_stocks.fsale_hqty',
 				'st_stocks.fdocument_status',
+				'st_stocks.fcheck_type',
+				'st_stocks.fcheck_date',
+				'st_stocks.fchecker',
 			]);
 	}
 

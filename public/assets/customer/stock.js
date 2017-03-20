@@ -129,6 +129,25 @@ define(function (require, exports, module) {
                         return document_status(data);
                     }
                 },
+                {
+                    "data": "fcheck_type",
+                    render: function ( data, type, full ) {
+                        var txt = '';
+                        switch (data){
+                            case 'A':
+                                txt = '自动审核';
+                                break;
+                            case 'B':
+                                txt = '手工审核';
+                                break;
+                            default:
+                                break;
+                        }
+                        return txt;
+                    }
+                },
+                {'data': 'fcheck_date'},
+                {'data': 'fchecker'},
             ],
             columnDefs: [
                 {
