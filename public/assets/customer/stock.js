@@ -132,7 +132,7 @@ define(function (require, exports, module) {
             ],
             columnDefs: [
                 {
-                    "targets": [0],
+                    "targets": [0,1,4,6],
                     "visible": false
                 }
             ],

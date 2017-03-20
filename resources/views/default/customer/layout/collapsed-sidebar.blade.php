@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="/assets/plugins/toastr/toastr.min.css">
 
     <link rel="stylesheet" href="{{url('assets')}}/plugins/layui/css/layui.css">
+    <link rel="stylesheet" href="/css/style.css">
 
     @yield('styles')
     <style>
