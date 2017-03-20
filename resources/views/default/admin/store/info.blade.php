@@ -28,7 +28,7 @@
                     </tr>
                     <tr>
                         <th>拜访周期:</th>
-                        <td>{{$store->line->fname}}</td>
+                        <td>{{$store->line->fname or ''}}</td>
                     </tr>
                     <tr>
                         <th>地址:</th>
@@ -44,11 +44,11 @@
                     </tr>
                     <tr>
                         <th>联系人电话:</th>
-                        <td>{{$store->ftelephone}}</td>
+                        <td>{{$store->ftelephone or ''}}</td>
                     </tr>
                     <tr>
                         <th>渠道分类:</th>
-                        <td>{{$store->channel->fname}}</td>
+                        <td>{{$store->channel->fname or ''}}</td>
                     </tr>
                     <tr>
                         <th>营业执照:</th>
