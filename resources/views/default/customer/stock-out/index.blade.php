@@ -47,6 +47,7 @@
                                 <th>到货确认人</th>
                                 <th>经销商</th>
                                 <th>到货状态</th>
+                                <th>审核状态</th>
                             </tr>
                             </thead>
                         </table>

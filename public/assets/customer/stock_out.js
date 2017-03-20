@@ -116,6 +116,12 @@ define(function (require, exports, module) {
                         }
                     }
                 },
+                {
+                    "data": "fdocument_status",
+                    render: function ( data, type, full ) {
+                        return document_status(data);
+                    }
+                },
 
             ],
             columnDefs: [
@@ -141,8 +147,38 @@ define(function (require, exports, module) {
 
         table.on( 'select', rowSelect).on( 'deselect', rowSelect);
         function rowSelect() {
+            checkEditEnabble(table,['.edit','.check','.buttons-remove'],['.uncheck']);
             itemTable.ajax.reload();
         }
+
+        //审核
+        $(".check").on('click',function () {
+            setTimeout(function () {
+                var rows = itemTable.rows()[0];
+                console.log(rows);
+                if(rows.length > 0)
+                {
+                    dataCheck(table,'/customer/stock-out/check');
+                }else{
+                    layer.msg('您未添加任何出库明细!');
+                }
+            }, 1000);
+        })
+
+        $(".uncheck").on('click',function () {
+            //dataCheck(table,'/customer/stock-out/uncheck');
+            setTimeout(function () {
+                var rows = itemTable.rows()[0];
+                console.log(rows);
+                if(rows.length > 0)
+                {
+                    dataCheck(table,'/customer/stock-out/uncheck');
+                }else{
+                    layer.msg('您未添加任何出库明细!');
+                }
+            }, 1000);
+        })
+
 
         var itemEditCn = $.extend(editorCN, {
             create:{
