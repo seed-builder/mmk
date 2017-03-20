@@ -154,7 +154,7 @@ define(function (require, exports, module) {
         table.on( 'select', rowSelect).on( 'deselect', rowSelect);
 
         function rowSelect() {
-            checkEditEnabble(table,['.edit','.check'],['.uncheck']);
+            checkEditEnabble(table,['.edit','.check','.buttons-remove'],['.uncheck']);
         }
 
         //审核

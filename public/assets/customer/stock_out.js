@@ -133,7 +133,9 @@ define(function (require, exports, module) {
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
-                //{extend: 'colvis', text: '列显示'}
+                {extend: 'colvis', text: '列显示'},
+                { text: '审核<i class="fa fa-fw fa-paperclip"></i>',className: 'check', enabled: false },
+                { text: '反审核<i class="fa fa-fw fa-unlink"></i>',className: 'uncheck', enabled: false },
             ]
         });
 
@@ -234,21 +236,16 @@ define(function (require, exports, module) {
                 }
             ],
             buttons: [
-                { text: '新增', action: function () {
-                    $('#stockFormDialog').modal('show');
-
-                }  },
-                { text: '编辑', className: 'edit', enabled: false,  action: function () {
-                    $('#stockFormDialog').modal('show');
-                    //table.rows('.selected').data()
-                } },
+                { text: '新增', action: function () { $('#stockFormDialog').modal('show'); } },
+                { text: '编辑', className: 'edit', enabled: false,  action: function () { $('#stockFormDialog').modal('show'); } },
                 // { text: '删除', className: 'delete', enabled: false },
                 // {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: itemEditor},
                 // {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: itemEditor},
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: itemEditor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
-                {extend: 'colvis', text: '列显示'}
+                {extend: 'colvis', text: '列显示'},
+
             ]
         });
 
