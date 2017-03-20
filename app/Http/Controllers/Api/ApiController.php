@@ -6,8 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\Builder;
 use App\Services\LogSvr;
+use Illuminate\Support\Facades\Validator;
 
- abstract class  ApiController extends Controller
+abstract class  ApiController extends Controller
 {
     //
     public function __construct()
@@ -66,7 +67,11 @@ use App\Services\LogSvr;
         //
         $data = $request->all();
         unset($data['_sign']);
-        $entity = $this->newEntity($data);
+	    $fieldErrors = $this->validateFields($data);
+	    if (!empty($fieldErrors)) {
+		    return response($fieldErrors, 400);
+	    }
+	    $entity = $this->newEntity($data);
         //$entity = Entity::create($data);
         $re = $entity->save();
 	    //LogSvr::Sync()->info('ModelCreated : '.json_encode($entity));
@@ -127,5 +132,28 @@ use App\Services\LogSvr;
         $status = $re ? 200 : 401;
         return response(['success' => $re], $status);
     }
+
+	 protected function validateFields($data)
+	 {
+		 $fieldErrors = [];
+		 $entity = $this->newEntity();
+		 if (isset($entity->validateRules)) {
+		 	$rules = [];
+		 	foreach ($data as $k => $v){
+		 		if(array_key_exists($k, $entity->validateRules)){
+		 			$rules[$k] = $entity->validateRules[$k];
+			    }
+		    }
+			 $validator = Validator::make($data, $rules);
+			 if ($validator->fails()) {
+				 $errors = $validator->errors();
+				 $keys = $errors->keys();
+				 foreach ($keys as $k) {
+					 $fieldErrors[] = ['name' => $k, 'status' => $errors->first($k)];
+				 }
+			 }
+		 }
+		 return $fieldErrors;
+	 }
 
 }

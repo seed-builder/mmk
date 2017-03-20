@@ -66,7 +66,7 @@ class Store extends BaseModel
     public $validateRules=[
     		'ffullname' => 'required',
     		'fcontracts' => 'required',
-    		'ftelephone' => 'required',
+    		'ftelephone' => 'required|unique:st_stores',
     		'faddress' => 'required',
     		'fpostalcode' => 'required',
     ];
