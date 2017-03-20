@@ -18,7 +18,7 @@ class CreateTableBdNotices extends Migration
             $table->char('ftype')->default('A')->comment('类型（A-针对所有客户，B-针对特定客户）');
             $table->integer('fcustomer_id')->nullable()->comment('客户id');
             $table->string('ftitle')->comment('标题');
-			$table->text('fcontent')->default('')->comment('内容');
+			$table->text('fcontent')->nullable()->comment('内容');
 
 	        $table->integer('fcreator_id')->default(0)->comment('创建人');
 	        $table->timestamp('fcreate_date')->nullable()->comment('创建时间');
