@@ -101,4 +101,27 @@ class StockController extends BaseController
 			'data' => $entitys
 		]);
 	}
+
+	/*
+     * 反审核
+     */
+	public function unCheck(Request $request){
+		$data = $request->all();
+		$ids = explode(",",$data['ids']);
+		$entitys = $this->newEntity()->newQuery()->whereIn('id',$ids)->get();
+
+		foreach ($entitys as $entity){
+			$entity->fdocument_status="A";
+			$entity->fcheck_type="B";
+			$entity->fcheck_date=date('Y-m-d H:i:s');
+			$entity->fchecker=Auth::user()->fname;
+			$entity->save();
+		}
+
+		return response()->json([
+			'code' => 200,
+			'result' => '反审核成功！',
+			'data' => $entitys
+		]);
+	}
 }
