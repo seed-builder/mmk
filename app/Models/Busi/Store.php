@@ -160,6 +160,7 @@ class Store extends BaseModel
 		    });
 		    VisitLineStore::destroy($ids);
 	    });
-	    //parent::boot();
+
+	    parent::boot();
     }
 }
