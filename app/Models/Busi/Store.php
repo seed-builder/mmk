@@ -68,7 +68,7 @@ class Store extends BaseModel
     		'fcontracts' => 'required',
     		'ftelephone' => 'required|unique:st_stores',
     		'faddress' => 'required',
-    		'fpostalcode' => 'required',
+    		//'fpostalcode' => 'required',
     ];
 
     public function customer(){
