@@ -36,8 +36,8 @@
                         <table id="moduleTable" class="table table-bordered table-hover">
                             <thead>
                             <tr>
-                                <th>经销商Id</th>
-                                <th>经销商</th>
+                                {{--<th>经销商Id</th>--}}
+                                {{--<th>经销商</th>--}}
                                 <th>物料编码</th>
                                 <th>物料名称</th>
                                 <th>规格型号</th>
