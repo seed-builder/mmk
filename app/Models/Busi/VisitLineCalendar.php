@@ -77,5 +77,33 @@ class VisitLineCalendar extends BaseModel
 
     }
 
+    public function makeLineStoreCalendar($femp_id,$fline_id,$fstore_id,$fdate){
+        //删除原有数据
+        $model = new VisitStoreCalendar();
+
+        $model->where('femp_id', $femp_id)
+            ->where('fdate', $fdate)
+            ->where('fstore_id', $fstore_id)
+            ->delete();
+
+        $line_calendar = VisitLineCalendar::query()
+            ->where('femp_id', $femp_id)
+            ->where('fdate', $fdate)
+            ->where('fline_id', $fline_id)
+            ->first();
+
+        if (!empty($line_calendar)){
+            $model->makeCalendar($femp_id,$fstore_id,$line_calendar->id,$fdate);
+        }else{
+            $vlc = VisitLineCalendar::create([
+                'fdate' => $fdate,
+                'femp_id' => $femp_id,
+                'fline_id' => $fline_id,
+            ]);
+
+            $model->makeCalendar($femp_id,$fstore_id,$vlc->id,$fdate);
+        }
+    }
+
 
 }
