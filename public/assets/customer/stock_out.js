@@ -272,8 +272,32 @@ define(function (require, exports, module) {
                 }
             ],
             buttons: [
-                { text: '新增', action: function () { $('#stockFormDialog').modal('show'); } },
-                { text: '编辑', className: 'edit', enabled: false,  action: function () { $('#stockFormDialog').modal('show'); } },
+                { text: '新增', action: function () {
+                        $('#sureForm').get(0).reset();
+                        $('#sureForm').bootstrapValidator('resetForm');
+                        var detailrows = infoTable.rows('.selected').data();
+                        var detail = detailrows.length > 0 ? detailrows[0] : null;
+                        if (detail) {
+                            $('#id', '#sureForm').val(detail.id);
+                            $('#material', '#sureForm').val(detail.material.fname);
+                            $('#order_no', '#sureForm').val(detail.order.fbill_no);
+                            //$('#unit', '#sureForm').val(detail.id);
+                            addOptions(document.getElementById('unit'),
+                                [
+                                    {text: detail.material.fsale_unit, value: 'sale_unit'},
+                                    {text: detail.material.fbase_unit, value: 'base_unit'}
+                                ]
+                            );
+                            $('#sureForm').attr('')
+                            $('#sureFormDialog').modal('show');
+                        }
+                        $('#stockFormDialog').modal('show');
+                    }
+                },
+                { text: '编辑', className: 'edit', enabled: false,  action: function () {
+                        $('#stockFormDialog').modal('show');
+                    }
+                },
                 // { text: '删除', className: 'delete', enabled: false },
                 // {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: itemEditor},
                 // {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: itemEditor},
