@@ -42,7 +42,7 @@ $user = Auth::user();
                         <li><a href="{{url('/customer/store')}}"><i class="fa fa-fw fa-home"></i>我的门店</a></li>
                         <li><a href="{{url('/customer/sale-order')}}"><i class="fa fa-fw fa-reorder"></i>门店订单</a></li>
                         <li><a href="{{url('/customer/stock')}}"><i class="fa fa-fw fa-cubes"></i>门店库存</a></li>
-                        <li><a href=""><i class="fa fa-fw fa-inbox"></i>门店出库</a></li>
+                        <li><a href=""><i class="fa fa-fw fa-truck"></i>门店出库</a></li>
                     </ul>
                 </li>
                 <li class="treeview active">
@@ -56,7 +56,7 @@ $user = Auth::user();
                     <ul class="treeview-menu">
                         <li><a href="{{url('/customer/stock-in')}}"><i class="fa fa-fw fa-indent"></i>入库管理</a></li>
                         <li><a href="{{url('/customer/stock-out')}}"><i class="fa fa-fw fa-truck"></i>出库管理</a></li>
-                        <li><a href="{{url('/customer/view-customer-stock-statistic')}}"><i class="fa fa-fw fa-table"></i>我的库存</a></li>
+                        <li><a href="{{url('/customer/view-customer-stock-statistic')}}"><i class="fa fa-fw fa-cubes"></i>我的库存</a></li>
                         <li><a href="{{url('/customer/display-policy')}}"><i class="fa fa-fw fa-folder"></i>费用政策</a></li>
                     </ul>
                 </li>

@@ -15,8 +15,6 @@ define(function(require, exports, module) {
             rowId: "id",
             ajax: '/customer/view-customer-stock-statistic/pagination',
             columns: [
-                // {  'data': 'cust_id' },
-                // {  'data': 'cust_name' },
                 {  'data': 'material_number' },
                 {  'data': 'material_name' },
                 {  'data': 'material_specification' },
