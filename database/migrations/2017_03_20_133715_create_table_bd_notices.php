@@ -13,9 +13,9 @@ class CreateTableBdNotices extends Migration
      */
     public function up()
     {
-        Schema::create('bd_notices', function (Blueprint $table) {
+        Schema::create('bd_messages', function (Blueprint $table) {
             $table->increments('id');
-            $table->char('ftype')->default('A')->comment('类型（A-针对所有客户，B-针对特定客户）');
+            $table->char('')->default('A')->comment('类型（A-针对所有客户，B-针对特定客户）');
             $table->integer('fcustomer_id')->nullable()->comment('客户id');
             $table->string('ftitle')->comment('标题');
 			$table->text('fcontent')->nullable()->comment('内容');
@@ -35,6 +35,6 @@ class CreateTableBdNotices extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bd_notices');
+        Schema::dropIfExists('bd_messages');
     }
 }

@@ -408,6 +408,16 @@ $(".filter-reset").on('click',function () {
     filter_reset($(this));
 })
 
+function addOptions(select, options) {
+    select.options.length=0;
+    for(var i=0; i < options.length; i++) {
+        var op = document.createElement("option");      // 新建OPTION (op)
+        op.setAttribute("value", options[i].value);          // 设置OPTION的 VALUE
+        op.appendChild(document.createTextNode(options[i].text)); // 设置OPTION的 TEXT
+        select.appendChild(op);           // 为SELECT 新建一 OPTION(op)
+    }
+}
+
 
 /*
  * layui

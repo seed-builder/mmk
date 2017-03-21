@@ -1,6 +1,7 @@
 @extends('customer.layout.collapsed-sidebar')
 @section('styles')
     @include('customer.layout.datatable-css')
+    <link rel="stylesheet" href="/assets/plugins/bootstrap-validator/css/bootstrapValidator.min.css" />
 @endsection
 
 @section('content')
@@ -91,7 +92,7 @@
         <!-- /.row -->
     </section>
 
-    <div class="modal fade" tabindex="-1" role="dialog" id="stockFormDialog">
+    <div class="modal fade" tabindex="-1" role="dialog" id="stockItemFormDialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -99,10 +100,11 @@
                             aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h4 class="modal-title">新增出库明细</h4>
+                    <h4 class="modal-title" id="stockItemFormDialogTitle">出库明细</h4>
                 </div>
-                <form class="form-horizontal" id="stockForm" action="{{url('/customer/stock-out-item')}}" method="post">
+                <form class="form-horizontal" id="stockItemForm" action="{{url('/customer/stock-out-item')}}" method="post">
                     {!! csrf_field() !!}
+                    <input type="hidden" id="id" name="id" value="" />
                     <input type="hidden" id="fstock_out_id" name="fstock_out_id" value="" />
                     <div class="modal-body">
                         <div class="box-body">
@@ -112,7 +114,7 @@
                                     <select class="form-control" name="fmaterial_id" id="fmaterial_id">
                                         <option value="">--请选择--</option>
                                         @forelse($materials as $material)
-                                            <option value="{{$material->id}}" data-sale-unit="{{$material->fsale_unit}}" data-base-unit="{{$material->fbase_unit}}" data-ratio="{{$material->fratio}}" >{{$material->fname}}</option>
+                                            <option value="{{$material->id}}" data-sale-unit="{{$material->fsale_unit}}" data-base-unit="{{$material->fbase_unit}}" >{{$material->fname}}</option>
                                         @empty
                                         @endforelse
                                     </select>
@@ -121,7 +123,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">单位</label>
                                 <div class="col-sm-10">
-                                    <select class="form-control" name="readonly_unit" id="unit">
+                                    <select class="form-control" name="unit" id="unit">
                                         <option value="">--请选择--</option>
                                     </select>
                                 </div>
@@ -149,6 +151,8 @@
 @endsection
 @section('js')
     @include('customer.layout.datatable-js')
+    <script src="/assets/plugins/bootstrap-validator/js/bootstrapValidator.min.js"></script>
+    <script src="/assets/plugins/bootstrap-validator/js/language/zh_CN.js"></script>
     <script type="text/javascript">
         var customers = {!! json_encode($customers) !!}
         var stores = {!! json_encode($stores) !!}

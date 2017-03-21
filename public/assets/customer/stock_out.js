@@ -9,10 +9,14 @@ define(function (require, exports, module) {
 
         var tableEditCn = $.extend(editorCN, {
             create:{
-                title: '新增出库'
+                title: '新增出库',
+                button: "新建",
+                submit: "提交"
             },
             edit: {
-                title: '出库编辑'
+                title: '出库编辑',
+                button: "保存",
+                submit: "提交"
             },
         });
         var editor = new $.fn.dataTable.Editor({
@@ -44,20 +48,15 @@ define(function (require, exports, module) {
                     type:  'datetime',
                     def:   function () { return new Date(); }
                 },
-                // {
-                //     label: '到货确认日期:',
-                //     name:  'frec_date',
-                //     type:  'datetime',
-                //     def:   function () { return new Date(); }
-                // },
-                // {
-                //     label: '预计到货日期:',
-                //     name:  'fneed_rec_date',
-                //     type:  'datetime',
-                //     def:   function () { return new Date(); }
-                // },
-                {'label': '来源单号', 'name': 'fsbill_no',},
+                { 'label': '出库类型', 'name': 'ftype', 'type': 'select', 'options': [
+                    {label: '自动出库', value: 'A'},
+                    {label: '经销出库', value: 'B'},
+                    {label: '库存调整', value: 'C'}
+                    ] ,
+                    def: 'B'
+                },
                 { 'label': '经销商', 'name': 'fcust_id', 'type': 'select', 'options': customers },
+                {'label': '来源单号', 'name': 'fsbill_no', 'type':'readonly'},
             ]
         });
 
@@ -148,6 +147,8 @@ define(function (require, exports, module) {
         table.on( 'select', rowSelect).on( 'deselect', rowSelect);
         function rowSelect() {
             checkEditEnabble(table,['.edit','.check','.buttons-remove'],['.uncheck']);
+            var count = table.rows({selected: true}).count();
+            itemTable.buttons(['.item-add']).enable(count>0);
             itemTable.ajax.reload();
         }
 
@@ -182,10 +183,14 @@ define(function (require, exports, module) {
 
         var itemEditCn = $.extend(editorCN, {
             create:{
-                title: '新增出库明细'
+                title: '新增出库明细',
+                button: "保存",
+                submit: "提交"
             },
             edit: {
-                title: '出库明细编辑'
+                title: '出库明细编辑',
+                button: "保存",
+                submit: "提交"
             },
         });
         var itemEditor = new $.fn.dataTable.Editor({
@@ -225,7 +230,7 @@ define(function (require, exports, module) {
 
         var itemTableCn = $.extend(zhCN, {
             'sZeroRecords': '您未添加任何出库明细！'
-        })
+        });
         var itemTable = $("#" + itemTableId).DataTable({
             dom: "lBfrtip",
             language: zhCN,
@@ -272,30 +277,41 @@ define(function (require, exports, module) {
                 }
             ],
             buttons: [
-                { text: '新增', action: function () {
-                        $('#sureForm').get(0).reset();
-                        $('#sureForm').bootstrapValidator('resetForm');
-                        var detailrows = infoTable.rows('.selected').data();
-                        var detail = detailrows.length > 0 ? detailrows[0] : null;
-                        if (detail) {
-                            $('#id', '#sureForm').val(detail.id);
-                            $('#material', '#sureForm').val(detail.material.fname);
-                            $('#order_no', '#sureForm').val(detail.order.fbill_no);
-                            //$('#unit', '#sureForm').val(detail.id);
-                            addOptions(document.getElementById('unit'),
-                                [
-                                    {text: detail.material.fsale_unit, value: 'sale_unit'},
-                                    {text: detail.material.fbase_unit, value: 'base_unit'}
-                                ]
-                            );
-                            $('#sureForm').attr('')
-                            $('#sureFormDialog').modal('show');
+                {
+                    text: '新增',
+                    className: 'item-add',
+                    enabled: false,
+                    action: function () {
+                        $('#stockItemFormDialogTitle').text('新增出库明细');
+                        $('#stockItemForm').get(0).reset();
+                        $('#stockItemForm').bootstrapValidator('resetForm');
+                        var rows = table.rows('.selected').data();
+                        var stock = rows.length > 0 ? rows[0] : null;
+                        if (stock) {
+                            $('#fstock_out_id', '#stockItemForm').val(stock.id);
+                            $('#stockItemFormDialog').modal('show');
                         }
-                        $('#stockFormDialog').modal('show');
                     }
                 },
-                { text: '编辑', className: 'edit', enabled: false,  action: function () {
-                        $('#stockFormDialog').modal('show');
+                { text: '编辑', className: 'item-edit', enabled: false,  action: function () {
+                        $('#stockItemFormDialogTitle').text('编辑出库明细');
+                        $('#stockItemForm').get(0).reset();
+                        $('#stockItemForm').bootstrapValidator('resetForm');
+                        var rows = itemTable.rows('.selected').data();
+                        var stockItem = rows.length > 0 ? rows[0] : null;
+                        if (stockItem) {
+                            $('#id', '#stockItemForm').val(stockItem.id);
+                            $('#fstock_out_id', '#stockItemForm').val(stockItem.fstock_out_id);
+                            $('#fmaterial_id', '#stockItemForm').val(stockItem.fmaterial_id);
+                            $('#fmaterial_id', '#stockItemForm').trigger('change');
+                            var unit = $("#unit", '#stockItemForm').val();
+                            if(unit == 'sale_unit'){
+                                $('#qty', '#stockItemForm').val(stockItem.fqty);
+                            }else{
+                                $('#qty', '#stockItemForm').val(stockItem.fbase_qty);
+                            }
+                            $('#stockItemFormDialog').modal('show');
+                        }
                     }
                 },
                 // { text: '删除', className: 'delete', enabled: false },
@@ -313,9 +329,58 @@ define(function (require, exports, module) {
 
         function checkBtn(e, dt, type, indexes) {
             var count = dt.rows( { selected: true } ).count();
-            dt.buttons( ['.edit'] ).enable(count > 0);
+            dt.buttons( ['.item-edit'] ).enable(count > 0);
+            var stock = table.rows({selected: true}).data()[0];
+            dt.buttons( ['.buttons-remove'] ).enable(stock.fdocument_status == 'A');
         }
 
+        $('#fmaterial_id', '#stockItemForm').on('change', function () {
+            var material = $("#fmaterial_id", '#stockItemForm').find("option:selected");
+            var sale_unit = material.attr('data-sale-unit');
+            var base_unit = material.attr('data-base-unit');
+            addOptions(document.getElementById('unit'),
+                [
+                    {text: sale_unit, value: 'sale_unit'},
+                    {text: base_unit, value: 'base_unit'}
+                ]
+            );
+        })
+
+        $('#stockItemForm').bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                qty: {
+                    validators: {
+                        notEmpty: {},
+                        numeric: {}
+                    }
+                },
+            }
+        }).on('success.form.bv', function (e) {
+            // Prevent form submission
+            e.preventDefault();
+            // Get the form instance
+            var $form = $(e.target);
+            // Get the BootstrapValidator instance
+            var bv = $form.data('bootstrapValidator');
+            // Use Ajax to submit form data
+            //var data = $form.serialize();
+            //console.log(data);
+            $.post($form.attr('action'), $form.serialize(), function (result) {
+                if(result.data)
+                {
+                    layer.msg('保存成功!');
+                    itemTable.ajax.reload();
+                    $('#stockItemFormDialog').modal('hide');
+                }
+            }, 'json');
+        });
+        
     }
 
 });
