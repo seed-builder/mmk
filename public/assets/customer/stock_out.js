@@ -183,10 +183,14 @@ define(function (require, exports, module) {
 
         var itemEditCn = $.extend(editorCN, {
             create:{
-                title: '新增出库明细'
+                title: '新增出库明细',
+                button: "保存",
+                submit: "提交"
             },
             edit: {
-                title: '出库明细编辑'
+                title: '出库明细编辑',
+                button: "保存",
+                submit: "提交"
             },
         });
         var itemEditor = new $.fn.dataTable.Editor({
