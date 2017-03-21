@@ -24,4 +24,6 @@ class SysConfig extends Model
 	//
 	protected $table = 'sys_configs';
 	protected $guarded = ['id'];
+
+    public $filter = "false";
 }
