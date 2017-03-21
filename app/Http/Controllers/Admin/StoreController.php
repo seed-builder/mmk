@@ -199,12 +199,12 @@ class StoreController extends AdminController
             $re = $entity->save();
 
             //生成路线
-            VisitLineStore::create([
-                'fline_id' => $data['fline_id'],
-                'fstore_id' => $entity->id,
-                'femp_id' => $data['femp_id'],
-                'fweek_day' => VisitLine::find($data['fline_id'])->fnumber,
-            ]);
+//            VisitLineStore::create([
+//                'fline_id' => $data['fline_id'],
+//                'fstore_id' => $entity->id,
+//                'femp_id' => $data['femp_id'],
+//                'fweek_day' => VisitLine::find($data['fline_id'])->fnumber,
+//            ]);
 
             $diffday = VisitLine::find($data['fline_id'])->fnumber-date("w");
             $calendar = new VisitLineCalendar();
