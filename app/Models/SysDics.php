@@ -10,7 +10,7 @@ class SysDics extends BaseModel
     //
     protected $table = 'sys_dics';
     protected $guarded = ['id'];
-    protected $filter = "false";
+    public $filter = "false";
     
     public $validateRules=['type' => 'required', 'key' => 'required','value' => 'required'];
 }

@@ -9,7 +9,7 @@ class City extends Model
     //
 	protected $table = 'citys';
 
-	protected $filter = "false";
+    public $filter = "false";
 
 	/**
 	 * 获取邮政编码

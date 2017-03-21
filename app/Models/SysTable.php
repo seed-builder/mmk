@@ -9,5 +9,5 @@ class SysTable extends Model
     //
 	protected $guarded=['id'];
 	protected $dateFormat='Y-m-d H:i:s';
-    protected $filter = "false";
+    public $filter = "false";
 }

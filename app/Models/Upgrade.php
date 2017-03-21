@@ -26,5 +26,5 @@ class Upgrade extends Model
     //
     protected $table='sys_upgrades';
     protected $guarded = ['id'];
-    protected $filter = "false";
+    public $filter = "false";
 }

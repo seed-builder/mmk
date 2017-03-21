@@ -22,5 +22,5 @@ class Dic extends Model
     protected $table = 'sys_dics';
     protected $guarded = ['id'];
 
-    protected $filter = "false";
+    public $filter = "false";
 }
