@@ -225,10 +225,10 @@ class StoreController extends AdminController
         } else {
             $re = Store::query()->where('id', $data['id'])->update($data);
 
-            VisitLineStore::query()->where('fstore_id',$data['id'])->where('femp_id',$data['femp_id'])->update([
-                'fline_id' => $data['fline_id'],
-                'fweek_day' => VisitLine::find($data['fline_id'])->fnumber,
-            ]);
+//            VisitLineStore::query()->where('fstore_id',$data['id'])->where('femp_id',$data['femp_id'])->update([
+//                'fline_id' => $data['fline_id'],
+//                'fweek_day' => VisitLine::find($data['fline_id'])->fnumber,
+//            ]);
 
             $diffday = VisitLine::find($data['fline_id'])->fnumber-date("w");
             $calendar = new VisitLineCalendar();
