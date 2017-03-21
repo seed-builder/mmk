@@ -96,6 +96,15 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label class="control-label col-md-3">事项完成依据</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control" name="fchildren_calculate" id="fchildren_calculate">
+                                            <option value="and">所有子项完成</option>
+                                            <option value="or">任一子项完成</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="control-label col-md-3">拜访功能</label>
                                     <div class="col-md-9">
                                         <select class="form-control" name="ffunction_id" id="ffunction_id">

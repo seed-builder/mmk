@@ -78,7 +78,7 @@ class VisitStoreCalendar extends BaseModel
         ]);
 
         $model = new VisitTodoCalendar();
-        $model->makeCalendar($fdate,$femp_id,$vsc->id);
+        $model->makeCalendar($fdate,$femp_id,$vsc->id,$fstore_id);
     }
 
     public function adminFilter($queryBuilder, $request)
