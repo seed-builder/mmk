@@ -40,10 +40,10 @@ class StoreController extends ApiController
     {
         //
         $data = $request->all();
-	    $fieldErrors = $this->validateFields($data);
-	    if (!empty($fieldErrors)) {
-		    return response($fieldErrors, 400);
-	    }
+//	    $fieldErrors = $this->validateFields($data);
+//	    if (!empty($fieldErrors)) {
+//		    return response($fieldErrors, 400);
+//	    }
         $postalcode = City::getPostalCode($data['fprovince'], $data['fcity'], $data['fcountry']);
         if($postalcode){
             $fn = Store::where('fpostalcode', $postalcode)->max('fnumber');
