@@ -67,10 +67,10 @@ abstract class  ApiController extends Controller
         //
         $data = $request->all();
         unset($data['_sign']);
-	    $fieldErrors = $this->validateFields($data);
-	    if (!empty($fieldErrors)) {
-		    return response($fieldErrors, 400);
-	    }
+//	    $fieldErrors = $this->validateFields($data);
+//	    if (!empty($fieldErrors)) {
+//		    return response($fieldErrors, 400);
+//	    }
 	    $entity = $this->newEntity($data);
         //$entity = Entity::create($data);
         $re = $entity->save();
