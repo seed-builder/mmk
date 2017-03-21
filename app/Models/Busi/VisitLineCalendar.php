@@ -77,6 +77,9 @@ class VisitLineCalendar extends BaseModel
 
     }
 
+    /*
+     * 生成指定门店拜访日历
+     */
     public function makeLineStoreCalendar($femp_id,$fline_id,$fstore_id,$fdate){
         //删除原有数据
         $model = new VisitStoreCalendar();
@@ -105,5 +108,34 @@ class VisitLineCalendar extends BaseModel
         }
     }
 
+    public function adminFilter($queryBuilder, $request)
+    {
+        $data = $request->all();
+        if (!empty($data['tree'])){
+            $emp = Employee::find($data['tree']['nodeid']);
+            if (empty($emp)) {
+                $dept = Department::find($data['tree']['nodeid']);
+                $emp_ids = $dept->getAllEmployeeByDept()->pluck('id')->toArray();
+
+                $queryBuilder->whereIn('femp_id', $emp_ids);
+            } else {
+                $queryBuilder->where('femp_id', $data['tree']['nodeid']);
+            }
+        }
+
+        if (!empty($data['filter'])){
+            foreach ($data['filter'] as $f){
+                $filter_name = $f['name'];
+                if ($filter_name=="femp"&&!empty($f['value'])){
+                    $ids = Employee::query()->where('fname','like','%'.$f['value'].'%')->pluck('id');
+                    $queryBuilder->whereIn('femp_id', $ids);
+                }else{
+                    $queryBuilder=$this->adminFilterQuery($queryBuilder,$f);
+                }
+            }
+        }
+
+        return $queryBuilder;
+    }
 
 }
