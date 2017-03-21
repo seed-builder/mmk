@@ -17,5 +17,5 @@ class ModelMap extends BaseModel
     public $timestamps = false;
     protected $guarded = ['id'];
 
-
+    public $filter = "false";
 }
