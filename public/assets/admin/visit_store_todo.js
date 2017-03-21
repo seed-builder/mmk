@@ -5,109 +5,156 @@ define(function (require, exports, module) {
 
     var zhCN = require('datatableZh');
     var editorCN = require('i18n');
-    exports.index = function ($, tableId,todos,funs) {
-        var editor = new $.fn.dataTable.Editor({
-            ajax: {
-                create: {
-                    type: 'POST',
-                    url: '/admin/visit-store-todo',
-                    data: {_token: $('meta[name="_token"]').attr('content')},
+    exports.index = function ($, treeId,todos,funs) {
+        var curNodeData;
+
+        var getTreeData = function () {
+            $.ajax({
+                url: "/admin/visit-store-todo/todoTree",
+                type: "GET",
+                data: {
+                    'fstore_id' : $("#store-list").val(),
+                    '_token':$('meta[name="_token"]').attr('content')
                 },
-                edit: {
-                    type: 'PUT',
-                    url: '/admin/visit-store-todo/_id_',
-                    data: {_token: $('meta[name="_token"]').attr('content')},
+                dataType:'json',
+                success:function(data){
+                    $("#" + treeId).treeview({
+                        color: "#428bca",
+                        enableLinks: true,
+                        levels: 99,
+                        data: data,
+                        onNodeSelected: function(event, data) {
+                            curNodeData = data;
+
+                            for(var p in data.item){
+                                $('#'+p, '#todoForm').val(data.item[p]);
+                            }
+                        },
+                        onNodeUnselected: function(event, data) {
+                            curNodeData=null;
+                        },
+                    });
                 },
-                remove: {
-                    type: 'DELETE',
-                    url: '/admin/visit-store-todo/_id_',
-                    data: {_token: $('meta[name="_token"]').attr('content')},
-                }
-            },
-            i18n: editorCN,
-            table: "#" + tableId,
-            idSrc: 'id',
-            fields: [
-                {'label': '编号', 'name': 'fnumber',},
-                {'label': '名称', 'name': 'fname',},
-                { 'label': '父级事项', 'name': 'fparent_id', 'type': 'select', 'options': todos},
-                { 'label': '定制功能', 'name': 'ffunction_id', 'type': 'select', 'options': funs},
-                { 'label': '是否必巡', 'name': 'fis_must_visit', 'type': 'select', 'options': [
-                    { label: "是",value: "0" },
-                    { label: "否",value: "1" },
-                ]}
-            ]
+            });
+        }
+
+        $("#store-list").select2({
+            language: 'zh-CN',
+            height : '50px'
+        })
+
+        $('#btnAddChild').click(function () {
+            if ($("#use_template").val()==2){
+                layer.alert('当前为模板，请先保存后在编辑!');
+                return;
+            }
+            if (!curNodeData) {
+                layer.alert('请先选择一个事项!');
+                return;
+            }
+            // $('#todoForm')[0].reset();
+            $("#fname").val('')
+            $('#id').val(0);
+            $('#fparent_id').val(curNodeData['dataid']);
         });
 
-        var table = $("#" + tableId).DataTable({
-            dom: "lBfrtip",
-            language: zhCN,
-            processing: true,
-            serverSide: true,
-            select: true,
-            paging: true,
-            rowId: "id",
-            ajax: '/admin/visit-store-todo/pagination',
-            columns: [
-                {'data': 'id'},
-                {'data': 'fnumber'},
-                {'data': 'fname'},
-
-                {
-                    'data': 'fparent_id',
-                    render: function (data, type, full) {
-                        if (full.parent != null)
-                            return full.parent.fname
-                        else
-                            return "无";
-                    }
-                },
-                {
-                    'data': 'ffunction_id',
-                    render: function (data, type, full) {
-                        if (full.ffunction != null)
-                            return full.ffunction.fname
-                        else
-                            return "无";
-                    }
-                },
-                {'data': 'ffunction_number'},
-                {
-                    'data': 'fis_must_visit',
-                    render: function (data, type, full) {
-                        if (data == "0") {
-                            return '是'
-                        } else {
-                            return '否'
-                        }
-                    }
-                },
-            ],
-            columnDefs: [
-                {
-                    "targets": [0],
-                    "visible": false
-                }
-            ],
-            buttons: [
-                // { text: '新增', action: function () { }  },
-                // { text: '编辑', className: 'edit', enabled: false },
-                // { text: '删除', className: 'delete', enabled: false },
-                {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: editor},
-                {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: editor},
-                {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
-                {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
-                {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
-                {extend: 'colvis', text: '列显示'}
-            ]
+        $('#btnAddSame').click(function () {
+            if ($("#use_template").val()==2){
+                layer.alert('当前为模板，请先保存后在编辑!');
+                return;
+            }
+            if (!curNodeData) {
+                layer.alert('请先选择一个事项!');
+                return;
+            }
+            // $('#todoForm')[0].reset();
+            $("#fname").val('')
+            $('#id').val(0);
+            $('#fparent_id').val(curNodeData['item']['fparent_id']);
         });
 
-        // table.on( 'select', checkBtn).on( 'deselect', checkBtn);
-        //
-        // function checkBtn(e, dt, type, indexes) {
-        //     var count = table.rows( { selected: true } ).count();
-        //     table.buttons( ['.edit', '.delete'] ).enable(count > 0);
-        // }
+        $('#btnRemove').click(function () {
+            if (!curNodeData) {
+                layer.alert('请先选择一个事项!');
+                return;
+            }
+            
+            layer.confirm('确定删除 ' + curNodeData.item['fname']+ ' 及其子事项 ?',function () {
+                ajaxLink('/admin/visit-store-todo/delete/'+curNodeData['dataid']);
+                getTreeData();
+                todos();
+                layer.closeAll();
+            })
+
+        });
+
+        $('#todoForm').on('submit',function () {
+            if ($("#use_template").val()==2){
+                layer.load(2);
+            }
+            ajaxForm('#todoForm',function () {
+                todos();
+                getTreeData();
+                $("#use_template").val(1)
+                layer.closeAll("loading")
+            })
+
+            return false;
+        })
+
+
+        var todos = function () {
+            ajaxGetData('/admin/visit-store-todo/todos/'+$("#store-list").val(),function(data){
+                if (data.length==0){
+                    $("#template").show();
+                }else {
+                    $("#template").hide();
+                }
+                var html = "<option value='0'>无</option>"
+                for (i in data){
+                    html+="<option value='"+data[i].id+"'>"+data[i].fname+"</option>"
+                }
+                $("#fparent_id").html(html)
+            })
+        }
+
+        $("#store-list").on('change',function () {
+            todos();
+            getTreeData();
+        })
+
+        $("#use_template").on('change',function () {
+            var use = $("#use_template").val();
+            if (use==1)
+                getTreeData()
+            else if (use==2){
+                $.ajax({
+                    url: "/admin/visit-store-todo/todos-template",
+                    type: "GET",
+                    data: {
+                        '_token':$('meta[name="_token"]').attr('content')
+                    },
+                    dataType:'json',
+                    success:function(data){
+                        $("#" + treeId).treeview({
+                            color: "#428bca",
+                            enableLinks: true,
+                            levels: 99,
+                            data: data,
+                            onNodeSelected: function(event, data) {
+                            },
+                            onNodeUnselected: function(event, data) {
+                            },
+                        });
+                    },
+                });
+
+            }
+
+        })
+
+        todos();
+        getTreeData();
 
     }
 

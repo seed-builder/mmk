@@ -22,7 +22,7 @@ define(function(require, exports, module) {
                         data: data,
                         onNodeSelected: function(event, data) {
                             curNodeData = data;
-                            console.log(data);
+
                             for(var p in data.item){
                                 $('#'+p, '#positionForm').val(data.item[p]);
                             }

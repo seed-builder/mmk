@@ -1,7 +1,9 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Busi\Store;
 use App\Models\Busi\VisitFunction;
+use App\Models\Busi\VisitTodoTemp;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
 use App\Models\Busi\VisitStoreTodo;
@@ -21,14 +23,25 @@ class VisitStoreTodoController extends AdminController
      */
     public function index()
     {
-        $todos = VisitStoreTodo::query()->where('fparent_id', 0)->get()->map(function ($item) {
-            return ['label' => $item->fname, 'value' => $item->id];
-        });
-        $todos = $todos->merge([['label' => '无', 'value' => 0]]);
-        $functions = VisitFunction::all()->map(function ($item) {
-            return ['label' => $item->fname, 'value' => $item->id];
-        });
-        return view('admin.visit-store-todo.index', compact('todos', 'functions'));
+//        $todos = VisitStoreTodo::query()->where('fparent_id', 0)->get()->map(function ($item) {
+//            return ['label' => $item->fname, 'value' => $item->id];
+//        });
+//        $todos = $todos->merge([['label' => '无', 'value' => 0]]);
+//        $functions = VisitFunction::all()->map(function ($item) {
+//            return ['label' => $item->fname, 'value' => $item->id];
+//        });
+
+        $todos = VisitStoreTodo::all();
+
+        $ids = $this->getCurUsersEmployeeIds();
+        $stores= [] ;
+        if (!empty($ids)) {
+            $stores = Store::query()->whereIn('femp_id', $ids)->get();
+        }
+
+        $functions = VisitFunction::all();
+
+        return view('admin.visit-store-todo.index', compact('todos', 'functions','stores'));
     }
 
     /**
@@ -128,4 +141,102 @@ class VisitStoreTodoController extends AdminController
         }
     }
 
+    public function save(Request $request){
+        $data = $request->except('_token');
+        if ($data['use_template']==2){
+            $tems = VisitTodoTemp::query()->where('fparent_id',0)->get();
+            foreach ($tems as $t){
+                $todo = $this->newEntity($t->toArray());
+                $todo->fstore_id = $data['fstore_id'];
+                $todo->save();
+                $todo->flag = ".".$todo->id;
+                $todo->save();
+                if (!empty($t->children)){
+                    foreach ($t->children as $child){
+                        $todo_child = $this->newEntity($child->toArray());
+                        $todo_child->fstore_id = $data['fstore_id'];
+                        $todo_child->fparent_id = $todo->id;
+                        $todo_child->save();
+                        $todo_child->flag = $this->todoFlag(".".$todo_child->id,$todo_child); ;
+                        $todo_child->save();
+                    }
+                }
+            }
+
+            return response()->json([
+                'code' => 200,
+                'result' => '根据模板生成成功！'
+            ]);
+        }
+
+        unset($data['use_template']);
+
+        if (!empty($data['id'])){
+            $todo = $this->newEntity()->newQuery()->find($data['id']);
+            $todo->fill($data);
+            $todo->flag = $this->todoFlag('.'.$data['id'],$todo);
+            $todo->ffunction_number = VisitFunction::find($data['ffunction_id'])->fnumber;
+
+            $todo->save();
+        }else{
+            $todo = $this->newEntity($data);
+            $todo->ffunction_number = VisitFunction::find($data['ffunction_id'])->fnumber;
+
+            $todo->save();
+            $todo->flag = $this->todoFlag('.'.$todo->id,$todo);
+            $todo->save();
+        }
+
+        return response()->json([
+            'code' => 200,
+            'result' => '保存成功！'
+        ]);
+    }
+
+    public function todoFlag($flag,$todo){
+        if (!empty($todo->parent)){
+            $flag='.'.$todo->parent->id.$flag;
+
+            $this->todoFlag($flag,$todo->parent);
+        }
+        return $flag;
+    }
+
+
+    public function todoTree(Request $request)
+    {
+        $fstore_id = $request->input('fstore_id',0);
+        $all = VisitStoreTodo::where('fparent_id', 0)->where('fstore_id',$fstore_id)->get();
+        $tree = [];
+        foreach ($all as $top)
+         $tree[] = $this->toBootstrapTreeViewData($top, ['text' => 'fname', 'dataid' => 'id'], false);
+//        $tree['state'] = ['expanded' => true];
+        return response()->json($tree);
+    }
+
+    public function storeTodoList($id){
+        return response()->json([
+            'code' => 200,
+            'data' => VisitStoreTodo::query()->where('fstore_id',$id)->get()
+        ]);
+    }
+
+    public function todosTemplate(){
+        $all = VisitTodoTemp::where('fparent_id', 0)->get();
+        $tree = [];
+        foreach ($all as $top)
+            $tree[] = $this->toBootstrapTreeViewData($top, ['text' => 'fname', 'dataid' => 'id'], false);
+//        $tree['state'] = ['expanded' => true];
+        return response()->json($tree);
+    }
+
+    public function delete($id){
+        VisitStoreTodo::query()->where('id',$id)->delete();
+        VisitStoreTodo::query()->where('fparent_id',$id)->delete();
+
+        return response()->json([
+            'code' => 200,
+            'result' => '删除成功！'
+        ]);
+    }
 }

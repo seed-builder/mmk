@@ -59,8 +59,8 @@ $user = Auth::user();
                             <li><a href="{{url('admin/material')}}"><i class="fa fa-circle-o"></i></i> 商品信息</a></li>
                         @endif
                         @if($user->can('customer_index'))
-                                <li><a href="{{url('/admin/customer')}}"><i class="fa fa-circle-o"></i></i>经销商信息</a></li>
-                        @endif
+                            <li><a href="{{url('/admin/customer')}}"><i class="fa fa-circle-o"></i></i>经销商信息</a></li>
+                    @endif
 
 
 
@@ -87,7 +87,7 @@ $user = Auth::user();
                 </li>
             @endif
 
-            @if($user->can(['store_index','visit_line_index','visit_line_store_index','visit_line_calendar_index','visit_store_calendar_index']))
+            @if($user->can(['store_index','visit_line_index','visit_line_store_index','visit_line_calendar_index','visit_store_calendar_index','visit_funciton_index','visit_store_todo_index']))
                 <li class="treeview active">
                     <a href="#">
                         <i class="fa fa-fw fa-building-o"></i>
@@ -98,22 +98,29 @@ $user = Auth::user();
                     </a>
                     <ul class="treeview-menu">
                         @if($user->can('store_index'))
-                            <li><a href="{{url('admin/store/index')}}"><i class="fa fa-circle-o"></i></i> 门店信息</a></li>
+                            <li><a href="{{url('admin/store/index')}}"><i class="fa fa-fw fa-shopping-cart"></i>门店信息</a></li>
                         @endif
 
                         @if($user->can('visit_line_index'))
-                            <li><a href="{{url('admin/visit_line/index')}}"><i class="fa fa-circle-o"></i></i> 线路</a>
+                            <li><a href="{{url('admin/visit_line/index')}}"><i class="fa fa-fw fa-random"></i>线路</a>
                             </li>
                         @endif
 
                         @if($user->can('visit_line_store_index'))
-                            <li><a href="{{url('admin/visit_line_store/index')}}"><i class="fa fa-circle-o"></i></i>
-                                    人员线路规划</a></li>
+                            <li><a href="{{url('admin/visit_line_store/index')}}"><i class="fa fa-fw fa-map-signs"></i>人员线路规划</a></li>
                         @endif
 
                         @if($user->can('visit_line_calendar_index'))
-                            <li><a href="{{url('admin/visit_line_calendar/index')}}"><i class="fa fa-circle-o"></i></i>
-                                    拜访日历</a></li>
+                            <li><a href="{{url('admin/visit_line_calendar/index')}}"><i class="fa fa-fw fa-calendar-o"></i>拜访日历</a></li>
+                        @endif
+
+                        @if($user->can('visit_funciton_index'))
+                            <li><a href="{{url('admin/visit-function')}}"><i class="fa fa-fw fa-clone"></i>拜访功能</a>
+                            </li>
+                        @endif
+                        @if($user->can('visit_store_todo_index'))
+                            <li><a href="{{url('admin/visit-store-todo')}}"><i class="fa fa-cogs"></i>拜访配置</a>
+                            </li>
                         @endif
                     </ul>
                 </li>
@@ -187,7 +194,7 @@ $user = Auth::user();
                 </li>
             @endif
 
-            @if($user->can(['sys-config_index','sys-dics_index','app-upgrade_index','message-template_index','visit_funciton_index','visit_store_todo_index']))
+            @if($user->can(['sys-config_index','sys-dics_index','app-upgrade_index','message-template_index']))
                 <li class="treeview active">
                     <a href="#">
                         <i class="fa fa-anchor"></i>
@@ -211,14 +218,7 @@ $user = Auth::user();
                             <li><a href="{{url('/admin/message-template')}}"><i class="fa fa-fw fa-paper-plane"></i>消息模板</a>
                             </li>
                         @endif
-                        @if($user->can('visit_funciton_index'))
-                            <li><a href="{{url('admin/visit-function')}}"><i class="fa fa-circle-o"></i></i> 拜访功能</a>
-                            </li>
-                        @endif
-                        @if($user->can('visit_store_todo_index'))
-                            <li><a href="{{url('admin/visit-store-todo')}}"><i class="fa fa-circle-o"></i></i> 拜访配置</a>
-                            </li>
-                        @endif
+
                     </ul>
                 </li>
             @endif
