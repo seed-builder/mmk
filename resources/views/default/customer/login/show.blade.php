@@ -25,7 +25,7 @@
     <![endif]-->
     <style type="text/css">
         body{
-            background-image: url('/images/bk.jpg') !important;
+            background-image: url('/images/bk2.jpg') !important;
             background-repeat: no-repeat;
             background-size:100% 100%;
             opacity: 0.8;
