@@ -1,26 +1,16 @@
-<?php echo $BEGIN_PHP; ?>
-
 <?php
-		$searchCols = [];
-		foreach ($columns as $col){
-			if($col->data_type == 'string'){
-				$searchCols[] = $col->name;
-			}
-		}
-
-?>
 namespace App\Http\Controllers\Customer;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Customer\BaseController;
-use App\Models\Busi\<?php echo e($model); ?>;
+use App\Models\Busi\ViewStoreOut;
 
-class <?php echo e($model); ?>Controller extends BaseController
+class ViewStoreOutController extends BaseController
 {
 	public function newEntity(array $attributes = [])
 	{
 		// TODO: Implement newEntity() method.
-		return new <?php echo e($model); ?>($attributes);
+		return new ViewStoreOut($attributes);
 	}
 
 	/**
@@ -31,7 +21,7 @@ class <?php echo e($model); ?>Controller extends BaseController
 	public function index()
 	{
 		//
-		return view('customer.<?php echo e(snake_case($model,'-')); ?>.index');
+		return view('customer.view-store-out.index');
 	}
 
 	/**
@@ -41,7 +31,7 @@ class <?php echo e($model); ?>Controller extends BaseController
 	*/
 	public function create()
 	{
-		return view('customer.<?php echo e(snake_case($model,'-')); ?>.create');
+		return view('customer.view-store-out.create');
 	}
 
 	/**
@@ -52,8 +42,8 @@ class <?php echo e($model); ?>Controller extends BaseController
 	*/
 	public function edit($id)
 	{
-		$entity = <?php echo e($model); ?>::find($id);
-		return view('customer.<?php echo e(snake_case($model,'-')); ?>.edit', ['entity' => $entity]);
+		$entity = ViewStoreOut::find($id);
+		return view('customer.view-store-out.edit', ['entity' => $entity]);
 	}
 
 	/**
@@ -76,7 +66,7 @@ class <?php echo e($model); ?>Controller extends BaseController
 	* @return  \Illuminate\Http\JsonResponse
 	*/
 	public function pagination(Request $request, $searchCols = [], $with=[], $conditionCall = null, $all_columns = false){
-		$searchCols = <?php echo json_encode($searchCols); ?>;
+		$searchCols = ["material_name","material_number","store_name","store_number"];
 		return parent::pagination($request, $searchCols);
 	}
 
