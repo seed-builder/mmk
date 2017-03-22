@@ -36,19 +36,19 @@
                             <form class="form-inline filter "  filter-table="#moduleTable">
                                 <div class="form-group">
                                     <label class="">门店编码</label>
-                                    <input type="text" class="form-control filter-condition" filter-name="store_number" filter-operator="like" >
+                                    <input type="text" class="form-control filter-condition" filter-name="view_store_outs.store_number" filter-operator="like" >
                                 </div>
                                 <div class="form-group">
                                     <label class="">门店</label>
-                                    <input type="text" class="form-control filter-condition" filter-name="store_name" filter-operator="like" >
+                                    <input type="text" class="form-control filter-condition" filter-name="view_store_outs.store_name" filter-operator="like" >
                                 </div>
                                 <div class="form-group">
                                     <label class="">物料编码</label>
-                                    <input type="text" class="form-control filter-condition" filter-name="material_number" filter-operator="like" >
+                                    <input type="text" class="form-control filter-condition" filter-name="view_store_outs.material_number" filter-operator="like" >
                                 </div>
                                 <div class="form-group">
                                     <label class="">物料</label>
-                                    <input type="text" class="form-control filter-condition" filter-name="material_name" filter-operator="like" >
+                                    <input type="text" class="form-control filter-condition" filter-name="view_store_outs.material_name" filter-operator="like" >
                                 </div>
                                 <div class="form-group">
                                     <button type="button" class="btn btn-info filter-submit">查询</button>
