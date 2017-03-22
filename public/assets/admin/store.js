@@ -82,7 +82,8 @@ define(function (require, exports, module) {
                 {
                     "data": 'id',
                     render: function (data, type, full) {
-                        return '<a href="/admin/store/storeInfo/'+data+'" data-target="#storeDetail" data-toggle="modal"><i class="fa fa-fw fa-search"></i></a>';
+                        return '<a href="/admin/store/storeInfo/'+data+'" data-target="#storeDetail" data-toggle="modal"><i class="fa fa-fw fa-search"></i></a>'
+                            +'<a href="/admin/visit-store-todo/index?store_id='+data+'" ><i class="fa fa-cogs"></i></a>';
                     }
                 },
             ],
@@ -162,12 +163,20 @@ define(function (require, exports, module) {
 
                     }
                 },
+
 //                {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: editor},
 //                 {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: editor},
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
+                {
+                    text: '批量配置拜访事项<i class="fa fa-cogs"></i>',
+                    className: 'make-todo',
+                    action: function () {
+                        $("#make-todos-modal").modal('show')
 
+                    }
+                },
                 //{extend: 'colvis', text: '列显示'}
             ]
         });
@@ -402,6 +411,32 @@ define(function (require, exports, module) {
         /*
          *   地图关键字搜索 end!
          */
+
+
+        //批量生成拜访事项
+        $('#make-todo-type').selectpicker();
+        $('#fcust_id').selectpicker();
+
+        $("#make-todo-type").on('change',function () {
+            if ($("#make-todo-type").val()==2){
+                $("#customers").show();
+            }else {
+                $("#customers").hide();
+            }
+        })
+        
+        $("#todoForm").on('submit',function () {
+            layer.confirm('拜访事项根据模板将根据模板批量生成，已有配置拜访事项的门店将不会被覆盖，确定操作吗？',function () {
+                layer.load(2);
+                ajaxForm('#todoForm',function () {
+                    layer.closeAll("loading")
+                    $("#make-todos-modal").modal("hide");
+                })
+            })
+
+            return false;
+        })
+
     }
 
 });

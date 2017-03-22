@@ -45,4 +45,36 @@ class VisitTodoTemp extends BaseModel
     public function ffunction(){
         return $this->hasOne(VisitFunction::class,'id','ffunction_id');
     }
+
+    public function makeByTemplate($store_id){
+        if (VisitStoreTodo::query()->where('fstore_id',$store_id)->count()==0){
+            $tems = VisitTodoTemp::query()->where('fparent_id',0)->get();
+            foreach ($tems as $t){
+                $todo = new VisitStoreTodo($t->toArray());
+                $todo->fstore_id = $store_id;
+                $todo->save();
+                $todo->flag = ".".$todo->id;
+                $todo->save();
+                if (!empty($t->children)){
+                    foreach ($t->children as $child){
+                        $todo_child = new VisitStoreTodo($child->toArray());
+                        $todo_child->fstore_id = $store_id;
+                        $todo_child->fparent_id = $todo->id;
+                        $todo_child->save();
+                        $todo_child->flag = $this->todoFlag(".".$todo_child->id,$todo_child); ;
+                        $todo_child->save();
+                    }
+                }
+            }
+        }
+    }
+
+    public function todoFlag($flag,$todo){
+        if (!empty($todo->parent)){
+            $flag='.'.$todo->parent->id.$flag;
+
+            $this->todoFlag($flag,$todo->parent);
+        }
+        return $flag;
+    }
 }

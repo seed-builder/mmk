@@ -68,16 +68,17 @@
                         <div class="box-body">
                             <div class="col-md-9">
                                 {{ csrf_field() }}
-                                <div class="form-group">
-                                    <label class="control-label col-md-3">门店</label>
-                                    <div class="col-md-9">
-                                        <select class="form-control" id="store-list" name="fstore_id">
-                                            @foreach($stores as $s)
-                                                <option value="{{$s->id}}">{{$s->ffullname}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
+                                <input type="hidden" name="fstore_id" id="fstore_id" value="{{$store_id}}">
+                                {{--<div class="form-group">--}}
+                                    {{--<label class="control-label col-md-3">门店</label>--}}
+                                    {{--<div class="col-md-9">--}}
+                                        {{--<select class="form-control" id="store-list" name="fstore_id">--}}
+                                            {{--@foreach($stores as $s)--}}
+                                                {{--<option value="{{$s->id}}">{{$s->ffullname}}</option>--}}
+                                            {{--@endforeach--}}
+                                        {{--</select>--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
                                 <div class="form-group">
                                     <label class="control-label col-md-3">事项名称</label>
                                     <div class="col-md-9">
