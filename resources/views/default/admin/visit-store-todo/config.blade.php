@@ -150,7 +150,7 @@
                 {!! json_encode($todos) !!}
         var funs = {!! json_encode($functions) !!}
         $(function () {
-                seajs.use('admin/visit_store_todo.js', function (app) {
+                seajs.use('admin/visit_store_todo_config.js', function (app) {
                     app.index($, 'tree', todos, funs);
                 });
             });
