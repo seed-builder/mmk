@@ -49,7 +49,7 @@ define(function (require, exports, module) {
                     def:   function () { return new Date(); }
                 },
                 { 'label': '出库类型', 'name': 'ftype', 'type': 'select', 'options': [
-                    {label: '自动出库', value: 'A'},
+                    // {label: '自动出库', value: 'A'},
                     {label: '经销出库', value: 'B'},
                     {label: '库存调整', value: 'C'}
                     ] ,
@@ -82,6 +82,14 @@ define(function (require, exports, module) {
                     }
                 },
                 {'data': 'fdate'},
+                {'data': 'ftype', render: function (data, type, full) {
+                    switch (data){
+                        case "A": return '自动出库';
+                        case "B": return '经销出库';
+                        case "C": return '库存调整';
+                        default: return '未知';
+                    }
+                }},
                 // {'data': 'frec_date'},
                 // {'data': 'fneed_rec_date'},
                 {'data': 'fsbill_no'},
