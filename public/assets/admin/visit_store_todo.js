@@ -13,7 +13,7 @@ define(function (require, exports, module) {
                 url: "/admin/visit-store-todo/todoTree",
                 type: "GET",
                 data: {
-                    'fstore_id' : $("#store-list").val(),
+                    'fstore_id' : $("#fstore_id").val(),
                     '_token':$('meta[name="_token"]').attr('content')
                 },
                 dataType:'json',
@@ -38,10 +38,10 @@ define(function (require, exports, module) {
             });
         }
 
-        $("#store-list").select2({
-            language: 'zh-CN',
-            height : '50px'
-        })
+        // $("#fstore_id").select2({
+        //     language: 'zh-CN',
+        //     height : '50px'
+        // })
 
         $('#btnAddChild').click(function () {
             if ($("#use_template").val()==2){
@@ -104,7 +104,7 @@ define(function (require, exports, module) {
 
 
         var todos = function () {
-            ajaxGetData('/admin/visit-store-todo/todos/'+$("#store-list").val(),function(data){
+            ajaxGetData('/admin/visit-store-todo/todos/'+$("#fstore_id").val(),function(data){
                 if (data.length==0){
                     $("#template").show();
                 }else {
@@ -118,7 +118,7 @@ define(function (require, exports, module) {
             })
         }
 
-        $("#store-list").on('change',function () {
+        $("#fstore_id").on('change',function () {
             todos();
             getTreeData();
         })

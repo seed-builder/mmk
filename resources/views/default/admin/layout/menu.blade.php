@@ -118,10 +118,10 @@ $user = Auth::user();
                             <li><a href="{{url('admin/visit-function')}}"><i class="fa fa-fw fa-clone"></i>拜访功能</a>
                             </li>
                         @endif
-                        @if($user->can('visit_store_todo_index'))
-                            <li><a href="{{url('admin/visit-store-todo')}}"><i class="fa fa-cogs"></i>拜访配置</a>
-                            </li>
-                        @endif
+                        {{--@if($user->can('visit_store_todo_index'))--}}
+                            {{--<li><a href="{{url('admin/visit-store-todo/index')}}"><i class="fa fa-cogs"></i>拜访配置</a>--}}
+                            {{--</li>--}}
+                        {{--@endif--}}
                     </ul>
                 </li>
             @endif
