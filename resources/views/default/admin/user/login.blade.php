@@ -23,15 +23,24 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style type="text/css">
+        body{
+            background-image: url('/images/bk.jpg') !important;
+            background-repeat: no-repeat;
+            background-size:100% 100%;
+            /*background-position: center;*/
+            opacity: 0.8;
+        }
+    </style>
 </head>
-<body class="hold-transition login-page">
+<body class="hold-transition ">
 <div class="login-box">
     <div class="login-logo">
         <b>管理系统登陆</b>
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
-        <p class="login-box-msg">Sign in to start your session</p>
+        {{--<p class="login-box-msg">Sign in to start your session</p>--}}
         @include('admin.layout.flash-message')
         <form action="/admin/login" method="post">
             {!! csrf_field() !!}
@@ -47,13 +56,13 @@
                 <div class="col-xs-8">
                     <div class="checkbox icheck">
                         <label>
-                            <input type="checkbox" name="remember"> Remember Me
+                            <input type="checkbox" name="remember"> 记  住
                         </label>
                     </div>
                 </div>
                 <!-- /.col -->
                 <div class="col-xs-4">
-                    <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                    <button type="submit" class="btn btn-primary btn-block btn-flat">登  陆</button>
                 </div>
                 <!-- /.col -->
             </div>

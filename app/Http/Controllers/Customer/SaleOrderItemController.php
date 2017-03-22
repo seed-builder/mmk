@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Customer;
 
+use App\Events\OrderDeliveryEvent;
 use App\Models\Busi\SaleOrder;
 use Exception;
 use Illuminate\Http\Request;
@@ -106,6 +107,7 @@ class SaleOrderItemController extends BaseController
 			$count = SaleOrderItem::where('fsale_order_id', $orderId)->where('fsend_status', '<>', 'C')->count();
 			if ($count == 0) {
 				$order = SaleOrder::find($orderId)->update(['fsend_status' => 'C']);
+				event(new OrderDeliveryEvent($orderId));
 			}else{
 				$order = SaleOrder::find($orderId)->update(['fsend_status' => 'D']);
 			}
