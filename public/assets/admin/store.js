@@ -82,8 +82,8 @@ define(function (require, exports, module) {
                 {
                     "data": 'id',
                     render: function (data, type, full) {
-                        return '<a href="/admin/store/storeInfo/'+data+'" data-target="#storeDetail" data-toggle="modal"><i class="fa fa-fw fa-search"></i></a>'
-                            +'<a href="/admin/visit-store-todo/index?store_id='+data+'" ><i class="fa fa-cogs"></i></a>';
+                        return '<a href="/admin/store/storeInfo/'+data+'" title="查看详情" data-target="#storeDetail" data-toggle="modal"><i class="fa fa-fw fa-search"></i></a>'
+                            +'<a title="配置门店拜访事项" href="/admin/visit-store-todo/index?store_id='+data+'" ><i class="fa fa-cogs"></i></a>';
                     }
                 },
             ],

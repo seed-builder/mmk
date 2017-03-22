@@ -1,6 +1,8 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Busi\VisitFunction;
+use App\Models\Busi\VisitStoreTodo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
 use App\Models\Busi\VisitTodoTemp;
@@ -18,10 +20,11 @@ class VisitTodoTempController extends AdminController
 	*
 	* @return  \Illuminate\Http\Response
 	*/
+
 	public function index()
 	{
-		//
-		return view('admin.visit-todo-temp.index');
+        $functions = VisitFunction::all();
+		return view('admin.visit-todo-temp.index',compact('functions'));
 	}
 
 	/**
@@ -69,5 +72,58 @@ class VisitTodoTempController extends AdminController
 		$searchCols = ["fchildren_calculate","fdocument_status","ffunction_number","fgroup_id","flag","fname","fnumber"];
 		return parent::pagination($request, $searchCols);
 	}
+
+    public function tempTree()
+    {
+        $all = VisitTodoTemp::where('fparent_id', 0)->get();
+        $tree = [];
+        foreach ($all as $top)
+            $tree[] = $this->toBootstrapTreeViewData($top, ['text' => 'fname', 'dataid' => 'id'], false);
+//        $tree['state'] = ['expanded' => true];
+        return response()->json($tree);
+    }
+
+    public function save(Request $request){
+        $data = $request->except('_token');
+        if (!empty($data['id'])) {
+            $todo = $this->newEntity()->newQuery()->find($data['id']);
+            $todo->fill($data);
+            $todo->flag = $this->todoFlag('.' . $data['id'], $todo);
+            $todo->ffunction_number = VisitFunction::find($data['ffunction_id'])->fnumber;
+
+            $todo->save();
+        } else {
+            $todo = $this->newEntity($data);
+            $todo->ffunction_number = VisitFunction::find($data['ffunction_id'])->fnumber;
+
+            $todo->save();
+            $todo->flag = $this->todoFlag('.' . $todo->id, $todo);
+            $todo->save();
+        }
+
+        return response()->json([
+            'code' => 200,
+            'result' => '保存成功！'
+        ]);
+    }
+
+    public function todoFlag($flag, $todo)
+    {
+        if (!empty($todo->parent)) {
+            $flag = '.' . $todo->parent->id . $flag;
+
+            $this->todoFlag($flag, $todo->parent);
+        }
+        return $flag;
+    }
+
+    public function delete($id){
+        VisitTodoTemp::query()->where('fparent_id',$id)->delete();
+        VisitTodoTemp::query()->where('id',$id)->delete();
+        return response()->json([
+            'code' => 200,
+            'result' => '删除成功！'
+        ]);
+    }
 
 }

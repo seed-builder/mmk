@@ -2,7 +2,6 @@
 @section('styles')
     @include('admin.layout.datatable-css')
     <link type="text/css" href="/assets/plugins/bootstrap-treeview/bootstrap-treeview.min.css" rel="stylesheet"/>
-    <link type="text/css" href="/assets/plugins/select2/select2.css" rel="stylesheet"/>
 @endsection
 
 @section('content')
@@ -146,8 +145,6 @@
 @section('js')
     @include('admin.layout.datatable-js')
     <script src="/assets/plugins/bootstrap-treeview/bootstrap-treeview.min.js"></script>
-    <script src="/assets/plugins/select2/select2.js"></script>
-    <script src="/assets/plugins/select2/i18n/zh-CN.js"></script>
     <script type="text/javascript">
         var todos =
                 {!! json_encode($todos) !!}
