@@ -119,8 +119,8 @@ $user = Auth::user();
                             </li>
                         @endif
                         {{--@if($user->can('visit_store_todo_index'))--}}
-                            {{--<li><a href="{{url('admin/visit-store-todo/index')}}"><i class="fa fa-cogs"></i>拜访配置</a>--}}
-                            {{--</li>--}}
+                            <li style="display: none"><a href="{{url('admin/visit-store-todo/index')}}"><i class="fa fa-cogs"></i>拜访配置</a>
+                            </li>
                         {{--@endif--}}
                         @if($user->can('visit_todo_temp_index'))
                             <li><a href="{{url('admin/visit-todo-temp')}}"><i class="fa fa-fw fa-clone"></i>拜访配置模板</a>
