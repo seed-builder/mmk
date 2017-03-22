@@ -36,6 +36,7 @@ class SaleOrderController extends ApiController
 		$entity = SaleOrder::where('fstore_id', $data['fstore_id'])
 			->where('femp_id', $data['femp_id'])
 			->where('fdate', $data['fdate'])
+			->where('fsend_status', 'A')
 			->first();
 		//
 		if(empty($entity)) {

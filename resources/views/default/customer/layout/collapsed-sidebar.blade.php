@@ -65,9 +65,9 @@
         <!-- Logo -->
         <a href="{{url('/customer')}}" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini"><b>经销商</b>系统</span>
+            <span class="logo-mini"><b><img src="/images/logo-mid.png" />经销商</b>系统</span>
             <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><b>经销商</b>系统</span>
+            <span class="logo-lg"><b><img src="/images/logo-mid.png" />经销商</b>系统</span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top">
