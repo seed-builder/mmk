@@ -45,15 +45,11 @@ define(function (require, exports, module) {
                 {'label': '订单号', 'name': 'readonly_fbill_no', 'data': 'fbill_no', 'type': 'readonly'},
                 {'label': '订单日期', 'name': 'fdate',  'data': 'fdate', type:  'datetime',
                     def:   function () { return new Date(); }},
-                {'label': '业务员','name':'femp_id' , 'data': 'employee.fname',  'type': 'laySelect', 'options': employees},
-                {'label': '门店', 'name':'fstore_id', 'data': 'store.ffullname',  'type': 'laySelect', 'options': stores},
+                {'label': '业务员','name':'femp_id' , 'data': 'employee.fname',  'type': 'select', 'options': employees},
+                {'label': '门店', 'name':'fstore_id', 'data': 'store.ffullname',  'type': 'select', 'options': stores},
                 {'label':'source', 'name': 'source', 'data': 'source', 'def': 'customer', 'type':'hidden'}
             ]
         });
-        // orderEditor.on('initComplete', function () {
-        //     alert('orderEditor initComplete');
-        //     $('.selectpicker').selectpicker();
-        // });
 
         var orderTable = $("#" + orderTableId).DataTable({
             dom: "lBfrtip",
@@ -151,7 +147,6 @@ define(function (require, exports, module) {
             order: [[3, 'desc']]
         });
 
-
         var orderEditCn = $.extend(editorCN, {
             create:{
                 title: '新增订单明细信息',
@@ -164,6 +159,7 @@ define(function (require, exports, module) {
                 submit: "提交"
             },
         });
+
         var infoEditor = new $.fn.dataTable.Editor({
             ajax: {
                 create: {
@@ -300,8 +296,12 @@ define(function (require, exports, module) {
                         })
                     }
                 },
-                {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: infoEditor, enabled: false},
-                {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: infoEditor, enabled: false},
+                {text: '新增<i class="fa fa-fw fa-plus"></i>',  className: 'send', enabled: false, action: function () {
+                    $('#itemFormDialog').modal('show');
+                }},
+                {text: '编辑<i class="fa fa-fw fa-pencil"></i>', enabled: false, action: function () {
+                    $('#itemFormDialog').modal('show');
+                }},
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: infoEditor, enabled: false},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
@@ -330,7 +330,7 @@ define(function (require, exports, module) {
             if(order){
                 infoTable.columns( 1 ).search( order.id ).draw();
                 orderTable.buttons( ['.accept'] ).enable(order.fsend_status == 'A');
-                orderTable.buttons( ['.buttons-edit'] ).enable(order.source != 'phone');
+                orderTable.buttons( ['.buttons-edit'] ).enable(order.source != 'phone' && order.fsend_status == 'A');
                 orderTable.buttons( ['.buttons-remove'] ).enable(order.source != 'phone' && order.fsend_status == 'A');
                 infoTable.buttons( ['.buttons-create']).enable(order.source != 'phone');
             }
