@@ -163,8 +163,6 @@
             setTimeout(function () {
                 $('.selectpicker').selectpicker();
             }, 2000);
-
-
         });
 
     </script>
