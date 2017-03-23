@@ -161,7 +161,7 @@
                                     <div class="layui-form-item">
                                         <label class="layui-form-label col-sm-3">门店简称</label>
                                         <div class="layui-input-block">
-                                            <input type="text" name="fshortname" required lay-verify="required" autocomplete="off" class="layui-input">
+                                            <input type="text" name="fshortname" required lay-verify="" autocomplete="off" class="layui-input">
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
@@ -235,7 +235,7 @@
                                     <div class="layui-form-item">
                                         <label class="layui-form-label col-sm-3">营业执照</label>
                                         <div class="layui-input-block">
-                                            <input type="text" name="fbusslicense" required lay-verify="required" autocomplete="off" class="layui-input">
+                                            <input type="text" name="fbusslicense" required lay-verify="" autocomplete="off" class="layui-input">
                                         </div>
                                     </div>
                                     <div class="layui-form-item">

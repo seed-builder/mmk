@@ -132,11 +132,12 @@ class Store extends BaseModel
 				    ]
 			    );
 
-                $diffday = VisitLine::find($store->fline_id)->fnumber-date("w");
-                $calendar = new VisitLineCalendar();
-
-                $calendar->makeLineStoreCalendar($store->femp_id,$store->fline_id,$store->id,date('Y-m-d',strtotime('+'.$diffday.' day')));
+//                $diffday = VisitLine::find($store->fline_id)->fnumber-date("w");
+//                $calendar = new VisitLineCalendar();
+//
+//                $calendar->makeLineStoreCalendar($store->femp_id,$store->fline_id,$store->id,date('Y-m-d',strtotime('+'.$diffday.' day')));
 		    }
+
 	    });
 
 	    static::updating(function ($store) {
@@ -162,10 +163,10 @@ class Store extends BaseModel
 	    		VisitLineStore::destroy($ids);
 		    }
 
-            $diffday = VisitLine::find($store->fline_id)->fnumber-date("w");
-            $calendar = new VisitLineCalendar();
-
-            $calendar->makeLineStoreCalendar($store->femp_id,$store->fline_id,$store->id,date('Y-m-d',strtotime('+'.$diffday.' day')));
+//            $diffday = VisitLine::find($store->fline_id)->fnumber-date("w");
+//            $calendar = new VisitLineCalendar();
+//
+//            $calendar->makeLineStoreCalendar($store->femp_id,$store->fline_id,$store->id,date('Y-m-d',strtotime('+'.$diffday.' day')));
 	    });
 
 	    static::deleted(function ($store) {

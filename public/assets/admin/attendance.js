@@ -79,11 +79,6 @@ define(function(require, exports, module) {
                     }
                 },
             ],
-            createdRow: function( row, data, dataIndex ) {
-                if(data.fbegin_id==null||data.fcomplete_id==null){
-                    //$(row).css( 'background','red' );
-                }
-            },
             buttons: [
                 // { text: '新增', action: function () { }  },
                 // { text: '删除', className: 'delete', enabled: false },
@@ -93,7 +88,16 @@ define(function(require, exports, module) {
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
                 //{extend: 'colvis', text: '列显示'}
-            ]
+            ],
+            columnDefs: [
+                {
+                    'targets': 0,
+                    'visible': {
+                        'selectRow': true
+                    }
+                }
+            ],
+            order: [[2,'desc']]
         });
 
         table.on( 'select', rowselect);

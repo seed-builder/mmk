@@ -26,21 +26,26 @@ class AttendanceReportController extends ApiController
 			//dump($conditions);
 			foreach ($conditions as $k => $v) {
 				$tmp = explode(' ', $k);
+				//var_dump($v);
 				if($tmp[0] == 'femp_id'){
-					$fempId = $v;
-					$repo = app(ISysConfigRepo::class);
-					if($repo->isAppDataIsolate()) {
-						$employee = Employee::find($fempId);
-						if ($employee->isDataIsolate()) {
-							$subs = $employee->getSubordinates();
-							$ids = [];
-							if (!empty($subs)) {
-								$ids = array_map(function ($item) {
-									return  $item->id;
-								}, $subs);
+					if(is_array($v) && $tmp[1] == 'in'){
+						$query->whereIn('femp_id', $v);
+					}else {
+						$fempId = $v;
+						$repo = app(ISysConfigRepo::class);
+						if ($repo->isAppDataIsolate()) {
+							$employee = Employee::find($fempId);
+							if ($employee->isDataIsolate()) {
+								$subs = $employee->getSubordinates();
+								$ids = [];
+								if (!empty($subs)) {
+									$ids = array_map(function ($item) {
+										return $item->id;
+									}, $subs);
+								}
+								$ids[] = $fempId;
+								$query->whereIn('femp_id', $ids);
 							}
-							$ids[]= $fempId;
-							$query->whereIn('femp_id', $ids);
 						}
 					}
 				}else {
