@@ -66,7 +66,6 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-
                         <table id="orderInfoTable" class="table table-bordered table-hover">
                             <thead>
                             <tr>
@@ -145,7 +144,66 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-
+    <div class="modal fade" tabindex="-1" role="dialog" id="itemFormDialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">新增订单明细</h4>
+                </div>
+                <form class="form-horizontal" id="sureForm" action="{{url('/customer/sale-order-item')}}" method="post">
+                    {!! csrf_field() !!}
+                    <input type="hidden" id="id" name="id" value="" />
+                    <input type="hidden" id="fsale_order_id" name="fsale_order_id" value="" />
+                    <div class="modal-body">
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">订单号</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="text" id="order_no" readonly/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">商品</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" name="fmaterial_id" id="fmaterial_id">
+                                        <option value="">--请选择--</option>
+                                        @forelse($materials as $material)
+                                            <option value="{{$material->id}}">{{$material->fname}}</option>
+                                            @empty
+                                        @endforelse
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">单位</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" name="unit" id="unit">
+                                        <option value="">--请选择--</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">数量</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="number" name="qty" id="qty"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="submit" class="btn btn-primary" id="makeBtn">保存</button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 @endsection
 @section('js')
     @include('customer.layout.datatable-js')
@@ -160,9 +218,7 @@
             seajs.use('customer/sale_order.js', function (app) {
                 app.index($, 'orderTable','orderInfoTable', stores, employees);
             });
-            setTimeout(function () {
-                $('.selectpicker').selectpicker();
-            }, 2000);
+
         });
 
     </script>

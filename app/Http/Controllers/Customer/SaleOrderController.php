@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Customer;
 
+use App\Models\Busi\Material;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
 use App\Models\Busi\SaleOrder;
@@ -40,8 +41,9 @@ class SaleOrderController extends BaseController
 			});
 			$stores->prepend(['label' => '--请选择--', 'value' => '']);
 		}
+		$materials = Material::all();
 
-		return view('customer.sale-order.index', ['stores' => $stores, 'employees' => $emps]);
+		return view('customer.sale-order.index', ['stores' => $stores, 'employees' => $emps, 'materials' => $materials]);
 	}
 
 	/**
