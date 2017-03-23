@@ -156,9 +156,9 @@ class UtlController extends Controller
 	    $table = $request->input('table');
 	    $op = $request->input('op');
 	    $data = json_decode( $request->input('data', '') , true );
-	    $affected = 1;
 	    $dataSync = app('dataSync');
-	    $dataSync->accept($table, $op, $data);
+	    $affected = $dataSync->accept($table, $op, $data?$data:[]);
+	    //var_dump($affected);
 	    return response(['affected' => $affected], 200);
     }
 

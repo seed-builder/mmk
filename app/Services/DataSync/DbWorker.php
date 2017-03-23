@@ -9,6 +9,7 @@
 namespace App\Services\DataSync;
 
 use DB;
+
 /**
  * DB 数据处理
  * Class DbWorker
@@ -29,7 +30,8 @@ class DbWorker extends Worker
 		$table = $name;
 		// TODO: Implement accept() method.
 		$affected = 0;
-		if(!empty($data) && !empty($table)) {
+		$op = intval($op);
+		if(!empty($table)) {
 			$columns = [];
 			$values = [];
 			//0-新增， 1-修改， 2-删除
@@ -46,6 +48,7 @@ class DbWorker extends Worker
 					$affected = DB::insert($query, $values);
 					break;
 				case 1:
+					var_dump('1');
 					$where = 'id=';
 					foreach ($data as $col => $val){
 						if($col == 'id'){

@@ -152,7 +152,7 @@
     <script src="/assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
     <script src="/assets/plugins/bootstrap-validator/js/bootstrapValidator.min.js"></script>
     <script src="/assets/plugins/bootstrap-validator/js/language/zh_CN.js"></script>
-    {{--<script src="/js/dt.ext.js"></script>--}}
+    <script src="/js/dt.ext.js"></script>
     <script type="text/javascript">
         var stores = {!! json_encode($stores) !!}
         var employees = {!! json_encode($employees) !!}
@@ -160,7 +160,10 @@
             seajs.use('customer/sale_order.js', function (app) {
                 app.index($, 'orderTable','orderInfoTable', stores, employees);
             });
-            $('.selectpicker').selectpicker();
+            setTimeout(function () {
+                $('.selectpicker').selectpicker();
+            }, 2000);
+
 
         });
 
