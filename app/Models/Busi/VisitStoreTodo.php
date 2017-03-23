@@ -41,4 +41,5 @@ class VisitStoreTodo extends BaseModel
     public function ffunction(){
         return $this->hasOne(VisitFunction::class,'id','ffunction_id');
     }
+
 }

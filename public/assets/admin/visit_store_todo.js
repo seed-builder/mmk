@@ -1,6 +1,6 @@
 /**
-*
-*/
+ *
+ */
 define(function(require, exports, module) {
 
     var zhCN = require('datatableZh');
@@ -10,7 +10,7 @@ define(function(require, exports, module) {
 
         var getTreeData = function () {
             $.ajax({
-                url: "/admin/visit-todo-temp/temp-tree",
+                url: "/admin/visit-store-todo/todoTree",
                 type: "GET",
                 data: {
                     '_token':$('meta[name="_token"]').attr('content')
@@ -66,7 +66,7 @@ define(function(require, exports, module) {
             }
 
             layer.confirm('确定删除 ' + curNodeData.item['fname']+ ' 及其子事项 ?',function () {
-                ajaxLink('/admin/visit-todo-temp/delete/'+curNodeData['dataid']);
+                ajaxLink('/admin/visit-store-todo/delete/'+curNodeData['dataid']);
                 getTreeData();
                 layer.closeAll();
             })
