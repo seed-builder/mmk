@@ -45,9 +45,9 @@ Artisan::command('test', function () {
 Artisan::command('test1', function () {
 	$this->comment('begin ...');
 	$db = new DbHelper();
-	$columns = $db->getColumns('exp_display_policy');
-	$builder = new CodeBuilder('DisplayPolicy', 'exp_display_policy', $columns);
-	$builder->createFiles('customer');
+	$columns = $db->getColumns('view_store_outs');
+	$builder = new CodeBuilder('ViewStoreOut', 'view_store_outs', $columns);
+	$builder->createFiles('admin', 'customer');
 	$this->comment('end ...');
 })->describe('philo blade test');
 

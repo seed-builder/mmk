@@ -78,6 +78,39 @@ class VisitStoreCalendar extends BaseModel
         ]);
 
         $model = new VisitTodoCalendar();
-        $model->makeCalendar($fdate,$femp_id,$vsc->id);
+        $model->makeCalendar($fdate,$femp_id,$vsc->id,$fstore_id);
+    }
+
+    public function adminFilter($queryBuilder, $request)
+    {
+        $data = $request->all();
+        if (!empty($data['tree'])){
+            $emp = Employee::find($data['tree']['nodeid']);
+            if (empty($emp)) {
+                $dept = Department::find($data['tree']['nodeid']);
+                $emp_ids = $dept->getAllEmployeeByDept()->pluck('id')->toArray();
+
+                $queryBuilder->whereIn('femp_id', $emp_ids);
+            } else {
+                $queryBuilder->where('femp_id', $data['tree']['nodeid']);
+            }
+        }
+
+        if (!empty($data['filter'])){
+            foreach ($data['filter'] as $f){
+                $filter_name = $f['name'];
+                if ($filter_name=="femp"&&!empty($f['value'])){
+                    $ids = Employee::query()->where('fname','like','%'.$f['value'].'%')->pluck('id');
+                    $queryBuilder->whereIn('femp_id', $ids);
+                }elseif ($filter_name=="fstore"&&!empty($f['value'])){
+                    $ids = Store::query()->where('ffullname','like','%'.$f['value'].'%')->pluck('id');
+                    $queryBuilder->whereIn('fstore_id', $ids);
+                }else{
+                    $queryBuilder=$this->adminFilterQuery($queryBuilder,$f);
+                }
+            }
+        }
+
+        return $queryBuilder;
     }
 }

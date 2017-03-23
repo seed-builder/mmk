@@ -67,11 +67,11 @@
                     <!-- /.box-header -->
                     <div class="box-body">
 						<div class="panel panel-default filter" filter-table="#moduleTable">
-							<form class="layui-form" id="vl-filter-form">
+							<form class="layui-form">
 								<div class="box-body">
 									<div class="layui-form-item">
 										<div class="layui-inline">
-											<label class="layui-form-label">姓名</label>
+											<label class="layui-form-label">人员</label>
 											<div class="layui-input-inline">
 												<input type="text" class="layui-input filter-condition" filter-name="femp" filter-operator="like" />
 											</div>
@@ -87,11 +87,12 @@
 												</select>
 											</div>
 										</div>
+										<input type="hidden" class="layui-input filter-condition" filter-name="distinctfields" value="fline_id,femp_id" />
 									</div>
 								</div>
 								<div class="box-footer" style="text-align: center">
-									<button type="submit" class="btn btn-info">查询</button> &nbsp;&nbsp;&nbsp;
-									<button type="button" class="btn btn-default" id="vl-reset">重置</button>
+									<button type="button" class="btn btn-info filter-submit">查询</button> &nbsp;&nbsp;&nbsp;
+									<button type="button" class="btn btn-default filter-reset">重置</button>
 								</div>
 							</form>
 						</div>
@@ -123,7 +124,7 @@
                     <!-- /.box-header -->
                     <div class="box-body">
 						<div class="panel panel-default filter" filter-table="#childTable">
-							<form class="layui-form" id="vs-filter-form">
+							<form class="layui-form">
 								<div class="box-body">
 									<div class="layui-form-item">
 										<div class="layui-inline">
@@ -138,11 +139,17 @@
 												<input type="text" class="layui-input filter-condition" filter-name="fcontracts" filter-operator="like" />
 											</div>
 										</div>
+										<div class="layui-inline">
+											<label class="layui-form-label">负责业代</label>
+											<div class="layui-input-inline">
+												<input type="text" class="layui-input filter-condition" filter-name="femp" filter-operator="like" />
+											</div>
+										</div>
 									</div>
 								</div>
 								<div class="box-footer" style="text-align: center">
-									<button type="submit" class="btn btn-info">查询</button> &nbsp;&nbsp;&nbsp;
-									<button type="button" class="btn btn-default" id="vs-reset">重置</button>
+									<button type="button" class="btn btn-info filter-submit">查询</button> &nbsp;&nbsp;&nbsp;
+									<button type="button" class="btn btn-default filter-reset">重置</button>
 								</div>
 							</form>
 						</div>

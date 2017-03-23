@@ -75,6 +75,12 @@
                                             </div>
                                         </div>
                                         <div class="layui-inline">
+                                            <label class="layui-form-label">负责业代</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" class="layui-input filter-condition" filter-name="femp" filter-operator="like">
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
                                             <label class="layui-form-label">线路名称</label>
                                             <div class="layui-input-inline">
                                                 <select class="layui-input filter-condition" filter-name="fline_id">
@@ -122,6 +128,54 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
+                        <div class="panel panel-default filter" filter-table="#storeTable">
+                            <form class="layui-form">
+                                <div class="box-body">
+                                    <div class="layui-form-item">
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">开始时间</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" class="layui-input filter-condition" filter-name="fdate" filter-operator=">=" onclick="layui.laydate({elem: this})">
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">结束时间</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" class="layui-input filter-condition" filter-name="fdate" filter-operator="<=" onclick="layui.laydate({elem: this})">
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">负责业代</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" class="layui-input filter-condition" filter-name="femp" filter-operator="like">
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">门店名称</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" class="layui-input filter-condition" filter-name="fstore" filter-operator="like">
+                                            </div>
+                                        </div>
+
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">巡访状态</label>
+                                            <div class="layui-input-inline">
+                                                <select class="layui-input filter-condition" filter-name="fstatus">
+                                                    <option value="">--请选择--</option>
+                                                    <option value="1">未开始</option>
+                                                    <option value="2">进行中</option>
+                                                    <option value="3">已完成</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box-footer" style="text-align: center">
+                                    <button type="button" class="btn btn-info filter-submit">查询</button> &nbsp;&nbsp;&nbsp;
+                                    <button type="button" class="btn btn-default filter-reset">重置</button>
+                                </div>
+                            </form>
+                        </div>
                         <table id="storeTable" class="table table-bordered table-hover">
                             <thead>
                             <tr>

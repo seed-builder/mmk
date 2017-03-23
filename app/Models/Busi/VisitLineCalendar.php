@@ -77,5 +77,65 @@ class VisitLineCalendar extends BaseModel
 
     }
 
+    /*
+     * 生成指定门店拜访日历
+     */
+    public function makeLineStoreCalendar($femp_id,$fline_id,$fstore_id,$fdate){
+        //删除原有数据
+        $model = new VisitStoreCalendar();
+
+        $model->where('femp_id', $femp_id)
+            ->where('fdate', $fdate)
+            ->where('fstore_id', $fstore_id)
+            ->delete();
+
+        $line_calendar = VisitLineCalendar::query()
+            ->where('femp_id', $femp_id)
+            ->where('fdate', $fdate)
+            ->where('fline_id', $fline_id)
+            ->first();
+
+        if (!empty($line_calendar)){
+            $model->makeCalendar($femp_id,$fstore_id,$line_calendar->id,$fdate);
+        }else{
+            $vlc = VisitLineCalendar::create([
+                'fdate' => $fdate,
+                'femp_id' => $femp_id,
+                'fline_id' => $fline_id,
+            ]);
+
+            $model->makeCalendar($femp_id,$fstore_id,$vlc->id,$fdate);
+        }
+    }
+
+    public function adminFilter($queryBuilder, $request)
+    {
+        $data = $request->all();
+        if (!empty($data['tree'])){
+            $emp = Employee::find($data['tree']['nodeid']);
+            if (empty($emp)) {
+                $dept = Department::find($data['tree']['nodeid']);
+                $emp_ids = $dept->getAllEmployeeByDept()->pluck('id')->toArray();
+
+                $queryBuilder->whereIn('femp_id', $emp_ids);
+            } else {
+                $queryBuilder->where('femp_id', $data['tree']['nodeid']);
+            }
+        }
+
+        if (!empty($data['filter'])){
+            foreach ($data['filter'] as $f){
+                $filter_name = $f['name'];
+                if ($filter_name=="femp"&&!empty($f['value'])){
+                    $ids = Employee::query()->where('fname','like','%'.$f['value'].'%')->pluck('id');
+                    $queryBuilder->whereIn('femp_id', $ids);
+                }else{
+                    $queryBuilder=$this->adminFilterQuery($queryBuilder,$f);
+                }
+            }
+        }
+
+        return $queryBuilder;
+    }
 
 }

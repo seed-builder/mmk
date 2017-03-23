@@ -117,11 +117,13 @@ abstract class DatatablesController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+    	//var_dump($id);
         $entity = $this->newEntity()->newQuery()->find($id);
+        //var_dump($entity);
         $entity->delete();
-        $entity = [];
+        //$entity = [];
         return $this->success($entity);
     }
 
@@ -152,9 +154,12 @@ abstract class DatatablesController extends Controller
         $order = $request->input('order', []);
         $search = $request->input('search', []);
         $draw = $request->input('draw', 0);
-        $filter = $request->input('filter', []);
+//        $filter = $request->input('filter', []);
 
         $queryBuilder = $this->entityQuery(); //$this->newEntity()->newQuery();
+        if (!$this->newEntity()->filter)
+        $queryBuilder = $this->newEntity()->adminFilter($queryBuilder,$request); //$this->newEntity()->newQuery();
+
         if (!empty($with)) {
             $queryBuilder->with($with);
         }
@@ -170,9 +175,9 @@ abstract class DatatablesController extends Controller
 
         $total = $queryBuilder->count();
 
-        if (!empty($filter)) {
-            $this->filter($queryBuilder,$filter);
-        }
+//        if (!empty($filter)) {
+//            $this->filter($queryBuilder,$filter);
+//        }
         if ($conditionCall != null && is_callable($conditionCall)) {
             $conditionCall($queryBuilder);
         }

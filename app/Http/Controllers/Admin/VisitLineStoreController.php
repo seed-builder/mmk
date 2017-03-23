@@ -84,42 +84,6 @@ class VisitLineStoreController extends AdminController
         $with = ['line','store','employee.department'];
 
         return parent::pagination($request, $searchCols, $with, function ($queryBuilder) use ($data,$request) {
-            $tree = $request->input('tree',[]);
-            if (!empty($tree['nodeid'])) {//组织树点击查询
-                $emp = Employee::find($tree['nodeid']);
-                if (empty($emp)) {
-                    $dept = Department::find($tree['nodeid']);
-                    $emp_ids = $dept->getAllEmployeeByDept()->pluck('id')->toArray();
-
-                    $queryBuilder->whereIn('femp_id', $emp_ids);
-                } else {
-                    $queryBuilder->where('femp_id', $tree['nodeid']);
-                }
-            }
-
-            if (!empty($data['femp'])){
-                $ids = Employee::query()->where('fname','like','%'.$data['femp'].'%')->pluck('id');
-                $queryBuilder->whereIn('femp_id', $ids);
-            }
-            if (!empty($data['fstore'])){
-                $ids = Store::query()->where('ffullname','like','%'.$data['fstore'].'%')->pluck('id');
-                $queryBuilder->whereIn('fstore_id', $ids);
-            }
-            if (!empty($data['fcontracts'])){
-                $ids = Store::query()->where('fcontracts','like','%'.$data['fcontracts'].'%')->pluck('id');
-                $queryBuilder->whereIn('fstore_id', $ids);
-            }
-            if (!empty($data['femp_id'])){
-                $queryBuilder->where('femp_id', $data['femp_id']);
-            }
-            if (!empty($data['fline_id'])){
-                $queryBuilder->where('fline_id', $data['fline_id']);
-            }
-
-            if (!empty($data['distinctfields'])) {
-                $queryBuilder->groupBy($data['distinctfields'])->distinct();
-            }
-
 
             $ids = $this->getCurUsersEmployeeIds();
             //var_dump($ids);

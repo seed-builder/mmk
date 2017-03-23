@@ -24,4 +24,6 @@ class Permission extends EntrustPermission
     //
     protected $table = 'sys_permissions';
 	protected $guarded = ['id'];
+    public $filter = "false";
+
 }

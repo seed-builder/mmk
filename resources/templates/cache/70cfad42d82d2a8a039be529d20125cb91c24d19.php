@@ -31,7 +31,7 @@ class <?php echo e($model); ?>Controller extends BaseController
 	public function index()
 	{
 		//
-		return view('admin.<?php echo e(snake_case($model,'-')); ?>.index');
+		return view('customer.<?php echo e(snake_case($model,'-')); ?>.index');
 	}
 
 	/**
@@ -41,7 +41,7 @@ class <?php echo e($model); ?>Controller extends BaseController
 	*/
 	public function create()
 	{
-		return view('admin.<?php echo e(snake_case($model,'-')); ?>.create');
+		return view('customer.<?php echo e(snake_case($model,'-')); ?>.create');
 	}
 
 	/**
@@ -53,7 +53,7 @@ class <?php echo e($model); ?>Controller extends BaseController
 	public function edit($id)
 	{
 		$entity = <?php echo e($model); ?>::find($id);
-		return view('admin.<?php echo e(snake_case($model,'-')); ?>.edit', ['entity' => $entity]);
+		return view('customer.<?php echo e(snake_case($model,'-')); ?>.edit', ['entity' => $entity]);
 	}
 
 	/**

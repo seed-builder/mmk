@@ -42,10 +42,6 @@ class VisitLineCalendarController extends AdminController
         $data = $request->all();
 
         return parent::pagination($request, $searchCols, $with, function ($queryBuilder) use ($data,$request) {
-            $tree = $request->input('tree',[]);
-            if (!empty($tree)){
-                $this->tree($queryBuilder,$tree,false);
-            }
 
             $ids = $this->getCurUsersEmployeeIds();
             //var_dump($ids);

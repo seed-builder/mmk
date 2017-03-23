@@ -34,6 +34,9 @@ class EventServiceProvider extends ServiceProvider
 	    'App\Events\VisitDetailCompletedEvent' => [
 		    'App\Listeners\VisitDetailCompletedEventHandler',
 	    ],
+	    'App\Events\OrderDeliveryEvent' => [
+		    'App\Listeners\OrderDeliveryHandler',
+	    ],
     ];
 
     /**

@@ -197,10 +197,10 @@ define(function (require, exports, module) {
                             return "";
                     }
                 },
-                {'data': 'fsale_unit'},
-                {'data': 'fbase_unit'},
                 {'data': 'fqty'},
+                {'data': 'fsale_unit'},
                 {'data': 'fbase_qty'},
+                {'data': 'fbase_unit'},
                 {
                     "data": "fdocument_status",
                     render: function ( data, type, full ) {

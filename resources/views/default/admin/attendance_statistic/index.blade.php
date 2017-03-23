@@ -44,7 +44,6 @@
                                 </ul>
                             </div>
                         </div>
-                        <input type="text" class="form-control pull-right" id="treeSearch" placeholder="搜索">
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">

@@ -61,7 +61,7 @@ class Kernel extends ConsoleKernel
             $line = VisitLine::query()->where('fnumber',$fnumber)->first();
             $vls = VisitLineStore::query()->where('fline_id',$line->id)->get();
             foreach ($vls as $v){
-                $calendar->makeCalendar($v->femp_id,$line->id,date('Y-m-d H:i:s'));
+                $calendar->makeCalendar($v->femp_id,$line->id,date('Y-m-d'));
             }
 
         })->dailyAt('00:00');

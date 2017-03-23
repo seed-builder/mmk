@@ -68,7 +68,12 @@ class SaleOrder extends BaseModel
 			//event(new \App\Events\ModelCreatedEvent($model));
 			if(empty($model->fbill_no)){
 				$store = Store::find($model->fstore_id);
-				$model->fbill_no = $store->fnumber . date('Ymd');
+				$count = SaleOrder::where('fstore_id', $model->fstore_id)
+					->where('femp_id', $model->femp_id)
+					->where('fdate', $model->fdate)
+					->count();
+				$count ++;
+				$model->fbill_no = $store->fnumber . date('Ymd') . sprintf('%02d',$count);
 				$model->fcust_id = $store->fcust_id;
 			}
 		});

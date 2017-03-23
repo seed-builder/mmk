@@ -175,10 +175,6 @@ class StoreController extends AdminController
 
         //数据处理
 
-//        $data['fprovince'] = City::find($data['fprovince'])->Name;
-//        $data['fcity'] = City::find($data['fcity'])->Name;
-//        $data['fcountry'] = City::find($data['fcountry'])->Name;
-
         $postalcode = City::getPostalCode($data['fprovince'], $data['fcity'], $data['fcountry']);
         if ($postalcode) {
             $fn = Store::where('fpostalcode', $postalcode)->max('fnumber');
@@ -198,18 +194,6 @@ class StoreController extends AdminController
             //$entity = Entity::create($data);
             $re = $entity->save();
 
-            //生成路线
-            VisitLineStore::create([
-                'fline_id' => $data['fline_id'],
-                'fstore_id' => $entity->id,
-                'femp_id' => $data['femp_id'],
-                'fweek_day' => VisitLine::find($data['fline_id'])->fnumber,
-            ]);
-
-            $diffday = VisitLine::find($data['fline_id'])->fnumber-date("w");
-            $calendar = new VisitLineCalendar();
-            $calendar->makeCalendar($data['femp_id'],$data['fline_id'],date('Y-m-d',strtotime('+'.$diffday.' day')));
-
 
             if ($re) {
                 return [
@@ -224,15 +208,6 @@ class StoreController extends AdminController
             }
         } else {
             $re = Store::query()->where('id', $data['id'])->update($data);
-
-            VisitLineStore::query()->where('fstore_id',$data['id'])->where('femp_id',$data['femp_id'])->update([
-                'fline_id' => $data['fline_id'],
-                'fweek_day' => VisitLine::find($data['fline_id'])->fnumber,
-            ]);
-
-            $diffday = VisitLine::find($data['fline_id'])->fnumber-date("w");
-            $calendar = new VisitLineCalendar();
-            $calendar->makeCalendar($data['femp_id'],$data['fline_id'],date('Y-m-d',strtotime('+'.$diffday.' day')));
 
             if ($re) {
                 return [

@@ -1,6 +1,6 @@
 @extends('admin.layout.collapsed-sidebar')
 @section('styles')
-
+    <link type="text/css" href="/assets/plugins/bootstrap-select/bootstrap-select.css" rel="stylesheet"/>
     <style>
         .tangram-suggestion-main {
             z-index: 9999;
@@ -161,7 +161,7 @@
                                     <div class="layui-form-item">
                                         <label class="layui-form-label col-sm-3">门店简称</label>
                                         <div class="layui-input-block">
-                                            <input type="text" name="fshortname" required lay-verify="required" autocomplete="off" class="layui-input">
+                                            <input type="text" name="fshortname" required lay-verify="" autocomplete="off" class="layui-input">
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
@@ -215,7 +215,7 @@
                                     <div class="layui-form-item">
                                         <label class="layui-form-label col-sm-3">渠道分类</label>
                                         <div class="layui-input-block">
-                                            <select name="fchannel" lay-filter="fchannel">
+                                            <select name="fchannel" lay-filter="fchannel" lay-search>
                                                 @foreach($channels as $f)
                                                     <option value="{{$f->id}}">{{$f->fname}}</option>
                                                 @endforeach
@@ -225,7 +225,7 @@
                                     <div class="layui-form-item">
                                         <label class="layui-form-label col-sm-3">客户分级</label>
                                         <div class="layui-input-block">
-                                            <select name="fcust_id" lay-filter="fcust_id">
+                                            <select name="fcust_id" lay-filter="fcust_id" lay-search>
                                                 @foreach($cus as $c)
                                                     <option value="{{$c->id}}">{{$c->fname}}</option>
                                                 @endforeach
@@ -235,7 +235,7 @@
                                     <div class="layui-form-item">
                                         <label class="layui-form-label col-sm-3">营业执照</label>
                                         <div class="layui-input-block">
-                                            <input type="text" name="fbusslicense" required lay-verify="required" autocomplete="off" class="layui-input">
+                                            <input type="text" name="fbusslicense" required lay-verify="" autocomplete="off" class="layui-input">
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
@@ -312,11 +312,54 @@
         </div>
     </div>
 
+    <div id="make-todos-modal" class="modal fade modal-scroll" role="dialog" tabindex="-1" data-replace="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">批量生成拜访事项</h4>
+                </div>
+                <form class="form-horizontal" id="todoForm" action="{{url('admin/visit-store-todo/batch-make-todos')}}">
+                    {{ csrf_field() }}
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">生成方式</label>
+                            <div class="col-md-9">
+                                <select class="form-control" name="make-todo-type" id="make-todo-type">
+                                    <option value="1">初始化</option>
+                                    <option value="2">根据经销商选择</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group" id="customers" style="display: none">
+                            <label class="control-label col-md-3">经销商</label>
+                            <div class="col-md-9">
+                                <select class="form-control" name="fcust_id" id="fcust_id" data-live-search="true">
+                                    @foreach($cus as $c)
+                                        <option value="{{$c->id}}">{{$c->fname}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary pull-right">生成</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 @endsection
 @section('js')
     <script src="/assets/plugins/bootstrap-fileinput/js/fileinput.min.js"></script>
     <script src="/assets/plugins/bootstrap-fileinput/js/fileinput_locale_zh_CN.js"></script>
     <script src="/assets/plugins/bootstrap-treeview/bootstrap-treeview.min.js"></script>
+    <script src="/assets/plugins/bootstrap-select/bootstrap-select.js"></script>
+    <script src="/assets/plugins/bootstrap-select/i18n/defaults-zh_CN.js"></script>
     <script type="text/javascript"
             src="http://api.map.baidu.com/api?v=2.0&ak=D4Bi3270ydgA5HsnWDnmBVwF3zaPdoMC"></script>
 

@@ -9,10 +9,14 @@ define(function (require, exports, module) {
 
        var orderEditCn = $.extend(editorCN, {
             create:{
-                title: '新增主订单信息'
+                title: '新增主订单信息',
+                button: "新建",
+                submit: "提交"
             },
             edit: {
-                title: '订单编辑'
+                title: '订单编辑',
+                button: "新建",
+                submit: "提交"
             },
         });
         //editorCN.edit.title = '确认接单';
@@ -133,9 +137,9 @@ define(function (require, exports, module) {
                         })
                     }
                 },
-                // {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: orderEditor},
-                // {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: orderEditor},
-                // {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: orderEditor},
+                {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: orderEditor},
+                {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: orderEditor},
+                {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: orderEditor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
                 {extend: 'colvis', text: '列显示'}
@@ -283,9 +287,9 @@ define(function (require, exports, module) {
                         })
                     }
                 },
-                // {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: infoEditor, enabled: false},
-                // {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: infoEditor, enabled: false},
-                // {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: infoEditor, enabled: false},
+                {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: infoEditor, enabled: false},
+                {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: infoEditor, enabled: false},
+                {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: infoEditor, enabled: false},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
                 {extend: 'colvis', text: '列显示'}
@@ -333,15 +337,6 @@ define(function (require, exports, module) {
             }
         }
 
-        function addOptions(select, options) {
-            select.options.length=0;
-            for(var i=0; i < options.length; i++) {
-                var op = document.createElement("option");      // 新建OPTION (op)
-                op.setAttribute("value", options[i].value);          // 设置OPTION的 VALUE
-                op.appendChild(document.createTextNode(options[i].text)); // 设置OPTION的 TEXT
-                select.appendChild(op);           // 为SELECT 新建一 OPTION(op)
-            }
-        }
 
         //
         $('#sureForm').bootstrapValidator({

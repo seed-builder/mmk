@@ -67,8 +67,8 @@ class VisitTodoCalendar extends BaseModel
      * 生成拜访具体工作日志
      * 参数 fdate femp_id fstore_calendar_id
      */
-    public function makeCalendar($fdate,$femp_id,$fstore_calendar_id){
-        $todos = VisitStoreTodo::query()->where('fparent_id',0)->get();
+    public function makeCalendar($fdate,$femp_id,$fstore_calendar_id,$fstore_id){
+        $todos = VisitStoreTodo::query()->where('fparent_id',0)->where('fstore_id',$fstore_id)->get();
 
         foreach ($todos as $t){
             $vtc = VisitTodoCalendar::create([
