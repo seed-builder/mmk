@@ -177,7 +177,7 @@ define(function (require, exports, module) {
 
                     }
                 },
-                //{extend: 'colvis', text: '列显示'}
+                {extend: 'colvis', text: '列显示'}
             ]
         });
 

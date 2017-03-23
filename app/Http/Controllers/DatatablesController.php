@@ -117,9 +117,12 @@ abstract class DatatablesController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+    	var_dump($id);
+
         $entity = $this->newEntity()->newQuery()->find($id);
+        var_dump($entity);
         $entity->delete();
         $entity = [];
         return $this->success($entity);
