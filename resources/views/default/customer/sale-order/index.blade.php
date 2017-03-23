@@ -1,6 +1,7 @@
 @extends('customer.layout.collapsed-sidebar')
 @section('styles')
     @include('customer.layout.datatable-css')
+    <link rel="stylesheet" href="/assets/plugins/bootstrap-select/bootstrap-select.min.css" />
     <link rel="stylesheet" href="/assets/plugins/bootstrap-validator/css/bootstrapValidator.min.css" />
 @endsection
 
@@ -42,7 +43,7 @@
                                 <th>门店</th>
                                 <th>下单日期</th>
                                 <th>业务员</th>
-                                <th>经销商</th>
+                                {{--<th>经销商</th>--}}
                                 <th>发货状态</th>
                                 <th>来源</th>
                             </tr>
@@ -148,8 +149,10 @@
 @endsection
 @section('js')
     @include('customer.layout.datatable-js')
+    <script src="/assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
     <script src="/assets/plugins/bootstrap-validator/js/bootstrapValidator.min.js"></script>
     <script src="/assets/plugins/bootstrap-validator/js/language/zh_CN.js"></script>
+    {{--<script src="/js/dt.ext.js"></script>--}}
     <script type="text/javascript">
         var stores = {!! json_encode($stores) !!}
         var employees = {!! json_encode($employees) !!}
@@ -157,7 +160,10 @@
             seajs.use('customer/sale_order.js', function (app) {
                 app.index($, 'orderTable','orderInfoTable', stores, employees);
             });
+            $('.selectpicker').selectpicker();
+
         });
+
     </script>
 
 @endsection

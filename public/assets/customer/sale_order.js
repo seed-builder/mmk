@@ -19,8 +19,7 @@ define(function (require, exports, module) {
                 submit: "提交"
             },
         });
-        //editorCN.edit.title = '确认接单';
-        //editorCN.edit.submit = '确认接单';
+
         var orderEditor = new $.fn.dataTable.Editor({
             ajax: {
                 create: {
@@ -48,7 +47,7 @@ define(function (require, exports, module) {
                     def:   function () { return new Date(); }},
                 {'label': '业务员','name':'femp_id' , 'data': 'employee.fname',  'type': 'select', 'options': employees},
                 {'label': '门店', 'name':'fstore_id', 'data': 'store.ffullname',  'type': 'select', 'options': stores},
-                {'label':'source', 'name': 'source', 'data': 'source', 'def': 'customer'}
+                {'label':'source', 'name': 'source', 'data': 'source', 'def': 'customer', 'type':'hidden'}
             ]
         });
 
@@ -83,15 +82,15 @@ define(function (require, exports, module) {
                             return "";
                     }
                 },
-                {
-                    'data': 'fcust_id',
-                    render: function (data, type, full) {
-                        if (full.customer != null)
-                            return full.customer.fname
-                        else
-                            return "";
-                    }
-                },
+                // {
+                //     'data': 'fcust_id',
+                //     render: function (data, type, full) {
+                //         if (full.customer != null)
+                //             return full.customer.fname
+                //         else
+                //             return "";
+                //     }
+                // },
                 {
                     'data': 'fsend_status',
                     render: function (data, type, full) {
@@ -144,11 +143,23 @@ define(function (require, exports, module) {
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
                 {extend: 'colvis', text: '列显示'}
-            ]
+            ],
+            order: [[3, 'desc']]
         });
 
-        editorCN.edit.title = '确认发货数量';
-        editorCN.edit.submit = '确认';
+
+        var orderEditCn = $.extend(editorCN, {
+            create:{
+                title: '新增订单明细信息',
+                button: "新建",
+                submit: "提交"
+            },
+            edit: {
+                title: '订单明细编辑',
+                button: "保存",
+                submit: "提交"
+            },
+        });
         var infoEditor = new $.fn.dataTable.Editor({
             ajax: {
                 create: {
@@ -319,6 +330,7 @@ define(function (require, exports, module) {
                 orderTable.buttons( ['.accept'] ).enable(order.fsend_status == 'A');
                 orderTable.buttons( ['.buttons-edit'] ).enable(order.source != 'phone');
                 orderTable.buttons( ['.buttons-remove'] ).enable(order.source != 'phone' && order.fsend_status == 'A');
+                infoTable.buttons( ['.buttons-create']).enable(order.source != 'phone');
             }
         }
 
@@ -332,11 +344,10 @@ define(function (require, exports, module) {
             var detail = detailrows.length > 0 ? detailrows[0] : null;
             //console.log(order);
             if(order && detail){
-                infoTable.buttons( ['.buttons-create', '.buttons-edit','.buttons-remove']).enable(order.source != 'phone' && detail.fsend_status == 'A');
+                infoTable.buttons( ['.buttons-edit','.buttons-remove']).enable(order.source != 'phone' && detail.fsend_status == 'A');
                 infoTable.buttons( ['.sure', '.send']).enable(detail.fsend_status == 'B');
             }
         }
-
 
         //
         $('#sureForm').bootstrapValidator({
