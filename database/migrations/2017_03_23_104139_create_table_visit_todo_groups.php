@@ -60,8 +60,8 @@ class CreateTableVisitTodoGroups extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('visit_todo_groups');
 	    Schema::dropIfExists('visit_todo_group_details');
 	    Schema::dropIfExists('visit_todo_group_stores');
+        Schema::dropIfExists('visit_todo_groups');
     }
 }
