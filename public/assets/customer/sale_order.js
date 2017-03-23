@@ -187,8 +187,6 @@ define(function (require, exports, module) {
                 {'label': '销售单位', 'name': 'readonly_fsale_unit', 'data': 'fsale_unit', 'type': 'readonly'},
                 {'label': '基本单位数量', 'name': 'readonly_fbase_qty',  'data': 'fbase_qty', 'type': 'readonly'},
                 {'label': '基本单位', 'name': 'readonly_fbase_unit', 'data': 'fbase_unit', 'type': 'readonly'},
-                {'label': '确认销售单位数量', 'name': 'fsend_qty' },
-                {'label': '确认基本单位数量', 'name': 'fsend_base_qty' },
             ]
         });
 
