@@ -9,6 +9,7 @@ use App\Models\Busi\StockOut;
 use App\Models\Busi\StockOutItem;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\DB;
 
 /**
  * 订单配送事件监听
