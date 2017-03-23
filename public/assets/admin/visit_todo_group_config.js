@@ -148,7 +148,14 @@ define(function(require, exports, module) {
                 'style': 'multi'
             },
             buttons: [
-                // { text: '新增', action: function () { }  },
+                { text: '生成拜访日志', action: function () {
+                    if ($("#todo_group_id").val()==0){
+                        layer.alert('请先选择一个方案');
+                        return
+                    }
+                    $("#makeCalendarModal").modal('show')
+                    $("#group_id").val($("#todo_group_id").val())
+                }  },
                 // { text: '编辑', className: 'edit', enabled: false },
                 // { text: '删除', className: 'delete', enabled: false },
             ]
@@ -184,8 +191,14 @@ define(function(require, exports, module) {
                 todoTree();
             })
 
-            console.log(ids)
         })
+
+        $("#makeCalendarForm").on('submit',function () {
+
+            ajaxForm('#makeCalendarForm')
+            return false;
+        })
+
     }
 
 });

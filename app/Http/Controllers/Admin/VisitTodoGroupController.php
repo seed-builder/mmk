@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Busi\Customer;
 use App\Models\Busi\Store;
 use App\Models\Busi\VisitStoreTodo;
+use App\Services\VisitCalendarService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
 use App\Models\Busi\VisitTodoGroup;
@@ -102,7 +103,7 @@ class VisitTodoGroupController extends AdminController
             if (!empty($entity->children)) {
                 $nodes = [];
                 foreach ($entity->children as $child) {
-                    if (in_array($child->id,$todoids)) {
+                    if (in_array($child->id, $todoids)) {
                         $nodes[] = $this->toBootstrapTreeViewData($child, $props, $expanded);
                     }
                 }
@@ -117,23 +118,25 @@ class VisitTodoGroupController extends AdminController
     public function config()
     {
         $customers = Customer::all();
-        $groups = VisitTodoGroup::all()->where('fdate','>',date("Y-m-d"));
+        $groups = VisitTodoGroup::all()->where('fstart_date', '>', date("Y-m-d"));
+
         return view('admin.visit-todo-group.config', compact('customers', 'groups'));
     }
 
-    public function addTodo(Request $request){
+    public function addTodo(Request $request)
+    {
         $data = $request->all();
         $ids = [];
         $todo = VisitStoreTodo::find($data['todo_id']);
         $vp = VisitTodoGroup::find($data['group_id']);
 
         $ids[] = $todo->id;
-        if (!empty($todo->children)){
+        if (!empty($todo->children)) {
             foreach ($todo->children as $t)
-                $ids[]=$t->id;
+                $ids[] = $t->id;
         }
 
-        $ids = array_diff($ids,$vp->todos->pluck('id')->toArray());
+        $ids = array_diff($ids, $vp->todos->pluck('id')->toArray());
 
         $vp->todos()->attach($ids);
 
@@ -143,15 +146,16 @@ class VisitTodoGroupController extends AdminController
         ]);
     }
 
-    public function removeTodo(Request $request){
+    public function removeTodo(Request $request)
+    {
         $data = $request->all();
 
         $ids = [];
         $todo = VisitStoreTodo::find($data['todo_id']);
         $ids[] = $todo->id;
-        if (!empty($todo->children)){
+        if (!empty($todo->children)) {
             foreach ($todo->children as $t)
-                $ids[]=$t->id;
+                $ids[] = $t->id;
         }
 
         $vp = VisitTodoGroup::find($data['group_id']);
@@ -163,18 +167,45 @@ class VisitTodoGroupController extends AdminController
         ]);
     }
 
-    public function makeTodoByGroup(Request $request){
+    public function makeTodoByGroup(Request $request)
+    {
         $data = $request->all();
 
-        $store_ids = explode(',',$data['todo_ids']);
+        $store_ids = explode(',', $data['todo_ids']);
         $vp = VisitTodoGroup::find($data['group_id']);
 
-        $store_ids = array_diff($store_ids,$vp->stores->pluck('id')->toArray());
+        $store_ids = array_diff($store_ids, $vp->stores->pluck('id')->toArray());
         $vp->stores()->attach($store_ids);
 
         return response()->json([
             'code' => 200,
             'result' => '生成成功！'
+        ]);
+    }
+
+    public function makeCalendar(Request $request)
+    {
+        $data = $request->all();
+
+        $vp = VisitTodoGroup::find($data['group_id']);
+        if (strtotime($data['start_date']) < strtotime($vp->fstart_date)) {
+            return response()->json([
+                'code' => 500,
+                'result' => '生成日志的开始时间不能早于'.$vp->fstart_date.'，生成失败！'
+            ]);
+        }
+        if (strtotime($data['end_date']) > strtotime($vp->fend_date)){
+            return response()->json([
+                'code' => 500,
+                'result' => '生成日志的结束时间不能晚于'.$vp->fend_date.'，生成失败！'
+            ]);
+        }
+        $calendar = new VisitCalendarService();
+        $calendar->makeGroup($data['group_id'], $data['start_date'], $data['end_date']);
+
+        return response()->json([
+            'code' => 200,
+            'result' => '生成拜访日志成功！'
         ]);
     }
 

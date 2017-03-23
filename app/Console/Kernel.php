@@ -6,6 +6,8 @@ use App\Models\Busi\Store;
 use App\Models\Busi\VisitLine;
 use App\Models\Busi\VisitLineCalendar;
 use App\Models\Busi\VisitLineStore;
+use App\Services\VisitCalendar;
+use App\Services\VisitCalendarService;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\DB;
@@ -42,27 +44,24 @@ class Kernel extends ConsoleKernel
 	    $schedule->command('gen:att-rpt')->dailyAt('02:00');
 
 	    //每周日00:00执行 生成下一周的拜访日记
-        $schedule->call(function(VisitLineCalendar $calendar){
+        $schedule->call(function(VisitCalendarService $calendar){
             for ($fnumber=1;$fnumber<=7;$fnumber++){
-                $line = VisitLine::query()->where('fnumber',$fnumber)->first();
-                $vls = VisitLineStore::query()->where('fline_id',$line->id)->get();
-                $fdate = date('Y-m-d',strtotime('+'.$fnumber.' day'));
+//                $line = VisitLine::query()->where('fnumber',$fnumber)->first();
+//                $vls = VisitLineStore::query()->where('fline_id',$line->id)->get();
+//                $fdate = date('Y-m-d',strtotime('+'.$fnumber.' day'));
+//
+//                foreach ($vls as $v){
+//                    $calendar->makeCalendar($v->femp_id,$line->id,$fdate);
+//                }
 
-                foreach ($vls as $v){
-                    $calendar->makeCalendar($v->femp_id,$line->id,$fdate);
-                }
+                $calendar->makeAllStores(date('Y-m-d',strtotime('+'.$fnumber.' day')));
             }
 
         })->weekly();
 
         //每天00:00点执行 生成拜访日记
-        $schedule->call(function(VisitLineCalendar $calendar){
-            $fnumber = date("w");
-            $line = VisitLine::query()->where('fnumber',$fnumber)->first();
-            $vls = VisitLineStore::query()->where('fline_id',$line->id)->get();
-            foreach ($vls as $v){
-                $calendar->makeCalendar($v->femp_id,$line->id,date('Y-m-d'));
-            }
+        $schedule->call(function(VisitCalendarService $calendar){
+            $calendar->makeAllStores(date('Y-m-d'));
 
         })->dailyAt('00:00');
 

@@ -105,13 +105,15 @@
                                         <div class="layui-inline">
                                             <label class="layui-form-label">门店名称</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" class="layui-input filter-condition" filter-name="ffullname" filter-operator="like" />
+                                                <input type="text" class="layui-input filter-condition"
+                                                       filter-name="ffullname" filter-operator="like"/>
                                             </div>
                                         </div>
                                         <div class="layui-inline">
                                             <label class="layui-form-label">经销商</label>
                                             <div class="layui-input-inline">
-                                                <select class="layui-input filter-condition" filter-name="fcust_id" lay-search>
+                                                <select class="layui-input filter-condition" filter-name="fcust_id"
+                                                        lay-search>
                                                     <option value="">--请选择--</option>
                                                     @foreach($customers as $c)
                                                         <option value="{{$c->id}}">{{$c->fname}}</option>
@@ -122,7 +124,8 @@
                                     </div>
                                 </div>
                                 <div class="box-footer" style="text-align: center">
-                                    <button type="button" class="btn btn-info filter-submit">查询</button> &nbsp;&nbsp;&nbsp;
+                                    <button type="button" class="btn btn-info filter-submit">查询</button>
+                                    &nbsp;&nbsp;&nbsp;
                                     <button type="button" class="btn btn-default filter-reset">重置</button>
                                 </div>
                             </form>
@@ -152,6 +155,46 @@
         <!-- /.row -->
     </section>
 
+    <div class="modal fade" tabindex="-1" role="dialog" id="makeCalendarModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">生成拜访日历</h4>
+                </div>
+                <form class="form-horizontal" id="makeCalendarForm"
+                      action="{{url('/admin/visit-todo-group/makeCalendar')}}">
+                    {{ csrf_field() }}
+                    <div class="modal-body">
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label>开始时间</label>
+                                <input type="date" class="form-control" name="start_date">
+                            </div>
+                            <div class="form-group">
+                                <label>结束时间</label>
+                                <input type="date" class="form-control" name="end_date">
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <input type="hidden" name="group_id" id="group_id">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="submit" class="btn btn-primary">保存</button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
 @endsection
 @section('js')
     @include('admin.layout.datatable-js')
@@ -162,7 +205,7 @@
     <script type="text/javascript">
         $(function () {
             seajs.use('admin/visit_todo_group_config.js', function (app) {
-                app.index($, 'moduleTable','tree-todo','tree-todo-group');
+                app.index($, 'moduleTable', 'tree-todo', 'tree-todo-group');
             });
         });
     </script>

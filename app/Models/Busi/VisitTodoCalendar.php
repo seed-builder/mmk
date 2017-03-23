@@ -68,7 +68,15 @@ class VisitTodoCalendar extends BaseModel
      * 参数 fdate femp_id fstore_calendar_id
      */
     public function makeCalendar($fdate,$femp_id,$fstore_calendar_id,$fstore_id){
-        $todos = VisitStoreTodo::query()->where('fparent_id',0)->where('fstore_id',$fstore_id)->get();
+        $store = Store::find($fstore_id);
+        $group = $store->todo_groups()
+            ->where('fstart_date','>=',date('Y-m-d'))
+            ->where('fend_date','<=',date('Y-m-d'))
+            ->orderBy('fcreate_date','desc')
+            ->first();
+
+        $todo_ids = $group->todos->pluck('id')->toArray();
+        $todos = VisitStoreTodo::query()->where('fparent_id',0)->whereIn('id',$todo_ids)->get();
 
         foreach ($todos as $t){
             $vtc = VisitTodoCalendar::create([
@@ -81,7 +89,7 @@ class VisitTodoCalendar extends BaseModel
             ]);
 
             if (!empty($t->children)){
-                foreach ($t->children as $child){
+                foreach ($t->children->whereIn('id',$todo_ids) as $child){
                     VisitTodoCalendar::create([
                         'fparent_id' => $vtc->id,
                         'fdate' => $fdate,
