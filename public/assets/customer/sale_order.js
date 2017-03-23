@@ -5,7 +5,7 @@ define(function (require, exports, module) {
 
     var zhCN = require('datatableZh');
     var editorCN = require('i18n');
-    exports.index = function ($, orderTableId,orderInfoTableId) {
+    exports.index = function ($, orderTableId, orderInfoTableId,  stores, employees) {
 
        var orderEditCn = $.extend(editorCN, {
             create:{
@@ -44,10 +44,11 @@ define(function (require, exports, module) {
             idSrc: 'id',
             fields: [
                 {'label': '订单号', 'name': 'readonly_fbill_no', 'data': 'fbill_no', 'type': 'readonly'},
-                {'label': '订单日期', 'name': 'readonly_fdate',  'data': 'fdate', 'type': 'readonly'},
-                {'label': '业务员','name':'readonly_femp_id' , 'data': 'employee.fname',  'type': 'readonly'},
-                {'label': '门店', 'name':'readonly_fstore_id', 'data': 'store.ffullname',  'type': 'readonly'},
-                {'label': '发货状态', 'name': 'fsend_status', 'def': 'C', 'type':'select', 'options':[{ 'label': '已收货', value:'C' }]},
+                {'label': '订单日期', 'name': 'fdate',  'data': 'fdate', type:  'datetime',
+                    def:   function () { return new Date(); }},
+                {'label': '业务员','name':'femp_id' , 'data': 'employee.fname',  'type': 'select', 'options': employees},
+                {'label': '门店', 'name':'fstore_id', 'data': 'store.ffullname',  'type': 'select', 'options': stores},
+                {'label':'source', 'name': 'source', 'data': 'source', 'def': 'customer'}
             ]
         });
 

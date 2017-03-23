@@ -134,6 +134,10 @@ class Customer extends Authenticatable
 		return $this->hasManyThrough(StockOut::class, Store::class, 'fcust_id', 'fstore_id');
 	}
 
+	public function department(){
+		return $this->belongsTo(Department::class, 'fsale_area_id');
+	}
+
     public function adminFilter($queryBuilder,$request){
         $data = $request->all();
         if (!empty($data['filter'])){

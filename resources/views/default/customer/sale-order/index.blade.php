@@ -151,9 +151,11 @@
     <script src="/assets/plugins/bootstrap-validator/js/bootstrapValidator.min.js"></script>
     <script src="/assets/plugins/bootstrap-validator/js/language/zh_CN.js"></script>
     <script type="text/javascript">
+        var stores = {!! json_encode($stores) !!}
+        var employees = {!! json_encode($employees) !!}
         $(function () {
             seajs.use('customer/sale_order.js', function (app) {
-                app.index($, 'orderTable','orderInfoTable');
+                app.index($, 'orderTable','orderInfoTable', stores, employees);
             });
         });
     </script>

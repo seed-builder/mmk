@@ -23,7 +23,23 @@ class SaleOrderController extends BaseController
 	public function index()
 	{
 		//
-		return view('customer.sale-order.index');
+		$customer = Auth::user();
+		$emps=[];
+		$stores = [];
+		if(!empty($customer->department))
+		{
+			$employees = $customer->department->getAllEmployeeByDept();
+			$emps = $employees->map(function ($employee){
+				return ['label' => $employee->fname, 'value' => $employee->id];
+			});
+		}
+		if($customer->stores){
+			$stores = $customer->stores->map(function ($store){
+				return ['label' => $store->ffullname, 'value' => $store->id];
+			});
+		}
+
+		return view('customer.sale-order.index', ['stores' => $stores, 'employees' => $emps]);
 	}
 
 	/**
