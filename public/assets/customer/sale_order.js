@@ -262,7 +262,6 @@ define(function (require, exports, module) {
                     action: function (e, dt, node, config) {
                         layer.confirm('确认配送?', {btn: ['确定', '取消']}, function () {
                             var orders = dt.rows('.selected').data();
-
                             if(orders.length > 0){
                                 var ids = [] ;
                                 var orderId = 0

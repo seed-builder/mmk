@@ -106,8 +106,11 @@ class SaleOrderItemController extends BaseController
 			SaleOrderItem::whereIn('id', $ids)->update(['fsend_status' => 'C']);
 			$count = SaleOrderItem::where('fsale_order_id', $orderId)->where('fsend_status', '<>', 'C')->count();
 			if ($count == 0) {
-				$order = SaleOrder::find($orderId)->update(['fsend_status' => 'C']);
-				event(new OrderDeliveryEvent($orderId));
+				$order = SaleOrder::find($orderId);
+				if($order->fsend_status != 'C') {
+					$order->update(['fsend_status' => 'C']);
+					event(new OrderDeliveryEvent($orderId));
+				}
 			}else{
 				$order = SaleOrder::find($orderId)->update(['fsend_status' => 'D']);
 			}

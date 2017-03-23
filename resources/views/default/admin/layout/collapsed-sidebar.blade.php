@@ -41,7 +41,7 @@
     <!-- FastClick -->
     <script src="/assets/plugins/fastclick/fastclick.js"></script>
     <script src="/assets/plugins/toastr/toastr.min.js"></script>
-    <script src="/assets/plugins/layer/layer.js"></script>
+    {{--<script src="/assets/plugins/layer/layer.js"></script>--}}
     <script src="{{url('assets')}}/plugins/layui/layui.js"></script>
 
     <script src="/js/jquery.bootstrap.min.js"></script>
