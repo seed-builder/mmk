@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Busi\Employee;
+use App\Repositories\SysConfigRepo;
 use Illuminate\Http\Request;
 use App\Models\Busi\Employee as Entity;
 use Hash;
 use App\Http\Requests\StoreEmployeeRequest;
+use Illuminate\Support\Facades\DB;
 
 class EmployeeController extends ApiController
 {
@@ -67,5 +70,21 @@ class EmployeeController extends ApiController
     public function newEntity(array $attributes = [])
     {
         return new Entity($attributes);
+    }
+
+	/**
+	 * 获取该员工有权限管理的下属
+	 * @param Request $request
+	 * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+	 */
+	public function subordinates(Request $request, $id)
+	{
+		$employee = Employee::find($id);
+		if ($employee->isDataIsolate()) {
+			$subs = $employee->getSubordinates();
+		}else{
+			$subs = Employee::all();
+		}
+		return response(['list' => $subs], 200);
     }
 }

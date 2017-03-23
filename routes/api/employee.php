@@ -90,6 +90,25 @@ Route::group(['prefix' => 'employee', 'middleware' => 'api.sign'], function () {
      */
     Route::get('/', ['as' => 'Employee.index', 'uses' => 'EmployeeController@index']);
 
+	/**
+	 * @SWG\Api(
+	 *     path="/api/employee/{id}/subordinates",
+	 *     @SWG\Operation(
+	 *      method="GET",
+	 *      nickname="employee-subordinates",
+	 *      summary="获取该员工有权限查看的下属",
+	 *      notes="获取该员工有权限查看的下属",
+	 *      type="array",
+	 *      items="$ref:Employee",
+	 *      @SWG\Parameters(
+	 *          @SWG\Parameter(name="id", description="id", required=false, type="integer", paramType="path", defaultValue="1"),
+	 *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="query", defaultValue="****")
+	 *      )
+	 *  )
+	 * )
+	 */
+	Route::get('/{id}/subordinates', ['as' => 'Employee.subordinates', 'uses' => 'EmployeeController@subordinates']);
+
     /**
      * @SWG\Api(
      *     path="/api/employee/{id}",
