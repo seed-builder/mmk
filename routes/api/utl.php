@@ -125,7 +125,7 @@ Route::group(['prefix' => 'utl', 'middleware' => 'api.sign'], function (){
      *          @SWG\Parameter(
      *              name="data",
      *              description="json格式字符串",
-     *              required=true,
+     *              required=false,
      *              type="string",
      *              paramType="query",
      *              defaultValue="{id:1, name:'1234'}"

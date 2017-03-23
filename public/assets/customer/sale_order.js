@@ -45,11 +45,15 @@ define(function (require, exports, module) {
                 {'label': '订单号', 'name': 'readonly_fbill_no', 'data': 'fbill_no', 'type': 'readonly'},
                 {'label': '订单日期', 'name': 'fdate',  'data': 'fdate', type:  'datetime',
                     def:   function () { return new Date(); }},
-                {'label': '业务员','name':'femp_id' , 'data': 'employee.fname',  'type': 'select', 'options': employees},
-                {'label': '门店', 'name':'fstore_id', 'data': 'store.ffullname',  'type': 'select', 'options': stores},
+                {'label': '业务员','name':'femp_id' , 'data': 'employee.fname',  'type': 'laySelect', 'options': employees},
+                {'label': '门店', 'name':'fstore_id', 'data': 'store.ffullname',  'type': 'laySelect', 'options': stores},
                 {'label':'source', 'name': 'source', 'data': 'source', 'def': 'customer', 'type':'hidden'}
             ]
         });
+        // orderEditor.on('initComplete', function () {
+        //     alert('orderEditor initComplete');
+        //     $('.selectpicker').selectpicker();
+        // });
 
         var orderTable = $("#" + orderTableId).DataTable({
             dom: "lBfrtip",

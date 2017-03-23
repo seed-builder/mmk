@@ -36,6 +36,7 @@ class DataSyncSvr
 	 * @param string $name
 	 * @param string $op
 	 * @param array $data
+	 * @return int
 	 */
 	public function accept($name, $op, array $data)
 	{
@@ -44,12 +45,14 @@ class DataSyncSvr
 		foreach ($filters as $filter) {
 			$filter->beforeAccept($data);
 		}
+		$affected=0;
 		foreach ($workers as $worker) {
-			$worker->accept($name, $op, $data);
+			$affected += $worker->accept($name, $op, $data);
 		}
 		foreach ($filters as $filter) {
 			$filter->afterAccept($data);
 		}
+		return $affected;
 	}
 
 	/**
