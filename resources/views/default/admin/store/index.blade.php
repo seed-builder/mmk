@@ -89,9 +89,33 @@
                                             </div>
                                         </div>
                                         <div class="layui-inline">
-                                            <label class="layui-form-label">负责人</label>
+                                            <label class="layui-form-label">负责业代</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" class="layui-input filter-condition" filter-name="fcontracts" filter-operator="like" />
+                                                <input type="text" class="layui-input filter-condition" filter-name="femp" filter-operator="like" />
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">经销商</label>
+                                            <div class="layui-input-inline">
+                                                <select class="layui-input filter-condition" filter-name="fcust_id"
+                                                        lay-search>
+                                                    <option value="">--请选择--</option>
+                                                    @foreach($cus as $c)
+                                                        <option value="{{$c->id}}">{{$c->fname}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">渠道</label>
+                                            <div class="layui-input-inline">
+                                                <select class="layui-input filter-condition" filter-name="fchannel"
+                                                        lay-search>
+                                                    <option value="">--请选择--</option>
+                                                    @foreach($channels as $c)
+                                                        <option value="{{$c->id}}">{{$c->fname}}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -105,15 +129,18 @@
                         <table id="moduleTable" class="table table-bordered table-hover">
                             <thead>
                             <tr>
-                                <th>序号</th>
+                                <th>id</th>
+                                <th>flongitude</th>
+                                <th>flatitude</th>
+                                <th>门店编码</th>
                                 <th>门店全称</th>
-                                {{--<th>门店简称</th>--}}
                                 <th>详细地址</th>
                                 <th>负责人</th>
                                 <th>联系电话</th>
                                 <th>负责业代</th>
-                                <th>flongitude</th>
-                                <th>flatitude</th>
+                                <th>经销商</th>
+                                <th>路线</th>
+                                <th>渠道</th>
                                 <th>是否签约</th>
                                 <th>操作</th>
                             </tr>

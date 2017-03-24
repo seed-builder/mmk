@@ -48,11 +48,15 @@ define(function (require, exports, module) {
             select: true,
             paging: true,
             rowId: "id",
+            searching: false,
             ajax: {
                 url : '/admin/store/pagination',
             },
             columns: [
                 {"data": "id"},
+                {"data": "flongitude"},
+                {"data": "flatitude"},
+                {"data": "fnumber"},
                 {"data": "ffullname"},
                 // {"data": "fshortname"},
                 {"data": "faddress"},
@@ -67,8 +71,33 @@ define(function (require, exports, module) {
                             return "";
                     }
                 },
-                {"data": "flongitude"},
-                {"data": "flatitude"},
+                {
+                    "data": 'fcust_id',
+                    render: function (data, type, full) {
+                        if (full.customer != null)
+                            return full.customer.fname
+                        else
+                            return "";
+                    }
+                },
+                {
+                    "data": 'fline_id',
+                    render: function (data, type, full) {
+                        if (full.line != null)
+                            return full.line.fname
+                        else
+                            return "";
+                    }
+                },
+                {
+                    "data": 'fchannel',
+                    render: function (data, type, full) {
+                        if (full.channel != null)
+                            return full.channel.fname
+                        else
+                            return "";
+                    }
+                },
                 {
                     "data": "fis_signed",
                     render: function (data, type, full) {
@@ -88,7 +117,7 @@ define(function (require, exports, module) {
             ],
             columnDefs: [
                 {
-                    "targets": [6, 7],
+                    "targets": [0,1,2],
                     "visible": false
                 }
             ],
@@ -295,8 +324,9 @@ define(function (require, exports, module) {
             var attrs = new Array();
             attrs.push({"name":"地址","value":data.faddress})
             attrs.push({"name":"负责人","value":data.fcontracts})
-            attrs.push({"name":"地址","value":data.ftelephone})
+            attrs.push({"name":"电话","value":data.ftelephone})
             attrs.push({"name":"负责业代","value":data.employee.fname})
+            attrs.push({"name":"所属客户","value":data.customer.fname})
             var obj = {"title":data.ffullname,"attrs":attrs};
 
             mapWindow(element,obj);

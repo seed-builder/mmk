@@ -53,7 +53,7 @@ class StoreController extends AdminController
 
         $data = $request->all();
 
-        return parent::pagination($request, $searchCols, ['employee','customer'], function ($queryBuilder) use ($data,$request) {
+        return parent::pagination($request, $searchCols, ['employee','customer','line','channel'], function ($queryBuilder) use ($data,$request) {
 
             $tree = $request->input('tree',[]);
             if (!empty($tree)){
