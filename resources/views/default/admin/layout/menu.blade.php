@@ -100,7 +100,7 @@ $user = Auth::user();
                         @endif
 
                         @if($user->can('visit_line_calendar_index'))
-                            <li><a href="{{url('admin/visit_line_calendar/index')}}"><i class="fa fa-fw fa-calendar-o"></i>拜访日历</a></li>
+                            <li><a href="{{url('admin/visit_line_calendar/index')}}"><i class="fa fa-fw fa-calendar-o"></i>拜访日志</a></li>
                         @endif
 
                         @if($user->can('visit_funciton_index'))

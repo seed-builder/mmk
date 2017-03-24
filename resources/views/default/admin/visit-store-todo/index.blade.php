@@ -67,17 +67,6 @@
                         <div class="box-body">
                             <div class="col-md-9">
                                 {{ csrf_field() }}
-                                <input type="hidden" name="fstore_id" id="fstore_id" value="{{$store_id}}">
-                                {{--<div class="form-group">--}}
-                                    {{--<label class="control-label col-md-3">门店</label>--}}
-                                    {{--<div class="col-md-9">--}}
-                                        {{--<select class="form-control" id="store-list" name="fstore_id">--}}
-                                            {{--@foreach($stores as $s)--}}
-                                                {{--<option value="{{$s->id}}">{{$s->ffullname}}</option>--}}
-                                            {{--@endforeach--}}
-                                        {{--</select>--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
                                 <div class="form-group">
                                     <label class="control-label col-md-3">事项名称</label>
                                     <div class="col-md-9">
@@ -114,15 +103,6 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="form-group" id="template" style="display: none">
-                                    <label class="control-label col-md-3">事项来源</label>
-                                    <div class="col-md-9">
-                                        <select class="form-control" name="use_template" id="use_template">
-                                            <option value="1">自定义</option>
-                                            <option value="2">选择模板</option>
-                                        </select>
-                                    </div>
-                                </div>
                                 <input type="hidden" class="form-control" name="id" id="id" >
                             </div>
 
@@ -150,7 +130,7 @@
                 {!! json_encode($todos) !!}
         var funs = {!! json_encode($functions) !!}
         $(function () {
-                seajs.use('admin/visit_store_todo_config.js', function (app) {
+                seajs.use('admin/visit_store_todo.js', function (app) {
                     app.index($, 'tree', todos, funs);
                 });
             });

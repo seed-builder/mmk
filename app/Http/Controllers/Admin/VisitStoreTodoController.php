@@ -25,8 +25,9 @@ class VisitStoreTodoController extends AdminController
     {
 
         $functions = VisitFunction::all();
+        $todos = VisitStoreTodo::all();
 
-        return view('admin.visit-store-todo.index', compact('functions'));
+        return view('admin.visit-store-todo.index', compact('functions','todos'));
     }
 
 

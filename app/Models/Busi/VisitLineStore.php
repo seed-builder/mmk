@@ -41,6 +41,20 @@ class VisitLineStore extends BaseModel
             }
         }
 
+        if (!empty($data['distinct'])){
+            $queryBuilder->groupBy($data['distinct'])->distinct();
+        }
+
+        if (!empty($data['init_filter'])){
+            if (!empty($data['init_filter']['femp_id'])){
+                $queryBuilder->where('femp_id', $data['init_filter']['femp_id']);
+            }
+
+            if (!empty($data['init_filter']['fline_id'])){
+                $queryBuilder->where('fline_id', $data['init_filter']['fline_id']);
+            }
+        }
+
         if (!empty($data['filter'])){
             foreach ($data['filter'] as $f){
                 $filter_name = $f['name'];

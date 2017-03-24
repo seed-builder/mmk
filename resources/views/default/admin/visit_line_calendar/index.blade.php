@@ -200,7 +200,7 @@
     </section>
 
     <div id="todoInfo" class="modal fade modal-scroll" role="dialog" tabindex="-1" data-replace="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog" style="width: 50%">
             <div class="modal-content">
             </div>
         </div>

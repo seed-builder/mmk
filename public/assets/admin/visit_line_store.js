@@ -142,6 +142,7 @@ define(function (require, exports, module) {
                             return "";
                     }
                 },
+
             ],
             columnDefs: [
                 {
@@ -301,6 +302,12 @@ define(function (require, exports, module) {
                 {
                     "data": 'fline_id',
                 },
+                {
+                    "data": 'fstore_id',
+                    render: function (data, type, full) {
+                        return '<a href="/admin/store/storeInfo/'+data+'" title="查看详情" data-target="#storeDetail" data-toggle="modal"><i class="fa fa-fw fa-search"></i></a>';
+                    }
+                },
 
             ],
             columnDefs: [
@@ -392,8 +399,10 @@ define(function (require, exports, module) {
             ajax: {
                 url: '/admin/visit_line_store/pagination',
                 data: function (data) {
-                    data['femp_id'] = fempId(treeId,table);
-                    data['fline_id'] = table.rows('.selected').data()[0] != null ? table.rows('.selected').data()[0].fline_id : '';
+                    data['init_filter'] = {
+                        'femp_id' : fempId(treeId,table),
+                        'fline_id' : table.rows('.selected').data()[0] != null ? table.rows('.selected').data()[0].fline_id : ''
+                    }
                 }
             },
             columns: [

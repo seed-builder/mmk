@@ -163,6 +163,8 @@
 									<th>负责人</th>
 									<th>联系电话</th>
 									<th>负责业代</th>
+									<th>fline_id</th>
+									<th>操作</th>
 								</tr>
 							</thead>
 						</table>
@@ -499,7 +501,12 @@
 	</div>
 
 
-
+	<div id="storeDetail" class="modal fade modal-scroll" role="dialog" tabindex="-1" data-replace="true">
+		<div class="modal-dialog" style="width: 50%">
+			<div class="modal-content">
+			</div>
+		</div>
+	</div>
 @endsection
 @section('js')
 	<script src="/assets/plugins/bootstrap-treeview/bootstrap-treeview.min.js"></script>
