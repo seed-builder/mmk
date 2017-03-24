@@ -178,6 +178,11 @@ class Store extends BaseModel
 		    $ids = $entities->map(function ($item){
 			    return $item->id;
 		    });
+
+            $fstore_calendar_ids = VisitStoreCalendar::query()->where('fstore_id',$store->id)->pluck('id')->toArray();
+            VisitTodoCalendar::query()->whereIn('fstore_calendar_id',$fstore_calendar_ids)->delete();
+		    VisitStoreCalendar::query()->where('fstore_id',$store->id)->delete();
+
 		    VisitLineStore::destroy($ids);
 	    });
 
