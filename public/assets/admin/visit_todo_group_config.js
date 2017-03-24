@@ -148,13 +148,31 @@ define(function(require, exports, module) {
                 'style': 'multi'
             },
             buttons: [
-                { text: '生成拜访日志', action: function () {
+                { text: '生成拜访日志<i class="fa fa-fw fa-calendar-o"></i>', action: function () {
+                    $("#makeCalendarModal").modal('show')
+                    $("#group_id").val($("#todo_group_id").val())
+                }  },
+                { text: '绑定<i class="fa fa-cogs"></i>', action: function () {
                     if ($("#todo_group_id").val()==0){
                         layer.alert('请先选择一个方案');
                         return
                     }
-                    $("#makeCalendarModal").modal('show')
-                    $("#group_id").val($("#todo_group_id").val())
+                    var row = table.rows('.selected').data();
+
+                    var ids = new Array();
+                    for (var i = 0; i < row.length; i++) {
+                        ids.push(row[i].id);
+                    }
+
+                    if (ids.length==0){
+                        layer.alert('请选择要配置的门店！');
+                        return
+                    }
+                    layer.confirm("确认绑定已选门店至当前方案中？",function () {
+                        ajaxLink('/admin/visit-todo-group/makeTodoByGroup?todo_ids='+ids+"&group_id="+$("#todo_group_id").val(),function () {
+                            todoTree();
+                        })
+                    })
                 }  },
                 // { text: '编辑', className: 'edit', enabled: false },
                 // { text: '删除', className: 'delete', enabled: false },
@@ -163,35 +181,35 @@ define(function(require, exports, module) {
 
         todoTree();
 
-        $('#todo_group_id').selectpicker({});
+        $('.todo_group').selectpicker({});
 
         $('#todo_group_id').on('change',function () {
             todoGroupTree();
         })
 
-        $("#btnMakeTodos").on('click',function(){
-            if ($("#todo_group_id").val()==0){
-                layer.alert('请先选择一个方案');
-                return
-            }
-
-            var row = table.rows('.selected').data();
-
-            var ids = new Array();
-            for (var i = 0; i < row.length; i++) {
-                ids.push(row[i].id);
-            }
-
-            if (ids.length==0){
-                layer.alert('请选择要配置的门店！');
-                return
-            }
-
-            ajaxLink('/admin/visit-todo-group/makeTodoByGroup?todo_ids='+ids+"&group_id="+$("#todo_group_id").val(),function () {
-                todoTree();
-            })
-
-        })
+        // $("#btnMakeTodos").on('click',function(){
+        //     if ($("#todo_group_id").val()==0){
+        //         layer.alert('请先选择一个方案');
+        //         return
+        //     }
+        //
+        //     var row = table.rows('.selected').data();
+        //
+        //     var ids = new Array();
+        //     for (var i = 0; i < row.length; i++) {
+        //         ids.push(row[i].id);
+        //     }
+        //
+        //     if (ids.length==0){
+        //         layer.alert('请选择要配置的门店！');
+        //         return
+        //     }
+        //
+        //     ajaxLink('/admin/visit-todo-group/makeTodoByGroup?todo_ids='+ids+"&group_id="+$("#todo_group_id").val(),function () {
+        //         todoTree();
+        //     })
+        //
+        // })
 
         $("#makeCalendarForm").on('submit',function () {
 

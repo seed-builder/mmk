@@ -187,7 +187,7 @@ class VisitTodoGroupController extends AdminController
     {
         $data = $request->all();
 
-        $vp = VisitTodoGroup::find($data['group_id']);
+        $vp = VisitTodoGroup::find($data['todo_group_id']);
         if (strtotime($data['start_date']) < strtotime($vp->fstart_date)) {
             return response()->json([
                 'code' => 500,
@@ -201,7 +201,7 @@ class VisitTodoGroupController extends AdminController
             ]);
         }
         $calendar = new VisitCalendarService();
-        $calendar->makeGroup($data['group_id'], $data['start_date'], $data['end_date']);
+        $calendar->makeGroup($data['todo_group_id'], $data['start_date'], $data['end_date']);
 
         return response()->json([
             'code' => 200,

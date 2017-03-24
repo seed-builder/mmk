@@ -128,18 +128,18 @@ define(function(require, exports, module) {
 				{"data": "fcreate_date"},
             ],
             buttons: [
-                {
-                    text: '生成拜访日历<i class="fa fa-fw fa-calendar"></i>',
-                    className: 'create',
-                    enabled: false,
-                    action: function () {
-                        var selectedNode = $('#'+treeId).treeview('getSelected');
-                        var femp_id = selectedNode.length>0?selectedNode[0]['dataid']:table.rows('.selected').data()[0].femp_id
-                        $("#femp_id").val(femp_id);
-                        $("#makeCalendarModal").modal('show');
-                        //window.location.href = "/admin/visit_store_calendar/makeVisitLineCalendar?week="+week+"&femp_id="+femp_id
-                    }
-                },
+                // {
+                //     text: '生成拜访日历<i class="fa fa-fw fa-calendar"></i>',
+                //     className: 'create',
+                //     enabled: false,
+                //     action: function () {
+                //         var selectedNode = $('#'+treeId).treeview('getSelected');
+                //         var femp_id = selectedNode.length>0?selectedNode[0]['dataid']:table.rows('.selected').data()[0].femp_id
+                //         $("#femp_id").val(femp_id);
+                //         $("#makeCalendarModal").modal('show');
+                //         //window.location.href = "/admin/visit_store_calendar/makeVisitLineCalendar?week="+week+"&femp_id="+femp_id
+                //     }
+                // },
                 // { text: '编辑', className: 'edit', enabled: false },
                 // { text: '删除', className: 'delete', enabled: false },
 //                {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: editor},
