@@ -212,8 +212,10 @@ define(function(require, exports, module) {
         // })
 
         $("#makeCalendarForm").on('submit',function () {
-
-            ajaxForm('#makeCalendarForm')
+            layer.load(1);
+            ajaxForm('#makeCalendarForm',function () {
+                layer.closeAll('loading')
+            })
             return false;
         })
 
