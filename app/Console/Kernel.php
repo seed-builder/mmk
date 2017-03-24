@@ -46,23 +46,14 @@ class Kernel extends ConsoleKernel
 	    //每周日00:00执行 生成下一周的拜访日记
         $schedule->call(function(VisitCalendarService $calendar){
             for ($fnumber=1;$fnumber<=7;$fnumber++){
-//                $line = VisitLine::query()->where('fnumber',$fnumber)->first();
-//                $vls = VisitLineStore::query()->where('fline_id',$line->id)->get();
-//                $fdate = date('Y-m-d',strtotime('+'.$fnumber.' day'));
-//
-//                foreach ($vls as $v){
-//                    $calendar->makeCalendar($v->femp_id,$line->id,$fdate);
-//                }
-
-                $calendar->makeAllStores(date('Y-m-d',strtotime('+'.$fnumber.' day')));
+                $calendar->byDay(date('Y-m-d',strtotime('+'.$fnumber.' day')));
             }
 
         })->weekly();
 
         //每天00:00点执行 生成拜访日记
         $schedule->call(function(VisitCalendarService $calendar){
-            $calendar->makeAllStores(date('Y-m-d'));
-
+            $calendar->byDay(date('Y-m-d'));
         })->dailyAt('00:00');
 
 	    //每天01:00点执行, 检查更新门店每天的签约状态 及 自动审核库存盘点数据；

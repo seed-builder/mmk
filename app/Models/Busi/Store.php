@@ -133,10 +133,8 @@ class Store extends BaseModel
 				    ]
 			    );
 
-//                $diffday = VisitLine::find($store->fline_id)->fnumber-date("w");
-//
-//                $calendar = new VisitCalendarService();
-//                $calendar->makeStore($store->id,date('Y-m-d',strtotime('+'.$diffday.' day')));
+                $calendar = new VisitCalendarService();
+                $calendar->byStore($store);
 		    }
 
 	    });
@@ -195,6 +193,8 @@ class Store extends BaseModel
                 if ($filter_name=="femp"&&!empty($f['value'])){
                     $ids = Employee::query()->where('fname','like','%'.$f['value'].'%')->pluck('id');
                     $queryBuilder->whereIn('femp_id', $ids);
+                }else{
+                    $queryBuilder=$this->adminFilterQuery($queryBuilder,$f);
                 }
             }
         }

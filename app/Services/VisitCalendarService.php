@@ -12,6 +12,7 @@ namespace App\Services;
 use App\Models\Busi\Store;
 use App\Models\Busi\VisitLine;
 use App\Models\Busi\VisitLineCalendar;
+use App\Models\Busi\VisitLineStore;
 use App\Models\Busi\VisitStoreCalendar;
 use App\Models\Busi\VisitStoreTodo;
 use App\Models\Busi\VisitTodoCalendar;
@@ -20,205 +21,198 @@ use Illuminate\Support\Facades\DB;
 
 class VisitCalendarService
 {
-
     /*
-     * 生成指定方案日历
+     * 按门店生成
      */
-    public function makeGroup($group_id, $start_date, $end_date)
-    {
-        DB::beginTransaction();
-        try {
-            $group = VisitTodoGroup::find($group_id);
-            $day = (strtotime($end_date) - strtotime($start_date)) / 86400;
+    public function byStore($store){
+        $line = VisitLine::find($store->fline_id);
 
-            for ($i = 0; $i < $day; $i++) {
-                foreach ($group->stores as $s) {
-                    $this->makeStore($s->id, date("Y-m-d", strtotime('+' . $i . ' day', strtotime($start_date))));
-                }
-            }
-            DB::commit();
-        } catch (Exception $e) {
-            DB::rollback();
+        //生成离当前门店线路 最近一天的日志
+        $number = date('w')==0?7:date('w');
+        if ($line->fnumber>=$number){
+            $day = $line->fnumber-$number;
+        }else{
+            $day = 7-$number+$line->fnumber;
         }
+        $fdate = date("Y-m-d", strtotime('+' . $day . ' day'));
 
-    }
+        $stores = collect([$store]);//转换集合使用deleteHistory方法
+        $this->deleteHistory($stores,$fdate);
 
-    /*
-     * 生成指定门店拜访日历
-     */
-    public function makeStore($fstore_id, $fdate)
-    {
-        DB::beginTransaction();
-        try {
-            //删除原有数据
-            $store = Store::find($fstore_id);
-
-            VisitStoreCalendar::query()->where('femp_id', $store->femp_id)
-                ->where('fdate', $fdate)
-                ->where('fstore_id', $fstore_id)
-                ->delete();
-            VisitLineCalendar::query()
-                ->where('femp_id', $store->femp_id)
-                ->where('fdate', $fdate)
-                ->where('fline_id', $store->fline_id)
-                ->delete();
-
-            $vlc = VisitLineCalendar::create([
+        $line_calendar = VisitLineCalendar::query()
+            ->where('femp_id',$store->femp_id)
+            ->where('fline_id',$line->id)
+            ->where('fdate',$fdate)
+            ->first();
+        if (empty($line_calendar)){
+            $line_calendar = VisitLineCalendar::create([
                 'fdate' => $fdate,
                 'femp_id' => $store->femp_id,
-                'fline_id' => $store->fline_id,
+                'fline_id' => $line->id,
             ]);
-
-            $this->makeStoreCalendar($store->femp_id, $fstore_id, $vlc->id, $fdate);
-
-            DB::commit();
-        } catch (Exception $e) {
-            DB::rollback();
         }
+
+        $this->makeStore($line_calendar,$store->id);
     }
-
     /*
-     * 生成所有门店拜访日历
+     * 按天生成
      */
-    public function makeAllStores($fdate)
-    {
-        DB::beginTransaction();
-        try {
-            $fnumber = date('w', strtotime($fdate));
-            $line = VisitLine::query()->where('fnumber', $fnumber)->first();
+    public function byDay($fdate){
+        $line_number = date('w',strtotime($fdate));
+        $line = VisitLine::query()->where('fnumber',$line_number)->first();
 
-            $vls = VisitLineStore::query()->where('fline_id', $line->id)->get();
-            foreach ($vls as $v) {
-                $femp_id = $v->femp_id;
+        //查询当天线路下的所有门店
+        $vls = VisitLineStore::query()->where('fline_id',$line->id)->get();
+        if (count($vls)==0)
+            return false;
 
-                VisitLineCalendar::query()
-                    ->where('femp_id', $femp_id)
-                    ->where('fdate', $fdate)
-                    ->delete();
-                VisitStoreCalendar::query()
-                    ->where('femp_id', $femp_id)
-                    ->where('fdate', $fdate)
-                    ->delete();
-                VisitTodoCalendar::query()
-                    ->where('femp_id', $femp_id)
-                    ->where('fdate', $fdate)
-                    ->delete();
+        $stores = Store::query()->whereIn('id',$vls->pluck('fstore_id')->toArray())->get();
 
-                $this->makeLineCalendar($femp_id, $line->id, date('Y-m-d'));
+        $this->deleteHistory($stores,$fdate);
 
+        foreach ($stores as $s){
+            $line_calendar = VisitLineCalendar::query()
+                ->where('femp_id',$s->femp_id)
+                ->where('fline_id',$line->id)
+                ->where('fdate',$fdate)
+                ->first();
+            if (empty($line_calendar)){
+                $line_calendar = VisitLineCalendar::create([
+                    'fdate' => $fdate,
+                    'femp_id' => $s->femp_id,
+                    'fline_id' => $line->id,
+                ]);
             }
-            DB::commit();
-        } catch (Exception $e) {
-            DB::rollback();
-        }
 
-    }
-
-    /*
-     * 生成线路日历
-     */
-    protected function makeLineCalendar($femp_id, $fline_id, $fdate)
-    {
-        $vlc = VisitLineCalendar::create([
-            'fdate' => $fdate,
-            'femp_id' => $femp_id,
-            'fline_id' => $fline_id,
-        ]);
-
-        $vls = VisitLineStore::query()->where('fline_id', $fline_id)->where('femp_id', $femp_id)->get();
-        foreach ($vls as $v) {
-            $this->makeStoreCalendar($femp_id, $v->fstore_id, $vlc->id, $fdate);
+            $this->makeStore($line_calendar,$s->id);
         }
     }
 
     /*
-     * 生成门店日历
+     * 根据拜访方案生成
      */
-    protected function makeStoreCalendar($femp_id, $fstore_id, $fline_calendar_id, $fdate)
-    {
-        $vsc = VisitStoreCalendar::create([
-            'fdate' => $fdate,
-            'femp_id' => $femp_id,
-            'fline_calendar_id' => $fline_calendar_id,
-            'fstore_id' => $fstore_id,
-        ]);
+    public function byGroup($group_id, $start_date, $end_date){
+        $group = VisitTodoGroup::find($group_id);
+        $day = (strtotime($end_date) - strtotime($start_date)) / 86400;
 
-        $this->makeTodoCalendar($fdate, $femp_id, $vsc->id, $fstore_id);
+//        $stores = $group->stores;
+
+        for ($i = 0; $i < $day; $i++) {
+            $fdate = date("Y-m-d", strtotime('+' . $i . ' day', strtotime($start_date)));
+            $line_number = date("w", strtotime('+' . $i . ' day', strtotime($start_date))) ;
+            $line_number = $line_number==0?7:$line_number;
+
+            $line = VisitLine::query()->where('fnumber',$line_number)->first();
+
+            //查询方案所绑定的门店 是否有分配在当前线路下的
+            $vls = VisitLineStore::query()->where('fline_id',$line->id)->whereIn('fstore_id',$group->stores->pluck('id')->toArray())->get();
+            if (count($vls)==0)
+                continue ;
+
+            $stores = Store::query()->whereIn('id',$vls->pluck('fstore_id')->toArray())->get();
+
+            $this->deleteHistory($stores,$fdate);
+
+            foreach ($stores as $s){
+                $line_calendar = VisitLineCalendar::query()
+                    ->where('femp_id',$s->femp_id)
+                    ->where('fline_id',$line->id)
+                    ->where('fdate',$fdate)
+                    ->first();
+                if (empty($line_calendar)){
+                    $line_calendar = VisitLineCalendar::create([
+                        'fdate' => $fdate,
+                        'femp_id' => $s->femp_id,
+                        'fline_id' => $line->id,
+                    ]);
+                }
+
+                $this->makeStore($line_calendar,$s->id);
+            }
+        }
     }
 
     /*
-     * 生成事项日历
+     * 生成门店拜访日志
      */
-    protected function makeTodoCalendar($fdate, $femp_id, $fstore_calendar_id, $fstore_id)
-    {
-        $store = Store::find($fstore_id);
+    public function makeStore($line_calendar,$store_id){
+        $store_calendar = $line_calendar->store_calendars()->save(new VisitStoreCalendar([
+            'fdate' => $line_calendar->fdate,
+            'femp_id' => $line_calendar->femp_id,
+            'fstore_id' => $store_id,
+        ]));
+
+        $this->makeTodo($store_calendar);
+    }
+
+    /*
+     * 生成门店拜访事项
+     */
+    public function makeTodo($store_calendar){
+        $store = Store::find($store_calendar->fstore_id);
         $group = $store->todo_groups()
-            ->where('fstart_date', '<=', $fdate)
-            ->where('fend_date', '>=', $fdate)
+            ->where('fstart_date', '<=', $store_calendar->fdate)
+            ->where('fend_date', '>=', $store_calendar->fdate)
             ->orderBy('fcreate_date', 'desc')
             ->first();
 
-        if (!empty($group->todos)) {
-            $todo_ids = $group->todos->pluck('id')->toArray();
-            $todos = VisitStoreTodo::query()->where('fparent_id', 0)->whereIn('id', $todo_ids)->get();
-
-            foreach ($todos as $t) {
-                $vtc = VisitTodoCalendar::create([
-                    'fparent_id' => 0,
-                    'fdate' => $fdate,
-                    'femp_id' => $femp_id,
-                    'fstore_calendar_id' => $fstore_calendar_id,
-                    'ftodo_id' => $t->id,
-                    'fis_must_visit' => $t->fis_must_visit
-                ]);
-
-                if (!empty($t->children)) {
-                    foreach ($t->children->whereIn('id', $todo_ids) as $child) {
-                        VisitTodoCalendar::create([
-                            'fparent_id' => $vtc->id,
-                            'fdate' => $fdate,
-                            'femp_id' => $femp_id,
-                            'fstore_calendar_id' => $fstore_calendar_id,
-                            'ftodo_id' => $child->id,
-                            'fis_must_visit' => $child->fis_must_visit
-                        ]);
-                    }
-                }
-            }
+        if (!empty($group->todos)){
+            $this->saveTodoCalendars($group,$store_calendar);
         }else{
             $group = VisitTodoGroup::query()->where('fis_default',1)->first();//默认方案
             if (count($group)>0){
-                $todo_ids = $group->todos->pluck('id')->toArray();
-                $todos = VisitStoreTodo::query()->where('fparent_id', 0)->whereIn('id', $todo_ids)->get();
+                $this->saveTodoCalendars($group,$store_calendar);
+            }
+        }
+    }
 
-                foreach ($todos as $t) {
-                    $vtc = VisitTodoCalendar::create([
-                        'fparent_id' => 0,
-                        'fdate' => $fdate,
-                        'femp_id' => $femp_id,
-                        'fstore_calendar_id' => $fstore_calendar_id,
-                        'ftodo_id' => $t->id,
-                        'fis_must_visit' => $t->fis_must_visit
-                    ]);
+    /*
+     * 根据方案生成具体拜访事项数据
+     */
+    public function saveTodoCalendars($group,$store_calendar){
+        $todo_ids = $group->todos->pluck('id')->toArray();
+        $todos = VisitStoreTodo::query()->where('fparent_id', 0)->whereIn('id', $todo_ids)->get();
 
-                    if (!empty($t->children)) {
-                        foreach ($t->children->whereIn('id', $todo_ids) as $child) {
-                            VisitTodoCalendar::create([
-                                'fparent_id' => $vtc->id,
-                                'fdate' => $fdate,
-                                'femp_id' => $femp_id,
-                                'fstore_calendar_id' => $fstore_calendar_id,
-                                'ftodo_id' => $child->id,
-                                'fis_must_visit' => $child->fis_must_visit
-                            ]);
-                        }
-                    }
+        foreach ($todos as $t){
+            $todo_calendars = $store_calendar->todo_calendars()->save(new VisitTodoCalendar([
+                'fparent_id' => 0,
+                'fdate' => $store_calendar->fdate,
+                'femp_id' => $store_calendar->femp_id,
+                'ftodo_id' => $t->id,
+                'fis_must_visit' => $t->fis_must_visit
+            ]));
+            if (!empty($t->children)) {
+                foreach ($t->children->whereIn('id', $todo_ids) as $child) {
+                    $store_calendar->todo_calendars()->save(new VisitTodoCalendar([
+                        'fparent_id' => $todo_calendars->id,
+                        'fdate' => $store_calendar->fdate,
+                        'femp_id' => $store_calendar->femp_id,
+                        'ftodo_id' => $child->id,
+                        'fis_must_visit' => $child->fis_must_visit
+                    ]));
                 }
             }
-
         }
-
     }
+
+    /*
+     * 删除原有数据
+     */
+    public function deleteHistory($stores,$fdate){
+        $store_ids = $stores->pluck('id')->toArray();
+        $store_calendars = VisitStoreCalendar::query()
+            ->whereIn('fstore_id',$store_ids)
+            ->where('fdate',$fdate)
+            ->get();
+        foreach ($store_calendars as $s){
+            $s->todo_calendars()->delete();
+        }
+        VisitStoreCalendar::query()
+            ->whereIn('fstore_id',$store_ids)
+            ->where('fdate',$fdate)
+            ->delete();
+    }
+
 
 
 }

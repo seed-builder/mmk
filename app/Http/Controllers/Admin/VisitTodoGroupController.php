@@ -233,7 +233,8 @@ class VisitTodoGroupController extends AdminController
             ]);
         }
         $calendar = new VisitCalendarService();
-        $calendar->makeGroup($data['todo_group_id'], $data['start_date'], $data['end_date']);
+        $calendar->byGroup($data['todo_group_id'], $data['start_date'], $data['end_date']);
+//        $calendar->makeGroup($data['todo_group_id'], $data['start_date'], $data['end_date']);
 
         return response()->json([
             'code' => 200,

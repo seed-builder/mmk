@@ -38,6 +38,9 @@ class VisitStoreCalendar extends BaseModel
 	protected $appends = ['is_store_signed'];
 
 
+	public function todo_calendars(){
+	    return $this->hasMany(VisitTodoCalendar::class,'fstore_calendar_id');
+    }
 	/**
 	 * @return bool
 	 */
