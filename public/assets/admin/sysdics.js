@@ -4,7 +4,7 @@
 define(function(require, exports, module) {
     
     var zhCN = require('datatableZh');
-
+    var editorCN = require('i18n');
     exports.index = function ($, tableId) {
 
         var editor = new $.fn.dataTable.Editor({
@@ -25,6 +25,7 @@ define(function(require, exports, module) {
                     data: {_token: $('meta[name="_token"]').attr('content')},
                 }
             },
+            i18n: editorCN,
             table: "#" + tableId,
             idSrc: 'id',
             fields: [
@@ -48,8 +49,8 @@ define(function(require, exports, module) {
                 {"data": "type"},
                 {"data": "key"},
                 {"data": "value"},
-                {"data": "created_at"},
-                {"data": "updated_at"},
+                // {"data": "created_at"},
+                // {"data": "updated_at"},
             ],
             buttons: [
                 // { text: '新增', action: function () { }  },

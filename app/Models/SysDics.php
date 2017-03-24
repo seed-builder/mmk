@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Busi\BaseModel;
 
-class SysDics extends BaseModel
+class SysDics extends Model
 {
     //
     protected $table = 'sys_dics';

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMessageTable extends Migration
+class CreateTableMessages extends Migration
 {
     /**
      * Run the migrations.
@@ -19,7 +19,7 @@ class CreateMessageTable extends Migration
             $table->string('from_type');
             $table->integer('to_id')->default(0);
             $table->string('to_type');
-            $table->timestamp('send_time');
+            $table->timestamp('send_time')->nullable();
             $table->integer('read')->default(0);
             $table->string('title');
             $table->string('content');
