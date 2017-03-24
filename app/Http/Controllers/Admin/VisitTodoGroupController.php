@@ -205,7 +205,7 @@ class VisitTodoGroupController extends AdminController
 
         return response()->json([
             'code' => 200,
-            'result' => '生成成功！'
+            'result' => '绑定成功！'
         ]);
     }
 
@@ -213,17 +213,23 @@ class VisitTodoGroupController extends AdminController
     {
         $data = $request->all();
 
+        if (empty($data['todo_group_id'])){
+            return response()->json([
+                'code' => 500,
+                'result' => '请先选择一个方案！'
+            ]);
+        }
         $vp = VisitTodoGroup::find($data['todo_group_id']);
         if (strtotime($data['start_date']) < strtotime($vp->fstart_date)) {
             return response()->json([
                 'code' => 500,
-                'result' => '生成日志的开始时间不能早于'.$vp->fstart_date.'，生成失败！'
+                'result' => '生成日志的开始时间不能早于'.date('Y-m-d',strtotime($vp->fstart_date)).'，生成失败！'
             ]);
         }
         if (strtotime($data['end_date']) > strtotime($vp->fend_date)){
             return response()->json([
                 'code' => 500,
-                'result' => '生成日志的结束时间不能晚于'.$vp->fend_date.'，生成失败！'
+                'result' => '生成日志的结束时间不能晚于'.date('Y-m-d',strtotime($vp->fend_date)).'，生成失败！'
             ]);
         }
         $calendar = new VisitCalendarService();
