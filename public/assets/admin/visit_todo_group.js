@@ -43,6 +43,7 @@ define(function (require, exports, module) {
                     type:  'datetime',
                     def:   function () { return new Date(); }
                 },
+                { 'label':  '是否为默认方案', 'name': 'fis_default', 'type':'select', 'options': [{'label':'否', value:0},{'label': '是', value: 1}]},
             ]
         });
 

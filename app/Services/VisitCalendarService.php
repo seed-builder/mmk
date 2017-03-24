@@ -187,32 +187,35 @@ class VisitCalendarService
             }
         }else{
             $group = VisitTodoGroup::query()->where('fis_default',1)->first();//默认方案
-            $todo_ids = $group->todos->pluck('id')->toArray();
-            $todos = VisitStoreTodo::query()->where('fparent_id', 0)->whereIn('id', $todo_ids)->get();
+            if (count($group)>0){
+                $todo_ids = $group->todos->pluck('id')->toArray();
+                $todos = VisitStoreTodo::query()->where('fparent_id', 0)->whereIn('id', $todo_ids)->get();
 
-            foreach ($todos as $t) {
-                $vtc = VisitTodoCalendar::create([
-                    'fparent_id' => 0,
-                    'fdate' => $fdate,
-                    'femp_id' => $femp_id,
-                    'fstore_calendar_id' => $fstore_calendar_id,
-                    'ftodo_id' => $t->id,
-                    'fis_must_visit' => $t->fis_must_visit
-                ]);
+                foreach ($todos as $t) {
+                    $vtc = VisitTodoCalendar::create([
+                        'fparent_id' => 0,
+                        'fdate' => $fdate,
+                        'femp_id' => $femp_id,
+                        'fstore_calendar_id' => $fstore_calendar_id,
+                        'ftodo_id' => $t->id,
+                        'fis_must_visit' => $t->fis_must_visit
+                    ]);
 
-                if (!empty($t->children)) {
-                    foreach ($t->children->whereIn('id', $todo_ids) as $child) {
-                        VisitTodoCalendar::create([
-                            'fparent_id' => $vtc->id,
-                            'fdate' => $fdate,
-                            'femp_id' => $femp_id,
-                            'fstore_calendar_id' => $fstore_calendar_id,
-                            'ftodo_id' => $child->id,
-                            'fis_must_visit' => $child->fis_must_visit
-                        ]);
+                    if (!empty($t->children)) {
+                        foreach ($t->children->whereIn('id', $todo_ids) as $child) {
+                            VisitTodoCalendar::create([
+                                'fparent_id' => $vtc->id,
+                                'fdate' => $fdate,
+                                'femp_id' => $femp_id,
+                                'fstore_calendar_id' => $fstore_calendar_id,
+                                'ftodo_id' => $child->id,
+                                'fis_must_visit' => $child->fis_must_visit
+                            ]);
+                        }
                     }
                 }
             }
+
         }
 
     }
