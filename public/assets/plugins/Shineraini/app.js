@@ -408,6 +408,13 @@ $(".filter-reset").on('click',function () {
     filter_reset($(this));
 })
 
+$(".filter-condition").keydown(function(event) {
+    if (event.keyCode == 13) {
+        //执行操作
+        filter($(this));
+    }
+})
+
 function addOptions(select, options) {
     select.options.length=0;
     for(var i=0; i < options.length; i++) {
