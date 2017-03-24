@@ -2,6 +2,7 @@
 
 namespace App\Models\Busi;
 
+use App\Services\VisitCalendarService;
 use Illuminate\Database\Eloquent\Model;
 use App\Services\LogSvr;
 
@@ -136,6 +137,9 @@ class Store extends BaseModel
 //                $calendar = new VisitLineCalendar();
 //
 //                $calendar->makeLineStoreCalendar($store->femp_id,$store->fline_id,$store->id,date('Y-m-d',strtotime('+'.$diffday.' day')));
+
+                $calendar = new VisitCalendarService();
+                $calendar->makeStore($store->id,date('Y-m-d'));
 		    }
 
 	    });

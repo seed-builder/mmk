@@ -25,13 +25,19 @@ class VisitCalendarService
      */
     public function makeGroup($group_id, $start_date, $end_date)
     {
-        $group = VisitTodoGroup::find($group_id);
-        $day = (strtotime($end_date) - strtotime($start_date)) / 86400;
+        DB::beginTransaction();
+        try {
+            $group = VisitTodoGroup::find($group_id);
+            $day = (strtotime($end_date) - strtotime($start_date)) / 86400;
 
-        for ($i = 0; $i < $day; $i++) {
-            foreach ($group->stores as $s) {
-                $this->makeStore($s->id, date("Y-m-d", strtotime('+' . $i . ' day', strtotime($start_date))));
+            for ($i = 0; $i < $day; $i++) {
+                foreach ($group->stores as $s) {
+                    $this->makeStore($s->id, date("Y-m-d", strtotime('+' . $i . ' day', strtotime($start_date))));
+                }
             }
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
         }
 
     }
@@ -146,8 +152,8 @@ class VisitCalendarService
     {
         $store = Store::find($fstore_id);
         $group = $store->todo_groups()
-            ->where('fstart_date','<=',$fdate)
-            ->where('fend_date','>=',$fdate)
+            ->where('fstart_date', '<=', $fdate)
+            ->where('fend_date', '>=', $fdate)
             ->orderBy('fcreate_date', 'desc')
             ->first();
 
@@ -167,6 +173,32 @@ class VisitCalendarService
 
                 if (!empty($t->children)) {
                     foreach ($t->children->whereIn('id', $todo_ids) as $child) {
+                        VisitTodoCalendar::create([
+                            'fparent_id' => $vtc->id,
+                            'fdate' => $fdate,
+                            'femp_id' => $femp_id,
+                            'fstore_calendar_id' => $fstore_calendar_id,
+                            'ftodo_id' => $child->id,
+                            'fis_must_visit' => $child->fis_must_visit
+                        ]);
+                    }
+                }
+            }
+        }else{
+            $todos = VisitStoreTodo::query()->where('fparent_id', 0)->get();
+
+            foreach ($todos as $t) {
+                $vtc = VisitTodoCalendar::create([
+                    'fparent_id' => 0,
+                    'fdate' => $fdate,
+                    'femp_id' => $femp_id,
+                    'fstore_calendar_id' => $fstore_calendar_id,
+                    'ftodo_id' => $t->id,
+                    'fis_must_visit' => $t->fis_must_visit
+                ]);
+
+                if (!empty($t->children)) {
+                    foreach ($t->children as $child) {
                         VisitTodoCalendar::create([
                             'fparent_id' => $vtc->id,
                             'fdate' => $fdate,
