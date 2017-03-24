@@ -326,7 +326,7 @@ define(function (require, exports, module) {
             attrs.push({"name":"负责人","value":data.fcontracts})
             attrs.push({"name":"电话","value":data.ftelephone})
             attrs.push({"name":"负责业代","value":data.employee.fname})
-            attrs.push({"name":"所属客户","value":data.customer.fname})
+            attrs.push({"name":"所属客户","value":data.customer!=null?data.customer.fname:''})
             var obj = {"title":data.ffullname,"attrs":attrs};
 
             mapWindow(element,obj);
