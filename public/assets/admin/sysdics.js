@@ -49,8 +49,8 @@ define(function(require, exports, module) {
                 {"data": "type"},
                 {"data": "key"},
                 {"data": "value"},
-                {"data": "created_at"},
-                {"data": "updated_at"},
+                // {"data": "created_at"},
+                // {"data": "updated_at"},
             ],
             buttons: [
                 // { text: '新增', action: function () { }  },
