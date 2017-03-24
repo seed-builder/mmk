@@ -69,7 +69,7 @@
                         </div>
                         <div class="box-body">
                             <div class="form-group">
-                                <select class="form-control" id="todo_group_id" data-live-search="true">
+                                <select class="form-control todo_group" id="todo_group_id" data-live-search="true">
                                     <option value="0">请选择一个方案</option>
                                     @foreach($groups as $g)
                                         <option value="{{$g->id}}">{{$g->fname." ".date("Y-m-d",strtotime($g->fstart_date))}}</option>
@@ -144,9 +144,9 @@
                         </table>
 
                     </div>
-                    <div class="box-footer" style="text-align: center">
-                        <button type="button" class="btn btn-block btn-primary" id="btnMakeTodos">生成</button>
-                    </div>
+                    {{--<div class="box-footer" style="text-align: center">--}}
+                        {{--<button type="button" class="btn btn-block btn-primary" id="btnMakeTodos">绑定已选择门店至方案中</button>--}}
+                    {{--</div>--}}
                 </div>
                 <!-- /.box -->
             </div>
@@ -168,8 +168,18 @@
                 <form class="form-horizontal" id="makeCalendarForm"
                       action="{{url('/admin/visit-todo-group/makeCalendar')}}">
                     {{ csrf_field() }}
+
                     <div class="modal-body">
                         <div class="box-body">
+                            <div class="form-group">
+                                <label>方案名称</label>
+                                <select class="form-control todo_group" name="todo_group_id" data-live-search="true">
+                                    <option value="0">请选择一个方案</option>
+                                    @foreach($groups as $g)
+                                        <option value="{{$g->id}}">{{$g->fname." ".date("Y-m-d",strtotime($g->fstart_date))}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                             <div class="form-group">
                                 <label>开始时间</label>
                                 <input type="date" class="form-control" name="start_date">
@@ -184,7 +194,6 @@
                     </div>
 
                     <div class="modal-footer">
-                        <input type="hidden" name="group_id" id="group_id">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                         <button type="submit" class="btn btn-primary">保存</button>
                     </div>

@@ -76,7 +76,7 @@ $user = Auth::user();
                 </li>
             @endif
 
-            @if($user->can(['store_index','visit_line_index','visit_line_store_index','visit_line_calendar_index','visit_store_calendar_index','visit_funciton_index','visit_store_todo_index','visit_todo_temp_index']))
+            @if($user->can(['store_index','visit_line_index','visit_line_store_index','visit_line_calendar_index','visit_store_calendar_index']))
                 <li class="treeview active">
                     <a href="#">
                         <i class="fa fa-fw fa-building-o"></i>
@@ -103,17 +103,7 @@ $user = Auth::user();
                             <li><a href="{{url('admin/visit_line_calendar/index')}}"><i class="fa fa-fw fa-calendar-o"></i>拜访日志</a></li>
                         @endif
 
-                        @if($user->can('visit_funciton_index'))
-                            <li><a href="{{url('admin/visit-function')}}"><i class="fa fa-fw fa-clone"></i>拜访功能</a>
-                            </li>
-                        @endif
-                            <li><a href="{{url('admin/visit-todo-group')}}"><i class="fa fa-files-o"></i>拜访方案</a>
-                            </li>
-                            <li><a href="{{url('admin/visit-todo-group/config')}}"><i class="fa fa-cogs"></i>拜访配置</a>
-                            </li>
 
-                            <li><a href="{{url('admin/visit-store-todo')}}"><i class="fa fa-folder"></i>拜访配置模板</a>
-                            </li>
                     </ul>
                 </li>
             @endif
@@ -186,7 +176,7 @@ $user = Auth::user();
                 </li>
             @endif
 
-            @if($user->can(['sys-config_index','sys-dics_index','app-upgrade_index','message-template_index']))
+            @if($user->can(['sys-config_index','sys-dics_index','app-upgrade_index','message-template_index','visit_funciton_index','visit_store_todo_index']))
                 <li class="treeview active">
                     <a href="#">
                         <i class="fa fa-anchor"></i>
@@ -210,7 +200,17 @@ $user = Auth::user();
                             <li><a href="{{url('/admin/message-template')}}"><i class="fa fa-fw fa-paper-plane"></i>消息模板</a>
                             </li>
                         @endif
+                        @if($user->can('visit_funciton_index'))
+                            <li><a href="{{url('admin/visit-function')}}"><i class="fa fa-fw fa-clone"></i>拜访功能</a>
+                            </li>
+                        @endif
+                        <li><a href="{{url('admin/visit-todo-group')}}"><i class="fa fa-files-o"></i>拜访方案</a>
+                        </li>
+                        <li><a href="{{url('admin/visit-todo-group/config')}}"><i class="fa fa-cogs"></i>拜访事项</a>
+                        </li>
 
+                        <li><a href="{{url('admin/visit-store-todo')}}"><i class="fa fa-folder"></i>拜访配置模板</a>
+                        </li>
                     </ul>
                 </li>
             @endif

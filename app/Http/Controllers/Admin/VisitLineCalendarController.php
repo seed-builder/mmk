@@ -51,32 +51,4 @@ class VisitLineCalendarController extends AdminController
         });
     }
 
-    /*
-     * 生成线路拜访日历
-     * 参数 week femp_id
-     */
-    public function makeVisitLineCalendar(Request $request)
-    {
-        $data = $request->all();
-        $week = $data['week'];
-
-        $model = new VisitLineCalendar();
-
-        $fday = date("w") + 1;
-
-        for ($i = 0; $i <= $week * 7; $i++) {
-
-            $fday = $fday == 8 ? 1 : $fday;
-
-            $fdate = date("Y-m-d", strtotime("+" . ($i + 1) . " day"));
-
-            $line = VisitLine::query()->where('fnumber', $fday)->first();
-
-            $model->makeCalendar($data['femp_id'], $line->id, $fdate);
-
-            $fday++;
-        }
-
-        return redirect('admin/visit_line_calendar');
-    }
 }
