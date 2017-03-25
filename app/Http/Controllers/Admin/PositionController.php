@@ -122,6 +122,7 @@ class PositionController extends AdminController
 
     public function ptree(){
 		$tops = Position::where('fparpost_id',0)->get();
+		var_dump($tops);
 		$tree = [];
 		foreach ($tops as $top) {
 			$tree[] = $this->toBootstrapTreeViewData($top, ['text' => 'fname', 'dataid' => 'id'], false);

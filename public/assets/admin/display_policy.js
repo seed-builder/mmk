@@ -32,7 +32,7 @@ define(function (require, exports, module) {
                 },
             });
         }
-        getTreeData();
+        //getTreeData();
 
         var editor = new $.fn.dataTable.Editor({
             ajax: {
