@@ -7,4 +7,5 @@ Route::get('store/getStore/{id}', ['uses' => 'StoreController@getStore']);
 Route::post('store/createStore', ['uses' => 'StoreController@createStore']);
 Route::post('store/editStore', ['uses' => 'StoreController@editStore']);
 Route::get('store/storeInfo/{id}', ['uses' => 'StoreController@storeInfo']);
+Route::post('store/exchange', ['uses' => 'StoreController@exchange']);
 Route::resource('store', 'StoreController');

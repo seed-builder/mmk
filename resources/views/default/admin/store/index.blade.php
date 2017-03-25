@@ -354,7 +354,7 @@
         </div>
     </div>
 
-    <div id="make-todos-modal" class="modal fade modal-scroll" role="dialog" tabindex="-1" data-replace="true">
+    <div id="exchange-modal" class="modal fade modal-scroll" role="dialog" tabindex="-1" data-replace="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -362,33 +362,36 @@
                             aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h4 class="modal-title">批量生成拜访事项</h4>
+                    <h4 class="modal-title">门店调换</h4>
                 </div>
-                <form class="form-horizontal" id="todoForm" action="{{url('admin/visit-store-todo/batch-make-todos')}}">
+                <form class="form-horizontal" id="exchangeForm" action="{{url('admin/store/exchange')}}">
                     {{ csrf_field() }}
                     <div class="modal-body">
                         <div class="form-group">
-                            <label class="control-label col-md-3">生成方式</label>
-                            <div class="col-md-9">
-                                <select class="form-control" name="make-todo-type" id="make-todo-type">
-                                    <option value="1">初始化</option>
-                                    <option value="2">根据经销商选择</option>
+                            <label class="control-label col-sm-3">旧员工</label>
+                            <div class="col-sm-9">
+                                <select class="form-control filter-select" name="old_femp_id" data-live-search="true">
+                                    <option value="">--请选择--</option>
+                                    @foreach($employees as $e)
+                                        <option value="{{$e->id}}">{{$e->fname}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group" id="customers" style="display: none">
-                            <label class="control-label col-md-3">经销商</label>
-                            <div class="col-md-9">
-                                <select class="form-control" name="fcust_id" id="fcust_id" data-live-search="true">
-                                    @foreach($cus as $c)
-                                        <option value="{{$c->id}}">{{$c->fname}}</option>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">新员工</label>
+                            <div class="col-sm-9">
+                                <select class="form-control filter-select" name="new_femp_id" data-live-search="true">
+                                    <option value="">--请选择--</option>
+                                    @foreach($employees as $e)
+                                        <option value="{{$e->id}}">{{$e->fname}}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary pull-right">生成</button>
+                        <button type="submit" class="btn btn-primary pull-right">调换门店</button>
                     </div>
                 </form>
             </div>
