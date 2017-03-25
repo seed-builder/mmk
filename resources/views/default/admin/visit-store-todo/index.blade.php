@@ -97,6 +97,7 @@
                                     <label class="control-label col-md-3">拜访功能</label>
                                     <div class="col-md-9">
                                         <select class="form-control" name="ffunction_id" id="ffunction_id">
+                                            <option value="0">无</option>
                                             @foreach($functions as $f)
                                                 <option value="{{$f->id}}">{{$f->fname}}</option>
                                             @endforeach
