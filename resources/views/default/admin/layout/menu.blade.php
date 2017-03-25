@@ -176,7 +176,7 @@ $user = Auth::user();
                 </li>
             @endif
 
-            @if($user->can(['sys-config_index','sys-dics_index','app-upgrade_index','message-template_index','visit_funciton_index','visit_store_todo_index']))
+            @if($user->can(['sys-config_index','sys-dics_index','app-upgrade_index','message-template_index','visit_funciton_index','visit_todo_group_index','visit_todo_group_config','visit_store_todo_index']))
                 <li class="treeview active">
                     <a href="#">
                         <i class="fa fa-anchor"></i>
@@ -204,13 +204,18 @@ $user = Auth::user();
                             <li><a href="{{url('admin/visit-function')}}"><i class="fa fa-fw fa-clone"></i>拜访功能</a>
                             </li>
                         @endif
-                        <li><a href="{{url('admin/visit-todo-group')}}"><i class="fa fa-files-o"></i>拜访方案</a>
-                        </li>
-                        <li><a href="{{url('admin/visit-todo-group/config')}}"><i class="fa fa-cogs"></i>拜访事项</a>
-                        </li>
-
-                        <li><a href="{{url('admin/visit-store-todo')}}"><i class="fa fa-folder"></i>拜访配置模板</a>
-                        </li>
+                        @if($user->can('visit_todo_group_index'))
+                            <li><a href="{{url('admin/visit-todo-group')}}"><i class="fa fa-files-o"></i>拜访方案</a>
+                            </li>
+                        @endif
+                        @if($user->can('visit_todo_group_config'))
+                            <li><a href="{{url('admin/visit-todo-group/config')}}"><i class="fa fa-cogs"></i>拜访事项</a>
+                            </li>
+                        @endif
+                        @if($user->can('visit_store_todo_index'))
+                            <li><a href="{{url('admin/visit-store-todo')}}"><i class="fa fa-folder"></i>拜访配置模板</a>
+                            </li>
+                        @endif
                     </ul>
                 </li>
             @endif

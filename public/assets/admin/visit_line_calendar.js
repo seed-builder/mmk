@@ -112,6 +112,9 @@ define(function(require, exports, module) {
 				},
 				{
 					"data": 'fdate',
+                    render: function ( data, type, full ) {
+                        return data.substring(0,10)
+                    }
 				},
 				{
 					"data": 'fstatus',
@@ -211,7 +214,7 @@ define(function(require, exports, module) {
                     }
                 },
                 {
-                    "data": 'fdate',
+                    "data": "fdate"
                 },
                 {
                     "data": 'fstatus',
@@ -225,7 +228,6 @@ define(function(require, exports, module) {
                         }
                     }
                 },
-                {"data": "fdate"},
                 {
                     "data": "id",
                     render: function ( data, type, full ) {

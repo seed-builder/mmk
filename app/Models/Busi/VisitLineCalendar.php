@@ -42,6 +42,10 @@ class VisitLineCalendar extends BaseModel
     	return $this->hasOne(VisitLine::class, 'id', 'fline_id');
     }
 
+    public function store_calendars(){
+        return $this->hasMany(VisitStoreCalendar::class,'fline_calendar_id');
+    }
+
     /*
      * 生成线路拜访日历
      * 参数 femp_id fline_id fdate

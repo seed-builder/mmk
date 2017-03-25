@@ -49,7 +49,7 @@
             <div class="col-xs-9">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">线路巡访日历</h3>
+                        <h3 class="box-title">线路拜访日志</h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                             </button>
@@ -106,8 +106,8 @@
                                 <th>线路代码</th>
                                 <th>线路名称</th>
                                 <th>负责业代</th>
-                                <th>巡访日期</th>
-                                <th>巡访状态</th>
+                                <th>拜访日期</th>
+                                <th>拜访状态</th>
                                 <th>创建时间</th>
                             </tr>
                             </thead>
@@ -119,7 +119,7 @@
 
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">线路门店巡访日历</h3>
+                        <h3 class="box-title">线路门店拜访日志</h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                             </button>
@@ -183,9 +183,8 @@
                                 <th>fline_calendar_id</th>
                                 <th>门店名称</th>
                                 <th>负责业代</th>
-                                <th>巡访日期</th>
-                                <th>巡访状态</th>
                                 <th>拜访时间</th>
+                                <th>拜访状态</th>
                                 <th>操作</th>
                             </tr>
                             </thead>

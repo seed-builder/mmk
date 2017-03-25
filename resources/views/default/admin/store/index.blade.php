@@ -118,6 +118,29 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">路线</label>
+                                            <div class="layui-input-inline">
+                                                <select class="layui-input filter-condition" filter-name="fline_id"
+                                                        lay-search>
+                                                    <option value="">--请选择--</option>
+                                                    @foreach($lines as $l)
+                                                        <option value="{{$l->id}}">{{$l->fname}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">是否签约</label>
+                                            <div class="layui-input-inline">
+                                                <select class="layui-input filter-condition" filter-name="fis_signed"
+                                                        lay-search>
+                                                    <option value="">--请选择--</option>
+                                                    <option value="0">未签约</option>
+                                                    <option value="1">已签约</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="box-footer" style="text-align: center">
