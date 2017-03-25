@@ -46,7 +46,7 @@ define(function (require, exports, module) {
         });
 
         var table = $("#" + tableId).DataTable({
-            dom: "lBfrtip",
+            dom: "lBrtip",
             language: zhCN,
             processing: true,
             serverSide: true,
@@ -56,70 +56,14 @@ define(function (require, exports, module) {
             ajax: '/admin/stock/pagination',
             columns: [
                 {'data': 'id'},
-                {
-                    'data': 'fstore_id',
-                    render: function (data, type, full) {
-                        if (full.store != null)
-                            return full.store.fnumber
-                        else
-                            return "";
-                    }
-                },
-                {
-                    'data': 'femp_id',
-                    render: function (data, type, full) {
-                        if (full.store != null)
-                            return full.store.ffullname
-                        else
-                            return "";
-                    }
-                },
+                {'data': 'store_number'},
+                {'data': 'store_name'},
                 {'data': 'ftime'},
-                {
-                    'data': 'fstore_id',
-                    render: function (data, type, full) {
-                        if (full.store.employee != null)
-                            return full.store.employee.fnumber
-                        else
-                            return "";
-                    }
-                },
-                {
-                    'data': 'flog_id',
-                    render: function (data, type, full) {
-                        if (full.store.employee != null)
-                            return full.store.employee.fname
-                        else
-                            return "";
-                    }
-                },
-                {
-                    'data': 'fmaterial_id',
-                    render: function (data, type, full) {
-                        if (full.material != null)
-                            return full.material.fnumber
-                        else
-                            return "";
-                    }
-                },
-                {
-                    'data': 'fcreator_id',
-                    render: function (data, type, full) {
-                        if (full.material != null)
-                            return full.material.fname
-                        else
-                            return "";
-                    }
-                },
-                {
-                    'data': 'fmodify_id',
-                    render: function (data, type, full) {
-                        if (full.material != null)
-                            return full.material.fspecification
-                        else
-                            return "";
-                    }
-                },
+                {'data': 'employee_number'},
+                { 'data': 'employee_name'},
+                {'data': 'material_number'},
+                {'data': 'material_name'},
+                {'data': 'material_specification',},
                 {'data': 'fhqty'},
                 {'data': 'feqty'},
                 {'data': 'fsale_hqty'},
