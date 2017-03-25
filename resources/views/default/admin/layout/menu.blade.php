@@ -141,7 +141,7 @@ $user = Auth::user();
                                 </span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="{{url('/admin/store')}}"><i class="fa fa-fw fa-home"></i>我的门店</a></li>
+                                {{--<li><a href="{{url('/admin/store')}}"><i class="fa fa-fw fa-home"></i>我的门店</a></li>--}}
                                 @if($user->can('sale-order_index'))
                                     <li><a href="{{url('/admin/sale-order')}}"><i class="fa fa-fw fa-reorder"></i>门店订单</a>
                                     </li>
