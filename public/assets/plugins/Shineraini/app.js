@@ -395,11 +395,12 @@ var filter_reset = function(ele){
 
     filter_params['filter'] = {}
 
-    filter[0].reset()
-    // $(filter).find(".filter-condition").each(function (index,obj) {
-    //
-    //     $(obj).val("")
-    // })
+    // filter.reset()
+    $(filter).find(".filter-condition").each(function (index,obj) {
+
+        $(obj).val("")
+    })
+    $('.filter-select').selectpicker('refresh');
 
     table.api().settings()[0].ajax.data = filter_params
     table.api().ajax.reload();
@@ -411,6 +412,7 @@ $(".filter-submit").on('click',function () {
 
 $(".filter-reset").on('click',function () {
     filter_reset($(this));
+
 })
 
 $(".filter-condition").keydown(function(event) {
