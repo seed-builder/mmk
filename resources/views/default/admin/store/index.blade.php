@@ -78,76 +78,68 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <div class="panel panel-default filter" filter-table="#moduleTable">
-                            <form class="layui-form">
-                                <div class="box-body">
-                                    <div class="layui-form-item">
-                                        <div class="layui-inline">
-                                            <label class="layui-form-label">门店名称</label>
-                                            <div class="layui-input-inline">
-                                                <input type="text" class="layui-input filter-condition" filter-name="ffullname" filter-operator="like" />
-                                            </div>
-                                        </div>
-                                        <div class="layui-inline">
-                                            <label class="layui-form-label">负责业代</label>
-                                            <div class="layui-input-inline">
-                                                <input type="text" class="layui-input filter-condition" filter-name="femp" filter-operator="like" />
-                                            </div>
-                                        </div>
-                                        <div class="layui-inline">
-                                            <label class="layui-form-label">经销商</label>
-                                            <div class="layui-input-inline">
-                                                <select class="layui-input filter-condition" filter-name="fcust_id"
-                                                        lay-search>
-                                                    <option value="">--请选择--</option>
-                                                    @foreach($cus as $c)
-                                                        <option value="{{$c->id}}">{{$c->fname}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="layui-inline">
-                                            <label class="layui-form-label">渠道</label>
-                                            <div class="layui-input-inline">
-                                                <select class="layui-input filter-condition" filter-name="fchannel"
-                                                        lay-search>
-                                                    <option value="">--请选择--</option>
-                                                    @foreach($channels as $c)
-                                                        <option value="{{$c->id}}">{{$c->fname}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="layui-inline">
-                                            <label class="layui-form-label">路线</label>
-                                            <div class="layui-input-inline">
-                                                <select class="layui-input filter-condition" filter-name="fline_id"
-                                                        lay-search>
-                                                    <option value="">--请选择--</option>
-                                                    @foreach($lines as $l)
-                                                        <option value="{{$l->id}}">{{$l->fname}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="layui-inline">
-                                            <label class="layui-form-label">是否签约</label>
-                                            <div class="layui-input-inline">
-                                                <select class="layui-input filter-condition" filter-name="fis_signed"
-                                                        lay-search>
-                                                    <option value="">--请选择--</option>
-                                                    <option value="0">未签约</option>
-                                                    <option value="1">已签约</option>
-                                                </select>
-                                            </div>
-                                        </div>
+                        <div class="panel panel-default">
+                            <div class="form-horizontal filter " filter-table="#moduleTable">
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">门店名称</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control filter-condition" filter-name="ffullname" filter-operator="like" />
+                                    </div>
+
+                                    <label class="col-sm-2 control-label">负责业代</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control filter-condition" filter-name="femp" filter-operator="like" />
+                                    </div>
+
+                                    <label class="col-sm-2 control-label">经销商</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control filter-condition filter-select" filter-name="fcust_id" data-live-search="true">
+                                            <option value="">--请选择--</option>
+                                            @foreach($cus as $c)
+                                                <option value="{{$c->id}}">{{$c->fname}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">渠道</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control filter-condition filter-select" filter-name="fchannel" data-live-search="true">
+                                            <option value="">--请选择--</option>
+                                            @foreach($channels as $c)
+                                                <option value="{{$c->id}}">{{$c->fname}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <label class="col-sm-2 control-label">路线</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control filter-condition filter-select" filter-name="fline_id" data-live-search="true">
+                                            <option value="">--请选择--</option>
+                                            @foreach($lines as $l)
+                                                <option value="{{$l->id}}">{{$l->fname}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <label class="col-sm-2 control-label">是否签约</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control filter-condition filter-select" filter-name="fis_signed" >
+                                            <option value="">--请选择--</option>
+                                            <option value="0">未签约</option>
+                                            <option value="1">已签约</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="box-footer" style="text-align: center">
-                                    <button type="button" class="btn btn-info filter-submit">查询</button> &nbsp;&nbsp;&nbsp;
+                                    <button type="button" class="btn btn-info filter-submit">查询</button>
                                     <button type="button" class="btn btn-default filter-reset">重置</button>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                         <table id="moduleTable" class="table table-bordered table-hover">
                             <thead>
@@ -362,7 +354,7 @@
         </div>
     </div>
 
-    <div id="make-todos-modal" class="modal fade modal-scroll" role="dialog" tabindex="-1" data-replace="true">
+    <div id="exchange-modal" class="modal fade modal-scroll" role="dialog" tabindex="-1" data-replace="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -370,33 +362,36 @@
                             aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h4 class="modal-title">批量生成拜访事项</h4>
+                    <h4 class="modal-title">门店调换</h4>
                 </div>
-                <form class="form-horizontal" id="todoForm" action="{{url('admin/visit-store-todo/batch-make-todos')}}">
+                <form class="form-horizontal" id="exchangeForm" action="{{url('admin/store/exchange')}}">
                     {{ csrf_field() }}
                     <div class="modal-body">
                         <div class="form-group">
-                            <label class="control-label col-md-3">生成方式</label>
-                            <div class="col-md-9">
-                                <select class="form-control" name="make-todo-type" id="make-todo-type">
-                                    <option value="1">初始化</option>
-                                    <option value="2">根据经销商选择</option>
+                            <label class="control-label col-sm-3">旧员工</label>
+                            <div class="col-sm-9">
+                                <select class="form-control filter-select" name="old_femp_id" data-live-search="true">
+                                    <option value="">--请选择--</option>
+                                    @foreach($employees as $e)
+                                        <option value="{{$e->id}}">{{$e->fname}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group" id="customers" style="display: none">
-                            <label class="control-label col-md-3">经销商</label>
-                            <div class="col-md-9">
-                                <select class="form-control" name="fcust_id" id="fcust_id" data-live-search="true">
-                                    @foreach($cus as $c)
-                                        <option value="{{$c->id}}">{{$c->fname}}</option>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">新员工</label>
+                            <div class="col-sm-9">
+                                <select class="form-control filter-select" name="new_femp_id" data-live-search="true">
+                                    <option value="">--请选择--</option>
+                                    @foreach($employees as $e)
+                                        <option value="{{$e->id}}">{{$e->fname}}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary pull-right">生成</button>
+                        <button type="submit" class="btn btn-primary pull-right">调换门店</button>
                     </div>
                 </form>
             </div>

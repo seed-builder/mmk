@@ -1,6 +1,6 @@
-@extends('customer.layout.collapsed-sidebar')
+@extends('admin.layout.collapsed-sidebar')
 @section('styles')
-    @include('customer.layout.datatable-css')
+    @include('admin.layout.datatable-css')
 @endsection
 
 @section('content')
@@ -85,10 +85,10 @@
 
 @endsection
 @section('js')
-    @include('customer.layout.datatable-js')
+    @include('admin.layout.datatable-js')
     <script type="text/javascript">
         $(function () {
-            seajs.use('customer/view_store_out.js', function (app) {
+            seajs.use('admin/view_store_out.js', function (app) {
                 app.index($, 'moduleTable');
             });
         });

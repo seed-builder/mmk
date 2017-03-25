@@ -36,7 +36,9 @@ class StoreController extends AdminController
         $channels = Channel::all();
         $cus = Customer::all();
         $lines = VisitLine::all();
-        return view('admin.store.index', compact('citys', 'channels', 'cus','lines'));
+
+        $employees = Employee::query()->whereIn('id',$this->getCurUsersEmployeeIds())->get();
+        return view('admin.store.index', compact('citys', 'channels', 'cus','lines','employees'));
     }
 
 	/**
@@ -247,5 +249,25 @@ class StoreController extends AdminController
         $store->image = '/admin/show-image?imageId=' . $store->fphoto;
 
         return view('admin.store.info', compact('store'));
+    }
+
+    /*
+     * d调换门店
+     */
+    public function exchange(Request $request){
+        $data = $request->all();
+
+        Store::query()->where('femp_id',$data['old_femp_id'])->update([
+            'femp_id' => $data['new_femp_id']
+        ]);
+
+        VisitLineStore::query()->where('femp_id',$data['old_femp_id'])->update([
+            'femp_id' => $data['new_femp_id']
+        ]);
+
+        return response()->json([
+            'code' => 200,
+            'result' => '调换成功！'
+        ]);
     }
 }

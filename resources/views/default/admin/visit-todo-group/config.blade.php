@@ -2,7 +2,6 @@
 @section('styles')
     @include('admin.layout.datatable-css')
     <link type="text/css" href="/assets/plugins/bootstrap-treeview/bootstrap-treeview.min.css" rel="stylesheet"/>
-    <link type="text/css" href="/assets/plugins/bootstrap-select/bootstrap-select.css" rel="stylesheet"/>
 
 @endsection
 
@@ -98,37 +97,32 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <div class="panel panel-default filter" filter-table="#moduleTable">
-                            <form class="layui-form">
-                                <div class="box-body">
-                                    <div class="layui-form-item">
-                                        <div class="layui-inline">
-                                            <label class="layui-form-label">门店名称</label>
-                                            <div class="layui-input-inline">
-                                                <input type="text" class="layui-input filter-condition"
-                                                       filter-name="ffullname" filter-operator="like"/>
-                                            </div>
-                                        </div>
-                                        <div class="layui-inline">
-                                            <label class="layui-form-label">经销商</label>
-                                            <div class="layui-input-inline">
-                                                <select class="layui-input filter-condition" filter-name="fcust_id"
-                                                        lay-search>
-                                                    <option value="">--请选择--</option>
-                                                    @foreach($customers as $c)
-                                                        <option value="{{$c->id}}">{{$c->fname}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
+                        <div class="panel panel-default">
+                            <div class="form-horizontal filter " filter-table="#moduleTable">
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">门店名称</label>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control filter-condition" filter-name="ffullname" filter-operator="like" />
                                     </div>
+
+                                    <label class="col-sm-2 control-label">经销商</label>
+                                    <div class="col-sm-3">
+                                        <select class="form-control filter-condition filter-select" filter-name="fcust_id" data-live-search="true">
+                                            <option value="">--请选择--</option>
+                                            @foreach($customers as $c)
+                                                <option value="{{$c->id}}">{{$c->fname}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
                                 </div>
+
                                 <div class="box-footer" style="text-align: center">
                                     <button type="button" class="btn btn-info filter-submit">查询</button>
-                                    &nbsp;&nbsp;&nbsp;
                                     <button type="button" class="btn btn-default filter-reset">重置</button>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                         <table id="moduleTable" class="table table-bordered table-hover">
                             <thead>

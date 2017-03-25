@@ -175,6 +175,15 @@ class Store extends BaseModel
             $fstore_calendar_ids = VisitStoreCalendar::query()->where('fstore_id',$store->id)->pluck('id')->toArray();
             VisitTodoCalendar::query()->whereIn('fstore_calendar_id',$fstore_calendar_ids)->delete();
 		    VisitStoreCalendar::query()->where('fstore_id',$store->id)->delete();
+		    //判断该线路日志下是否有门店日志
+            $line_calendar = VisitLineCalendar::query()->where('fline_id',$store->fline_id)->where('femp_id',$store->femp_id)->first();
+
+		    if ($line_calendar->store_calendars()->count()==0){
+                VisitLineCalendar::query()
+                    ->where('fline_id',$store->fline_id)
+                    ->where('femp_id',$store->femp_id)
+                    ->delete();
+            }
 
 		    VisitLineStore::destroy($ids);
 	    });

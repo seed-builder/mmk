@@ -46,80 +46,27 @@ define(function (require, exports, module) {
         });
 
         var table = $("#" + tableId).DataTable({
-            dom: "lBfrtip",
+            dom: "lBrtip",
             language: zhCN,
             processing: true,
             serverSide: true,
             select: true,
             paging: true,
             rowId: "id",
-            ajax: '/admin/stock/pagination',
+            ajax: {
+                url: '/admin/stock/pagination'
+            },
             columns: [
                 {'data': 'id'},
-                {
-                    'data': 'fstore_id',
-                    render: function (data, type, full) {
-                        if (full.store != null)
-                            return full.store.fnumber
-                        else
-                            return "";
-                    }
-                },
-                {
-                    'data': 'femp_id',
-                    render: function (data, type, full) {
-                        if (full.store != null)
-                            return full.store.ffullname
-                        else
-                            return "";
-                    }
-                },
+                {'data': 'customer_name'},
+                {'data': 'store_number'},
+                {'data': 'store_name'},
                 {'data': 'ftime'},
-                {
-                    'data': 'fstore_id',
-                    render: function (data, type, full) {
-                        if (full.store.employee != null)
-                            return full.store.employee.fnumber
-                        else
-                            return "";
-                    }
-                },
-                {
-                    'data': 'flog_id',
-                    render: function (data, type, full) {
-                        if (full.store.employee != null)
-                            return full.store.employee.fname
-                        else
-                            return "";
-                    }
-                },
-                {
-                    'data': 'fmaterial_id',
-                    render: function (data, type, full) {
-                        if (full.material != null)
-                            return full.material.fnumber
-                        else
-                            return "";
-                    }
-                },
-                {
-                    'data': 'fcreator_id',
-                    render: function (data, type, full) {
-                        if (full.material != null)
-                            return full.material.fname
-                        else
-                            return "";
-                    }
-                },
-                {
-                    'data': 'fmodify_id',
-                    render: function (data, type, full) {
-                        if (full.material != null)
-                            return full.material.fspecification
-                        else
-                            return "";
-                    }
-                },
+                {'data': 'employee_number'},
+                { 'data': 'employee_name'},
+                {'data': 'material_number'},
+                {'data': 'material_name'},
+                {'data': 'material_specification',},
                 {'data': 'fhqty'},
                 {'data': 'feqty'},
                 {'data': 'fsale_hqty'},
@@ -129,10 +76,29 @@ define(function (require, exports, module) {
                         return document_status(data);
                     }
                 },
+                {
+                    "data": "fcheck_type",
+                    render: function ( data, type, full ) {
+                        var txt = '';
+                        switch (data){
+                            case 'A':
+                                txt = '自动审核';
+                                break;
+                            case 'B':
+                                txt = '手工审核';
+                                break;
+                            default:
+                                break;
+                        }
+                        return txt;
+                    }
+                },
+                {'data': 'fcheck_date'},
+                {'data': 'fchecker'},
             ],
             columnDefs: [
                 {
-                    "targets": [0],
+                    "targets": [0,2,5,7],
                     "visible": false
                 }
             ],
@@ -148,14 +114,14 @@ define(function (require, exports, module) {
                 {extend: 'colvis', text: '列显示'},
                 { text: '审核<i class="fa fa-fw fa-paperclip"></i>',className: 'check', enabled: false },
                 { text: '反审核<i class="fa fa-fw fa-unlink"></i>',className: 'uncheck', enabled: false },
-            ]
+            ],
+            order: [[ 3, 'desc' ]]
         });
 
         table.on( 'select', rowSelect).on( 'deselect', rowSelect);
 
-
         function rowSelect() {
-            checkEditEnabble(table,['.edit','.check'],['.uncheck']);
+            checkEditEnabble(table,['.edit','.check','.buttons-remove'],['.uncheck']);
         }
 
         //审核
@@ -166,6 +132,7 @@ define(function (require, exports, module) {
         $(".uncheck").on('click',function () {
             dataCheck(table,'/admin/stock/uncheck');
         })
+
     }
 
 });

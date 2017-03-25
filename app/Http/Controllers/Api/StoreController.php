@@ -45,6 +45,9 @@ class StoreController extends ApiController
 //		    return response($fieldErrors, 400);
 //	    }
         $postalcode = City::getPostalCode($data['fprovince'], $data['fcity'], $data['fcountry']);
+        if(!$postalcode){
+	        $postalcode = City::getPostalCode($data['fprovince'], $data['fcity'], '');
+        }
         if($postalcode){
             $fn = Store::where('fpostalcode', $postalcode)->max('fnumber');
             if($fn){

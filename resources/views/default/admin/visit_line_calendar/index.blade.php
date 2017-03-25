@@ -23,30 +23,30 @@
     <!-- Main content -->
     <section class="content">
         <div class="row">
-            <div class="col-md-3" >
-                <div class="box">
-                    <div class="box-header">
-                        <h3 class="box-title">组织架构信息</h3>
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                            </button>
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
-                                    <i class="fa fa-wrench"></i></button>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="#" id="btnOpen"><i class="fa fa-folder-open"></i>展开</a></li>
-                                    <li><a href="#" id="btnCollapse"><i class="fa fa-folder"></i>折叠</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.box-header -->
-                    <div class="box-body">
-                        <div id="tree" tree-type="employee-tree"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-9">
+            {{--<div class="col-md-3" >--}}
+                {{--<div class="box">--}}
+                    {{--<div class="box-header">--}}
+                        {{--<h3 class="box-title">组织架构信息</h3>--}}
+                        {{--<div class="box-tools pull-right">--}}
+                            {{--<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>--}}
+                            {{--</button>--}}
+                            {{--<div class="btn-group">--}}
+                                {{--<button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">--}}
+                                    {{--<i class="fa fa-wrench"></i></button>--}}
+                                {{--<ul class="dropdown-menu" role="menu">--}}
+                                    {{--<li><a href="#" id="btnOpen"><i class="fa fa-folder-open"></i>展开</a></li>--}}
+                                    {{--<li><a href="#" id="btnCollapse"><i class="fa fa-folder"></i>折叠</a></li>--}}
+                                {{--</ul>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                    {{--<!-- /.box-header -->--}}
+                    {{--<div class="box-body">--}}
+                        {{--<div id="tree" tree-type="employee-tree"></div>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+            <div class="col-xs-12">
                 <div class="box">
                     <div class="box-header">
                         <h3 class="box-title">线路拜访日志</h3>
@@ -58,46 +58,52 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <div class="panel panel-default filter" filter-table="#moduleTable">
-                            <form class="layui-form">
-                                <div class="box-body">
-                                    <div class="layui-form-item">
-                                        <div class="layui-inline">
-                                            <label class="layui-form-label">开始时间</label>
-                                            <div class="layui-input-inline">
-                                                <input type="text" class="layui-input filter-condition" filter-name="fdate" filter-operator=">=" onclick="layui.laydate({elem: this})">
-                                            </div>
-                                        </div>
-                                        <div class="layui-inline">
-                                            <label class="layui-form-label">结束时间</label>
-                                            <div class="layui-input-inline">
-                                                <input type="text" class="layui-input filter-condition" filter-name="fdate" filter-operator="<=" onclick="layui.laydate({elem: this})">
-                                            </div>
-                                        </div>
-                                        <div class="layui-inline">
-                                            <label class="layui-form-label">负责业代</label>
-                                            <div class="layui-input-inline">
-                                                <input type="text" class="layui-input filter-condition" filter-name="femp" filter-operator="like">
-                                            </div>
-                                        </div>
-                                        <div class="layui-inline">
-                                            <label class="layui-form-label">线路名称</label>
-                                            <div class="layui-input-inline">
-                                                <select class="layui-input filter-condition" filter-name="fline_id">
-                                                    <option value="">--请选择--</option>
-                                                    @foreach($lines as $l)
-                                                        <option value="{{$l->id}}">{{$l->fname}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
+                        <div class="panel panel-default">
+                            <div class="form-horizontal filter " filter-table="#moduleTable">
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">开始时间</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control filter-condition filter-date" filter-name="fdate" filter-operator=">=" />
+                                    </div>
+
+                                    <label class="col-sm-2 control-label">结束时间</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control filter-condition filter-date" filter-name="fdate" filter-operator="<=" />
+                                    </div>
+
+                                    <label class="col-sm-2 control-label">负责业代</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control filter-condition" filter-name="femp" filter-operator="like" />
                                     </div>
                                 </div>
+                                <div class="form-group">
+
+                                    <label class="col-sm-2 control-label">线路</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control filter-condition filter-select" filter-name="fline_id" data-live-search="true">
+                                            <option value="">--请选择--</option>
+                                            @foreach($lines as $l)
+                                                <option value="{{$l->id}}">{{$l->fname}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <label class="col-sm-2 control-label">拜访状态</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control filter-condition filter-select" filter-name="fstatus" data-live-search="true">
+                                            <option value="">--请选择--</option>
+                                            <option value="1">未开始</option>
+                                            <option value="2">进行中</option>
+                                            <option value="3">已完成</option>
+                                        </select>
+                                    </div>
+                                </div>
+
                                 <div class="box-footer" style="text-align: center">
-                                    <button type="button" class="btn btn-info filter-submit">查询</button> &nbsp;&nbsp;&nbsp;
+                                    <button type="button" class="btn btn-info filter-submit">查询</button>
                                     <button type="button" class="btn btn-default filter-reset">重置</button>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                         <table id="moduleTable" class="table table-bordered table-hover">
                             <thead>
@@ -115,6 +121,7 @@
                     </div>
                     <!-- /.box-body -->
                 </div>
+
                 <!-- /.box -->
 
                 <div class="box">
@@ -128,53 +135,50 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <div class="panel panel-default filter" filter-table="#storeTable">
-                            <form class="layui-form">
-                                <div class="box-body">
-                                    <div class="layui-form-item">
-                                        <div class="layui-inline">
-                                            <label class="layui-form-label">开始时间</label>
-                                            <div class="layui-input-inline">
-                                                <input type="text" class="layui-input filter-condition" filter-name="fdate" filter-operator=">=" onclick="layui.laydate({elem: this})">
-                                            </div>
-                                        </div>
-                                        <div class="layui-inline">
-                                            <label class="layui-form-label">结束时间</label>
-                                            <div class="layui-input-inline">
-                                                <input type="text" class="layui-input filter-condition" filter-name="fdate" filter-operator="<=" onclick="layui.laydate({elem: this})">
-                                            </div>
-                                        </div>
-                                        <div class="layui-inline">
-                                            <label class="layui-form-label">负责业代</label>
-                                            <div class="layui-input-inline">
-                                                <input type="text" class="layui-input filter-condition" filter-name="femp" filter-operator="like">
-                                            </div>
-                                        </div>
-                                        <div class="layui-inline">
-                                            <label class="layui-form-label">门店名称</label>
-                                            <div class="layui-input-inline">
-                                                <input type="text" class="layui-input filter-condition" filter-name="fstore" filter-operator="like">
-                                            </div>
-                                        </div>
+                        <div class="panel panel-default">
 
-                                        <div class="layui-inline">
-                                            <label class="layui-form-label">巡访状态</label>
-                                            <div class="layui-input-inline">
-                                                <select class="layui-input filter-condition" filter-name="fstatus">
-                                                    <option value="">--请选择--</option>
-                                                    <option value="1">未开始</option>
-                                                    <option value="2">进行中</option>
-                                                    <option value="3">已完成</option>
-                                                </select>
-                                            </div>
-                                        </div>
+                            <div class="form-horizontal filter " filter-table="#storeTable">
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">开始时间</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control filter-condition filter-date" filter-name="fdate" filter-operator=">=" />
+                                    </div>
+
+                                    <label class="col-sm-2 control-label">结束时间</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control filter-condition filter-date" filter-name="fdate" filter-operator="<=" />
+                                    </div>
+
+                                    <label class="col-sm-2 control-label">负责业代</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control filter-condition" filter-name="femp" filter-operator="like" />
                                     </div>
                                 </div>
+                                <div class="form-group">
+
+                                    <label class="col-sm-2 control-label">门店名称</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control filter-condition" filter-name="fstore" filter-operator="like" />
+                                    </div>
+
+                                    <label class="col-sm-2 control-label">拜访状态</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control filter-condition filter-select" filter-name="fstatus" data-live-search="true">
+                                            <option value="">--请选择--</option>
+                                            <option value="1">未开始</option>
+                                            <option value="2">进行中</option>
+                                            <option value="3">已完成</option>
+                                        </select>
+                                    </div>
+                                </div>
+
                                 <div class="box-footer" style="text-align: center">
-                                    <button type="button" class="btn btn-info filter-submit">查询</button> &nbsp;&nbsp;&nbsp;
+                                    <button type="button" class="btn btn-info filter-submit">查询</button>
                                     <button type="button" class="btn btn-default filter-reset">重置</button>
                                 </div>
-                            </form>
+                            </div>
+
                         </div>
                         <table id="storeTable" class="table table-bordered table-hover">
                             <thead>
