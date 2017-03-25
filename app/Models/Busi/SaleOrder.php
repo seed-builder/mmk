@@ -34,15 +34,15 @@ class SaleOrder extends BaseModel
 	protected $appends = ['total_qty'];
 
     public function store(){
-        return $this->hasOne(Store::class,'id','fstore_id');
+        return $this->belongsTo(Store::class,'fstore_id');
     }
 
 	public function employee(){
-        return $this->hasOne(Employee::class,'id','femp_id');
+        return $this->belongsTo(Employee::class, 'femp_id');
     }
 
     public function customer(){
-        return $this->hasOne(Customer::class,'id','fcust_id');
+        return $this->belongsTo(Customer::class,'fcust_id');
     }
 
     public function items(){

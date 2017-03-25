@@ -59,6 +59,10 @@ class Employee extends BaseModel
 		});
 	}
 
+	public function customer(){
+		return $this->belongsTo(Customer::class, 'fcust_id');
+	}
+
     public function organization(){
         return $this->hasOne(Organization::class, 'id', 'forg_id');
     }
