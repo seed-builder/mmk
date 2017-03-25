@@ -428,7 +428,7 @@ $('.filter-date').datepicker({
 language: 'zh-CN',
     format: 'yyyy-mm-dd',
     clearBtn: true,
-    autoclose :false,
+    autoclose :true,
 });
 
 function addOptions(select, options) {
