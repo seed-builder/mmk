@@ -33,24 +33,26 @@
                     <!-- /.box-header -->
                     <div class="box-body">
                         <div class="panel panel-default" >
-                            <form class="form-inline filter "  filter-table="#moduleTable">
+                            <form class="form-horizontal filter "  filter-table="#moduleTable">
                                 <div class="form-group">
-                                    <label class="">门店编码</label>
-                                    <input type="text" class="form-control filter-condition" filter-name="view_store_outs.store_number" filter-operator="like" >
+                                    <label class="col-sm-1 control-label">门店编码</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control filter-condition" filter-name="view_store_outs.store_number" filter-operator="like" >
+                                    </div>
+                                    <label class="col-sm-1 control-label">门店</label><div class="col-sm-2">
+                                        <input type="text" class="form-control filter-condition" filter-name="view_store_outs.store_name" filter-operator="like" >
+                                    </div>
+                                    <label class="col-sm-1 control-label">物料编码</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control filter-condition" filter-name="view_store_outs.material_number" filter-operator="like" >
+                                    </div>
+
+                                    <label class="col-sm-1 control-label">物料</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control filter-condition" filter-name="view_store_outs.material_name" filter-operator="like" >
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="">门店</label>
-                                    <input type="text" class="form-control filter-condition" filter-name="view_store_outs.store_name" filter-operator="like" >
-                                </div>
-                                <div class="form-group">
-                                    <label class="">物料编码</label>
-                                    <input type="text" class="form-control filter-condition" filter-name="view_store_outs.material_number" filter-operator="like" >
-                                </div>
-                                <div class="form-group">
-                                    <label class="">物料</label>
-                                    <input type="text" class="form-control filter-condition" filter-name="view_store_outs.material_name" filter-operator="like" >
-                                </div>
-                                <div class="form-group">
+                                <div class="box-footer" style="text-align: center">
                                     <button type="button" class="btn btn-info filter-submit">查询</button>
                                     <button type="button" class="btn btn-default filter-reset">重置</button>
                                 </div>
