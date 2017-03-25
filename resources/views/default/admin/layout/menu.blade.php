@@ -48,7 +48,7 @@ $user = Auth::user();
                             <li><a href="{{url('admin/material')}}"><i class="fa fa-circle-o"></i></i> 商品信息</a></li>
                         @endif
                         @if($user->can('customer_index'))
-                            <li><a href="{{url('/admin/customer')}}"><i class="fa fa-circle-o"></i></i>经销商信息</a></li>
+                            <li><a href="{{url('/admin/customer')}}"><i class="fa fa-circle-o"></i></i> 经销商信息</a></li>
                     @endif
 
 

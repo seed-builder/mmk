@@ -32,44 +32,37 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <div class="panel panel-default filter" filter-table="#moduleTable">
-                            <form class="layui-form">
-                                <div class="box-body">
-                                    <div class="layui-form-item">
-                                        <div class="layui-inline">
-                                            <label class="layui-form-label">商品编码</label>
-                                            <div class="layui-input-inline">
-                                                <input type="text" class="layui-input filter-condition" filter-name="fnumber" filter-operator="like" />
-                                            </div>
-                                        </div>
-                                        <div class="layui-inline">
-                                            <label class="layui-form-label">商品名称</label>
-                                            <div class="layui-input-inline">
-                                                <input type="text" class="layui-input filter-condition" filter-name="fname" filter-operator="like" />
-                                            </div>
-                                        </div>
-                                        <div class="layui-inline">
-                                            <label class="layui-form-label">销售单位</label>
-                                            <div class="layui-input-inline">
-                                                <input type="text" class="layui-input filter-condition" filter-name="fsale_unit" filter-operator="like" />
-                                            </div>
-                                        </div>
-                                        <div class="layui-inline">
-                                            <label class="layui-form-label">基本单位</label>
-                                            <div class="layui-input-inline">
-                                                <input type="text" class="layui-input filter-condition" filter-name="fbase_unit" filter-operator="like" />
-                                            </div>
-                                        </div>
-                                        <div class="layui-inline">
-                                            <label class="layui-form-label">规格</label>
-                                            <div class="layui-input-inline">
-                                                <input type="text" class="layui-input filter-condition" filter-name="fspecification" filter-operator="like" />
-                                            </div>
-                                        </div>
+                        <div class="panel panel-default">
+                            <form class="form-horizontal filter " filter-table="#moduleTable">
+                                <div class="form-group">
+                                    <label class="col-sm-1 control-label">商品编码</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control filter-condition" filter-name="fnumber" filter-operator="like" />
+                                    </div>
+
+                                    <label class="col-sm-1 control-label">商品名称</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control filter-condition" filter-name="fname" filter-operator="like" />
+                                    </div>
+
+                                    <label class="col-sm-1 control-label">销售单位</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control filter-condition" filter-name="fsale_unit" filter-operator="like" />
+                                    </div>
+
+                                    <label class="col-sm-1 control-label">基本单位</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control filter-condition" filter-name="fbase_unit" filter-operator="like" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-1 control-label">规格</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control filter-condition" filter-name="fspecification" filter-operator="like" />
                                     </div>
                                 </div>
                                 <div class="box-footer" style="text-align: center">
-                                    <button type="button" class="btn btn-info filter-submit">查询</button> &nbsp;&nbsp;&nbsp;
+                                    <button type="button" class="btn btn-info filter-submit">查询</button>
                                     <button type="button" class="btn btn-default filter-reset">重置</button>
                                 </div>
                             </form>

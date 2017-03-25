@@ -22,6 +22,9 @@
     <link rel="stylesheet" href="/assets/plugins/toastr/toastr.min.css">
 
     <link rel="stylesheet" href="{{url('assets')}}/plugins/layui/css/layui.css">
+    <link type="text/css" href="/assets/plugins/bootstrap-select/bootstrap-select.css" rel="stylesheet"/>
+
+    <link rel="stylesheet" href="/css/style.css">
 
     @yield('styles')
     <style>
@@ -158,7 +161,10 @@
 
 <!-- AdminLTE App -->
 <script src="/assets/plugins/AdminLTE/dist/js/app.min.js"></script>
+<script src="/assets/plugins/bootstrap-select/bootstrap-select.js"></script>
+<script src="/assets/plugins/bootstrap-select/i18n/defaults-zh_CN.js"></script>
 <script src="/assets/plugins/Shineraini/app.js"></script>
+
 <!-- AdminLTE for demo purposes -->
 <script type="text/javascript">
     toastr.options = {
