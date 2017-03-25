@@ -82,17 +82,17 @@
                             <div class="form-horizontal filter " filter-table="#moduleTable">
 
                                 <div class="form-group">
-                                    <label class="col-sm-1 control-label">门店名称</label>
+                                    <label class="col-sm-2 control-label">门店名称</label>
                                     <div class="col-sm-2">
                                         <input type="text" class="form-control filter-condition" filter-name="ffullname" filter-operator="like" />
                                     </div>
 
-                                    <label class="col-sm-1 control-label">负责业代</label>
+                                    <label class="col-sm-2 control-label">负责业代</label>
                                     <div class="col-sm-2">
                                         <input type="text" class="form-control filter-condition" filter-name="femp" filter-operator="like" />
                                     </div>
 
-                                    <label class="col-sm-1 control-label">经销商</label>
+                                    <label class="col-sm-2 control-label">经销商</label>
                                     <div class="col-sm-2">
                                         <select class="form-control filter-condition filter-select" filter-name="fcust_id" data-live-search="true">
                                             <option value="">--请选择--</option>
@@ -102,7 +102,11 @@
                                         </select>
                                     </div>
 
-                                    <label class="col-sm-1 control-label">渠道</label>
+
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">渠道</label>
                                     <div class="col-sm-2">
                                         <select class="form-control filter-condition filter-select" filter-name="fchannel" data-live-search="true">
                                             <option value="">--请选择--</option>
@@ -111,10 +115,8 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
 
-                                <div class="form-group">
-                                    <label class="col-sm-1 control-label">路线</label>
+                                    <label class="col-sm-2 control-label">路线</label>
                                     <div class="col-sm-2">
                                         <select class="form-control filter-condition filter-select" filter-name="fline_id" data-live-search="true">
                                             <option value="">--请选择--</option>
@@ -124,7 +126,7 @@
                                         </select>
                                     </div>
 
-                                    <label class="col-sm-1 control-label">是否签约</label>
+                                    <label class="col-sm-2 control-label">是否签约</label>
                                     <div class="col-sm-2">
                                         <select class="form-control filter-condition filter-select" filter-name="fis_signed" >
                                             <option value="">--请选择--</option>

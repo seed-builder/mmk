@@ -71,12 +71,12 @@
 							<div class="form-horizontal filter " filter-table="#moduleTable">
 
 								<div class="form-group">
-									<label class="col-sm-1 control-label">人员</label>
+									<label class="col-sm-2 control-label">人员</label>
 									<div class="col-sm-2">
 										<input type="text" class="form-control filter-condition" filter-name="femp" filter-operator="like" />
 									</div>
 
-									<label class="col-sm-1 control-label">线路</label>
+									<label class="col-sm-2 control-label">线路</label>
 									<div class="col-sm-2">
 										<select class="form-control filter-condition filter-select" filter-name="fline_id" data-live-search="true">
 											<option value="">--请选择--</option>
@@ -126,17 +126,17 @@
 							<div class="form-horizontal filter" filter-table="#childTable">
 
 								<div class="form-group">
-									<label class="col-sm-1 control-label">门店名称</label>
+									<label class="col-sm-2 control-label">门店名称</label>
 									<div class="col-sm-2">
 										<input type="text" class="form-control filter-condition" filter-name="fstore" filter-operator="like" />
 									</div>
 
-									<label class="col-sm-1 control-label">负责人</label>
+									<label class="col-sm-2 control-label">负责人</label>
 									<div class="col-sm-2">
 										<input type="text" class="form-control filter-condition" filter-name="fcontracts" filter-operator="like" />
 									</div>
 
-									<label class="col-sm-1 control-label">负责业代</label>
+									<label class="col-sm-2 control-label">负责业代</label>
 									<div class="col-sm-2">
 										<input type="text" class="form-control filter-condition" filter-name="femp" filter-operator="like" />
 									</div>

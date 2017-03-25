@@ -87,12 +87,12 @@
                             <div class="form-horizontal filter " filter-table="#moduleTable">
 
                                 <div class="form-group">
-                                    <label class="col-sm-1 control-label">姓名</label>
+                                    <label class="col-sm-2 control-label">姓名</label>
                                     <div class="col-sm-2">
                                         <input type="text" class="form-control filter-condition" filter-name="bd_employees.fname" filter-operator="like" />
                                     </div>
 
-                                    <label class="col-sm-1 control-label">考勤状态</label>
+                                    <label class="col-sm-2 control-label">考勤状态</label>
                                     <div class="col-sm-2">
                                         <select class="form-control filter-condition filter-select" filter-name="attendance_statistics.fstatus">
                                             <option value="">--请选择--</option>
@@ -103,17 +103,17 @@
                                         </select>
                                     </div>
 
-                                    <label class="col-sm-1 control-label">开始时间</label>
+                                    <label class="col-sm-2 control-label">开始时间</label>
                                     <div class="col-sm-2">
                                         <input type="date" class="form-control filter-condition" filter-name="attendance_statistics.fday" filter-operator=">="/>
                                     </div>
 
-
-                                    <label class="col-sm-1 control-label">结束时间</label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">结束时间</label>
                                     <div class="col-sm-2">
                                         <input type="date" class="form-control filter-condition" filter-name="attendance_statistics.fday" filter-operator="<="/>
                                     </div>
-
                                 </div>
 
                                 <div class="box-footer" style="text-align: center">

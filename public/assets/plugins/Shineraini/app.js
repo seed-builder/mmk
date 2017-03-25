@@ -422,6 +422,13 @@ $(".filter-condition").keydown(function(event) {
 
 $(".filter-select").selectpicker();
 
+// $('.filter-date').datepicker({
+//     language: 'zh-CN',
+//     format: 'yyyy-mm-dd',
+//     clearBtn: true,
+//     autoclose :false
+// });
+
 function addOptions(select, options) {
     select.options.length=0;
     for(var i=0; i < options.length; i++) {

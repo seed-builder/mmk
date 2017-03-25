@@ -30,17 +30,17 @@
                         <div class="panel panel-default">
                             <div class="form-horizontal filter " filter-table="#moduleTable">
                                 <div class="form-group">
-                                    <label class="col-sm-1 control-label">名称</label>
+                                    <label class="col-sm-2 control-label">名称</label>
                                     <div class="col-sm-2">
                                         <input type="text" class="form-control filter-condition" filter-name="fname" filter-operator="like" />
                                     </div>
 
-                                    <label class="col-sm-1 control-label">地址</label>
+                                    <label class="col-sm-2 control-label">地址</label>
                                     <div class="col-sm-2">
                                         <input type="text" class="form-control filter-condition" filter-name="faddress" filter-operator="like" />
                                     </div>
 
-                                    <label class="col-sm-1 control-label">电话</label>
+                                    <label class="col-sm-2 control-label">电话</label>
                                     <div class="col-sm-2">
                                         <input type="text" class="form-control filter-condition" filter-name="ftel" filter-operator="like" />
                                     </div>

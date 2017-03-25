@@ -61,17 +61,17 @@
                         <div class="panel panel-default">
                             <form class="form-horizontal filter " filter-table="#moduleTable">
                                 <div class="form-group">
-                                    <label class="col-sm-1 control-label">姓名</label>
+                                    <label class="col-sm-2 control-label">姓名</label>
                                     <div class="col-sm-2">
                                         <input type="text" class="form-control filter-condition" filter-name="bd_employees.fname" filter-operator="like" />
                                     </div>
 
-                                    <label class="col-sm-1 control-label">工号</label>
+                                    <label class="col-sm-2 control-label">工号</label>
                                     <div class="col-sm-2">
                                         <input type="text" class="form-control filter-condition" filter-name="bd_employees.fnumber" filter-operator="like" />
                                     </div>
 
-                                    <label class="col-sm-1 control-label">手机号</label>
+                                    <label class="col-sm-2 control-label">手机号</label>
                                     <div class="col-sm-2">
                                         <input type="text" class="form-control filter-condition" filter-name="bd_employees.fphone" filter-operator="like" />
                                     </div>
