@@ -118,7 +118,7 @@ $user = Auth::user();
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="{{url('/admin/leave')}}"><i class="fa fa-fw fa-calendar-minus-o"></i>请假管理</a></li>
-                    <li><a href="{{url('/admin/display-policy')}}"><i class="fa fa-fw fa-tasks"></i>陈列费用政策管理</a></li>
+
                 </ul>
             </li>
 
@@ -132,23 +132,48 @@ $user = Auth::user();
                     </span>
                     </a>
                     <ul class="treeview-menu">
-                        @if($user->can('stock_index'))
-                            <li><a href="{{url('/admin/stock')}}"><i class="fa fa-fw fa-inbox"></i>门店库存</a></li>
-                        @endif
-                        @if($user->can('sale-order_index'))
-                            <li><a href="{{url('/admin/sale-order')}}"><i class="fa fa-fw fa-reorder"></i>门店订单管理</a>
-                            </li>
-                        @endif
-                        @if($user->can('stock-out_index'))
-                            <li><a href="{{url('/admin/stock-out')}}"><i class="fa fa-fw fa-outdent"></i>出库管理</a></li>
-                        @endif
-                        @if($user->can('stock-in_index'))
-                            <li><a href="{{url('/admin/stock-in')}}"><i class="fa fa-fw fa-indent"></i>入库管理</a></li>
-                        @endif
-                        @if($user->can('view-customer-stock-statistic_index'))
-                            <li><a href="{{url('/admin/view-customer-stock-statistic')}}"><i
-                                            class="fa fa-fw fa-table"></i>库存余额</a></li>
-                        @endif
+                        <li class="treeview active">
+                            <a href="#">
+                                <i class="fa fa-fw fa-sitemap"></i>
+                                <span>门店</span>
+                                <span class="pull-right-container">
+                                  <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="{{url('/admin/store')}}"><i class="fa fa-fw fa-home"></i>我的门店</a></li>
+                                @if($user->can('sale-order_index'))
+                                    <li><a href="{{url('/admin/sale-order')}}"><i class="fa fa-fw fa-reorder"></i>门店订单</a>
+                                    </li>
+                                @endif
+                                @if($user->can('stock_index'))
+                                    <li><a href="{{url('/admin/stock')}}"><i class="fa fa-fw fa-inbox"></i>门店库存</a></li>
+                                @endif
+                                <li><a href="{{url('/admin/view-store-out')}}"><i class="fa fa-fw fa-truck"></i>门店出库</a></li>
+                            </ul>
+                        </li>
+                        <li class="treeview active">
+                            <a href="#">
+                                <i class="fa fa-fw fa-sitemap"></i>
+                                <span>经销商</span>
+                                <span class="pull-right-container">
+                                  <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                @if($user->can('stock-in_index'))
+                                    <li><a href="{{url('/admin/stock-in')}}"><i class="fa fa-fw fa-indent"></i>入库管理</a></li>
+                                @endif
+                                @if($user->can('stock-out_index'))
+                                    <li><a href="{{url('/admin/stock-out')}}"><i class="fa fa-fw fa-outdent"></i>出库管理</a></li>
+                                @endif
+                                @if($user->can('view-customer-stock-statistic_index'))
+                                    <li><a href="{{url('/admin/view-customer-stock-statistic')}}"><i
+                                                    class="fa fa-fw fa-table"></i>库存余额</a></li>
+                                @endif
+                                    <li><a href="{{url('/admin/display-policy')}}"><i class="fa fa-fw fa-tasks"></i>费用政策</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </li>
             @endif
