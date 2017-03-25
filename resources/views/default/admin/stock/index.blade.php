@@ -33,8 +33,12 @@
                     <!-- /.box-header -->
                     <div class="box-body">
                         <div class="panel panel-default" >
-                            <form class="form-horizontal filter "  filter-table="#orderTable">
+                            <form class="form-horizontal filter "  filter-table="#moduleTable">
                                 <div class="form-group">
+                                    <label class="col-sm-1 control-label">经销商</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control filter-condition" filter-name="bd_customers.fname" filter-operator="like" >
+                                    </div>
                                     <label  class="col-sm-1 control-label">门店</label>
                                     <div class="col-sm-2">
                                         <input type="text" class="form-control filter-condition" filter-name="st_stores.ffullname" filter-operator="like" >
@@ -43,19 +47,15 @@
                                     <div class="col-sm-2">
                                         <input type="text" class="form-control filter-condition" filter-name="bd_employees.fname" filter-operator="like" >
                                     </div>
-                                    <label class="col-sm-1 control-label">经销商</label>
-                                    <div class="col-sm-2">
-                                        <input type="text" class="form-control filter-condition" filter-name="bd_customers.fname" filter-operator="like" >
-                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-1 control-label">开始日期</label>
                                     <div class="col-sm-2">
-                                        <input type="date" class="form-control filter-condition" filter-name="st_sale_orders.fdate" filter-operator="<=" >
+                                        <input type="date" class="form-control filter-condition" filter-name="st_stocks.ftime" filter-operator="<=" >
                                     </div>
                                     <label class="col-sm-1 control-label">结束日期</label>
                                     <div class="col-sm-2">
-                                        <input type="date" class="form-control filter-condition" filter-name="st_sale_orders.fdate" filter-operator=">=" >
+                                        <input type="date" class="form-control filter-condition" filter-name="st_stocks.ftime" filter-operator=">=" >
                                     </div>
                                     <div class="col-sm-3 col-sm-offset-1">
                                         <button type="button" class="btn btn-info filter-submit">查询</button>
@@ -68,6 +68,7 @@
                             <thead>
                             <tr>
                                 <th>id</th>
+                                <th>经销商</th>
                                 <th>门店编码</th>
                                 <th>门店名称</th>
                                 <th>盘点日期</th>
