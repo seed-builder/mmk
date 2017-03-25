@@ -136,7 +136,7 @@ define(function (require, exports, module) {
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
-                //{extend: 'colvis', text: '列显示'}
+                {extend: 'colvis', text: '列显示'}
             ]
         });
 
@@ -252,7 +252,7 @@ define(function (require, exports, module) {
                     });
                 }},
                 { text: '反审核<i class="fa fa-fw fa-unlink"></i>',className: 'uncheck', enabled: false },
-                //{extend: 'colvis', text: '列显示'}
+                {extend: 'colvis', text: '列显示'}
             ]
         });
         chlidTable.on( 'select', chlidRowSelect).on( 'deselect', chlidRowSelect);

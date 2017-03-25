@@ -206,7 +206,7 @@ define(function(require, exports, module) {
                     });
                 }},
                 { text: '反审核<i class="fa fa-fw fa-unlink"></i>',className: 'uncheck', enabled: false },
-                //{extend: 'colvis', text: '列显示'}
+                {extend: 'colvis', text: '列显示'}
             ]
         });
 
