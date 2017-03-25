@@ -64,12 +64,12 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">开始时间</label>
                                     <div class="col-sm-2">
-                                        <input type="date" class="form-control filter-condition" filter-name="fdate" filter-operator=">=" />
+                                        <input type="text" class="form-control filter-condition filter-date" filter-name="fdate" filter-operator=">=" />
                                     </div>
 
                                     <label class="col-sm-2 control-label">结束时间</label>
                                     <div class="col-sm-2">
-                                        <input type="date" class="form-control filter-condition" filter-name="fdate" filter-operator="<=" />
+                                        <input type="text" class="form-control filter-condition filter-date" filter-name="fdate" filter-operator="<=" />
                                     </div>
 
                                     <label class="col-sm-2 control-label">负责业代</label>
@@ -142,12 +142,12 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">开始时间</label>
                                     <div class="col-sm-2">
-                                        <input type="date" class="form-control filter-condition" filter-name="fdate" filter-operator=">=" />
+                                        <input type="text" class="form-control filter-condition filter-date" filter-name="fdate" filter-operator=">=" />
                                     </div>
 
                                     <label class="col-sm-2 control-label">结束时间</label>
                                     <div class="col-sm-2">
-                                        <input type="date" class="form-control filter-condition" filter-name="fdate" filter-operator="<=" />
+                                        <input type="text" class="form-control filter-condition filter-date" filter-name="fdate" filter-operator="<=" />
                                     </div>
 
                                     <label class="col-sm-2 control-label">负责业代</label>

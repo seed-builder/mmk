@@ -105,14 +105,14 @@
 
                                     <label class="col-sm-2 control-label">开始时间</label>
                                     <div class="col-sm-2">
-                                        <input type="date" class="form-control filter-condition" filter-name="attendance_statistics.fday" filter-operator=">="/>
+                                        <input type="text" class="form-control filter-condition filter-date" filter-name="attendance_statistics.fday" filter-operator=">="/>
                                     </div>
 
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">结束时间</label>
                                     <div class="col-sm-2">
-                                        <input type="date" class="form-control filter-condition" filter-name="attendance_statistics.fday" filter-operator="<="/>
+                                        <input type="text" class="form-control filter-condition filter-date" filter-name="attendance_statistics.fday" filter-operator="<="/>
                                     </div>
                                 </div>
 
