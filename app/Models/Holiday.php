@@ -10,5 +10,4 @@ class Holiday extends Model
     protected $table = 'holidays';
     protected $guarded = ['id'];
 
-    public $filter = "false";
 }

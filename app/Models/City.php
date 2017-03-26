@@ -9,8 +9,6 @@ class City extends Model
     //
 	protected $table = 'citys';
 
-    public $filter = "false";
-
 	/**
 	 * 获取邮政编码
 	 * @param $province

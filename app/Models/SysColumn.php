@@ -8,7 +8,6 @@ class SysColumn extends Model
 {
 	protected $guarded=['id'];
 	protected $dateFormat='Y-m-d H:i:s';
-    public $filter = "false";
 
     //
 	public function __construct(array $attributes = []){

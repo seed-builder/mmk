@@ -27,6 +27,5 @@ class Role extends EntrustRole
 
     public $validateRules=['name' => 'required', 'display_name' => 'required'];
 
-    public $filter = "false";
 
 }
