@@ -12,6 +12,7 @@ class VisitLineStore extends BaseModel
 
 	 protected $guarded = ['id'];
 
+    public $filter = true;
 	 
 	 public function employee(){
 	 	return $this->hasOne(Employee::class, 'id', 'femp_id');

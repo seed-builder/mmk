@@ -8,8 +8,6 @@ class BaseModel extends Model
 {
     protected $guarded = ['id'];
 
-    public $filter = true;
-
     /**
      * The name of the "created at" column.
      *

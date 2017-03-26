@@ -34,6 +34,8 @@ class StockOut extends BaseModel
 	protected $table = 'st_stock_outs';
 	protected $guarded = ['id'];
 
+    public $filter = true;
+
     public function store(){
         return $this->hasOne(Store::class,'id','fstore_id');
     }

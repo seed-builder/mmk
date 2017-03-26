@@ -30,6 +30,8 @@ class StockInItem extends BaseModel
     protected $table = 'st_stock_in_items';
     protected $guarded = ['id'];
 
+    public $filter = true;
+
     public function stockin()
     {
         return $this->hasOne(StockIn::class, 'id', 'fstock_in_id');

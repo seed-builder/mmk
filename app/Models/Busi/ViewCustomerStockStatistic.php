@@ -27,24 +27,4 @@ class ViewCustomerStockStatistic extends BaseModel
 	protected $table = 'view_customer_stock_statistic';
 	protected $guarded = ['id'];
 
-    public function adminFilter($queryBuilder, $request)
-    {
-        $data = $request->all();
-        if (!empty($data['filter'])){
-            foreach ($data['filter'] as $f){
-                $filter_name = $f['name'];
-                if ($filter_name=="material_fnumber"&&!empty($f['value'])){
-                    $ids = Store::query()->where('fnumber','like','%'.$f['value'].'%')->pluck('id');
-                    $queryBuilder->whereIn('fmaterial_id', $ids);
-                }elseif ($filter_name=="material_fname"&&!empty($f['value'])){
-                    $ids = Store::query()->where('fname','like','%'.$f['value'].'%')->pluck('id');
-                    $queryBuilder->whereIn('fmaterial_id', $ids);
-                }else{
-                    $queryBuilder=$this->adminFilterQuery($queryBuilder,$f);
-                }
-            }
-        }
-
-        return $queryBuilder;
-    }
 }
