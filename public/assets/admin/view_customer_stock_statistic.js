@@ -13,7 +13,9 @@ define(function(require, exports, module) {
             select: true,
             paging: true,
             rowId: "id",
-            ajax: '/admin/view-customer-stock-statistic/pagination',
+            ajax: {
+                url : '/admin/view-customer-stock-statistic/pagination'
+            },
             columns: [
                 {  'data': 'cust_id' },
                 {  'data': 'cust_name' },

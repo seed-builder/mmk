@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Busi\Customer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
 use App\Models\Busi\ViewCustomerStockStatistic;
@@ -20,8 +21,8 @@ class ViewCustomerStockStatisticController extends AdminController
 	*/
 	public function index()
 	{
-		//
-		return view('admin.view-customer-stock-statistic.index');
+		$customers = Customer::all();
+		return view('admin.view-customer-stock-statistic.index',compact('customers'));
 	}
 
 	/**

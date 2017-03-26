@@ -34,7 +34,49 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
+                        <div class="panel panel-default" >
+                            <form class="form-horizontal filter "  filter-table="#moduleTable">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">经销商</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control filter-condition filter-select" filter-name="fcust_id" data-live-search="true">
+                                            <option value="">--请选择--</option>
+                                            @foreach($customers as $c)
+                                                <option value="{{$c['value']}}">{{$c['label']}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
 
+                                    <label class="col-sm-2 control-label">门店</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control filter-condition" filter-name="fstore" filter-operator="like"/>
+                                    </div>
+
+                                    <label class="col-sm-2 control-label">出库单号</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control filter-condition filter-date" filter-name="fbill_no" filter-operator="like"/>
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+
+                                    <label class="col-sm-2 control-label">出库起始时间</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control filter-condition filter-date" filter-name="fdate" filter-operator=">="/>
+                                    </div>
+
+                                    <label class="col-sm-2 control-label">出库结束时间</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control filter-condition filter-date" filter-name="fdate" filter-operator="<="/>
+                                    </div>
+
+                                </div>
+                                <div class="box-footer" style="text-align: center">
+                                    <button type="button" class="btn btn-info filter-submit">查询</button>
+                                    <button type="button" class="btn btn-default filter-reset">重置</button>
+                                </div>
+                            </form>
+                        </div>
                         <table id="moduleTable" class="table table-bordered table-hover">
                             <thead>
                             <tr>

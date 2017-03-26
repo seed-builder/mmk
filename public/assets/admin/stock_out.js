@@ -68,7 +68,9 @@ define(function (require, exports, module) {
             select: true,
             paging: true,
             rowId: "id",
-            ajax: '/admin/stock-out/pagination',
+            ajax: {
+                url : '/admin/stock-out/pagination'
+            },
             columns: [
                 {'data': 'id'},
                 {'data': 'fbill_no'},

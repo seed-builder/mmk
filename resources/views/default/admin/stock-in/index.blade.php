@@ -33,7 +33,58 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
+                        <div class="panel panel-default" >
+                            <form class="form-horizontal filter "  filter-table="#moduleTable">
+                                <div class="form-group">
+                                    <label class="col-sm-1 control-label">经销商</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control filter-condition filter-select" filter-name="fcust_id" data-live-search="true">
+                                            <option value="">--请选择--</option>
+                                            @foreach($customers as $c)
+                                                <option value="{{$c['value']}}">{{$c['label']}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
 
+                                    <label class="col-sm-2 control-label">发货起始时间</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control filter-condition filter-date" filter-name="fsend_date" filter-operator=">="/>
+                                    </div>
+
+                                    <label class="col-sm-2 control-label">发货结束时间</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control filter-condition filter-date" filter-name="fsend_date" filter-operator="<="/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+
+                                    <label class="col-sm-1 control-label">到货状态</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control filter-condition filter-select" filter-name="fsend_status">
+                                            <option value="">--请选择--</option>
+                                            <option value="A">未到货</option>
+                                            <option value="B">到货中</option>
+                                            <option value="C">已到货</option>
+                                        </select>
+                                    </div>
+
+                                    <label class="col-sm-2 control-label">到货起始时间</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control filter-condition filter-date" filter-name="fin_date" filter-operator=">="/>
+                                    </div>
+
+                                    <label class="col-sm-2 control-label">到货结束时间</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control filter-condition filter-date" filter-name="fin_date" filter-operator="<="/>
+                                    </div>
+
+                                </div>
+                                <div class="box-footer" style="text-align: center">
+                                    <button type="button" class="btn btn-info filter-submit">查询</button>
+                                    <button type="button" class="btn btn-default filter-reset">重置</button>
+                                </div>
+                            </form>
+                        </div>
                         <table id="moduleTable" class="table table-bordered table-hover">
                             <thead>
                             <tr>
@@ -65,7 +116,26 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
+                        <div class="panel panel-default" >
+                            <form class="form-horizontal filter "  filter-table="#itemTable">
+                                <div class="form-group">
+                                    <label class="col-sm-1 control-label">入库单号</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control filter-condition" filter-name="fstock_in" filter-operator="like"/>
+                                    </div>
 
+                                    <label class="col-sm-2 control-label">入库商品</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control filter-condition" filter-name="fmaterial" filter-operator="like"/>
+                                    </div>
+                                </div>
+
+                                <div class="box-footer" style="text-align: center">
+                                    <button type="button" class="btn btn-info filter-submit">查询</button>
+                                    <button type="button" class="btn btn-default filter-reset">重置</button>
+                                </div>
+                            </form>
+                        </div>
                         <table id="itemTable" class="table table-bordered table-hover">
                             <thead>
                             <tr>

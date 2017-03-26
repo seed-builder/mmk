@@ -138,7 +138,7 @@
 
 									<label class="col-sm-1 control-label">负责业代</label>
 									<div class="col-sm-2">
-										<input type="date" class="form-control filter-condition" filter-name="femp" filter-operator="like" />
+										<input type="text" class="form-control filter-condition" filter-name="femp" filter-operator="like" />
 									</div>
 								</div>
 

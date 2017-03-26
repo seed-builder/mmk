@@ -39,4 +39,25 @@ class StockInItem extends BaseModel
     {
         return $this->hasOne(Material::class, 'id', 'fmaterial_id');
     }
+
+    public function adminFilter($queryBuilder, $request)
+    {
+        $data = $request->all();
+        if (!empty($data['filter'])){
+            foreach ($data['filter'] as $f){
+                $filter_name = $f['name'];
+                if ($filter_name=="fstock_in"&&!empty($f['value'])){
+                    $ids = StockIn::query()->where('fbill_no','like','%'.$f['value'].'%')->pluck('id');
+                    $queryBuilder->whereIn('fstock_in_id', $ids);
+                }elseif ($filter_name=="fmaterial"&&!empty($f['value'])){
+                    $ids = Material::query()->where('fname','like','%'.$f['value'].'%')->pluck('id');
+                    $queryBuilder->whereIn('fmaterial_id', $ids);
+                }else{
+                    $queryBuilder=$this->adminFilterQuery($queryBuilder,$f);
+                }
+            }
+        }
+
+        return $queryBuilder;
+    }
 }
