@@ -158,8 +158,8 @@ abstract class DatatablesController extends Controller
 //        $filter = $request->input('filter', []);
 
         $queryBuilder = $this->entityQuery(); //$this->newEntity()->newQuery();
-        if (!$this->newEntity()->filter)
-        $queryBuilder = $this->newEntity()->adminFilter($queryBuilder,$request); //$this->newEntity()->newQuery();
+        if ($this->newEntity()->filter)
+            $queryBuilder = $this->newEntity()->adminFilter($queryBuilder,$request); //$this->newEntity()->newQuery();
 
         if (!empty($with)) {
             $queryBuilder->with($with);
