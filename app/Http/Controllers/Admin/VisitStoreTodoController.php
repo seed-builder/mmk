@@ -37,13 +37,18 @@ class VisitStoreTodoController extends AdminController
             $todo = $this->newEntity()->newQuery()->find($data['id']);
             $todo->fill($data);
             $todo->flag = $this->todoFlag('.' . $data['id'], $todo);
-            $todo->ffunction_number = VisitFunction::find($data['ffunction_id'])->fnumber;
+            if($data['ffunction_id'])
+            {
+            	$todo->ffunction_number = VisitFunction::find($data['ffunction_id'])->fnumber;
+            }
 
             $todo->save();
         } else {
             $todo = $this->newEntity($data);
-            $todo->ffunction_number = VisitFunction::find($data['ffunction_id'])->fnumber;
-
+	        if($data['ffunction_id'])
+	        {
+		        $todo->ffunction_number = VisitFunction::find($data['ffunction_id'])->fnumber;
+	        }
             $todo->save();
             $todo->flag = $this->todoFlag('.' . $todo->id, $todo);
             $todo->save();
