@@ -171,7 +171,6 @@ class Store extends BaseModel
 	    		VisitLineStore::destroy($ids);
 		    }
 
-
 	    });
 
 	    static::deleted(function ($store) {
