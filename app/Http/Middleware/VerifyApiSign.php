@@ -20,7 +20,7 @@ class VerifyApiSign
      */
     public function handle($request, Closure $next)
     {
-        $data = $request->all();
+        $data = $request->except(['nsukey']);
         if(empty($data['_sign'])){
             return response('Fail: the sign is empty! ', 401);
         }
