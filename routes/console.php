@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Busi\DisplayPolicyStore;
+use App\Models\City;
 use App\Services\CodeBuilder;
 use App\Services\DbHelper;
 use App\Services\VisitCalendarService;
@@ -107,3 +108,34 @@ Artisan::command('make-calendar', function () {
 	}
 	$this->comment('end ...');
 })->describe('make all stores todo calendars');
+
+Artisan::command('make-store-number', function () {
+	$this->comment('make all stores fnumber...');
+	$stores = Store::all();
+	$this->comment('count = ' . $stores->count());
+	foreach ($stores as $store) {
+		$this->comment('store 【'.$store->ffullname.'】 fnumber【'.$store->fnumber.'】');
+		if(!empty($store->fnumber))
+			continue;
+
+		if(!empty($store->fprovince) && !empty($store->fcity) && !empty($store->fcountry)) {
+			$postalcode = City::getPostalCode($store->fprovince, $store->fcity, $store->fcountry);
+			if (!$postalcode) {
+				$postalcode = City::getPostalCode($store->fprovince, $store->fcity, '');
+			}
+			if ($postalcode) {
+				$fn = Store::where('fpostalcode', $postalcode)->max('fnumber');
+				if ($fn) {
+					$fn++;
+					$store->fnumber = $fn;
+				} else {
+					$store->fnumber = $postalcode . sprintf('%05d', 1);
+				}
+				$store->fpostalcode = $postalcode;
+				$store->save();
+				$this->comment('make store 【'.$store->ffullname.'】 fnumber【'.$store->fnumber.'】');
+			}
+		}
+	}
+	$this->comment('end ...');
+})->describe('make all stores fnumber');
