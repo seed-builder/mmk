@@ -62,6 +62,9 @@ define(function (require, exports, module) {
                 {'data': 'fremark'},
                 {'data': 'fstart_date'},
                 {'data': 'fend_date'},
+                {'data': 'fis_default', render: function (data) {
+                    return data == 1 ? '是':"否";
+                }},
                 {'data': 'fcreate_date'},
 
             ],
