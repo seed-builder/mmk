@@ -121,12 +121,12 @@
                                 <div class="form-group">
                                     <label class="col-sm-1 control-label">入库单号</label>
                                     <div class="col-sm-2">
-                                        <input type="text" class="form-control filter-condition" filter-name="fstock_in" filter-operator="like"/>
+                                        <input type="text" class="form-control filter-condition" filter-name="stock_in_fbill_no" filter-operator="like"/>
                                     </div>
 
                                     <label class="col-sm-2 control-label">入库商品</label>
                                     <div class="col-sm-2">
-                                        <input type="text" class="form-control filter-condition" filter-name="fmaterial" filter-operator="like"/>
+                                        <input type="text" class="form-control filter-condition" filter-name="material_fname" filter-operator="like"/>
                                     </div>
                                 </div>
 

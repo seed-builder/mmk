@@ -155,11 +155,11 @@ abstract class DatatablesController extends Controller
         $order = $request->input('order', []);
         $search = $request->input('search', []);
         $draw = $request->input('draw', 0);
-//        $filter = $request->input('filter', []);
+        $filter = $request->input('filter', []);
+        $tree = $request->input('tree', []);
+        $initFilter = $request->input('init_filter', []);
 
         $queryBuilder = $this->entityQuery(); //$this->newEntity()->newQuery();
-        if ($this->newEntity()->filter)
-            $queryBuilder = $this->newEntity()->adminFilter($queryBuilder,$request); //$this->newEntity()->newQuery();
 
         if (!empty($with)) {
             $queryBuilder->with($with);
@@ -176,9 +176,10 @@ abstract class DatatablesController extends Controller
 
         $total = $queryBuilder->count();
 
-//        if (!empty($filter)) {
-//            $this->filter($queryBuilder,$filter);
-//        }
+        if (!empty($filter)||!empty($tree)||!empty($initFilter)) {
+            $this->adminFilter($queryBuilder,$request);
+        }
+
         if ($conditionCall != null && is_callable($conditionCall)) {
             $conditionCall($queryBuilder);
         }
@@ -316,7 +317,6 @@ abstract class DatatablesController extends Controller
         //return $options;
     }
 
-
     /*
      * 查询过滤器
      */
@@ -351,4 +351,28 @@ abstract class DatatablesController extends Controller
 		}
 		return $result;
 	}
+
+	/*
+	 * 过滤器查询
+	 */
+    public abstract function adminFilter($queryBuilder,$request);
+
+    public abstract function formFilter($queryBuilder,$data);
+
+    public abstract function treeFilter($queryBuilder,$data);
+
+    public abstract function initFilter($queryBuilder,$data);
+
+    public function adminFilterQuery($queryBuilder,$data){
+        $operator = !empty($data['operator'])?$data['operator']:'=';
+
+        if ($operator=='like')
+            $queryBuilder->where($data['name'],$operator,'%'.$data['value'].'%');
+        else
+            $queryBuilder->where($data['name'],$operator,$data['value']);
+
+        return $queryBuilder;
+    }
+
+
 }

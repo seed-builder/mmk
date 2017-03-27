@@ -63,43 +63,4 @@ class VisitTodoCalendar extends BaseModel
         }
     }
 
-    /*
-     * 生成拜访具体工作日志
-     * 参数 fdate femp_id fstore_calendar_id
-     */
-    public function makeCalendar($fdate,$femp_id,$fstore_calendar_id,$fstore_id){
-        $store = Store::find($fstore_id);
-        $group = $store->todo_groups()
-            ->where('fstart_date','>=',date('Y-m-d'))
-            ->where('fend_date','<=',date('Y-m-d'))
-            ->orderBy('fcreate_date','desc')
-            ->first();
-
-        $todo_ids = $group->todos->pluck('id')->toArray();
-        $todos = VisitStoreTodo::query()->where('fparent_id',0)->whereIn('id',$todo_ids)->get();
-
-        foreach ($todos as $t){
-            $vtc = VisitTodoCalendar::create([
-                'fparent_id' => 0,
-                'fdate' => $fdate,
-                'femp_id' => $femp_id,
-                'fstore_calendar_id' => $fstore_calendar_id,
-                'ftodo_id' => $t->id,
-	            'fis_must_visit' => $t->fis_must_visit
-            ]);
-
-            if (!empty($t->children)){
-                foreach ($t->children->whereIn('id',$todo_ids) as $child){
-                    VisitTodoCalendar::create([
-                        'fparent_id' => $vtc->id,
-                        'fdate' => $fdate,
-                        'femp_id' => $femp_id,
-                        'fstore_calendar_id' => $fstore_calendar_id,
-                        'ftodo_id' => $child->id,
-	                    'fis_must_visit' => $child->fis_must_visit
-                    ]);
-                }
-            }
-        }
-    }
 }

@@ -49,12 +49,12 @@
 
                                     <label class="col-sm-2 control-label">门店</label>
                                     <div class="col-sm-2">
-                                        <input type="text" class="form-control filter-condition" filter-name="fstore" filter-operator="like"/>
+                                        <input type="text" class="form-control filter-condition" filter-name="store_ffullname" filter-operator="like"/>
                                     </div>
 
                                     <label class="col-sm-2 control-label">出库单号</label>
                                     <div class="col-sm-2">
-                                        <input type="text" class="form-control filter-condition filter-date" filter-name="fbill_no" filter-operator="like"/>
+                                        <input type="text" class="form-control filter-condition" filter-name="fbill_no" filter-operator="like"/>
                                     </div>
 
                                 </div>

@@ -162,4 +162,24 @@ class StockOutController extends AdminController
 		]);
 	}
 
+    public function formFilter($queryBuilder, $data)
+    {
+        foreach ($data as $f){
+
+            if (empty($f['value']))
+                continue;
+
+            switch ($f['name']){
+                case "store_ffullname" : {
+                    $ids = Store::query()->where('ffullname','like','%'.$f['value'].'%')->pluck('id');
+                    $queryBuilder->whereIn('fstore_id', $ids);
+                    break;
+                }
+                default : {
+                    $queryBuilder=$this->adminFilterQuery($queryBuilder,$f);
+                }
+            }
+        }
+    }
+
 }

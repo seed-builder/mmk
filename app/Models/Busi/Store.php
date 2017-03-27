@@ -62,7 +62,6 @@ class Store extends BaseModel
     //
     protected $table = 'st_stores';
 
-    public $filter = true;
     //protected $with = ['employee','customer', 'lines','channel','photo'];
     
     public $validateRules=[
@@ -192,21 +191,4 @@ class Store extends BaseModel
 	    parent::boot();
     }
 
-    public function adminFilter($queryBuilder, $request)
-    {
-        $data = $request->all();
-        if (!empty($data['filter'])){
-            foreach ($data['filter'] as $f){
-                $filter_name = $f['name'];
-                if ($filter_name=="femp"&&!empty($f['value'])){
-                    $ids = Employee::query()->where('fname','like','%'.$f['value'].'%')->pluck('id');
-                    $queryBuilder->whereIn('femp_id', $ids);
-                }else{
-                    $queryBuilder=$this->adminFilterQuery($queryBuilder,$f);
-                }
-            }
-        }
-
-        return $queryBuilder;
-    }
 }

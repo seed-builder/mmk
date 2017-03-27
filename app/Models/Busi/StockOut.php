@@ -34,7 +34,6 @@ class StockOut extends BaseModel
 	protected $table = 'st_stock_outs';
 	protected $guarded = ['id'];
 
-    public $filter = true;
 
     public function store(){
         return $this->hasOne(Store::class,'id','fstore_id');
@@ -71,22 +70,4 @@ class StockOut extends BaseModel
 		});
 
 	}
-
-    public function adminFilter($queryBuilder, $request)
-    {
-        $data = $request->all();
-        if (!empty($data['filter'])){
-            foreach ($data['filter'] as $f){
-                $filter_name = $f['name'];
-                if ($filter_name=="fstore"&&!empty($f['value'])){
-                    $ids = Store::query()->where('ffullname','like','%'.$f['value'].'%')->pluck('id');
-                    $queryBuilder->whereIn('fstore_id', $ids);
-                }else{
-                    $queryBuilder=$this->adminFilterQuery($queryBuilder,$f);
-                }
-            }
-        }
-
-        return $queryBuilder;
-    }
 }

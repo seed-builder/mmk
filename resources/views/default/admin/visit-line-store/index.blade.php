@@ -66,14 +66,14 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-						<div class="panel panel-default filter" filter-table="#moduleTable">
+						<div class="panel panel-default">
 
 							<div class="form-horizontal filter " filter-table="#moduleTable">
 
 								<div class="form-group">
 									<label class="col-sm-1 control-label">人员</label>
 									<div class="col-sm-2">
-										<input type="text" class="form-control filter-condition" filter-name="femp" filter-operator="like" />
+										<input type="text" class="form-control filter-condition" filter-name="employee_fname" filter-operator="like" />
 									</div>
 
 									<label class="col-sm-1 control-label">线路</label>
@@ -86,6 +86,7 @@
 										</select>
 									</div>
 
+									<input type="hidden" class="form-control filter-condition" filter-name="distinct_fields" value="femp_id,fline_id" />
 								</div>
 
 								<div class="box-footer" style="text-align: center">
@@ -128,17 +129,17 @@
 								<div class="form-group">
 									<label class="col-sm-1 control-label">门店名称</label>
 									<div class="col-sm-2">
-										<input type="text" class="form-control filter-condition" filter-name="fstore" filter-operator="like" />
+										<input type="text" class="form-control filter-condition" filter-name="store_ffullname" filter-operator="like" />
 									</div>
 
 									<label class="col-sm-1 control-label">负责人</label>
 									<div class="col-sm-2">
-										<input type="text" class="form-control filter-condition" filter-name="fcontracts" filter-operator="like" />
+										<input type="text" class="form-control filter-condition" filter-name="store_fcontracts" filter-operator="like" />
 									</div>
 
 									<label class="col-sm-1 control-label">负责业代</label>
 									<div class="col-sm-2">
-										<input type="text" class="form-control filter-condition" filter-name="femp" filter-operator="like" />
+										<input type="text" class="form-control filter-condition" filter-name="employee_fname" filter-operator="like" />
 									</div>
 								</div>
 

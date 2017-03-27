@@ -41,27 +41,4 @@ class BaseModel extends Model
     }
 
 
-    public function adminFilter($queryBuilder,$request){
-	    $data = $request->all();
-        if (!empty($data['filter'])){
-
-            foreach ($data['filter'] as $f){
-                $queryBuilder=$this->adminFilterQuery($queryBuilder,$f);
-            }
-        }
-	    return $queryBuilder;
-    }
-
-    public function adminFilterQuery($queryBuilder,$data){
-        if (!empty($data['value'])){
-            $operator = !empty($data['operator'])?$data['operator']:'=';
-
-            if ($operator=='like')
-                $queryBuilder->where($data['name'],$operator,'%'.$data['value'].'%');
-            else
-                $queryBuilder->where($data['name'],$operator,$data['value']);
-        }
-
-        return $queryBuilder;
-    }
 }

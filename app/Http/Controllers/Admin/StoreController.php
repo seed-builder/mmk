@@ -57,11 +57,6 @@ class StoreController extends AdminController
 
         return parent::pagination($request, $searchCols, ['employee','customer','line','channel'], function ($queryBuilder) use ($data,$request) {
 
-            $tree = $request->input('tree',[]);
-            if (!empty($tree)){
-                $this->tree($queryBuilder,$tree,false);
-            }
-
             $this->readyAllotStoreQuery($data,$queryBuilder);
 
             $ids = $this->getCurUsersEmployeeIds();//$entities->pluck('id')->all(); //array_map(function ($item){	return $item->id;}, $entities);
@@ -70,6 +65,26 @@ class StoreController extends AdminController
                 $queryBuilder->whereIn('femp_id', $ids);
             }
         });
+    }
+
+    public function formFilter($queryBuilder, $data)
+    {
+        foreach ($data as $f){
+
+            if (empty($f['value']))
+                continue;
+
+            switch ($f['name']){
+                case "employee_fname" : {
+                    $ids = Employee::query()->where('fname','like','%'.$f['value'].'%')->pluck('id');
+                    $queryBuilder->whereIn('femp_id', $ids);
+                    break;
+                }
+                default : {
+                    $queryBuilder=$this->adminFilterQuery($queryBuilder,$f);
+                }
+            }
+        }
     }
 
     //门店路线规划 预分配门店查询

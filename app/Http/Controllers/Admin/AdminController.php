@@ -130,4 +130,59 @@ abstract class AdminController extends DatatablesController
 
         }
     }
+
+    public function adminFilter($queryBuilder,$request){
+
+        $data = $request->all();
+
+        if (!empty($data['init_filter']))
+            $this->initFilter($queryBuilder,$data['init_filter']);
+
+        if (!empty($data['tree']))
+            $this->treeFilter($queryBuilder,$data['tree']);
+
+        if (!empty($data['filter']))
+            $this->formFilter($queryBuilder,$data['filter']);
+
+
+        return $queryBuilder;
+
+    }
+
+    public  function initFilter($queryBuilder, $data)
+    {
+        return $queryBuilder;
+    }
+
+    public function treeFilter($queryBuilder,$data,$tableAlias = false){
+        if($tableAlias){
+            $col = 'bd_employees.id';
+        }else{
+            $col = 'femp_id';
+        }
+        $emp = Employee::find($data['nodeid']);
+        if (empty($emp)) {
+            $dept = Department::find($data['nodeid']);
+            $emp_ids = $dept->getAllEmployeeByDept()->pluck('id')->toArray();
+
+            $queryBuilder->whereIn($col, $emp_ids);
+        } else {
+            $queryBuilder->where($col, $data['nodeid']);
+        }
+
+        return $queryBuilder;
+    }
+
+    public function formFilter($queryBuilder,$data){
+        foreach ($data as $f){
+
+            if (empty($f['value']))
+                continue;
+
+            $queryBuilder=$this->adminFilterQuery($queryBuilder,$f);
+
+        }
+
+        return $queryBuilder;
+    }
 }

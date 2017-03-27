@@ -51,4 +51,24 @@ class VisitLineCalendarController extends AdminController
         });
     }
 
+    public function formFilter($queryBuilder, $data)
+    {
+        foreach ($data as $f){
+
+            if (empty($f['value']))
+                continue;
+
+            switch ($f['name']){
+                case "employee_fname" : {
+                    $ids = Employee::query()->where('fname','like','%'.$f['value'].'%')->pluck('id');
+                    $queryBuilder->whereIn('femp_id', $ids);
+                    break;
+                }
+                default : {
+                    $queryBuilder=$this->adminFilterQuery($queryBuilder,$f);
+                }
+            }
+        }
+    }
+
 }

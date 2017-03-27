@@ -130,5 +130,60 @@ class VisitLineStoreController extends AdminController
 
     }
 
+    /*
+     * 初始化过滤器
+     */
+    public  function initFilter($queryBuilder, $data)
+    {
+        if (!empty($data['distinct']))
+            $queryBuilder->groupBy($data['distinct'])->distinct();
+
+        if (!empty($data['femp_id']))
+            $queryBuilder->where('femp_id', $data['femp_id']);
+
+        if (!empty($data['fline_id']))
+            $queryBuilder->where('fline_id', $data['fline_id']);
+
+        return $queryBuilder;
+    }
+
+    /*
+     * 查询表单过滤器
+     */
+    public function formFilter($queryBuilder, $data)
+    {
+        foreach ($data as $f){
+
+            if (empty($f['value']))
+                continue;
+
+            switch ($f['name']){
+                case "distinct_fields" : {
+                    $distinct = explode(",",$f['value']);
+                    $queryBuilder->groupBy($distinct)->distinct();
+                    break;
+                }
+                case "employee_fname" : {
+                    $ids = Employee::query()->where('fname','like','%'.$f['value'].'%')->pluck('id');
+                    $queryBuilder->whereIn('femp_id', $ids);
+                    break;
+                }
+                case "store_ffullname" : {
+                    $ids = Store::query()->where('ffullname','like','%'.$f['value'].'%')->pluck('id');
+                    $queryBuilder->whereIn('fstore_id', $ids);
+                    break;
+                }
+                case "store_fcontracts" : {
+                    $ids = Store::query()->where('fcontracts','like','%'.$f['value'].'%')->pluck('id');
+                    $queryBuilder->whereIn('fstore_id', $ids);
+                    break;
+                }
+                default : {
+                    $queryBuilder=$this->adminFilterQuery($queryBuilder,$f);
+                }
+            }
+        }
+    }
+
 
 }

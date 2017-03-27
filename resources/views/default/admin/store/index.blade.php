@@ -89,7 +89,7 @@
 
                                     <label class="col-sm-2 control-label">负责业代</label>
                                     <div class="col-sm-2">
-                                        <input type="text" class="form-control filter-condition" filter-name="femp" filter-operator="like" />
+                                        <input type="text" class="form-control filter-condition" filter-name="employee_fname" filter-operator="like" />
                                     </div>
 
                                     <label class="col-sm-2 control-label">经销商</label>

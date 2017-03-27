@@ -91,8 +91,10 @@ define(function (require, exports, module) {
             rowId: "id",
             ajax: {
                 url: '/admin/visit-line-store/pagination',
-                data: {
-                    distinct:['fline_id', 'femp_id']
+                data: function (data) {
+                    data['init_filter'] = {
+                        'distinct' : ['fline_id', 'femp_id']
+                    }
                 }
             },
             columns: [
@@ -151,23 +153,6 @@ define(function (require, exports, module) {
                 }
             ],
             buttons: [
-                // {
-                //     text: '生成员工线路<i class="fa fa-fw fa-recycle"></i></i>',
-                //     className: 'makeAllLine',
-                //     enabled: false,
-                //     action: function () {
-                //         var id = fempId(treeId,table);
-                //
-                //         layer.confirm('确定生成该员工所有线路（已有线路不会生成）?', function () {
-                //             var load = layer.load(1);
-                //             ajaxLink("/admin/visit_line_store/makeEmpAllLine?id="+id,function () {
-                //                 table.ajax.reload();
-                //                 layer.close(load);
-                //             })
-                //
-                //         });
-                //     }
-                // },
                 {
                     text: '线路门店互调<i class="fa fa-fw fa-exchange"></i>',
                     className: 'lineAdjust',
