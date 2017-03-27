@@ -114,7 +114,7 @@ Artisan::command('make-store-number', function () {
 	$stores = Store::all();
 	$this->comment('count = ' . $stores->count());
 	foreach ($stores as $store) {
-		$this->comment('store 【'.$store->ffullname.'】 fnumber【'.$store->fnumber.'】');
+		$this->comment('store fprovince【'.$store->fprovince.'】 fcity【'.$store->fcity.'】 fcountry【'.$store->fcountry.'】');
 		if(!empty($store->fnumber))
 			continue;
 
