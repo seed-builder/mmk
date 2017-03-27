@@ -167,8 +167,8 @@ class Store extends BaseModel
 	    		VisitLineStore::destroy($ids);
 		    }
 
-//            $calendar = new VisitCalendarService();
-//            $calendar->byStore($store);
+            $calendar = new VisitCalendarService();
+            $calendar->byStore($store);
 	    });
 
 	    static::deleted(function ($store) {
