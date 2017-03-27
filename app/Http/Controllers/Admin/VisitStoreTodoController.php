@@ -40,6 +40,8 @@ class VisitStoreTodoController extends AdminController
             if($data['ffunction_id'])
             {
             	$todo->ffunction_number = VisitFunction::find($data['ffunction_id'])->fnumber;
+            }else{
+	            $todo->ffunction_number ='';
             }
 
             $todo->save();
@@ -48,6 +50,9 @@ class VisitStoreTodoController extends AdminController
 	        if($data['ffunction_id'])
 	        {
 		        $todo->ffunction_number = VisitFunction::find($data['ffunction_id'])->fnumber;
+	        }
+	        else{
+		        $todo->ffunction_number ='';
 	        }
             $todo->save();
             $todo->flag = $this->todoFlag('.' . $todo->id, $todo);

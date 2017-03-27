@@ -141,6 +141,10 @@ class Store extends BaseModel
 
 	    static::updating(function ($store) {
 		    //LogSvr::storeUpdate()->info(json_encode($store));
+		    $old = Store::find($store->id);
+		    if($store->fline_id == $old->fline_id)
+		    	return;
+
 	    	if($store->fline_id){
 				$entity = VisitLineStore::where('fstore_id', $store->id)->first();
 				if($entity){
@@ -154,6 +158,10 @@ class Store extends BaseModel
 						]
 					);
 				}
+
+			    $calendar = new VisitCalendarService();
+			    $calendar->byStore($store);
+
 		    }else{
 	    		$entities = VisitLineStore::where('fstore_id', $store->id)->get();
 	    		$ids = $entities->map(function ($item){
@@ -162,8 +170,6 @@ class Store extends BaseModel
 	    		VisitLineStore::destroy($ids);
 		    }
 
-            $calendar = new VisitCalendarService();
-            $calendar->byStore($store);
 	    });
 
 	    static::deleted(function ($store) {

@@ -1,8 +1,10 @@
 <?php
 
 use App\Models\Busi\DisplayPolicyStore;
+use App\Models\City;
 use App\Services\CodeBuilder;
 use App\Services\DbHelper;
+use App\Services\VisitCalendarService;
 use Illuminate\Foundation\Inspiring;
 use App\Models\Busi\Store;
 
@@ -94,3 +96,45 @@ function createPositionFlag($position, $pflag){
 		}
 	}
 }
+
+Artisan::command('make-calendar', function () {
+	$this->comment('make all stores todo calendar ...');
+	$stores = Store::where('fline_id','>',0)->get();
+	//var_dump($stores->toArray());
+	$svr = new VisitCalendarService();
+	foreach ($stores as $store) {
+		$svr->byStore($store);
+		$this->comment('complete store = ' . $store->ffullname);
+	}
+	$this->comment('end ...');
+})->describe('make all stores todo calendars');
+
+Artisan::command('make-store-number', function () {
+	$this->comment('make all stores fnumber...');
+	$stores = Store::all();
+	$this->comment('count = ' . $stores->count());
+	foreach ($stores as $store) {
+		if(!empty($store->fnumber))
+			continue;
+		$this->comment('store fprovince【'.$store->fprovince.'】 fcity【'.$store->fcity.'】 fcountry【'.$store->fcountry.'】');
+		if(!empty($store->fprovince) && !empty($store->fcity) && !empty($store->fcountry)) {
+			$postalcode = City::getPostalCode($store->fprovince, $store->fcity, $store->fcountry);
+			if (!$postalcode) {
+				$postalcode = City::getPostalCode($store->fprovince, $store->fcity, '');
+			}
+			if ($postalcode) {
+				$fn = Store::where('fpostalcode', $postalcode)->max('fnumber');
+				if ($fn) {
+					$fn++;
+					$store->fnumber = $fn;
+				} else {
+					$store->fnumber = $postalcode . sprintf('%05d', 1);
+				}
+				$store->fpostalcode = $postalcode;
+				$store->save();
+				$this->comment('make store 【'.$store->ffullname.'】 fnumber【'.$store->fnumber.'】');
+			}
+		}
+	}
+	$this->comment('end ...');
+})->describe('make all stores fnumber');

@@ -144,7 +144,7 @@ class VisitTodoGroupController extends AdminController
     public function config()
     {
         $customers = Customer::all();
-        $groups = VisitTodoGroup::all()->where('fstart_date', '>', date("Y-m-d"));
+        $groups = VisitTodoGroup::all()->where('fstart_date', '<=', date("Y-m-d"));
 
         return view('admin.visit-todo-group.config', compact('customers', 'groups'));
     }
