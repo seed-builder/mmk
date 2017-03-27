@@ -3,6 +3,7 @@
 use App\Models\Busi\DisplayPolicyStore;
 use App\Services\CodeBuilder;
 use App\Services\DbHelper;
+use App\Services\VisitCalendarService;
 use Illuminate\Foundation\Inspiring;
 use App\Models\Busi\Store;
 
@@ -94,3 +95,15 @@ function createPositionFlag($position, $pflag){
 		}
 	}
 }
+
+Artisan::command('make-calendar', function () {
+	$this->comment('make all stores todo calendar ...');
+	$stores = Store::where('fline_id','>',0)->get();
+	//var_dump($stores->toArray());
+	$svr = new VisitCalendarService();
+	foreach ($stores as $store) {
+		$svr->byStore($store);
+		$this->comment('complete store = ' . $store->ffullname);
+	}
+	$this->comment('end ...');
+})->describe('make all stores todo calendars');
