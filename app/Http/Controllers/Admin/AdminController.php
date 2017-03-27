@@ -97,40 +97,6 @@ abstract class AdminController extends DatatablesController
 	    return $ids;
     }
 
-    /*
-     * tree select
-     */
-    public function tree($queryBuilder, $treeData, $tableAlias = false){
-        if($tableAlias){
-            $col = 'bd_employees.id';
-        }else{
-            $col = 'femp_id';
-        }
-        switch ($treeData['type']){
-            case 'employee-tree':{
-                $emp = Employee::find($treeData['nodeid']);
-                if (empty($emp)) {
-                    $dept = Department::find($treeData['nodeid']);
-                    $emp_ids = $dept->getAllEmployeeByDept()->pluck('id')->toArray();
-
-                    $queryBuilder->whereIn($col, $emp_ids);
-                } else {
-                    $queryBuilder->where($col, $treeData['nodeid']);
-                }
-                break;
-            }
-            case 'department-tree':{
-                $dept = Department::find($treeData['nodeid']);
-                $deptids = $dept->getAllChildDept()->pluck('id')->toArray();
-                $queryBuilder->whereIn('fdept_id', $deptids);
-            }
-            case 'channel-tree' : {
-
-            }
-
-        }
-    }
-
     public function adminFilter($queryBuilder,$request){
 
         $data = $request->all();
