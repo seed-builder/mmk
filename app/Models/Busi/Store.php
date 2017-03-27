@@ -159,6 +159,10 @@ class Store extends BaseModel
 						]
 					);
 				}
+
+			    $calendar = new VisitCalendarService();
+			    $calendar->byStore($store);
+
 		    }else{
 	    		$entities = VisitLineStore::where('fstore_id', $store->id)->get();
 	    		$ids = $entities->map(function ($item){
@@ -167,8 +171,7 @@ class Store extends BaseModel
 	    		VisitLineStore::destroy($ids);
 		    }
 
-            $calendar = new VisitCalendarService();
-            $calendar->byStore($store);
+
 	    });
 
 	    static::deleted(function ($store) {
