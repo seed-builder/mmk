@@ -114,10 +114,9 @@ Artisan::command('make-store-number', function () {
 	$stores = Store::all();
 	$this->comment('count = ' . $stores->count());
 	foreach ($stores as $store) {
-		$this->comment('store fprovince【'.$store->fprovince.'】 fcity【'.$store->fcity.'】 fcountry【'.$store->fcountry.'】');
 		if(!empty($store->fnumber))
 			continue;
-
+		$this->comment('store fprovince【'.$store->fprovince.'】 fcity【'.$store->fcity.'】 fcountry【'.$store->fcountry.'】');
 		if(!empty($store->fprovince) && !empty($store->fcity) && !empty($store->fcountry)) {
 			$postalcode = City::getPostalCode($store->fprovince, $store->fcity, $store->fcountry);
 			if (!$postalcode) {
