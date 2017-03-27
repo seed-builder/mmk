@@ -1,6 +1,6 @@
 <?php
 return array(
-	'enable' => config('app.debug'),
+	'enable' => env('APP_DEBUG', false), //config('app.debug'),
 
 	'prefix' => 'api-docs',
 
