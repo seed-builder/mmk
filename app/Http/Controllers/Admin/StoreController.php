@@ -146,6 +146,8 @@ class StoreController extends AdminController
             $query->where('femp_id', $data['femp_id']);
         }
 
+        $query->with(['employee']);
+
         return response()->json($query->get());
     }
 
