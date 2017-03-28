@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Models\Busi\DisplayPolicyStore;
 use App\Models\Busi\Store;
 use App\Models\Busi\VisitLine;
 use App\Models\Busi\VisitLineCalendar;
