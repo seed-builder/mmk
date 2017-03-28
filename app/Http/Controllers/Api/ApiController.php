@@ -88,10 +88,13 @@ abstract class  ApiController extends Controller
     public function show($id)
     {
         //
-	    //var_dump($id);
-        $entity = $this->newEntity()->newQuery()->find($id);
-	    // var_dump($entity);
-        return response($entity, 200);
+	    if($id == 0){
+	    	return response('{}', 404);
+	    }else {
+		    $entity = $this->newEntity()->newQuery()->find($id);
+		    // var_dump($entity);
+		    return response($entity, 200);
+	    }
     }
 
     /**
