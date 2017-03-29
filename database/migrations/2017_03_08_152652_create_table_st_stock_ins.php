@@ -15,6 +15,7 @@ class CreateTableStStockIns extends Migration
     {
         Schema::create('st_stock_ins', function (Blueprint $table) {
             $table->increments('id');
+	        $table->integer('fstore_id')->default(0)->comment('门店id');
 	        $table->string('fbill_no')->default('')->comment('订单单号(门店编码+日期)');
 	        $table->timestamp('fsend_date')->nullable()->comment('发货日期');
 	        $table->timestamp('fin_date')->nullable()->comment('到货日期');
