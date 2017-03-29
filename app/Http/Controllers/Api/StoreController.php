@@ -23,7 +23,7 @@ class StoreController extends ApiController
     public function show($id)
     {
         //
-        $entity = Store::find($id);
+        $entity = Store::with(['customer','employee'])->find($id);
         if(!empty($entity->customer)){
             $entity->customer_name = $entity->customer->fname;
         }
