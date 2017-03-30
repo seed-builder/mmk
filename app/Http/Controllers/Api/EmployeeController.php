@@ -45,6 +45,7 @@ class EmployeeController extends ApiController
             $emp->login_time += 1;
             $emp->save();
             $senior = $emp->getSenior();
+            //var_dump($emp->customer);
             $data = [
                 'id' => $emp->id,
                 'fname' => $emp->fname,
@@ -59,7 +60,7 @@ class EmployeeController extends ApiController
                 'department_id' => $emp->fdept_id,
                 'org_name' => $emp->organization? $emp->organization->fname : '',
                 'org_id' => $emp->forg_id,
-	            'customer' => empty($emp->customer) ? [] : $emp->customer[0]
+	            'customer' => $emp->customer->first()
             ];
 
             return response($data, 200);
