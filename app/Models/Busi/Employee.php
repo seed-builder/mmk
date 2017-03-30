@@ -83,6 +83,14 @@ class Employee extends BaseModel
         return $this->hasMany(AttendanceStatistic::class, 'femp_id')->select('attendance_statistics.*');;
     }
 
+	public function received_messages(){
+		return $this->morphMany(Message::class, 'to');
+	}
+
+	public function send_messages(){
+		return $this->morphMany(Message::class, 'from');
+	}
+
     public function getSenior(){
         $position = $this->position;
         //$psenior = $this->position->senior;
