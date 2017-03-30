@@ -51,7 +51,7 @@
                                 </div>
                             </div>
                         </div>
-                        <table id="moduleTable" class="table table-bordered table-hover">
+                        <table id="moduleTable" class="table table-bordered table-hover display nowrap" cellspacing="0" width="100%">
                             <thead>
                             <tr>
                                 <th>id</th>
