@@ -16,7 +16,7 @@ class CreateTableBdMessageContents extends Migration
         Schema::create('bd_message_contents', function (Blueprint $table) {
             $table->increments('id');
 	        $table->string('title')->comment('标题');
-	        $table->text('content')->default('')->comment('内容');
+	        $table->text('content')->comment('内容');
 	        $table->string('files')->default('')->comment('附件id集合（bd_resources id）');
 
 	        $table->integer('fcreator_id')->default(0)->comment('创建人');
