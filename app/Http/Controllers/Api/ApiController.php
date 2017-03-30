@@ -136,7 +136,7 @@ abstract class  ApiController extends Controller
         return response(['success' => $re], $status);
     }
 
-	 protected function validateFields($data)
+	protected function validateFields($data)
 	 {
 		 $fieldErrors = [];
 		 $entity = $this->newEntity();

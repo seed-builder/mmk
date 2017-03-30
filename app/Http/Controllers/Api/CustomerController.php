@@ -32,27 +32,27 @@ class CustomerController extends ApiController
 				$tmp = explode(' ', $k);
 				if($tmp[0] == 'femp_id'){
 					$fempId = $v;
-//					$repo = app(ISysConfigRepo::class);
-//					if($repo->isAppDataIsolate()) {
-//						$employee = Employee::find($fempId);
-//						if ($employee->isDataIsolate()) {
-//							$subs = $employee->getSubordinates();
-//							$ids = [];
-//							//var_dump($subs);
-//							if (!empty($subs)) {
-//								$ids = array_map(function ($item) {
-//									return $item->id;
-//								}, $subs);
-//							}
-//							$ids[] = [$fempId];
-//							//var_dump($ids);
-//							$query->distinct();
-//							$query->select('bd_customers.*');
-//							$query->join('st_stores', 'bd_customers.id', '=', 'st_stores.fcust_id');
-//							$query->whereIn('st_stores.femp_id', $ids);
-//						}
-//					}
-				}else {
+					$repo = app(ISysConfigRepo::class);
+					if($repo->isAppDataIsolate()) {
+						$employee = Employee::find($fempId);
+						if ($employee->isDataIsolate()) {
+							$subs = $employee->getSubordinates();
+							$ids = [];
+							//var_dump($subs);
+							if (!empty($subs)) {
+								$ids = array_map(function ($item) {
+									return $item->id;
+								}, $subs);
+							}
+							$ids[] = [$fempId];
+							//var_dump($ids);
+							$query->distinct();
+							$query->select('bd_customers.*');
+							$query->join('bd_employee_customers', 'bd_customers.id', '=', 'bd_employee_customers.fcust_id');
+							$query->whereIn('bd_employee_customers.femp_id', $ids);
+						}
+					}
+				} else {
 					$query->where($tmp[0], isset($tmp[1]) ? $tmp[1] : '=', $v);
 				}
 			}

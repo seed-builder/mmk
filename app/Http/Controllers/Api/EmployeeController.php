@@ -59,7 +59,7 @@ class EmployeeController extends ApiController
                 'department_id' => $emp->fdept_id,
                 'org_name' => $emp->organization? $emp->organization->fname : '',
                 'org_id' => $emp->forg_id,
-	            'customer' => $emp->customer
+	            'customer' => empty($emp->customer) ? [] : $emp->customer[0]
             ];
 
             return response($data, 200);
@@ -88,4 +88,5 @@ class EmployeeController extends ApiController
 		}
 		return response(['list' => $subs], 200);
     }
+
 }

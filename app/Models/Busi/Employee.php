@@ -60,7 +60,11 @@ class Employee extends BaseModel
 	}
 
 	public function customer(){
-		return $this->belongsTo(Customer::class, 'fcust_id');
+		return $this->customers()->wherePivot('fdefault', 1);
+	}
+
+	public function customers(){
+		return $this->belongsToMany(Customer::class, 'bd_employee_customers', 'femp_id', 'fcust_id');
 	}
 
     public function organization(){
@@ -93,7 +97,7 @@ class Employee extends BaseModel
     }
 
 	/**
-	 * 获取下属
+	 * 获取下属(包括自己在内)
 	 * @return array
 	 */
     public function getSubordinates(){
