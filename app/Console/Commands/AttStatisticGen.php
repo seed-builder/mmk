@@ -80,6 +80,11 @@ class AttStatisticGen extends Command
 
     public function day($day, $employee)
     {
+	    $entity = AttendanceStatistic::where('femp_id', $employee->id)
+		    ->where('fday', $day)->first();
+	    if(!empty($entity) && $entity->fstatus == 1){
+	    	return;
+	    }
 	    $workTimeBegin = env('WORK_TIME_BEGIN');
 	    $workTimeEnd = env('WORK_TIME_END');
 	    $beginStatus = 0;
@@ -130,8 +135,6 @@ class AttStatisticGen extends Command
 		    $props['fstatus'] = 2;
 	    }
 
-	    $entity = AttendanceStatistic::where('femp_id', $employee->id)
-		    ->where('fday', $day)->first();
 	    if (empty($entity)) {
 		    $entity = new AttendanceStatistic($props);
 	    } else {

@@ -81,4 +81,61 @@ class AttendanceStatistic extends BaseModel
                 return '请假';
         }
     }
+
+    public static function createOrUpdate($attendance){
+    	if(empty($attendance))
+    		return false;
+
+	    $day = date('Y-m-d', strtotime($attendance->ftime));
+	    $date = strtotime($day);
+	    $entity = AttendanceStatistic::where('femp_id', $attendance->femp_id)->where('fday', $day)->first();
+	    if (empty($entity)) {
+		    $entity = new AttendanceStatistic([
+			    'forg_id' => $attendance->forg_id,
+			    'femp_id' => $attendance->femp_id,
+			    'fyear' => date('Y', $date),
+			    'fmonth' => date('m', $date),
+			    'fday' => $day,
+			    'fbegin_status' => 0,
+			    'fcomplete_status' => 0,
+		    ]);
+	    }
+
+	    if ($attendance->ftype == 0) {
+		    $workTimeBegin = env('WORK_TIME_BEGIN');
+		    $begin = $attendance->ftime;
+		    $workBegin = str_replace('00:00:00', $workTimeBegin, $day);
+		    if (strtotime($workBegin) > strtotime($begin)) {
+			    $beginStatus = 1;
+		    } else {
+			    $beginStatus = 2;
+		    }
+		    $entity->fbegin = $begin;
+		    $entity->fbegin_id = $attendance->id;
+		    $entity->fbegin_status = $beginStatus;
+	    }else if ($attendance->ftype == 1) {
+		    $workTimeEnd = env('WORK_TIME_END');
+		    $complete = $attendance->ftime;
+		    $workEnd = str_replace('00:00:00', $workTimeEnd, $day);
+		    if (strtotime($complete) >= strtotime($workEnd)) {
+			    $completeStatus = 1;
+		    } else {
+			    $completeStatus = 2;
+		    }
+		    $entity->fcomplete = $complete;
+		    $entity->fcomplete_id = $attendance->id;
+		    $entity->fcomplete_status = $completeStatus;
+	    }
+
+	    if ($entity->fbegin_status == 0 || $entity->fcomplete_status == 0) {
+		    $entity->fstatus = 0;
+	    } elseif ($entity->fbegin_status == 1 && $entity->fcomplete_status == 1) {
+		    $entity->fstatus = 1;
+	    } elseif ($entity->fbegin_status == 2 || $entity->fcomplete_status == 2) {
+		    $entity->fstatus = 2;
+	    }
+	    $entity->save();
+	    return $entity;
+    }
+
 }
