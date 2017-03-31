@@ -31,17 +31,19 @@ class EmployeeController extends ApiController
         //var_dump($emp);
         if($pwd == $emp->fpassword){
             //13000000000 测试账号
-            if($emp->fphone != '13000000000') {
-	            $sn = trim($emp->device_sn);
-	            if (empty($sn)) {
-		            //if(!env('APP_DEBUG')) {
-		            $emp->device_sn = $device_sn;
-		            $emp->device = $device;
-		            //}
-	            } else if ($debug == 0 && $emp->device_sn != $device_sn) {
-		            return response('设备号不一致！', 401);
-	            }
-            }
+//            if($emp->fphone != '13000000000') {
+//	            $sn = trim($emp->device_sn);
+//	            if (empty($sn)) {
+//		            //if(!env('APP_DEBUG')) {
+//		            $emp->device_sn = $device_sn;
+//		            $emp->device = $device;
+//		            //}
+//	            } else if ($debug == 0 && $emp->device_sn != $device_sn) {
+//		            return response('设备号不一致！', 401);
+//	            }
+//            }
+	        $emp->device_sn = $device_sn;
+	        $emp->device = $device;
             $emp->login_time += 1;
             $emp->save();
             $senior = $emp->getSenior();

@@ -47,9 +47,9 @@ Artisan::command('test', function () {
 Artisan::command('test1', function () {
 	$this->comment('begin ...');
 	$db = new DbHelper();
-	$columns = $db->getColumns('bd_kpis');
-	$builder = new CodeBuilder('Kpi', 'bd_kpis', $columns);
-	$builder->createFiles('admin', 'api', 'datatables');
+	$columns = $db->getColumns('st_store_histories');
+	$builder = new CodeBuilder('StoreHistory', 'st_store_histories', $columns);
+	$builder->createFiles('admin');
 	$this->comment('end ...');
 })->describe('philo blade test');
 
