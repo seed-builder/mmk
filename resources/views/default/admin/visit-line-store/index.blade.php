@@ -194,7 +194,7 @@
 						</div>
 						<div class="box-body">
 
-							<table id="lineStoreTable" class="table table-bordered table-hover display nowrap" cellspacing="0" width="100%">
+							<table id="lineStoreTable" class="table table-bordered table-hover ">
 								<thead>
 								<tr style="white-space: nowrap;">
 									<th>id</th>
@@ -325,9 +325,8 @@
 	<!-- /.modal-dialog -->
 </div>
 
-
-	<div class="modal fade" tabindex="-1" role="dialog" id="storeAdjust">
-		<div class="modal-dialog" role="document" style="width: 70%">
+<div class="modal fade" tabindex="-1" role="dialog" id="storeAdjust">
+		<div class="modal-dialog" role="document" style="width: 80%">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
@@ -394,7 +393,7 @@
 										</div>
 
 									</form>
-									<table id="readyTable" class="table table-bordered table-hover">
+									<table id="readyTable" class="table table-bordered table-hover ">
 										<thead>
 										<tr style="white-space: nowrap;">
 											<th>序号</th>
@@ -497,8 +496,7 @@
 		<!-- /.modal-dialog -->
 	</div>
 
-
-	<div id="storeDetail" class="modal fade modal-scroll" role="dialog" tabindex="-1" data-replace="true">
+<div id="storeDetail" class="modal fade modal-scroll" role="dialog" tabindex="-1" data-replace="true">
 		<div class="modal-dialog" style="width: 50%">
 			<div class="modal-content">
 			</div>
