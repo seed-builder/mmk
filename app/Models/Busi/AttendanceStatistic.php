@@ -58,6 +58,7 @@ class AttendanceStatistic extends BaseModel
                 return '迟到';
         }
     }
+
     public function complete_status(){
 	    switch ($this->fcomplete_status){
             case 0:
@@ -105,7 +106,7 @@ class AttendanceStatistic extends BaseModel
 	    if (empty($entity->fbegin) && $attendance->ftype == 0) {
 		    $workTimeBegin = env('WORK_TIME_BEGIN');
 		    $begin = $attendance->ftime;
-		    $workBegin = str_replace('00:00:00', $workTimeBegin, $day);
+		    $workBegin = $day .' '. $workTimeBegin;
 		    if (strtotime($workBegin) > strtotime($begin)) {
 			    $beginStatus = 1;
 		    } else {
@@ -114,10 +115,10 @@ class AttendanceStatistic extends BaseModel
 		    $entity->fbegin = $begin;
 		    $entity->fbegin_id = $attendance->id;
 		    $entity->fbegin_status = $beginStatus;
-	    }else if ($attendance->ftype == 1) {
+	    } else if ($attendance->ftype == 1) {
 		    $workTimeEnd = env('WORK_TIME_END');
 		    $complete = $attendance->ftime;
-		    $workEnd = str_replace('00:00:00', $workTimeEnd, $day);
+		    $workEnd = $day . ' ' . $workTimeEnd;
 		    if (strtotime($complete) >= strtotime($workEnd)) {
 			    $completeStatus = 1;
 		    } else {
