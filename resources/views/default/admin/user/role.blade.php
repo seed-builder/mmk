@@ -27,7 +27,7 @@
                     <div class="box-body">
                         <form method="post" action="#" >
                             {!! csrf_field() !!}
-                        <table id="moduleTable" class="table table-bordered table-hover">
+                        <table id="moduleTable" class="table table-bordered table-hover display nowrap" cellspacing="0" width="100%">
                             <thead>
                             <tr>
                                 <th><input type="checkbox" onchange="cball(this)" /> </th>

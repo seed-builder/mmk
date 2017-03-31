@@ -194,7 +194,7 @@
 						</div>
 						<div class="box-body">
 
-							<table id="lineStoreTable" class="table table-bordered table-hover">
+							<table id="lineStoreTable" class="table table-bordered table-hover display nowrap" cellspacing="0" width="100%">
 								<thead>
 								<tr style="white-space: nowrap;">
 									<th>id</th>

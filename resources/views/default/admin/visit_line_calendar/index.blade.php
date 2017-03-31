@@ -157,7 +157,7 @@
                             </div>
 
                         </div>
-                        <table id="storeTable" class="table table-bordered table-hover">
+                        <table id="storeTable" class="table table-bordered table-hover  display nowrap" cellspacing="0" width="100%">
                             <thead>
                             <tr>
                                 <th>序号</th>
