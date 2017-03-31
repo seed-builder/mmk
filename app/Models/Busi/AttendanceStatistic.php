@@ -98,10 +98,11 @@ class AttendanceStatistic extends BaseModel
 			    'fday' => $day,
 			    'fbegin_status' => 0,
 			    'fcomplete_status' => 0,
+			    'fbegin' => '',
 		    ]);
 	    }
 
-	    if ($attendance->ftype == 0) {
+	    if (empty($entity->fbegin) && $attendance->ftype == 0) {
 		    $workTimeBegin = env('WORK_TIME_BEGIN');
 		    $begin = $attendance->ftime;
 		    $workBegin = str_replace('00:00:00', $workTimeBegin, $day);
