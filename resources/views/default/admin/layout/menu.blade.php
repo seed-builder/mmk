@@ -66,6 +66,7 @@ $user = Auth::user();
                         <i class="fa fa-fw fa-calendar-check-o"></i>
                         <span>考勤管理</span>
                         <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
                     </span>
                     </a>
                     <ul class="treeview-menu">
