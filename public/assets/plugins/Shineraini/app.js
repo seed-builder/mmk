@@ -3,12 +3,14 @@
  *    设置导航栏
  **/
 $(".treeview-menu").each(function (i, obj) {
+    var cur_url = $("#cur_url").val();//当前页url
+
     $(obj).find("a").each(function (j, a) {
         var node_url = $(a).attr("href");//菜单url
-        var cur_url = $("#cur_url").val();//当前页url
 
         if (node_url == cur_url) {
-            $(this).parent().addClass("active")
+            //$(this).parent().addClass("active")
+            setActive($(this));
             var node = $(obj).prev();
             var node_i = $(node).find("i").prop("outerHTML");
             var node_span = $(node).find("span").prop("outerHTML");
@@ -18,7 +20,18 @@ $(".treeview-menu").each(function (i, obj) {
             $(".content-header").html(title);
         }
     })
-})
+});
+
+function setActive(el) {
+    var p = el.parent();
+    var tag = p.get(0).tagName;
+    console.log(tag);
+    if(tag.toLowerCase() == 'section')
+        return;
+
+    el.parent().addClass("active");
+    setActive(el.parent());
+}
 
 /*
  *  modal

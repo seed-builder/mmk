@@ -19,7 +19,7 @@ $user = Auth::user();
         <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
             @if($user->can(['employee_index','department_index','channel_index','position_index','material_index','customer_index']))
-                <li class="treeview active">
+                <li class="treeview ">
                     <a href="#">
                         <i class="fa fa-fw fa-tv"></i>
                         <span>基础信息管理</span>
@@ -61,7 +61,7 @@ $user = Auth::user();
             @endif
 
             @if($user->can(['attendance_index']))
-                <li class="treeview active">
+                <li class="treeview ">
                     <a href="#">
                         <i class="fa fa-fw fa-calendar-check-o"></i>
                         <span>考勤管理</span>
@@ -77,7 +77,7 @@ $user = Auth::user();
             @endif
 
             @if($user->can(['store_index','visit_line_index','visit_line_store_index','visit_line_calendar_index','visit_store_calendar_index']))
-                <li class="treeview active">
+                <li class="treeview ">
                     <a href="#">
                         <i class="fa fa-fw fa-building-o"></i>
                         <span>门店管理</span>
@@ -108,7 +108,7 @@ $user = Auth::user();
                 </li>
             @endif
 
-            <li class="treeview active">
+            <li class="treeview ">
                 <a href="#">
                     <i class="fa fa-fw fa-eyedropper"></i>
                     <span>申报管理</span>
@@ -123,7 +123,7 @@ $user = Auth::user();
             </li>
 
             @if($user->can(['stock_index','sale-order_index','stock-out_index','stock-in_index','view-customer-stock-statistic_index']))
-                <li class="treeview active">
+                <li class="treeview ">
                     <a href="#">
                         <i class="fa fa-fw fa-sitemap"></i>
                         <span>经销商门户</span>
@@ -132,7 +132,7 @@ $user = Auth::user();
                     </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li class="treeview active">
+                        <li class="treeview ">
                             <a href="#">
                                 <i class="fa fa-fw fa-sitemap"></i>
                                 <span>门店</span>
@@ -152,7 +152,7 @@ $user = Auth::user();
                                 <li><a href="{{url('/admin/view-store-out')}}"><i class="fa fa-fw fa-truck"></i>门店出库</a></li>
                             </ul>
                         </li>
-                        <li class="treeview active">
+                        <li class="treeview ">
                             <a href="#">
                                 <i class="fa fa-fw fa-sitemap"></i>
                                 <span>经销商</span>
@@ -179,7 +179,7 @@ $user = Auth::user();
             @endif
 
             @if($user->can(['user_index','role_index','permission_index']))
-                <li class="treeview active">
+                <li class="treeview ">
                     <a href="#">
                         <i class="fa fa-users"></i>
                         <span>用户权限管理</span>
@@ -202,7 +202,7 @@ $user = Auth::user();
             @endif
 
             @if($user->can(['sys-config_index','sys-dics_index','app-upgrade_index','message-template_index','visit_funciton_index','visit_todo_group_index','visit_todo_group_config','visit_store_todo_index']))
-                <li class="treeview active">
+                <li class="treeview ">
                     <a href="#">
                         <i class="fa fa-anchor"></i>
                         <span>系统管理</span>
@@ -245,7 +245,7 @@ $user = Auth::user();
                 </li>
             @endif
 
-            {{--<li class="treeview active">--}}
+            {{--<li class="treeview ">--}}
             {{--<a href="#">--}}
             {{--<i class="fa fa-arrows"></i>--}}
             {{--<span>工作流</span>--}}

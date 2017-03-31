@@ -19,7 +19,7 @@ $user = Auth::user();
         <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
 
-                <li class="treeview active">
+                <li class="treeview ">
                     <a href="#">
                         <i class="fa fa-fw fa-sitemap"></i>
                         <span>门店</span>
@@ -34,7 +34,7 @@ $user = Auth::user();
                         <li><a href="{{url('/customer/view-store-out')}}"><i class="fa fa-fw fa-truck"></i>门店出库</a></li>
                     </ul>
                 </li>
-                <li class="treeview active">
+                <li class="treeview ">
                     <a href="#">
                         <i class="fa fa-fw fa-sitemap"></i>
                         <span>经销商</span>
