@@ -194,6 +194,16 @@ class Store extends BaseModel
 		    VisitLineStore::destroy($ids);
 	    });
 
+	    /**
+	     * 记录更新历史
+	     */
+	    static::updated(function ($store){
+	    	$data = $store->toArray();
+	    	unset($data['id']);
+	    	$data['fstore_id'] = $store->id;
+	    	StoreHistory::create($data);
+	    });
+
 	    parent::boot();
     }
 
