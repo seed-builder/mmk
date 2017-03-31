@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Busi\Department;
-use App\Models\Busi\Employee;
 use App\Services\LogSvr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
