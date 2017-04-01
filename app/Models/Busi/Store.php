@@ -198,6 +198,7 @@ class Store extends BaseModel
 	     * 记录更新历史
 	     */
 	    static::updated(function ($store){
+		    LogSvr::store()->info('store updated , store=' . json_encode($store));
 	    	$data = $store->toArray();
 	    	unset($data['id']);
 	    	$data['fstore_id'] = $store->id;
