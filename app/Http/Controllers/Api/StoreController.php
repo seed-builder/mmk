@@ -44,20 +44,7 @@ class StoreController extends ApiController
 //	    if (!empty($fieldErrors)) {
 //		    return response($fieldErrors, 400);
 //	    }
-        $postalcode = City::getPostalCode($data['fprovince'], $data['fcity'], $data['fcountry']);
-        if(!$postalcode){
-	        $postalcode = City::getPostalCode($data['fprovince'], $data['fcity'], '');
-        }
-        if($postalcode){
-            $fn = Store::where('fpostalcode', $postalcode)->max('fnumber');
-            if($fn){
-            	$fn++;
-	            $data['fnumber'] = $fn;
-            }else{
-	            $data['fnumber'] = $postalcode . sprintf('%05d', 1);
-            }
-            $data['fpostalcode'] = $postalcode;
-        }
+
         unset($data['_sign']);
         $entity = $this->newEntity($data);
         //$entity = Entity::create($data);

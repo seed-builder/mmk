@@ -171,7 +171,6 @@ class StoreController extends AdminController
     //数据保存
     public function saveData($data, $action)
     {
-
         //图片保存
         if (!empty($data['storephoto'])) {
             //$file = $request->file('storephoto');
@@ -191,30 +190,12 @@ class StoreController extends AdminController
                 }
             }
         }
-
-        //数据处理
-		if(empty($data['fnumber'])) {
-			$postalcode = City::getPostalCode($data['fprovince'], $data['fcity'], $data['fcountry']);
-			if ($postalcode) {
-				$fn = Store::where('fpostalcode', $postalcode)->max('fnumber');
-				if ($fn) {
-					$fn++;
-					$data['fnumber'] = $fn;
-				} else {
-					$data['fnumber'] = $postalcode . sprintf('%05d', 1);
-				}
-				$data['fpostalcode'] = $postalcode;
-			}
-		}
         unset($data['_token'], $data['storephoto']);
-
         if ($action == 'create') {
 
             $entity = $this->newEntity($data);
             //$entity = Entity::create($data);
             $re = $entity->save();
-
-
             if ($re) {
                 return [
                     'code' => 200,

@@ -58,6 +58,8 @@ class CreateTableStStoreHistories extends Migration
 		    $table->integer('fforbidder_id')->default(0)->comment('禁用人');
 		    $table->timestamp('fforbid_date')->nullable()->comment('禁用日期');
 		    $table->string('fforbid_status')->default('A')->comment('禁用状态');
+		    $table->integer('fline_id')->default(0)->comment('line id');
+		    $table->integer('fis_signed')->default(0)->comment('是否签约');
 	    });
     }
 
