@@ -193,18 +193,19 @@ class StoreController extends AdminController
         }
 
         //数据处理
-
-        $postalcode = City::getPostalCode($data['fprovince'], $data['fcity'], $data['fcountry']);
-        if ($postalcode) {
-            $fn = Store::where('fpostalcode', $postalcode)->max('fnumber');
-            if ($fn) {
-                $fn++;
-                $data['fnumber'] = $fn;
-            } else {
-                $data['fnumber'] = $postalcode . sprintf('%05d', 1);
-            }
-            $data['fpostalcode'] = $postalcode;
-        }
+		if(empty($data['fnumber'])) {
+			$postalcode = City::getPostalCode($data['fprovince'], $data['fcity'], $data['fcountry']);
+			if ($postalcode) {
+				$fn = Store::where('fpostalcode', $postalcode)->max('fnumber');
+				if ($fn) {
+					$fn++;
+					$data['fnumber'] = $fn;
+				} else {
+					$data['fnumber'] = $postalcode . sprintf('%05d', 1);
+				}
+				$data['fpostalcode'] = $postalcode;
+			}
+		}
         unset($data['_token'], $data['storephoto']);
 
         if ($action == 'create') {
