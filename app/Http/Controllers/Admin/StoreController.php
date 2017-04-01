@@ -151,7 +151,6 @@ class StoreController extends AdminController
         return response()->json($query->get());
     }
 
-
     //门店添加
     public function createStore(Request $request)
     {

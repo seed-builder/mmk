@@ -73,6 +73,10 @@ class Store extends BaseModel
     		//'fpostalcode' => 'required',
     ];
 
+    public $fieldNames = [
+    	'ftelephone' => '手机号码'
+    ];
+
     public function customer(){
         return $this->belongsTo(Customer::class, 'fcust_id');
     }

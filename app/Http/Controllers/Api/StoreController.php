@@ -40,13 +40,13 @@ class StoreController extends ApiController
     {
         //
         $data = $request->all();
-//	    $fieldErrors = $this->validateFields($data);
-//	    if (!empty($fieldErrors)) {
-//		    return response($fieldErrors, 400);
-//	    }
-
-        unset($data['_sign']);
-        $entity = $this->newEntity($data);
+	    unset($data['_sign']);
+	    $entity = $this->newEntity($data);
+	    $fieldErrors = $this->validateFields($data);
+	    if (!empty($fieldErrors)) {
+		    $msg = $this->formatFieldErrors($fieldErrors, $entity->fieldNames);
+		    return response($msg, 404);
+	    }
         //$entity = Entity::create($data);
         $re = $entity->save();
         $status = $re ? 200 : 400;
