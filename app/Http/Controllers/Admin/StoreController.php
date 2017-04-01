@@ -226,7 +226,10 @@ class StoreController extends AdminController
                 ];
             }
         } else {
-            $re = Store::query()->where('id', $data['id'])->update($data);
+        	$store = Store::find($data['id']);
+        	$store->fill($data);
+	        $re = $store->save();
+//            $re = Store::query()->where('id', $data['id'])->update($data);
 
             if ($re) {
                 return [
