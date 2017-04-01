@@ -109,6 +109,12 @@ define(function (require, exports, module) {
                     }
                 },
                 {
+                    "data": "fdocument_status",
+                    render: function (data, type, full) {
+                       return document_status(data);
+                    }
+                },
+                {
                     "data": 'id',
                     render: function (data, type, full) {
                         return '<a href="/admin/store/storeInfo/'+data+'" title="查看详情" data-target="#storeDetail" data-toggle="modal"><i class="fa fa-fw fa-search"></i></a>';
@@ -202,11 +208,30 @@ define(function (require, exports, module) {
 
 //                {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: editor},
 //                 {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: editor},
+                { text: '审核<i class="fa fa-fw fa-paperclip"></i>',className: 'check', enabled: false },
+                { text: '反审核<i class="fa fa-fw fa-unlink"></i>',className: 'uncheck', enabled: false },
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
             ]
         });
+
+        table.on('select', rowselect).on( 'deselect', editEnable);
+        //设置编辑门店按钮是否可用
+        function editEnable() {
+            var count = table.rows({selected: true}).count();
+            table.buttons(['.edit']).enable(count > 0);
+            checkEditEnabble(table,['.check'],['.uncheck']);
+        }
+
+        //审核
+        $(".check").on('click',function () {
+            dataCheck(table,'/admin/store/check');
+        })
+
+        $(".uncheck").on('click',function () {
+            dataCheck(table,'/admin/store/uncheck');
+        })
 
         //组织架构
         var getTreeData = function () {
@@ -256,7 +281,6 @@ define(function (require, exports, module) {
 
         });
 
-        table.on('select', rowselect).on( 'deselect', editEnable);
 
         //主表地图
         var map = new BMap.Map(mapId, {enableMapClick: false});
@@ -296,8 +320,6 @@ define(function (require, exports, module) {
             });
         }
 
-
-
         var mapAddOverlay = function (longitude, latitude, data) {
             var point = new BMap.Point(longitude, latitude);
             var marker = new BMap.Marker(point);  // 创建标注
@@ -313,11 +335,6 @@ define(function (require, exports, module) {
             table.buttons(['.add']).enable(fempId(treeId,table)!=null);
         }
 
-        //设置编辑门店按钮是否可用
-        function editEnable() {
-            var count = table.rows({selected: true}).count();
-            table.buttons(['.edit']).enable(count > 0);
-        }
 
         //modal关闭时数据清空
         $("#storeinfo").on("hidden.bs.modal", function () {

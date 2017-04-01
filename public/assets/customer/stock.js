@@ -175,7 +175,7 @@ define(function (require, exports, module) {
 
         function rowSelect() {
             checkEditEnabble(table,['.edit','.check','.buttons-remove'],['.uncheck']);
-        }
+    }
 
         //审核
         $(".check").on('click',function () {
