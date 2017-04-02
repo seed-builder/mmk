@@ -195,12 +195,17 @@ define(function (require, exports, module) {
                 ajaxForm("#kpi-form",function () {
                     table.ajax.reload();
                     $("#kpi-modal").modal('hide');
+
                     layer.closeAll();
                 })
             })
 
 
             return false;
+        })
+
+        $('#kpi-modal').on('hide.bs.modal', function () {
+            $("#kpi-form")[0].reset();
         })
     }
 
