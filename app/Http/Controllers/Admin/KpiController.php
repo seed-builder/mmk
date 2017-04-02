@@ -95,7 +95,7 @@ class KpiController extends AdminController
             $empids = $data['femp_id'];
             unset($data['femp_id']);
 
-            Kpi::query()->whereIn('femp_id',$empids)->where('fyear',$data['fyear'])->delete();
+            Kpi::query()->whereIn('femp_id',$empids)->where('fyear',$data['fyear'])->where('ftype',$data['ftype'])->delete();
             foreach ($empids as $d){
                 $data['femp_id'] = $d;
                 $data['fcreator_id'] = Auth::user()->id;
