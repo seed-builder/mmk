@@ -38,4 +38,23 @@ class Kpi extends BaseModel
 	//
 	protected $table = 'bd_kpis';
 	protected $guarded = ['id'];
+
+//    public $validateRules=[
+//        'fjan' => 'required',
+//        'feb' => 'required',
+//        'fmar' => 'required',
+//        'fapr' => 'required',
+//        'fmay' => 'required',
+//        'fjun' => 'required',
+//        'fjul' => 'required',
+//        'faug' => 'required',
+//        'fsep' => 'required',
+//        'foct' => 'required',
+//        'fnov' => 'required',
+//        'fdec' => 'required',
+//    ];
+
+	public function employee(){
+	    return $this->hasOne(Employee::class,'id','femp_id');
+    }
 }

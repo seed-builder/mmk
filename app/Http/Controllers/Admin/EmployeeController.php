@@ -252,7 +252,11 @@ class EmployeeController extends AdminController
             $query->where('id', $data['femp_id']);
         }
         if (!empty($data['fdept_id'])) {
-            $query->where('fdept_id', $data['fdept_id']);
+            $dept = Department::find($data['fdept_id']);
+
+            $ids = array_intersect($dept->getAllEmployeeByDept()->pluck('id')->toArray(),$this->getCurUsersEmployeeIds());
+//            $query->where('fdept_id', $data['fdept_id']);
+            $query->whereIn('id', $ids);
         }
 
         $rs = $query->get();

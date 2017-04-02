@@ -1,11 +1,41 @@
 /**
-*
-*/
-define(function(require, exports, module) {
+ *
+ */
+define(function (require, exports, module) {
 
     var zhCN = require('datatableZh');
     var editorCN = require('i18n');
-    exports.index = function ($, tableId) {
+    exports.index = function ($, tableId,treeId,employees) {
+
+        var nodeData;
+        //组织结构初始化
+        var getTreeData = function () {
+            $.ajax({
+                url: "../../admin/department/departmentTree",
+                type: "POST",
+                data: {'_token':$('meta[name="_token"]').attr('content')},
+                dataType:'json',
+                success:function(data){
+                    $("#" + treeId).treeview({
+                        color: "#428bca",
+                        enableLinks: true,
+                        levels: 99,
+                        data: data,
+                        onNodeSelected: function(event, data) {
+                            treeNodeSelect(treeId,table);
+                            nodeData = data;
+
+                        },
+                        onNodeUnselected: function(event, data) {
+                            treeNodeSelect(treeId,table);
+                        },
+                    });
+                },
+            });
+        }
+
+        getTreeData();
+
         var editor = new $.fn.dataTable.Editor({
             ajax: {
                 create: {
@@ -28,27 +58,28 @@ define(function(require, exports, module) {
             table: "#" + tableId,
             idSrc: 'id',
             fields: [
-            { 'label':  'fapr', 'name': 'fapr', },
-                { 'label':  'faug', 'name': 'faug', },
-                { 'label':  'fcreate_date', 'name': 'fcreate_date', },
-                { 'label':  'fcreator_id', 'name': 'fcreator_id', },
-                { 'label':  'fdec', 'name': 'fdec', },
-                { 'label':  'fdocument_status', 'name': 'fdocument_status', },
-                { 'label':  'feb', 'name': 'feb', },
-                { 'label':  'femp_id', 'name': 'femp_id', },
-                { 'label':  'fjan', 'name': 'fjan', },
-                { 'label':  'fjul', 'name': 'fjul', },
-                { 'label':  'fjun', 'name': 'fjun', },
-                { 'label':  'fmar', 'name': 'fmar', },
-                { 'label':  'fmay', 'name': 'fmay', },
-                { 'label':  'fmodify_date', 'name': 'fmodify_date', },
-                { 'label':  'fmodify_id', 'name': 'fmodify_id', },
-                { 'label':  'fnov', 'name': 'fnov', },
-                { 'label':  'foct', 'name': 'foct', },
-                { 'label':  'fsep', 'name': 'fsep', },
-                { 'label':  'ftype', 'name': 'ftype', },
-                { 'label':  'fyear', 'name': 'fyear', },
-        ]
+                // {'label': '年份', 'name': 'fyear',},
+                // { 'label': '指标类型', 'name': 'ftype', 'type': 'select', 'options': [
+                //     // {label: '自动出库', value: 'A'},
+                //     {label: '目标拜访量', value: 0},
+                //     {label: '目标销售额', value: 1}
+                // ] ,
+                //     def: 0
+                // },
+                {'label': '1月', 'name': 'fjan',},
+                {'label': '2月', 'name': 'feb',},
+                {'label': '3月', 'name': 'fmar',},
+                {'label': '4月', 'name': 'fapr',},
+                {'label': '5月', 'name': 'fmay',},
+                {'label': '6月', 'name': 'fjun',},
+                {'label': '7月', 'name': 'fjul',},
+                {'label': '8月', 'name': 'faug',},
+                {'label': '9月', 'name': 'fsep',},
+                {'label': '10月', 'name': 'foct',},
+                {'label': '11月', 'name': 'fnov',},
+                {'label': '12月', 'name': 'fdec',},
+
+            ]
         });
 
         var table = $("#" + tableId).DataTable({
@@ -59,35 +90,78 @@ define(function(require, exports, module) {
             select: true,
             paging: true,
             rowId: "id",
-            ajax: '/admin/kpi/pagination',
+            ajax: {
+                url : '/admin/kpi/pagination'
+            },
             columns: [
-                    {  'data': 'fapr' },
-                    {  'data': 'faug' },
-                    {  'data': 'fcreate_date' },
-                    {  'data': 'fcreator_id' },
-                    {  'data': 'fdec' },
-                    {  'data': 'fdocument_status' },
-                    {  'data': 'feb' },
-                    {  'data': 'femp_id' },
-                    {  'data': 'fjan' },
-                    {  'data': 'fjul' },
-                    {  'data': 'fjun' },
-                    {  'data': 'fmar' },
-                    {  'data': 'fmay' },
-                    {  'data': 'fmodify_date' },
-                    {  'data': 'fmodify_id' },
-                    {  'data': 'fnov' },
-                    {  'data': 'foct' },
-                    {  'data': 'fsep' },
-                    {  'data': 'ftype' },
-                    {  'data': 'fyear' },
-                    {  'data': 'id' },
+                {'data': 'id'},
+                {
+                    'data': 'femp_id',
+                    render: function (data, type, full) {
+                        if (full.employee != null)
+                            return full.employee.fname
+                        else
+                            return "无";
+                    }
+                },
+                {
+                    'data': 'femp_id',
+                    render: function (data, type, full) {
+                        if (full.employee != null)
+                            return full.employee.fphone
+                        else
+                            return "无";
+                    }
+                },
+                {
+                    'data': 'ftype',
+                    render: function (data, type, full) {
+                        return data==1?'目标销售额':'目标拜访量'
+                    }
+                },
+                {'data': 'fyear'},
+                {'data': 'fjan'},
+                {'data': 'feb'},
+                {'data': 'fmar'},
+                {'data': 'fapr'},
+                {'data': 'fmay'},
+                {'data': 'fjun'},
+                {'data': 'fjul'},
+                {'data': 'faug'},
+                {'data': 'fsep'},
+                {'data': 'foct'},
+                {'data': 'fnov'},
+                {'data': 'fdec'},
+
             ],
+            columnDefs: [
+                {
+                    "targets": [0],
+                    "visible": false
+                }
+            ],
+
             buttons: [
-                // { text: '新增', action: function () { }  },
+                { text: '新增<i class="fa fa-fw fa-plus"></i>', action: function () {
+                    if (!nodeData){
+                        layer.alert('请先在左边的部门架构中选择一个部门！');
+                        return
+                    }
+
+                    ajaxGetData('/admin/employee/employees?fdept_id='+nodeData.dataid,function (data) {
+                        var html = "";
+                        for (i in data){
+                            html+="<option value='"+data[i].id+"'>"+data[i].fname+"</option>"
+                        }
+                        $("#femp_list").html(html);
+                        $("#femp_list").selectpicker('refresh');
+                    })
+                    $("#kpi-modal").modal('show');
+
+                }  },
                 // { text: '编辑', className: 'edit', enabled: false },
                 // { text: '删除', className: 'delete', enabled: false },
-                {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: editor},
+                // {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: editor},
                 {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: editor},
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
@@ -103,6 +177,31 @@ define(function(require, exports, module) {
         //     table.buttons( ['.edit', '.delete'] ).enable(count > 0);
         // }
 
+        $(".form-select").selectpicker();
+
+        $('.year').datepicker({
+            format: "yyyy",
+            language: 'zh-CN',
+            showMeridian: true,
+            autoclose: true,
+            startView: 2,
+            maxViewMode : 'years',
+            minViewMode : 'years',
+            pickerPosition: "bottom-left",
+        });
+        
+        $("#kpi-form").on('submit',function () {
+            layer.confirm('若所选员工之前已有设置过的业绩将会被覆盖，确认操作？',function () {
+                ajaxForm("#kpi-form",function () {
+                    table.ajax.reload();
+                    $("#kpi-modal").modal('hide');
+                    layer.closeAll();
+                })
+            })
+
+
+            return false;
+        })
     }
 
 });

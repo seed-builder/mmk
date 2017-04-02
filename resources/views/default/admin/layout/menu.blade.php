@@ -122,6 +122,19 @@ $user = Auth::user();
 
                 </ul>
             </li>
+            <li class="treeview ">
+                <a href="#">
+                    <i class="fa fa-fw fa-line-chart"></i>
+                    <span>业绩设定</span>
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="{{url('/admin/kpi')}}"><i class="fa fa-fw fa-signal"></i>业绩查询</a></li>
+
+                </ul>
+            </li>
 
             @if($user->can(['stock_index','sale-order_index','stock-out_index','stock-in_index','view-customer-stock-statistic_index']))
                 <li class="treeview ">
