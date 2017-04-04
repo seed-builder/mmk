@@ -94,6 +94,15 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label class="control-label col-md-3">是否必巡</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control" name="fis_must_visit" >
+                                            <option value="0">否</option>
+                                            <option value="1">是</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="control-label col-md-3">拜访功能</label>
                                     <div class="col-md-9">
                                         <select class="form-control" name="ffunction_id" id="ffunction_id">

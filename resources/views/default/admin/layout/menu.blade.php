@@ -239,22 +239,36 @@ $user = Auth::user();
                             <li><a href="{{url('/admin/message-template')}}"><i class="fa fa-fw fa-paper-plane"></i>消息模板</a>
                             </li>
                         @endif
-                        @if($user->can('visit_funciton_index'))
-                            <li><a href="{{url('admin/visit-function')}}"><i class="fa fa-fw fa-clone"></i>拜访功能</a>
-                            </li>
-                        @endif
-                        @if($user->can('visit_todo_group_index'))
-                            <li><a href="{{url('admin/visit-todo-group')}}"><i class="fa fa-files-o"></i>拜访方案</a>
-                            </li>
-                        @endif
-                        @if($user->can('visit_todo_group_config'))
-                            <li><a href="{{url('admin/visit-todo-group/config')}}"><i class="fa fa-cogs"></i>拜访事项</a>
-                            </li>
-                        @endif
-                        @if($user->can('visit_store_todo_index'))
-                            <li><a href="{{url('admin/visit-store-todo')}}"><i class="fa fa-folder"></i>拜访配置模板</a>
-                            </li>
-                        @endif
+
+
+                        <li class="treeview ">
+                            <a href="#">
+                                <i class="fa fa-fw fa-sitemap"></i>
+                                <span>拜访配置</span>
+                                <span class="pull-right-container">
+                              <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                @if($user->can('visit_funciton_index'))
+                                    <li><a href="{{url('admin/visit-function')}}"><i class="fa fa-fw fa-clone"></i>拜访功能</a>
+                                    </li>
+                                @endif
+                                @if($user->can('visit_todo_group_index'))
+                                    <li><a href="{{url('admin/visit-todo-group')}}"><i class="fa fa-files-o"></i>拜访方案</a>
+                                    </li>
+                                @endif
+                                @if($user->can('visit_todo_group_config'))
+                                    <li><a href="{{url('admin/visit-todo-group/config')}}"><i class="fa fa-cogs"></i>拜访事项</a>
+                                    </li>
+                                @endif
+                                @if($user->can('visit_store_todo_index'))
+                                    <li><a href="{{url('admin/visit-store-todo')}}"><i class="fa fa-folder"></i>拜访配置模板</a>
+                                    </li>
+                                @endif
+                            </ul>
+                        </li>
+                            {{--<li><a href="{{url('admin/message')}}"><i class="fa fa-envelope"></i>发送消息</a></li>--}}
                     </ul>
                 </li>
             @endif
