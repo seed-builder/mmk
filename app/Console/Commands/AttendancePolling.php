@@ -58,7 +58,7 @@ EOH;
 			$ids = array_map(function ($item){
 				return $item->id;
 			}, $result);
-			$this->sendMsg($ids->all());
+			$this->sendMsg($ids);
 		}
     }
 
