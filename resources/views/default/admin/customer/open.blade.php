@@ -15,7 +15,7 @@
                 <div class="form-group">
                     <label for="login_name" class="col-sm-2 control-label">登陆名称</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="login_name" placeholder="登陆名称" name="login_name" value="{{$customer->login_name or 'C'.$customer->id}}" autocomplete="off">
+                        <input type="text" class="form-control" id="login_name" placeholder="登陆名称" name="login_name" value="{{$customer->login_name or $customer->ftel}}" autocomplete="off">
                     </div>
                 </div>
                 <div class="form-group">

@@ -59,7 +59,7 @@ define(function (require, exports, module) {
         });
 
         var table = $("#" + tableId).DataTable({
-            dom: "lBfrtip",
+            dom: "lBrtip",
             language: zhCN,
             processing: true,
             serverSide: true,
@@ -92,9 +92,6 @@ define(function (require, exports, module) {
                         if(full.fdocument_status == 'C'){
                             if(data){
                                 var btn =  '<a href="/admin/customer/'+full.id+'/open" data-target="#customerInfo" data-toggle="modal">登陆信息</a> &nbsp;&nbsp;';
-                                btn += full.fforbid_status =='A' ?
-                                    '<a href="javascript:void" class="btnForbid" data-id="'+full.id+'">禁用</a>':
-                                    '<a href="javascript:void" class="btnNoForbid" data-id="'+full.id+'">启用</a>' ;
                                 return btn;
                             } else {
                                 return '<a href="/admin/customer/'+full.id+'/open" data-target="#customerInfo" data-toggle="modal">开通后台</a>'
@@ -111,10 +108,49 @@ define(function (require, exports, module) {
                 {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: editor},
                 {extend: "edit",className:'edit', text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: editor},
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
-                {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
-                {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
                 { text: '审核<i class="fa fa-fw fa-paperclip"></i>',className: 'check', enabled: false },
                 { text: '反审核<i class="fa fa-fw fa-unlink"></i>',className: 'uncheck', enabled: false },
+                { text: '禁用<i class="fa fa-fw fa-ban"></i>',className: 'btnForbid', enabled: false , action: function () {
+                    var token = $('meta[name=_token]').attr('content');
+                    var curData = table.rows( { selected: true } ).data()[0];
+                    var id = curData.id;
+                    var entity = [];
+                    entity[0]={'fforbid_status': 'B'};
+                    console.log(entity);
+                    layer.confirm('确定禁用该客户的后台管理功能 ?', {icon: 3, title:'提示'}, function () {
+                        $.post('/admin/customer/'+id, { data: entity , _method:'PUT', _token: token }, function (result) {
+                            if (result.data) {
+                                // You can reload the current location
+                                layer.msg('禁用成功！');
+                                table.ajax.reload();
+                            } else {
+                                layer.msg('禁用失败！');
+                            }
+                        }, 'json');
+                    });
+                }},
+                { text: '启用<i class="fa fa-fw fa-check"></i>',className: 'btnNoForbid', enabled: false , action: function () {
+                    var token = $('meta[name=_token]').attr('content');
+                    var curData = table.rows( { selected: true } ).data()[0];
+                    var id = curData.id;
+                    var entity = [];
+                    entity[0]={'fforbid_status': 'A'};
+                    console.log(entity);
+                    layer.confirm('确定启用该客户的后台管理功能 ?', {icon: 3, title:'提示'}, function () {
+                        $.post('/admin/customer/'+id, { data: entity, _method:'PUT', _token: token }, function (result) {
+                            if (result.data) {
+                                // You can reload the current location
+                                layer.msg('启用成功！');
+                                table.ajax.reload();
+                            } else {
+                                layer.msg('启用失败！');
+                            }
+                        }, 'json');
+                    });
+                }},
+                {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
+                {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
+
                 //{extend: 'colvis', text: '列显示'}
             ]
         });
@@ -123,52 +159,22 @@ define(function (require, exports, module) {
         function rowSelect() {
             checkEditEnabble(table,['.edit','.check'],['.uncheck']);
             //table.ajax.reload();
+            var curData = table.rows( { selected: true } ).data()[0];
+            if(curData){
+                if(curData.fforbid_status == 'A'){
+                    table.buttons( ['.btnForbid'] ).enable(true);
+                    table.buttons( ['.btnNoForbid'] ).enable(false);
+                }else{
+                    table.buttons( ['.btnForbid'] ).enable(false);
+                    table.buttons( ['.btnNoForbid'] ).enable(true);
+                }
+            }else{
+                table.buttons( ['.btnForbid'] ).enable(false);
+                table.buttons( ['.btnNoForbid'] ).enable(false);
+            }
+
         }
 
-        function bindEvt() {
-            $('.btnForbid').on("click", function () {
-                var token = $('meta[name=_token]').attr('content');
-                var id = $(this).attr('data-id');
-                var entity = [];
-                entity[0]={'fforbid_status': 'B'};
-                console.log(entity);
-                layer.confirm('确定禁用该客户的后台管理功能 ?', {icon: 3, title:'提示'}, function () {
-                    $.post('/admin/customer/'+id, { data: entity , _method:'PUT', _token: token }, function (result) {
-                        if (result.data) {
-                            // You can reload the current location
-                            layer.msg('禁用成功！');
-                            table.ajax.reload();
-                        } else {
-                            layer.msg('禁用失败！');
-                        }
-                    }, 'json');
-                });
-            });
-            $('.btnNoForbid').on("click", function () {
-                var token = $('meta[name=_token]').attr('content');
-                var id = $(this).attr('data-id');
-                var entity = [];
-                entity[0]={'fforbid_status': 'A'};
-                console.log(entity);
-                layer.confirm('确定启用该客户的后台管理功能 ?', {icon: 3, title:'提示'}, function () {
-                    $.post('/admin/customer/'+id, { data: entity, _method:'PUT', _token: token }, function (result) {
-                        if (result.data) {
-                            // You can reload the current location
-                            layer.msg('启用成功！');
-                            table.ajax.reload();
-                        } else {
-                            layer.msg('启用失败！');
-                        }
-                    }, 'json');
-                });
-            });
-        }
-
-        table.on( 'draw', function () {
-            //alert( 'Table redrawn' );
-            bindEvt();
-        } );
-        bindEvt();
 
         //审核
         $(".check").on('click',function () {
