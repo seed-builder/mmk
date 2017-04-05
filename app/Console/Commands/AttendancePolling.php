@@ -55,9 +55,9 @@ EOH;
 		$result = DB::select($sql);
 
 		if(!empty($result)){
-			$ids = $result->map(function ($item){
+			$ids = array_map(function ($item){
 				return $item->id;
-			});
+			}, $result);
 			$this->sendMsg($ids->all());
 		}
     }
