@@ -35,30 +35,29 @@
                         <div class="panel panel-default">
                             <form class="form-horizontal filter " filter-table="#moduleTable">
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">商品编码</label>
-                                    <div class="col-sm-2">
+                                    <label class="col-sm-2 col-md-1 control-label">商品编码</label>
+                                    <div class="col-sm-2 col-md-3">
                                         <input type="text" class="form-control filter-condition" filter-name="fnumber" filter-operator="like" />
                                     </div>
-
-                                    <label class="col-sm-2 control-label">商品名称</label>
-                                    <div class="col-sm-2">
+                                    <label class="col-sm-2 col-md-1  control-label">商品名称</label>
+                                    <div class="col-sm-2 col-md-3">
                                         <input type="text" class="form-control filter-condition" filter-name="fname" filter-operator="like" />
                                     </div>
 
-                                    <label class="col-sm-2 control-label">销售单位</label>
-                                    <div class="col-sm-2">
+                                    <label class="col-sm-2 col-md-1 control-label">销售单位</label>
+                                    <div class="col-sm-2 col-md-3">
                                         <input type="text" class="form-control filter-condition" filter-name="fsale_unit" filter-operator="like" />
                                     </div>
 
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">基本单位</label>
-                                    <div class="col-sm-2">
+                                    <label class="col-sm-2 col-md-1 control-label">基本单位</label>
+                                    <div class="col-sm-2 col-md-3">
                                         <input type="text" class="form-control filter-condition" filter-name="fbase_unit" filter-operator="like" />
                                     </div>
 
-                                    <label class="col-sm-2 control-label">规格</label>
-                                    <div class="col-sm-2">
+                                    <label class="col-sm-2 col-md-1 control-label">规格</label>
+                                    <div class="col-sm-2 col-md-3">
                                         <input type="text" class="form-control filter-condition" filter-name="fspecification" filter-operator="like" />
                                     </div>
                                 </div>
