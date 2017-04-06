@@ -40,7 +40,7 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')
         //          ->hourly();
 	    //下午18点开始每小时执行一次
-	    $schedule->command('command:attendance_polling')->cron('10 18-23/1 * * *');
+	    $schedule->command('command:attendance_polling')->cron('10 18-22/1 * * *');
 	    $schedule->command('gen:att-stc')->dailyAt('01:00');
 	    $schedule->command('gen:att-rpt')->dailyAt('02:00');
 

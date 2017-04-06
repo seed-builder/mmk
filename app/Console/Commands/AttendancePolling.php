@@ -44,6 +44,7 @@ class AttendancePolling extends Command
     public function handle()
     {
         //
+	    LogSvr::AttendancPolling()->info('考勤日完成情况轮询通知开始..!');
         $today = date('Y-m-d');
         $day = WorkCalendarData::where('fday', $today)->first();
         if(!$day->fis_work_time) return; //非工作日
@@ -60,6 +61,7 @@ EOH;
 			}, $result);
 			$this->sendMsg($ids);
 		}
+	    LogSvr::AttendancPolling()->info('考勤日完成情况轮询通知结束!');
     }
 
     protected function sendMsg($ids){
@@ -71,7 +73,7 @@ EOH;
 	    }
 	    // type=1 , content=
 	    $content = $messageTemp->content ;//str_replace('#name', 'test', $messageTemp->content);
-
+	    LogSvr::AttendancPolling()->info('待发送推送消息的数量：'. count($ids));
 	    if(env('APP_DEBUG')){
 		    LogSvr::AttendancPolling()->info('AttendancePolling测试, 待发送推送消息的 ids：'. json_encode($ids));
 		    return;
