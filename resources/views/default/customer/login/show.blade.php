@@ -44,7 +44,7 @@
         <form action="/customer/login" method="post">
             {!! csrf_field() !!}
             <div class="form-group has-feedback">
-                <input type="text" name="login_name" class="form-control" placeholder="user name">
+                <input type="text" name="name" class="form-control" placeholder="user name">
                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">

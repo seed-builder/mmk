@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Busi\Customer;
+use App\Models\Busi\Employee;
 use App\Repositories\ISysConfigRepo;
 use App\Repositories\SysConfigRepo;
 use App\Services\DataSync\DataSyncSvr;
@@ -12,6 +14,7 @@ use App\Services\Sms\AliDaYuSms;
 use App\Services\Sms\ISmsSvr;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,6 +27,14 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+	    $this->loadConfig();
+	    Relation::morphMap([
+		    'employee' => Employee::class,
+		    'customer' => Customer::class,
+	    ]);
+    }
+
+    protected function loadConfig(){
 	    $request = Request::instance();
 	    $path = $request->path();
 	    //LogSvr::routeSvr()->info($path);
@@ -42,8 +53,8 @@ class AppServiceProvider extends ServiceProvider
 			    'auth.model' => Customer::class,
 		    ]);
 	    }
-    }
 
+    }
     /**
      * Register any application services.
      *

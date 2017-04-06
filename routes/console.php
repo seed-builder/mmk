@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\Busi\Customer;
 use App\Models\Busi\DisplayPolicyStore;
+use App\Models\Busi\Employee;
 use App\Models\City;
 use App\Services\CodeBuilder;
 use App\Services\DbHelper;
@@ -138,3 +140,42 @@ Artisan::command('make-store-number', function () {
 	}
 	$this->comment('end ...');
 })->describe('make all stores fnumber');
+
+Artisan::command('cp-customer-to-user', function () {
+	$this->comment('begin ...');
+	$customers = Customer::whereNotNull('ftel')->where('ftel', '<>', '')->get();
+	$this->comment('ready to copy '.count($customers).' customers to sys-users table');
+	if(!empty($customers)){
+		foreach ($customers as $customer){
+			if(empty($customer->user)) {
+				$customer->user()->create([
+					'name' => $customer->ftel,
+					'password' => bcrypt('888888'),
+					'status' => 1
+				]);
+				$this->comment('success copy customer:  '.$customer->fname );
+			}
+		}
+	}
+	$this->comment('end ...');
+})->describe('copy customers to sys_users tables');
+
+Artisan::command('cp-employee-to-user', function () {
+	$this->comment('begin ...');
+	$employees = Employee::whereNotNull('fphone')->get();
+	$this->comment('ready to copy '.count($employees).' employees to sys-users table');
+	if(!empty($employees)){
+		foreach ($employees as $employee){
+			if(empty($employee->user)) {
+				$employee->user()->create([
+					'name' => $employee->fphone,
+					'password' => $employee->fpassword,
+					'login_time' => $employee->login_time,
+					'status' => 1
+				]);
+				$this->comment('success copy employee:  '.$employee->fname );
+			}
+		}
+	}
+	$this->comment('end ...');
+})->describe('copy employees to sys_users tables');

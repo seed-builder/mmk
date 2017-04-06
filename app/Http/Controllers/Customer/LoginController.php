@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Models\Busi\Customer;
+use App\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -51,14 +52,9 @@ class LoginController extends Controller
 		return view('customer.login.show');
 	}
 
-	/**
-	 * Get the login username to be used by the controller.
-	 *
-	 * @return string
-	 */
 	public function username()
 	{
-		return 'login_name';
+		return 'name';
 	}
 
 	/**
@@ -83,8 +79,13 @@ class LoginController extends Controller
 		$this->validate($request, [
 			$this->username() => 'required', 'password' => 'required',
 		]);
-		$forbid = Customer::where('login_name', $request->input('login_name'))->where('fforbid_status', 'B')->count();
-		if($forbid){
+		$user = User::where('name', $request->input('name'))
+			->where('reference_type', 'customer')
+			->first();
+		if(empty($user)){
+			throw new ValidationException(null, redirect('/customer/login')->withErrors(['该用户非经销商, 禁止登陆']));
+		}
+		if($user->status == 0){
 			throw new ValidationException(null, redirect('/customer/login')->withErrors(['该用户已经被禁用, 请联系管理员']));
 		}
 	}

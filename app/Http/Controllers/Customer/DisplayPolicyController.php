@@ -69,7 +69,7 @@ class DisplayPolicyController extends BaseController
 	public function pagination(Request $request, $searchCols = [], $with=[], $conditionCall = null, $all_columns = false){
 		$searchCols = ["fbill_no","fdocument_status","fexp_type","fsketch"];
 		return parent::pagination($request, $searchCols, $with, function ($queryBuilder){
-			$customer = Auth::user();
+			$customer = Auth::user()->reference;
 			//if($customer->fservice_depart)
 			$queryBuilder->where('fcost_dept_id', $customer->fservice_depart);
 		});

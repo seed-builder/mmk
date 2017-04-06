@@ -44,9 +44,13 @@ define(function(require, exports, module) {
             rowId: "id",
             ajax: '/admin/user/pagination',
             columns: [
-                {  'data': 'id' },
+                // {  'data': 'id' },
                 {  'data': 'name' },
-                {  'data': 'email' },
+                // {  'data': 'email' },
+                {  'data': 'reference_type' },
+                {  'data': 'status', render: function (data, type, full) {
+                    return data == 1 ? '启用':'禁用';
+                } },
                 {  'data': 'created_at' },
                 {  'data': 'updated_at' },
                 {  'data': 'id' },

@@ -74,7 +74,7 @@ class DisplayPolicyStoreController extends AdminController
         $with=['department','employee','policy','store'];
 
 		return parent::pagination($request, $searchCols,$with,function ($queryBuilder){
-            $customer = Auth::user();
+            $customer = Auth::user()->reference;
             //if($customer->fservice_depart)
             $queryBuilder->whereIn('fstore_id', $customer->stores()->pluck('id'));
 

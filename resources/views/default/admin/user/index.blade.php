@@ -37,9 +37,11 @@
                         <table id="moduleTable" class="table table-bordered table-hover display nowrap" cellspacing="0" width="100%">
                             <thead>
                             <tr>
-                                <th>id</th>
-                                <th>名称</th>
-                                <th>Email</th>
+                                {{--<th>id</th>--}}
+                                <th>登陆名</th>
+                                {{--<th>Email</th>--}}
+                                <th>类型</th>
+                                <th>状态</th>
                                 <th>创建时间</th>
                                 <th>修改时间</th>
                                 <th>操作</th>

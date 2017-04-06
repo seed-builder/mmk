@@ -76,7 +76,7 @@ return [
         ],
 	    'customer' => [
 		    'driver' => 'eloquent',
-		    'model' => App\Models\Busi\Customer::class,
+		    'model' => App\Models\User::class,//App\Models\Busi\Customer::class,
 	    ],
         // 'users' => [
         //     'driver' => 'database',

@@ -69,7 +69,7 @@ class ViewCustomerStockStatisticController extends BaseController
 	public function pagination(Request $request, $searchCols = [], $with=[], $conditionCall = null, $all_columns = false){
 		$searchCols = ["cust_name","fbase_unit","fsale_unit","material_name","material_specification"];
 		return parent::pagination($request, $searchCols, $with, function ($queryBuilder){
-			$customer = Auth::user();
+			$customer = Auth::user()->reference;
 			$queryBuilder->where('cust_id', $customer->id);
 		});
 	}

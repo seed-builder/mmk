@@ -3,6 +3,7 @@
 namespace App\Models\Busi;
 
 use App\Models\SysConfig;
+use App\Models\User;
 use App\Repositories\ISysConfigRepo;
 use App\Repositories\SysConfigRepo;
 use Illuminate\Database\Eloquent\Model;
@@ -56,6 +57,15 @@ class Employee extends BaseModel
 			if(empty($model->fpassword)){
 				$model->fpassword = md5('888888');
 			}
+		});
+
+		static::created(function ($employee){
+			$employee->user()->create([
+				'name' => $employee->fphone,
+				'password' => $employee->fpassword,
+				'login_time' => $employee->login_time,
+				'status' => 1
+			]);
 		});
 	}
 
@@ -126,5 +136,9 @@ class Employee extends BaseModel
 	    $ids = app(ISysConfigRepo::class)->noDataIsolateEmployees();
     	return !str_contains($ids, $this->id);
     }
+
+	public function user(){
+		return $this->morphOne(User::class, 'reference');
+	}
 
 }
