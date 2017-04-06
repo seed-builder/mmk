@@ -24,12 +24,6 @@ class AlterTableSysUsers2 extends Migration
 	        $table->string('email')->nullable()->change();
 	        $table->dropIndex('sys_users_email_unique');
         });
-
-	    Schema::table('bd_messages', function (Blueprint $table) {
-		    //
-		    $table->dropColumn('from_type');
-		    $table->dropColumn('to_type');
-	    });
     }
 
     /**
