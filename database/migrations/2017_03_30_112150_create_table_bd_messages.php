@@ -16,9 +16,9 @@ class CreateTableBdMessages extends Migration
         Schema::create('bd_messages', function (Blueprint $table) {
 		        $table->increments('id');
 		        $table->integer('from_id')->default(0);
-		        $table->string('from_type')->default('');
+//		        $table->string('from_type')->default('');
 		        $table->integer('to_id')->default(0);
-		        $table->string('to_type')->default('');
+//		        $table->string('to_type')->default('');
 		        $table->integer('message_content_id')->default(0);
 		        $table->integer('read')->default(0);
 		        $table->timestamp('fcreate_date')->nullable();
