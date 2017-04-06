@@ -151,7 +151,7 @@ Artisan::command('cp-customer-to-user', function () {
 				$customer->user()->create([
 					'name' => $customer->ftel,
 					'password' => bcrypt('888888'),
-					'status' => 0
+					'status' => 1
 				]);
 				$this->comment('success copy customer:  '.$customer->fname );
 			}
