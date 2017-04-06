@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
 use App\Models\Busi\Customer;
@@ -80,21 +81,33 @@ class CustomerController extends AdminController
 		$customer =	Customer::find($id);
 		if($request->isMethod('POST')){
 			$this->validate($request, [
-				'login_name' => 'required|max:255',
+				'name' => 'required|max:255',
 				'password' => 'required',
 			]);
-			$customer->login_name = $request->input('login_name');
-			$customer->password = bcrypt($request->input('password'));
-			$customer->save();
+			$prop = [
+				'name' => $request->input('name'),
+				'password' =>  bcrypt($request->input('password')),
+				'status' => 1
+			];
+			$user = $customer->user;
+			if(empty($user)){
+				$customer->user()->create($prop);
+			}else{
+				$user->update($prop);
+				//$user->save();
+			}
+//			$customer->login_name = $request->input('login_name');
+//			$customer->password = bcrypt($request->input('password'));
+//			$customer->save();
 			return $this->success($customer);
 		}else{
-			return view('admin.customer.open', compact('customer'));
+			return view('admin.customer.open', ['customer' =>$customer ,'user'=>$customer->user]);
 		}
 	}
 
 	public function unique(Request $request, $id){
-		$login_name = $request->input('login_name');
-		$count = Customer::where('login_name',$login_name)->where('id', '<>', $id)->count();
+		$name = $request->input('name');
+		$count = User::where('name',$name)->where('reference_type', 'customer')->where('reference_id', '<>', $id)->count();
 		$valid = $count == 0 ;
 		return response(['valid' => $valid, 'message' => '该名称已存在'], 200);
 	}

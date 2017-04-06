@@ -87,6 +87,7 @@ class Customer extends Authenticatable
 				$customer->user()->create([
 					'name' => $customer->ftel,
 					'password' => bcrypt('888888'),
+					'status' => 0
 				]);
 			}
 		});
@@ -95,6 +96,13 @@ class Customer extends Authenticatable
 		});
 		static::updated(function ($model){
 			event(new ModelUpdatedEvent($model));
+			if( !empty($model->user) ) {
+				if ($model->fforbid_status == 'A') {
+					$model->user->update(['status' => 1]);
+				}else{
+					$model->user->update(['status' => 0]);
+				}
+			}
 		});
 	}
 

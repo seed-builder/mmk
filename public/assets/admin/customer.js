@@ -90,12 +90,7 @@ define(function (require, exports, module) {
                     "data": "login_name",
                     render: function ( data, type, full ) {
                         if(full.fdocument_status == 'C'){
-                            if(data){
-                                var btn =  '<a href="/admin/customer/'+full.id+'/open" data-target="#customerInfo" data-toggle="modal">登陆信息</a> &nbsp;&nbsp;';
-                                return btn;
-                            } else {
-                                return '<a href="/admin/customer/'+full.id+'/open" data-target="#customerInfo" data-toggle="modal">开通后台</a>'
-                            }
+                            return  '<a href="/admin/customer/'+full.id+'/open" data-target="#customerInfo" data-toggle="modal">登陆信息</a> &nbsp;&nbsp;';
                         }
                         return '';
                     }

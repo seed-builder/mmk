@@ -13,15 +13,15 @@
             <form class="form-horizontal" id="openForm" action="{{url('/admin/customer/'.$customer->id.'/open')}}" autocomplete="off" method="post">
                 {!! csrf_field() !!}
                 <div class="form-group">
-                    <label for="login_name" class="col-sm-2 control-label">登陆名称</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="login_name" placeholder="登陆名称" name="login_name" value="{{$customer->login_name or $customer->ftel}}" autocomplete="off">
+                    <label for="login_name" class="col-sm-4 col-md-2 control-label">登陆名称</label>
+                    <div class="col-sm-8  col-md-10">
+                        <input type="text" class="form-control" id="name" placeholder="登陆名称" name="name" value="{{$user->name or $customer->ftel}}" autocomplete="off">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputPassword3" class="col-sm-2 control-label">密码</label>
-                    <div class="col-sm-10">
-                        <input type="password" class="form-control" id="inputPassword3" placeholder="密码" name="password" value="{{$customer->password}}" autocomplete="off">
+                    <label for="inputPassword3" class="col-sm-4 col-md-2 control-label">密码(默认888888)</label>
+                    <div class="col-sm-8 col-md-10">
+                        <input type="password" class="form-control" id="inputPassword3" placeholder="密码" name="password" value="{{$user->password or '888888'}}" autocomplete="off">
                     </div>
                 </div>
                 <div class="form-group">
@@ -44,7 +44,7 @@
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
-            login_name: {
+            name: {
                 validators: {
                     notEmpty: {},
                     remote: {
