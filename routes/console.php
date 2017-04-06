@@ -9,6 +9,7 @@ use App\Services\DbHelper;
 use App\Services\VisitCalendarService;
 use Illuminate\Foundation\Inspiring;
 use App\Models\Busi\Store;
+use Illuminate\Support\Facades\DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -146,15 +147,22 @@ Artisan::command('cp-customer-to-user', function () {
 	$customers = Customer::whereNotNull('ftel')->where('ftel', '<>', '')->get();
 	$this->comment('ready to copy '.count($customers).' customers to sys-users table');
 	if(!empty($customers)){
-		foreach ($customers as $customer){
-			if(empty($customer->user)) {
-				$customer->user()->create([
-					'name' => $customer->ftel,
-					'password' => bcrypt('888888'),
-					'status' => 1
-				]);
-				$this->comment('success copy customer:  '.$customer->fname );
+		DB::beginTransaction();
+		try {
+			foreach ($customers as $customer) {
+				if (empty($customer->user)) {
+					$customer->user()->create([
+						'name' => $customer->ftel,
+						'password' => bcrypt('888888'),
+						'status' => 1
+					]);
+					$this->comment('success copy customer:  ' . $customer->fname);
+				}
 			}
+			DB::commit();
+		} catch (Exception $e) {
+			$this->comment(' copy customer err:  ' . $e->getMessage());
+			DB::rollBack();
 		}
 	}
 	$this->comment('end ...');
@@ -165,16 +173,23 @@ Artisan::command('cp-employee-to-user', function () {
 	$employees = Employee::whereNotNull('fphone')->get();
 	$this->comment('ready to copy '.count($employees).' employees to sys-users table');
 	if(!empty($employees)){
-		foreach ($employees as $employee){
-			if(empty($employee->user)) {
-				$employee->user()->create([
-					'name' => $employee->fphone,
-					'password' => $employee->fpassword,
-					'login_time' => $employee->login_time,
-					'status' => 1
-				]);
-				$this->comment('success copy employee:  '.$employee->fname );
+		DB::beginTransaction();
+		try {
+			foreach ($employees as $employee) {
+				if (empty($employee->user)) {
+					$employee->user()->create([
+						'name' => $employee->fphone,
+						'password' => $employee->fpassword,
+						'login_time' => $employee->login_time,
+						'status' => 1
+					]);
+					$this->comment('success copy employee:  ' . $employee->fname);
+				}
 			}
+			DB::commit();
+		} catch (Exception $e) {
+			$this->comment(' copy customer err:  ' . $e->getMessage());
+			DB::rollBack();
 		}
 	}
 	$this->comment('end ...');
