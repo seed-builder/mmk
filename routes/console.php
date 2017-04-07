@@ -51,9 +51,9 @@ Artisan::command('test', function () {
 Artisan::command('test1', function () {
 	$this->comment('begin ...');
 	$db = new DbHelper();
-	$columns = $db->getColumns('st_store_histories');
-	$builder = new CodeBuilder('StoreHistory', 'st_store_histories', $columns);
-	$builder->createFiles('admin');
+	$columns = $db->getColumns('sys_crontabs');
+	$builder = new CodeBuilder('SysCrontab', 'sys_crontabs', $columns);
+	$builder->createFiles( 'datatables');
 	$this->comment('end ...');
 })->describe('philo blade test');
 

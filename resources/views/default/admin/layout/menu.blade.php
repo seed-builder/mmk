@@ -225,6 +225,7 @@ $user = Auth::user();
                     </span>
                     </a>
                     <ul class="treeview-menu">
+                        <li><a href="{{url('/admin/sys-crontab')}}"><i class="fa fa-cogs"></i>后台任务管理</a></li>
                         @if($user->can('sys-config_index'))
                             <li><a href="{{url('/admin/sys-config')}}"><i class="fa fa-cogs"></i>配置管理</a></li>
                         @endif
