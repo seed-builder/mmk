@@ -240,4 +240,5 @@ class Store extends BaseModel
 	    parent::boot();
     }
 
+
 }

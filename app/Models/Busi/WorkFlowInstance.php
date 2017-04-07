@@ -2,6 +2,7 @@
 
 namespace App\Models\Busi;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -28,4 +29,41 @@ class WorkFlowInstance extends Model
 	//
 	protected $table = 'work_flow_instances';
 	protected $guarded = ['id'];
+
+	public function workflow(){
+		return $this->belongsTo(WorkFlow::class, 'work_flow_id');
+	}
+
+	/**
+	 * 当前审批节点
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+	 */
+	public function node(){
+		return $this->belongsTo(WorkFlowNode::class, 'node_id');
+	}
+
+	/**
+	 * 当前发起人
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+	 */
+	public function sponsor(){
+		return $this->belongsTo(User::class, 'sponsor_id');
+	}
+
+	/**
+	 * 当前审批人
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+	 */
+	public function approver(){
+		return $this->belongsTo(User::class, 'approver_id');
+	}
+
+	/**
+	 * 数据
+	 * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+	 */
+	public function data(){
+		return $this->morphTo();
+	}
+
 }
