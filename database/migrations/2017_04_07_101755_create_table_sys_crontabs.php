@@ -18,8 +18,8 @@ class CreateTableSysCrontabs extends Migration
             $table->string('name')->unique()->comment('名称');
             $table->string('command')->default('')->comment('命令');
             $table->string('desc')->default('')->comment('描述');
-            $table->timestamp('exec_time')->default('')->comment('最近一次运行时间');
-            $table->text('exec_remark')->default('')->comment('最近一次运行状态备注');
+            $table->timestamp('exec_time')->nullable()->comment('最近一次运行时间');
+            $table->text('exec_remark')->nullable()->comment('最近一次运行状态备注');
             $table->timestamps();
         });
     }

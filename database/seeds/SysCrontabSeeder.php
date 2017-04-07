@@ -12,12 +12,14 @@ class SysCrontabSeeder extends Seeder
      */
     public function run()
     {
+	    $entities = SysCrontab::all();
+	    if(!empty($entities)) {
+		    $entities->each(function ($item) {
+			    $item->delete();
+		    });
+	    }
+	    //
         //
-	    SysCrontab::create([
-	    	'name' => 'attendance_polling',
-		    'command' => 'command:attendance_polling',
-		    'desc' => '日完成提醒'
-	    ]);
 
 	    SysCrontab::create([
 		    'name' => 'attendance_polling',
