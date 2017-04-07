@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\SysCrontab;
 use Illuminate\Console\Command;
 use App\Models\Busi\Attendance;
 use DB;
@@ -12,6 +13,7 @@ use App\Models\Busi\WorkCalendarData;
 
 class AttendancePolling extends Command
 {
+	protected $name = 'attendance_polling';
     /**
      * The name and signature of the console command.
      *
@@ -65,7 +67,7 @@ EOH;
     }
 
     protected function sendMsg($ids){
-
+	    $msg = [];
 	    $messageTemp = MessageTemplate::where('type', 0)->first();
 	    if(empty($messageTemp)){
 		    LogSvr::AttendancPolling()->warn('警告：没有找到【type=0】的消息模板！');
@@ -73,7 +75,8 @@ EOH;
 	    }
 	    // type=1 , content=
 	    $content = $messageTemp->content ;//str_replace('#name', 'test', $messageTemp->content);
-	    LogSvr::AttendancPolling()->info('待发送推送消息的数量：'. count($ids));
+	    $msg[] = '待发送推送消息的数量：'. count($ids);
+	    LogSvr::AttendancPolling()->info($msg);
 	    if(env('APP_DEBUG')){
 		    LogSvr::AttendancPolling()->info('AttendancePolling测试, 待发送推送消息的 ids：'. json_encode($ids));
 		    return;
@@ -99,15 +102,18 @@ EOH;
 			    ))
 			    //->message($content, $message)
 			    ->send();
-
+		    $msg[] = '发送成功！';
 	    } catch (\JPush\Exceptions\APIConnectionException $e) {
 		    // try something here
 		    //print $e;
 		    LogSvr::AttendancPolling()->error('错误, APIConnectionException：'. $e);
+		    $msg[] = '发送失败: ' . $e->getMessage();
 	    } catch (\JPush\Exceptions\APIRequestException $e) {
 		    // try something here
 		    //print $e;
 		    LogSvr::AttendancPolling()->error('错误, APIRequestException：'. $e);
+		    $msg[] = '发送失败: ' . $e->getMessage();
 	    }
+	    SysCrontab::exec($this->name, implode('\n\t', $msg));
     }
 }

@@ -7,6 +7,7 @@ use App\Models\Busi\Store;
 use App\Models\Busi\VisitLine;
 use App\Models\Busi\VisitLineCalendar;
 use App\Models\Busi\VisitLineStore;
+use App\Models\SysCrontab;
 use App\Services\VisitCalendar;
 use App\Services\VisitCalendarService;
 use Illuminate\Console\Scheduling\Schedule;
@@ -49,18 +50,20 @@ class Kernel extends ConsoleKernel
             for ($fnumber=1;$fnumber<=7;$fnumber++){
                 $calendar->byDay(date('Y-m-d',strtotime('+'.$fnumber.' day')));
             }
-
+	        SysCrontab::exec('visit-calendar-week');
         })->weekly();
 
         //每天00:00点执行 生成拜访日记
         $schedule->call(function(VisitCalendarService $calendar){
             $calendar->byDay(date('Y-m-d'));
+	        SysCrontab::exec('visit-calendar-day');
         })->dailyAt('00:00');
 
 	    //每天01:00点执行, 检查更新门店每天的签约状态 及 自动审核库存盘点数据；
         $schedule->call(function(){
 			//自动审核库存盘点数据
 	        DB::update('update st_stocks set fdocument_status=?,fcheck_type=?,fcheck_date=?,fchecker=? where fdocument_status=? ', ['C','A',date('Y-m-d H:i:s'),'system','A']);
+	        SysCrontab::exec('check-stock');
 
 	        DB::update('update st_stores set fis_signed = ?', [0]);
 	        $now = date('Y-m-d');
@@ -76,6 +79,8 @@ class Kernel extends ConsoleKernel
 			        $store->save();
 		        }
 	        }
+	        SysCrontab::exec('check-store-signed');
+
         })->dailyAt('01:00');
     }
 

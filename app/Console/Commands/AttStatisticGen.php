@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\SysCrontab;
 use Illuminate\Console\Command;
 use App\Models\Busi\Attendance;
 use App\Models\Busi\AttendanceReport;
@@ -13,6 +14,7 @@ use App\Services\LogSvr;
 
 class AttStatisticGen extends Command
 {
+	protected $name = 'att-stc';
     /**
      * The name and signature of the console command.
      *
@@ -76,6 +78,7 @@ class AttStatisticGen extends Command
 			}
 	    }
 	    $this->log('AttStatisticGen end!');
+	    SysCrontab::exec($this->name);
     }
 
     public function day($day, $employee)
