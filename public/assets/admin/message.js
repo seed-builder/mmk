@@ -6,38 +6,6 @@ define(function(require, exports, module) {
     var zhCN = require('datatableZh');
     var editorCN = require('i18n');
     exports.index = function ($, tableId) {
-        var editor = new $.fn.dataTable.Editor({
-            ajax: {
-                create: {
-                    type: 'POST',
-                    url: '/admin/message',
-                    data: {_token: $('meta[name="_token"]').attr('content')},
-                },
-                edit: {
-                    type: 'PUT',
-                    url: '/admin/message/_id_',
-                    data: {_token: $('meta[name="_token"]').attr('content')},
-                },
-                remove: {
-                    type: 'DELETE',
-                    url: '/admin/message/_id_',
-                    data: {_token: $('meta[name="_token"]').attr('content')},
-                }
-            },
-            i18n: editorCN,
-            table: "#" + tableId,
-            idSrc: 'id',
-            fields: [
-            { 'label':  'fcreate_date', 'name': 'fcreate_date', },
-                { 'label':  'fmodify_date', 'name': 'fmodify_date', },
-                { 'label':  'from_id', 'name': 'from_id', },
-                { 'label':  'from_type', 'name': 'from_type', },
-                    { 'label':  'message_content_id', 'name': 'message_content_id', },
-                { 'label':  'read', 'name': 'read', },
-                { 'label':  'to_id', 'name': 'to_id', },
-                { 'label':  'to_type', 'name': 'to_type', },
-    ]
-        });
 
         var table = $("#" + tableId).DataTable({
             dom: "lBfrtip",
@@ -49,23 +17,18 @@ define(function(require, exports, module) {
             rowId: "id",
             ajax: '/admin/message/pagination',
             columns: [
-                    {  'data': 'fcreate_date' },
-                    {  'data': 'fmodify_date' },
-                    {  'data': 'from_id' },
-                    {  'data': 'from_type' },
-                    {  'data': 'id' },
-                    {  'data': 'message_content_id' },
-                    {  'data': 'read' },
-                    {  'data': 'to_id' },
-                    {  'data': 'to_type' },
+                {  'data': 'id' },
+                {  'data': 'from_id' },
+                {  'data': 'to_id' },
+                {  'data': 'message_content_id' },
+                {  'data': 'read' },
+                {  'data': 'fcreate_date' },
+                {  'data': 'fmodify_date' },
             ],
             buttons: [
                 // { text: '新增', action: function () { }  },
                 // { text: '编辑', className: 'edit', enabled: false },
                 // { text: '删除', className: 'delete', enabled: false },
-                {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: editor},
-                {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: editor},
-                {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
                 {extend: 'colvis', text: '列显示'}

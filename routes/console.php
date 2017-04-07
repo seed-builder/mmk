@@ -182,7 +182,6 @@ Artisan::command('cp-employee-to-user', function () {
 		try {
 			foreach ($employees as $employee) {
 				if (empty($employee->user)) {
-
 					$employee->user()->create([
 						'name' => $employee->fphone,
 						'password' => $employee->fpassword,

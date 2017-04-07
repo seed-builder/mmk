@@ -226,6 +226,8 @@ $user = Auth::user();
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="{{url('/admin/sys-crontab')}}"><i class="fa fa-cogs"></i>后台任务管理</a></li>
+                        <li><a href="{{url('/admin/message-content')}}"><i class="fa fa-comment"></i>消息内容管理</a></li>
+                        <li><a href="{{url('/admin/message')}}"><i class="fa fa-comments"></i>消息发送列表</a></li>
                         @if($user->can('sys-config_index'))
                             <li><a href="{{url('/admin/sys-config')}}"><i class="fa fa-cogs"></i>配置管理</a></li>
                         @endif
@@ -237,7 +239,7 @@ $user = Auth::user();
                             </li>
                         @endif
                         @if($user->can('message-template_index'))
-                            <li><a href="{{url('/admin/message-template')}}"><i class="fa fa-fw fa-paper-plane"></i>消息模板</a>
+                            <li><a href="{{url('/admin/message-template')}}"><i class="fa fa-fw fa-paper-plane"></i>系统信息模板</a>
                             </li>
                         @endif
 

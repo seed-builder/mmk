@@ -28,15 +28,9 @@ define(function(require, exports, module) {
             table: "#" + tableId,
             idSrc: 'id',
             fields: [
-            { 'label':  'content', 'name': 'content', },
-                { 'label':  'fcreate_date', 'name': 'fcreate_date', },
-                { 'label':  'fcreator_id', 'name': 'fcreator_id', },
-                { 'label':  'fdocument_status', 'name': 'fdocument_status', },
-                { 'label':  'files', 'name': 'files', },
-                { 'label':  'fmodify_date', 'name': 'fmodify_date', },
-                { 'label':  'fmodify_id', 'name': 'fmodify_id', },
-                    { 'label':  'title', 'name': 'title', },
-    ]
+                { 'label':  'title', 'name': 'title', },
+                { 'label':  'content', 'name': 'content', },
+            ]
         });
 
         var table = $("#" + tableId).DataTable({
@@ -49,18 +43,17 @@ define(function(require, exports, module) {
             rowId: "id",
             ajax: '/admin/message-content/pagination',
             columns: [
-                    {  'data': 'content' },
-                    {  'data': 'fcreate_date' },
-                    {  'data': 'fcreator_id' },
-                    {  'data': 'fdocument_status' },
-                    {  'data': 'files' },
-                    {  'data': 'fmodify_date' },
-                    {  'data': 'fmodify_id' },
-                    {  'data': 'id' },
-                    {  'data': 'title' },
+                {  'data': 'id' },
+                {  'data': 'title' },
+                {  'data': 'content' },
+                {  'data': 'fcreate_date' },
+                {  'data': 'fcreator_id' },
+                {  'data': 'fmodify_date' },
+                {  'data': 'fmodify_id' },
+
             ],
             buttons: [
-                // { text: '新增', action: function () { }  },
+                { text: '发送', action: function () { }  },
                 // { text: '编辑', className: 'edit', enabled: false },
                 // { text: '删除', className: 'delete', enabled: false },
                 {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: editor},
@@ -68,7 +61,6 @@ define(function(require, exports, module) {
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
-                {extend: 'colvis', text: '列显示'}
             ]
         });
 

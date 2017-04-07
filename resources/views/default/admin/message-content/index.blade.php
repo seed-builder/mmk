@@ -23,7 +23,7 @@
             <div class="col-xs-12">
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">bd_message_contents列表</h3>
+                        <h3 class="box-title">消息内容列表</h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                             </button>
@@ -36,15 +36,13 @@
                         <table id="moduleTable" class="table table-bordered table-hover">
                             <thead>
                             <tr>
-                                <th>content</th>
-                                <th>fcreate_date</th>
-                                <th>fcreator_id</th>
-                                <th>fdocument_status</th>
-                                <th>files</th>
-                                <th>fmodify_date</th>
-                                <th>fmodify_id</th>
                                 <th>id</th>
-                                <th>title</th>
+                                <th>标题</th>
+                                <th>内容</th>
+                                <th>创建时间</th>
+                                <th>创建者</th>
+                                <th>修改时间</th>
+                                <th>修改者</th>
                             </tr>
                             </thead>
                         </table>
