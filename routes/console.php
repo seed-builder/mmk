@@ -151,6 +151,10 @@ Artisan::command('cp-customer-to-user', function () {
 		try {
 			foreach ($customers as $customer) {
 				if (empty($customer->user)) {
+					$exists = User::where('name', $customer->ftel)->count();
+					if($exists)
+						continue;
+
 					$customer->user()->create([
 						'name' => $customer->ftel,
 						'password' => bcrypt('888888'),
@@ -177,6 +181,7 @@ Artisan::command('cp-employee-to-user', function () {
 		try {
 			foreach ($employees as $employee) {
 				if (empty($employee->user)) {
+
 					$employee->user()->create([
 						'name' => $employee->fphone,
 						'password' => $employee->fpassword,
