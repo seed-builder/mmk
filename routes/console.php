@@ -51,9 +51,9 @@ Artisan::command('test', function () {
 Artisan::command('test1', function () {
 	$this->comment('begin ...');
 	$db = new DbHelper();
-	$columns = $db->getColumns('wf_change_lists');
-	$builder = new CodeBuilder('WfChangeList', 'wf_change_lists', $columns);
-	$builder->createFiles( 'admin', 'api');
+	$columns = $db->getColumns('work_flow_instances');
+	$builder = new CodeBuilder('WorkFlowInstance', 'work_flow_instances', $columns);
+	$builder->createFiles( 'api');
 	$this->comment('end ...');
 })->describe('philo blade test');
 
