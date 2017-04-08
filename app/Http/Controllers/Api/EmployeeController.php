@@ -62,7 +62,8 @@ class EmployeeController extends ApiController
                 'department_id' => $emp->fdept_id,
                 'org_name' => $emp->organization? $emp->organization->fname : '',
                 'org_id' => $emp->forg_id,
-	            'customer' => $emp->customer->first()
+	            'customer' => $emp->customer->first(),
+	            'user_id' => empty($emp->user) ? 0 : $emp->user->id
             ];
 
             return response($data, 200);
