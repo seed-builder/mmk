@@ -24,4 +24,12 @@ class WorkFlowLink extends Model
 	//
 	protected $table = 'work_flow_links';
 	protected $guarded = ['id'];
+
+	public function source_node(){
+		return $this->belongsTo(WorkFlowNode::class, 'source_node_id');
+	}
+
+	public function target_node(){
+		return $this->belongsTo(WorkFlowNode::class, 'target_node_id');
+	}
 }

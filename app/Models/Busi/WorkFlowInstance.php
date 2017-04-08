@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @SWG\Property(name="data_id", type="integer", description="数据 id")
  * @SWG\Property(name="data_type", type="string", description="数据类型")
  * @SWG\Property(name="node_id", type="string", description="当前所处审批节点")
- * @SWG\Property(name="status", type="integer", description="状态(0-审批中,1-结束)")
+ * @SWG\Property(name="status", type="integer", description="状态(0-审批中,1-结束, 2-挂起, 3-非正常结束)")
  * @SWG\Property(name="updated_at", type="string", description="")
  * @SWG\Property(name="created_at", type="string", description="")
  * @SWG\Property(name="work_flow_id", type="integer", description="")
@@ -49,14 +49,6 @@ class WorkFlowInstance extends Model
 	 */
 	public function sponsor(){
 		return $this->belongsTo(User::class, 'sponsor_id');
-	}
-
-	/**
-	 * 当前审批人
-	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-	 */
-	public function approver(){
-		return $this->belongsTo(User::class, 'approver_id');
 	}
 
 	/**

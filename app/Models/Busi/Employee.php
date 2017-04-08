@@ -110,7 +110,17 @@ class Employee extends BaseModel
         return static::where('fpost_id', $position->senior->id)->first();
     }
 
-    public function visit_line_stores(){
+	public function getAllSeniors(){
+		$position = $this->position;
+		//$psenior = $this->position->senior;
+		if(empty($position->senior)){
+			return collect([]);
+		}
+		return static::where('fpost_id', $position->senior->id)->get();
+	}
+
+
+	public function visit_line_stores(){
         return $this->hasMany(VisitLineStore::class, 'femp_id', 'id');
     }
 

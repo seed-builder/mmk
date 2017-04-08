@@ -86,6 +86,20 @@ class User extends Authenticatable
     	return $this->morphTo();
     }
 
+	/**
+	 * 获取上级
+	 */
+	public function getSeniors(){
+		if($this->reference_type == 'employee'){
+			$seniors = $this->reference->getAllSeniors();
+			$users = $seniors->map(function ($senior){
+				return $senior->user;
+			});
+			return $users;
+		}
+		return [];
+	}
+
     public function sendMessages(){
         return $this->hasMany(Message::class,'from_id','id');
     }

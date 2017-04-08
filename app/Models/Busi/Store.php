@@ -240,5 +240,12 @@ class Store extends BaseModel
 	    parent::boot();
     }
 
+	/**
+	 * 变更单
+	 * @return \Illuminate\Database\Eloquent\Relations\MorphOne
+	 */
+	public function change_list(){
+		return $this->morphOne(WfChangeList::class, 'data');
+	}
 
 }

@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Services\CodeBuilder;
 use App\Services\DbHelper;
 use App\Services\VisitCalendarService;
+use App\Services\WorkFlowEngine;
 use Illuminate\Foundation\Inspiring;
 use App\Models\Busi\Store;
 use Illuminate\Support\Facades\DB;
@@ -29,31 +30,23 @@ Artisan::command('inspire', function () {
 
 Artisan::command('test', function () {
 	$this->comment('begin ...');
-	$affected = DB::update('update st_stores set fis_signed = ?', [0]);
-	$this->comment('update $affected =' . $affected);
-	$now = date('Y-m-d');
-	//取得当前有效的签约
-	$policies = DisplayPolicyStore::where('fstatus', 1)
-		->where('fstart_date', '<=', $now)
-		->where('fend_date', '>=', $now)
-		->get();
-	$this->comment('count = ' . $policies->count());
-	if(!empty($policies)){
-		foreach ($policies as $policy) {
-			$store = $policy->store;
-			$store->fis_signed = 1;
-			$store->save();
-		}
-	}
+
+	$engine = new WorkFlowEngine();
+	$engine->createInstance(123,'store-change', 5, 'wf_change_list');
+	$logs = $engine->start();
+	//$logs = $engine->agree(18,'agree ssss!', []);
+	//$logs = $engine->against(21,'agree ssss!');
+	//$this->assertNotNull($logs);
+	$this->comment('log count = ' . count($logs));
 	$this->comment('end ...');
 })->describe('philo blade test');
 
 Artisan::command('test1', function () {
 	$this->comment('begin ...');
 	$db = new DbHelper();
-	$columns = $db->getColumns('work_flow_instances');
-	$builder = new CodeBuilder('WorkFlowInstance', 'work_flow_instances', $columns);
-	$builder->createFiles( 'api');
+	$columns = $db->getColumns('work_flow_variables');
+	$builder = new CodeBuilder('WorkFlowVariable', 'work_flow_variables', $columns);
+	$builder->createFiles( 'admin');
 	$this->comment('end ...');
 })->describe('philo blade test');
 
