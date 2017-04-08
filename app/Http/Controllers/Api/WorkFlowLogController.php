@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Services\WorkFlowEngine;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\ApiController;
 use App\Models\Busi\WorkFlowLog;
@@ -17,16 +18,29 @@ class WorkFlowLogController extends ApiController
 
 	/**
 	 * 同意，审批通过
+	 * @param Request $request
+	 * @param $id
+	 * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
 	 */
-	public function agree(){
-
+	public function agree(Request $request, $id){
+		$engine = new WorkFlowEngine();
+		$remark = $request->input('remark','同意，审批通过');
+		$formData = $request->except(['remark', '_sign']);
+		$logs = $engine->agree($id, $remark, $formData);
+		return response(['success' => 1], 200);
 	}
 
 	/**
 	 * 不同意，审批结束
+	 * @param Request $request
+	 * @param $id
+	 * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
 	 */
-	public function against(){
-
+	public function against(Request $request, $id){
+		$engine = new WorkFlowEngine();
+		$remark = $request->input('remark','不同意，审批结束');
+		$engine->against($id, $remark);
+		return response(['success' => 1], 200);
 	}
 
 }

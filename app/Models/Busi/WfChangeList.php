@@ -39,7 +39,7 @@ class WfChangeList extends BaseModel
 		static::created(function($model){
 			if($model->data_type == 'store'){
 				$engine = new WorkFlowEngine();
-				$engine->createInstance(123,'store-change', $model->id, 'wf_change_list');
+				$engine->createInstance($model->fcreator_id,'store-change', $model->id, 'wf_change_list');
 				$engine->start();
 			}
 		});

@@ -57,6 +57,7 @@ Route::group(['prefix' => 'work-flow-log', 'middleware' => 'api.sign'], function
 	 *      notes="同意，审批通过",
 	 *      type="",
 	 *      @SWG\Parameters(
+	 *          @SWG\Parameter(name="remark", description="意见", required=false,type="string", paramType="form", defaultValue="" ),
 	 *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="" ),
 	 *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
 	 *      )
@@ -75,6 +76,7 @@ Route::group(['prefix' => 'work-flow-log', 'middleware' => 'api.sign'], function
 	 *      notes="不同意，审批结束",
 	 *      type="",
 	 *      @SWG\Parameters(
+	 *          @SWG\Parameter(name="remark", description="意见", required=false,type="string", paramType="form", defaultValue="" ),
 	 *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="" ),
 	 *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
 	 *      )

@@ -144,16 +144,23 @@ class WorkFlowEngine
 	 * 不同意
 	 * 非正常结束
 	 * @param $logId
-	 * @param $formData
+	 * @param $remark
+	 * @internal param $formData
 	 * @internal param $instance
 	 */
-	public function against($logId){
+	public function against($logId, $remark){
 		DB::beginTransaction();
 		try {
 			$log = WorkFlowLog::find($logId);
 			$log->wf_instance->update(['status' => 3]);
 			//更新当前执行日志状态数据 为已经执行
-			$log->update(['action' => 'against', 'remark' => 'against', 'status' => 1]);
+			$log->update(['action' => 'against', 'remark' => $remark, 'status' => 3]);
+			if($log->wf_node->type == 'C'){
+				WorkFlowLog::where('work_flow_instance_id', $log->work_flow_instance_id)
+					->where('node_id', $log->node_id)
+					->where('pre_log_id', $log->pre_log_id)
+					->update(['status' => 3]);
+			}
 			DB::commit();
 		} catch (Exception $e) {
 			DB::rollback();

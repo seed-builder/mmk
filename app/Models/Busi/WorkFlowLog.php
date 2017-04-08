@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  * @SWG\Property(name="link_id", type="string", description="审批节点")
  * @SWG\Property(name="node_id", type="string", description="审批节点")
  * @SWG\Property(name="remark", type="string", description="备注")
- * @SWG\Property(name="status", type="integer", description="处理状态（0-未处理，1-已经处理， 2-挂起）")
+ * @SWG\Property(name="status", type="integer", description="处理状态（0-未处理，1-已经处理， 2-挂起, 3-非正常结束）")
  * @SWG\Property(name="updated_at", type="string", description="")
  * @SWG\Property(name="work_flow_id", type="integer", description="")
  * @SWG\Property(name="work_flow_instance_id", type="integer", description="")
@@ -41,6 +41,10 @@ class WorkFlowLog extends Model
 
 	public function wf_link(){
 		return $this->belongsTo(WorkFlowLink::class, 'link_id');
+	}
+
+	public function wf_node(){
+		return $this->belongsTo(WorkFlowNode::class, 'node_id');
 	}
 
 	/**
