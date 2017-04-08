@@ -16,7 +16,9 @@ class CreateTableChangeLists extends Migration
         Schema::create('wf_change_lists', function (Blueprint $table) {
             $table->increments('id');
             $table->string('type')->default(0)->comment('变更类型（0-新增， 1-更新， 2-删除）');
-            $table->text('data')->nullable()->comment('数据json');
+            $table->text('data')->nullable()->comment('更改内容数据json');
+            $table->text('data_id')->nullable()->comment('源数据id');
+            $table->text('data_type')->nullable()->comment('源数据类型');
 
 	        $table->integer('fcreator_id')->default(0)->comment('创建人');
 	        $table->timestamp('fcreate_date')->nullable()->comment('创建时间');
