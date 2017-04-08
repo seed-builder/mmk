@@ -12,6 +12,8 @@ use Illuminate\Database\Eloquent\Model;
  * @author  xrs
  * @SWG\Model(id="WfChangeList")
  * @SWG\Property(name="data", type="string", description="数据json")
+ * @SWG\Property(name="data_id", type="integer", description="数据 id")
+ * @SWG\Property(name="data_type", type="string", description="数据类型")
  * @SWG\Property(name="fcreate_date", type="string", description="创建时间")
  * @SWG\Property(name="fcreator_id", type="integer", description="创建人")
  * @SWG\Property(name="fdocument_status", type="string", description="数据状态")
