@@ -18,6 +18,8 @@ use App\Services\LogSvr;
  * @SWG\Property(name="fmaterial_id", type="integer", description="物料内码id")
  * @SWG\Property(name="box_qty", type="number", description="箱数量")
  * @SWG\Property(name="bottle_qty", type="number", description="瓶数量")
+ * @SWG\Property(name="present_box_qty", type="number", description="赠送的瓶数量")
+ * @SWG\Property(name="present_bottle_qty", type="number", description="赠送的瓶数量")
  * @SWG\Property(name="fqty", type="number", description="订单数量")
  * @SWG\Property(name="fsale_unit", type="string", description="销售单位")
  * @SWG\Property(name="fbase_unit", type="string", description="基本单位")
@@ -35,7 +37,7 @@ class SaleOrderItem extends BaseModel
 	//
 	protected $table = 'st_sale_order_items';
 	protected $guarded = ['id'];
-	protected $appends = ['box_qty', 'bottle_qty'];
+	protected $appends = ['box_qty', 'bottle_qty','present_box_qty','present_bottle_qty'];
 
 	public function __construct(array $attributes = [])
 	{
@@ -75,6 +77,17 @@ class SaleOrderItem extends BaseModel
 			return $this->fbase_qty - floor($this->fqty) * $this->material->fratio;
 		}
 		return $this->fbase_qty ;
+	}
+
+	public function getPresentBoxQtyAttribute(){
+		return floor($this->fpresent_qty);
+	}
+
+	public function getPresentBottleQtyAttribute(){
+		if($this->material){
+			return $this->fpresent_qty - floor($this->fpresent_qty) * $this->material->fratio;
+		}
+		return $this->fpresent_base_qty ;
 	}
 
 }
