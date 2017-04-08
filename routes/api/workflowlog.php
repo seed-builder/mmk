@@ -51,7 +51,7 @@ Route::group(['prefix' => 'work-flow-log', 'middleware' => 'api.sign'], function
 	 * @SWG\Api(
 	 *     path="/api/work-flow-log/{id}/agree",
 	 *     @SWG\Operation(
-	 *      method="PUT",
+	 *      method="POST",
 	 *      nickname="work-flow-log-agree",
 	 *      summary="同意，审批通过",
 	 *      notes="同意，审批通过",
@@ -70,7 +70,7 @@ Route::group(['prefix' => 'work-flow-log', 'middleware' => 'api.sign'], function
 	 * @SWG\Api(
 	 *     path="/api/work-flow-log/{id}/against",
 	 *     @SWG\Operation(
-	 *      method="PUT",
+	 *      method="POST",
 	 *      nickname="work-flow-log-against",
 	 *      summary="不同意，审批结束",
 	 *      notes="不同意，审批结束",
