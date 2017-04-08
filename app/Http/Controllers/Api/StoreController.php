@@ -78,7 +78,7 @@ class StoreController extends ApiController
 	    //$re = $entity->save();
 	    //LogSvr::update()->info(json_encode($re));
 	    $status = $re ? 200 : 401;
-	    return response(['success' => $re], $status);
+	    return response(['success' => $entity], $status);
     }
 
 	public function newEntity(array $attributes = [])
