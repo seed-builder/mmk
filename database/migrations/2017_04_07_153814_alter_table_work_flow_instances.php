@@ -18,6 +18,7 @@ class AlterTableWorkFlowInstances extends Migration
 	        $table->renameColumn('table', 'data_type');
 	        $table->integer('sponsor_id')->default(0)->comment('发起人id');
 	        $table->string('title')->default('')->comment('标题');
+	        $table->string('desc')->default('')->comment('描述');
         });
     }
 
@@ -33,6 +34,7 @@ class AlterTableWorkFlowInstances extends Migration
 	        $table->renameColumn('data_type', 'table');
 	        $table->dropColumn('title');
 	        $table->dropColumn('sponsor_id');
+	        $table->dropColumn('desc');
         });
     }
 }
