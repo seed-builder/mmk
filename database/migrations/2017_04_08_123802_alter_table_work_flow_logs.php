@@ -16,6 +16,9 @@ class AlterTableWorkFlowLogs extends Migration
         Schema::table('work_flow_logs', function (Blueprint $table) {
             //
 	        $table->integer('status')->default(0)->comment('处理状态（0-未处理，1-已经处理）');
+	        //$table->integer('link_id')->default(0)->comment('work flow link id');
+	        $table->integer('pre_log_id')->default(0)->comment('pre log id');
+	        $table->integer('node_id')->default(0)->comment('work flow node id')->change();
         });
     }
 
@@ -29,6 +32,8 @@ class AlterTableWorkFlowLogs extends Migration
         Schema::table('work_flow_logs', function (Blueprint $table) {
             //
 	        $table->dropColumn('status');
+	        $table->dropColumn('link_id');
+	        $table->dropColumn('pre_log_id');
         });
     }
 }

@@ -26,7 +26,7 @@ class CreateTableWorkFlowVariables extends Migration
 	        $table->string('display_name')->comment('显示名(中文)');
 	        $table->string('value')->comment('默认变量值');
 	        $table->string('data_type')->comment('数据类型');
-	        $table->integer('categroy')->default(0)->comment('所属类型(0-公共变量, 1-私有变量)');
+	        $table->integer('category')->default(0)->comment('所属类型(0-公共变量, 1-私有变量)');
 
             $table->timestamps();
         });

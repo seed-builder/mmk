@@ -17,13 +17,15 @@ use Illuminate\Database\Eloquent\Model;
  * @SWG\Property(name="created_at", type="string", description="")
  * @SWG\Property(name="id", type="integer", description="")
  * @SWG\Property(name="node_id", type="string", description="审批节点")
+ * @SWG\Property(name="link_id", type="string", description="审批节点")
+ * @SWG\Property(name="node_id", type="string", description="审批节点")
  * @SWG\Property(name="remark", type="string", description="备注")
- * @SWG\Property(name="status", type="integer", description="处理状态（0-未处理，1-已经处理）")
+ * @SWG\Property(name="status", type="integer", description="处理状态（0-未处理，1-已经处理， 2-挂起）")
  * @SWG\Property(name="updated_at", type="string", description="")
  * @SWG\Property(name="work_flow_id", type="integer", description="")
  * @SWG\Property(name="work_flow_instance_id", type="integer", description="")
   */
-class WorkFlowLog extends BaseModel
+class WorkFlowLog extends Model
 {
 	//
 	protected $table = 'work_flow_logs';
@@ -33,12 +35,12 @@ class WorkFlowLog extends BaseModel
 		return $this->belongsTo(WorkFlow::class, 'work_flow_id');
 	}
 
-	public function work_flow_instance(){
+	public function wf_instance(){
 		return $this->belongsTo(WorkFlowInstance::class, 'work_flow_instance_id');
 	}
 
-	public function work_flow_node(){
-		return $this->belongsTo(WorkFlowNode::class, 'node_id');
+	public function wf_link(){
+		return $this->belongsTo(WorkFlowLink::class, 'link_id');
 	}
 
 	/**

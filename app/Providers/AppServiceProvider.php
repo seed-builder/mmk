@@ -34,6 +34,7 @@ class AppServiceProvider extends ServiceProvider
 		    'employee' => Employee::class,
 		    'customer' => Customer::class,
 		    'wf_change_list' => WfChangeList::class,
+		    'store' => Store::class,
 	    ]);
     }
 

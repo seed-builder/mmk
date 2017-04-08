@@ -1,5 +1,6 @@
 <?php
 
+use App\Services\WorkFlowEngine;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -39,9 +40,10 @@ class ExampleTest extends TestCase
 //	    $subs = $employee->getSubordinates();
 //	    var_dump($subs);
 //	    $this->assertNotNull($subs);
-		$svr = new \App\Services\Sms\AliDaYuSms();
-		$resp = $svr->verify('13860453820');
-		var_dump($resp);
-	    $this->assertNotNull($resp);
+//		$svr = new \App\Services\Sms\AliDaYuSms();
+//		$resp = $svr->verify('13860453820');
+//		var_dump($resp);
+//	    $this->assertNotNull($resp);
+
     }
 }

@@ -85,4 +85,15 @@ class User extends Authenticatable
     	return $this->morphTo();
     }
 
+	/**
+	 * 获取上级
+	 */
+	public function getSenior(){
+		if($this->reference_type == 'employee'){
+			$senior = $this->reference->getSenior();
+			return empty($senior) ? null : $senior->user;
+		}
+		return null;
+	}
+
 }
