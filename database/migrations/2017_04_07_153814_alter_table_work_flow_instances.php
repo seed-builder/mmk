@@ -34,7 +34,7 @@ class AlterTableWorkFlowInstances extends Migration
 	        $table->renameColumn('data_type', 'table');
 	        $table->dropColumn('title');
 	        $table->dropColumn('sponsor_id');
-	        $table->dropColumn('desc');
+	        //$table->dropColumn('desc');
         });
     }
 }
