@@ -15,18 +15,5 @@ class WorkFlowInstanceController extends ApiController
 		return new WorkFlowInstance($attributes);
 	}
 
-	/**
-	 * 同意，审批通过
-	 */
-	public function agree(){
-
-	}
-
-	/**
-	 * 不同意，审批结束
-	 */
-	public function against(){
-
-	}
 
 }

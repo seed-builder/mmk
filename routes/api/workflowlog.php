@@ -2,7 +2,7 @@
 /**
 * @SWG\Resource(
 *  resourcePath="/work-flow-log",
-*  description="WorkFlowLog"
+*  description="工作流实例审批日志"
 * )
 */
 Route::group(['prefix' => 'work-flow-log', 'middleware' => 'api.sign'], function () {
@@ -13,8 +13,8 @@ Route::group(['prefix' => 'work-flow-log', 'middleware' => 'api.sign'], function
     *     @SWG\Operation(
     *      method="GET",
     *      nickname="work-flow-log-list",
-    *      summary="page list",
-    *      notes="page list",
+    *      summary="工作流实例审批日志列表",
+    *      notes="工作流实例审批日志列表",
     *      type="array",
     *     items="$ref:WorkFlowLog",
     *      @SWG\Parameters(
@@ -35,8 +35,8 @@ Route::group(['prefix' => 'work-flow-log', 'middleware' => 'api.sign'], function
     *     @SWG\Operation(
     *      method="GET",
     *      nickname="work-flow-log-show",
-    *      summary="信息详情",
-    *      notes="信息详情",
+    *      summary="工作流实例审批日志信息详情",
+    *      notes="工作流实例审批日志信息详情",
     *      type="Attendance",
     *      @SWG\Parameters(
     *          @SWG\Parameter(name="id", description="id", required=true, type="integer", paramType="path", defaultValue="1"),
@@ -47,75 +47,41 @@ Route::group(['prefix' => 'work-flow-log', 'middleware' => 'api.sign'], function
     */
     Route::get('/{id}', ['as' => 'WorkFlowLog.show', 'uses' => 'WorkFlowLogController@show']);
 
-    /**
-    * @SWG\Api(
-    *     path="/api/work-flow-log",
-    *     @SWG\Operation(
-    *      method="POST",
-    *      nickname="work-flow-log-store",
-    *      summary="新增",
-    *      notes="新增",
-    *      type="",
-    *      @SWG\Parameters(
-    *          @SWG\Parameter(name="action", description="审批动作", required=true,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="approver_id", description="审批人id（user id）", required=true,type="integer", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="created_at", description="", required=true,type="string", paramType="form", defaultValue="" ),
-                    *          @SWG\Parameter(name="node_id", description="审批节点", required=true,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="remark", description="备注", required=true,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="status", description="处理状态（0-未处理，1-已经处理）", required=false,type="integer", paramType="form", defaultValue="0" ),
-            *          @SWG\Parameter(name="updated_at", description="", required=true,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="work_flow_id", description="", required=false,type="integer", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="work_flow_instance_id", description="", required=false,type="integer", paramType="form", defaultValue="" ),
-        *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
-    *      )
-    *  )
-    * )
-    */
-    Route::post('/', ['as' => 'WorkFlowLog.store', 'uses' => 'WorkFlowLogController@store']);
+	/**
+	 * @SWG\Api(
+	 *     path="/api/work-flow-log/{id}",
+	 *     @SWG\Operation(
+	 *      method="PUT",
+	 *      nickname="work-flow-log-update",
+	 *      summary="同意，审批通过",
+	 *      notes="同意，审批通过",
+	 *      type="",
+	 *      @SWG\Parameters(
+	 *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="" ),
+	 *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
+	 *      )
+	 *  )
+	 * )
+	 */
+	Route::put('/{id}/agree', ['as' => 'WorkFlowLogController.agree', 'uses' => 'WorkFlowLogController@agree']);
 
-    /**
-    * @SWG\Api(
-    *     path="/api/work-flow-log/{id}",
-    *     @SWG\Operation(
-    *      method="PUT",
-    *      nickname="work-flow-log-update",
-    *      summary="更新",
-    *      notes="更新",
-    *      type="",
-    *      @SWG\Parameters(
-    *          @SWG\Parameter(name="action", description="审批动作", required=false,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="approver_id", description="审批人id（user id）", required=false,type="integer", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="created_at", description="", required=false,type="string", paramType="form", defaultValue="" ),
-                    *          @SWG\Parameter(name="node_id", description="审批节点", required=false,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="remark", description="备注", required=false,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="status", description="处理状态（0-未处理，1-已经处理）", required=false,type="integer", paramType="form", defaultValue="0" ),
-            *          @SWG\Parameter(name="updated_at", description="", required=false,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="work_flow_id", description="", required=false,type="integer", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="work_flow_instance_id", description="", required=false,type="integer", paramType="form", defaultValue="" ),
-        *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="" ),
-    *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
-    *      )
-    *  )
-    * )
-    */
-    Route::put('/{id}', ['as' => 'WorkFlowLog.update', 'uses' => 'WorkFlowLogController@update']);
+	/**
+	 * @SWG\Api(
+	 *     path="/api/work-flow-log/{id}",
+	 *     @SWG\Operation(
+	 *      method="PUT",
+	 *      nickname="work-flow-log-update",
+	 *      summary="不同意，审批结束",
+	 *      notes="不同意，审批结束",
+	 *      type="",
+	 *      @SWG\Parameters(
+	 *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="" ),
+	 *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
+	 *      )
+	 *  )
+	 * )
+	 */
+	Route::put('/{id}/against', ['as' => 'WorkFlowLogController.against', 'uses' => 'WorkFlowLogController@against']);
 
-    /**
-    * @SWG\Api(
-    *     path="/api/work-flow-log/{id}",
-    *     @SWG\Operation(
-    *      method="DELETE",
-    *      nickname="work-flow-log-delete",
-    *      summary="删除",
-    *      notes="删除",
-    *      type="",
-    *      @SWG\Parameters(
-    *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="1" ),
-    *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
-    *      )
-    *  )
-    * )
-    */
-    Route::delete('/{id}', ['as' => 'WorkFlowLog.delete', 'uses' => 'WorkFlowLogController@destroy']);
 
 });

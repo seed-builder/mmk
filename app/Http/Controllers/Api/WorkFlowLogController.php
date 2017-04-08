@@ -14,4 +14,19 @@ class WorkFlowLogController extends ApiController
 		// TODO: Implement newEntity() method.
 		return new WorkFlowLog($attributes);
 	}
+
+	/**
+	 * 同意，审批通过
+	 */
+	public function agree(){
+
+	}
+
+	/**
+	 * 不同意，审批结束
+	 */
+	public function against(){
+
+	}
+
 }
