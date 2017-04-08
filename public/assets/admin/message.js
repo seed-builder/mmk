@@ -18,12 +18,31 @@ define(function(require, exports, module) {
             ajax: '/admin/message/pagination',
             columns: [
                 {  'data': 'id' },
-                {  'data': 'from_id' },
-                {  'data': 'to_id' },
-                {  'data': 'message_content_id' },
-                {  'data': 'read' },
+                {
+                    'data': 'from_id',
+                    render: function ( data, type, full ) {
+                        return full.from.name;
+                    }
+                },
+                {
+                    'data': 'to_id',
+                    render: function ( data, type, full ) {
+                        return full.to.name;
+                    }
+                },
+                {
+                    'data': 'message_content_id',
+                    render: function ( data, type, full ) {
+                        return full.content.title;
+                    }
+                },
+                {
+                    'data': 'read',
+                    render: function ( data, type, full ) {
+                        return data==0?'未读':'已读';
+                    }
+                },
                 {  'data': 'fcreate_date' },
-                {  'data': 'fmodify_date' },
             ],
             buttons: [
                 // { text: '新增', action: function () { }  },

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Busi\Message;
 use App\Models\Busi\Position;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -85,4 +86,7 @@ class User extends Authenticatable
     	return $this->morphTo();
     }
 
+    public function sendMessages(){
+        return $this->hasMany(Message::class,'from_id','id');
+    }
 }

@@ -67,7 +67,8 @@ class MessageController extends AdminController
 	*/
 	public function pagination(Request $request, $searchCols = [], $with=[], $conditionCall = null, $all_columns = false){
 		$searchCols = ["from_type","to_type"];
-		return parent::pagination($request, $searchCols);
+        $with = ['from','to','content'];
+		return parent::pagination($request, $searchCols,$with);
 	}
 
 }

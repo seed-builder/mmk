@@ -28,7 +28,7 @@ window.Vue = require('vue');
 window.axios = require('axios');
 
 window.axios.defaults.headers.common = {
-    'X-CSRF-TOKEN': window.Laravel.csrfToken,
+    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content'),
     'X-Requested-With': 'XMLHttpRequest'
 };
 

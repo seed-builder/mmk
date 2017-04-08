@@ -37,12 +37,11 @@
                             <thead>
                             <tr>
                                 <th>id</th>
-                                <th>from_id</th>
-                                <th>to_id</th>
-                                <th>message_content_id</th>
-                                <th>read</th>
-                                <th>fcreate_date</th>
-                                <th>fmodify_date</th>
+                                <th>发布用户</th>
+                                <th>接收用户</th>
+                                <th>标题</th>
+                                <th>状态</th>
+                                <th>发送时间</th>
                             </tr>
                             </thead>
                         </table>

@@ -36,9 +36,10 @@
             cursor: move;
         }
     </style>
+    {{--<script src="/js/app.js"></script>--}}
     <!-- jQuery 2.2.3 -->
     <script src="/assets/plugins//jQuery/jquery-2.2.3.min.js"></script>
-    <!-- Bootstrap 3.3.6 -->
+    {{--<!-- Bootstrap 3.3.6 -->--}}
     <script src="/assets/plugins/AdminLTE/bootstrap/js/bootstrap.min.js"></script>
     <!-- SlimScroll -->
     <script src="/assets/plugins/slimScroll/jquery.slimscroll.min.js"></script>
@@ -48,11 +49,11 @@
     {{--<script src="/assets/plugins/layer/layer.js"></script>--}}
     <script src="{{url('assets')}}/plugins/layui/layui.js"></script>
 
-    <script src="/js/jquery.bootstrap.min.js"></script>
     <script src="/assets/sea.js"></script>
     <script src="/assets/sea.config.js"></script>
     <!-- jquery UI -->
     <script src="/assets/plugins/jQueryUI/jquery-ui.js"></script>
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>

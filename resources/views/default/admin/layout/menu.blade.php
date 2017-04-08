@@ -226,8 +226,22 @@ $user = Auth::user();
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="{{url('/admin/sys-crontab')}}"><i class="fa fa-cogs"></i>后台任务管理</a></li>
-                        <li><a href="{{url('/admin/message-content')}}"><i class="fa fa-comment"></i>消息内容管理</a></li>
-                        <li><a href="{{url('/admin/message')}}"><i class="fa fa-comments"></i>消息发送列表</a></li>
+                        <li class="treeview ">
+                            <a href="#">
+                                <i class="fa fa-comments"></i>
+                                <span>消息管理</span>
+                                <span class="pull-right-container">
+                              <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="{{url('/admin/message-content')}}"><i class="fa fa-comment"></i>消息内容管理</a></li>
+                                <li><a href="{{url('/admin/message-content/create')}}"><i class="fa fa-fw fa-comment-o"></i>消息内容新增</a></li>
+                                <li><a href="{{url('/admin/message')}}"><i class="fa fa-fw fa-commenting"></i>消息发送列表</a></li>
+                            </ul>
+                        </li>
+
+
                         @if($user->can('sys-config_index'))
                             <li><a href="{{url('/admin/sys-config')}}"><i class="fa fa-cogs"></i>配置管理</a></li>
                         @endif

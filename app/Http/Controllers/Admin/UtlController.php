@@ -53,22 +53,25 @@ class UtlController extends Controller
     }
 
 	public function uploadFile(Request $request){
-		$file = $request->file('sourceFile');
-		//var_dump($file);
-		if($file->isValid())
-		{
-			$path = $file->store('upload/files');
-			if($path){
-				$res = Resources::create([
-					'name' => $file->getClientOriginalName(),
-					'ext' => $file->getClientOriginalExtension(),
-					'size' => $file->getSize(),
-					'path' => 'app/' . $path ,
-					'mimetype' => $file->getMimeType(),
-				]);
-			}
-		}
-		return response($res, 200);
+        $file = $request->file('sourceFile');
+        //var_dump($file);
+        if($file->isValid())
+        {
+            $path = $file->store('upload/message-files');
+            if($path){
+                $res = Resources::create([
+                    'name' => $file->getClientOriginalName(),
+                    'ext' => $file->getClientOriginalExtension(),
+                    'size' => $file->getSize(),
+                    'path' => 'app/' . $path ,
+                    'mimetype' => $file->getMimeType(),
+                ]);
+            }
+        }
+        return response()->json([
+            'data' => $res->id
+        ]);
+
 	}
 
 	public function downloadFile(Request $request){
