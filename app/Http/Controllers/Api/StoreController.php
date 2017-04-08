@@ -68,13 +68,13 @@ class StoreController extends ApiController
 	    //var_dump($data);
 	    unset($data['_sign']);
 	    $entity->fill($data);
-	    if(empty($entity->change_list)){
-		    $re = $entity->change_list()->create([
-			    'type' => 1,
-			    'data' => json_encode($entity),
-			    'fcreator_id' => $data['fmodify_id'],
-		    ]);
-	    }
+	    //if(empty($entity->change_list)){
+	    $re = $entity->change_list()->create([
+		    'type' => 1,
+		    'data' => json_encode($entity),
+		    'fcreator_id' => $data['fmodify_id'],
+	    ]);
+	    //}
 	    //$re = $entity->save();
 	    //LogSvr::update()->info(json_encode($re));
 	    $status = $re ? 200 : 401;

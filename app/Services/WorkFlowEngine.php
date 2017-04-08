@@ -287,7 +287,7 @@ class WorkFlowEngine
 	protected function genNodeLog($preLog, $link){
 		//
 		$curNode = $link->target_node;
-
+		$log=null;
 		switch ($curNode->type){
 			case 'F':
 				//开始节点操作人是自己

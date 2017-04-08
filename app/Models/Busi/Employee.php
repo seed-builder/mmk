@@ -114,7 +114,7 @@ class Employee extends BaseModel
 		$position = $this->position;
 		//$psenior = $this->position->senior;
 		if(empty($position->senior)){
-			return [];
+			return collect([]);
 		}
 		return static::where('fpost_id', $position->senior->id)->get();
 	}
