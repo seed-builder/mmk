@@ -32,11 +32,11 @@ Artisan::command('test', function () {
 	$this->comment('begin ...');
 
 	$engine = new WorkFlowEngine();
-//	$engine->createInstance(123,'store-change', 9, 'wf_change_list');
-//	$logs = $engine->start();
-	$logs = $engine->agree(10,'agree ssss!', []);
-	$this->assertNotNull($logs);
-
+	//$engine->createInstance(123,'store-change', 9, 'wf_change_list');
+	//$logs = $engine->start();
+	$logs = $engine->agree(18,'agree ssss!', []);
+	//$this->assertNotNull($logs);
+	$this->comment('log count = ' . count($logs));
 	$this->comment('end ...');
 })->describe('philo blade test');
 

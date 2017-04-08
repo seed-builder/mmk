@@ -88,12 +88,15 @@ class User extends Authenticatable
 	/**
 	 * 获取上级
 	 */
-	public function getSenior(){
+	public function getSeniors(){
 		if($this->reference_type == 'employee'){
-			$senior = $this->reference->getSenior();
-			return empty($senior) ? null : $senior->user;
+			$seniors = $this->reference->getAllSeniors();
+			$users = $seniors->map(function ($senior){
+				return $senior->user;
+			});
+			return $users;
 		}
-		return null;
+		return [];
 	}
 
 }

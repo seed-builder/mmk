@@ -179,9 +179,20 @@ class WorkFlowEngine
 		 //生成下一步审批日志
 		 $this->data = array_merge($this->data, $data);
 		 $links = $this->findNextLinks($log->node_id);
+		if(count($links) == 1 && $links[0]->target_node->type == 'L'){
+			//正常结束
+			WorkFlowLog::where('work_flow_instance_id', $log->work_flow_instance_id)
+				->where('node_id', $log->node_id)
+				->where('pre_log_id', $log->pre_log_id)
+				->update(['status' => 1]);
+		}
 		 //$this->instance->update(['node_id' => $node->id]);
 		 $nextLogs =  $this->genNodeLogs($log, $links);
 		 return $nextLogs;
+	}
+
+	public function normalEnd($log){
+
 	}
 
 	/**
@@ -250,7 +261,7 @@ class WorkFlowEngine
 		if(!empty($links)){
 			foreach ($links as $link)
 			{
-				$links[] = $this->genNodeLog($preLog, $link);
+				$logs[] = $this->genNodeLog($preLog, $link);
 			}
 		}
 		return $logs;
@@ -315,16 +326,18 @@ class WorkFlowEngine
 
 						break;
 					case 2:
-						$seniorUser = $preLog->approver->getSenior();
-						if(!empty($seniorUser)){
-							$log = WorkFlowLog::create([
-								'work_flow_id' => $this->instance->work_flow_id,
-								'work_flow_instance_id' => $this->instance->id,
-								'node_id' => $curNode->id,
-								'approver_id' => $seniorUser->id,
-								'pre_log_id' => $preLog->id,
-								'link_id' => $link->id,
-							]);
+						$seniorUsers = $preLog->approver->getSeniors();
+						if(!empty($seniorUsers)) {
+							foreach ($seniorUsers as $seniorUser) {
+								$log = WorkFlowLog::create([
+									'work_flow_id' => $this->instance->work_flow_id,
+									'work_flow_instance_id' => $this->instance->id,
+									'node_id' => $curNode->id,
+									'approver_id' => $seniorUser->id,
+									'pre_log_id' => $preLog->id,
+									'link_id' => $link->id,
+								]);
+							}
 						}
 						break;
 				}
