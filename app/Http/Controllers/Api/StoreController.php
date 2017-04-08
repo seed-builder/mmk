@@ -53,7 +53,8 @@ class StoreController extends ApiController
         //创建变更单
         $entity->change_list()->create([
         	'type' => 0,
-	        'data' => json_encode($entity)
+	        'data' => json_encode($entity),
+	        'fcreator_id' => $entity->fcreator_id
         ]);
         $status = $re ? 200 : 400;
         return response($entity, $status);
@@ -70,11 +71,8 @@ class StoreController extends ApiController
 	    if(empty($entity->change_list)){
 		    $re = $entity->change_list()->create([
 			    'type' => 1,
-			    'data' => json_encode($entity)
-		    ]);
-	    }else{
-		    $re =  $entity->change_list->update([
-			    'data' => json_encode($entity)
+			    'data' => json_encode($entity),
+			    'fcreator_id' => $data['fmodify_id'],
 		    ]);
 	    }
 	    //$re = $entity->save();
