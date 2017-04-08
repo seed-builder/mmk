@@ -39,7 +39,7 @@
                     <!-- /.box-header -->
                     <div class="box-body">
 
-                        <table id="moduleTable" class="table table-bordered table-hover">
+                        <table id="moduleTable" class="table table-bordered table-hover display nowrap" cellspacing="0" width="100%">
                             <thead>
                             <tr>
                 <?php $__empty_1 = true; $__currentLoopData = $columns; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $col): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>

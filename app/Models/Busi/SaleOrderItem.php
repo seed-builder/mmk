@@ -43,10 +43,17 @@ class SaleOrderItem extends BaseModel
 			$material = Material::find($attributes['fmaterial_id']);
 			$attributes['fsale_unit'] = $material->fsale_unit;
 			$attributes['fbase_unit'] = $material->fbase_unit;
+			//
 			$attributes['fqty'] = $attributes['box_qty'] + round($attributes['bottle_qty'] / $material->fratio, 2);
 			$attributes['fbase_qty'] = $attributes['box_qty'] * $material->fratio + $attributes['bottle_qty'];
+			//赠送数量
+			$attributes['fpresent_qty'] = $attributes['present_box_qty'] + round($attributes['present_bottle_qty'] / $material->fratio, 2);
+			$attributes['fpresent_base_qty'] = $attributes['present_box_qty'] * $material->fratio + $attributes['present_bottle_qty'];
+
 			unset($attributes['box_qty']);
 			unset($attributes['bottle_qty']);
+			unset($attributes['present_box_qty']);
+			unset($attributes['present_bottle_qty']);
 		}
 		parent::__construct($attributes);
 	}
