@@ -52,14 +52,6 @@ class WorkFlowInstance extends Model
 	}
 
 	/**
-	 * 当前审批人
-	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-	 */
-	public function approver(){
-		return $this->belongsTo(User::class, 'approver_id');
-	}
-
-	/**
 	 * 数据
 	 * @return \Illuminate\Database\Eloquent\Relations\MorphTo
 	 */
