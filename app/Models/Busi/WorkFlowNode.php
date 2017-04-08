@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @SWG\Property(name="approver_type", type="integer", description="审批人类型(0-按角色，1-特定人)")
  * @SWG\Property(name="created_at", type="string", description="")
  * @SWG\Property(name="id", type="integer", description="")
- * @SWG\Property(name="type", type="string", description="节点类型(F-first, C-common, L-last)")
+ * @SWG\Property(name="type", type="string", description="节点类型(F-开始, C-普通审批节点, D-汇签节点, L-结束节点)")
  * @SWG\Property(name="updated_at", type="string", description="")
  * @SWG\Property(name="work_flow_id", type="integer", description="")
   */

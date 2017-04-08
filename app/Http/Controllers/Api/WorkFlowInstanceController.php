@@ -14,4 +14,19 @@ class WorkFlowInstanceController extends ApiController
 		// TODO: Implement newEntity() method.
 		return new WorkFlowInstance($attributes);
 	}
+
+	/**
+	 * 同意，审批通过
+	 */
+	public function agree(){
+
+	}
+
+	/**
+	 * 不同意，审批结束
+	 */
+	public function against(){
+
+	}
+
 }
