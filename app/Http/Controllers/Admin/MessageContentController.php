@@ -136,23 +136,27 @@ class MessageContentController extends AdminController
             $users = User::all();
             $this->sendMessage($users,$data['message_content_id']);
         }else{
-            $users = collect();
+            $users = [];
             if (!empty($data['fcust_ids'])){
-                $customers = User::query()->where('reference_type','customer')->whereIn('reference_id',$data['fcust_ids'])->get();
-                $users = $users->merge($customers);
+                $customers = User::query()->where('reference_type','customer')->whereIn('reference_id',$data['fcust_ids'])->pluck('id')->toArray();
+                $users = array_merge($users,$customers);
+                //$users->merge($customers);
             }
             if (!empty($data['fadmin_ids'])){
-                $admins = User::query()->whereIn('id',$data['fadmin_ids'])->get();
-                $users = $users->merge($admins);
+                $admins = User::query()->whereIn('id',$data['fadmin_ids'])->pluck('id')->toArray();
+                $users = array_merge($users,$admins);
+//                $users = $users->merge($admins);
             }
             if (!empty($data['fdept_ids'])){
                 $departments = Department::query()->whereIn('id',$data['fdept_ids'])->get();
                 foreach ($departments as $department){
                     $emp_ids = $department->getAllEmployeeByDept()->pluck('id');
-                    $employees = User::query()->where('reference_type','employee')->whereIn('reference_id',$emp_ids)->get();
-                    $users = $users->merge($employees);
+                    $employees = User::query()->where('reference_type','employee')->whereIn('reference_id',$emp_ids)->pluck('id')->toArray();
+                    $users = array_merge($users,$employees);
+//                    $users = $users->merge($employees);
                 }
             }
+            $users = array_unique($users);
 
             $this->sendMessage($users,$data['message_content_id']);
         }
@@ -169,7 +173,7 @@ class MessageContentController extends AdminController
             $datas[] =[
                 'from_id' => Auth::user()->id,
                 'from_type' => 'App\Models\User',
-                'to_id' => $user->id,
+                'to_id' => $user,
                 'to_type' => 'App\Models\User',
                 'message_content_id' => $content_id,
                 'fcreate_date' => date('Y-m-d H:i:s'),
@@ -181,4 +185,24 @@ class MessageContentController extends AdminController
     }
 
 
+    public function info($message_id){
+
+        $message = Message::find($message_id);
+        $message->read = 1;
+        $message->save();
+
+        $entity = $this->newEntity()->newQuery()->find($message->message_content_id);
+
+
+        $files_arr = explode(',',$entity->files);
+
+        $files = [];
+        foreach ($files_arr as $f)
+            $files[] = '/admin/download-file?id='.$f;
+
+        $entity->files = $files;
+
+
+        return view('admin.message-content.info', ['entity' => $entity]);
+    }
 }

@@ -86,13 +86,41 @@
             </a>
 
             <div class="navbar-custom-menu">
+
                 <ul class="nav navbar-nav">
+                    <li class="dropdown messages-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-envelope-o"></i>
+                            {!! Auth::user()->unreadMessagesCount()>0?'<span class="label label-success">'.Auth::user()->unreadMessagesCount().'</span>':'' !!}
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <!-- inner menu: contains the actual data -->
+                                <ul class="menu">
+                                    @foreach(Auth::user()->unreadMessages() as $message)
+                                        <li><!-- start message -->
+                                            <a href="{{url('admin/message/receiveMessages')}}">
+                                                <h4>
+                                                    {{$message->content->title}}
+                                                    <small><i class="fa fa-clock-o"></i> 5 mins</small>
+                                                </h4>
+                                                <p>{{ strlen($message->content->content)>10?substr($message->content->content,0,10)."...":$message->content->content }}</p>
+                                            </a>
+                                        </li>
+                                    @endforeach
+
+                                </ul>
+                            </li>
+                            <li class="footer"><a href="{{url('admin/message/receiveMessages')}}">查看所有</a></li>
+                        </ul>
+                    </li>
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <img src="/assets/plugins/AdminLTE/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
                             <span class="hidden-xs">{{Auth::user()->name}}</span>
                         </a>
                         <ul class="dropdown-menu">
+
                             <!-- User image -->
                             <li class="user-header">
                                 <img src="/assets/plugins/AdminLTE/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">

@@ -103,4 +103,16 @@ class User extends Authenticatable
     public function sendMessages(){
         return $this->hasMany(Message::class,'from_id','id');
     }
+
+    public function receiveMessages(){
+        return $this->hasMany(Message::class,'to_id','id');
+    }
+
+    public function unreadMessages(){
+        return $this->receiveMessages->where('read',0);
+    }
+
+    public function unreadMessagesCount(){
+        return $this->receiveMessages()->where('read',0)->count();
+    }
 }
