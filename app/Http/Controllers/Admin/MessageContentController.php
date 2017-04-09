@@ -6,6 +6,7 @@ use App\Models\Busi\Department;
 use App\Models\Busi\Message;
 use App\Models\Busi\Resources;
 use App\Models\User;
+use App\Services\MessageService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
 use App\Models\Busi\MessageContent;
@@ -134,18 +135,21 @@ class MessageContentController extends AdminController
         $data = $request->all();
         if ($data['scope']==1){//所有人
             $users = User::all();
-            $this->sendMessage($users,$data['message_content_id']);
+
+            $users_ids = $users->pluck('id')->toArray();
+            $emp_ids = $users->where('reference_type','employee')->pluck('id')->toArray();
+
+            $this->sendMessage($users_ids,$data['message_content_id']);
+            $this->sendApp($emp_ids,$data['message_content_id']);
         }else{
             $users = [];
             if (!empty($data['fcust_ids'])){
                 $customers = User::query()->where('reference_type','customer')->whereIn('reference_id',$data['fcust_ids'])->pluck('id')->toArray();
                 $users = array_merge($users,$customers);
-                //$users->merge($customers);
             }
             if (!empty($data['fadmin_ids'])){
                 $admins = User::query()->whereIn('id',$data['fadmin_ids'])->pluck('id')->toArray();
                 $users = array_merge($users,$admins);
-//                $users = $users->merge($admins);
             }
             if (!empty($data['fdept_ids'])){
                 $departments = Department::query()->whereIn('id',$data['fdept_ids'])->get();
@@ -153,7 +157,8 @@ class MessageContentController extends AdminController
                     $emp_ids = $department->getAllEmployeeByDept()->pluck('id');
                     $employees = User::query()->where('reference_type','employee')->whereIn('reference_id',$emp_ids)->pluck('id')->toArray();
                     $users = array_merge($users,$employees);
-//                    $users = $users->merge($employees);
+
+                    $this->sendApp($emp_ids,$data['message_content_id']);
                 }
             }
             $users = array_unique($users);
@@ -166,6 +171,11 @@ class MessageContentController extends AdminController
             'code' => 200,
             'result' => '发送成功！'
         ]);
+    }
+
+    protected function sendApp($emp_ids,$content_id){
+        $appSend = new MessageService();
+        $appSend->sendMessage($emp_ids,$content_id);
     }
 
     protected function sendMessage($users,$content_id){
