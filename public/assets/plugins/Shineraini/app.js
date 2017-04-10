@@ -193,6 +193,41 @@ function ajaxForm(form_id, callback) {
 
 }
 
+function ajaxFormWithFile(form_id, callback) {
+    var fd = new FormData($(form_id)[0]);
+    var data = $(form_id).serializeArray();
+    $.each(data,function(key,input){
+        fd.append(input.name,input.value);
+    });
+
+    $.ajax({
+        type: 'POST',
+        data: fd,
+        //async: true,
+        cache: false,
+        url: $(form_id).attr('action'),
+        dataType: "json",
+        timeout: 10000,
+        processData: false,  // tell jQuery not to process the data
+        contentType: false,   // tell jQuery not to set contentType
+        success: function (res) {
+            layer.msg(res.result);
+            if (res.redirect_url) {
+                window.location.href = res.redirect_url;
+            }
+
+            if (callback !== undefined) {
+                callback();
+            }
+        },
+
+        error: function (jqXHR, textStatus, errorThrown) {
+            layer.msg(jqXHR.responseText);
+        },
+
+    });
+}
+
 /*
  *  ajaxGet
  */
@@ -437,6 +472,7 @@ $(".filter-condition").keydown(function(event) {
 })
 
 $(".filter-select").selectpicker();
+
 
 $('.filter-date').datepicker({
 language: 'zh-CN',

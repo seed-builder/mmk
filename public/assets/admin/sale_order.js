@@ -124,6 +124,8 @@ define(function (require, exports, module) {
                         return send_status(data);
                     }
                 },
+                {'data': 'fpresent_qty'},
+                {'data': 'fpresent_base_qty'},
 
             ],
             buttons: [

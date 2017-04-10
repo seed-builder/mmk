@@ -225,6 +225,24 @@ $user = Auth::user();
                     </span>
                     </a>
                     <ul class="treeview-menu">
+                        <li><a href="{{url('/admin/sys-crontab')}}"><i class="fa fa-cogs"></i>后台任务管理</a></li>
+                        <li class="treeview ">
+                            <a href="#">
+                                <i class="fa fa-comments"></i>
+                                <span>消息管理</span>
+                                <span class="pull-right-container">
+                              <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="{{url('/admin/message-content')}}"><i class="fa fa-comment"></i>消息内容管理</a></li>
+                                <li><a href="{{url('/admin/message-content/create')}}"><i class="fa fa-fw fa-comment-o"></i>消息内容新增</a></li>
+                                <li><a href="{{url('/admin/message')}}"><i class="fa fa-fw fa-commenting"></i>消息发送列表</a></li>
+                                <li><a href="{{url('/admin/message/receiveMessages')}}"><i class="fa fa-fw fa-comments-o"></i>个人消息列表</a></li>
+                            </ul>
+                        </li>
+
+
                         @if($user->can('sys-config_index'))
                             <li><a href="{{url('/admin/sys-config')}}"><i class="fa fa-cogs"></i>配置管理</a></li>
                         @endif
@@ -236,7 +254,7 @@ $user = Auth::user();
                             </li>
                         @endif
                         @if($user->can('message-template_index'))
-                            <li><a href="{{url('/admin/message-template')}}"><i class="fa fa-fw fa-paper-plane"></i>消息模板</a>
+                            <li><a href="{{url('/admin/message-template')}}"><i class="fa fa-fw fa-paper-plane"></i>系统信息模板</a>
                             </li>
                         @endif
 

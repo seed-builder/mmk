@@ -23,4 +23,13 @@ class WorkFlow extends Model
 	//
 	protected $table = 'work_flows';
 	protected $guarded = ['id'];
+
+	/**
+	 * 流程实例
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
+	public function instances(){
+		return $this->hasMany(WorkFlowInstance::class, 'work_flow_id');
+	}
+
 }

@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Models\Busi\Customer;
 use App\Models\Busi\Employee;
+use App\Models\Busi\Store;
+use App\Models\Busi\WfChangeList;
 use App\Repositories\ISysConfigRepo;
 use App\Repositories\SysConfigRepo;
 use App\Services\DataSync\DataSyncSvr;
@@ -31,6 +33,8 @@ class AppServiceProvider extends ServiceProvider
 	    Relation::morphMap([
 		    'employee' => Employee::class,
 		    'customer' => Customer::class,
+		    'wf_change_list' => WfChangeList::class,
+		    'store' => Store::class,
 	    ]);
     }
 

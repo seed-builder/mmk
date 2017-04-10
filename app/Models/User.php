@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Busi\Message;
 use App\Models\Busi\Position;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -85,4 +86,33 @@ class User extends Authenticatable
     	return $this->morphTo();
     }
 
+	/**
+	 * 获取上级
+	 */
+	public function getSeniors(){
+		if($this->reference_type == 'employee'){
+			$seniors = $this->reference->getAllSeniors();
+			$users = $seniors->map(function ($senior){
+				return $senior->user;
+			});
+			return $users;
+		}
+		return [];
+	}
+
+    public function sendMessages(){
+        return $this->hasMany(Message::class,'from_id','id');
+    }
+
+    public function receiveMessages(){
+        return $this->hasMany(Message::class,'to_id','id');
+    }
+
+    public function unreadMessages(){
+        return $this->receiveMessages->where('read',0);
+    }
+
+    public function unreadMessagesCount(){
+        return $this->receiveMessages()->where('read',0)->count();
+    }
 }

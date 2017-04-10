@@ -182,22 +182,28 @@ class StoreController extends BaseController
         unset($data['_token'], $data['storephoto']);
 		$data['fcust_id'] =  Auth::user()->reference->id;
         if ($action == 'create') {
+	        $data['fforbid_status'] = 'B';//未经审批，禁用
             $entity = $this->newEntity($data);
             //$entity = Entity::create($data);
             $re = $entity->save();
+			//创建变更单
+	        $entity->change_list()->create([
+		        'type' => 0,
+		        'data' => json_encode($entity)
+	        ]);
 
             //生成路线
-            VisitLineStore::create([
-                'fline_id' => $data['fline_id'],
-                'fstore_id' => $entity->id,
-                'femp_id' => $data['femp_id'],
-                'fweek_day' => VisitLine::find($data['fline_id'])->fnumber,
-            ]);
+//            VisitLineStore::create([
+//                'fline_id' => $data['fline_id'],
+//                'fstore_id' => $entity->id,
+//                'femp_id' => $data['femp_id'],
+//                'fweek_day' => VisitLine::find($data['fline_id'])->fnumber,
+//            ]);
 
             if ($re) {
                 return [
                     'code' => 200,
-                    'result' => '添加门店成功！'
+                    'result' => '门店添加变更单提交成功，请等待审批！'
                 ];
             } else {
                 return [
@@ -206,17 +212,29 @@ class StoreController extends BaseController
                 ];
             }
         } else {
-            $re = Store::query()->where('id', $data['id'])->update($data);
+	        $store = Store::find($data['id']);
+	        $store->fill($data);
+	        if(empty($store->change_list)){
+		        $re = $store->change_list()->create([
+			        'type' => 1,
+			        'data' => json_encode($store)
+		        ]);
+	        }else {
+		        $re = $store->change_list->update([
+			        'data' => json_encode($store)
+		        ]);
+	        }
+            //$re = Store::query()->where('id', $data['id'])->update($data);
 
-            VisitLineStore::query()->where('fstore_id',$data['id'])->where('femp_id',$data['femp_id'])->update([
-                'fline_id' => $data['fline_id'],
-                'fweek_day' => VisitLine::find($data['fline_id'])->fnumber,
-            ]);
+//            VisitLineStore::query()->where('fstore_id',$data['id'])->where('femp_id',$data['femp_id'])->update([
+//                'fline_id' => $data['fline_id'],
+//                'fweek_day' => VisitLine::find($data['fline_id'])->fnumber,
+//            ]);
 
             if ($re) {
                 return [
                     'code' => 200,
-                    'result' => '修改门店成功！'
+                    'result' => '门店修改变更提交成功，请等待审批！'
                 ];
             } else {
                 return [

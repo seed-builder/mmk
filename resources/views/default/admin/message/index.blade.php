@@ -23,7 +23,7 @@
             <div class="col-xs-12">
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">bd_messages列表</h3>
+                        <h3 class="box-title">消息发送列表</h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                             </button>
@@ -36,15 +36,12 @@
                         <table id="moduleTable" class="table table-bordered table-hover display nowrap" cellspacing="0" width="100%">
                             <thead>
                             <tr>
-                                <th>fcreate_date</th>
-                                <th>fmodify_date</th>
-                                <th>from_id</th>
-                                <th>from_type</th>
                                 <th>id</th>
-                                <th>message_content_id</th>
-                                <th>read</th>
-                                <th>to_id</th>
-                                <th>to_type</th>
+                                <th>发布用户</th>
+                                <th>接收用户</th>
+                                <th>标题</th>
+                                <th>状态</th>
+                                <th>发送时间</th>
                             </tr>
                             </thead>
                         </table>

@@ -191,10 +191,16 @@ class StoreController extends AdminController
         }
         unset($data['_token'], $data['storephoto']);
         if ($action == 'create') {
-
+	        $data['fforbid_status'] = 'B';//未经审批，禁用
             $entity = $this->newEntity($data);
             //$entity = Entity::create($data);
             $re = $entity->save();
+	        //创建变更单
+	        $entity->change_list()->create([
+		        'type' => 0,
+		        'data' => json_encode($entity)
+	        ]);
+
             if ($re) {
                 return [
                     'code' => 200,
@@ -209,13 +215,23 @@ class StoreController extends AdminController
         } else {
         	$store = Store::find($data['id']);
         	$store->fill($data);
-	        $re = $store->save();
+	        if(empty($store->change_list)){
+		        $re = $store->change_list()->create([
+			        'type' => 1,
+			        'data' => json_encode($store)
+		        ]);
+	        }else {
+		        $re = $store->change_list->update([
+			        'data' => json_encode($store)
+		        ]);
+	        }
+	        //$re = $store->save();
 //            $re = Store::query()->where('id', $data['id'])->update($data);
 
             if ($re) {
                 return [
                     'code' => 200,
-                    'result' => '修改门店成功！'
+                    'result' => '门店修改变更提交成功，请等待审批！'
                 ];
             } else {
                 return [

@@ -2,6 +2,7 @@
 
 namespace App\Models\Busi;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -29,5 +30,13 @@ class Message extends BaseModel
 
 	public function content(){
 		return $this->belongsTo(MessageContent::class, 'message_content_id');
+	}
+
+	public function from(){
+		return $this->belongsTo(User::class, 'from_id');
+	}
+
+	public function to(){
+		return $this->belongsTo(User::class, 'to_id');
 	}
 }

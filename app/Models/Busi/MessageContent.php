@@ -2,6 +2,7 @@
 
 namespace App\Models\Busi;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -26,4 +27,12 @@ class MessageContent extends BaseModel
 	//
 	protected $table = 'bd_message_contents';
 	protected $guarded = ['id'];
+
+	public function creator(){
+	    return $this->hasOne(User::class,'id','fcreator_id');
+    }
+    public function modifyer(){
+        return $this->hasOne(User::class,'id','fmodify_id');
+    }
+
 }
