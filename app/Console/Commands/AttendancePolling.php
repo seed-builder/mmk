@@ -28,11 +28,10 @@ class AttendancePolling extends Command
      */
     protected $description = '考勤日完成情况轮询通知';
 
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
+	/**
+	 * Create a new command instance.
+	 *
+	 */
     public function __construct()
     {
         parent::__construct();
