@@ -44,8 +44,8 @@ Artisan::command('test', function () {
 Artisan::command('test1', function () {
 	$this->comment('begin ...');
 	$db = new DbHelper();
-	$columns = $db->getColumns('work_flow_variables');
-	$builder = new CodeBuilder('WorkFlowVariable', 'work_flow_variables', $columns);
+	$columns = $db->getColumns('work_flow_node_forms');
+	$builder = new CodeBuilder('WorkFlowNodeForm', 'work_flow_node_forms', $columns);
 	$builder->createFiles( 'admin');
 	$this->comment('end ...');
 })->describe('philo blade test');
