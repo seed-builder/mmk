@@ -81,7 +81,7 @@ Route::group(['prefix' => '{{snake_case($model,'-')}}', 'middleware' => 'api.sig
     * @SWG\Api(
     *     path="/api/{{snake_case($model,'-')}}/{id}",
     *     @SWG\Operation(
-    *      method="PUT",
+    *      method="POST",
     *      nickname="{{snake_case($model,'-')}}-update",
     *      summary="更新",
     *      notes="更新",
@@ -99,7 +99,7 @@ Route::group(['prefix' => '{{snake_case($model,'-')}}', 'middleware' => 'api.sig
     *  )
     * )
     */
-    Route::put('/{id}', ['as' => '{{$model}}.update', 'uses' => '{{$model}}Controller@update']);
+    Route::post('/{id}', ['as' => '{{$model}}.update', 'uses' => '{{$model}}Controller@update']);
 
     /**
     * @SWG\Api(

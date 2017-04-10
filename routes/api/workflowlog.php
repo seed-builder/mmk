@@ -64,7 +64,7 @@ Route::group(['prefix' => 'work-flow-log', 'middleware' => 'api.sign'], function
 	 *  )
 	 * )
 	 */
-	Route::put('/{id}/agree', ['as' => 'WorkFlowLogController.agree', 'uses' => 'WorkFlowLogController@agree']);
+	Route::post('/{id}/agree', ['as' => 'WorkFlowLogController.agree', 'uses' => 'WorkFlowLogController@agree']);
 
 	/**
 	 * @SWG\Api(
@@ -83,7 +83,7 @@ Route::group(['prefix' => 'work-flow-log', 'middleware' => 'api.sign'], function
 	 *  )
 	 * )
 	 */
-	Route::put('/{id}/against', ['as' => 'WorkFlowLogController.against', 'uses' => 'WorkFlowLogController@against']);
+	Route::post('/{id}/against', ['as' => 'WorkFlowLogController.against', 'uses' => 'WorkFlowLogController@against']);
 
 
 });

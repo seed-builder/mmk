@@ -21,7 +21,7 @@ if(!function_exists('uuid')){
                 .substr($charid,20,12)
                 //.chr(125);// "}"
             ;
-            return $uuid;
+            return strtolower($uuid);
         }
     }
 }
