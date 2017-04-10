@@ -75,7 +75,7 @@ Route::group(['prefix' => 'wf-change-list', 'middleware' => 'api.sign'], functio
     * @SWG\Api(
     *     path="/api/wf-change-list/{id}",
     *     @SWG\Operation(
-    *      method="PUT",
+    *      method="POST",
     *      nickname="wf-change-list-update",
     *      summary="更新变更单",
     *      notes="更新变更单",
@@ -94,7 +94,7 @@ Route::group(['prefix' => 'wf-change-list', 'middleware' => 'api.sign'], functio
     *  )
     * )
     */
-    Route::put('/{id}', ['as' => 'WfChangeList.update', 'uses' => 'WfChangeListController@update']);
+    Route::post('/{id}', ['as' => 'WfChangeList.update', 'uses' => 'WfChangeListController@update']);
 
     /**
     * @SWG\Api(
