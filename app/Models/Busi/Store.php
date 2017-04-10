@@ -6,6 +6,7 @@ use App\Models\City;
 use App\Services\VisitCalendarService;
 use Illuminate\Database\Eloquent\Model;
 use App\Services\LogSvr;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 /**
  * 门店
@@ -243,10 +244,10 @@ class Store extends BaseModel
 
 	/**
 	 * 变更单
-	 * @return \Illuminate\Database\Eloquent\Relations\MorphOne
+	 * @return \Illuminate\Database\Eloquent\Relations\MorphMany
 	 */
-	public function change_list(){
-		return $this->morphOne(WfChangeList::class, 'data');
+	public function change_lists(){
+		return $this->morphMany(WfChangeList::class, 'data');
 	}
 
 }
