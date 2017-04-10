@@ -14,7 +14,7 @@ class SysCrontab extends Model
 	public static function exec($name, $remark = ''){
 		$crontab = static::where('name', $name)->first();
 		if(!empty($crontab)){
-			$crontab->updat([
+			$crontab->update([
 				'exec_time' => date('Y-m-d H:i:s'),
 				'exec_remark' => $remark
 			]);
