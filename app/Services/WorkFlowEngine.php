@@ -221,8 +221,8 @@ class WorkFlowEngine
 			foreach ($links as $link) {
 				if (!empty($link->condition)) {
 					$condition = strtolower($link->condition);
-					var_dump($condition);
-					var_dump($data);
+//					var_dump($condition);
+//					var_dump($data);
 					foreach ($data as $key => $val){
 						$condition = str_replace($key, '$data["'.$key.'"]', $condition);
 					}
