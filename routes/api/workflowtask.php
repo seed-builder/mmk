@@ -47,81 +47,43 @@ Route::group(['prefix' => 'work-flow-task', 'middleware' => 'api.sign'], functio
     */
     Route::get('/{id}', ['as' => 'WorkFlowTask.show', 'uses' => 'WorkFlowTaskController@show']);
 
-    /**
-    * @SWG\Api(
-    *     path="/api/work-flow-task",
-    *     @SWG\Operation(
-    *      method="POST",
-    *      nickname="work-flow-task-store",
-    *      summary="新增",
-    *      notes="新增",
-    *      type="",
-    *      @SWG\Parameters(
-    *          @SWG\Parameter(name="action", description="审批动作", required=true,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="approver_id", description="审批人id（user id）", required=true,type="integer", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="created_at", description="", required=true,type="string", paramType="form", defaultValue="" ),
-                    *          @SWG\Parameter(name="link_id", description="work flow link id", required=false,type="integer", paramType="form", defaultValue="0" ),
-            *          @SWG\Parameter(name="node_id", description="work flow node id", required=false,type="integer", paramType="form", defaultValue="0" ),
-            *          @SWG\Parameter(name="pre_log_id", description="pre log id", required=false,type="integer", paramType="form", defaultValue="0" ),
-            *          @SWG\Parameter(name="remark", description="备注", required=true,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="status", description="处理状态（0-未处理，1-已经处理， 2-挂起, 3-非正常结束）", required=false,type="integer", paramType="form", defaultValue="0" ),
-            *          @SWG\Parameter(name="uid", description="guid", required=false,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="updated_at", description="", required=true,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="work_flow_id", description="", required=false,type="integer", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="work_flow_instance_id", description="", required=false,type="integer", paramType="form", defaultValue="" ),
-        *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
-    *      )
-    *  )
-    * )
-    */
-    Route::post('/', ['as' => 'WorkFlowTask.store', 'uses' => 'WorkFlowTaskController@store']);
+	/**
+	 * @SWG\Api(
+	 *     path="/api/work-flow-task/{id}/agree",
+	 *     @SWG\Operation(
+	 *      method="POST",
+	 *      nickname="work-flow-task-agree",
+	 *      summary="同意，审批通过",
+	 *      notes="同意，审批通过",
+	 *      type="",
+	 *      @SWG\Parameters(
+	 *          @SWG\Parameter(name="remark", description="意见", required=false,type="string", paramType="form", defaultValue="" ),
+	 *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="" ),
+	 *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
+	 *      )
+	 *  )
+	 * )
+	 */
+	Route::post('/{id}/agree', ['as' => 'WorkFlowTask.agree', 'uses' => 'WorkFlowTaskController@agree']);
 
-    /**
-    * @SWG\Api(
-    *     path="/api/work-flow-task/{id}",
-    *     @SWG\Operation(
-    *      method="POST",
-    *      nickname="work-flow-task-update",
-    *      summary="更新",
-    *      notes="更新",
-    *      type="",
-    *      @SWG\Parameters(
-    *          @SWG\Parameter(name="action", description="审批动作", required=false,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="approver_id", description="审批人id（user id）", required=false,type="integer", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="created_at", description="", required=false,type="string", paramType="form", defaultValue="" ),
-                    *          @SWG\Parameter(name="link_id", description="work flow link id", required=false,type="integer", paramType="form", defaultValue="0" ),
-            *          @SWG\Parameter(name="node_id", description="work flow node id", required=false,type="integer", paramType="form", defaultValue="0" ),
-            *          @SWG\Parameter(name="pre_log_id", description="pre log id", required=false,type="integer", paramType="form", defaultValue="0" ),
-            *          @SWG\Parameter(name="remark", description="备注", required=false,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="status", description="处理状态（0-未处理，1-已经处理， 2-挂起, 3-非正常结束）", required=false,type="integer", paramType="form", defaultValue="0" ),
-            *          @SWG\Parameter(name="uid", description="guid", required=false,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="updated_at", description="", required=false,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="work_flow_id", description="", required=false,type="integer", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="work_flow_instance_id", description="", required=false,type="integer", paramType="form", defaultValue="" ),
-        *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="" ),
-    *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
-    *      )
-    *  )
-    * )
-    */
-    Route::post('/{id}', ['as' => 'WorkFlowTask.update', 'uses' => 'WorkFlowTaskController@update']);
+	/**
+	 * @SWG\Api(
+	 *     path="/api/work-flow-task/{id}/against",
+	 *     @SWG\Operation(
+	 *      method="POST",
+	 *      nickname="work-flow-task-against",
+	 *      summary="不同意，审批结束",
+	 *      notes="不同意，审批结束",
+	 *      type="",
+	 *      @SWG\Parameters(
+	 *          @SWG\Parameter(name="remark", description="意见", required=false,type="string", paramType="form", defaultValue="" ),
+	 *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="" ),
+	 *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
+	 *      )
+	 *  )
+	 * )
+	 */
+	Route::post('/{id}/against', ['as' => 'WorkFlowTask.against', 'uses' => 'WorkFlowTaskController@against']);
 
-    /**
-    * @SWG\Api(
-    *     path="/api/work-flow-task/{id}",
-    *     @SWG\Operation(
-    *      method="DELETE",
-    *      nickname="work-flow-task-delete",
-    *      summary="删除",
-    *      notes="删除",
-    *      type="",
-    *      @SWG\Parameters(
-    *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="1" ),
-    *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
-    *      )
-    *  )
-    * )
-    */
-    Route::delete('/{id}', ['as' => 'WorkFlowTask.delete', 'uses' => 'WorkFlowTaskController@destroy']);
 
 });

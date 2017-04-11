@@ -25,6 +25,12 @@ class WorkFlowInstanceVariable extends Model
 	//
 	protected $table = 'work_flow_instance_variables';
 	protected $guarded = ['id'];
+	protected $appends = ['obj'];
+	//protected $casts = ['value']
+
+	public function getObjAttribute(){
+		return unserialize($this->value);
+	}
 
 	protected static function boot()
 	{
