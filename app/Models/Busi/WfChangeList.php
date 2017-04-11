@@ -32,6 +32,10 @@ class WfChangeList extends BaseModel
 	protected $table = 'wf_change_lists';
 	protected $guarded = ['id'];
 
+	public function data(){
+		return $this->morphTo();
+	}
+
 	protected static function boot()
 	{
 		Engine::boot();
@@ -42,17 +46,28 @@ class WfChangeList extends BaseModel
 //				$engine = new WorkFlowEngine();
 //				$engine->createInstance($model->fcreator_id,'store-change', $model->id, 'wf_change_list');
 //				$engine->start();
+				$data = json_decode($model->data, true);
+				$sponsor = new Sponsor($model->fcreator_id);
 				$engine = new Engine();
-				$engine->startInstance('store-change', new Sponsor($model->fcreator_id), ['store_change_list' => $model]);
+				$engine->startInstance('store-change', $sponsor,
+					[
+						'store_change_list' => $model,
+						'creator' => $sponsor->nick_name,
+						'action' => $model->type == 0 ? '新增': $model->type == 1 ? '修改':'删除',
+						'store_name' => $data['ffullname'],
+						'store_address' => $data['faddress'],
+						'created' => $model->fcreate_date
+					]);
 			}
 		});
 
 		Instance::variablesSaved(function (Instance $instance){
-			if($instance->work_flow_instance->workflow->name == 'store-change'){
+			if($instance->workflow->name == 'store-change'){
 				if(array_key_exists('store_change_list', $instance->variables)){
 					$instance->variables['store_change_list']->save();
 				}
 			}
 		});
+
 	}
 }

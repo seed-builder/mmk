@@ -23,6 +23,7 @@ class Instance
 	public $variables;
 	public $work_flow_instance;
 	public $sponsor;
+	public $workflow;
 
 	public function __construct()
 	{
@@ -42,12 +43,13 @@ class Instance
 
 	protected function create(Sponsor $sponsor, WorkFlow $workflow){
 		$billNo = $this->genBillNo($workflow->id);
+		$title =  $this->parse($workflow->msg_template, $this->variables);
 		$this->work_flow_instance = WorkFlowInstance::create([
 			'work_flow_id' => $workflow->id,
 			'sponsor_id' => $sponsor->id,
 			'sponsor' => $sponsor->nick_name,
 			'bill_no' => $billNo,
-			'title' => $workflow->name,
+			'title' => $title
 		]);
 		$this->sponsor = $sponsor;
 	}
@@ -60,11 +62,12 @@ class Instance
 	 * @return bool
 	 */
 	public function start(WorkFlow $workflow, Sponsor $sponsor, $variables){
+		$this->variables = $variables;
+		$this->workflow = $workflow;
 		if ($this->fireEvent('starting', true) === false) {
 			return false;
 		}
 		$this->create($sponsor, $workflow);
-		$this->variables = $variables;
 		$this->saveVariables($variables);
 		$this->fireEvent('started');
 	}
@@ -202,4 +205,14 @@ class Instance
 	public static function variablesSaved($callback){
 		static::registerEvent('variables-saved', $callback);
 	}
+
+	public function parse($template, $variables){
+		$result = $template;
+		foreach ($variables as $key => $val){
+			$result = str_replace('{'.$key.'}', $val, $result);
+		}
+		//$result = eval('return '. $template . ';');
+		return $result;
+	}
+
 }
