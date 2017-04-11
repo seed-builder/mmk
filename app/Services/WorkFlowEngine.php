@@ -10,6 +10,7 @@ namespace App\Services;
 
 use App\Models\Busi\WorkFlow;
 use App\Models\Busi\WorkFlowInstance;
+use App\Models\Busi\WorkFlowInstanceVariable;
 use App\Models\Busi\WorkFlowLink;
 use App\Models\Busi\WorkFlowLog;
 use App\Models\Busi\WorkFlowNode;
@@ -48,8 +49,12 @@ class WorkFlowEngine
 				$this->data[$variable->name] = $variable->value;
 			}
 		}
-		if(!empty($this->instance->data)){
-			$arr = $this->instance->data->toArray();
+		if(!empty($this->instance->variables)){
+			$arr = [];
+			foreach ($this->instance->variables as $variable){
+				$arr[$variable->name] = unserialize($variable->value);
+			}
+			//$arr = $this->instance->data->toArray();
 			$this->data = array_merge($this->data, $arr);
 		}
 	}
@@ -58,13 +63,14 @@ class WorkFlowEngine
 	 * 创建工作流实例
 	 * @param $sponsorId
 	 * @param $wf_name
-	 * @param $dataId
-	 * @param $dataType
+	 * @param array $variables
 	 * @throws \Exception
+	 * @internal param $dataId
+	 * @internal param $dataType
 	 * @internal param $data
 	 * @internal param $name
 	 */
-	public function createInstance($sponsorId, $wf_name, $dataId, $dataType){
+	public function createInstance($sponsorId, $wf_name, $variables=[]){
 		$wf = WorkFlow::where('name', $wf_name)->first();
 		if(empty($wf)){
 			throw new \Exception('no work flow ' . $wf_name);
@@ -75,13 +81,12 @@ class WorkFlowEngine
 		$this->instance = WorkFlowInstance::create([
 			'work_flow_id' => $wf->id,
 			'sponsor_id' => $sponsorId,
-			'data_type' => $dataType,
-			'data_id' => $dataId,
 			'sponsor' => empty($user->reference) ? '': $user->reference->fname,
 			'bill_no' => $billNo,
 			'title' => $wf->name,
  			//'node_id' => $node->id
 		]);
+		$this->saveVariables($variables);
 		$this->initData();
 	}
 
@@ -124,9 +129,9 @@ class WorkFlowEngine
 	 * @internal param $instance
 	 * @return array
 	 */
-	public function agree($logId, $remark, $formData){
-		$this->saveData($formData);
-		$logs = $this->execApprove($logId, 'agree', $remark, $formData+['@@approved' => 1]);
+	public function agree($logId, $remark, $variables=[]){
+		$this->saveVariables($variables);
+		$logs = $this->execApprove($logId, 'agree', $remark, $variables+['@@approved' => 1]);
 		return $logs;
 	}
 
@@ -136,9 +141,9 @@ class WorkFlowEngine
 	 * @param $formData
 	 * @internal param $instance
 	 */
-	public function back($logId, $formData){
-		$this->saveData($formData);
-		$this->execApprove($logId, ['@@approved' => 0]);
+	public function back($logId, $remark, $variables=[]){
+		$this->saveVariables($variables);
+		//$this->execApprove($logId, ['@@approved' => 0]);
 	}
 
 	/**
@@ -149,9 +154,10 @@ class WorkFlowEngine
 	 * @internal param $formData
 	 * @internal param $instance
 	 */
-	public function against($logId, $remark){
+	public function against($logId, $remark, $variables=[]){
 		DB::beginTransaction();
 		try {
+			$this->saveVariables($variables);
 			$log = WorkFlowLog::find($logId);
 			$log->wf_instance->update(['status' => 3]);
 			//更新当前执行日志状态数据 为已经执行
@@ -361,4 +367,29 @@ class WorkFlowEngine
 			$entity->save();
 		}
 	}
+
+	/**
+	 * save instance $variables
+	 * @param array $variables
+	 */
+	protected function saveVariables($variables=[]){
+		if(!empty($variables)){
+			foreach ($variables as $name => $value){
+				$variable = $this->instance->variables()->where('name', $name)->first();
+				if(!empty($variable)){
+					$variable->update(['value' => serialize($value)]);
+				}else {
+					$variable = WorkFlowVariable::where('work_flow_id', $this->instance->work_flow_id)->where('name', $name)->first();
+					if (!empty($variable)) {
+						$this->instance->variables()->create([
+							'work_flow_variable_id' => $variable->id,
+							'name' => $name,
+							'value' => serialize($value),
+						]);
+					}
+				}
+			}
+		}
+	}
+
 }

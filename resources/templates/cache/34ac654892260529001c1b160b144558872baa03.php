@@ -82,7 +82,7 @@ Route::group(['prefix' => '<?php echo e(snake_case($model,'-')); ?>', 'middlewar
     * @SWG\Api(
     *     path="/api/<?php echo e(snake_case($model,'-')); ?>/{id}",
     *     @SWG\Operation(
-    *      method="PUT",
+    *      method="POST",
     *      nickname="<?php echo e(snake_case($model,'-')); ?>-update",
     *      summary="更新",
     *      notes="更新",
@@ -100,7 +100,7 @@ Route::group(['prefix' => '<?php echo e(snake_case($model,'-')); ?>', 'middlewar
     *  )
     * )
     */
-    Route::put('/{id}', ['as' => '<?php echo e($model); ?>.update', 'uses' => '<?php echo e($model); ?>Controller@update']);
+    Route::post('/{id}', ['as' => '<?php echo e($model); ?>.update', 'uses' => '<?php echo e($model); ?>Controller@update']);
 
     /**
     * @SWG\Api(
