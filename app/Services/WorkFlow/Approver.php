@@ -30,9 +30,9 @@ class Approver
 		$user = User::find($this->id);
 		if(!empty($user)){
 			$arr = $user->getSeniors();
-			$seniors = array_map(function($user){
+			$seniors = $arr->map(function($user){
 				return new Approver($user->id, $user->name);
-			}, $arr);
+			});
 		}
 		return $seniors;
 	}

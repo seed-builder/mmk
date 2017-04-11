@@ -45,7 +45,7 @@ class Instance
 		$this->work_flow_instance = WorkFlowInstance::create([
 			'work_flow_id' => $workflow->id,
 			'sponsor_id' => $sponsor->id,
-			'sponsor' => $sponsor->name,
+			'sponsor' => $sponsor->nick_name,
 			'bill_no' => $billNo,
 			'title' => $workflow->name,
 		]);

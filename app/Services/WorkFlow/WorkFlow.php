@@ -16,8 +16,6 @@ use App\Models\Busi\WorkFlow as DBWorkFlow;
  */
 class WorkFlow
 {
-	public $id;
-	public $name;
 	protected $workflow;
 
 	public function __construct()

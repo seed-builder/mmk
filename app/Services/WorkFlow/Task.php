@@ -11,6 +11,7 @@ namespace App\Services\WorkFlow;
 use App\Models\Busi\WorkFlowLink;
 use App\Models\Busi\WorkFlowNode;
 use App\Models\Busi\WorkFlowTask;
+use Illuminate\Support\Facades\DB;
 
 /**
  * 待办事项
@@ -138,7 +139,7 @@ class Task
 				break;
 			default:
 				//中间审批节点
-				$approvers = Approver::getApprovers($curNode->approver_type, new Approver($preTask->approver_id) );
+				$approvers = Approver::getApprovers($curNode, new Approver($preTask->approver_id) );
 				if (!empty($approvers)) {
 					foreach ($approvers as $approver) {
 						$tasks[] = $this->createTask([

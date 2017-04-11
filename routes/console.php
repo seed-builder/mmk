@@ -152,7 +152,9 @@ Artisan::command('cp-customer-to-user', function () {
 					$customer->user()->create([
 						'name' => $customer->ftel,
 						'password' => bcrypt('888888'),
-						'status' => 1
+						'status' => 1,
+						'nick_name' => $customer->fname,
+
 					]);
 					$this->comment('success copy customer:  ' . $customer->fname);
 				}
@@ -179,7 +181,8 @@ Artisan::command('cp-employee-to-user', function () {
 						'name' => $employee->fphone,
 						'password' => $employee->fpassword,
 						'login_time' => $employee->login_time,
-						'status' => 1
+						'status' => 1,
+						'nick_name' => $employee->fname,
 					]);
 					$this->comment('success copy employee:  ' . $employee->fname);
 				}
@@ -192,3 +195,27 @@ Artisan::command('cp-employee-to-user', function () {
 	}
 	$this->comment('end ...');
 })->describe('copy employees to sys_users tables');
+
+Artisan::command('fill-user-nickname', function () {
+	$this->comment('begin ...');
+	$users = User::whereNotNull('reference_type')->get();
+	$this->comment('ready to copy '.count($users).' users fill');
+	if(!empty($users)){
+		DB::beginTransaction();
+		try {
+			foreach ($users as $user) {
+				if (!empty($user->reference)) {
+					//$user->update(['nick_name' => $user->reference->fname]);
+					$user->nick_name = $user->reference->fname;
+					$user->save();
+					$this->comment('success fill user:  ' . $user->reference->fname);
+				}
+			}
+			DB::commit();
+		} catch (Exception $e) {
+			$this->comment(' fill user err:  ' . $e->getMessage());
+			DB::rollBack();
+		}
+	}
+	$this->comment('end ...');
+})->describe('fill users nick name');

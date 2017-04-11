@@ -12,6 +12,8 @@ use Illuminate\Contracts\Events\Dispatcher;
 
 trait HasEvents
 {
+	protected static $dispatcher;
+
 	/**
 	 * Get the observable event names.
 	 *
