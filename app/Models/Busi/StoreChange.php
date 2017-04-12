@@ -20,6 +20,7 @@ class StoreChange extends BaseModel
 	//
 	protected $table = 'st_store_changes';
 	protected $guarded = ['id'];
+	protected $with = ['customer'];
 
 	public function customer()
 	{
