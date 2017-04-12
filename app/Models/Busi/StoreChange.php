@@ -39,7 +39,8 @@ class StoreChange extends BaseModel
 		$props = $store;
 		$props['fstore_id'] = $store['id'];
 		$props['type'] = $type;
-		$props['remark'] = $remark;
+		if(!empty($remark))
+			$props['remark'] = $remark;
 		unset($props['id']);
 		unset($props['customer']);
 		return StoreChange::create($props);
