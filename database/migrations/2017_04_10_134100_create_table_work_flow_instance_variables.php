@@ -18,7 +18,7 @@ class CreateTableWorkFlowInstanceVariables extends Migration
 		    $table->increments('id');
 		    $table->integer('work_flow_instance_id');
 		    $table->integer('work_flow_variable_id');
-		    $table->string('name')->unique()->comment('变量名（英文）');
+		    $table->string('name')->comment('变量名（英文）');
 		    $table->text('value')->nullable()->comment('变量值');
 		    $table->uuid('uid')->default('')->comment('guid');
 		    $table->timestamps();

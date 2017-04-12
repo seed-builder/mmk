@@ -242,12 +242,5 @@ class Store extends BaseModel
 	    parent::boot();
     }
 
-	/**
-	 * 变更单
-	 * @return \Illuminate\Database\Eloquent\Relations\MorphMany
-	 */
-	public function change_lists(){
-		return $this->morphMany(WfChangeList::class, 'data');
-	}
 
 }

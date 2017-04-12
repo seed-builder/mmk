@@ -36,7 +36,7 @@ class Instance
 		$this->variables = [];
 		if(!empty($this->work_flow_instance->variables)){
 			foreach ($this->work_flow_instance->variables as $variable){
-				$this->variables[$variable->name] = unserialize($variable->value);
+				$this->variables[$variable->name] = json_decode($variable->value, true);
 			}
 		}
 	}
@@ -127,8 +127,8 @@ class Instance
 			foreach ($variables as $name => $value){
 				$variable = $this->work_flow_instance->variables()->where('name', $name)->first();
 				if(!empty($variable)){
-					$variable->update(['value' => serialize($value)]);
-				}else {
+					$variable->update(['value' => json_encode($value)]);
+				} else {
 					$variable = WorkFlowVariable::where('work_flow_id', $this->work_flow_instance->work_flow_id)
 						->where('name', $name)
 						->first();
@@ -136,13 +136,12 @@ class Instance
 						$this->work_flow_instance->variables()->create([
 							'work_flow_variable_id' => $variable->id,
 							'name' => $name,
-							'value' => serialize($value),
+							'value' => json_encode($value),
 						]);
 					}
 				}
 			}
 			$this->fireEvent('variables-saved', false);
-
 		}
 	}
 
