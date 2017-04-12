@@ -94,8 +94,9 @@ class Engine
 				//正常审批结束
 				$store_change_list = $wfInstance->variables()->where('name', 'store_change_list')->first();
 				if (!empty($store_change_list)) {
-					LogSvr::engine()->info('variables-saved, value: ' . $store_change_list->value);
+					//LogSvr::engine()->info('variables-saved, value: ' . $store_change_list->value);
 					$data = json_decode($store_change_list->value, true);
+					unset($data['customer']);
 					$storeChange = StoreChange::find($data['id']);
 					$storeChange->fill($data);
 					$storeChange->save();
@@ -146,7 +147,7 @@ class Engine
 		$workflow = new WorkFlow();
 		$workflow->init($name);
 		$this->instance->start($workflow, $sponsor, $variables);
-		$this->task->start($this->instance, $variables);
+		$this->task->start($this->instance, []);
 	}
 
 	/**
