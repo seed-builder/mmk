@@ -2,7 +2,7 @@
 /**
 * @SWG\Resource(
 *  resourcePath="/work-flow-task",
-*  description="WorkFlowTask"
+*  description="工作流审批任务"
 * )
 */
 Route::group(['prefix' => 'work-flow-task', 'middleware' => 'api.sign'], function () {
@@ -13,8 +13,8 @@ Route::group(['prefix' => 'work-flow-task', 'middleware' => 'api.sign'], functio
     *     @SWG\Operation(
     *      method="GET",
     *      nickname="work-flow-task-list",
-    *      summary="page list",
-    *      notes="page list",
+    *      summary="工作流审批任务列表",
+    *      notes="工作流审批任务列表",
     *      type="array",
     *     items="$ref:WorkFlowTask",
     *      @SWG\Parameters(
