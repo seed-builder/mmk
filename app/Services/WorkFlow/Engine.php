@@ -91,7 +91,7 @@ class Engine
 			LogSvr::engine()->info('variables-saved');
 			$wfInstance = $instance->getWorkFlowInstance();
 			if($wfInstance->workflow->name == 'store-change') {
-				//正常审批结束
+				//保存变量
 				$store_change_list = $wfInstance->variables()->where('name', 'store_change_list')->first();
 				if (!empty($store_change_list)) {
 					//LogSvr::engine()->info('variables-saved, value: ' . $store_change_list->value);

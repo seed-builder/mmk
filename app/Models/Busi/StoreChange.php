@@ -31,12 +31,15 @@ class StoreChange extends BaseModel
 	 * 从门店数据新增变更数据
 	 * @param array $store
 	 * @param int $type | 0-新增，1-修改，2-删除
+	 * @param string $remark
+	 * @return
 	 */
-	public static function addFromStore(array $store, $type = 0)
+	public static function addFromStore(array $store, $type = 0, $remark='')
 	{
 		$props = $store;
 		$props['fstore_id'] = $store['id'];
 		$props['type'] = $type;
+		$props['remark'] = $remark;
 		unset($props['id']);
 		unset($props['customer']);
 		return StoreChange::create($props);

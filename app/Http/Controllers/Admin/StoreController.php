@@ -6,6 +6,7 @@ use App\Models\Busi\Channel;
 use App\Models\Busi\Customer;
 use App\Models\Busi\Department;
 use App\Models\Busi\Employee;
+use App\Models\Busi\StoreChange;
 use App\Models\Busi\VisitLineCalendar;
 use App\Models\Busi\VisitLineStore;
 use Illuminate\Http\Request;
@@ -191,15 +192,13 @@ class StoreController extends AdminController
         }
         unset($data['_token'], $data['storephoto']);
         if ($action == 'create') {
+	        $data['fdocument_status'] = 'A';//未经审批，禁用
 	        $data['fforbid_status'] = 'B';//未经审批，禁用
             $entity = $this->newEntity($data);
             //$entity = Entity::create($data);
             $re = $entity->save();
 	        //创建变更单
-	        $entity->change_list()->create([
-		        'type' => 0,
-		        'data' => json_encode($entity)
-	        ]);
+	        StoreChange::addFromStore($entity->toArray(), 0, '新增门店');
 
             if ($re) {
                 return [
@@ -215,16 +214,7 @@ class StoreController extends AdminController
         } else {
         	$store = Store::find($data['id']);
         	$store->fill($data);
-	        if(empty($store->change_list)){
-		        $re = $store->change_list()->create([
-			        'type' => 1,
-			        'data' => json_encode($store)
-		        ]);
-	        }else {
-		        $re = $store->change_list->update([
-			        'data' => json_encode($store)
-		        ]);
-	        }
+	        $re = StoreChange::addFromStore($store->toArray(), 1, '修改门店');
 	        //$re = $store->save();
 //            $re = Store::query()->where('id', $data['id'])->update($data);
 
