@@ -56,15 +56,19 @@ class Engine
 		 * 流程正常流转
 		 */
 		Task::processed(function (Task $task){
-			$tasks = WorkFlowTask::where('work_flow_instance_id', $task->work_flow_instance_id)
-				->where('status', 0)
-				->get();
-			if(count($tasks) == 1 && $tasks[0]->node->type == 'L'){
+			$nextTasks = $task->getNextTasks();
+			if(count($nextTasks) == 1 && $nextTasks[0]->node->type == 'L'){
 				$instance = new Instance();
 				$instance->init($task->work_flow_instance_id);
 				$instance->terminate(1);
-				$lastTask = $tasks[0];
+				$lastTask = $nextTasks[0];
 				$lastTask->update(['status' => 1]);
+			}
+			//如果当前节点不是会签节点， 其他任务自动完成审核
+			if($task->node->type == 'C'){
+				WorkFlowTask::where('work_flow_instance_id', $task->work_flow_instance_id)
+					->where('node_id', $task->node_id)
+					->update(['status' => $task->status]);
 			}
 		});
 

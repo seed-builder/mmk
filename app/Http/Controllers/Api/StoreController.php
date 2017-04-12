@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Busi\Employee;
+use App\Models\Busi\StoreChange;
 use App\Models\City;
 use App\Repositories\ISysConfigRepo;
 use Illuminate\Http\Request;
@@ -41,6 +42,8 @@ class StoreController extends ApiController
         //
         $data = $request->all();
 	    unset($data['_sign']);
+	    $data['fdocument_status'] = 'A';//未经审批，禁用
+	    $data['fforbid_status'] = 'B';//未经审批，禁用
 	    $entity = $this->newEntity($data);
 	    $fieldErrors = $this->validateFields($data);
 	    if (!empty($fieldErrors)) {
@@ -48,14 +51,8 @@ class StoreController extends ApiController
 		    return response($msg, 404);
 	    }
         //$entity = Entity::create($data);
-	    $data['fforbid_status'] = 'B';//未经审批，禁用
         $re = $entity->save();
-        //创建变更单
-        $entity->change_lists()->create([
-        	'type' => 0,
-	        'data' => json_encode($entity),
-	        'fcreator_id' => $entity->fcreator_id
-        ]);
+	    StoreChange::addFromStore($entity->toArray(), 0);
         $status = $re ? 200 : 400;
         return response($entity, $status);
     }
@@ -68,16 +65,10 @@ class StoreController extends ApiController
 	    //var_dump($data);
 	    unset($data['_sign']);
 	    $entity->fill($data);
-	    //if(empty($entity->change_list)){
-	    $re = $entity->change_lists()->create([
-		    'type' => 1,
-		    'data' => json_encode($entity),
-		    'fcreator_id' => $data['fmodify_id'],
-	    ]);
-	    //}
+	    StoreChange::addFromStore($entity->toArray(), 1);
 	    //$re = $entity->save();
 	    //LogSvr::update()->info(json_encode($re));
-	    $status = $re ? 200 : 401;
+	    $status = 200;//$re ? 200 : 401;
 	    return response(['success' => $entity], $status);
     }
 

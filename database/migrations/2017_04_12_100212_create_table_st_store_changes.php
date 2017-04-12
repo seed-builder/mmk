@@ -15,6 +15,8 @@ class CreateTableStStoreChanges extends Migration
     {
         Schema::create('st_store_changes', function (Blueprint $table) {
             $table->increments('id');
+	        $table->string('remark')->default('')->comment('变更备注');
+	        $table->integer('type')->default(0)->comment('变更类型（0-新增,1-修改，2-删除）');
 	        $table->integer('fstore_id');
 	        $table->integer('forg_id')->default(0)->comment('组织id');
 	        $table->integer('fcust_id')->default(0)->comment('客户id');;
@@ -60,7 +62,7 @@ class CreateTableStStoreChanges extends Migration
 	        $table->string('fforbid_status')->default('A')->comment('禁用状态');
 	        $table->integer('fline_id')->default(0)->comment('line id');
 	        $table->integer('fis_signed')->default(0)->comment('是否签约');
-	        $table->string('remark')->default(0)->comment('审批备注');
+
         });
     }
 

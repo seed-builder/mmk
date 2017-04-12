@@ -24,6 +24,7 @@ class Task
 
 	protected $task;
 	protected $variables;
+	protected $nextTasks;
 
 	/**
 	 * Get the observable event names.
@@ -80,20 +81,20 @@ class Task
 	 * @return array
 	 */
 	public function process($variables){
-		$nextTasks = [];
+		//$nextTasks = [];
 		DB::beginTransaction();
 		try {
 			$this->receive($variables);
 			//更新当前执行日志状态数据 为已经执行
 			$this->task->update(['status' => 1]);
-			$nextLinks = $this->findNextLinks($this->task->node_id);
-			$nextTasks = $this->createNextTasks($this->task, $nextLinks);
+			$nextLinks = $this->findNextLinks($this->task->node);
+			$this->nextTasks = $this->createNextTasks($this->task, $nextLinks);
 			DB::commit();
 			$this->fireEvent('task_processed', false);
 		} catch (Exception $e) {
 			DB::rollback();
 		}
-		return $nextTasks;
+		//return $nextTasks;
 	}
 
 	/**
@@ -134,7 +135,7 @@ class Task
 					'remark' => 'end',
 					'link_id' => $link->id,
 					'pre_task_id' => $preTask->id,
-					'node_id' => $preTask->node_id,
+					'node_id' => $curNode->id,
 				]);
 				break;
 			default:
@@ -147,7 +148,7 @@ class Task
 							'work_flow_instance_id' => $preTask->work_flow_instance_id,
 							'link_id' => $link->id,
 							'pre_task_id' => $preTask->id,
-							'node_id' => $preTask->node_id,
+							'node_id' => $curNode->id,
 							'approver_id' => $approver->id,
 						]);
 					}
@@ -165,6 +166,8 @@ class Task
 	protected function createTask($props){
 		$query = WorkFlowTask::query();
 		foreach ($props as $k => $v){
+			if($k == 'pre_task_id')
+				continue;
 			$query->where($k, $v);
 		}
 		$task = $query->first();
@@ -205,11 +208,22 @@ class Task
 
 	/**
 	 * 查找下一步符合条件的所有走向
-	 * @param $curNodeId
+	 * @param $curNode
 	 * @return array
 	 */
-	protected function findNextLinks($curNodeId){
-		$links = WorkFlowLink::where('source_node_id', $curNodeId)->get();
+	protected function findNextLinks($curNode){
+		$invalid = false;
+		$links=[];
+		if($curNode->type == 'D'){
+			//汇签节点，则需要所有任务都完成再往下走
+			$invalid = WorkFlowTask::where('node_id', $curNode->id)
+				->where('work_flow_instance_id', $this->task->work_flow_instance_id)
+				->where('status', '<>', 1)
+				->count();
+		}
+		if(!$invalid) {
+			$links = WorkFlowLink::where('source_node_id', $curNode->id)->get();
+		}
 		return $this->chooseLinks($links, $this->variables);
 	}
 
@@ -262,6 +276,14 @@ class Task
 
 	public function getVariables(){
 		return $this->variables;
+	}
+
+	public function getCurrentTask(){
+		return $this->task;
+	}
+
+	public function getNextTasks(){
+		return $this->nextTasks;
 	}
 
 	public function __get($name)
