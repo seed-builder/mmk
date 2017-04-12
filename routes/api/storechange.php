@@ -2,7 +2,7 @@
 /**
 * @SWG\Resource(
 *  resourcePath="/store-change",
-*  description="StoreChange"
+*  description="门店变更记录"
 * )
 */
 Route::group(['prefix' => 'store-change', 'middleware' => 'api.sign'], function () {
@@ -13,8 +13,8 @@ Route::group(['prefix' => 'store-change', 'middleware' => 'api.sign'], function 
     *     @SWG\Operation(
     *      method="GET",
     *      nickname="store-change-list",
-    *      summary="page list",
-    *      notes="page list",
+    *      summary="门店变更记录列表",
+    *      notes="门店变更记录列表",
     *      type="array",
     *     items="$ref:StoreChange",
     *      @SWG\Parameters(
@@ -35,8 +35,8 @@ Route::group(['prefix' => 'store-change', 'middleware' => 'api.sign'], function 
     *     @SWG\Operation(
     *      method="GET",
     *      nickname="store-change-show",
-    *      summary="信息详情",
-    *      notes="信息详情",
+    *      summary="门店变更记录信息详情",
+    *      notes="门店变更记录信息详情",
     *      type="Attendance",
     *      @SWG\Parameters(
     *          @SWG\Parameter(name="id", description="id", required=true, type="integer", paramType="path", defaultValue="1"),
@@ -53,8 +53,8 @@ Route::group(['prefix' => 'store-change', 'middleware' => 'api.sign'], function 
     *     @SWG\Operation(
     *      method="POST",
     *      nickname="store-change-store",
-    *      summary="新增",
-    *      notes="新增",
+    *      summary="新增门店变更记录",
+    *      notes="新增门店变更记录",
     *      type="",
     *      @SWG\Parameters(
 *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
@@ -70,8 +70,8 @@ Route::group(['prefix' => 'store-change', 'middleware' => 'api.sign'], function 
     *     @SWG\Operation(
     *      method="POST",
     *      nickname="store-change-update",
-    *      summary="更新",
-    *      notes="更新",
+    *      summary="更新门店变更记录",
+    *      notes="更新门店变更记录",
     *      type="",
     *      @SWG\Parameters(
 *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="" ),
@@ -88,8 +88,8 @@ Route::group(['prefix' => 'store-change', 'middleware' => 'api.sign'], function 
     *     @SWG\Operation(
     *      method="DELETE",
     *      nickname="store-change-delete",
-    *      summary="删除",
-    *      notes="删除",
+    *      summary="删除门店变更记录",
+    *      notes="删除门店变更记录",
     *      type="",
     *      @SWG\Parameters(
     *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="1" ),
