@@ -59,7 +59,8 @@ class AttStatisticGen extends Command
 
 	    $this->log('AttStatisticGen begin');
 	    //$workdays = DB::select("select fday from  eng_work_calendar_data where fday >='$begin' and fday <= '$end'and fis_work_time=1");
-	    $workdays = WorkCalendarData::where('fday', '>=', $begin)->where('fday', '<=', $end)->where('fis_work_time', 1)->get();
+	    //$workdays = WorkCalendarData::where('fday', '>=', $begin)->where('fday', '<=', $end)->where('fis_work_time', 1)->get();
+	    $workdays = WorkCalendarData::where('fday', '>=', $begin)->where('fday', '<=', $end)->get();
 	    if(count($workdays) > 0) {
 	    	if(is_null($empId)) {
 			    $employees = Employee::all();
