@@ -498,3 +498,39 @@ function addOptions(select, options) {
 layui.use(['form', 'layedit', 'laydate'], function(){
 
 });
+
+$(document).ready(function () {
+    setInterval("message()",5000);
+});
+
+function message() {
+    toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": false,
+        "positionClass": "toast-bottom-center",
+        "preventDuplicates": false,
+        "onclick": function () {
+            // window.location.href=$("#notifications-url").val()
+            $("#message_content").attr("href","/admin/message-content/info/"+$("#last_unread_id").val())
+            $("#message_content").trigger('click')
+        },
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }
+
+    $.get('/admin/message/unread',{},function(data,status,xhr){
+        var last_unread_id = $("#last_unread_id").val();
+        if (data.last_id>last_unread_id){
+            $("#last_unread_id").val(data.last_id);
+            toastr.info('您收到一条新消息！')
+        }
+    },'json')
+}

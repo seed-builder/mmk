@@ -93,16 +93,19 @@
                             <i class="fa fa-envelope-o"></i>
                             {!! Auth::user()->unreadMessagesCount()>0?'<span class="label label-success">'.Auth::user()->unreadMessagesCount().'</span>':'' !!}
                         </a>
+                        <input type="hidden" id="last_unread_id" value="{{Auth::user()->lastUnreadMessage()->id}}">
+                        <a href="" id="message_content" data-target="#contentInfo" data-toggle="modal" style="display: none"></a>
+
                         <ul class="dropdown-menu">
                             <li>
                                 <!-- inner menu: contains the actual data -->
-                                <ul class="menu">
+                                <ul class="menu" id="message_list">
                                     @foreach(Auth::user()->unreadMessages() as $message)
                                         <li><!-- start message -->
                                             <a href="{{url('admin/message/receiveMessages')}}">
                                                 <h4>
                                                     {{$message->content->title}}
-                                                    <small><i class="fa fa-clock-o"></i> 5 mins</small>
+                                                    <small><i class="fa fa-clock-o"></i> {{$message->fcreate_date}}</small>
                                                 </h4>
                                                 <p>{{ strlen($message->content->content)>10?substr($message->content->content,0,10)."...":$message->content->content }}</p>
                                             </a>
@@ -174,6 +177,12 @@
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         @yield('content')
+        <div id="contentInfo" class="modal fade modal-scroll" role="dialog" tabindex="-1" data-replace="true">
+            <div class="modal-dialog" style="width: 50%">
+                <div class="modal-content">
+                </div>
+            </div>
+        </div>
     </div>
     <!-- /.content-wrapper -->
 

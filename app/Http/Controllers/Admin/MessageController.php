@@ -90,5 +90,15 @@ class MessageController extends AdminController
         });
     }
 
+    public function unreadMessagesData(){
+        $user = Auth::user();
+
+        return response()->json([
+            'count' => $user->unreadMessagesCount(),
+            'last_id' => $user->lastUnreadMessage()->id,
+            'unread_list' => $user->unreadMessages(),
+        ]);
+    }
+
 
 }
