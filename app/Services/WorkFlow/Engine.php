@@ -7,7 +7,11 @@
  */
 
 namespace App\Services\WorkFlow;
+use App\Models\Busi\Store;
+use App\Models\Busi\StoreChange;
 use App\Models\Busi\WorkFlowTask;
+use App\Services\LogSvr;
+use App\Services\VisitCalendarService;
 
 /**
  * 工作流引擎
@@ -47,9 +51,11 @@ class Engine
 		Task::setEventDispatcher($dispatcher);
 
 		Task::dataReceived(function (Task $task){
+			$variables = $task->getVariables();
+			//LogSvr::task()->info(json_encode($variables));
 			$instance = new Instance();
 			$instance->init($task->work_flow_instance_id);
-			$instance->saveVariables($task->variables);
+			$instance->saveVariables($variables);
 		});
 
 		/**
@@ -81,6 +87,53 @@ class Engine
 			$instance->terminate(3);
 		});
 
+		Instance::variablesSaved(function (Instance $instance){
+			LogSvr::engine()->info('variables-saved');
+			$wfInstance = $instance->getWorkFlowInstance();
+			if($wfInstance->workflow->name == 'store-change') {
+				//正常审批结束
+				$store_change_list = $wfInstance->variables()->where('name', 'store_change_list')->first();
+				if (!empty($store_change_list)) {
+					LogSvr::engine()->info('variables-saved, value: ' . $store_change_list->value);
+					$data = json_decode($store_change_list->value, true);
+					$storeChange = StoreChange::find($data['id']);
+					$storeChange->fill($data);
+					$storeChange->save();
+				}
+			}
+		});
+
+		/**
+		 * 实例结束
+		 */
+		Instance::terminated(function ($instance){
+			//LogSvr::engine()->info('Instance terminated');
+			$wfInstance = $instance->getWorkFlowInstance();
+			if($wfInstance->workflow->name == 'store-change') {
+				if ($wfInstance->status == 1) {
+					//正常审批结束
+					$store_change_list = $wfInstance->variables()->where('name', 'store_change_list')->first();
+					if (!empty($store_change_list)) {
+						$data = json_decode($store_change_list->value, true);
+						$store = Store::find($data['fstore_id']);
+						unset($data['fstore_id']);
+						unset($data['id']);
+						unset($data['remark']);
+						unset($data['type']);
+						unset($data['customer']);
+						$data['fdocument_status'] = 'C';
+						$data['fforbid_status'] = 'A';
+						$store->fill($data);
+						$store->save();
+						//审批通过，则生成拜访日志
+						$calendar = new VisitCalendarService();
+						$calendar->byStore($store);
+						//LogSvr::engine()->info('save store');
+					}
+				}
+			}
+		});
+
 	}
 
 	/**
@@ -99,13 +152,12 @@ class Engine
 	/**
 	 * 同意
 	 * @param $taskId
-	 * @param $remark
 	 * @param array $variables
 	 * @return array
 	 */
-	public function agree($taskId, $remark, $variables=[]){
+	public function agree($taskId, $variables=[]){
 		$this->task->init($taskId);
-		$this->task->forward($variables + ['remark' => $remark]);
+		$this->task->forward($variables);
 		return true;
 	}
 
@@ -113,12 +165,12 @@ class Engine
 	 * 不同意
 	 * 非正常结束
 	 * @param $taskId
-	 * @param $remark
+	 * @param $variables
 	 * @return bool
 	 */
-	public function against($taskId, $remark){
+	public function against($taskId, $variables){
 		$this->task->init($taskId);
-		$this->task->terminate(['remark' => $remark]);
+		$this->task->terminate($variables);
 		return true;
 	}
 

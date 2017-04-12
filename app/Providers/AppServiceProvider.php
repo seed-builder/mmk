@@ -14,6 +14,7 @@ use App\Services\DataSync\DisplayPolicyStoreFilter;
 use App\Services\DataSync\KingdeeWorker;
 use App\Services\Sms\AliDaYuSms;
 use App\Services\Sms\ISmsSvr;
+use App\Services\WorkFlow\Engine;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -36,6 +37,7 @@ class AppServiceProvider extends ServiceProvider
 		    'wf_change_list' => WfChangeList::class,
 		    'store' => Store::class,
 	    ]);
+	    //Engine::boot();
     }
 
     protected function loadConfig(){

@@ -58,7 +58,7 @@ class Task
 			'work_flow_id' => $workflowId,
 			'work_flow_instance_id' => $instance->getId(),
 			'node_id' => $node->id,
-			'approver_id' => $instance->sponsor->id,
+			'approver_id' => $instance->getSponsor()->id,
 			'action' => 'start',
 			'remark' => 'start',
 			//'status' => 1,

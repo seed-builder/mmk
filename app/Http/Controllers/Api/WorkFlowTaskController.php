@@ -31,9 +31,10 @@ class WorkFlowTaskController extends ApiController
 	 */
 	public function agree(Request $request, $id){
 		$engine = new Engine();
-		$remark = $request->input('remark','同意，审批通过');
-		$formData = $request->except(['remark', '_sign']);
-		$engine->agree($id, $remark, $formData);
+//		$remark = $request->input('remark','同意，审批通过');
+		$variablesStr = $request->input('variables', '{}');
+		$variables = json_decode($variablesStr, true);
+		$engine->agree($id, $variables);
 		return response(['success' => 1], 200);
 	}
 
@@ -45,8 +46,10 @@ class WorkFlowTaskController extends ApiController
 	 */
 	public function against(Request $request, $id){
 		$engine = new Engine();
-		$remark = $request->input('remark','不同意，审批结束');
-		$engine->against($id, $remark);
+//		$remark = $request->input('remark','不同意，审批结束');
+		$variablesStr = $request->input('variables', '{}');
+		$variables = json_decode($variablesStr, true);
+		$engine->against($id, $variables);
 		return response(['success' => 1], 200);
 	}
 

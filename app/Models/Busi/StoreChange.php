@@ -41,7 +41,6 @@ class StoreChange extends BaseModel
 		return StoreChange::create($props);
 	}
 
-
 	protected static function boot()
 	{
 		Engine::boot();
@@ -59,15 +58,6 @@ class StoreChange extends BaseModel
 					'created' => $model->fcreate_date
 				]);
 		});
-
-		Instance::variablesSaved(function (Instance $instance) {
-			if ($instance->workflow->name == 'store_change') {
-				if (array_key_exists('store_change_list', $instance->variables)) {
-					//$instance->variables['store_change_list']->save();
-				}
-			}
-		});
-
 
 	}
 }

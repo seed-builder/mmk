@@ -57,7 +57,7 @@ Route::group(['prefix' => 'work-flow-task', 'middleware' => 'api.sign'], functio
 	 *      notes="同意，审批通过",
 	 *      type="",
 	 *      @SWG\Parameters(
-	 *          @SWG\Parameter(name="remark", description="意见", required=false,type="string", paramType="form", defaultValue="" ),
+	 *          @SWG\Parameter(name="variables", description="变量（数组的json格式）", required=false,type="string", paramType="form", defaultValue="{&quot;store_change_list&quot;:{&quot;remark&quot;:&quot;同意，审批通过&quot;}}" ),
 	 *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="" ),
 	 *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
 	 *      )
@@ -76,7 +76,7 @@ Route::group(['prefix' => 'work-flow-task', 'middleware' => 'api.sign'], functio
 	 *      notes="不同意，审批结束",
 	 *      type="",
 	 *      @SWG\Parameters(
-	 *          @SWG\Parameter(name="remark", description="意见", required=false,type="string", paramType="form", defaultValue="" ),
+	 *          @SWG\Parameter(name="variables", description="变量（数组的json格式）", required=false,type="string", paramType="form", defaultValue="{&quot;store_change_list&quot;:{&quot;remark&quot;:&quot;同意，审批通过&quot;}}" ),
 	 *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="" ),
 	 *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
 	 *      )

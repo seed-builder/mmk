@@ -20,10 +20,10 @@ class Instance
 {
 	use HasEvents;
 
-	public $variables;
-	public $work_flow_instance;
-	public $sponsor;
-	public $workflow;
+	protected $variables;
+	protected $work_flow_instance;
+	protected $sponsor;
+	protected $workflow;
 
 	public function __construct()
 	{
@@ -153,6 +153,14 @@ class Instance
 		return $this->work_flow_instance->work_flow_id;
 	}
 
+	public function getSponsor(){
+		return $this->sponsor;
+	}
+
+	public function getWorkFlowInstance(){
+		return $this->work_flow_instance;
+	}
+
 	/**
 	 * Get the observable event names.
 	 *
@@ -178,11 +186,11 @@ class Instance
 	}
 
 	public static function terminating($callback){
-		static::registerEvent('ending', $callback);
+		static::registerEvent('terminating', $callback);
 	}
 
 	public static function terminated($callback){
-		static::registerEvent('ended', $callback);
+		static::registerEvent('terminated', $callback);
 	}
 
 	public static function suspending($callback){
@@ -205,7 +213,7 @@ class Instance
 		static::registerEvent('variables-saved', $callback);
 	}
 
-	public function parse($template, $variables){
+	protected function parse($template, $variables){
 		$result = $template;
 		foreach ($variables as $key => $val){
 			$result = str_replace('{'.$key.'}', $val, $result);
@@ -213,5 +221,12 @@ class Instance
 		//$result = eval('return '. $template . ';');
 		return $result;
 	}
+
+	public function __get($name)
+	{
+		// TODO: Implement __get() method.
+		return $this->work_flow_instance->{$name} ?: null;
+	}
+
 
 }
