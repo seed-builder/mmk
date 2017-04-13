@@ -2,7 +2,7 @@
 /**
 * @SWG\Resource(
 *  resourcePath="/message",
-*  description="Message"
+*  description="消息"
 * )
 */
 Route::group(['prefix' => 'message', 'middleware' => 'api.sign'], function () {
@@ -13,8 +13,8 @@ Route::group(['prefix' => 'message', 'middleware' => 'api.sign'], function () {
     *     @SWG\Operation(
     *      method="GET",
     *      nickname="message-list",
-    *      summary="page list",
-    *      notes="page list",
+    *      summary="消息列表",
+    *      notes="消息列表",
     *      type="array",
     *     items="$ref:Message",
     *      @SWG\Parameters(
@@ -35,8 +35,8 @@ Route::group(['prefix' => 'message', 'middleware' => 'api.sign'], function () {
     *     @SWG\Operation(
     *      method="GET",
     *      nickname="message-show",
-    *      summary="信息详情",
-    *      notes="信息详情",
+    *      summary="消息信息详情",
+    *      notes="消息信息详情",
     *      type="Attendance",
     *      @SWG\Parameters(
     *          @SWG\Parameter(name="id", description="id", required=true, type="integer", paramType="path", defaultValue="1"),
@@ -53,8 +53,8 @@ Route::group(['prefix' => 'message', 'middleware' => 'api.sign'], function () {
     *     @SWG\Operation(
     *      method="POST",
     *      nickname="message-store",
-    *      summary="新增",
-    *      notes="新增",
+    *      summary="新增消息",
+    *      notes="新增消息",
     *      type="",
     *      @SWG\Parameters(
     *          @SWG\Parameter(name="from_id", description="", required=false,type="integer", paramType="form", defaultValue="0" ),
@@ -74,8 +74,8 @@ Route::group(['prefix' => 'message', 'middleware' => 'api.sign'], function () {
     *     @SWG\Operation(
     *      method="POST",
     *      nickname="message-update",
-    *      summary="更新",
-    *      notes="更新",
+    *      summary="更新消息",
+    *      notes="更新消息",
     *      type="",
     *      @SWG\Parameters(
     *          @SWG\Parameter(name="read", description="是否已读（0-否，1-是）", required=false,type="integer", paramType="form", defaultValue="0" ),
@@ -93,8 +93,8 @@ Route::group(['prefix' => 'message', 'middleware' => 'api.sign'], function () {
     *     @SWG\Operation(
     *      method="DELETE",
     *      nickname="message-delete",
-    *      summary="删除",
-    *      notes="删除",
+    *      summary="删除消息",
+    *      notes="删除消息",
     *      type="",
     *      @SWG\Parameters(
     *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="1" ),
