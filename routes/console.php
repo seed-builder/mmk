@@ -199,7 +199,7 @@ Artisan::command('push-attendance', function () {
 	$stores = \App\Models\Busi\Attendance::where('ftime', '>', '2017-03-27')->where('ftime', '<', '2017-03-30')->get();
 	foreach ($stores as $store) {
 		$dataSync->send('ms_attendances', 0, $store->toArray());
-		$this->comment('complete send attendance: ' . $store->ffullname);
+		$this->comment('complete send attendance: ' . $store->ftime);
 	}
 	$this->comment('end ...');
 })->describe('push attendance to cloud');
