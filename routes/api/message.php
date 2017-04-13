@@ -57,15 +57,11 @@ Route::group(['prefix' => 'message', 'middleware' => 'api.sign'], function () {
     *      notes="新增",
     *      type="",
     *      @SWG\Parameters(
-    *          @SWG\Parameter(name="fcreate_date", description="", required=true,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="fmodify_date", description="", required=true,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="from_id", description="", required=false,type="integer", paramType="form", defaultValue="0" ),
-            *          @SWG\Parameter(name="from_type", description="", required=false,type="string", paramType="form", defaultValue="" ),
-                    *          @SWG\Parameter(name="message_content_id", description="", required=false,type="integer", paramType="form", defaultValue="0" ),
-            *          @SWG\Parameter(name="read", description="", required=false,type="integer", paramType="form", defaultValue="0" ),
-            *          @SWG\Parameter(name="to_id", description="", required=false,type="integer", paramType="form", defaultValue="0" ),
-            *          @SWG\Parameter(name="to_type", description="", required=false,type="string", paramType="form", defaultValue="" ),
-        *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
+    *          @SWG\Parameter(name="from_id", description="", required=false,type="integer", paramType="form", defaultValue="0" ),
+    *          @SWG\Parameter(name="message_content_id", description="", required=false,type="integer", paramType="form", defaultValue="0" ),
+    *          @SWG\Parameter(name="read", description="", required=false,type="integer", paramType="form", defaultValue="0" ),
+    *          @SWG\Parameter(name="to_id", description="", required=false,type="integer", paramType="form", defaultValue="0" ),
+    *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
     *      )
     *  )
     * )
@@ -76,27 +72,20 @@ Route::group(['prefix' => 'message', 'middleware' => 'api.sign'], function () {
     * @SWG\Api(
     *     path="/api/message/{id}",
     *     @SWG\Operation(
-    *      method="PUT",
+    *      method="POST",
     *      nickname="message-update",
     *      summary="更新",
     *      notes="更新",
     *      type="",
     *      @SWG\Parameters(
-    *          @SWG\Parameter(name="fcreate_date", description="", required=false,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="fmodify_date", description="", required=false,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="from_id", description="", required=false,type="integer", paramType="form", defaultValue="0" ),
-            *          @SWG\Parameter(name="from_type", description="", required=false,type="string", paramType="form", defaultValue="" ),
-                    *          @SWG\Parameter(name="message_content_id", description="", required=false,type="integer", paramType="form", defaultValue="0" ),
-            *          @SWG\Parameter(name="read", description="", required=false,type="integer", paramType="form", defaultValue="0" ),
-            *          @SWG\Parameter(name="to_id", description="", required=false,type="integer", paramType="form", defaultValue="0" ),
-            *          @SWG\Parameter(name="to_type", description="", required=false,type="string", paramType="form", defaultValue="" ),
-        *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="" ),
+    *          @SWG\Parameter(name="read", description="是否已读（0-否，1-是）", required=false,type="integer", paramType="form", defaultValue="0" ),
+    *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="" ),
     *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
     *      )
     *  )
     * )
     */
-    Route::put('/{id}', ['as' => 'Message.update', 'uses' => 'MessageController@update']);
+    Route::post('/{id}', ['as' => 'Message.update', 'uses' => 'MessageController@update']);
 
     /**
     * @SWG\Api(

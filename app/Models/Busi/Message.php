@@ -12,15 +12,14 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @author  xrs
  * @SWG\Model(id="Message")
+ * @SWG\Property(name="id", type="integer", description="")
  * @SWG\Property(name="fcreate_date", type="string", description="")
  * @SWG\Property(name="fmodify_date", type="string", description="")
- * @SWG\Property(name="from_id", type="integer", description="")
- * @SWG\Property(name="from_type", type="string", description="")
- * @SWG\Property(name="id", type="integer", description="")
- * @SWG\Property(name="message_content_id", type="integer", description="")
- * @SWG\Property(name="read", type="integer", description="")
- * @SWG\Property(name="to_id", type="integer", description="")
- * @SWG\Property(name="to_type", type="string", description="")
+ * @SWG\Property(name="from_id", type="integer", description="发送人id")
+ * @SWG\Property(name="to_id", type="integer", description="接收人id")
+ * @SWG\Property(name="message_content_id", type="integer", description="内容id")
+ * @SWG\Property(name="read", type="integer", description="是否已读")
+ * @SWG\Property(name="type", type="integer", description="消息类型（0-公告）")
   */
 class Message extends BaseModel
 {
