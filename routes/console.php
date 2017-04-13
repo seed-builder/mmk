@@ -192,3 +192,14 @@ Artisan::command('cp-employee-to-user', function () {
 	}
 	$this->comment('end ...');
 })->describe('copy employees to sys_users tables');
+
+Artisan::command('push-attendance', function () {
+	$this->comment('begin  send attendances...');
+	$dataSync = app('dataSync');
+	$stores = \App\Models\Busi\Attendance::where('ftime', '>', '2017-03-27')->where('ftime', '<', '2017-03-30')->get();
+	foreach ($stores as $store) {
+		$dataSync->send('ms_attendances', 0, $store->toArray());
+		$this->comment('complete send attendance: ' . $store->ffullname);
+	}
+	$this->comment('end ...');
+})->describe('push attendance to cloud');
