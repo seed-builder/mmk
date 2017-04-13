@@ -93,7 +93,7 @@
                             <i class="fa fa-envelope-o"></i>
                             {!! Auth::user()->unreadMessagesCount()>0?'<span class="label label-success">'.Auth::user()->unreadMessagesCount().'</span>':'' !!}
                         </a>
-                        <input type="hidden" id="last_unread_id" value="{{Auth::user()->lastUnreadMessage()->id}}">
+                        <input type="hidden" id="last_unread_id" value="{{!empty(Auth::user()->lastUnreadMessage())?Auth::user()->lastUnreadMessage()->id:0}}">
                         <a href="" id="message_content" data-target="#contentInfo" data-toggle="modal" style="display: none"></a>
 
                         <ul class="dropdown-menu">
