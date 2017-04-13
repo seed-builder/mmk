@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @SWG\Property(name="to_id", type="integer", description="接收人id")
  * @SWG\Property(name="message_content_id", type="integer", description="内容id")
  * @SWG\Property(name="read", type="integer", description="是否已读")
- * @SWG\Property(name="type", type="integer", description="消息类型（0-公告）")
+ * @SWG\Property(name="type", type="integer", description="消息类型（0-系统公告,1-公司发文,2-流程消息,3-任务消息）")
   */
 class Message extends BaseModel
 {
