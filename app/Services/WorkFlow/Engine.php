@@ -85,6 +85,11 @@ class Engine
 			$instance = new Instance();
 			$instance->init($task->work_flow_instance_id);
 			$instance->terminate(3);
+
+			WorkFlowTask::where('work_flow_instance_id', $task->work_flow_instance_id)
+				->where('node_id', $task->node_id)
+				->update(['status' => $task->status]);
+
 		});
 
 		Instance::variablesSaved(function (Instance $instance){
