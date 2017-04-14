@@ -1,3 +1,7 @@
+<?php
+$user = Auth::user();
+$loginUserName = empty($user->nick_name) ? $loginUser->name: $user->nick_name;
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -84,7 +88,7 @@
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <img src="/assets/plugins/AdminLTE/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                            <span class="hidden-xs">{{Auth::user()->reference->fname}}</span>
+                            <span class="hidden-xs">{{$loginUserName}}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
@@ -92,7 +96,7 @@
                                 <img src="/assets/plugins/AdminLTE/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                                 <p>
-                                    {{Auth::user()->fname}}
+                                    {{$loginUserName}}
                                     <small>{{Auth::user()->fcreate_date}}</small>
                                 </p>
                             </li>

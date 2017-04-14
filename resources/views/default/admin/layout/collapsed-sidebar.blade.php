@@ -1,3 +1,7 @@
+<?php
+$loginUser = Auth::user();
+$loginUserName = empty($loginUser->nick_name) ? $loginUser->name: $loginUser->nick_name;
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -91,16 +95,16 @@
                     <li class="dropdown messages-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-envelope-o"></i>
-                            {!! Auth::user()->unreadMessagesCount()>0?'<span class="label label-success">'.Auth::user()->unreadMessagesCount().'</span>':'' !!}
+                            {!! $loginUser->unreadMessagesCount()>0?'<span class="label label-success">'.$loginUser->unreadMessagesCount().'</span>':'' !!}
                         </a>
-                        <input type="hidden" id="last_unread_id" value="{{!empty(Auth::user()->lastUnreadMessage())?Auth::user()->lastUnreadMessage()->id:0}}">
+                        <input type="hidden" id="last_unread_id" value="{{!empty($loginUser->lastUnreadMessage())?$loginUser->lastUnreadMessage()->id:0}}">
                         <a href="" id="message_content" data-target="#contentInfo" data-toggle="modal" style="display: none"></a>
 
                         <ul class="dropdown-menu">
                             <li>
                                 <!-- inner menu: contains the actual data -->
                                 <ul class="menu" id="message_list">
-                                    @foreach(Auth::user()->unreadMessages() as $message)
+                                    @foreach($loginUser->unreadMessages() as $message)
                                         <li><!-- start message -->
                                             <a href="{{url('admin/message/receiveMessages')}}">
                                                 <h4>
@@ -120,7 +124,7 @@
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <img src="/assets/plugins/AdminLTE/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                            <span class="hidden-xs">{{Auth::user()->name}}</span>
+                            <span class="hidden-xs">{{$loginUserName}}</span>
                         </a>
                         <ul class="dropdown-menu">
 
@@ -129,8 +133,8 @@
                                 <img src="/assets/plugins/AdminLTE/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                                 <p>
-                                    {{Auth::user()->name}}
-                                    <small>{{Auth::user()->created_at}}</small>
+                                    {{$loginUserName}}
+                                    <small>{{$loginUser->created_at}}</small>
                                 </p>
                             </li>
                             <!-- Menu Body -->

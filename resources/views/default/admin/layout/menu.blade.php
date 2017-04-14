@@ -1,5 +1,6 @@
 <?php
 $user = Auth::user();
+$loginUserName = empty($user->nick_name) ? $loginUser->name: $user->nick_name;
 ?>
 <!-- Left side column. contains the sidebar -->
 <aside class="main-sidebar">
@@ -11,7 +12,7 @@ $user = Auth::user();
                 <img src="/assets/plugins/AdminLTE/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
-                <p>{{Auth::user()->name}}</p>
+                <p>{{$loginUserName}}</p>
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
         </div>
