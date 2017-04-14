@@ -128,7 +128,7 @@ class Engine
 						unset($data['remark']);
 						unset($data['type']);
 						unset($data['customer']);
-//						unset($data['employee']);
+						unset($data['employee']);
 						$data['fdocument_status'] = 'C';
 						$data['fforbid_status'] = 'A';
 						$store->fill($data);
