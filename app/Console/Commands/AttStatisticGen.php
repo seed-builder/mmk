@@ -14,7 +14,7 @@ use App\Services\LogSvr;
 
 class AttStatisticGen extends Command
 {
-	protected $name = 'att-stc';
+	//protected $name = 'att-stc';
     /**
      * The name and signature of the console command.
      *
@@ -82,7 +82,7 @@ class AttStatisticGen extends Command
 			}
 	    }
 	    $this->log('AttStatisticGen end!');
-	    SysCrontab::exec($this->name);
+	    SysCrontab::exec('att-stc');
     }
 
     public function day($day, $employee)

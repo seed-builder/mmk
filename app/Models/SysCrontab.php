@@ -12,7 +12,9 @@ class SysCrontab extends Model
 	public $validateRules=['name' => 'required|unique:sys_crontabs'];
 
 	public static function exec($name, $remark = ''){
+		var_dump($name);
 		$crontab = static::where('name', $name)->first();
+		var_dump($crontab);
 		if(!empty($crontab)){
 			$crontab->update([
 				'exec_time' => date('Y-m-d H:i:s'),
