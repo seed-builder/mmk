@@ -102,6 +102,7 @@ class Engine
 					//LogSvr::engine()->info('variables-saved, value: ' . $store_change_list->value);
 					$data = json_decode($store_change_list->value, true);
 					unset($data['customer']);
+					unset($data['employee']);
 					$storeChange = StoreChange::find($data['id']);
 					$storeChange->fill($data);
 					$storeChange->save();
@@ -127,6 +128,7 @@ class Engine
 						unset($data['remark']);
 						unset($data['type']);
 						unset($data['customer']);
+//						unset($data['employee']);
 						$data['fdocument_status'] = 'C';
 						$data['fforbid_status'] = 'A';
 						$store->fill($data);
