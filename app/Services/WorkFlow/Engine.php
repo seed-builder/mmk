@@ -93,7 +93,7 @@ class Engine
 		});
 
 		Instance::variablesSaved(function (Instance $instance){
-			LogSvr::engine()->info('variables-saved');
+			//LogSvr::engine()->info('variables-saved');
 			$wfInstance = $instance->getWorkFlowInstance();
 			if($wfInstance->workflow->name == 'store-change') {
 				//保存变量
