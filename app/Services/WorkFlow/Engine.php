@@ -127,6 +127,7 @@ class Engine
 						unset($data['id']);
 						unset($data['remark']);
 						unset($data['type']);
+						unset($data['change_reason']);
 						unset($data['customer']);
 						unset($data['employee']);
 						$data['fdocument_status'] = 'C';
