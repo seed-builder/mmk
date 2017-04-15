@@ -64,8 +64,28 @@ class Employee extends BaseModel
 				'name' => $employee->fphone,
 				'password' => $employee->fpassword,
 				'login_time' => $employee->login_time,
+				'logo' => $employee->fphoto,
 				'status' => 1
 			]);
+		});
+
+		static::updated(function ($employee){
+			if(empty($employee->user)) {
+				$employee->user()->create([
+					'name' => $employee->fphone,
+					'password' => $employee->fpassword,
+					'login_time' => $employee->login_time,
+					'logo' => $employee->fphoto,
+					'status' => 1
+				]);
+			}else{
+				$employee->user()->update([
+					'name' => $employee->fphone,
+					'password' => $employee->fpassword,
+					'login_time' => $employee->login_time,
+					'logo' => $employee->fphoto,
+				]);
+			}
 		});
 	}
 

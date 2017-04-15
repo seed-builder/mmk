@@ -183,6 +183,7 @@ Artisan::command('cp-employee-to-user', function () {
 						'login_time' => $employee->login_time,
 						'status' => 1,
 						'nick_name' => $employee->fname,
+						'logo' => $employee->fphoto,
 					]);
 					$this->comment('success copy employee:  ' . $employee->fname);
 				}
