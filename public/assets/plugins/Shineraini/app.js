@@ -516,15 +516,19 @@ function exportExcel(form_id,url) {
     var form = $(form_id)
     $.each(form.find('.form-control'),function (index,input) {
         var name = $(input).attr('filter-name')
+        var operator = $(input).attr('filter-operator')
 
         if (name){
             var input1 = '<input type="hidden" class="export_conditions" name="filter['+index+'][name]" value="'+$(input).attr('filter-name')+'"/>'
-            var input2 = '<input type="hidden" class="export_conditions" name="filter['+index+'][operator]" value="'+$(input).attr('filter-operator')+'" />'
             var input3 = '<input type="hidden" class="export_conditions" name="filter['+index+'][value]" value="'+$(input).val()+'" />'
             form.append(input1)
-            form.append(input2)
             form.append(input3)
         }
+        if (operator){
+            var input2 = '<input type="hidden" class="export_conditions" name="filter['+index+'][operator]" value="'+$(input).attr('filter-operator')+'" />'
+            form.append(input2)
+        }
+
     })
 
     var treeNode = $('.treeview').treeview('getSelected');
