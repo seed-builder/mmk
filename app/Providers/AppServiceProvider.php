@@ -6,6 +6,7 @@ use App\Models\Busi\Customer;
 use App\Models\Busi\Employee;
 use App\Models\Busi\Store;
 use App\Models\Busi\WfChangeList;
+use App\Models\Busi\WorkFlowTask;
 use App\Repositories\ISysConfigRepo;
 use App\Repositories\SysConfigRepo;
 use App\Services\DataSync\DataSyncSvr;
@@ -36,6 +37,7 @@ class AppServiceProvider extends ServiceProvider
 		    'customer' => Customer::class,
 		    'wf_change_list' => WfChangeList::class,
 		    'store' => Store::class,
+		    //'store' => WorkFlowTask::class,
 	    ]);
 	    //Engine::boot();
     }

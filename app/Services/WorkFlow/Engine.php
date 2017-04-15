@@ -69,6 +69,18 @@ class Engine
 				$instance->terminate(1);
 				$lastTask = $nextTasks[0];
 				$lastTask->update(['status' => 1]);
+			}else{
+				foreach ($nextTasks as $task){
+					$extraType = 'workflow_' . str_replace('-', '_', $task->workflow->name);
+					Message::send(
+						$task->approver_id,
+						$task->workflow->desc,
+						$task->instance->title,
+						$extraType,
+						$task->id,
+						3
+						);
+				}
 			}
 			//如果当前节点不是会签节点， 其他任务自动完成审核
 			if($task->node->type == 'C'){
