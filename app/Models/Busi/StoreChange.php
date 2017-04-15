@@ -75,6 +75,9 @@ class StoreChange extends BaseModel
 					$action = '删除';
 					break;
 			}
+			if(empty($model->change_reason)){
+				$model->change_reason = $action;
+			}
 
 			$engine->startInstance('store-change', $sponsor,
 				[
@@ -85,7 +88,7 @@ class StoreChange extends BaseModel
 					'store_name' => $model->ffullname,
 					'store_address' => $model->faddress,
 					'created' => date('Y-m-d H:i:s'),
-					'reason' => $model->change_reason?: $action,
+					'reason' => $model->change_reason,
 					'lineName' => $model->line->fname
 				]);
 		});
