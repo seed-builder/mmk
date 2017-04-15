@@ -62,7 +62,7 @@ abstract class  ApiController extends Controller
 			$query->orderBy($tmpArr[0], $tmpArr[1]);
 		}
 		$data = $query->take($pageSize)->skip(($page - 1) * $pageSize)->get();
-		LogSvr::apiSql()->info($query->toSql());
+		//LogSvr::apiSql()->info($query->toSql());
 		return response(['count' => $count, 'list' => $data, 'page' => $page, 'pageSize' => $pageSize], 200);
 	}
 
