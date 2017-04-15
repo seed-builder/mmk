@@ -156,8 +156,8 @@ class Engine
 						unset($data['customer']);
 						unset($data['employee']);
 						unset($data['line']);
-						$data['fdocument_status'] = 'C';
-						$data['fforbid_status'] = 'A';
+						$data['fdocument_status'] = 'C'; //审核状态通过
+//						$data['fforbid_status'] = 'A';
 						$store->fill($data);
 						$store->save();
 						//审批通过，则生成拜访日志
