@@ -51,7 +51,7 @@ Route::group(['prefix' => 'work-flow-instance', 'middleware' => 'api.sign'], fun
 	 * @SWG\Api(
 	 *     path="/api/work-flow-instance/storeValid",
 	 *     @SWG\Operation(
-	 *      method="GET",
+	 *      method="POST",
 	 *      nickname="work-flow-instance-storeValid",
 	 *      summary="门店是否在审批中",
 	 *      notes="门店是否在审批中",
@@ -63,7 +63,7 @@ Route::group(['prefix' => 'work-flow-instance', 'middleware' => 'api.sign'], fun
 	 *  )
 	 * )
 	 */
-	Route::get('/storeValid', ['as' => 'WorkFlowInstance.storeValid', 'uses' => 'WorkFlowInstanceController@storeValid']);
+	Route::post('/storeValid', ['as' => 'WorkFlowInstance.storeValid', 'uses' => 'WorkFlowInstanceController@storeValid']);
 
 	/**
 	 * @SWG\Api(
