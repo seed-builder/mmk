@@ -67,7 +67,7 @@ class StoreController extends ApiController
 	    //var_dump($data);
 	    unset($data['_sign']);
 	    $entity->fill($data);
-	    StoreChange::addFromStore($entity->toArray(), 1);
+	    StoreChange::addFromStore($entity->toArray(), $data['fforbid_status']== 'B' ? 2 : 1);
 	    //$re = $entity->save();
 	    //LogSvr::update()->info(json_encode($re));
 	    $status = 200;//$re ? 200 : 401;
