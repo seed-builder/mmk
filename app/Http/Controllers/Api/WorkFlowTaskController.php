@@ -23,7 +23,7 @@ class WorkFlowTaskController extends ApiController
 		if ($id == 0) {
 			return response('{}', 404);
 		} else {
-			$entity = WorkFlowTask::with(['instance.variables', 'workflow'])->find($id);
+			$entity = WorkFlowTask::with(['instance.variables', 'instance.sponsor','workflow'])->find($id);
 			// var_dump($entity);
 			return response($entity, 200);
 		}
