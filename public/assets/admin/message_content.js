@@ -44,6 +44,7 @@ define(function (require, exports, module) {
             columns: [
                 {  'data': 'id' },
                 {  'data': 'title' },
+                {  'data': 'subtitle' },
                 {  'data': 'content' },
                 {  'data': 'fcreate_date' },
                 {
