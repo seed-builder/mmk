@@ -40,10 +40,17 @@ class WorkFlowInstanceController extends ApiController
 	/**
 	 * 门店是否在变更审批中
 	 * @param Request $request
+	 * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
 	 */
 	public function storeValid(Request $request){
-
-		WorkFlowInstanceVariable::where();
+		$store_id = $request->input('store_id');
+	    $count = WorkFlowInstanceVariable::query()
+			->join('work_flow_instances', 'work_flow_instances.id', '=', 'work_flow_instance_variables.work_flow_instance_id')
+			->where('work_flow_instances.status', 0)
+			->where('work_flow_instance_variables.name', 'store_id')
+			->where('work_flow_instance_variables.value', $store_id)
+			->count();
+		return response(['valid' => $count > 0], 200);
 	}
 
 }

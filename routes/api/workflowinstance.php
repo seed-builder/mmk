@@ -47,4 +47,23 @@ Route::group(['prefix' => 'work-flow-instance', 'middleware' => 'api.sign'], fun
     */
     Route::get('/{id}', ['as' => 'WorkFlowInstance.show', 'uses' => 'WorkFlowInstanceController@show']);
 
+	/**
+	 * @SWG\Api(
+	 *     path="/api/work-flow-instance/storeValid",
+	 *     @SWG\Operation(
+	 *      method="GET",
+	 *      nickname="work-flow-instance-storeValid",
+	 *      summary="门店是否在审批中",
+	 *      notes="门店是否在审批中",
+	 *      type="Attendance",
+	 *      @SWG\Parameters(
+	 *          @SWG\Parameter(name="store_id", description="门店id", required=true, type="integer", paramType="query", defaultValue="1"),
+	 *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="query", defaultValue="****")
+	 *      )
+	 *  )
+	 * )
+	 */
+	Route::get('/storeValid', ['as' => 'WorkFlowInstance.storeValid', 'uses' => 'WorkFlowInstanceController@storeValid']);
+
+
 });
