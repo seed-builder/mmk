@@ -71,6 +71,5 @@ class StoreChange extends BaseModel
 					'reason' => $model->change_reason?:'新增'
 				]);
 		});
-
 	}
 }
