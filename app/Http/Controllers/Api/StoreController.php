@@ -44,6 +44,8 @@ class StoreController extends ApiController
 	    unset($data['_sign']);
 	    $data['fdocument_status'] = 'A';//未经审批，禁用
 	    $data['fforbid_status'] = 'B';//未经审批，禁用
+	    $change_reason = $data['change_reason'];
+	    unset($data['change_reason']);
 	    $entity = $this->newEntity($data);
 	    $fieldErrors = $this->validateFields($data);
 	    if (!empty($fieldErrors)) {
@@ -52,7 +54,7 @@ class StoreController extends ApiController
 	    }
         //$entity = Entity::create($data);
         $re = $entity->save();
-	    StoreChange::addFromStore($entity->toArray(), 0);
+	    StoreChange::addFromStore($entity->toArray()+['change_reason' => $change_reason], 0);
         $status = $re ? 200 : 400;
         return response($entity, $status);
     }
