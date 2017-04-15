@@ -36,6 +36,25 @@ class WorkFlowTaskController extends ApiController
 	}
 
 	/**
+	 * 批量同意，审批通过
+	 * @param Request $request
+	 * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+	 * @internal param $id
+	 */
+	public function batchAgree(Request $request){
+		$ids = $request->input('ids','');
+		$remark = $request->input('remark','批量通过');
+		if(!empty($ids)) {
+			$arr = explode(',', $ids);
+			foreach ($arr as $id) {
+				$engine = new Engine();
+				$engine->agree($id, ['remark' => $remark]);
+			}
+		}
+		return response(['success' => 1], 200);
+	}
+
+	/**
 	 * 同意，审批通过
 	 * @param Request $request
 	 * @param $id

@@ -185,7 +185,16 @@ Artisan::command('cp-employee-to-user', function () {
 						'nick_name' => $employee->fname,
 						'logo' => $employee->fphoto,
 					]);
-					$this->comment('success copy employee:  ' . $employee->fname);
+					$this->comment('add: success copy employee:  ' . $employee->fname);
+				}else{
+					$employee->user()->update([
+						'name' => $employee->fphone,
+						'password' => $employee->fpassword,
+						'login_time' => $employee->login_time,
+						'nick_name' => $employee->fname,
+						'logo' => $employee->fphoto,
+					]);
+					$this->comment('update: success copy employee:  ' . $employee->fname);
 				}
 			}
 			DB::commit();
