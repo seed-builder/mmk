@@ -573,7 +573,11 @@ function message() {
 
     $.get('/admin/message/unread',{},function(data,status,xhr){
         var last_unread_id = $("#last_unread_id").val();
+        $("#message_count").velocity("fadeIn", { duration: 1500 })
+            .velocity("fadeOut", { delay: 500, duration: 1500 });
+
         if (data.last_id>last_unread_id){
+
             $("#last_unread_id").val(data.last_id);
             toastr.info('您收到一条新消息！')
         }
