@@ -563,7 +563,7 @@ function message() {
         },
         "showDuration": "300",
         "hideDuration": "1000",
-        "timeOut": "5000",
+        "timeOut": "100000",
         "extendedTimeOut": "1000",
         "showEasing": "swing",
         "hideEasing": "linear",
@@ -571,15 +571,25 @@ function message() {
         "hideMethod": "fadeOut"
     }
 
+    // while (unread_count>0){
+
+    // }
+
     $.get('/admin/message/unread',{},function(data,status,xhr){
         var last_unread_id = $("#last_unread_id").val();
-        $("#message_count").velocity("fadeIn", { duration: 1500 })
-            .velocity("fadeOut", { delay: 500, duration: 1500 });
+
+        if (data.count>0)
+            $("#message_count").velocity("fadeOut", {  duration: 500 })
+                .velocity("fadeIn", { duration: 500 });
 
         if (data.last_id>last_unread_id){
-
             $("#last_unread_id").val(data.last_id);
             toastr.info('您收到一条新消息！')
+            $("#message_count").text(data.count);
+
+
+            // $("#message_count").velocity("fadeIn", { duration: 1500 })
+            //     .velocity("fadeOut", { delay: 500, duration: 1500 });
         }
     },'json')
 }
