@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Busi\WorkFlowInstanceVariable;
+use App\Models\Busi\WorkFlowVariable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\ApiController;
@@ -34,4 +36,14 @@ class WorkFlowInstanceController extends ApiController
 			return response($entity, 200);
 		}
 	}
+
+	/**
+	 * 门店是否在变更审批中
+	 * @param Request $request
+	 */
+	public function storeValid(Request $request){
+
+		WorkFlowInstanceVariable::where();
+	}
+
 }

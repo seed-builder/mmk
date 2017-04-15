@@ -30,6 +30,7 @@ class Message
 		$mc = MessageContent::create([
 			'title' => $title,
 			'content' => $content,
+			'subtitle' => $content,
 		]);
 		EntityMessage::create([
 			'from_id' => $fromId,
