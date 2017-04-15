@@ -113,6 +113,7 @@ class StoreController extends ApiController
 				}
 			}
 		}
+		$query->where('fforbid_status', 'A');//过滤禁用状态的
 		//return $query;
 	}
 
@@ -125,7 +126,7 @@ class StoreController extends ApiController
 		$fpolicy_id = $request->input('fpolicy_id');
 		//$entity = $this->newEntity();
 		$query = DB::table('st_stores'); //$entity->query();
-		$query->where('st_stores.femp_id', $femp_id);
+		$query->where('st_stores.femp_id', $femp_id)->where('st_stores.fforbid_status', 'A');
 		//$query->where('st_stores.fis_signed', 0);
 		$query->whereNotExists(function ($query) use($fpolicy_id) {
 			$query->select(DB::raw(1))

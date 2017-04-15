@@ -32,6 +32,10 @@ class StoreChange extends BaseModel
 		return $this->belongsTo(Employee::class, 'femp_id');
 	}
 
+	public function line(){
+		return $this->hasOne(VisitLine::class, 'id', 'fline_id');
+	}
+
 	/**
 	 * 从门店数据新增变更数据
 	 * @param array $store
@@ -81,7 +85,8 @@ class StoreChange extends BaseModel
 					'store_name' => $model->ffullname,
 					'store_address' => $model->faddress,
 					'created' => date('Y-m-d H:i:s'),
-					'reason' => $model->change_reason?: $action
+					'reason' => $model->change_reason?: $action,
+					'lineName' => $model->line->fname
 				]);
 		});
 	}
