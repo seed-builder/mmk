@@ -25,7 +25,7 @@ $(".treeview-menu").each(function (i, obj) {
 function setActive(el) {
     var p = el.parent();
     var tag = p.get(0).tagName;
-    console.log(tag);
+    // console.log(tag);
     if(tag.toLowerCase() == 'section')
         return;
 
@@ -281,13 +281,19 @@ var treeNodeSelect = function(treeId,table){
         filter_params['tree']['nodeid'] = treeNode[0].dataid;
         filter_params['tree']['type'] = $('#'+treeId).attr('tree-type');
     }
+    // var form = table.parents('filter')
+
     table.settings()[0].ajax.data = filter_params;
     table.ajax.reload();
+
+
 };
 var treeNodeUnSelect = function (treeId,table) {
     filter_params['tree'] = {};
     table.settings()[0].ajax.data = filter_params;
     table.ajax.reload();
+
+    $(".tree_conditions").remove();
 }
 /*
  * map
@@ -503,6 +509,40 @@ $(document).ready(function () {
     setInterval("message()",5000);
 });
 
+/*
+ * 导出excel
+ */
+function exportExcel(form_id,url) {
+    var form = $(form_id)
+    $.each(form.find('.form-control'),function (index,input) {
+        var name = $(input).attr('filter-name')
+
+        if (name){
+            var input1 = '<input type="hidden" class="export_conditions" name="filter['+index+'][name]" value="'+$(input).attr('filter-name')+'"/>'
+            var input2 = '<input type="hidden" class="export_conditions" name="filter['+index+'][operator]" value="'+$(input).attr('filter-operator')+'" />'
+            var input3 = '<input type="hidden" class="export_conditions" name="filter['+index+'][value]" value="'+$(input).val()+'" />'
+            form.append(input1)
+            form.append(input2)
+            form.append(input3)
+        }
+    })
+
+    var treeNode = $('.treeview').treeview('getSelected');
+    if (treeNode.length>0){
+        var tree_condition = '<input type="hidden" class="export_conditions" name="tree[nodeid]" value="'+treeNode[0].dataid+'" />'
+        form.append(tree_condition);
+    }
+
+    form.attr('action',url)
+    form.submit();
+    form.attr('action','')
+
+    $(".export_conditions").remove();
+}
+
+/*
+ * 消息弹窗
+ */
 function message() {
     toastr.options = {
         "closeButton": true,
