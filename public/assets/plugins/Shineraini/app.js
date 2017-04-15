@@ -520,6 +520,7 @@ function exportExcel(form_id,url) {
 
         if (name){
             var input1 = '<input type="hidden" class="export_conditions" name="filter['+index+'][name]" value="'+$(input).attr('filter-name')+'"/>'
+
             var input3 = '<input type="hidden" class="export_conditions" name="filter['+index+'][value]" value="'+$(input).val()+'" />'
             form.append(input1)
             form.append(input3)

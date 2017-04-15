@@ -182,9 +182,7 @@ class MessageContentController extends AdminController
         foreach ($users as $user){
             $datas[] =[
                 'from_id' => Auth::user()->id,
-                'from_type' => 'App\Models\User',
                 'to_id' => $user,
-                'to_type' => 'App\Models\User',
                 'message_content_id' => $content_id,
                 'fcreate_date' => date('Y-m-d H:i:s'),
                 'fmodify_date' => date('Y-m-d H:i:s'),

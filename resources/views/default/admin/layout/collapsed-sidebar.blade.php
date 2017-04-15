@@ -50,13 +50,14 @@ $loginUserName = empty($loginUser->nick_name) ? $loginUser->name: $loginUser->ni
     <!-- FastClick -->
     <script src="/assets/plugins/fastclick/fastclick.js"></script>
     <script src="/assets/plugins/toastr/toastr.min.js"></script>
-    {{--<script src="/assets/plugins/layer/layer.js"></script>--}}
+    <script src="/assets/plugins/layer/layer.js"></script>
     <script src="{{url('assets')}}/plugins/layui/layui.js"></script>
 
     <script src="/assets/sea.js"></script>
     <script src="/assets/sea.config.js"></script>
     <!-- jquery UI -->
     <script src="/assets/plugins/jQueryUI/jquery-ui.js"></script>
+    <script src="/assets/plugins/velocity/velocity.min.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -95,7 +96,7 @@ $loginUserName = empty($loginUser->nick_name) ? $loginUser->name: $loginUser->ni
                     <li class="dropdown messages-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-envelope-o"></i>
-                            {!! $loginUser->unreadMessagesCount()>0?'<span class="label label-success">'.$loginUser->unreadMessagesCount().'</span>':'' !!}
+                            <span class="label label-success" id="message_count">{{ $loginUser->unreadMessagesCount()>0?$loginUser->unreadMessagesCount():'' }}</span>
                         </a>
                         <input type="hidden" id="last_unread_id" value="{{!empty($loginUser->lastUnreadMessage())?$loginUser->lastUnreadMessage()->id:0}}">
                         <a href="" id="message_content" data-target="#contentInfo" data-toggle="modal" style="display: none"></a>
@@ -141,7 +142,7 @@ $loginUserName = empty($loginUser->nick_name) ? $loginUser->name: $loginUser->ni
                             <li class="user-body">
                                 <div class="row">
                                     <div class="col-xs-4 text-center">
-                                        <a href="#">密码重置</a>
+                                        <a id="pwd-reset" style="cursor: pointer">密码重置</a>
                                     </div>
                                     {{--<div class="col-xs-4 text-center">--}}
                                         {{--<a href="#">Sales</a>--}}
@@ -237,6 +238,13 @@ $loginUserName = empty($loginUser->nick_name) ? $loginUser->name: $loginUser->ni
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
     }
+
+    $("#pwd-reset").on('click',function () {
+        layer.confirm('确认重置密码吗？重置后密码为：888888',function () {
+            window.location.href="/admin/user/reset-pwd?id="+{{$loginUser->id}}
+            layer.closeAll();
+        })
+    })
 
 
 </script>

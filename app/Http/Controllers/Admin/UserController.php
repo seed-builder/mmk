@@ -6,6 +6,7 @@ use App\Models\Role;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends AdminController
 {
@@ -145,5 +146,19 @@ class UserController extends AdminController
 		}
 		return $data;
 	}
+
+	public function resetPwd(Request $request){
+	    $id = $request->input('id',0);
+	    $user = User::find($id);
+        $user->password = bcrypt('888888');
+        $user->save();
+
+        Auth::logout();
+
+        if ($user->reference_type=='customer')
+            return redirect('customer/login');
+        else
+            return redirect(url('admin/login'));
+    }
 
 }

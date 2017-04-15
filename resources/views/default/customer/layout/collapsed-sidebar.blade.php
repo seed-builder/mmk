@@ -1,6 +1,6 @@
 <?php
-$user = Auth::user();
-$loginUserName = empty($user->nick_name) ? $loginUser->name: $user->nick_name;
+$loginUser = Auth::user();
+$loginUserName = empty($loginUser->nick_name) ? $loginUser->name: $loginUser->nick_name;
 ?>
 <!DOCTYPE html>
 <html>
@@ -44,8 +44,9 @@ $loginUserName = empty($user->nick_name) ? $loginUser->name: $user->nick_name;
     <!-- FastClick -->
     <script src="/assets/plugins/fastclick/fastclick.js"></script>
     <script src="/assets/plugins/toastr/toastr.min.js"></script>
-    {{--<script src="/assets/plugins/layer/layer.me.js"></script>--}}
-    <script src="{{url('assets')}}/plugins/layui/layui.js"></script>
+    <script src="/assets/plugins/layer/layer.js"></script>
+
+    <script src="/assets/plugins/layui/layui.js"></script>
 
     <script src="/js/jquery.bootstrap.min.js"></script>
     <script src="/assets/sea.js"></script>
@@ -85,6 +86,35 @@ $loginUserName = empty($user->nick_name) ? $loginUser->name: $user->nick_name;
 
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
+                    <li class="dropdown messages-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-envelope-o"></i>
+                            <span class="label label-success" id="message_count">{{ $loginUser->unreadMessagesCount()>0?$loginUser->unreadMessagesCount():'' }}</span>
+                        </a>
+                        <input type="hidden" id="last_unread_id" value="{{!empty($loginUser->lastUnreadMessage())?$loginUser->lastUnreadMessage()->id:0}}">
+                        <a href="" id="message_content" data-target="#contentInfo" data-toggle="modal" style="display: none"></a>
+
+                        <ul class="dropdown-menu">
+                            <li>
+                                <!-- inner menu: contains the actual data -->
+                                <ul class="menu" id="message_list">
+                                    @foreach($loginUser->unreadMessages() as $message)
+                                        <li><!-- start message -->
+                                            <a href="{{url('admin/message/receiveMessages')}}">
+                                                <h4>
+                                                    {{$message->content->title}}
+                                                    <small><i class="fa fa-clock-o"></i> {{$message->fcreate_date}}</small>
+                                                </h4>
+                                                <p>{{ strlen($message->content->content)>10?substr($message->content->content,0,10)."...":$message->content->content }}</p>
+                                            </a>
+                                        </li>
+                                    @endforeach
+
+                                </ul>
+                            </li>
+                            <li class="footer"><a href="{{url('admin/message/receiveMessages')}}">查看所有</a></li>
+                        </ul>
+                    </li>
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <img src="/assets/plugins/AdminLTE/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
@@ -104,7 +134,8 @@ $loginUserName = empty($user->nick_name) ? $loginUser->name: $user->nick_name;
                             <li class="user-body">
                                 <div class="row">
                                     <div class="col-xs-4 text-center">
-                                        <a href="#">密码重置</a>
+                                        <a id="pwd-reset" style="cursor: pointer">密码重置</a>
+
                                     </div>
                                     {{--<div class="col-xs-4 text-center">--}}
                                         {{--<a href="#">Sales</a>--}}
@@ -181,7 +212,12 @@ $loginUserName = empty($user->nick_name) ? $loginUser->name: $user->nick_name;
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
     }
-
+    $("#pwd-reset").on('click',function () {
+        layer.confirm('确认重置密码吗？重置后密码为：888888',function () {
+            window.location.href="/admin/user/reset-pwd?id="+{{$loginUser->id}}
+            layer.closeAll();
+        })
+    })
 
 </script>
 @yield('js')
