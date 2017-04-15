@@ -70,15 +70,15 @@ class Engine
 				$lastTask = $nextTasks[0];
 				$lastTask->update(['status' => 1]);
 			}else{
-				foreach ($nextTasks as $task){
-					$extraType = 'workflow_' . str_replace('-', '_', $task->workflow->name);
+				foreach ($nextTasks as $ntask){
+					$extraType = 'workflow_' . str_replace('-', '_', $ntask->workflow->name);
 					Message::send(
-						$task->approver_id,
-						$task->workflow->desc,
-						$task->instance->title,
+						$ntask->approver_id,
+						$ntask->workflow->desc,
+						$ntask->instance->title,
 						$extraType,
-						$task->id,
-						3
+						$ntask->id,
+						2
 						);
 				}
 			}
