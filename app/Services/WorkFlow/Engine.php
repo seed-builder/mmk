@@ -127,6 +127,7 @@ class Engine
 					$data = json_decode($store_change_list->value, true);
 					unset($data['customer']);
 					unset($data['employee']);
+					unset($data['line']);
 					$storeChange = StoreChange::find($data['id']);
 					$storeChange->fill($data);
 					$storeChange->save();
@@ -154,6 +155,7 @@ class Engine
 						unset($data['change_reason']);
 						unset($data['customer']);
 						unset($data['employee']);
+						unset($data['line']);
 						$data['fdocument_status'] = 'C';
 						$data['fforbid_status'] = 'A';
 						$store->fill($data);
