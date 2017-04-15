@@ -96,8 +96,10 @@ class Instance
 	{
 		if ($this->work_flow_instance->status == 0) {
 			$handled = WorkFlowTask::where('work_flow_instance_id', $this->work_flow_instance->id)
-				->where('status', 1)
+				->where('status', '>', 0)
+				->where('approver_id', '<>', $this->work_flow_instance->sponsor_id)
 				->count();
+			//var_dump($handled);
 			if($handled == 0){
 				DB::beginTransaction();
 				try {
