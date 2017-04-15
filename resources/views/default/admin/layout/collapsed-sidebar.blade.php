@@ -50,7 +50,7 @@ $loginUserName = empty($loginUser->nick_name) ? $loginUser->name: $loginUser->ni
     <!-- FastClick -->
     <script src="/assets/plugins/fastclick/fastclick.js"></script>
     <script src="/assets/plugins/toastr/toastr.min.js"></script>
-    <script src="/assets/plugins/layer/layer.js"></script>
+    {{--<script src="/assets/plugins/layer/layer.js"></script>--}}
     <script src="{{url('assets')}}/plugins/layui/layui.js"></script>
 
     <script src="/assets/sea.js"></script>
@@ -96,7 +96,7 @@ $loginUserName = empty($loginUser->nick_name) ? $loginUser->name: $loginUser->ni
                     <li class="dropdown messages-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-envelope-o"></i>
-                            <span class="label label-success" id="message_count">{{ $loginUser->unreadMessagesCount()>0?$loginUser->unreadMessagesCount():'' }}</span>
+                            <span class="label label-danger" id="message_count">{{ $loginUser->unreadMessagesCount()>0?$loginUser->unreadMessagesCount():'' }}</span>
                         </a>
                         <input type="hidden" id="last_unread_id" value="{{!empty($loginUser->lastUnreadMessage())?$loginUser->lastUnreadMessage()->id:0}}">
                         <a href="" id="message_content" data-target="#contentInfo" data-toggle="modal" style="display: none"></a>
@@ -142,7 +142,7 @@ $loginUserName = empty($loginUser->nick_name) ? $loginUser->name: $loginUser->ni
                             <li class="user-body">
                                 <div class="row">
                                     <div class="col-xs-4 text-center">
-                                        <a id="pwd-reset" style="cursor: pointer">密码重置</a>
+                                        <a id="pwd-reset" style="cursor: ">密码重置</a>
                                     </div>
                                     {{--<div class="col-xs-4 text-center">--}}
                                         {{--<a href="#">Sales</a>--}}
