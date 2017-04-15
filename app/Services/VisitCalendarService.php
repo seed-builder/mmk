@@ -159,13 +159,17 @@ class VisitCalendarService
      */
     public function makeStore($line_calendar, $store_id)
     {
-        $store_calendar = $line_calendar->store_calendars()->save(new VisitStoreCalendar([
-            'fdate' => $line_calendar->fdate,
-            'femp_id' => $line_calendar->femp_id,
-            'fstore_id' => $store_id,
-        ]));
+        $store = Store::find($store_id);
+        if ($store->fdocument_status=='C'&&$store->fforbid_status=='A'){ //fdocument_status='C' and fforbid_status='A' 才生成拜访日历
+            $store_calendar = $line_calendar->store_calendars()->save(new VisitStoreCalendar([
+                'fdate' => $line_calendar->fdate,
+                'femp_id' => $line_calendar->femp_id,
+                'fstore_id' => $store_id,
+            ]));
 
-        $this->makeTodo($store_calendar);
+            $this->makeTodo($store_calendar);
+        }
+
     }
 
     /*
