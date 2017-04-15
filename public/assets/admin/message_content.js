@@ -52,7 +52,7 @@ define(function (require, exports, module) {
                         if (full.creator!=null)
                             return full.creator.name;
                         else
-                            return '无'
+                            return '系统创建'
                     }
                 },
                 {
@@ -64,7 +64,7 @@ define(function (require, exports, module) {
                         if (full.modifyer!=null)
                             return full.modifyer.name;
                         else
-                            return '无'
+                            return '系统创建'
                     }
                 },
 
