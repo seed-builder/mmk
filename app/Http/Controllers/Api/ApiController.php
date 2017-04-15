@@ -25,7 +25,7 @@ abstract class  ApiController extends Controller
 			//dump($conditions);
 			foreach ($conditions as $k => $v) {
 				$tmp = explode(' ', $k);
-				$query->where($tmp[0], isset($tmp[1]) ? $tmp[1] : '=', $v);
+				$query->where($tmp[0], isset($tmp[1]) ? $tmp[1] : '=', json_decode($v,true));
 			}
 		}
 		//return $query;
