@@ -43,7 +43,7 @@ class StoreController extends ApiController
         $data = $request->all();
 	    unset($data['_sign']);
 	    $data['fdocument_status'] = 'A';//未经审批，禁用
-	    $data['fforbid_status'] = 'B';//未经审批，禁用
+	    $data['fforbid_status'] = 'A';//未经审批，禁用
 	    $change_reason = isset($data['change_reason'])?$data['change_reason']:'';
 	    unset($data['change_reason']);
 	    $entity = $this->newEntity($data);
