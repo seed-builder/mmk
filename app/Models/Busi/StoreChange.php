@@ -68,7 +68,7 @@ class StoreChange extends BaseModel
 					'store_name' => $model->ffullname,
 					'store_address' => $model->faddress,
 					'created' => date('Y-m-d H:i:s'),
-					'reason' => $model->change_reason
+					'reason' => $model->change_reason?:'新增'
 				]);
 		});
 
