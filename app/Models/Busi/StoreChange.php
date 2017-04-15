@@ -59,16 +59,29 @@ class StoreChange extends BaseModel
 			$employee = $model->employee;
 			$sponsor = new Sponsor($model->type == 0 ? $model->fcreator_id : $model->fmodify_id );
 			$engine = new Engine();
+			switch($model->type){
+				default:
+				case 0:
+					$action = '新增';
+					break;
+				case 1:
+					$action = '修改';
+					break;
+				case 2:
+					$action = '删除';
+					break;
+			}
+
 			$engine->startInstance('store-change', $sponsor,
 				[
 					'store_change_list' => $model,
 					'store_id' => $model->fstore_id,
 					'creator' => $sponsor->nick_name,
-					'action' => $model->type == 0 ? '新增' : ($model->type == 1 ? '修改' : '删除'),
+					'action' =>  $action,
 					'store_name' => $model->ffullname,
 					'store_address' => $model->faddress,
 					'created' => date('Y-m-d H:i:s'),
-					'reason' => $model->change_reason?:'新增'
+					'reason' => $model->change_reason?: $action
 				]);
 		});
 	}
