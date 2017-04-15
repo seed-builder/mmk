@@ -95,7 +95,7 @@ class MessageController extends AdminController
 
         return response()->json([
             'count' => $user->unreadMessagesCount(),
-            'last_id' => $user->lastUnreadMessage()->id,
+            'last_id' => !empty($user->lastUnreadMessage())?$user->lastUnreadMessage()->id:0,
             'unread_list' => $user->unreadMessages(),
         ]);
     }
