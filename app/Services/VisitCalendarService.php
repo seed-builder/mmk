@@ -26,6 +26,9 @@ class VisitCalendarService
      */
     public function byStore($store)
     {
+        if ($store->fdocument_status!="C"||$store->fforbid_status!="A")
+            return;
+
         DB::beginTransaction();
         try {
             $line = VisitLine::find($store->fline_id);
@@ -77,7 +80,10 @@ class VisitCalendarService
             if (count($vls) == 0)
                 return false;
 
-            $stores = Store::query()->whereIn('id', $vls->pluck('fstore_id')->toArray())->get();
+            $stores = Store::query()->whereIn('id', $vls->pluck('fstore_id')->toArray())
+                                    ->where('fdocument_status','C')
+                                    ->where('fforbid_status','A')
+                                    ->get();
 
             $this->deleteHistory($stores, $fdate);
 
@@ -123,7 +129,11 @@ class VisitCalendarService
                 $line = VisitLine::query()->where('fnumber', $line_number)->first();
 
                 //查询方案所绑定的门店 是否有分配在当前线路下的
-                $vls = VisitLineStore::query()->where('fline_id', $line->id)->whereIn('fstore_id', $group->stores->pluck('id')->toArray())->get();
+                $store_ids = $group->stores->where('fdocument_status','C')
+                    ->where('fforbid_status','A')
+                    ->pluck('id')->toArray();
+
+                $vls = VisitLineStore::query()->where('fline_id', $line->id)->whereIn('fstore_id', $store_ids)->get();
                 if (count($vls) == 0)
                     continue;
 
@@ -159,16 +169,13 @@ class VisitCalendarService
      */
     public function makeStore($line_calendar, $store_id)
     {
-        $store = Store::find($store_id);
-        if ($store->fdocument_status=='C'&&$store->fforbid_status=='A'){ //fdocument_status='C' and fforbid_status='A' 才生成拜访日历
-            $store_calendar = $line_calendar->store_calendars()->save(new VisitStoreCalendar([
-                'fdate' => $line_calendar->fdate,
-                'femp_id' => $line_calendar->femp_id,
-                'fstore_id' => $store_id,
-            ]));
+        $store_calendar = $line_calendar->store_calendars()->save(new VisitStoreCalendar([
+            'fdate' => $line_calendar->fdate,
+            'femp_id' => $line_calendar->femp_id,
+            'fstore_id' => $store_id,
+        ]));
 
-            $this->makeTodo($store_calendar);
-        }
+        $this->makeTodo($store_calendar);
 
     }
 
