@@ -25,7 +25,16 @@ abstract class  ApiController extends Controller
 			//dump($conditions);
 			foreach ($conditions as $k => $v) {
 				$tmp = explode(' ', $k);
-				$query->where($tmp[0], isset($tmp[1]) ? $tmp[1] : '=', $v);
+				if(isset($tmp[1])){
+					$operator = trim($tmp[1]);
+					if(preg_match('/^[a-zA-Z]+$/', $operator)){
+						$query->{'where'.ucwords($operator)}($tmp[0], $v);
+					}else{
+						$query->where($tmp[0], $tmp[1], $v);
+					}
+				}else {
+					$query->where($tmp[0], $v);
+				}
 			}
 		}
 		//return $query;
@@ -53,7 +62,7 @@ abstract class  ApiController extends Controller
 			$query->orderBy($tmpArr[0], $tmpArr[1]);
 		}
 		$data = $query->take($pageSize)->skip(($page - 1) * $pageSize)->get();
-		//LogSvr::apiSql()->info($query->toSql());
+		LogSvr::apiSql()->info($query->toSql());
 		return response(['count' => $count, 'list' => $data, 'page' => $page, 'pageSize' => $pageSize], 200);
 	}
 
