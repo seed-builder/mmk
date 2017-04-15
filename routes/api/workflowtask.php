@@ -85,7 +85,6 @@ Route::group(['prefix' => 'work-flow-task', 'middleware' => 'api.sign'], functio
 	 */
 	Route::post('/{id}/against', ['as' => 'WorkFlowTask.against', 'uses' => 'WorkFlowTaskController@against']);
 
-
 	/**
 	 * @SWG\Api(
 	 *     path="/api/work-flow-task/batch-agree",
@@ -102,7 +101,24 @@ Route::group(['prefix' => 'work-flow-task', 'middleware' => 'api.sign'], functio
 	 *  )
 	 * )
 	 */
-	Route::post('/batch-agree', ['as' => 'WorkFlowTask.against', 'uses' => 'WorkFlowTaskController@batchAgree']);
+	Route::post('/batch-agree', ['as' => 'WorkFlowTask.batchAgree', 'uses' => 'WorkFlowTaskController@batchAgree']);
 
+	/**
+	 * @SWG\Api(
+	 *     path="/api/work-flow-task/batch-against",
+	 *     @SWG\Operation(
+	 *      method="POST",
+	 *      nickname="work-flow-task-batch-against",
+	 *      summary="批量审批不通过",
+	 *      notes="批量审批不通过",
+	 *      type="",
+	 *      @SWG\Parameters(
+	 *          @SWG\Parameter(name="ids", description="多个id,逗号隔开", required=false,type="string", paramType="form", defaultValue="15,16" ),
+	 *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
+	 *      )
+	 *  )
+	 * )
+	 */
+	Route::post('/batch-against', ['as' => 'WorkFlowTask.batchAgainst', 'uses' => 'WorkFlowTaskController@batchAgainst']);
 
 });

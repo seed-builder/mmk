@@ -9,7 +9,10 @@
 namespace App\Services\WorkFlow;
 
 use App\Models\Busi\WorkFlowInstance;
+use App\Models\Busi\WorkFlowTask;
 use App\Models\Busi\WorkFlowVariable;
+use Exception;
+use Illuminate\Support\Facades\DB;
 
 /**
  * 工作流实例
@@ -86,6 +89,35 @@ class Instance
 	}
 
 	/**
+	 * 撤销实例
+	 * 1. 还未被处理过，可以撤销
+	 */
+	public function dismiss()
+	{
+		if ($this->work_flow_instance->status == 0) {
+			$handled = WorkFlowTask::where('work_flow_instance_id', $this->work_flow_instance->id)
+				->where('status', 1)
+				->count();
+			if($handled == 0){
+				DB::beginTransaction();
+				try {
+					WorkFlowTask::where('work_flow_instance_id', $this->work_flow_instance->id)
+						->where('status', 0)
+						->update(['status' => 2]);
+					$this->work_flow_instance->status = 2;
+					$this->work_flow_instance->save();
+					DB::commit();
+					$this->fireEvent('dismissed');
+					return true;
+				} catch (Exception $e) {
+					DB::rollback();
+				}
+			}
+		}
+		return false;
+	}
+
+	/**
 	 * 挂起实例
 	 */
 	public function suspend(){
@@ -121,6 +153,7 @@ class Instance
 	/**
 	 * 保存变量
 	 * @param array $variables
+	 * @return bool
 	 */
 	public function saveVariables($variables=[]){
 		if(!empty($variables)){
@@ -143,6 +176,7 @@ class Instance
 			}
 			$this->fireEvent('variables-saved', false);
 		}
+		return true;
 	}
 
 	public function getId(){
@@ -174,6 +208,7 @@ class Instance
 			'suspending','suspended',
 			'resuming','resumed',
 			'variables-saved',
+			'dismissed'
 		];
 	}
 
@@ -211,6 +246,10 @@ class Instance
 
 	public static function variablesSaved($callback){
 		static::registerEvent('variables-saved', $callback);
+	}
+
+	public static function dismissed($callback){
+		static::registerEvent('dismissed', $callback);
 	}
 
 	protected function parse($template, $variables){

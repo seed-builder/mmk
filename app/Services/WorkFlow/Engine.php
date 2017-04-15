@@ -197,5 +197,26 @@ class Engine
 		return true;
 	}
 
+	/**
+	 * 撤销
+	 * @param $instanceId
+	 * @return bool
+	 */
+	public function dismiss($instanceId){
+		$this->instance->init($instanceId);
+		return $this->instance->dismiss();
+	}
+
+	/**
+	 * 保存变量
+	 * @param $instanceId
+	 * @param array $variables
+	 * @return bool
+	 */
+	public function saveVariables($instanceId, $variables=[]){
+		$this->instance->init($instanceId);
+		return $this->instance->saveVariables($variables);
+	}
+
 
 }

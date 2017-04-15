@@ -65,5 +65,42 @@ Route::group(['prefix' => 'work-flow-instance', 'middleware' => 'api.sign'], fun
 	 */
 	Route::get('/storeValid', ['as' => 'WorkFlowInstance.storeValid', 'uses' => 'WorkFlowInstanceController@storeValid']);
 
+	/**
+	 * @SWG\Api(
+	 *     path="/api/work-flow-instance/{id}/save-variables",
+	 *     @SWG\Operation(
+	 *      method="POST",
+	 *      nickname="work-flow-task-batch-against",
+	 *      summary="保存变量",
+	 *      notes="保存变量",
+	 *      type="",
+	 *      @SWG\Parameters(
+	 *          @SWG\Parameter(name="variables", description="变量（数组的json格式）", required=false,type="string", paramType="form", defaultValue="{&quot;store_change_list&quot;:{&quot;remark&quot;:&quot;同意，审批通过&quot;}}" ),
+	 *          @SWG\Parameter(name="id", description="工作流实例id", required=true,type="integer", paramType="path", defaultValue="" ),
+	 *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
+	 *      )
+	 *  )
+	 * )
+	 */
+	Route::post('/{id}/save-variables', ['as' => 'WorkFlowInstance.saveVariables', 'uses' => 'WorkFlowInstanceController@saveVariables']);
+
+	/**
+	 * @SWG\Api(
+	 *     path="/api/work-flow-instance/{id}/dismiss",
+	 *     @SWG\Operation(
+	 *      method="POST",
+	 *      nickname="work-flow-task-batch-against",
+	 *      summary="撤销工作流实例",
+	 *      notes="撤销工作流实例",
+	 *      type="",
+	 *      @SWG\Parameters(
+	 *          @SWG\Parameter(name="id", description="工作流实例id", required=true,type="integer", paramType="path", defaultValue="" ),
+	 *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
+	 *      )
+	 *  )
+	 * )
+	 */
+	Route::post('/{id}/dismiss', ['as' => 'WorkFlowInstance.dismiss', 'uses' => 'WorkFlowInstanceController@dismiss']);
+
 
 });

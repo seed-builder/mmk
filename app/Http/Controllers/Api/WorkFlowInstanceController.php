@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Busi\WorkFlowInstanceVariable;
 use App\Models\Busi\WorkFlowVariable;
+use App\Services\WorkFlow\Engine;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\ApiController;
@@ -51,6 +52,32 @@ class WorkFlowInstanceController extends ApiController
 			->where('work_flow_instance_variables.value', $store_id)
 			->count();
 		return response(['valid' => $count > 0], 200);
+	}
+
+	/**
+	 * 保存变量
+	 * @param Request $request
+	 * @param $id
+	 * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+	 */
+	public function saveVariables(Request $request, $id){
+		$variablesStr = $request->input('variables', '{}');
+		$variables = json_decode($variablesStr, true);
+		$engine = new Engine();
+		$res = $engine->saveVariables($id, $variables);
+		return response(['success' => $res], 200);
+	}
+
+	/**
+	 * 撤销
+	 * @param Request $request
+	 * @param $id
+	 * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+	 */
+	public function dismiss(Request $request, $id){
+		$engine = new Engine();
+		$res = $engine->dismiss($id);
+		return response(['success' => $res], 200);
 	}
 
 }

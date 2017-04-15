@@ -20,7 +20,7 @@ class CreateTableWorkFlowTasks extends Migration
 	        $table->integer('approver_id')->nullable()->comment('审批人id（user id）');
 	        $table->string('action')->nullable()->comment('审批动作');
 	        $table->string('remark')->nullable()->comment('备注');
-	        $table->integer('status')->default(0)->comment('处理状态（0-未处理，1-已经处理， 2-挂起, 3-非正常结束）');
+	        $table->integer('status')->default(0)->comment('处理状态（0-未处理，1-已经处理， 2-被撤销, 3-非正常结束）');
 	        $table->integer('link_id')->default(0)->comment('work flow link id');
 	        $table->integer('pre_task_id')->default(0)->comment('pre task id');
 	        $table->integer('node_id')->default(0)->comment('work flow node id');
