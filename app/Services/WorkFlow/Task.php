@@ -36,7 +36,8 @@ class Task
 		return [
 			'data_received',
 			'task_processed',
-			'task_terminated'
+			'task_terminating',
+			'task_terminated',
 		];
 	}
 
@@ -199,11 +200,16 @@ class Task
 	/**
 	 * 终止
 	 * @param $variables
+	 * @return bool
 	 */
 	public function terminate($variables){
+		if ($this->fireEvent('task_terminating', true) === false) {
+			return false;
+		}
 		$this->receive($variables);
 		$this->task->update(['status' => 3]);
 		$this->fireEvent('task_terminated', false);
+		return true;
 	}
 
 	/**
@@ -260,6 +266,10 @@ class Task
 
 	public static function terminated($callback){
 		static::registerEvent('task_terminated', $callback);
+	}
+
+	public static function terminating($callback){
+		static::registerEvent('task_terminating', $callback);
 	}
 
 	public static function processed($callback){

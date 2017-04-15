@@ -9,9 +9,11 @@
 namespace App\Services\WorkFlow;
 use App\Models\Busi\Store;
 use App\Models\Busi\StoreChange;
+use App\Models\Busi\WorkFlowInstance;
 use App\Models\Busi\WorkFlowTask;
 use App\Services\LogSvr;
 use App\Services\VisitCalendarService;
+use function foo\func;
 
 /**
  * 工作流引擎
@@ -90,6 +92,14 @@ class Engine
 			}
 			//发送消息
 
+		});
+
+		/**
+		 * pre 检查是否可以执行非正常结束动作
+		 */
+		Task::terminating(function(Task $task){
+			$instance = WorkFlowInstance::find($task->work_flow_instance_id);
+			return $instance->status == 0 || $instance->status == 3;
 		});
 
 		/**
