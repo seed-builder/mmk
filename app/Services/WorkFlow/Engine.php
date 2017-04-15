@@ -78,7 +78,7 @@ class Engine
 						$ntask->instance->title,
 						$extraType,
 						$ntask->id,
-						3
+						2
 						);
 				}
 			}

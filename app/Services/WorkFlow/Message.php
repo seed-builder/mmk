@@ -14,7 +14,7 @@ use App\Models\Busi\MessageContent;
 class Message
 {
 	public static function sendStoreChangeTask($toId, $title, $content, $taskId){
-		static::send($toId, $title, $content, 'workflow_store_change',$taskId, 3);
+		static::send($toId, $title, $content, 'workflow_store_change',$taskId, 2);
 	}
 
 	/**
