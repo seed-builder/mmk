@@ -64,7 +64,7 @@ class StoreChange extends BaseModel
 					'store_change_list' => $model,
 					'store_id' => $model->fstore_id,
 					'creator' => $sponsor->nick_name,
-					'action' => $model->type == 0 ? '新增' : $model->type == 1 ? '修改' : '删除',
+					'action' => $model->type == 0 ? '新增' : ($model->type == 1 ? '修改' : '删除'),
 					'store_name' => $model->ffullname,
 					'store_address' => $model->faddress,
 					'created' => date('Y-m-d H:i:s'),
