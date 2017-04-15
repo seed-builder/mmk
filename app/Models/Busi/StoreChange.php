@@ -62,6 +62,7 @@ class StoreChange extends BaseModel
 			$engine->startInstance('store-change', $sponsor,
 				[
 					'store_change_list' => $model,
+					'store_id' => $model->fstore_id,
 					'creator' => $sponsor->nick_name,
 					'action' => $model->type == 0 ? '新增' : $model->type == 1 ? '修改' : '删除',
 					'store_name' => $model->ffullname,
