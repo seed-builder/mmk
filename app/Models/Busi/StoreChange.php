@@ -67,7 +67,8 @@ class StoreChange extends BaseModel
 					'action' => $model->type == 0 ? '新增' : $model->type == 1 ? '修改' : '删除',
 					'store_name' => $model->ffullname,
 					'store_address' => $model->faddress,
-					'created' => date('Y-m-d H:i:s')
+					'created' => date('Y-m-d H:i:s'),
+					'reason' => $model->change_reason
 				]);
 		});
 
