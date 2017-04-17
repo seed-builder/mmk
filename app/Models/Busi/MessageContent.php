@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  * @SWG\Property(name="id", type="integer", description="")
  * @SWG\Property(name="title", type="string", description="标题")
  * @SWG\Property(name="subtitle", type="string", description="副标题")
+ * @SWG\Property(name="type", type="integer", description="消息类型（0-系统公告,1-公司发文,2-流程消息,3-任务消息）")
   */
 class MessageContent extends BaseModel
 {
