@@ -105,4 +105,24 @@ Route::group(['prefix' => 'message', 'middleware' => 'api.sign'], function () {
     */
     Route::delete('/{id}', ['as' => 'Message.delete', 'uses' => 'MessageController@destroy']);
 
+	/**
+	 * @SWG\Api(
+	 *     path="/api/message/count",
+	 *     @SWG\Operation(
+	 *      method="GET",
+	 *      nickname="message-count",
+	 *      summary="查询消息数量",
+	 *      notes="查询消息数量",
+	 *      type="array",
+	 *     items="$ref:Message",
+	 *      @SWG\Parameters(
+	 *          @SWG\Parameter(name="search", description="查询条件（数组的json格式, 键里面可带有比较符号，不带默认为: =）", required=false, type="string", paramType="query", defaultValue="{&quot;to_id&quot;:123,&quot;read&quot;:0}"),
+	 *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="query", defaultValue="****")
+	 *      )
+	 *    )
+	 * )
+	 */
+	Route::get('/count', ['as' => 'Message.count', 'uses' => 'MessageController@count']);
+
+
 });
