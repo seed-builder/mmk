@@ -33,6 +33,7 @@ class EmployeeRepo extends Repo
 	public function getLoginData($phone){
 		$key = $this->prefix . $phone;
 		$loginData = Cache::get($key);
+		//var_dump($loginData);
 		if(is_null($loginData)){
 			$emp = Employee::where('fphone', $phone)->first();
 			if(!empty($emp)){
@@ -56,10 +57,15 @@ class EmployeeRepo extends Repo
 					'user_id' => empty($emp->user) ? 0 : $emp->user->id
 				];
 
-				Cache::put($key, $loginData);
+				Cache::forever($key, $loginData);
 			}
 		}
 		return $loginData;
+	}
+
+	public function clearCache($phone){
+		$key = $this->prefix . $phone;
+		Cache::forget($key);
 	}
 
 }
