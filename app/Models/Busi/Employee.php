@@ -9,6 +9,7 @@ use App\Repositories\SysConfigRepo;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use DB;
+use EmployeeRepo;
 
 /**
  * Class Employee
@@ -69,6 +70,13 @@ class Employee extends BaseModel
 			]);
 		});
 
+		static::updating(function ($employee){
+			$old = Employee::find($employee->id);
+			if($old->fpassword != $employee->fpassword){
+				EmployeeRepo::clearCache($employee->fphone);
+			}
+		});
+
 		static::updated(function ($employee){
 			if(empty($employee->user)) {
 				$employee->user()->create([
@@ -86,6 +94,7 @@ class Employee extends BaseModel
 					'logo' => $employee->fphoto,
 				]);
 			}
+
 		});
 	}
 
