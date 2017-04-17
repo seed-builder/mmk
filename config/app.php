@@ -234,6 +234,7 @@ return [
         'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
 	    'SysConfigRepo' => \App\Facades\SysConfigFacade::class,
 	    'Sms' => \App\Facades\SmsFacade::class,
+	    'EmployeeRepo' => \App\Facades\EmployeeRepoFacade::class,
     ],
 
 ];

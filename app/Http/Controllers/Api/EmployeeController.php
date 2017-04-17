@@ -9,68 +9,89 @@ use App\Models\Busi\Employee as Entity;
 use Hash;
 use App\Http\Requests\StoreEmployeeRequest;
 use Illuminate\Support\Facades\DB;
+use EmployeeRepo;
 
 class EmployeeController extends ApiController
 {
     //
-    public function login(Request $request){
-        $this->validate($request, [
-            'phone' => 'required',
-            'pwd' => 'required',
-            'device_sn' => 'required',
-            'device' => 'required',
-        ]);
-        $device_sn = $request->input('device_sn','');
-        $device = $request->input('device','');
-        $debug = $request->input('debug',0);
-        $emp = Entity::where('fphone', $request->input('phone'))->first();
-        $pwd = $request->input('pwd');
-        if(empty($emp)){
-            return response('该号码不存在！', 401);
-        }
-        //var_dump($emp);
-        if($pwd == $emp->fpassword){
-            //13000000000 测试账号
-//            if($emp->fphone != '13000000000') {
-//	            $sn = trim($emp->device_sn);
-//	            if (empty($sn)) {
-//		            //if(!env('APP_DEBUG')) {
-//		            $emp->device_sn = $device_sn;
-//		            $emp->device = $device;
-//		            //}
-//	            } else if ($debug == 0 && $emp->device_sn != $device_sn) {
-//		            return response('设备号不一致！', 401);
-//	            }
-//            }
-	        $emp->device_sn = $device_sn;
-	        $emp->device = $device;
-            $emp->login_time += 1;
-            $emp->save();
-            $senior = $emp->getSenior();
-            //var_dump($emp->customer);
-            $data = [
-                'id' => $emp->id,
-                'fname' => $emp->fname,
-                'femail' => $emp->femail,
-                'fphone' => $emp->fphone,
-                'fphoto' => $emp->fphoto,
-                'login_time' => $emp->login_time,
-                'position' => $emp->position ? $emp->position->fname : '',
-                'senior_phone' => $senior ? $senior->fphone:'',
-                'senior_name' => $senior ? $senior->fname:'',
-                'department_name' => $emp->department? $emp->department->fname : '',
-                'department_id' => $emp->fdept_id,
-                'org_name' => $emp->organization? $emp->organization->fname : '',
-                'org_id' => $emp->forg_id,
-	            'customer' => $emp->customer->first(),
-	            'user_id' => empty($emp->user) ? 0 : $emp->user->id
-            ];
+//    public function login(Request $request){
+//        $this->validate($request, [
+//            'phone' => 'required',
+//            'pwd' => 'required',
+//            'device_sn' => 'required',
+//            'device' => 'required',
+//        ]);
+//        $device_sn = $request->input('device_sn','');
+//        $device = $request->input('device','');
+//        $debug = $request->input('debug',0);
+//        $emp = Entity::where('fphone', $request->input('phone'))->first();
+//        $pwd = $request->input('pwd');
+//        if(empty($emp)){
+//            return response('该号码不存在！', 401);
+//        }
+//        //var_dump($emp);
+//        if($pwd == $emp->fpassword){
+//            //13000000000 测试账号
+////            if($emp->fphone != '13000000000') {
+////	            $sn = trim($emp->device_sn);
+////	            if (empty($sn)) {
+////		            //if(!env('APP_DEBUG')) {
+////		            $emp->device_sn = $device_sn;
+////		            $emp->device = $device;
+////		            //}
+////	            } else if ($debug == 0 && $emp->device_sn != $device_sn) {
+////		            return response('设备号不一致！', 401);
+////	            }
+////            }
+//	        $emp->device_sn = $device_sn;
+//	        $emp->device = $device;
+//            $emp->login_time += 1;
+//            $emp->save();
+//            $senior = $emp->getSenior();
+//            //var_dump($emp->customer);
+//            $data = [
+//                'id' => $emp->id,
+//                'fname' => $emp->fname,
+//                'femail' => $emp->femail,
+//                'fphone' => $emp->fphone,
+//                'fphoto' => $emp->fphoto,
+//                'login_time' => $emp->login_time,
+//                'position' => $emp->position ? $emp->position->fname : '',
+//                'senior_phone' => $senior ? $senior->fphone:'',
+//                'senior_name' => $senior ? $senior->fname:'',
+//                'department_name' => $emp->department? $emp->department->fname : '',
+//                'department_id' => $emp->fdept_id,
+//                'org_name' => $emp->organization? $emp->organization->fname : '',
+//                'org_id' => $emp->forg_id,
+//	            'customer' => $emp->customer->first(),
+//	            'user_id' => empty($emp->user) ? 0 : $emp->user->id
+//            ];
+//
+//            return response($data, 200);
+//        }else{
+//            return response('密码错误!', 401);
+//        }
+//    }
 
-            return response($data, 200);
-        }else{
-            return response('密码错误!', 401);
-        }
+    public function login(Request $request)
+    {
+	    $this->validate($request, [
+		    'phone' => 'required',
+		    'pwd' => 'required',
+		    'device_sn' => 'required',
+		    'device' => 'required',
+	    ]);
+	    $phone = $request->input('phone', '');
+	    $pwd = $request->input('pwd', '');
+	    $device_sn = $request->input('device_sn', '');
+	    $device = $request->input('device', '');
+
+	    $res = EmployeeRepo::login($phone, $pwd, $device, $device_sn);
+	    $status = $res['success'] ? 200 : 401;
+
+	    return $res['success'] ? response($res['data'], 200) : response($res['error'], 401);
     }
+
 
     public function newEntity(array $attributes = [])
     {

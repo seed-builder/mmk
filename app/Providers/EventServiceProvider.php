@@ -37,6 +37,9 @@ class EventServiceProvider extends ServiceProvider
 	    'App\Events\OrderDeliveryEvent' => [
 		    'App\Listeners\OrderDeliveryHandler',
 	    ],
+	    'App\Events\EmployeeLoginedEvent' => [
+		    'App\Listeners\EmployeeLoginedHandler',
+	    ],
     ];
 
     /**
