@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Busi\Department;
+use App\Services\ExcelService;
 use App\Services\LogSvr;
-use App\Helpers\Excel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Busi\AttendanceStatistic;
@@ -133,7 +133,7 @@ class AttendanceStatisticController extends AdminController
             ];
         }
 
-        $excel = new Excel();
+        $excel = new ExcelService();
         $excel->export($data, date('Ymd') . '_考勤信息');
     }
 }

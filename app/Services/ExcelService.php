@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Helpers;
+namespace App\Services;
 
 use PHPExcel;
 use PHPExcel_IOFactory;
 
-class Excel
+class ExcelService
 {
     //
     public function export($data,$filename){

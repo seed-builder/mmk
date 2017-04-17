@@ -45,6 +45,21 @@ define(function (require, exports, module) {
                 {  'data': 'id' },
                 {  'data': 'title' },
                 {  'data': 'subtitle' },
+                {
+                    'data': 'type',
+                    render: function ( data, type, full ) {
+                        switch (data){
+                            case 0:
+                                return '系统公告';
+                            case 1:
+                                return '公司发文';
+                            case 2:
+                                return '流程消息';
+                            case 3:
+                                return '任务消息';
+                        }
+                    }
+                },
                 {  'data': 'content' },
                 {  'data': 'fcreate_date' },
                 {

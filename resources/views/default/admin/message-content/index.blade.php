@@ -39,6 +39,7 @@
                                 <th>id</th>
                                 <th>标题</th>
                                 <th>副标题</th>
+                                <th>消息类别</th>
                                 <th>内容</th>
                                 <th>创建时间</th>
                                 <th>创建者</th>

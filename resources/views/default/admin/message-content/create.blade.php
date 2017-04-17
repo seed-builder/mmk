@@ -52,6 +52,16 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="col-sm-2 control-label">消息类别</label>
+
+                                <div class="col-sm-9">
+                                    <select class="form-control" name="type">
+                                        <option value="0">系统公告</option>
+                                        <option value="1">公司发文</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-sm-2 control-label">内容</label>
 
                                 <div class="col-sm-9">
