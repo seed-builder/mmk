@@ -28,6 +28,7 @@ class Message
 	 */
 	public static function send($toId, $title, $content, $extraType, $extraId, $type=2, $fromId = 0){
 		$mc = MessageContent::create([
+			'type' => $type ,
 			'title' => $title,
 			'content' => $content,
 			'subtitle' => $content,
