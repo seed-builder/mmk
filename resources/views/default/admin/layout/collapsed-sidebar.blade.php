@@ -1,3 +1,7 @@
+<?php
+$loginUser = Auth::user();
+$loginUserName = empty($loginUser->nick_name) ? $loginUser->name: $loginUser->nick_name;
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -53,6 +57,7 @@
     <script src="/assets/sea.config.js"></script>
     <!-- jquery UI -->
     <script src="/assets/plugins/jQueryUI/jquery-ui.js"></script>
+    <script src="/assets/plugins/velocity/velocity.min.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -91,18 +96,21 @@
                     <li class="dropdown messages-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-envelope-o"></i>
-                            {!! Auth::user()->unreadMessagesCount()>0?'<span class="label label-success">'.Auth::user()->unreadMessagesCount().'</span>':'' !!}
+                            <span class="label label-danger" id="message_count">{{ $loginUser->unreadMessagesCount()>0?$loginUser->unreadMessagesCount():'' }}</span>
                         </a>
+                        <input type="hidden" id="last_unread_id" value="{{!empty($loginUser->lastUnreadMessage())?$loginUser->lastUnreadMessage()->id:0}}">
+                        <a href="" id="message_content" data-target="#contentInfo" data-toggle="modal" style="display: none"></a>
+
                         <ul class="dropdown-menu">
                             <li>
                                 <!-- inner menu: contains the actual data -->
-                                <ul class="menu">
-                                    @foreach(Auth::user()->unreadMessages() as $message)
+                                <ul class="menu" id="message_list">
+                                    @foreach($loginUser->unreadMessages() as $message)
                                         <li><!-- start message -->
                                             <a href="{{url('admin/message/receiveMessages')}}">
                                                 <h4>
                                                     {{$message->content->title}}
-                                                    <small><i class="fa fa-clock-o"></i> 5 mins</small>
+                                                    <small><i class="fa fa-clock-o"></i> {{$message->fcreate_date}}</small>
                                                 </h4>
                                                 <p>{{ strlen($message->content->content)>10?substr($message->content->content,0,10)."...":$message->content->content }}</p>
                                             </a>
@@ -117,7 +125,7 @@
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <img src="/assets/plugins/AdminLTE/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                            <span class="hidden-xs">{{Auth::user()->name}}</span>
+                            <span class="hidden-xs">{{$loginUserName}}</span>
                         </a>
                         <ul class="dropdown-menu">
 
@@ -126,15 +134,15 @@
                                 <img src="/assets/plugins/AdminLTE/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                                 <p>
-                                    {{Auth::user()->name}}
-                                    <small>{{Auth::user()->created_at}}</small>
+                                    {{$loginUserName}}
+                                    <small>{{$loginUser->created_at}}</small>
                                 </p>
                             </li>
                             <!-- Menu Body -->
                             <li class="user-body">
                                 <div class="row">
                                     <div class="col-xs-4 text-center">
-                                        <a href="#">密码重置</a>
+                                        <a id="pwd-reset" style="cursor: ">密码重置</a>
                                     </div>
                                     {{--<div class="col-xs-4 text-center">--}}
                                         {{--<a href="#">Sales</a>--}}
@@ -174,6 +182,12 @@
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         @yield('content')
+        <div id="contentInfo" class="modal fade modal-scroll" role="dialog" tabindex="-1" data-replace="true">
+            <div class="modal-dialog" style="width: 50%">
+                <div class="modal-content">
+                </div>
+            </div>
+        </div>
     </div>
     <!-- /.content-wrapper -->
 
@@ -224,6 +238,13 @@
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
     }
+
+    $("#pwd-reset").on('click',function () {
+        layer.confirm('确认重置密码吗？重置后密码为：888888',function () {
+            window.location.href="/admin/user/reset-pwd?id="+{{$loginUser->id}}
+            layer.closeAll();
+        })
+    })
 
 
 </script>

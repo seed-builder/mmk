@@ -44,9 +44,9 @@ Artisan::command('test', function () {
 Artisan::command('test1', function () {
 	$this->comment('begin ...');
 	$db = new DbHelper();
-	$columns = $db->getColumns('work_flow_variables');
-	$builder = new CodeBuilder('WorkFlowVariable', 'work_flow_variables', $columns);
-	$builder->createFiles( 'admin');
+	$columns = $db->getColumns('bd_message_contents');
+	$builder = new CodeBuilder('MessageContent', 'bd_message_contents', $columns);
+	$builder->createFiles( 'api');
 	$this->comment('end ...');
 })->describe('philo blade test');
 
@@ -152,7 +152,9 @@ Artisan::command('cp-customer-to-user', function () {
 					$customer->user()->create([
 						'name' => $customer->ftel,
 						'password' => bcrypt('888888'),
-						'status' => 1
+						'status' => 1,
+						'nick_name' => $customer->fname,
+
 					]);
 					$this->comment('success copy customer:  ' . $customer->fname);
 				}
@@ -179,9 +181,20 @@ Artisan::command('cp-employee-to-user', function () {
 						'name' => $employee->fphone,
 						'password' => $employee->fpassword,
 						'login_time' => $employee->login_time,
-						'status' => 1
+						'status' => 1,
+						'nick_name' => $employee->fname,
+						'logo' => $employee->fphoto,
 					]);
-					$this->comment('success copy employee:  ' . $employee->fname);
+					$this->comment('add: success copy employee:  ' . $employee->fname);
+				}else{
+					$employee->user()->update([
+						'name' => $employee->fphone,
+						'password' => $employee->fpassword,
+						'login_time' => $employee->login_time,
+						'nick_name' => $employee->fname,
+						'logo' => $employee->fphoto,
+					]);
+					$this->comment('update: success copy employee:  ' . $employee->fname);
 				}
 			}
 			DB::commit();
@@ -192,6 +205,30 @@ Artisan::command('cp-employee-to-user', function () {
 	}
 	$this->comment('end ...');
 })->describe('copy employees to sys_users tables');
+
+Artisan::command('fill-user-nickname', function () {
+	$this->comment('begin ...');
+	$users = User::whereNotNull('reference_type')->get();
+	$this->comment('ready to copy '.count($users).' users fill');
+	if(!empty($users)){
+		DB::beginTransaction();
+		try {
+			foreach ($users as $user) {
+				if (!empty($user->reference)) {
+					//$user->update(['nick_name' => $user->reference->fname]);
+					$user->nick_name = $user->reference->fname;
+					$user->save();
+					$this->comment('success fill user:  ' . $user->reference->fname);
+				}
+			}
+			DB::commit();
+		} catch (Exception $e) {
+			$this->comment(' fill user err:  ' . $e->getMessage());
+			DB::rollBack();
+		}
+	}
+	$this->comment('end ...');
+})->describe('fill users nick name');
 
 Artisan::command('push-attendance', function () {
 	$this->comment('begin  send attendances...');

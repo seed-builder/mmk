@@ -31,7 +31,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'status','login_time'
+        'name', 'email', 'password', 'status','login_time','nick_name','logo'
     ];
     /**
      * The attributes that should be hidden for arrays.
@@ -108,11 +108,16 @@ class User extends Authenticatable
         return $this->hasMany(Message::class,'to_id','id');
     }
 
-    public function unreadMessages(){
-        return $this->receiveMessages->where('read',0);
+
+    public function unreadMessages($limit=5){
+        return $this->receiveMessages()->where('read',0)->orderBy('fcreate_date','desc')->limit($limit)->get();
     }
 
     public function unreadMessagesCount(){
         return $this->receiveMessages()->where('read',0)->count();
+    }
+
+    public function lastUnreadMessage(){
+        return $this->receiveMessages()->where('read',0)->orderBy('fcreate_date','desc')->first();
     }
 }

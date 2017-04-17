@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Busi\Employee;
+use App\Models\Busi\StoreChange;
 use App\Models\City;
 use App\Repositories\ISysConfigRepo;
 use Illuminate\Http\Request;
@@ -41,6 +42,10 @@ class StoreController extends ApiController
         //
         $data = $request->all();
 	    unset($data['_sign']);
+	    $data['fdocument_status'] = 'A';//未经审批，禁用
+	    $data['fforbid_status'] = 'A';//未经审批，禁用
+	    $change_reason = isset($data['change_reason'])?$data['change_reason']:'';
+	    unset($data['change_reason']);
 	    $entity = $this->newEntity($data);
 	    $fieldErrors = $this->validateFields($data);
 	    if (!empty($fieldErrors)) {
@@ -48,15 +53,8 @@ class StoreController extends ApiController
 		    return response($msg, 404);
 	    }
         //$entity = Entity::create($data);
-	    $data['fdocument_status'] = 'A';//未经审批，禁用
-	    $data['fforbid_status'] = 'B';//未经审批，禁用
         $re = $entity->save();
-        //创建变更单
-//        $entity->change_list()->create([
-//        	'type' => 0,
-//	        'data' => json_encode($entity),
-//	        'fcreator_id' => $entity->fcreator_id
-//        ]);
+	    StoreChange::addFromStore($entity->toArray()+['change_reason' => $change_reason], 0);
         $status = $re ? 200 : 400;
         return response($entity, $status);
     }
@@ -69,16 +67,10 @@ class StoreController extends ApiController
 	    //var_dump($data);
 	    unset($data['_sign']);
 	    $entity->fill($data);
-	    //if(empty($entity->change_list)){
-//	    $re = $entity->change_list()->create([
-//		    'type' => 1,
-//		    'data' => json_encode($entity),
-//		    'fcreator_id' => $data['fmodify_id'],
-//	    ]);
-	    //}
-	    $re = $entity->save();
+	    StoreChange::addFromStore($entity->toArray(), $entity->fforbid_status == 'B' ? 2 : 1);
+	    //$re = $entity->save();
 	    //LogSvr::update()->info(json_encode($re));
-	    $status = $re ? 200 : 401;
+	    $status = 200;//$re ? 200 : 401;
 	    return response(['success' => $entity], $status);
     }
 
@@ -121,6 +113,7 @@ class StoreController extends ApiController
 				}
 			}
 		}
+		$query->where('fforbid_status', 'A');//过滤禁用状态的
 		//return $query;
 	}
 
@@ -133,7 +126,7 @@ class StoreController extends ApiController
 		$fpolicy_id = $request->input('fpolicy_id');
 		//$entity = $this->newEntity();
 		$query = DB::table('st_stores'); //$entity->query();
-		$query->where('st_stores.femp_id', $femp_id);
+		$query->where('st_stores.femp_id', $femp_id)->where('st_stores.fforbid_status', 'A');
 		//$query->where('st_stores.fis_signed', 0);
 		$query->whereNotExists(function ($query) use($fpolicy_id) {
 			$query->select(DB::raw(1))

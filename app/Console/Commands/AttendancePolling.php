@@ -113,6 +113,6 @@ EOH;
 		    LogSvr::AttendancPolling()->error('错误, APIRequestException：'. $e);
 		    $msg[] = '发送失败: ' . $e->getMessage();
 	    }
-	    SysCrontab::exec($this->name, implode('\n\t', $msg));
+	    SysCrontab::exec('attendance_polling', implode($msg));
     }
 }

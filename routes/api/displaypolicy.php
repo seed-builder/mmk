@@ -79,7 +79,7 @@ Route::group(['prefix' => 'display-policy', 'middleware' => 'api.sign'], functio
     * @SWG\Api(
     *     path="/api/display-policy/{id}",
     *     @SWG\Operation(
-    *      method="PUT",
+    *      method="POST",
     *      nickname="display-policy-update",
     *      summary="更新陈列费用政策",
     *      notes="更新陈列费用政策",
@@ -103,7 +103,7 @@ Route::group(['prefix' => 'display-policy', 'middleware' => 'api.sign'], functio
     *  )
     * )
     */
-    Route::put('/{id}', ['as' => 'DisplayPolicy.update', 'uses' => 'DisplayPolicyController@update']);
+    Route::post('/{id}', ['as' => 'DisplayPolicy.update', 'uses' => 'DisplayPolicyController@update']);
 
     /**
     * @SWG\Api(

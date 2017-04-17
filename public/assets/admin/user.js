@@ -29,6 +29,7 @@ define(function(require, exports, module) {
             idSrc: 'id',
             fields: [
                 { 'label':  '用户名', 'name': 'name', },
+                { 'label':  '昵称', 'name': 'nick_name', },
                 { 'label':  'Email', 'name': 'email', },
                 { 'label':  '密码', 'name': 'password', 'type':'password'},
             ]
@@ -46,6 +47,7 @@ define(function(require, exports, module) {
             columns: [
                 // {  'data': 'id' },
                 {  'data': 'name' },
+                {  'data': 'nick_name' },
                 // {  'data': 'email' },
                 {  'data': 'reference_type' },
                 {  'data': 'status', render: function (data, type, full) {
@@ -60,7 +62,7 @@ define(function(require, exports, module) {
                     "render": function ( data, type, row ) {
                         return '<a href="/admin/user/'+data+'/set-role">设置角色</a>&nbsp;<a href="/admin/user/'+data+'/set-position">设置职位</a>'
                         },
-                    "targets": 5,
+                    "targets": 6,
                     "searchable": false,
                     "sortable": false
                 }

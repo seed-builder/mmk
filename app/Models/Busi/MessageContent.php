@@ -21,6 +21,7 @@ use Illuminate\Database\Eloquent\Model;
  * @SWG\Property(name="fmodify_id", type="integer", description="修改人")
  * @SWG\Property(name="id", type="integer", description="")
  * @SWG\Property(name="title", type="string", description="标题")
+ * @SWG\Property(name="subtitle", type="string", description="副标题")
   */
 class MessageContent extends BaseModel
 {

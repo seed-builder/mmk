@@ -102,7 +102,7 @@ class MessageContentController extends AdminController
 
     public function store(Request $request, $extraFields = [])
     {
-        $data = $request->only(['files','title','content']);
+        $data = $request->only(['files','title','subtitle','content']);
 
         if (!empty($data['files']))
             $data['files'] = implode(',',$data['files']);
@@ -118,7 +118,7 @@ class MessageContentController extends AdminController
 
     public function update(Request $request, $id, $extraFields = [])
     {
-        $data = $request->only(['files','title','content']);
+        $data = $request->only(['files','title','subtitle','content']);
 
         if (!empty($data['files']))
             $data['files'] = implode(',',$data['files']);
@@ -182,9 +182,7 @@ class MessageContentController extends AdminController
         foreach ($users as $user){
             $datas[] =[
                 'from_id' => Auth::user()->id,
-                'from_type' => 'App\Models\User',
                 'to_id' => $user,
-                'to_type' => 'App\Models\User',
                 'message_content_id' => $content_id,
                 'fcreate_date' => date('Y-m-d H:i:s'),
                 'fmodify_date' => date('Y-m-d H:i:s'),

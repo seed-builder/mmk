@@ -39,6 +39,7 @@
                             <tr>
                                 {{--<th>id</th>--}}
                                 <th>登陆名</th>
+                                <th>昵称</th>
                                 {{--<th>Email</th>--}}
                                 <th>类型</th>
                                 <th>状态</th>

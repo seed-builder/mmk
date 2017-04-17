@@ -14,7 +14,8 @@
         "zizaco/entrust": "5.2.x-dev",
         "philo/laravel-blade": "3.*",
         "laravel/tinker": "^1.0",
-        "doctrine/dbal": "^2.5"
+        "doctrine/dbal": "^2.5",
+        "phpoffice/phpexcel": "1.8.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

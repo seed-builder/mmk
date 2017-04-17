@@ -18,7 +18,7 @@ use App\Services\LogSvr;
  */
 class AttRepoortGen extends Command
 {
-	protected $name= 'att-rpt';
+	//protected $name= 'att-rpt';
     /**
      * attendance report generator!
      *
@@ -63,7 +63,7 @@ class AttRepoortGen extends Command
 	    $this->init($year, $month);
 	    $this->statistic($year, $month);
 	    $this->log("year: $year, month: $month, generate attendance report end!");
-	    SysCrontab::exec($this->name);
+	    SysCrontab::exec('att-rpt');
     }
 
 	/**

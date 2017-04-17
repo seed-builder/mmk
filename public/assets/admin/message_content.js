@@ -44,12 +44,16 @@ define(function (require, exports, module) {
             columns: [
                 {  'data': 'id' },
                 {  'data': 'title' },
+                {  'data': 'subtitle' },
                 {  'data': 'content' },
                 {  'data': 'fcreate_date' },
                 {
                     'data': 'fcreator_id',
                     render: function ( data, type, full ) {
-                        return full.creator.name;
+                        if (full.creator!=null)
+                            return full.creator.name;
+                        else
+                            return '系统创建'
                     }
                 },
                 {
@@ -58,7 +62,10 @@ define(function (require, exports, module) {
                 {
                     'data': 'fmodify_id',
                     render: function ( data, type, full ) {
-                        return full.modifyer.name;
+                        if (full.modifyer!=null)
+                            return full.modifyer.name;
+                        else
+                            return '系统创建'
                     }
                 },
 

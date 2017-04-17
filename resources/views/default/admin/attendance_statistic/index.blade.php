@@ -84,7 +84,8 @@
                     <!-- /.box-header -->
                     <div class="box-body">
                         <div class="panel panel-default">
-                            <div class="form-horizontal filter " filter-table="#moduleTable">
+                            <form class="form-horizontal filter" id="moduleForm" filter-table="#moduleTable" method="post">
+                                {{ csrf_field() }}
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">姓名</label>
@@ -120,7 +121,7 @@
                                     <button type="button" class="btn btn-info filter-submit">查询</button>
                                     <button type="button" class="btn btn-default filter-reset">重置</button>
                                 </div>
-                            </div>
+                            </form>
 
 
 

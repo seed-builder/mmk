@@ -14,7 +14,7 @@ use App\Services\LogSvr;
 
 class AttStatisticGen extends Command
 {
-	protected $name = 'att-stc';
+	//protected $name = 'att-stc';
     /**
      * The name and signature of the console command.
      *
@@ -59,8 +59,11 @@ class AttStatisticGen extends Command
 
 	    $this->log('AttStatisticGen begin');
 	    //$workdays = DB::select("select fday from  eng_work_calendar_data where fday >='$begin' and fday <= '$end'and fis_work_time=1");
-	    //$workdays = WorkCalendarData::where('fday', '>=', $begin)->where('fday', '<=', $end)->where('fis_work_time', 1)->get();
-	    $workdays = WorkCalendarData::where('fday', '>=', $begin)->where('fday', '<=', $end)->get();
+	    $workdays = WorkCalendarData::where('fday', '>=', $begin)
+		    ->where('fday', '<=', $end)
+		    //->where('fis_work_time', 1)
+		    ->get();
+
 	    if(count($workdays) > 0) {
 	    	if(is_null($empId)) {
 			    $employees = Employee::all();
@@ -79,7 +82,7 @@ class AttStatisticGen extends Command
 			}
 	    }
 	    $this->log('AttStatisticGen end!');
-	    SysCrontab::exec($this->name);
+	    SysCrontab::exec('att-stc');
     }
 
     public function day($day, $employee)

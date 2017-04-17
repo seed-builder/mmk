@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @SWG\Property(name="data_id", type="integer", description="数据 id")
  * @SWG\Property(name="data_type", type="string", description="数据类型")
  * @SWG\Property(name="node_id", type="string", description="当前所处审批节点")
- * @SWG\Property(name="status", type="integer", description="状态(0-审批中,1-结束, 2-挂起, 3-非正常结束)")
+ * @SWG\Property(name="status", type="integer", description="状态(0-审批中,1-结束, 2-被撤销, 3-非正常结束)")
  * @SWG\Property(name="updated_at", type="string", description="")
  * @SWG\Property(name="created_at", type="string", description="")
  * @SWG\Property(name="work_flow_id", type="integer", description="")
@@ -36,14 +36,6 @@ class WorkFlowInstance extends Model
 	}
 
 	/**
-	 * 当前审批节点
-	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-	 */
-	public function node(){
-		return $this->belongsTo(WorkFlowNode::class, 'node_id');
-	}
-
-	/**
 	 * 当前发起人
 	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
 	 */
@@ -52,12 +44,13 @@ class WorkFlowInstance extends Model
 	}
 
 	/**
-	 * 数据
-	 * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+	 * 实例相关的私有数据变量
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
 	 */
-	public function data(){
-		return $this->morphTo();
+	public function variables(){
+		return $this->hasMany(WorkFlowInstanceVariable::class, 'work_flow_instance_id');
 	}
+
 
 	protected static function boot()
 	{

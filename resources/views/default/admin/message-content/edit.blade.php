@@ -47,6 +47,13 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="col-sm-2 control-label">副标题</label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="subtitle" value="{{$entity->subtitle}}" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-sm-2 control-label">内容</label>
 
                                 <div class="col-sm-9">
