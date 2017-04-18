@@ -22,7 +22,7 @@ class SysConfigRepo extends Repo implements ISysConfigRepo
 			$config = Cache::get('app-data-isolate');
 		}else{
 			$config = SysConfig::where('name', 'app-data-isolate')->first();
-			Cache::put('app-data-isolate', $config);
+			Cache::forever('app-data-isolate', $config);
 		}
 		return $config->status == 1 ;
 	}
@@ -36,7 +36,7 @@ class SysConfigRepo extends Repo implements ISysConfigRepo
 			$config = Cache::get('mgt-data-isolate');
 		}else{
 			$config = SysConfig::where('name', 'mgt-data-isolate')->first();
-			Cache::put('mgt-data-isolate', $config);
+			Cache::forever('mgt-data-isolate', $config);
 		}
 		return $config->status == 1 ;
 	}
@@ -50,9 +50,15 @@ class SysConfigRepo extends Repo implements ISysConfigRepo
 			$config = Cache::get('no-data-isolate-employees');
 		}else{
 			$config = SysConfig::where('name', 'no-data-isolate-employees')->first();
-			Cache::put('no-data-isolate-employees', $config);
+			Cache::forever('no-data-isolate-employees', $config);
 		}
 		return $config->status == 1 ? $config->value : '';
+	}
+
+	public function clearCache(){
+		Cache::forget('mgt-data-isolate');
+		Cache::forget('app-data-isolate');
+		Cache::forget('no-data-isolate-employees');
 	}
 
 }

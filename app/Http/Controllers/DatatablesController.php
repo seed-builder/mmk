@@ -106,6 +106,7 @@ abstract class DatatablesController extends Controller
             $entity = $this->newEntity()->newQuery()->find($id);
             $entity->fill($props);
             $entity->save();
+            $this->afterSave($entity);
             return $this->success($entity);
         }
     }
@@ -348,4 +349,7 @@ abstract class DatatablesController extends Controller
 		return $result;
 	}
 
+	protected function afterSave($model){
+
+	}
 }

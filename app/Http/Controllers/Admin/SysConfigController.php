@@ -70,4 +70,8 @@ class SysConfigController extends AdminController
 		return parent::pagination($request, $searchCols);
 	}
 
+	protected function afterSave($model){
+		Cache::forget($model->name);
+	}
+
 }
