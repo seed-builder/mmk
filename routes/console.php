@@ -85,11 +85,11 @@ Artisan::command('create-position-flag', function () {
 function createPositionFlag($position, $pflag){
 	$position->flag = $pflag . $position->id;
 	$position->save();
-	echo $position->flag;
+	//echo $position->flag;
+	$this->comment('gen flag: ' . $position->flag);
 	if($position->children){
 		foreach ($position->children as $child) {
 			createPositionFlag($child, $position->flag . '-');
-
 		}
 	}
 }
