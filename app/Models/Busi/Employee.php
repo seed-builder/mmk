@@ -161,8 +161,10 @@ class Employee extends BaseModel
 	    $subs = [];
 	    if(!empty($this->position)) {
 		    $flag = $this->position->flag;
-		    $sql = "select e.* from bd_employees e, bd_positions p where e.fpost_id = p.id and p.flag like '{$flag}_%'";
-		    $subs = DB::select($sql);
+		    if(!empty($flag)) {
+			    $sql = "select e.* from bd_employees e, bd_positions p where e.fpost_id = p.id and p.flag like '{$flag}_%'";
+			    $subs = DB::select($sql);
+		    }
 	    }
 	    $subs[] = $this;
 	    return $subs;
