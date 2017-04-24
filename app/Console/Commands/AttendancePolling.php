@@ -13,7 +13,7 @@ use App\Models\Busi\WorkCalendarData;
 
 class AttendancePolling extends Command
 {
-	protected $name = 'attendance_polling';
+	//protected $name = 'attendance_polling';
     /**
      * The name and signature of the console command.
      *
@@ -45,7 +45,7 @@ class AttendancePolling extends Command
     public function handle()
     {
         //
-	    LogSvr::AttendancPolling()->info('考勤日完成情况轮询通知开始..!');
+	    $this->log('考勤日完成情况轮询通知开始..!');
         $today = date('Y-m-d');
         $day = WorkCalendarData::where('fday', $today)->first();
         if(!$day->fis_work_time) return; //非工作日
@@ -62,22 +62,22 @@ EOH;
 			}, $result);
 			$this->sendMsg($ids);
 		}
-	    LogSvr::AttendancPolling()->info('考勤日完成情况轮询通知结束!');
+	    $this->log('考勤日完成情况轮询通知结束!');
     }
 
     protected function sendMsg($ids){
 	    $msg = [];
 	    $messageTemp = MessageTemplate::where('type', 0)->first();
 	    if(empty($messageTemp)){
-		    LogSvr::AttendancPolling()->warn('警告：没有找到【type=0】的消息模板！');
+		    $this->log('警告：没有找到【type=0】的消息模板！');
 		    return;
 	    }
 	    // type=1 , content=
 	    $content = $messageTemp->content ;//str_replace('#name', 'test', $messageTemp->content);
 	    $msg[] = '待发送推送消息的数量：'. count($ids);
-	    LogSvr::AttendancPolling()->info($msg);
+	    $this->log($msg);
 	    if(env('APP_DEBUG')){
-		    LogSvr::AttendancPolling()->info('AttendancePolling测试, 待发送推送消息的 ids：'. json_encode($ids));
+		    $this->log('AttendancePolling测试, 待发送推送消息的 ids：'. json_encode($ids));
 		    return;
 	    }
 
@@ -105,14 +105,19 @@ EOH;
 	    } catch (\JPush\Exceptions\APIConnectionException $e) {
 		    // try something here
 		    //print $e;
-		    LogSvr::AttendancPolling()->error('错误, APIConnectionException：'. $e);
+		    $this->log('错误, APIConnectionException：'. $e);
 		    $msg[] = '发送失败: ' . $e->getMessage();
 	    } catch (\JPush\Exceptions\APIRequestException $e) {
 		    // try something here
 		    //print $e;
-		    LogSvr::AttendancPolling()->error('错误, APIRequestException：'. $e);
+		    $this->log('错误, APIRequestException：'. $e);
 		    $msg[] = '发送失败: ' . $e->getMessage();
 	    }
 	    SysCrontab::exec('attendance_polling', implode($msg));
     }
+
+	public function log($msg){
+		$this->info($msg);
+		$this->log($msg);
+	}
 }

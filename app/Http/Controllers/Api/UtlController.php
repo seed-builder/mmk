@@ -41,12 +41,16 @@ class UtlController extends Controller
         $h = $request->input('h', null);
         $w = $request->input('w', null);
         $image = Resources::find($id); //'
-        $image = storage_path($image->path);
-        $img = Image::make($image);
-        if($h || $w){
-            $img->resize($w, $h);
-        }
-        return $img->response();
+	    if(!empty($image)) {
+		    $image = storage_path($image->path);
+		    $img = Image::make($image);
+		    if ($h || $w) {
+			    $img->resize($w, $h);
+		    }
+		    return $img->response();
+	    }else{
+	    	return response("", 200);
+	    }
     }
 
 	public function uploadFile(Request $request){
