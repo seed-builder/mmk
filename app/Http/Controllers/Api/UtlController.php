@@ -49,7 +49,7 @@ class UtlController extends Controller
 		    }
 		    return $img->response();
 	    }else{
-	    	return response("", 200);
+		    return response('not image', 404);
 	    }
     }
 
