@@ -148,6 +148,14 @@ define(function (require, exports, module) {
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
+                { text: '出库单打印<i class="fa fa-fw fa-print"></i>',action: function () {
+                    var row = table.rows('.selected').data();
+                    if (row.length==0){
+                        layer.alert('请选择一个出库单')
+                        return ;
+                    }
+                    window.location.href= "/admin/stock-out/print-out-order/"+row[0].id
+                } },
                 {extend: 'colvis', text: '列显示'},
                 { text: '审核<i class="fa fa-fw fa-paperclip"></i>',className: 'check', enabled: false },
                 { text: '反审核<i class="fa fa-fw fa-unlink"></i>',className: 'uncheck', enabled: false },

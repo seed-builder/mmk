@@ -35,7 +35,7 @@
                     <!-- /.box-header -->
                     <div class="box-body">
                         <div class="panel panel-default" >
-                            <form class="form-horizontal filter "  filter-table="#moduleTable">
+                            <form class="form-horizontal filter" id="moduleForm"  filter-table="#moduleTable">
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">经销商</label>
                                     <div class="col-sm-2">

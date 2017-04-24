@@ -593,3 +593,42 @@ function message() {
         }
     },'json')
 }
+
+
+/*
+ * 打印
+ */
+function printView(form_id,url,tree_id) {
+    var form = $(form_id)
+    $.each(form.find('.form-control'),function (index,input) {
+        var name = $(input).attr('filter-name')
+        var operator = $(input).attr('filter-operator')
+
+        if (name){
+            var input1 = '<input type="hidden" class="print_conditions" name="filter['+index+'][name]" value="'+$(input).attr('filter-name')+'"/>'
+
+            var input3 = '<input type="hidden" class="print_conditions" name="filter['+index+'][value]" value="'+$(input).val()+'" />'
+            form.append(input1)
+            form.append(input3)
+        }
+        if (operator){
+            var input2 = '<input type="hidden" class="print_conditions" name="filter['+index+'][operator]" value="'+$(input).attr('filter-operator')+'" />'
+            form.append(input2)
+        }
+
+    })
+    if (tree_id!=null){
+        var treeNode = $('.treeview').treeview('getSelected');
+        if (treeNode.length>0){
+            var tree_condition = '<input type="hidden" class="print_conditions" name="tree[nodeid]" value="'+treeNode[0].dataid+'" />'
+            form.append(tree_condition);
+        }
+    }
+
+
+    form.attr('action',url)
+    form.submit();
+    form.attr('action','')
+
+    $(".print_conditions").remove();
+}

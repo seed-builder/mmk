@@ -70,4 +70,17 @@ class StockOut extends BaseModel
 		});
 
 	}
+
+	public function ftype(){
+	    switch ($this->ftype){
+            case 'A':
+                return '自动出库';
+            case 'B':
+                return '经销出库';
+            case 'C':
+                return '库存调整';
+            default:
+                return '自动出库';
+        }
+    }
 }
