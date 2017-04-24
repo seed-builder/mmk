@@ -58,7 +58,7 @@ EOH;
 
 		if(!empty($result)){
 			$ids = array_map(function ($item){
-				return $item->id;
+				return $item->id . '';
 			}, $result);
 			$this->sendMsg($ids);
 		}
