@@ -27,7 +27,6 @@ class StockOutController extends AdminController
 	*/
 	public function index()
 	{
-
         $all = Customer::all();
         $customers = $all->map(function ($item){
             return ['label' => $item->fname, 'value' => $item->id];

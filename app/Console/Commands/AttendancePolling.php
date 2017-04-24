@@ -116,8 +116,9 @@ EOH;
 	    SysCrontab::exec('attendance_polling', implode($msg));
     }
 
-	public function log($msg){
+	public function log($msg, $method = 'info'){
 		$this->info($msg);
-		$this->log($msg);
+		//$this->log($msg);
+		LogSvr::AttendancPolling()->{$method}($msg);
 	}
 }
