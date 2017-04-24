@@ -72,10 +72,11 @@ EOH;
 		    $this->log('警告：没有找到【type=0】的消息模板！');
 		    return;
 	    }
+	    //var_dump($messageTemp);
 	    // type=1 , content=
 	    $content = $messageTemp->content ;//str_replace('#name', 'test', $messageTemp->content);
 	    $msg[] = '待发送推送消息的数量：'. count($ids);
-	    $this->log($msg);
+	    $this->log(implode($msg));
 	    if(env('APP_DEBUG')){
 		    $this->log('AttendancePolling测试, 待发送推送消息的 ids：'. json_encode($ids));
 		    return;
