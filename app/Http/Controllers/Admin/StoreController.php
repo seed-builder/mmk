@@ -20,6 +20,7 @@ use Illuminate\Http\Response;
 use DB;
 use Auth;
 use SysConfigRepo;
+use App\Services\LogSvr;
 
 class StoreController extends AdminController
 {
@@ -61,7 +62,7 @@ class StoreController extends AdminController
             $this->readyAllotStoreQuery($data,$queryBuilder);
 
             $ids = $this->getCurUsersEmployeeIds();//$entities->pluck('id')->all(); //array_map(function ($item){	return $item->id;}, $entities);
-            //var_dump($ids);
+	        //LogSvr::store()->info(json_encode($ids));
             if (!empty($ids)) {
                 $queryBuilder->whereIn('femp_id', $ids);
             }
