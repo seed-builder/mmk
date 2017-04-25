@@ -115,7 +115,7 @@ $loginUserName = empty($loginUser->nick_name) ? $loginUser->name: $loginUser->ni
                                             <a href="{{url('admin/message/receiveMessages')}}">
                                                 <h4>
                                                     {{$message->content->title}}
-                                                    <small><i class="fa fa-clock-o"></i> {{$message->fcreate_date}}</small>
+                                                    <small><i class="fa fa-clock-o"></i> {{date('Y-m-d',strtotime($message->fcreate_date))}}</small>
                                                 </h4>
                                                 <p>{{ strlen($message->content->content)>10?substr($message->content->content,0,10)."...":$message->content->content }}</p>
                                             </a>
