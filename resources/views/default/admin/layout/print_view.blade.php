@@ -27,7 +27,7 @@
                                         @foreach($title_datas as $k=>$title)
                                             <td width="16%">{{$title['label']}}：</td>
                                             <td width="16%">{{$title['value']}}</td>
-                                            @if(($k+1)%3==0)
+                                            @if(($k+1)%2==0)
                                     </tr>
                                     <tr>
                                     @endif
@@ -46,10 +46,25 @@
                                     @foreach($table_datas['tds'] as $td)
                                         <tr>
                                             @foreach($td as $t)
-                                                <td>{{$t['value']}}</td>
+                                                <td>{{$t}}</td>
                                             @endforeach
                                         </tr>
                                     @endforeach
+                                    <tr id="statistics">
+                                        @foreach($table_datas['tds'][0] as $k=>$td)
+                                            @if(in_array($k,$table_datas['statistics_col']))
+                                                <?php
+                                                    $sum = 0;
+                                                    foreach ($table_datas['tds'] as $td){
+                                                        $sum+=$td[$k];
+                                                    }
+                                                ?>
+                                                <td>{{$sum}}</td>
+                                            @else
+                                            <td></td>
+                                            @endif
+                                        @endforeach
+                                    </tr>
 
                                     </tbody>
                                 </table>
@@ -74,6 +89,13 @@
 <script>
     $("#printBtn").on('click',function () {
         $("#print-content").jqprint();
+    })
+
+    $("#statistics").find('td').each(function (index,obj) {
+        if ($(obj).text()!=""){
+            $("#statistics").find('td:eq('+(index-1)+')').text('合计：')
+            return false;
+        }
     })
 </script>
 @endsection
