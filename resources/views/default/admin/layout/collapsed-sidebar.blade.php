@@ -117,7 +117,8 @@ $loginUserName = empty($loginUser->nick_name) ? $loginUser->name: $loginUser->ni
                                                     {{$message->content->title}}
                                                     <small><i class="fa fa-clock-o"></i> {{date('Y-m-d',strtotime($message->fcreate_date))}}</small>
                                                 </h4>
-                                                <p>{{ strlen($message->content->content)>10?substr($message->content->content,0,10)."...":$message->content->content }}</p>
+                                                {{--<p>{!! substr($message->content->content,0,40) !!}</p>--}}
+                                                <p>{!! strlen($message->content->content)>40 ? substr($message->content->content,0,40) ." ..." : $message->content->content !!}</p>
                                             </a>
                                         </li>
                                     @endforeach
