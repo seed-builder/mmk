@@ -186,81 +186,57 @@ class StockOutController extends AdminController
     public function printOutOrder(Request $request, $id)
     {
         $stock_out = StockOut::find($id);
-        $title = $stock_out->customer->name . '供货凭证';
+        $title = $stock_out->customer->name . '送货单';
         $title_datas = [
             [
-                'label' => '购货单位',
+                'label' => '经销商地址',
+                'value' => $stock_out->customer->faddress
+            ],
+            [
+                'label' => '经销商电话',
+                'value' => $stock_out->customer->ftel
+            ],
+            [
+                'label' => '收货单位',
                 'value' => $stock_out->store->ffullname
             ],
             [
-                'label' => '日期',
-                'value' => $stock_out->fdate
-            ],
-            [
-                'label' => '编号',
+                'label' => '单号',
                 'value' => $stock_out->fbill_no
             ],
             [
-                'label' => '源单类型',
-                'value' => ''
+                'label' => '门店地址',
+                'value' => $stock_out->store->faddress
             ],
             [
-                'label' => '选单号',
-                'value' => $stock_out->fsbill_no
+                'label' => '门店电话',
+                'value' => $stock_out->store->fphone
             ],
             [
-                'label' => '币别',
-                'value' => '人民币'
+                'label' => '日期',
+                'value' => date('Y年m月d日',strtotime($stock_out->fdate))
             ],
-            [
-                'label' => '销售方式',
-                'value' => $stock_out->ftype()
-            ],
-            [
-                'label' => '摘要',
-                'value' => ''
-            ],
-            [
-                'label' => '汇率',
-                'value' => '1.00'
-            ],
-            [
-                'label' => '交货方式',
-                'value' => ''
-            ],
-            [
-                'label' => '交货地点',
-                'value' => ''
-            ],
-            [
-                'label' => '结算方式',
-                'value' => ''
-            ],
-            [
-                'label' => '结算日期',
-                'value' => date('Y-m-d', strtotime($stock_out->frec_date))
-            ],
+
+
         ];
         $tds = [];
         $idx = 1;
         foreach ($stock_out->items as $item) {
             $tds[] = [
-                ['value' => $idx, 'statistics' => false],
-                ['value' => $item->material->fnumber, 'statistics' => false],
-                ['value' => $item->material->fname, 'statistics' => false],
-                ['value' => $item->material->fspecification, 'statistics' => false],
-                ['value' => $item->material->fbase_unit, 'statistics' => false],
-                ['value' => $item->fbase_unit, 'statistics' => true],
-                ['value' => $item->fsale_unit, 'statistics' => true],
-                ['value' => 0.00, 'statistics' => false],
-                ['value' => 0.00, 'statistics' => true],
-                ['value' => '', 'statistics' => true],
+                $idx,
+                $item->material->fname,
+                $item->material->fspecification,
+                $item->material->fbase_unit,
+                (int)$item->fbase_qty,
+                0.00,
+                1.00
             ];
             $idx++;
         }
         $table_datas = [
-            'ths' => ['行号', '产品代码', '产品名称', '规格型号', '单位', '数量', '箱数', '单价', '金额', '备注'],
-            'tds' => $tds
+            'ths' => ['行号', '产品名称', '规格型号', '单位', '数量', '单价', '金额'],
+            'tds' => $tds,
+            'statistics_col' => [6]
         ];
         return view('admin.layout.print_view', compact('title', 'title_datas', 'table_datas'));
     }
