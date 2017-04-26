@@ -10,6 +10,7 @@ use Hash;
 use App\Http\Requests\StoreEmployeeRequest;
 use Illuminate\Support\Facades\DB;
 use EmployeeRepo;
+use Sms;
 
 class EmployeeController extends ApiController
 {
@@ -112,6 +113,19 @@ class EmployeeController extends ApiController
 			$subs = Employee::all();
 		}
 		return response(['list' => $subs], 200);
+    }
+
+    public function changePwd(Request $request){
+	    $this->validate($request, [
+		    'phone' => 'required',
+		    'password' => 'required',
+		    'code' => 'required',
+	    ]);
+	    $phone = $request->input('phone', '');
+	    $pwd = $request->input('password', '');
+	    $code = $request->input('code');
+	    $result = EmployeeRepo::changePwd($phone, $pwd, $code);
+	    return response($result, 200);
     }
 
 }

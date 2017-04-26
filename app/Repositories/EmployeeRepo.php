@@ -68,4 +68,16 @@ class EmployeeRepo extends Repo
 		Cache::forget($key);
 	}
 
+	public function changePwd($phone, $pwd, $code){
+		$resp = Sms::checkVerifyCode($phone, $code);
+		if($resp){
+			$emp = Employee::where('fphone', $phone)->first();
+			$emp->fpassword = $pwd;
+			$emp->save();
+			$this->clearCache($phone);
+			return $this->success($emp, '修改密码成功');
+		}else{
+			return $this->fail('验证码错误!');
+		}
+	}
 }

@@ -11,8 +11,8 @@ namespace App\Repositories;
 
 class Repo
 {
-	public function success($data){
-		return ['data' => $data, 'success' => true];
+	public function success($data, $msg = ''){
+		return ['data' => $data, 'msg' => $msg, 'success' => true];
 	}
 
 	public function fail($msg){

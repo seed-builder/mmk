@@ -214,7 +214,26 @@ Route::group(['prefix' => 'employee', 'middleware' => 'api.sign'], function () {
      */
     Route::delete('/{id}', ['as' => 'Employee.delete', 'uses' => 'EmployeeController@destroy']);
 
-
+    //changePwd
+	/**
+	 * @SWG\Api(
+	 *     path="/api/employee/change-pwd",
+	 *     @SWG\Operation(
+	 *      method="POST",
+	 *      nickname="change-pwd",
+	 *      summary="修改密码",
+	 *      notes="修改密码",
+	 *      type="",
+	 *      @SWG\Parameters(
+	 *          @SWG\Parameter(name="phone", description="手机号", required=true,type="string", paramType="form", defaultValue="" ),
+				@SWG\Parameter(name="password", description="密码", required=true,type="string", paramType="form", defaultValue="" ),
+				@SWG\Parameter(name="code", description="验证码", required=true,type="string", paramType="form", defaultValue="" ),
+	 *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
+	 *      )
+	 *  )
+	 * )
+	 */
+	Route::post('/change-pwd', ['as' => 'Employee.changePwd', 'uses' => 'EmployeeController@changePwd']);
 
 
 });
