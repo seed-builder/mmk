@@ -11,6 +11,7 @@ namespace App\Repositories;
 use App\Events\EmployeeLoginedEvent;
 use Illuminate\Support\Facades\Cache;
 use App\Models\Busi\Employee;
+use Sms;
 
 class EmployeeRepo extends Repo
 {
