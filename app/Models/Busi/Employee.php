@@ -64,7 +64,7 @@ class Employee extends BaseModel
 			$employee->user()->create([
 				'name' => $employee->fphone,
 				'password' => $employee->fpassword,
-				'login_time' => $employee->login_time,
+				'login_time' => $employee->login_time?:0,
 				'logo' => $employee->fphoto,
 				'status' => 1
 			]);
