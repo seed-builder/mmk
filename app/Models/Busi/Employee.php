@@ -65,7 +65,7 @@ class Employee extends BaseModel
 				'name' => $employee->fphone,
 				'password' => $employee->fpassword,
 				'login_time' => $employee->login_time?:0,
-				'logo' => $employee->fphoto,
+				'logo' => $employee->fphoto?:'',
 				'status' => 1
 			]);
 		});
@@ -82,16 +82,16 @@ class Employee extends BaseModel
 				$employee->user()->create([
 					'name' => $employee->fphone,
 					'password' => $employee->fpassword,
-					'login_time' => $employee->login_time,
-					'logo' => $employee->fphoto,
+					'login_time' => $employee->login_time?:0,
+					'logo' => $employee->fphoto?:'',
 					'status' => 1
 				]);
 			}else{
 				$employee->user()->update([
 					'name' => $employee->fphone,
 					'password' => $employee->fpassword,
-					'login_time' => $employee->login_time,
-					'logo' => $employee->fphoto,
+					'login_time' => $employee->login_time?:0,
+					'logo' => $employee->fphoto?:'',
 				]);
 			}
 
