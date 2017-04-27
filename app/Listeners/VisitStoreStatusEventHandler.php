@@ -36,11 +36,16 @@ class VisitStoreStatusEventHandler //implements ShouldQueue
 		    $lineCalendar = VisitLineCalendar::find($event->model->fline_calendar_id);
 		    if ($event->model->fstatus == 2) {
 			    $lineCalendar->fstatus = 2;
+			    if(empty($lineCalendar->fbegin))
+			    {
+				    $lineCalendar->fbegin = date('Y-m-d H:i:s');
+			    }
 			    $lineCalendar->save();
 		    } elseif ($event->model->fstatus == 3) {
 			    $count = VisitStoreCalendar::where('fline_calendar_id', $event->model->fline_calendar_id)->where('fstatus', '<', 3)->count();
 			    if ($count == 0) {
 				    $lineCalendar->fstatus = 3;
+				    $lineCalendar->fend = date('Y-m-d H:i:s');
 				    $lineCalendar->save();
 			    }
 		    }

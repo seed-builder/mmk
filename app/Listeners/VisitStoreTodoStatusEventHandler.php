@@ -39,6 +39,10 @@ class VisitStoreTodoStatusEventHandler  //implements ShouldQueue
 		    if ($event->model->fstatus == 2) {
 			    if (!empty($storeCalendar)) {
 				    $storeCalendar->fstatus = 2;
+				    if(empty($storeCalendar->fbegin))
+				    {
+				    	$storeCalendar->fbegin = date('Y-m-d H:i:s');
+				    }
 				    $storeCalendar->save();
 			    }
 		    } elseif ($event->model->fstatus == 3) {
@@ -46,8 +50,13 @@ class VisitStoreTodoStatusEventHandler  //implements ShouldQueue
 				    ->where('fis_must_visit',1)
 				    ->where('fstatus', '<', 3)->count();
 			    if ($count == 0) {
+				    $storeCalendar->fend = date('Y-m-d H:i:s');
 				    $storeCalendar->fstatus = 3;
 			    }else{
+				    if(empty($storeCalendar->fbegin))
+				    {
+					    $storeCalendar->fbegin = date('Y-m-d H:i:s');
+				    }
 				    $storeCalendar->fstatus = 2;
 			    }
 			    $storeCalendar->save();
@@ -61,6 +70,10 @@ class VisitStoreTodoStatusEventHandler  //implements ShouldQueue
 		    $parent = VisitTodoCalendar::find($todoCalendar->fparent_id);
 		    if($todoCalendar->fstatus == 2){
 			    $parent->fstatus = 2;
+			    if(empty($parent->fbegin))
+			    {
+				    $parent->fbegin = date('Y-m-d H:i:s');
+			    }
 			    $parent->save();
 		    }elseif($todoCalendar->fstatus == 3){
 			    if($parent->todo->fchildren_calculate == 'and') {
@@ -68,8 +81,13 @@ class VisitStoreTodoStatusEventHandler  //implements ShouldQueue
 					    ->where('fis_must_visit',1)
 					    ->where('fstatus', '<', 3)->count();
 				    if ($count == 0) {
+					    $parent->fend = date('Y-m-d H:i:s');
 					    $parent->fstatus = 3;
 				    } else {
+					    if(empty($parent->fbegin))
+					    {
+						    $parent->fbegin = date('Y-m-d H:i:s');
+					    }
 					    $parent->fstatus = 2;
 				    }
 			    }else if($parent->todo->fchildren_calculate == 'or') {
@@ -77,8 +95,13 @@ class VisitStoreTodoStatusEventHandler  //implements ShouldQueue
 					    ->where('fis_must_visit',1)
 					    ->where('fstatus', '=', 3)->count();
 				    if ($count > 0) {
+					    $parent->fend = date('Y-m-d H:i:s');
 					    $parent->fstatus = 3;
 				    } else {
+					    if(empty($parent->fbegin))
+					    {
+						    $parent->fbegin = date('Y-m-d H:i:s');
+					    }
 					    $parent->fstatus = 2;
 				    }
 			    }
