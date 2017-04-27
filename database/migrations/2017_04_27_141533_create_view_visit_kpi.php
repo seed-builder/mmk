@@ -162,6 +162,7 @@ EOD;
 	    $view_visit_kpi = <<<EOD
 CREATE OR REPLACE VIEW view_visit_kpi AS SELECT
 	dcs.fdate,
+	dcs.femp_id,
 	emp.fname,
 	pos.fname AS position_name,
 	lcc.line_cust_total,
