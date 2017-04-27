@@ -38,12 +38,12 @@
 
                                     <label class="col-sm-2 control-label">姓名</label>
                                     <div class="col-sm-2">
-                                        <input type="text" class="form-control filter-condition" filter-name="fname"/>
+                                        <input type="text" class="form-control filter-condition" filter-name="fname" filter-operator="like"/>
                                     </div>
 
                                     <label class="col-sm-2 control-label">职位</label>
                                     <div class="col-sm-2">
-                                        <input type="text" class="form-control filter-condition" filter-name="position_name"/>
+                                        <input type="text" class="form-control filter-condition" filter-name="position_name" filter-operator="like"/>
                                     </div>
 
                                     <label class="col-sm-2 control-label">线路总客户数</label>
