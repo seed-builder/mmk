@@ -126,7 +126,8 @@ define(function(require, exports, module) {
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
                 { text: '审核<i class="fa fa-fw fa-paperclip"></i>',className: 'check', enabled: false },
                 { text: '反审核<i class="fa fa-fw fa-unlink"></i>',className: 'uncheck', enabled: false },
-                {extend: 'colvis', text: '列显示'}
+                { text: '重置密码<i class="fa fa-fw fa-unlink"></i>',className: 'reset', enabled: false },
+                // {extend: 'colvis', text: '列显示'}
             ]
         });
         
@@ -134,7 +135,9 @@ define(function(require, exports, module) {
 
 
         function rowSelect() {
-            checkEditEnabble(table,['.edit','.check'],['.uncheck']);
+            checkEditEnabble(table,['.check'],['.uncheck']);
+                var count = table.rows( { selected: true } ).count();
+                table.buttons( ['.edit','.reset'] ).enable(count > 0);
         }
 
         //审核
@@ -144,7 +147,19 @@ define(function(require, exports, module) {
 
         $(".uncheck").on('click',function () {
             dataCheck(table,'/admin/employee/uncheck');
-        })
+        });
+
+        $(".reset").on('click',function () {
+            //
+            var row = table.rows('.selected').data();
+            layer.confirm('确认重置该用户密码?', function () {
+                $.post('/admin/employee/reset-pwd/' + row[0].id, {_token: $('meta[name="_token"]').attr('content')}, function (res) {
+                    if(res.code ==  200){
+                        layer.msg('重置密码成功');
+                    }
+                });
+            });
+        });
         //
         // function checkBtn(e, dt, type, indexes) {
         //     var count = table.rows( { selected: true } ).count();

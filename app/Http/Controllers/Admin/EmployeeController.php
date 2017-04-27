@@ -267,4 +267,19 @@ class EmployeeController extends AdminController
         ]);
     }
 
+	/**
+	 * 重置用户密码
+	 * @param Request $request
+	 * @param $id
+	 * @return \Illuminate\Http\JsonResponse
+	 */
+    public function resetPwd(Request $request, $id){
+    	$emp = Employee::find($id);
+    	$emp->update(['fpassword' => md5('888888')]);
+	    return response()->json([
+		    'code' => 200,
+		    'data' => $emp
+	    ]);
+    }
+
 }
