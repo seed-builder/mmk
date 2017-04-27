@@ -132,7 +132,8 @@ $loginUserName = empty($user->nick_name) ? $loginUser->name: $user->nick_name;
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="{{url('/admin/kpi')}}"><i class="fa fa-fw fa-signal"></i>业绩查询</a></li>
+                    <li><a href="{{url('/admin/kpi')}}"><i class="fa fa-fw fa-bar-chart"></i>业绩查询</a></li>
+                    <li><a href="{{url('/admin/view-visit-kpi')}}"><i class="fa fa-fw fa-vk"></i>重要KPI跟进表</a></li>
 
                 </ul>
             </li>
