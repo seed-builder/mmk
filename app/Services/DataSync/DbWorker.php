@@ -48,7 +48,7 @@ class DbWorker extends Worker
 					$affected = DB::insert($query, $values);
 					break;
 				case 1:
-					var_dump('1');
+					//var_dump('1');
 					$where = 'id=';
 					foreach ($data as $col => $val){
 						if($col == 'id'){

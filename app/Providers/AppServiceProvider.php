@@ -13,6 +13,7 @@ use App\Repositories\SysConfigRepo;
 use App\Services\DataSync\DataSyncSvr;
 use App\Services\DataSync\DefaultFilter;
 use App\Services\DataSync\DisplayPolicyStoreFilter;
+use App\Services\DataSync\EmployeeFilter;
 use App\Services\DataSync\KingdeeWorker;
 use App\Services\Sms\AliDaYuSms;
 use App\Services\Sms\ISmsSvr;
@@ -76,6 +77,7 @@ class AppServiceProvider extends ServiceProvider
 	    	$svr = new DataSyncSvr();
 	    	$svr->registerFilter(DefaultFilter::class);
 	    	$svr->registerFilter(DisplayPolicyStoreFilter::class, 'exp_display_policy_store');
+	    	$svr->registerFilter(EmployeeFilter::class, 'bd_employees');
 	    	$svr->registerWorker(KingdeeWorker::class);
 	    	return $svr;
 	    });
