@@ -67,10 +67,27 @@ define(function(require, exports, module) {
                         return (data==null?0:data)+'%'
                     }
                 },
-                {  'data': 'day_cost_total' },
-                {  'data': 'month_cost_total' },
-                {  'data': 'cust_avg_cost' },
-
+                {
+                    'data': 'day_cost_total',
+                    render: function ( data, type, full ) {
+                        var second = isNaN(parseInt(data))?0:parseInt(data);
+                        return second/60
+                    }
+                },
+                {
+                    'data': 'month_cost_total',
+                    render: function ( data, type, full ) {
+                        var second = isNaN(parseInt(data))?0:parseInt(data);
+                        return second/60
+                    }
+                },
+                {
+                    'data': 'cust_avg_cost',
+                    render: function ( data, type, full ) {
+                        var second = isNaN(parseInt(data))?0:parseInt(data);
+                        return second/60
+                    }
+                },
 
             ],
             buttons: [
