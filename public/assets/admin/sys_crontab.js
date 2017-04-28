@@ -46,7 +46,7 @@ define(function(require, exports, module) {
             columns: [
                 {  'data': 'id' },
                 {  'data': 'name' },
-                {  'data': 'command' },
+                // {  'data': 'command' },
                 {  'data': 'desc' },
                 {  'data': 'exec_time' },
                 {  'data': 'exec_remark' },
