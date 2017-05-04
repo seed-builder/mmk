@@ -79,7 +79,9 @@ class Store extends BaseModel
 
     public $fieldNames = [
     	'ftelephone' => '手机号码',
-	    'fline_id' => '线路'
+	    'fline_id' => '线路',
+	    'ffullname' => '门店名称',
+	    'fcreator_id' => '创建人',
     ];
 
     public function customer(){
