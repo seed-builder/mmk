@@ -180,6 +180,7 @@ EOD;
 CREATE
 OR REPLACE VIEW view_visit_kpi AS SELECT
 	ed.fdate,
+	ed.femp_id,
 	emp.fname,
 	pos.fname AS position_name,
 	st.store_total,
