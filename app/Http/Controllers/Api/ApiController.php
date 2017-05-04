@@ -179,7 +179,7 @@ abstract class  ApiController extends Controller
 			if(array_key_exists($field, $fieldNames)) {
 				$result[] = str_replace($field, $fieldNames[$field], $error['status']);
 			}else{
-				$result[] = $error;
+				$result[] = $error['status'];
 			}
 		}
 		return implode(',', $result);
