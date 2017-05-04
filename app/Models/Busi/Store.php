@@ -73,6 +73,7 @@ class Store extends BaseModel
     		'ftelephone' => 'required|unique:st_stores',
     		'faddress' => 'required',
 	        'fline_id' => 'required',
+	        'fcreator_id' => 'required',
     		//'fpostalcode' => 'required',
     ];
 
