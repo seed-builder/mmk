@@ -127,6 +127,13 @@
                                             <input type="text" class="form-control filter-condition" filter-name="cust_avg_cost" filter-operator="<="/>
                                         </div>
                                     </div>
+
+                                    <label class="col-sm-2 control-label">日期</label>
+                                    <div class="col-sm-2">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control filter-condition filter-date" filter-name="fdate"/>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="box-footer" style="text-align: center">
@@ -143,12 +150,15 @@
                                 <th>职位</th>
                                 <th>线路总客户数</th>
                                 <th>有效客户数</th>
-                                <th>当日拜访客户数</th>
-                                <th>本月累计拜访客户数</th>
+                                <th>当日应拜访客户数</th>
+                                <th>当日已拜访客户数</th>
+                                <th>本月应拜访客户数</th>
+                                <th>本月已拜访客户数</th>
                                 <th>拜访率</th>
                                 <th>当日拜访用时</th>
                                 <th>当月累计拜访用时</th>
                                 <th>平均单个客户拜访用时</th>
+                                {{--<th>日期</th>--}}
                             </tr>
                             </thead>
                         </table>

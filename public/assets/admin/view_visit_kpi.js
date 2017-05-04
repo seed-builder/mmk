@@ -57,10 +57,12 @@ define(function(require, exports, module) {
             columns: [
                 {  'data': 'fname' },
                 {  'data': 'position_name' },
-                {  'data': 'line_cust_total' },
-                {  'data': 'valid_cust_total' },
-                {  'data': 'day_visit_cust_num' },
-                {  'data': 'month_visit_cust_num' },
+                {  'data': 'store_total' },
+                {  'data': 'valid_store_total' },
+                {  'data': 'day_store_total' },
+                {  'data': 'day_store_done_total' },
+                {  'data': 'month_store_total' },
+                {  'data': 'month_store_done_total' },
                 {
                     'data': 'rate',
                     render: function ( data, type, full ) {
@@ -82,12 +84,13 @@ define(function(require, exports, module) {
                     }
                 },
                 {
-                    'data': 'cust_avg_cost',
+                    'data': 'store_avg_cost',
                     render: function ( data, type, full ) {
                         var second = isNaN(parseInt(data))?0:parseInt(data);
                         return second/60
                     }
                 },
+                // {  'data': 'fdate' },
 
             ],
             buttons: [

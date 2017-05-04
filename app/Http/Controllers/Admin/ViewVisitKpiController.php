@@ -68,8 +68,19 @@ class ViewVisitKpiController extends AdminController
     public function pagination(Request $request, $searchCols = [], $with = [], $conditionCall = null, $all_columns = false)
     {
         $searchCols = ["fname", "position_name"];
-        return parent::pagination($request, $searchCols, $with, function ($query){
-            $query->where('fdate','=',date('Y-m-d'));
+
+        return parent::pagination($request, $searchCols, $with, function ($query) use ($request) {
+            $filters = $request->input('filter', []);
+            $date = date('Y-m-d');
+            foreach ($filters as $filter) {
+                if ($filter['name'] == 'fdate' && !empty($filter['value']))
+                    $date = $filter['value'];
+            }
+            $query->where('fdate', '=', $date);
+            $ids = $this->getCurUsersEmployeeIds();
+            if (!empty($ids)) {
+                $query->whereIn('femp_id', $ids);
+            }
         });
     }
 
