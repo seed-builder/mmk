@@ -15,34 +15,33 @@ class CreateViewVisitKpi extends Migration
     public function up()
     {
 	    $view_visit_valid_cust = <<<EOD
-	    #有效客户数
+	    #有效客户数(门店数)
 CREATE
 OR REPLACE VIEW view_visit_valid_cust AS SELECT
 	femp_id,
-	COUNT(fcust_id) AS cust_total
+	COUNT(1) AS cust_total
 FROM
-	bd_employee_customers
+	st_stores
 GROUP BY
 	femp_id;
 EOD;
 
 	    $view_visit_line_cust = <<<EOD
-#线路客户
+#线路客户(门店数)
 CREATE
 OR REPLACE VIEW view_visit_line_cust AS SELECT DISTINCT
-	s.fcust_id,
+	ls.fstore_id,
 	ls.femp_id
 FROM
 	visit_line_store ls
-INNER JOIN st_stores s ON ls.fstore_id = s.id;
 EOD;
 
 	    $view_visit_line_cust_count = <<<EOD
-#线路总客户数
+#线路总客户数(门店数)
 CREATE
 OR REPLACE VIEW view_visit_line_cust_count AS SELECT
 	femp_id,
-	COUNT(fcust_id) AS line_cust_total
+	COUNT(fstore_id) AS line_cust_total
 FROM
 	view_visit_line_cust
 GROUP BY
@@ -53,12 +52,11 @@ EOD;
 #日拜访客户
 CREATE
 OR REPLACE VIEW view_visit_day_cust AS SELECT DISTINCT
-	s.fcust_id,
+	sc.fstore_id,
 	sc.femp_id,
 	sc.fdate
 FROM
 	visit_store_calendar sc
-INNER JOIN st_stores s ON sc.fstore_id = s.id
 WHERE
 	sc.fstatus > 1;
 EOD;
@@ -69,7 +67,7 @@ CREATE
 OR REPLACE VIEW view_visit_day_cust_count AS SELECT
 	fdate,
 	femp_id,
-	COUNT(fcust_id) AS day_visit_cust_num
+	COUNT(fstore_id) AS day_visit_cust_num
 FROM
 	view_visit_day_cust
 GROUP BY
@@ -81,12 +79,11 @@ EOD;
 #月拜访客户
 CREATE
 OR REPLACE VIEW view_visit_month_cust AS SELECT DISTINCT
-	s.fcust_id,
+	sc.fstore_id ,
 	sc.femp_id,
 	DATE_FORMAT(sc.fdate, '%Y-%m') fmonth
 FROM
 	visit_store_calendar sc
-INNER JOIN st_stores s ON sc.fstore_id = s.id
 WHERE
 	sc.fstatus > 1;
 EOD;
@@ -97,7 +94,7 @@ CREATE
 OR REPLACE VIEW view_visit_month_cust_count AS SELECT
 	fmonth,
 	femp_id,
-	COUNT(fcust_id) AS month_visit_cust_num
+	COUNT(fstore_id) AS month_visit_cust_num
 FROM
 	view_visit_month_cust
 GROUP BY
@@ -215,5 +212,22 @@ EOD;
     public function down()
     {
         //
+	    $drop = <<<EOD
+drop VIEW  view_visit_valid_cust;
+drop VIEW  view_visit_line_cust;
+drop VIEW  view_visit_line_cust_count;
+drop VIEW  view_visit_day_cust;
+drop VIEW  view_visit_day_cust_count;
+drop VIEW  view_visit_month_cust;
+drop VIEW  view_visit_month_cust_count;
+drop VIEW  view_visit_day_cost;
+drop VIEW  view_visit_day_cost_sum;
+drop VIEW  view_visit_month_cost;
+drop VIEW  view_visit_month_cost_sum;
+drop VIEW  view_visit_kpi;
+EOD;
+
+
+
     }
 }
