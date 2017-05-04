@@ -72,11 +72,13 @@ class Store extends BaseModel
     		'fcontracts' => 'required',
     		'ftelephone' => 'required|unique:st_stores',
     		'faddress' => 'required',
+	        'fline_id' => 'required'
     		//'fpostalcode' => 'required',
     ];
 
     public $fieldNames = [
-    	'ftelephone' => '手机号码'
+    	'ftelephone' => '手机号码',
+	    'fline_id' => '线路'
     ];
 
     public function customer(){
