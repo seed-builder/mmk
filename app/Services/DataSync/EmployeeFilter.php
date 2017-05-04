@@ -19,7 +19,7 @@ class EmployeeFilter extends DefaultFilter
 		if(!empty($data['fphone'])) {
 			EmployeeRepo::clearCache($data['fphone']);
 			$employee = Employee::find($data['id']);
-			if(empty($employee->user)) {
+			if(!empty($employee) && empty($employee->user)) {
 				$employee->user()->create([
 					'name' => $employee->fphone,
 					'password' => $employee->fpassword,
