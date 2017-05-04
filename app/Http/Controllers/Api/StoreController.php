@@ -47,7 +47,7 @@ class StoreController extends ApiController
 	    $change_reason = isset($data['change_reason'])?$data['change_reason']:'';
 	    unset($data['change_reason']);
 	    $entity = $this->newEntity($data);
-	    $fieldErrors = $this->validateFields($data);
+	    $fieldErrors = $this->validateFields($data, true);
 	    if (!empty($fieldErrors)) {
 		    $msg = $this->formatFieldErrors($fieldErrors, $entity->fieldNames);
 		    return response($msg, 404);

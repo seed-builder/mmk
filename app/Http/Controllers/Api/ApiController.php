@@ -147,15 +147,19 @@ abstract class  ApiController extends Controller
 		return response(['success' => $re], $status);
 	}
 
-	protected function validateFields($data)
+	protected function validateFields($data, $all = false)
 	{
 		$fieldErrors = [];
 		$entity = $this->newEntity();
 		if (isset($entity->validateRules)) {
-			$rules = [];
-			foreach ($data as $k => $v) {
-				if (array_key_exists($k, $entity->validateRules)) {
-					$rules[$k] = $entity->validateRules[$k];
+			if($all){
+				$rules = $entity->validateRules;
+			}else {
+				$rules = [];
+				foreach ($data as $k => $v) {
+					if (array_key_exists($k, $entity->validateRules)) {
+						$rules[$k] = $entity->validateRules[$k];
+					}
 				}
 			}
 			$validator = Validator::make($data, $rules);
