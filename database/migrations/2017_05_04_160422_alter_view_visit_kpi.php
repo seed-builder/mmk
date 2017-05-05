@@ -14,7 +14,23 @@ class AlterViewVisitKpi extends Migration
      */
     public function up()
     {
-        //
+	    $drop = <<<EOD
+drop VIEW  view_visit_valid_cust;
+drop VIEW  view_visit_line_cust;
+drop VIEW  view_visit_line_cust_count;
+drop VIEW  view_visit_day_cust;
+drop VIEW  view_visit_day_cust_count;
+drop VIEW  view_visit_month_cust;
+drop VIEW  view_visit_month_cust_count;
+drop VIEW  view_visit_day_cost;
+drop VIEW  view_visit_day_cost_sum;
+drop VIEW  view_visit_month_cost;
+drop VIEW  view_visit_month_cost_sum;
+drop VIEW  view_visit_kpi;
+EOD;
+
+
+	    //
 	    $query[] = <<<EOD
 #有效门店数
 CREATE
@@ -189,7 +205,7 @@ OR REPLACE VIEW view_visit_kpi AS SELECT
 	dsd.day_store_done_total,
 	ms.month_store_total,
 	msd.month_store_done_total,
-	msd.month_store_done_total / ms.month_store_total * 100 AS rate,
+	msd.month_store_done_total / vst.valid_store_total * 100 AS rate,
 	dcs.store_cost_second_total AS day_cost_total,
 	mcs.store_cost_second_total AS month_cost_total,
 	round(
