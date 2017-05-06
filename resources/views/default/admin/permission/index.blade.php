@@ -98,7 +98,6 @@
                                                 </select>
                                             </div>
                                         </div>
-
                                         <div class="form-group">
                                             <label class="control-label col-md-3">上级</label>
                                             <div class="col-md-9">
@@ -107,6 +106,15 @@
                                                     @foreach($perOptions as $p)
                                                         <option value="{{$p['value']}}">{{$p['label']}}</option>
                                                     @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3">类型</label>
+                                            <div class="col-md-9">
+                                                <select class="form-control" name="type" id="type">
+                                                    <option value="m">模块</option>
+                                                    <option value="f">功能</option>
                                                 </select>
                                             </div>
                                         </div>
