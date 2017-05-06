@@ -95,7 +95,7 @@
             for(var i = 0; i < nodes.length; i++){
                 ids[ids.length] = nodes[i].dataid;
             }
-            alert(ids.join(','));
+            //alert(ids.join(','));
             $('#perms').val(ids.join(','));
             $('#saveForm').submit();
         }
