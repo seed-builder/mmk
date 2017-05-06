@@ -5,7 +5,7 @@ $tops = \App\Models\Permission::where('pid',0)->orderBy('sort')->get();
 
 function createLi($user, $m){
 	$html = '';
-	if($user->can($m->name)){
+	if($m->type == 'm' && $user->can($m->name)){
 		$url = $m->url ? url($m->url) : '';
         $display = $m->display_name;
         $icon = $m->logo;
