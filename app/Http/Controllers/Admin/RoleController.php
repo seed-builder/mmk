@@ -72,14 +72,38 @@ class RoleController extends AdminController
 	}
 
 	public function setPermission(Request $request, $id){
-		$perms = Permission::all();
+//		$perms = Permission::all();
+
 		$role = Role::find($id);
+
 		if($request->isMethod('post')){
-			$ids = $request->input('perms',[]);
+			$perms = $request->input('perms','');
+			$ids = explode(',', $perms);
 			$role->perms()->sync($ids);
 			$this->flash_success('设置权限成功！');
 		}
+		$tops = Permission::where('pid', 0)->orderBy('sort')->get();
+		$perms =[];// ['text' => 'root', 'selectable' => false, 'state' => [ 'expanded' => true ], 'nodes' => []];
+		foreach ($tops as $top)
+			$perms[] = $this->toBootstrapTreeViewData($top,  ['text' => 'display_name', 'dataid' => 'id', 'icon' => 'logo'], false);
+
+		foreach ($perms as &$perm){
+			$this->checkRolePerm($role, $perm);
+		}
+
 		return view('admin.role.permission', ['perms' => $perms, 'role' => $role]);
+	}
+
+	protected function checkRolePerm($role, &$node){
+		$perm = $node['item'];
+		if($role->hasPermission($perm->name)){
+			$node['state']['checked'] = true;
+		}
+		if(!empty($node['nodes'])){
+			foreach ($node['nodes'] as &$n){
+				$this->checkRolePerm($role, $n);
+			}
+		}
 	}
 
 }

@@ -238,7 +238,7 @@ $loginUserName = empty($user->nick_name) ? $loginUser->name: $user->nick_name;
                             </a>
                             <ul class="treeview-menu">
                                 <li><a href="{{url('/admin/message-content')}}"><i class="fa fa-comment"></i>消息内容管理</a></li>
-                                <li><a href="{{url('/admin/message-content/create')}}"><i class="fa fa-fw fa-comment-o"></i>消息内容新增</a></li>
+                                <li><a href="{{url('/admin/message-content/create')}}"><i class="fa fa-fw fa-comment-o"></i>·</a></li>
                                 <li><a href="{{url('/admin/message')}}"><i class="fa fa-fw fa-commenting"></i>消息发送列表</a></li>
                                 <li><a href="{{url('/admin/message/receiveMessages')}}"><i class="fa fa-fw fa-comments-o"></i>个人消息列表</a></li>
                             </ul>

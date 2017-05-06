@@ -2,6 +2,7 @@
 
 namespace App\Models\Busi;
 
+use App\Events\FlagChangedEvent;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
@@ -64,6 +65,15 @@ class Position extends BaseModel
 				$pflag = $parent->flag. '-' ;
 			}
 			$model->flag = $pflag . $model->id;
+		});
+
+		static::updating(function ($entity){
+			$old = static::find($entity->id);
+			if($old->fparpost_id != $entity->fparpost_id){
+				$father = static::find($entity->fparpost_id);
+				$entity->flag = $father->flag . '-' . $entity->id;
+				event(new FlagChangedEvent($entity));
+			}
 		});
 	}
 }

@@ -81,7 +81,7 @@ Artisan::command('create-position-flag', function () {
 		//$this->comment('complete send store: ' . $store->ffullname);
 	}
 	$this->comment('end ...');
-})->describe('push store to cloud');
+})->describe('create position flag');
 
 function createPositionFlag($position, $pflag){
 	$position->flag = $pflag . $position->id;
@@ -94,6 +94,17 @@ function createPositionFlag($position, $pflag){
 		}
 	}
 }
+
+Artisan::command('create-permission-flag', function () {
+	$this->comment('begin ...');
+	$tops = \App\Models\Permission::where('pid', 0)->get();
+	foreach ($tops as $position) {
+		createPositionFlag($position, '');
+		//$this->comment('gen flag: ' . $position->flag);
+		//$this->comment('complete send store: ' . $store->ffullname);
+	}
+	$this->comment('end ...');
+})->describe('create permission flag');
 
 Artisan::command('make-calendar', function () {
 	$this->comment('make all stores todo calendar ...');

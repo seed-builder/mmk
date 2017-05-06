@@ -40,6 +40,9 @@ class EventServiceProvider extends ServiceProvider
 	    'App\Events\EmployeeLoginedEvent' => [
 		    'App\Listeners\EmployeeLoginedHandler',
 	    ],
+	    'App\Events\FlagChangedEvent' => [
+		    'App\Listeners\FlagChangedEventHandler',
+	    ],
     ];
 
     /**
