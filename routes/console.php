@@ -5,6 +5,7 @@ use App\Models\Busi\DisplayPolicyStore;
 use App\Models\Busi\Employee;
 use App\Models\City;
 use App\Models\User;
+use App\Repositories\EmployeeRepo;
 use App\Services\CodeBuilder;
 use App\Services\DbHelper;
 use App\Services\VisitCalendarService;
@@ -12,7 +13,6 @@ use App\Services\WorkFlowEngine;
 use Illuminate\Foundation\Inspiring;
 use App\Models\Busi\Store;
 use Illuminate\Support\Facades\DB;
-use EmployeeRepo;
 
 /*
 |--------------------------------------------------------------------------
@@ -185,6 +185,7 @@ Artisan::command('cp-employee-to-user', function () {
 	$this->comment('begin ...');
 	$employees = Employee::whereNotNull('fphone')->get();
 	$this->comment('ready to copy '.count($employees).' employees to sys-users table');
+	$repo = new EmployeeRepo();
 	if(!empty($employees)){
 		DB::beginTransaction();
 		try {
@@ -209,7 +210,7 @@ Artisan::command('cp-employee-to-user', function () {
 					]);
 					$this->comment('update: success copy employee:  ' . $employee->fname);
 				}
-				EmployeeRepo::clearCache($employee->fphone);
+				$repo->clearCache($employee->fphone);
 			}
 			DB::commit();
 		} catch (Exception $e) {

@@ -12,8 +12,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-         //$this->call(ModelMapSeeder::class);
+         $this->call(ModelMapSeeder::class);
          //$this->call(HolidaySeeder::class);
 	    $this->call(SysCrontabSeeder::class);
+	    $this->call(UserSeeder::class);
     }
 }
