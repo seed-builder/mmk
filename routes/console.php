@@ -203,7 +203,7 @@ Artisan::command('cp-employee-to-user', function () {
 				}else{
 					$employee->user()->update([
 						'name' => $employee->fphone,
-//						'password' => $employee->fpassword,
+						'password' =>  bcrypt('888888'), //$employee->fpassword,
 						'login_time' => $employee->login_time,
 						'nick_name' => $employee->fname,
 						'logo' => $employee->fphoto,
