@@ -190,27 +190,8 @@ Artisan::command('cp-employee-to-user', function () {
 		DB::beginTransaction();
 		try {
 			foreach ($employees as $employee) {
-				if (empty($employee->user)) {
-					$employee->user()->create([
-						'name' => $employee->fphone,
-						'password' => bcrypt('888888'),
-						'login_time' => $employee->login_time,
-						'status' => 1,
-						'nick_name' => $employee->fname,
-						'logo' => $employee->fphoto,
-					]);
-					$this->comment('add: success copy employee:  ' . $employee->fname);
-				}else{
-					$employee->user()->update([
-						'name' => $employee->fphone,
-						'password' =>  bcrypt('888888'), //$employee->fpassword,
-						'login_time' => $employee->login_time,
-						'nick_name' => $employee->fname,
-						'logo' => $employee->fphoto,
-					]);
-					$this->comment('update: success copy employee:  ' . $employee->fname);
-				}
-				$repo->clearCache($employee->fphone);
+				$repo->syncUser($employee);
+				$this->comment('success copy employee:  ' . $employee->fname);
 			}
 			DB::commit();
 		} catch (Exception $e) {

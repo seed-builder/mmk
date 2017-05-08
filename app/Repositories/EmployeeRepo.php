@@ -86,5 +86,36 @@ class EmployeeRepo extends Repo
 		}
 	}
 
+	public function syncUser($employee){
+		if (empty($employee->user)) {
+			$user = $employee->user()->create([
+				'name' => $employee->fphone,
+				'password' => bcrypt('888888'),
+				'login_time' => $employee->login_time,
+				'status' => 1,
+				'nick_name' => $employee->fname,
+				'logo' => $employee->fphoto,
+			]);
+			if($employee->fpost_id > 0)
+			{
+				$user->positions()->sync([$employee->fpost_id]);
+			}
+			$user->roles()->sync([3]);
+		}else{
+			$employee->user()->update([
+				'name' => $employee->fphone,
+//						'password' =>  bcrypt('888888'), //$employee->fpassword,
+				'login_time' => $employee->login_time,
+				'nick_name' => $employee->fname,
+				'logo' => $employee->fphoto,
+			]);
+			if($employee->fpost_id > 0)
+			{
+				$employee->user->positions()->sync([$employee->fpost_id]);
+			}
+			$employee->user->roles()->sync([3]);
+		}
+		$this->clearCache($employee->fphone);
+	}
 
 }

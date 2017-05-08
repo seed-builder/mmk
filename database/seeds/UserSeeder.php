@@ -31,6 +31,6 @@ class UserSeeder extends Seeder
 		    ]);
 	    }
 
-	    $admin->roles()->sync($role);
+	    $admin->roles()->sync([$role->id]);
     }
 }
