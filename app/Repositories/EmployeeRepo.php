@@ -100,7 +100,7 @@ class EmployeeRepo extends Repo
 			{
 				$user->positions()->sync([$employee->fpost_id]);
 			}
-			$user->roles()->sync([3]);
+			//$user->roles()->sync([3]);
 		}else{
 			$employee->user()->update([
 				'name' => $employee->fphone,
@@ -113,7 +113,7 @@ class EmployeeRepo extends Repo
 			{
 				$employee->user->positions()->sync([$employee->fpost_id]);
 			}
-			$employee->user->roles()->sync([3]);
+//			$employee->user->roles()->sync([3]);
 		}
 		$this->clearCache($employee->fphone);
 	}
