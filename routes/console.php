@@ -193,7 +193,7 @@ Artisan::command('cp-employee-to-user', function () {
 				if (empty($employee->user)) {
 					$employee->user()->create([
 						'name' => $employee->fphone,
-						'password' => $employee->fpassword,
+						'password' => bcrypt('888888'),
 						'login_time' => $employee->login_time,
 						'status' => 1,
 						'nick_name' => $employee->fname,
@@ -203,7 +203,7 @@ Artisan::command('cp-employee-to-user', function () {
 				}else{
 					$employee->user()->update([
 						'name' => $employee->fphone,
-						'password' => $employee->fpassword,
+//						'password' => $employee->fpassword,
 						'login_time' => $employee->login_time,
 						'nick_name' => $employee->fname,
 						'logo' => $employee->fphoto,

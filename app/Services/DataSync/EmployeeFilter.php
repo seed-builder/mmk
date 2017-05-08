@@ -22,7 +22,7 @@ class EmployeeFilter extends DefaultFilter
 			if(!empty($employee) && empty($employee->user)) {
 				$employee->user()->create([
 					'name' => $employee->fphone,
-					'password' => $employee->fpassword,
+					'password' => bcrypt('888888'),//$employee->fpassword,
 					'login_time' => $employee->login_time ?: 0,
 					'logo' => $employee->fphoto ?: '',
 					'status' => 1
