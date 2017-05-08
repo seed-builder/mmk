@@ -22,5 +22,15 @@ class UserSeeder extends Seeder
 		    ]);
 	    }
 
+	    $role = \App\Models\Role::where('name', 'admin');
+	    if(empty($role)){
+	    	$role = \App\Models\Role::create([
+	    		'name' => 'admin',
+			    'display_name' => '超级管理员',
+			    'description' => '超级管理员',
+		    ]);
+	    }
+
+	    $admin->roles()->sync($role);
     }
 }
