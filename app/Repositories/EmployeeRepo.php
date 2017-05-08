@@ -109,10 +109,10 @@ class EmployeeRepo extends Repo
 				'nick_name' => $employee->fname,
 				'logo' => $employee->fphoto,
 			]);
-			if($employee->fpost_id > 0)
-			{
-				$employee->user->positions()->sync([$employee->fpost_id]);
-			}
+//			if($employee->fpost_id > 0)
+//			{
+//				$employee->user->positions()->sync([$employee->fpost_id]);
+//			}
 //			$employee->user->roles()->sync([3]);
 		}
 		$this->clearCache($employee->fphone);
