@@ -12,6 +12,7 @@ use App\Services\WorkFlowEngine;
 use Illuminate\Foundation\Inspiring;
 use App\Models\Busi\Store;
 use Illuminate\Support\Facades\DB;
+use EmployeeRepo;
 
 /*
 |--------------------------------------------------------------------------
@@ -208,6 +209,7 @@ Artisan::command('cp-employee-to-user', function () {
 					]);
 					$this->comment('update: success copy employee:  ' . $employee->fname);
 				}
+				EmployeeRepo::clearCache($employee->fphone);
 			}
 			DB::commit();
 		} catch (Exception $e) {
