@@ -42,9 +42,9 @@ class CreateIndexForDb extends Migration
 		    $table->index('flag', 'bd_positions_indx_flag');
 	    });
 
-	    Schema::table('citys', function (Blueprint $table) {
-		    $table->index('MergerName', 'citys_indx_MergerName');
-	    });
+//	    Schema::table('citys', function (Blueprint $table) {
+//		    $table->index('MergerName', 'citys_indx_MergerName');
+//	    });
 
 	    Schema::table('exp_display_policy_store', function (Blueprint $table) {
 		    $table->index('fpolicy_id', 'policy_store_indx_fpolicy_id');
