@@ -215,6 +215,10 @@ $loginUserName = empty($loginUser->nick_name) ? $loginUser->name: $loginUser->ni
     </div><!-- /.modal -->
 
 </div>
+
+<audio id="audioObj" src="/audio/2478.wav" >提示声音</audio>
+
+
 <!-- ./wrapper -->
 
 <!-- AdminLTE App -->

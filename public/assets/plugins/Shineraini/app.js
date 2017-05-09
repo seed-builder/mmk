@@ -545,6 +545,7 @@ function exportExcel(form_id,url) {
     $(".export_conditions").remove();
 }
 
+var audioPlayed = false;
 /*
  * 消息弹窗
  */
@@ -577,11 +578,17 @@ function message() {
 
     $.get('/admin/message/unread',{},function(data,status,xhr){
         var last_unread_id = $("#last_unread_id").val();
-
-        if (data.count>0)
-            $("#message_count").velocity("fadeOut", {  duration: 500 })
-                .velocity("fadeIn", { duration: 500 });
-
+        if (data.count>0) {
+            $("#message_count").velocity("fadeOut", {duration: 500})
+                .velocity("fadeIn", {duration: 500});
+            if(!audioPlayed) {
+                document.getElementById('audioObj').play();
+                audioPlayed = true;
+            }
+        }else{
+            $("#message_count").text(0);
+            $("#message_count").hide();
+        }
         if (data.last_id>last_unread_id){
             $("#last_unread_id").val(data.last_id);
             toastr.info('您收到一条新消息！')
