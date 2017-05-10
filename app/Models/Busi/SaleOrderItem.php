@@ -18,7 +18,7 @@ use App\Services\LogSvr;
  * @SWG\Property(name="fmaterial_id", type="integer", description="物料内码id")
  * @SWG\Property(name="box_qty", type="number", description="箱数量")
  * @SWG\Property(name="bottle_qty", type="number", description="瓶数量")
- * @SWG\Property(name="present_box_qty", type="number", description="赠送的瓶数量")
+ * @SWG\Property(name="present_box_qty", type="number", description="赠送的箱数量")
  * @SWG\Property(name="present_bottle_qty", type="number", description="赠送的瓶数量")
  * @SWG\Property(name="fqty", type="number", description="订单数量")
  * @SWG\Property(name="fsale_unit", type="string", description="销售单位")

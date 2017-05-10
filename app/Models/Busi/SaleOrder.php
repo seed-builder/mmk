@@ -78,6 +78,25 @@ class SaleOrder extends BaseModel
 			}
 		});
 
+		static::created(function ($order){
+			$customer = Customer::find($order->fcust_id);
+			if(!empty($customer) && !empty($customer->user)){
+				$content = MessageContent::create([
+					'title' => '门店【'.$order->store->ffullname.'】有新增订单',
+					'subtitle' => '门店【'.$order->store->ffullname.'】有新增订单',
+					'content' => '业代【'.$order->employee->fname.'】负责门店【'.$order->store->ffullname.'】有新增订单',
+					'type' => 0
+				]);
+				Message::create([
+					'from_id' => 0,
+					'to_id' => $customer->user->id,
+					'message_content_id' => $content->id,
+					'read' => 0,
+					'type' => 0
+				]);
+			}
+		});
+
 	}
 
 }
