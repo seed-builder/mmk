@@ -53,6 +53,7 @@ $loginUserName = empty($loginUser->nick_name) ? $loginUser->name: $loginUser->ni
     <script src="/assets/sea.config.js"></script>
     <!-- jquery UI -->
     <script src="/assets/plugins/jQueryUI/jquery-ui.js"></script>
+    <script src="/assets/plugins/velocity/velocity.min.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -100,7 +101,7 @@ $loginUserName = empty($loginUser->nick_name) ? $loginUser->name: $loginUser->ni
                                 <ul class="menu" id="message_list">
                                     @foreach($loginUser->unreadMessages() as $message)
                                         <li><!-- start message -->
-                                            <a href="{{url('admin/message/receiveMessages')}}">
+                                            <a href="{{url('customer/message/receiveMessages')}}">
                                                 <h4>
                                                     {{$message->content->title}}
                                                     <small><i class="fa fa-clock-o"></i> {{$message->fcreate_date}}</small>
@@ -112,7 +113,7 @@ $loginUserName = empty($loginUser->nick_name) ? $loginUser->name: $loginUser->ni
 
                                 </ul>
                             </li>
-                            <li class="footer"><a href="{{url('admin/message/receiveMessages')}}">查看所有</a></li>
+                            <li class="footer"><a href="{{url('customer/message/receiveMessages')}}">查看所有</a></li>
                         </ul>
                     </li>
                     <li class="dropdown user user-menu">
@@ -189,6 +190,7 @@ $loginUserName = empty($loginUser->nick_name) ? $loginUser->name: $loginUser->ni
     @include('customer.layout.sidebar')
 </div>
 <!-- ./wrapper -->
+<audio id="audioObj" src="/audio/2478.wav" >提示声音</audio>
 
 <!-- AdminLTE App -->
 <script src="/assets/plugins/AdminLTE/dist/js/app.min.js"></script>
@@ -214,11 +216,36 @@ $loginUserName = empty($loginUser->nick_name) ? $loginUser->name: $loginUser->ni
     }
     $("#pwd-reset").on('click',function () {
         layer.confirm('确认重置密码吗？重置后密码为：888888',function () {
-            window.location.href="/admin/user/reset-pwd?id="+{{$loginUser->id}}
+            window.location.href="/customer/user/reset-pwd?id="+{{$loginUser->id}}
             layer.closeAll();
         })
     })
 
+    $(function () {
+        $.get('/customer/message/unread',{},function(data,status,xhr){
+            var last_unread_id = $("#last_unread_id").val();
+            if (data.count>0) {
+                $("#message_count").velocity("fadeOut", {duration: 500})
+                    .velocity("fadeIn", {duration: 500});
+                if(!audioPlayed) {
+                    document.getElementById('audioObj').play();
+                    audioPlayed = true;
+                }
+            }else{
+                $("#message_count").text(0);
+                $("#message_count").hide();
+            }
+            if (data.last_id>last_unread_id){
+                $("#last_unread_id").val(data.last_id);
+                toastr.info('您收到一条新消息！')
+                $("#message_count").text(data.count);
+
+
+                // $("#message_count").velocity("fadeIn", { duration: 1500 })
+                //     .velocity("fadeOut", { delay: 500, duration: 1500 });
+            }
+        },'json')
+    })
 </script>
 @yield('js')
 @include('customer.layout.toastr-message')

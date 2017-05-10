@@ -50,6 +50,19 @@ $customer = $user->reference;
                         <li><a href="{{url('/customer/display-policy')}}"><i class="fa fa-fw fa-folder"></i>费用政策</a></li>
                     </ul>
                 </li>
+                <li class="treeview ">
+                    <a href="#">
+                        <i class="fa fa-comments"></i>
+                        <span>消息管理</span>
+                        <span class="pull-right-container">
+                                  <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="{{url('/customer/message/receiveMessages')}}"><i class="fa fa-fw fa-comments-o"></i>个人消息列表</a></li>
+                    </ul>
+                </li>
+
         </ul>
     </section>
     <!-- /.sidebar -->
