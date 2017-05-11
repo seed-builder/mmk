@@ -40,5 +40,15 @@ class VisitPzbz extends BaseModel
 				'fphotos' => $entity->fphotos
 			]);
 		});
+
+		static::updated(function($entity){
+			Rollcall::createOrUpdate([
+				'femp_id' => $entity->todo_calendar->femp_id,
+				'faddress' => $entity->todo_calendar->store_calendar->store->faddress,
+				'flongitude' => $entity->todo_calendar->flongitude,
+				'flatitude' => $entity->todo_calendar->flatitude,
+				'fphotos' => $entity->fphotos
+			]);
+		});
 	}
 }
