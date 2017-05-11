@@ -2,7 +2,7 @@
 /**
 * @SWG\Resource(
 *  resourcePath="/rollcall",
-*  description="Rollcall"
+*  description="Rollcall - 实时点名报表"
 * )
 */
 Route::group(['prefix' => 'rollcall', 'middleware' => 'api.sign'], function () {
@@ -46,74 +46,5 @@ Route::group(['prefix' => 'rollcall', 'middleware' => 'api.sign'], function () {
     * )
     */
     Route::get('/{id}', ['as' => 'Rollcall.show', 'uses' => 'RollcallController@show']);
-
-    /**
-    * @SWG\Api(
-    *     path="/api/rollcall",
-    *     @SWG\Operation(
-    *      method="POST",
-    *      nickname="rollcall-store",
-    *      summary="新增",
-    *      notes="新增",
-    *      type="",
-    *      @SWG\Parameters(
-    *          @SWG\Parameter(name="address", description="地址", required=true,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="fcreate_date", description="", required=true,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="femp_id", description="employee id", required=false,type="integer", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="flatitude", description="百度地图纬度", required=true,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="flongitude", description="百度地图经度", required=true,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="fmode", description="模式", required=true,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="fmodify_date", description="", required=true,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="fphotos", description="图片id 集合， 逗号隔开", required=true,type="string", paramType="form", defaultValue="" ),
-                *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
-    *      )
-    *  )
-    * )
-    */
-    Route::post('/', ['as' => 'Rollcall.store', 'uses' => 'RollcallController@store']);
-
-    /**
-    * @SWG\Api(
-    *     path="/api/rollcall/{id}",
-    *     @SWG\Operation(
-    *      method="POST",
-    *      nickname="rollcall-update",
-    *      summary="更新",
-    *      notes="更新",
-    *      type="",
-    *      @SWG\Parameters(
-    *          @SWG\Parameter(name="address", description="地址", required=false,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="fcreate_date", description="", required=false,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="femp_id", description="employee id", required=false,type="integer", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="flatitude", description="百度地图纬度", required=false,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="flongitude", description="百度地图经度", required=false,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="fmode", description="模式", required=false,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="fmodify_date", description="", required=false,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="fphotos", description="图片id 集合， 逗号隔开", required=false,type="string", paramType="form", defaultValue="" ),
-                *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="" ),
-    *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
-    *      )
-    *  )
-    * )
-    */
-    Route::post('/{id}', ['as' => 'Rollcall.update', 'uses' => 'RollcallController@update']);
-
-    /**
-    * @SWG\Api(
-    *     path="/api/rollcall/{id}",
-    *     @SWG\Operation(
-    *      method="DELETE",
-    *      nickname="rollcall-delete",
-    *      summary="删除",
-    *      notes="删除",
-    *      type="",
-    *      @SWG\Parameters(
-    *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="1" ),
-    *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
-    *      )
-    *  )
-    * )
-    */
-    Route::delete('/{id}', ['as' => 'Rollcall.delete', 'uses' => 'RollcallController@destroy']);
 
 });
