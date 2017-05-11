@@ -57,7 +57,7 @@ class Attendance extends BaseModel
 		    	'fphotos' => $attendance->fphoto,
 		    	'flongitude' => $attendance->flongitude,
 		    	'flatitude' => $attendance->flatitude,
-		    	'fmode' => $attendance->fmode,
+		    	'fmode' => $attendance->ftype,
 		    ]);
 	    });
 

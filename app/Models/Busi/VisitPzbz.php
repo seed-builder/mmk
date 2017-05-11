@@ -37,7 +37,8 @@ class VisitPzbz extends BaseModel
 				'faddress' => $entity->todo_calendar->store_calendar->store->faddress,
 				'flongitude' => $entity->todo_calendar->flongitude,
 				'flatitude' => $entity->todo_calendar->flatitude,
-				'fphotos' => $entity->fphotos
+				'fphotos' => $entity->fphotos,
+				'fmode' => 2
 			]);
 		});
 
@@ -47,7 +48,8 @@ class VisitPzbz extends BaseModel
 				'faddress' => $entity->todo_calendar->store_calendar->store->faddress,
 				'flongitude' => $entity->todo_calendar->flongitude,
 				'flatitude' => $entity->todo_calendar->flatitude,
-				'fphotos' => $entity->fphotos
+				'fphotos' => $entity->fphotos,
+				'fmode' => 2
 			]);
 		});
 	}

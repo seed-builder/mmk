@@ -301,7 +301,7 @@ var treeNodeUnSelect = function (treeId,table) {
 var mapInit = function (map, params) {
     var location = params.location != null ? params.location : new BMap.Point()
     map.centerAndZoom(location, params['zoom']);
-    map.enableScrollWheelZoom(true);
+
 
     var navigationControl = new BMap.NavigationControl({
         // 靠左上角位置

@@ -45,6 +45,7 @@ class VisitTodoCalendar extends BaseModel
 			    'faddress' => $model->store_calendar->store->faddress,
 			    'flongitude' => $model->flongitude,
 			    'flatitude' => $model->flatitude,
+			    'fmode' => 2
 		    ]);
 
 	    });
