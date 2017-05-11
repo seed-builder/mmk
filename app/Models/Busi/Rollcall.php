@@ -27,6 +27,10 @@ class Rollcall extends BaseModel
 	protected $table = 'bd_rollcalls';
 	protected $guarded = ['id'];
 
+	public function employee(){
+		return $this->belongsTo(Employee::class, 'femp_id');
+	}
+
 	public static function createOrUpdate($data){
 		$entity = static::where('femp_id', $data['femp_id'])->first();
 		if(empty($entity)){
