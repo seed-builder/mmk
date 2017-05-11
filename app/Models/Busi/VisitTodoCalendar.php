@@ -39,6 +39,14 @@ class VisitTodoCalendar extends BaseModel
 
 	    static::updated(function ($model){
 		    event(new VisitTodoStatusChangedEvent($model));
+
+		    Rollcall::createOrUpdate([
+			    'femp_id' => $model->femp_id,
+			    'faddress' => $model->store_calendar->store->faddress,
+			    'flongitude' => $model->flongitude,
+			    'flatitude' => $model->flatitude,
+		    ]);
+
 	    });
     }
 
@@ -49,6 +57,10 @@ class VisitTodoCalendar extends BaseModel
     public function employee(){
         return $this->belongsTo(Employee::class, 'femp_id');
     }
+
+	public function store_calendar(){
+		return $this->belongsTo(VisitStoreCalendar::class, 'fstore_calendar_id');
+	}
 
     public function status(){
         switch ($this->fstatus){
