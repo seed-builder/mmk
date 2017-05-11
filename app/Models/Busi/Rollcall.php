@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @author  xrs
  * @SWG\Model(id="Rollcall")
- * @SWG\Property(name="address", type="string", description="地址")
+ * @SWG\Property(name="faddress", type="string", description="地址")
  * @SWG\Property(name="fcreate_date", type="string", description="")
  * @SWG\Property(name="femp_id", type="integer", description="employee id")
  * @SWG\Property(name="flatitude", type="string", description="百度地图纬度")
