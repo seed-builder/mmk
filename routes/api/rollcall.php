@@ -13,8 +13,8 @@ Route::group(['prefix' => 'rollcall', 'middleware' => 'api.sign'], function () {
     *     @SWG\Operation(
     *      method="GET",
     *      nickname="rollcall-list",
-    *      summary="page list",
-    *      notes="page list",
+    *      summary="实时点名报表",
+    *      notes="实时点名报表",
     *      type="array",
     *     items="$ref:Rollcall",
     *      @SWG\Parameters(
@@ -35,8 +35,8 @@ Route::group(['prefix' => 'rollcall', 'middleware' => 'api.sign'], function () {
     *     @SWG\Operation(
     *      method="GET",
     *      nickname="rollcall-show",
-    *      summary="信息详情",
-    *      notes="信息详情",
+    *      summary="实时点名报表信息详情",
+    *      notes="实时点名报表信息详情",
     *      type="Attendance",
     *      @SWG\Parameters(
     *          @SWG\Parameter(name="id", description="id", required=true, type="integer", paramType="path", defaultValue="1"),
