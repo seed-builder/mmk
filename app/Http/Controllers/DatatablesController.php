@@ -234,7 +234,7 @@ abstract class DatatablesController extends Controller
 
     public function success($data)
     {
-        return response()->json(['data' => [$data]]);
+        return response()->json(['data' => [$data], 'cancelled' => 0]);
     }
 
     public function fail($error, $fieldErrors = [])

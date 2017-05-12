@@ -106,7 +106,7 @@ $loginUserName = empty($loginUser->nick_name) ? $loginUser->name: $loginUser->ni
                                                     {{$message->content->title}}
                                                     <small><i class="fa fa-clock-o"></i> {{$message->fcreate_date}}</small>
                                                 </h4>
-                                                <p>{{ strlen($message->content->content)>10?substr($message->content->content,0,10)."...":$message->content->content }}</p>
+                                                <p class="text-overflow">{!! $message->content->content !!}</p>
                                             </a>
                                         </li>
                                     @endforeach

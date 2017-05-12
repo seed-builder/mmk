@@ -86,6 +86,9 @@ class AppServiceProvider extends ServiceProvider
 	    $this->app->singleton(ISmsSvr::class, AliDaYuSms::class);
 	    $this->app->singleton(ISmsSvr::class, AliDaYuSms::class);
 	    $this->app->bind('employee-repo', EmployeeRepo::class);
+	    $this->app->bind('workflowengine', function($app){
+	    	return new Engine();
+	    });
     }
 
     public function provides()

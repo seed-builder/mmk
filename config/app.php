@@ -235,6 +235,7 @@ return [
 	    'SysConfigRepo' => \App\Facades\SysConfigFacade::class,
 	    'Sms' => \App\Facades\SmsFacade::class,
 	    'EmployeeRepo' => \App\Facades\EmployeeRepoFacade::class,
+	    'WorkFlowEngine' => \App\Facades\WorkFlowEngineFacade::class,
     ],
 
 ];
