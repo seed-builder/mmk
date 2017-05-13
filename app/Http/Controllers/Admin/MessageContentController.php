@@ -200,16 +200,13 @@ class MessageContentController extends AdminController
         $message->save();
 
         $entity = $this->newEntity()->newQuery()->find($message->message_content_id);
-
-
-        $files_arr = explode(',',$entity->files);
-
-        $files = [];
-        foreach ($files_arr as $f)
-            $files[] = '/admin/download-file?id='.$f;
-
-        $entity->files = $files;
-
+	    $files = [];
+        if(!empty($entity->files)) {
+	        $files_arr = explode(',', $entity->files);
+	        foreach ($files_arr as $f)
+		        $files[] = '/admin/download-file?id=' . $f;
+        }
+	    $entity->files = $files;
 
         return view('admin.message-content.info', ['entity' => $entity]);
     }

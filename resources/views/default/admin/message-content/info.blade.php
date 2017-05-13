@@ -25,9 +25,10 @@
                     <tr>
                         <th>附件:</th>
                         <td>
-                            @foreach($entity->files as $k=>$file)
+                            @forelse($entity->files as $k=>$file)
                                 <a href="{{$file}}" type="button" class="btn btn-info btn-flat">附件{{$k+1}} <i class="fa fa-paperclip"></i></a>
-                            @endforeach
+                                @empty
+                            @endforelse
                         </td>
                     </tr>
                     </tbody>
