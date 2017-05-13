@@ -109,10 +109,37 @@ define(function(require, exports, module) {
             order: [[ 5, 'desc' ]],
             buttons: [
                 { text: '同意',  className: 'agree', enabled: false, action: function () {
-
+                    //prompt层
+                    layer.prompt({title: '【同意】输入意见', value: '同意', formType: 2}, function(pass, index){
+                        layer.close(index);
+                        var data = table.rows( { selected: true } ).data()[0];
+                        if(data){
+                            $.post('/admin/work-flow-task/'+data.id+'/agree', {_token: $('meta[name="_token"]').attr('content')}, function (result) {
+                                if(result.data){
+                                    layer.msg('审批通过!');
+                                    table.ajax.reload();
+                                }else{
+                                    layer.msg('审批失败!');
+                                }
+                            }, 'json');
+                        }
+                    });
                 }  },
                 { text: '驳回',  className: 'disagree', enabled: false, action: function () {
-
+                    layer.prompt({title: '【驳回】输入意见', value: '不同意', formType: 2}, function(pass, index){
+                        layer.close(index);
+                        var data = table.rows( { selected: true } ).data()[0];
+                        if(data){
+                            $.post('/admin/work-flow-task/'+data.id+'/against', {_token: $('meta[name="_token"]').attr('content')}, function (result) {
+                                if(result.data){
+                                    layer.msg('驳回成功!');
+                                    table.ajax.reload();
+                                }else{
+                                    layer.msg('驳回失败!');
+                                }
+                            }, 'json');
+                        }
+                    });
                 }  },
                 { text: '审批详情',  className: 'info', enabled: false, action: function () {
 
