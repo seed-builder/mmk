@@ -79,7 +79,7 @@ class UserController extends AdminController
 	 * @return \Illuminate\Http\JsonResponse
 	 */
 	public function pagination(Request $request, $searchCols = [], $with = [], $conditionCall = null, $all_columns = false){
-		$searchCols = ["email","name","password","remember_token"];
+		$searchCols = ["name","nick_name"];
 		return parent::pagination($request, $searchCols);
 	}
 

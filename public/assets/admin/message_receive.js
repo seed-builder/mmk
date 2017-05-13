@@ -21,7 +21,7 @@ define(function(require, exports, module) {
                 {
                     'data': 'from_id',
                     render: function ( data, type, full ) {
-                        return full.from.name;
+                        return data == 0 ? '系统' : full.from.name;
                     }
                 },
                 {
