@@ -195,6 +195,7 @@ class StoreController extends AdminController
         if ($action == 'create') {
 	        $data['fdocument_status'] = 'A';//未经审批，禁用
 	        $data['fforbid_status'] = 'B';//未经审批，禁用
+	        $data['fcreator_id'] = Auth::user()->id;
             $entity = $this->newEntity($data);
             //$entity = Entity::create($data);
             $re = $entity->save();
@@ -214,7 +215,9 @@ class StoreController extends AdminController
             }
         } else {
         	$store = Store::find($data['id']);
+        	$data['fmodify_id'] =  Auth::user()->id;
         	$store->fill($data);
+
 	        $re = StoreChange::addFromStore($store->toArray(), 1, '修改门店');
 	        //$re = $store->save();
 //            $re = Store::query()->where('id', $data['id'])->update($data);
