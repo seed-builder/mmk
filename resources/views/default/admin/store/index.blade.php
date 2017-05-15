@@ -82,42 +82,17 @@
                             <div class="form-horizontal filter " filter-table="#moduleTable">
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">门店名称</label>
-                                    <div class="col-sm-2">
+                                    <label class="col-sm-1 control-label">门店名称</label>
+                                    <div class="col-sm-3">
                                         <input type="text" class="form-control filter-condition" filter-name="ffullname" filter-operator="like" />
                                     </div>
 
-                                    <label class="col-sm-2 control-label">负责业代</label>
-                                    <div class="col-sm-2">
+                                    <label class="col-sm-1 control-label">负责业代</label>
+                                    <div class="col-sm-3">
                                         <input type="text" class="form-control filter-condition" filter-name="employee_fname" filter-operator="like" />
                                     </div>
-
-                                    <label class="col-sm-2 control-label">经销商</label>
-                                    <div class="col-sm-2">
-                                        <select class="form-control filter-condition filter-select" filter-name="fcust_id" data-live-search="true">
-                                            <option value="">--请选择--</option>
-                                            @foreach($cus as $c)
-                                                <option value="{{$c->id}}">{{$c->fname}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-
-
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">渠道</label>
-                                    <div class="col-sm-2">
-                                        <select class="form-control filter-condition filter-select" filter-name="fchannel" data-live-search="true">
-                                            <option value="">--请选择--</option>
-                                            @foreach($channels as $c)
-                                                <option value="{{$c->id}}">{{$c->fname}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-
-                                    <label class="col-sm-2 control-label">路线</label>
-                                    <div class="col-sm-2">
+                                    <label class="col-sm-1 control-label">路线</label>
+                                    <div class="col-sm-3">
                                         <select class="form-control filter-condition filter-select" filter-name="fline_id" data-live-search="true">
                                             <option value="">--请选择--</option>
                                             @foreach($lines as $l)
@@ -126,8 +101,32 @@
                                         </select>
                                     </div>
 
-                                    <label class="col-sm-2 control-label">是否签约</label>
-                                    <div class="col-sm-2">
+
+
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-1 control-label">经销商</label>
+                                    <div class="col-sm-3">
+                                        <select class="form-control filter-condition filter-select" filter-name="fcust_id" data-live-search="true">
+                                            <option value="">--请选择--</option>
+                                            @foreach($cus as $c)
+                                                <option value="{{$c->id}}">{{$c->fname}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <label class="col-sm-1 control-label">渠道</label>
+                                    <div class="col-sm-3">
+                                        <select class="form-control filter-condition filter-select" filter-name="fchannel" data-live-search="true">
+                                            <option value="">--请选择--</option>
+                                            @foreach($channels as $c)
+                                                <option value="{{$c->id}}">{{$c->fname}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <label class="col-sm-1 control-label">是否签约</label>
+                                    <div class="col-sm-3">
                                         <select class="form-control filter-condition filter-select" filter-name="fis_signed" >
                                             <option value="">--请选择--</option>
                                             <option value="0">未签约</option>
