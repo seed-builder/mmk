@@ -354,7 +354,7 @@ define(function (require, exports, module) {
             var count = dt.rows( { selected: true } ).count();
             dt.buttons( ['.item-edit'] ).enable(count > 0);
             var stock = table.rows({selected: true}).data()[0];
-            dt.buttons( ['.buttons-remove'] ).enable(stock.fdocument_status == 'A');
+            dt.buttons( ['.buttons-remove'] ).enable(stock.fdocument_status == 'A' && stock.ftype != 'A');
         }
 
         $('#fmaterial_id', '#stockItemForm').on('change', function () {
