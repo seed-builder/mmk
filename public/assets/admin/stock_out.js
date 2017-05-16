@@ -165,6 +165,11 @@ define(function (require, exports, module) {
         table.on( 'select', rowSelect).on( 'deselect', rowSelect);
         function rowSelect() {
             checkEditEnabble(table,['.buttons-edit','.check','.buttons-remove'],['.uncheck']);
+            //自动出库的控制
+            var data = table.rows({selected: true}).data()[0];
+            if(data){
+                table.buttons(['.buttons-edit']).enable(data.ftype != 'A' && data.fdocument_status == 'A');
+            }
             var count = table.rows({selected: true}).count();
             itemTable.buttons(['.item-add']).enable(count>0);
             itemTable.ajax.reload();

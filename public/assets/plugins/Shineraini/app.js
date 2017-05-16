@@ -62,7 +62,6 @@ function checkEditEnabble(table, enableButtonClass, disableButtonClass) {
             table.buttons(disableButtonClass).enable(true);
         }
     }
-
 }
 
 /*
