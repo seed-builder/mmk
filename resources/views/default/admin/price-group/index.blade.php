@@ -69,7 +69,7 @@
                             <thead>
                             <tr>
                                 <th>id</th>
-                                <th>物料名称</th>
+                                <th>商品名称</th>
                                 <th>规格</th>
                                 <th>销售单位</th>
                                 <th>价格</th>
