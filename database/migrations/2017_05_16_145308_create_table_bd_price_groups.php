@@ -35,8 +35,6 @@ class CreateTableBdPriceGroups extends Migration
 		    $table->increments('id');
 		    $table->integer('fgroup_id')->unsigned();
 		    $table->integer('fmaterial_id')->unsigned();
-		    $table->string('fspecification')->nullable()->comment('规格');
-		    $table->string('fsale_unit')->nullable()->comment('销售单位');
 		    $table->decimal('fprice')->default(0)->comment('价格');
 		    $table->integer('fmin_qty')->default(0)->comment('数量起');
 		    $table->integer('fmax_qty')->default(1000000)->comment('数量止');

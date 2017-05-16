@@ -5,7 +5,7 @@ define(function(require, exports, module) {
 
     var zhCN = require('datatableZh');
     var editorCN = require('i18n');
-    exports.index = function ($, tableId, detailTableId) {
+    exports.index = function ($, tableId, detailTableId, materials) {
 
         var tableEditCn = $.extend(editorCN, {
             create:{
@@ -147,12 +147,16 @@ define(function(require, exports, module) {
             table: "#" + detailTableId,
             idSrc: 'id',
             fields: [
-                { 'label':  'fgroup_id', 'name': 'fgroup_id', },
-                { 'label':  'fmaterial_id', 'name': 'fmaterial_id', },
-                { 'label':  'fmax_qty', 'name': 'fmax_qty', },
-                { 'label':  'fmin_qty', 'name': 'fmin_qty', },
-                { 'label':  'fmodify_date', 'name': 'fmodify_date', },
-                { 'label':  'fprice', 'name': 'fprice', },
+                { 'label':  'fgroup_id', 'name': 'fgroup_id', type: 'hidden', def: function () {
+                    return table.rows( { selected: true } ).data()[0].id;
+                }},
+                { 'label':  '价格组', 'name': 'readonly_group_name', type: 'readonly', def: function () {
+                    return table.rows( { selected: true } ).data()[0].fname;
+                }},
+                { 'label':  '商品', 'name': 'fmaterial_id', type: 'select', options: materials},
+                { 'label':  '数量起', 'name': 'fmin_qty', def: 0 },
+                { 'label':  '数量止', 'name': 'fmax_qty', def: 10000 },
+                { 'label':  '价格', 'name': 'fprice', },
             ]
         });
 
@@ -170,12 +174,18 @@ define(function(require, exports, module) {
                 {  'data': 'fmaterial_id', render: function (data, type, full) {
                     return full.material.fname;
                 } },
-                {  'data': 'fspecification' },
-                {  'data': 'fsale_unit' },
+                {  'data': 'fmaterial_id', render: function (data, type, full) {
+                    return full.material.fspecification;
+                } },
+                {  'data': 'fmaterial_id', render: function (data, type, full) {
+                    return full.material.fsale_unit;
+                } },
                 {  'data': 'fprice' },
                 {  'data': 'fmin_qty' },
                 {  'data': 'fmax_qty' },
-                {  'data': 'fdocument_status' },
+                {  'data': 'fdocument_status', render: function (data, type, full) {
+                    return document_status(data);
+                } },
                 {  'data': 'fcreate_date' },
                 {  'data': 'fmodify_date' },
                 {  'data': 'fgroup_id' },

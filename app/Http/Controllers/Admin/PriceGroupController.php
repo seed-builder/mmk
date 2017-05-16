@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Busi\Material;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
 use App\Models\Busi\PriceGroup;
@@ -21,7 +22,11 @@ class PriceGroupController extends AdminController
 	public function index()
 	{
 		//
-		return view('admin.price-group.index');
+		$materials = Material::all();
+		$options = $materials->map(function($material){
+			return ['label' => $material->fname, 'value' => $material->id ];
+		});
+		return view('admin.price-group.index', ['materials' => $options]);
 	}
 
 	/**

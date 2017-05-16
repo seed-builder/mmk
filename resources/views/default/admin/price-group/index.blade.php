@@ -96,9 +96,10 @@
 @section('js')
     @include('admin.layout.datatable-js')
     <script type="text/javascript">
+        var options = {!! json_encode($materials) !!}
         $(function () {
             seajs.use('admin/price_group.js', function (app) {
-                app.index($, 'moduleTable', 'detailTable');
+                app.index($, 'moduleTable', 'detailTable', options);
             });
         });
     </script>
