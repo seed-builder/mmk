@@ -164,7 +164,7 @@ define(function (require, exports, module) {
 
         table.on( 'select', rowSelect).on( 'deselect', rowSelect);
         function rowSelect() {
-            checkEditEnabble(table,['.edit','.check','.buttons-remove'],['.uncheck']);
+            checkEditEnabble(table,['.buttons-edit','.check','.buttons-remove'],['.uncheck']);
             var count = table.rows({selected: true}).count();
             itemTable.buttons(['.item-add']).enable(count>0);
             itemTable.ajax.reload();
