@@ -100,7 +100,8 @@ class StockInController extends AdminController
 
         foreach ($data as $d){
             StockInItem::query()->where('fstock_in_id',$d->id)->update([
-                'fdocument_status' => "C"
+                'fdocument_status' => "C",
+                'fsend_status' => "C",
             ]);
         }
 
@@ -118,7 +119,8 @@ class StockInController extends AdminController
 
         foreach ($data as $d){
             StockInItem::query()->where('fstock_in_id',$d->id)->update([
-                'fdocument_status' => "A"
+                'fdocument_status' => "A",
+                'fsend_status' => "A",
             ]);
         }
 

@@ -236,6 +236,7 @@ define(function (require, exports, module) {
             checkEditEnabble(itemTable,['.edit','.check','.create','.remove'],['.uncheck']);
             itemTable.ajax.reload();
         }
+
         itemTable.on( 'select', itemRowSelect).on( 'deselect', itemRowSelect);
 
         function itemRowSelect() {
