@@ -5,7 +5,21 @@ define(function(require, exports, module) {
 
     var zhCN = require('datatableZh');
     var editorCN = require('i18n');
-    exports.index = function ($, tableId) {
+    exports.index = function ($, tableId, detailTableId) {
+
+        var tableEditCn = $.extend(editorCN, {
+            create:{
+                title: '新增价格组',
+                button: "新建",
+                submit: "提交"
+            },
+            edit: {
+                title: '价格组编辑',
+                button: "保存",
+                submit: "提交"
+            },
+        });
+
         var editor = new $.fn.dataTable.Editor({
             ajax: {
                 create: {
@@ -24,24 +38,34 @@ define(function(require, exports, module) {
                     data: {_token: $('meta[name="_token"]').attr('content')},
                 }
             },
-            i18n: editorCN,
+            i18n: tableEditCn,
             table: "#" + tableId,
             idSrc: 'id',
             fields: [
-            { 'label':  'fbegin', 'name': 'fbegin', },
-                { 'label':  'fchecker', 'name': 'fchecker', },
-                { 'label':  'fcheck_date', 'name': 'fcheck_date', },
-                { 'label':  'fcreate_date', 'name': 'fcreate_date', },
-                { 'label':  'fcreator', 'name': 'fcreator', },
-                { 'label':  'fdocument_status', 'name': 'fdocument_status', },
-                { 'label':  'fend', 'name': 'fend', },
-                { 'label':  'flevel', 'name': 'flevel', },
-                { 'label':  'fmodifier', 'name': 'fmodifier', },
-                { 'label':  'fmodify_date', 'name': 'fmodify_date', },
-                { 'label':  'fname', 'name': 'fname', },
-                { 'label':  'fnumber', 'name': 'fnumber', },
-                { 'label':  'fsuit_object', 'name': 'fsuit_object', },
-        ]
+                { 'label':  '编号', 'name': 'fnumber', },
+                { 'label':  '名称', 'name': 'fname', },
+                { 'label':  '等级', 'name': 'flevel', type:  "select",
+                    options: [
+                        { label: "一级",value: "1" },
+                        { label: "二级",value: "2" },
+                        { label: "三级",value: "3" },
+                        { label: "四级",value: "4" },
+                        { label: "五级",value: "5" },
+                        { label: "六级",value: "6" },
+                        { label: "七级",value: "7" },
+                        { label: "八级",value: "8" },
+                        { label: "九级",value: "9" },
+                    ]
+                },
+                { 'label':  '有效期开始', 'name': 'fbegin',  type:  'datetime', def:   function () { return new Date(); } },
+                { 'label':  '有效期截止', 'name': 'fend', type:  'datetime', def:   function () { return new Date(); } },
+                { 'label':  '适用范围', 'name': 'fsuit_object', type:  "select",
+                    options: [
+                        { label: "全部",value: "all" },
+                        { label: "门店",value: "store" },
+                        { label: "经销商",value: "customer" },
+                    ]},
+            ]
         });
 
         var table = $("#" + tableId).DataTable({
@@ -54,20 +78,32 @@ define(function(require, exports, module) {
             rowId: "id",
             ajax: '/admin/price-group/pagination',
             columns: [
-                    {  'data': 'fbegin' },
-                    {  'data': 'fchecker' },
-                    {  'data': 'fcheck_date' },
-                    {  'data': 'fcreate_date' },
-                    {  'data': 'fcreator' },
-                    {  'data': 'fdocument_status' },
-                    {  'data': 'fend' },
-                    {  'data': 'flevel' },
-                    {  'data': 'fmodifier' },
-                    {  'data': 'fmodify_date' },
-                    {  'data': 'fname' },
-                    {  'data': 'fnumber' },
-                    {  'data': 'fsuit_object' },
-                    {  'data': 'id' },
+                {  'data': 'id' },
+                {  'data': 'fnumber' },
+                {  'data': 'fname' },
+                {  'data': 'flevel' },
+                {  'data': 'fsuit_object' , render: function (data, type, full) {
+                    var txt = '';
+                    switch (data){
+                        case 'all':
+                            txt = '全部';
+                            break;
+                        case 'store':
+                            txt = '门店';
+                            break;
+                        case 'customer':
+                            txt = '经销商';
+                            break;
+                    }
+                    return txt;
+                }},
+                {  'data': 'fbegin' },
+                {  'data': 'fend' },
+                {  'data': 'fdocument_status', render: function (data, type, full) {
+                    return document_status(data);
+                } },
+                {  'data': 'fcreate_date' },
+                {  'data': 'fmodify_date' },
             ],
             buttons: [
                 // { text: '新增', action: function () { }  },
@@ -76,6 +112,81 @@ define(function(require, exports, module) {
                 {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: editor},
                 {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: editor},
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
+                {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
+                {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
+                //{extend: 'colvis', text: '列显示'}
+            ]
+        });
+
+        // table.on( 'select', checkBtn).on( 'deselect', checkBtn);
+        //
+        // function checkBtn(e, dt, type, indexes) {
+        //     var count = table.rows( { selected: true } ).count();
+        //     table.buttons( ['.edit', '.delete'] ).enable(count > 0);
+        // }
+
+        var detailEditor = new $.fn.dataTable.Editor({
+            ajax: {
+                create: {
+                    type: 'POST',
+                    url: '/admin/price',
+                    data: {_token: $('meta[name="_token"]').attr('content')},
+                },
+                edit: {
+                    type: 'PUT',
+                    url: '/admin/price/_id_',
+                    data: {_token: $('meta[name="_token"]').attr('content')},
+                },
+                remove: {
+                    type: 'DELETE',
+                    url: '/admin/price/_id_',
+                    data: {_token: $('meta[name="_token"]').attr('content')},
+                }
+            },
+            i18n: editorCN,
+            table: "#" + detailTableId,
+            idSrc: 'id',
+            fields: [
+                { 'label':  'fgroup_id', 'name': 'fgroup_id', },
+                { 'label':  'fmaterial_id', 'name': 'fmaterial_id', },
+                { 'label':  'fmax_qty', 'name': 'fmax_qty', },
+                { 'label':  'fmin_qty', 'name': 'fmin_qty', },
+                { 'label':  'fmodify_date', 'name': 'fmodify_date', },
+                { 'label':  'fprice', 'name': 'fprice', },
+            ]
+        });
+
+        var detailTable = $("#" + detailTableId).DataTable({
+            dom: "lBfrtip",
+            language: zhCN,
+            processing: true,
+            serverSide: true,
+            select: true,
+            paging: true,
+            rowId: "id",
+            ajax: '/admin/price/pagination',
+            columns: [
+                {  'data': 'id' },
+                {  'data': 'fmaterial_id', render: function (data, type, full) {
+                    return full.material.fname;
+                } },
+                {  'data': 'fspecification' },
+                {  'data': 'fsale_unit' },
+                {  'data': 'fprice' },
+                {  'data': 'fmin_qty' },
+                {  'data': 'fmax_qty' },
+                {  'data': 'fdocument_status' },
+                {  'data': 'fcreate_date' },
+                {  'data': 'fmodify_date' },
+                {  'data': 'fgroup_id' },
+            ],
+            buttons: [
+                // { text: '新增', action: function () { }  },
+                // { text: '编辑', className: 'edit', enabled: false },
+                // { text: '删除', className: 'delete', enabled: false },
+                {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: detailEditor},
+                {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: detailEditor},
+                {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: detailEditor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
                 //{extend: 'colvis', text: '列显示'}

@@ -66,8 +66,8 @@ class PriceController extends AdminController
 	* @return  \Illuminate\Http\JsonResponse
 	*/
 	public function pagination(Request $request, $searchCols = [], $with=[], $conditionCall = null, $all_columns = false){
-		$searchCols = ["fdocument_status","fsale_unit","fspecification"];
-		return parent::pagination($request, $searchCols);
+		$searchCols = ["fspecification"];
+		return parent::pagination($request, $searchCols, ['material']);
 	}
 
 }

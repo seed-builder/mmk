@@ -5,7 +5,7 @@ namespace App\Models\Busi;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * model description
+ * 价格组
  * Class PriceGroup
  * @package  App\Models
  *

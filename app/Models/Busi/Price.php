@@ -5,7 +5,7 @@ namespace App\Models\Busi;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * model description
+ * 价格
  * Class Price
  * @package  App\Models
  *
@@ -30,4 +30,13 @@ class Price extends BaseModel
 	//
 	protected $table = 'bd_prices';
 	protected $guarded = ['id'];
+
+	public function group(){
+		return $this->belongsTo(PriceGroup::class, 'fgroup_id');
+	}
+
+	public function material(){
+		return $this->belongsTo(Material::class, 'fmaterial_id');
+	}
+
 }

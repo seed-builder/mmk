@@ -66,7 +66,7 @@ class PriceGroupController extends AdminController
 	* @return  \Illuminate\Http\JsonResponse
 	*/
 	public function pagination(Request $request, $searchCols = [], $with=[], $conditionCall = null, $all_columns = false){
-		$searchCols = ["fdocument_status","fname","fnumber","fsuit_object"];
+		$searchCols = ["fname","fnumber"];
 		return parent::pagination($request, $searchCols);
 	}
 
