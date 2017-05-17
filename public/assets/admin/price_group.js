@@ -156,6 +156,7 @@ define(function(require, exports, module) {
     }
 
     exports.edit = function ($, tableId, groupId, materials) {
+
         var detailEditor = new $.fn.dataTable.Editor({
             ajax: {
                 create: {
