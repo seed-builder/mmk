@@ -105,6 +105,12 @@ define(function(require, exports, module) {
                 {  'data': 'fcreate_date' },
                 {  'data': 'fmodify_date' },
             ],
+            columnDefs: [
+                {
+                    "targets": [0],
+                    "visible": false
+                }
+            ],
             buttons: [
                 // { text: '新增', action: function () { }  },
                 // { text: '编辑', className: 'edit', enabled: false },
@@ -201,6 +207,12 @@ define(function(require, exports, module) {
                 {  'data': 'fcreate_date' },
                 {  'data': 'fmodify_date' },
                 {  'data': 'fgroup_id' },
+            ],
+            columnDefs: [
+                {
+                    "targets": [0,10],
+                    "visible": false
+                }
             ],
             buttons: [
                 // { text: '新增', action: function () { }  },
