@@ -5,6 +5,7 @@ $docStatus = ['A' => '未审核', 'C' => '已审核'];
 @extends('admin.layout.collapsed-sidebar')
 @section('styles')
     @include('admin.layout.datatable-css')
+    <link rel="stylesheet" href="/assets/plugins/bootstrap-validator/css/bootstrapValidator.min.css" />
 @endsection
 
 @section('content')
@@ -27,19 +28,22 @@ $docStatus = ['A' => '未审核', 'C' => '已审核'];
             <section class="col-lg-12 connectedSortable">
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">价格组详情</h3>
+                        <h3 class="box-title">{{$entity->id == 0 ? '新增价格组':'价格组详情'}}</h3>
                         <div class="box-tools pull-right">
                             <div class="btn-group">
                                 <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">操作
                                     <i class="fa fa-wrench"></i></button>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a href="#" id="btnAddChild"><i class="fa fa-file"></i>新增下级菜单功能</a></li>
-                                    <li><a href="#" id="btnAddSame"><i class="fa fa-file"></i>新增同级菜单功能</a></li>
-                                    {{--<li><a href="#" id="btnEdit"><i class="fa fa-pencil"></i>编辑</a></li>--}}
-                                    <li><a href="#" id="btnRemove"><i class="fa fa-remove"></i>删除</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#" id="btnOpen"><i class="fa fa-folder-open"></i>展开</a></li>
-                                    <li><a href="#" id="btnCollapse"><i class="fa fa-folder"></i>折叠</a></li>
+                                    @if($entity->id > 0 )
+                                        <li><a href="#" id="btnRemove"><i class="fa fa-remove"></i>删除</a></li>
+                                        <li class="divider"></li>
+                                        @if($entity->fdocument_status=='A')
+                                        <li><a href="#" id="btnCheck"><i class="fa fa-folder-open"></i>审核</a></li>
+                                        @endif
+                                        @if($entity->fdocument_status=='C')
+                                        <li><a href="#" id="btnUnCheck"><i class="fa fa-folder"></i>反审核</a></li>
+                                        @endif
+                                    @endif
                                 </ul>
                             </div>
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -47,8 +51,9 @@ $docStatus = ['A' => '未审核', 'C' => '已审核'];
                         </div>
                     </div>
                     <!-- form start -->
-                    <form class="form-horizontal">
+                    <form id="detailForm" class="form-horizontal" method="post" action="{{ route('price-group.update', $entity->id) }}">
                         {!! csrf_field() !!}
+                        {!! method_field('PUT') !!}
                         <input type="hidden" id="id" name="id" value="{{$entity->id}}" />
                         <div class="box-body">
                             <div class="form-group">
@@ -83,12 +88,12 @@ $docStatus = ['A' => '未审核', 'C' => '已审核'];
 
                                 <label for="fname" class="col-sm-1 control-label">起始日期</label>
                                 <div class="col-sm-3">
-                                    <input type="text" class="form-control editor-datetime" id="fbegin" name="fbegin" value="{{$entity->fbegin}}" placeholder="起始日期">
+                                    <input type="text" class="form-control datepicker" id="fbegin" name="fbegin" value="{{$entity->fbegin}}" placeholder="起始日期">
                                 </div>
 
                                 <label for="fname" class="col-sm-1 control-label">截止日期</label>
                                 <div class="col-sm-3">
-                                    <input type="text" class="form-control editor-datetime" id="fend" name="fend" value="{{$entity->fend}}" placeholder="起始日期">
+                                    <input type="text" class="form-control datepicker" id="fend" name="fend" value="{{$entity->fend}}" placeholder="起始日期">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -115,20 +120,26 @@ $docStatus = ['A' => '未审核', 'C' => '已审核'];
                         <!-- /.box-body -->
                         <div class="box-footer">
                             <a href="/admin/price-group" class="btn btn-default">取消</a>
+                            @if($entity->fdocument_status == 'A')
                             <button type="submit" class="btn btn-info pull-right">保存</button>
+                            @endif
                         </div>
                         <!-- /.box-footer -->
                     </form>
                 </div>
                 <!-- /.box -->
-                <!-- Custom tabs (Charts with tabs)-->
+                @if($entity->id > 0)
+                <!-- tabs (Charts with tabs)-->
                 <div class="nav-tabs-custom">
                     <!-- Tabs within a box -->
-                    <ul class="nav nav-tabs pull-right">
-                        <li><a href="#group-stores" data-toggle="tab">门店</a></li>
-                        <li><a href="#group-customers" data-toggle="tab">经销商</a></li>
+                    <ul class="nav nav-tabs ">
                         <li class="active"><a href="#group-prices" data-toggle="tab">商品价格</a></li>
-                        <li class="pull-left header"><i class="fa fa-inbox"></i> 价格组详情</li>
+                        @if($entity->fsuit_object == 'all' || $entity->fsuit_object == 'store')
+                        <li><a href="#group-stores" data-toggle="tab">门店</a></li>
+                        @endif
+                        @if($entity->fsuit_object == 'all' || $entity->fsuit_object == 'customer')
+                        <li><a href="#group-customers" data-toggle="tab">经销商</a></li>
+                        @endif
                     </ul>
                     <div class="tab-content no-padding">
                         <!-- Morris chart - Sales -->
@@ -160,6 +171,7 @@ $docStatus = ['A' => '未审核', 'C' => '已审核'];
                     </div>
                 </div>
                 <!-- /.nav-tabs-custom -->
+                @endif
             </section>
 
         </div>
@@ -171,19 +183,22 @@ $docStatus = ['A' => '未审核', 'C' => '已审核'];
     @include('admin.layout.datatable-js')
     <script type="text/javascript" src="/assets/plugins/datepicker/bootstrap-datepicker.js"></script>
     <script type="text/javascript" src="/assets/plugins/datepicker/locales/bootstrap-datepicker.zh-CN.js"></script>
+    <script src="/assets/plugins/bootstrap-validator/js/bootstrapValidator.min.js"></script>
+    <script src="/assets/plugins/bootstrap-validator/js/language/zh_CN.js"></script>
     <script type="text/javascript">
         var options = {!! json_encode($materials) !!}
+        var groupId = {{$entity->id}}
         $(function () {
             seajs.use('admin/price_group.js', function (app) {
-                app.index($, 'moduleTable', 'detailTable', options);
+                app.edit($, 'detailTable', groupId ,options);
             });
 
-            $(function () {
-                $('.datetimepicker').datepicker({
-                    format: 'yyyy-mm-dd',
-                    language: 'zh-CN'
-                });
+
+            $('.datepicker').datepicker({
+                format: 'yyyy-mm-dd',
+                language: 'zh-CN'
             });
+
         });
     </script>
 

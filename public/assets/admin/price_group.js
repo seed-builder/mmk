@@ -46,15 +46,15 @@ define(function(require, exports, module) {
                 { 'label':  '名称', 'name': 'fname', },
                 { 'label':  '等级', 'name': 'flevel', type:  "select",
                     options: [
-                        { label: "一级",value: "1" },
-                        { label: "二级",value: "2" },
-                        { label: "三级",value: "3" },
-                        { label: "四级",value: "4" },
-                        { label: "五级",value: "5" },
-                        { label: "六级",value: "6" },
-                        { label: "七级",value: "7" },
-                        { label: "八级",value: "8" },
-                        { label: "九级",value: "9" },
+                        { label: "1 级",value: "1" },
+                        { label: "2 级",value: "2" },
+                        { label: "3 级",value: "3" },
+                        { label: "4 级",value: "4" },
+                        { label: "5 级",value: "5" },
+                        { label: "6 级",value: "6" },
+                        { label: "7 级",value: "7" },
+                        { label: "8 级",value: "8" },
+                        { label: "9 级",value: "9" },
                     ]
                 },
                 { 'label':  '有效期开始', 'name': 'fbegin',  type:  'datetime', def:   function () { return new Date(); } },
@@ -67,7 +67,6 @@ define(function(require, exports, module) {
                     ]},
             ]
         });
-
 
         var table = $("#" + tableId).DataTable({
             dom: "lBfrtip",
@@ -113,15 +112,15 @@ define(function(require, exports, module) {
                 }
             ],
             buttons: [
-                // { text: '新增', action: function () {
-                //     var data = getSelectedData();
-                //     window.location.href='/admin/price-group/create';
-                // }  },
+                { text: '新增', action: function () {
+                    var data = getSelectedData();
+                    window.location.href='/admin/price-group/create';
+                }  },
 
                 // { text: '删除', className: 'delete', enabled: false },
-                {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: editor},
+                //{extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: editor},
                 // {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: editor},
-                { text: '编辑', className: 'edit', enabled: false, action: function () {
+                { text: '详情', className: 'edit', enabled: false, action: function () {
                     var data = getSelectedData();
                     window.location.href='/admin/price-group/' + data.id +'/edit';
                 } },
@@ -142,11 +141,7 @@ define(function(require, exports, module) {
         table.on( 'select', checkBtn).on( 'deselect', checkBtn);
 
         function checkBtn(e, dt, type, indexes) {
-            var count = table.rows( { selected: true } ).count();
-            detailTable.buttons( ['.buttons-create'] ).enable(count > 0);
-
             checkEditEnabble(table,['.check', '.edit'],['.uncheck']);
-            detailTable.ajax.reload();
         }
 
         //审核
@@ -158,6 +153,9 @@ define(function(require, exports, module) {
             dataCheck(table,'/admin/price-group/uncheck');
         })
 
+    }
+
+    exports.edit = function ($, tableId, groupId, materials) {
         var detailEditor = new $.fn.dataTable.Editor({
             ajax: {
                 create: {
@@ -177,15 +175,10 @@ define(function(require, exports, module) {
                 }
             },
             i18n: editorCN,
-            table: "#" + detailTableId,
+            table: "#" + tableId,
             idSrc: 'id',
             fields: [
-                { 'label':  'fgroup_id', 'name': 'fgroup_id', type: 'hidden', def: function () {
-                    return table.rows( { selected: true } ).data()[0].id;
-                }},
-                { 'label':  '价格组', 'name': 'readonly_group_name', type: 'readonly', def: function () {
-                    return table.rows( { selected: true } ).data()[0].fname;
-                }},
+                { 'label':  'fgroup_id', 'name': 'fgroup_id', type: 'hidden', def: groupId },
                 { 'label':  '商品', 'name': 'fmaterial_id', type: 'select', options: materials},
                 { 'label':  '数量起', 'name': 'fmin_qty', def: 0 },
                 { 'label':  '数量止', 'name': 'fmax_qty', def: 10000 },
@@ -193,7 +186,7 @@ define(function(require, exports, module) {
             ]
         });
 
-        var detailTable = $("#" + detailTableId).DataTable({
+        var detailTable = $("#" + tableId).DataTable({
             dom: "lBfrtip",
             language: zhCN,
             processing: true,
@@ -204,7 +197,6 @@ define(function(require, exports, module) {
             ajax:{
                 url : '/admin/price/pagination',
                 data : function (data) {
-                    var groupId = table.rows('.selected').data().length>0?table.rows('.selected').data()[0].id:0;
                     data.columns[10]['search']['value'] = groupId;
                 }
             },
@@ -239,7 +231,7 @@ define(function(require, exports, module) {
                 // { text: '新增', action: function () { }  },
                 // { text: '编辑', className: 'edit', enabled: false },
                 // { text: '删除', className: 'delete', enabled: false },
-                {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: detailEditor, enabled: false},
+                {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: detailEditor },
                 {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: detailEditor},
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: detailEditor},
                 { text: '审核<i class="fa fa-fw fa-paperclip"></i>',className: 'detail-check', enabled: false },
@@ -259,16 +251,139 @@ define(function(require, exports, module) {
             checkEditEnabble(detailTable,['.detail-check'],['.detail-uncheck']);
         }
 
+        //删除
+        $('#btnRemove').on('click', function () {
+            layer.confirm('确定删除 ? ', ['确定', '取消'], function () {
+                $.post('/admin/price-group/' + groupId, {_token: $('meta[name="_token"]').attr('content'), _method: 'DELETE'}, function (res) {
+                    if(res.cancelled == 0){
+                        layer.msg('删除成功');
+                        window.location.href = '/admin/price-group';
+                    }else{
+                        layer.msg('删除失败 ' + res.error);
+                    }
+                })
+            });
+        });
         //审核
-        $(".detail-check").on('click',function () {
-            dataCheck(detailTable,'/admin/price/check');
+        $("#btnCheck").on('click',function () {
+            //dataCheck(detailTable,'');
+            $.get('/admin/price-group/check', {ids: groupId}, function (res) {
+                if(res.code ==  200){
+                    layer.msg(res.result);
+                    window.location.reload(true);
+                }
+            })
         })
 
-        $(".detail-uncheck").on('click',function () {
-            dataCheck(detailTable,'/admin/price/uncheck');
+        $("#btnUnCheck").on('click',function () {
+            $.get('/admin/price-group/uncheck', {ids: groupId}, function (res) {
+                if(res.code ==  200){
+                    layer.msg(res.result);
+                    window.location.reload(true);
+                }
+            })
         })
 
+        $('#detailForm').bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                fnumber: {
+                    validators: {
+                        notEmpty: {},
+                    }
+                },
+                fname: {
+                    validators: {
+                        notEmpty: {},
+                    }
+                },
+                fbegin: {
+                    validators: {
+                        notEmpty: {},
+                    }
+                },
+                fend: {
+                    validators: {
+                        notEmpty: {},
+                    }
+                },
 
+            }
+        }).on('success.form.bv', function (e) {
+            // Prevent form submission
+            e.preventDefault();
+            // Get the form instance
+            var $form = $(e.target);
+            // Get the BootstrapValidator instance
+            var bv = $form.data('bootstrapValidator');
+
+            // Use Ajax to submit form data
+            $.post($form.attr('action'), $form.serialize(), function (result) {
+                if(result.cancelled == 0)
+                {
+                    layer.msg('保存成功!');
+                    window.location.reload(true);
+                }else{
+                    layer.msg('保存失败 ' + result.error );
+                }
+            }, 'json');
+        });
     }
 
+    exports.create = function ($) {
+        $('#detailForm').bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                fnumber: {
+                    validators: {
+                        notEmpty: {},
+                    }
+                },
+                fname: {
+                    validators: {
+                        notEmpty: {},
+                    }
+                },
+                fbegin: {
+                    validators: {
+                        notEmpty: {},
+                    }
+                },
+                fend: {
+                    validators: {
+                        notEmpty: {},
+                    }
+                },
+
+            }
+        }).on('success.form.bv', function (e) {
+            // Prevent form submission
+            e.preventDefault();
+            // Get the form instance
+            var $form = $(e.target);
+            // Get the BootstrapValidator instance
+            var bv = $form.data('bootstrapValidator');
+
+            // Use Ajax to submit form data
+            $.post($form.attr('action'), $form.serialize(), function (result) {
+                if(result.cancelled == 0)
+                {
+                    layer.msg('保存成功!');
+                    window.location.href = '/admin/price-group/' + result.data[0].id+'/edit';
+                }else{
+                    layer.msg('保存失败 ' + result.error );
+                }
+            }, 'json');
+        });
+    }
 });

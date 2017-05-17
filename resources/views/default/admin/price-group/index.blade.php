@@ -53,40 +53,40 @@
                 </div>
                 <!-- /.box -->
             </div>
-            <div class="col-xs-12">
-                <div class="box box-info">
-                    <div class="box-header">
-                        <h3 class="box-title">价格组详情</h3>
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                            </button>
-                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                        </div>
-                    </div>
-                    <!-- /.box-header -->
-                    <div class="box-body">
-                        <table id="detailTable" class="table table-bordered table-hover display nowrap" cellspacing="0" width="100%">
-                            <thead>
-                            <tr>
-                                <th>id</th>
-                                <th>商品名称</th>
-                                <th>规格</th>
-                                <th>销售单位</th>
-                                <th>价格</th>
-                                <th>数量起</th>
-                                <th>数量止</th>
-                                <th>审核状态</th>
-                                <th>创建时间</th>
-                                <th>修改时间</th>
-                                <th>group_id</th>
-                            </tr>
-                            </thead>
-                        </table>
-                    </div>
-                    <!-- /.box-body -->
-                </div>
-                <!-- /.box -->
-            </div>
+            {{--<div class="col-xs-12">--}}
+                {{--<div class="box box-info">--}}
+                    {{--<div class="box-header">--}}
+                        {{--<h3 class="box-title">价格组详情</h3>--}}
+                        {{--<div class="box-tools pull-right">--}}
+                            {{--<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>--}}
+                            {{--</button>--}}
+                            {{--<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                    {{--<!-- /.box-header -->--}}
+                    {{--<div class="box-body">--}}
+                        {{--<table id="detailTable" class="table table-bordered table-hover display nowrap" cellspacing="0" width="100%">--}}
+                            {{--<thead>--}}
+                            {{--<tr>--}}
+                                {{--<th>id</th>--}}
+                                {{--<th>商品名称</th>--}}
+                                {{--<th>规格</th>--}}
+                                {{--<th>销售单位</th>--}}
+                                {{--<th>价格</th>--}}
+                                {{--<th>数量起</th>--}}
+                                {{--<th>数量止</th>--}}
+                                {{--<th>审核状态</th>--}}
+                                {{--<th>创建时间</th>--}}
+                                {{--<th>修改时间</th>--}}
+                                {{--<th>group_id</th>--}}
+                            {{--</tr>--}}
+                            {{--</thead>--}}
+                        {{--</table>--}}
+                    {{--</div>--}}
+                    {{--<!-- /.box-body -->--}}
+                {{--</div>--}}
+                {{--<!-- /.box -->--}}
+            {{--</div>--}}
             <!-- /.col -->
         </div>
         <!-- /.row -->

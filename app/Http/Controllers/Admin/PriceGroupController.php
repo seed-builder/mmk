@@ -37,12 +37,7 @@ class PriceGroupController extends AdminController
 	*/
 	public function create()
 	{
-		$materials = Material::all();
-		$options = $materials->map(function($material){
-			return ['label' => $material->fname, 'value' => $material->id ];
-		});
-
-		return view('admin.price-group.detail', ['entity' => new PriceGroup(), 'materials' => $options]);
+		return view('admin.price-group.create', ['entity' => new PriceGroup(['id' => 0])]);
 	}
 
 	/**
@@ -59,7 +54,51 @@ class PriceGroupController extends AdminController
 			return ['label' => $material->fname, 'value' => $material->id ];
 		});
 
-		return view('admin.price-group.detail', ['entity' => $entity, 'materials' => $options]);
+		return view('admin.price-group.edit', ['entity' => $entity, 'materials' => $options]);
+	}
+
+	public function store(Request $request, $extraFields = [])
+	{
+		$data = $request->except('_token');
+		if (empty($data))
+			return $this->fail('data is empty');
+		//$props = current($data);
+		$props = $this->beforeSave($data);
+		$fieldErrors = $this->validateFields($props);
+		if (!empty($fieldErrors)) {
+			return $this->fail('validate error', $fieldErrors);
+		} else {
+			if (!empty($extraFields)) {
+				$props += $extraFields;
+			}
+			$entity = $this->newEntity($props);
+			$entity->save();
+			return $this->success($entity);
+		}
+	}
+
+	public function update(Request $request, $id, $extraFields = [])
+	{
+		//$data = $request->input('data', []);
+		$data = $request->except('_token');
+		if (empty($data))
+			return $this->fail('data is empty');
+
+		//$props = current($data);
+		$props = $this->beforeSave($data);
+		$fieldErrors = $this->validateFields($props);
+		if (!empty($fieldErrors)) {
+			return $this->fail('validate error', $fieldErrors);
+		} else {
+			if (!empty($extraFields)) {
+				$props += $extraFields;
+			}
+			$entity = $this->newEntity()->newQuery()->find($id);
+			$entity->fill($props);
+			$entity->save();
+			$this->afterSave($entity);
+			return $this->success($entity);
+		}
 	}
 
 	/**
