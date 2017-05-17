@@ -37,7 +37,12 @@ class PriceGroupController extends AdminController
 	*/
 	public function create()
 	{
-		return view('admin.price-group.create');
+		$materials = Material::all();
+		$options = $materials->map(function($material){
+			return ['label' => $material->fname, 'value' => $material->id ];
+		});
+
+		return view('admin.price-group.detail', ['entity' => new PriceGroup(), 'materials' => $options]);
 	}
 
 	/**
@@ -49,7 +54,12 @@ class PriceGroupController extends AdminController
 	public function edit($id)
 	{
 		$entity = PriceGroup::find($id);
-		return view('admin.price-group.edit', ['entity' => $entity]);
+		$materials = Material::all();
+		$options = $materials->map(function($material){
+			return ['label' => $material->fname, 'value' => $material->id ];
+		});
+
+		return view('admin.price-group.detail', ['entity' => $entity, 'materials' => $options]);
 	}
 
 	/**
@@ -61,6 +71,8 @@ class PriceGroupController extends AdminController
 	public function show($id)
 	{
 		//
+		$entity = PriceGroup::find($id);
+		return view('admin.price-group.detail', ['entity' => $entity]);
 	}
 
 	/**

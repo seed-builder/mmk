@@ -68,6 +68,7 @@ define(function(require, exports, module) {
             ]
         });
 
+
         var table = $("#" + tableId).DataTable({
             dom: "lBfrtip",
             language: zhCN,
@@ -112,11 +113,18 @@ define(function(require, exports, module) {
                 }
             ],
             buttons: [
-                // { text: '新增', action: function () { }  },
-                // { text: '编辑', className: 'edit', enabled: false },
+                // { text: '新增', action: function () {
+                //     var data = getSelectedData();
+                //     window.location.href='/admin/price-group/create';
+                // }  },
+
                 // { text: '删除', className: 'delete', enabled: false },
                 {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: editor},
-                {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: editor},
+                // {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: editor},
+                { text: '编辑', className: 'edit', enabled: false, action: function () {
+                    var data = getSelectedData();
+                    window.location.href='/admin/price-group/' + data.id +'/edit';
+                } },
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
                 { text: '审核<i class="fa fa-fw fa-paperclip"></i>',className: 'check', enabled: false },
                 { text: '反审核<i class="fa fa-fw fa-unlink"></i>',className: 'uncheck', enabled: false },
@@ -127,13 +135,17 @@ define(function(require, exports, module) {
             order: [[9, 'desc']]
         });
 
+        function getSelectedData() {
+            return table.rows( { selected: true } ).data()[0];
+        }
+
         table.on( 'select', checkBtn).on( 'deselect', checkBtn);
 
         function checkBtn(e, dt, type, indexes) {
             var count = table.rows( { selected: true } ).count();
             detailTable.buttons( ['.buttons-create'] ).enable(count > 0);
 
-            checkEditEnabble(table,['.check'],['.uncheck']);
+            checkEditEnabble(table,['.check', '.edit'],['.uncheck']);
             detailTable.ajax.reload();
         }
 
