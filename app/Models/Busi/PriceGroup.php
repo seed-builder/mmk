@@ -31,4 +31,8 @@ class PriceGroup extends BaseModel
 	//
 	protected $table = 'bd_price_groups';
 	protected $guarded = ['id'];
+
+	public function prices(){
+		return $this->hasMany(Price::class, 'fgroup_id');
+	}
 }

@@ -112,18 +112,30 @@ define(function(require, exports, module) {
                 {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: editor},
                 {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: editor},
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
+                { text: '审核<i class="fa fa-fw fa-paperclip"></i>',className: 'check', enabled: false },
+                { text: '反审核<i class="fa fa-fw fa-unlink"></i>',className: 'uncheck', enabled: false },
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
                 //{extend: 'colvis', text: '列显示'}
             ]
         });
 
-        // table.on( 'select', checkBtn).on( 'deselect', checkBtn);
-        //
-        // function checkBtn(e, dt, type, indexes) {
-        //     var count = table.rows( { selected: true } ).count();
-        //     table.buttons( ['.edit', '.delete'] ).enable(count > 0);
-        // }
+        table.on( 'select', checkBtn).on( 'deselect', checkBtn);
+
+        function checkBtn(e, dt, type, indexes) {
+            // var count = table.rows( { selected: true } ).count();
+            // table.buttons( ['.edit', '.delete'] ).enable(count > 0);
+            checkEditEnabble(table,['.check'],['.uncheck']);
+        }
+
+        //审核
+        $(".check").on('click',function () {
+            dataCheck(table,'/admin/price-group/check');
+        })
+
+        $(".uncheck").on('click',function () {
+            dataCheck(table,'/admin/price-group/uncheck');
+        })
 
         var detailEditor = new $.fn.dataTable.Editor({
             ajax: {
@@ -197,18 +209,31 @@ define(function(require, exports, module) {
                 {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: detailEditor},
                 {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: detailEditor},
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: detailEditor},
+                { text: '审核<i class="fa fa-fw fa-paperclip"></i>',className: 'detail-check', enabled: false },
+                { text: '反审核<i class="fa fa-fw fa-unlink"></i>',className: 'detail-uncheck', enabled: false },
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
                 //{extend: 'colvis', text: '列显示'}
             ]
         });
 
-        // table.on( 'select', checkBtn).on( 'deselect', checkBtn);
-        //
-        // function checkBtn(e, dt, type, indexes) {
-        //     var count = table.rows( { selected: true } ).count();
-        //     table.buttons( ['.edit', '.delete'] ).enable(count > 0);
-        // }
+        detailTable.on( 'select', detailCheckBtn).on( 'deselect', detailCheckBtn);
+
+        function detailCheckBtn(e, dt, type, indexes) {
+            // var count = table.rows( { selected: true } ).count();
+            // table.buttons( ['.edit', '.delete'] ).enable(count > 0);
+            checkEditEnabble(detailTable,['.detail-check'],['.detail-uncheck']);
+        }
+
+        //审核
+        $(".detail-check").on('click',function () {
+            dataCheck(detailTable,'/admin/price/check');
+        })
+
+        $(".detail-uncheck").on('click',function () {
+            dataCheck(detailTable,'/admin/price/uncheck');
+        })
+
 
     }
 

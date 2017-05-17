@@ -5,6 +5,7 @@ use App\Models\Busi\Material;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
 use App\Models\Busi\PriceGroup;
+use Illuminate\Support\Facades\Auth;
 
 class PriceGroupController extends AdminController
 {
@@ -73,6 +74,29 @@ class PriceGroupController extends AdminController
 	public function pagination(Request $request, $searchCols = [], $with=[], $conditionCall = null, $all_columns = false){
 		$searchCols = ["fname","fnumber"];
 		return parent::pagination($request, $searchCols);
+	}
+
+	/*
+     * 审核
+     */
+	public function check(Request $request)
+	{
+		$data = $request->all();
+		$ids = explode(",", $data['ids']);
+		$entitys = $this->newEntity()->newQuery()->whereIn('id', $ids)->get();
+
+		foreach ($entitys as $entity) {
+			$entity->fdocument_status = "C";
+			$entity->fcheck_date = date('Y-m-d H:i:s');
+			$entity->fchecker = Auth::user()->id;
+			$entity->save();
+		}
+
+		return response()->json([
+			'code' => 200,
+			'result' => '审核成功！',
+			'data' => $entitys
+		]);
 	}
 
 }
