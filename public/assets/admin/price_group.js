@@ -129,9 +129,11 @@ define(function(require, exports, module) {
         table.on( 'select', checkBtn).on( 'deselect', checkBtn);
 
         function checkBtn(e, dt, type, indexes) {
-            // var count = table.rows( { selected: true } ).count();
-            // table.buttons( ['.edit', '.delete'] ).enable(count > 0);
+            var count = table.rows( { selected: true } ).count();
+            detailTable.buttons( ['.buttons-create'] ).enable(count > 0);
+
             checkEditEnabble(table,['.check'],['.uncheck']);
+            detailTable.ajax.reload();
         }
 
         //审核
@@ -186,7 +188,13 @@ define(function(require, exports, module) {
             select: true,
             paging: true,
             rowId: "id",
-            ajax: '/admin/price/pagination',
+            ajax:{
+                url : '/admin/price/pagination',
+                data : function (data) {
+                    var groupId = table.rows('.selected').data().length>0?table.rows('.selected').data()[0].id:0;
+                    data.columns[10]['search']['value'] = groupId;
+                }
+            },
             columns: [
                 {  'data': 'id' },
                 {  'data': 'fmaterial_id', render: function (data, type, full) {
@@ -218,7 +226,7 @@ define(function(require, exports, module) {
                 // { text: '新增', action: function () { }  },
                 // { text: '编辑', className: 'edit', enabled: false },
                 // { text: '删除', className: 'delete', enabled: false },
-                {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: detailEditor},
+                {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: detailEditor, enabled: false},
                 {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: detailEditor},
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: detailEditor},
                 { text: '审核<i class="fa fa-fw fa-paperclip"></i>',className: 'detail-check', enabled: false },
