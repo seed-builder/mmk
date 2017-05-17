@@ -123,7 +123,8 @@ define(function(require, exports, module) {
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
                 //{extend: 'colvis', text: '列显示'}
-            ]
+            ],
+            order: [[9, 'desc']]
         });
 
         table.on( 'select', checkBtn).on( 'deselect', checkBtn);
@@ -234,7 +235,8 @@ define(function(require, exports, module) {
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
                 //{extend: 'colvis', text: '列显示'}
-            ]
+            ],
+            order: [[9, 'desc']]
         });
 
         detailTable.on( 'select', detailCheckBtn).on( 'deselect', detailCheckBtn);
