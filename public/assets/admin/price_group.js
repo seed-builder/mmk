@@ -357,12 +357,43 @@ define(function(require, exports, module) {
                 { text: '新增', action: function () {
                     window.location.href='/admin/price-group/'+groupId+'/choose-store';
                 }  },
-                { text: '删除', className: 'delete', enabled: false },
+                {
+                    text: '删除', className: 'delete', enabled: false, action: function () {
+                        layer.confirm('确定删除关联的门店?',['确定','取消'], function () {
+                            var stores = storeTable.rows('.selected').data();
+                            if (stores.length > 0) {
+                                var ids = [];
+                                var orderId = 0
+                                for (var i = 0; i < stores.length; i++) {
+                                    ids[ids.length] = stores[i].id;
+                                }
+                                $.post('/admin/price-group/' + groupId + '/detach-store',
+                                    {_token: $('meta[name="_token"]').attr('content'), ids: ids},
+                                    function (result) {
+                                        if (result.data) {
+                                            layer.msg('删除关联门店成功!');
+                                            storeTable.ajax.reload();
+                                        } else {
+                                            layer.msg('删除关联门店失败, 错误：' + result.error);
+                                        }
+                                    }
+                                )
+                            }
+                        });
+                    }
+                },
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
                 //{extend: 'colvis', text: '列显示'}
             ]
         });
+
+        storeTable.on( 'select', storeTableCheckBtn).on( 'deselect', storeTableCheckBtn);
+
+        function storeTableCheckBtn(e, dt, type, indexes) {
+            var count = storeTable.rows( { selected: true } ).count();
+            storeTable.buttons( ['.delete'] ).enable(count > 0);
+        }
 
         //store table
         var customerTable = $("#customerTable").DataTable({
@@ -385,12 +416,18 @@ define(function(require, exports, module) {
                 { text: '新增', action: function () {
                     window.location.href='/admin/price-group/'+groupId+'/choose-customer';
                 }  },
-                { text: '删除', className: 'delete', enabled: false },
+                { text: '删除', className: 'delete', enabled: false,  },
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
                 //{extend: 'colvis', text: '列显示'}
             ]
         });
+        customerTable.on( 'select', customerTableCheckBtn).on( 'deselect', customerTableCheckBtn);
+
+        function customerTableCheckBtn(e, dt, type, indexes) {
+            var count = customerTable.rows( { selected: true } ).count();
+            customerTable.buttons( ['.delete'] ).enable(count > 0);
+        }
 
     };
 
