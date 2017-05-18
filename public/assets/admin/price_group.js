@@ -354,7 +354,9 @@ define(function(require, exports, module) {
                 {  'data': 'faddress' },
             ],
             buttons: [
-                { text: '新增', action: function () { }  },
+                { text: '新增', action: function () {
+                    window.location.href='/admin/price-group/'+groupId+'/choose-store';
+                }  },
                 { text: '删除', className: 'delete', enabled: false },
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
@@ -380,14 +382,17 @@ define(function(require, exports, module) {
                 {  'data': 'faddress' },
             ],
             buttons: [
-                { text: '新增', action: function () { }  },
+                { text: '新增', action: function () {
+                    window.location.href='/admin/price-group/'+groupId+'/choose-customer';
+                }  },
                 { text: '删除', className: 'delete', enabled: false },
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
                 //{extend: 'colvis', text: '列显示'}
             ]
         });
-    }
+
+    };
 
     exports.create = function ($) {
         $('#detailForm').bootstrapValidator({
@@ -439,5 +444,130 @@ define(function(require, exports, module) {
                 }
             }, 'json');
         });
+    }
+
+    exports.chooseStore = function ($, tableId, groupId) {
+        var table = $("#" + tableId).DataTable({
+            dom: '<"pull-right"B>lrtip',
+            language: zhCN,
+            processing: true,
+            serverSide: true,
+            select: true,
+            paging: true,
+            rowId: "id",
+            searching: false,
+            ajax: {
+                url : '/admin/store/pagination',
+            },
+            columns: [
+                {  "data": "id",
+                    render: function (data, type, full) {
+                        return '<input type="checkbox" class="editor-active" value="'+data+'">';
+                    },
+                    className: "dt-body-center"
+                },
+                {"data": "fnumber"},
+                {"data": "ffullname"},
+                {"data": "faddress"},
+                {"data": "fcontracts"},
+                {"data": "ftelephone"},
+                {
+                    "data": 'femp_id',
+                    render: function (data, type, full) {
+                        if (full.employee != null)
+                            return full.employee.fname
+                        else
+                            return "";
+                    }
+                },
+                {
+                    "data": 'fcust_id',
+                    render: function (data, type, full) {
+                        if (full.customer != null)
+                            return full.customer.fname
+                        else
+                            return "";
+                    }
+                },
+                {
+                    "data": 'fline_id',
+                    render: function (data, type, full) {
+                        if (full.line != null)
+                            return full.line.fname
+                        else
+                            return "";
+                    }
+                },
+                {
+                    "data": 'fchannel',
+                    render: function (data, type, full) {
+                        if (full.channel != null)
+                            return full.channel.fname
+                        else
+                            return "";
+                    }
+                },
+                {
+                    "data": "fis_signed",
+                    render: function (data, type, full) {
+                        if (data==0){
+                            return '未签约';
+                        }else {
+                            return '已签约';
+                        }
+                    }
+                },
+                {
+                    "data": "fdocument_status",
+                    render: function (data, type, full) {
+                        return document_status(data);
+                    }
+                }
+            ],
+            columnDefs: [
+                {
+                    'targets': 0,
+                    'checkboxes': {
+                        'selectRow': true
+                    },
+                    'sortable': false
+                }
+            ],
+            buttons: [
+                { text: '关联选择', className: 'btn-primary', enabled: false,  action: function () {
+                    var stores = table.rows('.selected').data();
+                    if(stores.length > 0){
+                        var ids = [] ;
+                        var orderId = 0
+                        for(var i = 0; i < stores.length; i++){
+                            ids[ids.length] = stores[i].id;
+                        }
+                        $.post('/admin/price-group/'+groupId+'/attach-store',
+                            {_token: $('meta[name="_token"]').attr('content'), ids: ids},
+                            function (result) {
+                                if(result.data){
+                                    layer.msg('关联成功!');
+                                }else{
+                                    layer.msg('关联成功, 错误：' + result.error);
+                                }
+                            }
+                        )
+                    }
+                }  },
+                { text: '返回', action: function () {
+                    window.location.href= '/admin/price-group/'+groupId+'/edit';
+                } },
+            ],
+            select: {
+                'style': 'multi'
+            },
+        });
+
+        table.on( 'select', detailCheckBtn).on( 'deselect', detailCheckBtn);
+
+        function detailCheckBtn(e, dt, type, indexes) {
+            var count = table.rows({selected: true}).count();
+            table.buttons(['.btn-primary']).enable(count > 0);
+        }
     }
 });

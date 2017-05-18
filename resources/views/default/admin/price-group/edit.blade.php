@@ -18,7 +18,7 @@ $docStatus = ['A' => '未审核', 'C' => '已审核'];
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
             <li><a href="#">经销商</a></li>
-            <li class="active">售价管理</li>
+            <li class="active"><a href="/admin/price-group">售价管理</a></li>
         </ol>
     </section>
 
@@ -149,7 +149,7 @@ $docStatus = ['A' => '未审核', 'C' => '已审核'];
                     </ul>
                     <div class="tab-content no-padding">
                         <!-- Morris chart - Sales -->
-                        <div class="chart tab-pane active" id="group-prices" style="position: relative; height: 300px;">
+                        <div class="chart tab-pane active" id="group-prices" style="position: relative; min-height: 300px; padding: 5px;">
                             <table id="detailTable" class="table table-bordered table-hover display nowrap" cellspacing="0" width="100%">
                                 <thead>
                                 <tr>
@@ -168,7 +168,7 @@ $docStatus = ['A' => '未审核', 'C' => '已审核'];
                                 </thead>
                             </table>
                         </div>
-                        <div class="chart tab-pane" id="group-stores" style="position: relative; height: 300px;">
+                        <div class="chart tab-pane" id="group-stores" style="position: relative; min-height: 300px; padding: 5px;">
                             <table id="storeTable" class="table table-bordered table-hover display nowrap" cellspacing="0" width="100%">
                                 <thead>
                                 <tr>
@@ -180,7 +180,7 @@ $docStatus = ['A' => '未审核', 'C' => '已审核'];
                                 </thead>
                             </table>
                         </div>
-                        <div class="chart tab-pane" id="group-customers" style="position: relative; height: 300px;">
+                        <div class="chart tab-pane" id="group-customers" style="position: relative; min-height: 300px; padding: 5px;">
                             <table id="customerTable" class="table table-bordered table-hover display nowrap" cellspacing="0" width="100%">
                                 <thead>
                                 <tr>
