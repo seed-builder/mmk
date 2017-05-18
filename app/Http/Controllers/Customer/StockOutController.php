@@ -166,7 +166,7 @@ class StockOutController extends BaseController
 
     public function printOutOrder($id){
         $stock_out = StockOut::find($id);
-
+//dd
         return view('customer.stock-out.print_view', compact('stock_out'));
     }
 
