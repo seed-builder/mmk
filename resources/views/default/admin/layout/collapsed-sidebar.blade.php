@@ -59,10 +59,6 @@ $loginUserName = empty($loginUser->nick_name) ? $loginUser->name: $loginUser->ni
     <script src="/assets/plugins/jQueryUI/jquery-ui.js"></script>
     <script src="/assets/plugins/velocity/velocity.min.js"></script>
 
-    <!-- jqprint -->
-    <script src="http://www.jq22.com/jquery/jquery-migrate-1.2.1.min.js"></script>
-    <script src="/assets/plugins/jquery-print/jquery.jqprint-0.3.js"></script>
-
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

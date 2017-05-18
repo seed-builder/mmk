@@ -163,4 +163,69 @@ class StockOutController extends BaseController
 			'data' => $entities
 		]);
 	}
+
+    public function printOutOrder($id){
+        $stock_out = StockOut::find($id);
+
+        return view('customer.stock-out.print_view', compact('stock_out'));
+    }
+
+//    public function printOutOrder($id)
+//    {
+//        $stock_out = StockOut::find($id);
+//        $title = $stock_out->customer->name . '送货单';
+//        $title_datas = [
+//            [
+//                'label' => '经销商地址',
+//                'value' => $stock_out->customer->faddress
+//            ],
+//            [
+//                'label' => '经销商电话',
+//                'value' => $stock_out->customer->ftel
+//            ],
+//            [
+//                'label' => '收货单位',
+//                'value' => $stock_out->store->ffullname
+//            ],
+//            [
+//                'label' => '单号',
+//                'value' => $stock_out->fbill_no
+//            ],
+//            [
+//                'label' => '门店地址',
+//                'value' => $stock_out->store->faddress
+//            ],
+//            [
+//                'label' => '门店电话',
+//                'value' => $stock_out->store->fphone
+//            ],
+//            [
+//                'label' => '日期',
+//                'value' => date('Y年m月d日',strtotime($stock_out->fdate))
+//            ],
+//
+//
+//        ];
+//        $tds = [];
+//        $idx = 1;
+//        foreach ($stock_out->items as $item) {
+//            $tds[] = [
+//                $idx,
+//                $item->material->fname,
+//                $item->material->fspecification,
+//                $item->material->fbase_unit,
+//                (int)$item->fbase_qty,
+//                0.00,
+//                1.00
+//            ];
+//            $idx++;
+//        }
+//        $table_datas = [
+//            'ths' => ['行号', '产品名称', '规格型号', '单位', '数量', '单价', '金额'],
+//            'tds' => $tds,
+//            'statistics_col' => [6]
+//        ];
+//        return view('customer.layout.print_view', compact('title', 'title_datas', 'table_datas'));
+//    }
+
 }
