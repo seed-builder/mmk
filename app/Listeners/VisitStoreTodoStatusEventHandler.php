@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\VisitTodoStatusChangedEvent;
+use App\Services\LogSvr;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Models\Busi\VisitStoreCalendar;
@@ -33,7 +34,9 @@ class VisitStoreTodoStatusEventHandler  //implements ShouldQueue
      */
     public function handle(VisitTodoStatusChangedEvent $event)
     {
+	    //LogSvr::todo()->info('handle VisitStoreTodoStatusEventHandler, id=' . $event->model->id);
 	    if($event->model->fstatus > 1) {
+		    $this->updateParent($event->model);
 		    //
 		    $storeCalendar = VisitStoreCalendar::find($event->model->fstore_calendar_id);
 		    if ($event->model->fstatus == 2) {
@@ -47,6 +50,7 @@ class VisitStoreTodoStatusEventHandler  //implements ShouldQueue
 			    }
 		    } elseif ($event->model->fstatus == 3) {
 			    $count = VisitTodoCalendar::where('fstore_calendar_id', $event->model->fstore_calendar_id)
+				    ->where('fparent_id',0)
 				    ->where('fis_must_visit',1)
 				    ->where('fstatus', '<', 3)->count();
 			    if ($count == 0) {
@@ -61,11 +65,12 @@ class VisitStoreTodoStatusEventHandler  //implements ShouldQueue
 			    }
 			    $storeCalendar->save();
 		    }
-		    $this->updateParent($event->model);
+
 	    }
     }
 
     protected function updateParent(VisitTodoCalendar $todoCalendar){
+	    //LogSvr::todo()->info('updateParent VisitStoreTodoStatusEventHandler,  id=' . $todoCalendar->id);
     	if($todoCalendar && $todoCalendar->fparent_id > 0) {
 		    $parent = VisitTodoCalendar::find($todoCalendar->fparent_id);
 		    if($todoCalendar->fstatus == 2){

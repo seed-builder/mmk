@@ -96,7 +96,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-3">是否必巡</label>
                                     <div class="col-md-9">
-                                        <select class="form-control" name="fis_must_visit" >
+                                        <select class="form-control" name="fis_must_visit" id="fis_must_visit">
                                             <option value="0">否</option>
                                             <option value="1">是</option>
                                         </select>

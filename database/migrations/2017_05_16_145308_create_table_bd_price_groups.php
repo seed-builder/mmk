@@ -17,13 +17,13 @@ class CreateTableBdPriceGroups extends Migration
             $table->increments('id');
             $table->string('fnumber')->nullable()->comment();
             $table->string('fname')->comment('名称');
-            $table->string('fsuit_object')->default('store')->comment('适用范围:(all-全部, store-门店, customer-经销商)');
+            $table->string('fsuit_object')->default('store')->comment('适用范围:(store-门店, customer-经销商)');
             $table->timestamp('fbegin')->nullable()->comment('起始时间');
             $table->timestamp('fend')->nullable()->comment('截止时间');
             $table->integer('flevel')->default(9)->comment('优先级（数字越大优先级越低）');
             $table->char('fdocument_status', 1)->default('A')->comment('审核状态（A-未审核, B-审核中, C-审核通过)');
 	        $table->timestamp('fcheck_date')->nullable()->comment('审核日期');
-	        $table->timestamp('fchecker')->nullable()->comment('审核人id');
+	        $table->integer('fchecker')->nullable()->comment('审核人id');
 	        $table->timestamp('fcreate_date')->nullable();
 	        $table->timestamp('fmodify_date')->nullable();
 	        $table->integer('fcreator')->nullable();
@@ -42,7 +42,7 @@ class CreateTableBdPriceGroups extends Migration
 		    $table->timestamp('fmodify_date')->nullable();
 		    $table->char('fdocument_status', 1)->default('A')->comment('审核状态（A-未审核, B-审核中, C-审核通过)');
 		    $table->timestamp('fcheck_date')->nullable()->comment('审核日期');
-		    $table->timestamp('fchecker')->nullable()->comment('审核人id');
+		    $table->integer('fchecker')->nullable()->comment('审核人id');
 
 		    $table->foreign('fgroup_id')->references('id')->on('bd_price_groups')
 			    ->onUpdate('cascade')->onDelete('cascade');

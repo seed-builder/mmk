@@ -1,7 +1,12 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Busi\Channel;
+use App\Models\Busi\Customer;
+use App\Models\Busi\Employee;
 use App\Models\Busi\Material;
+use App\Models\Busi\VisitLine;
+use App\Models\City;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
 use App\Models\Busi\PriceGroup;
@@ -127,6 +132,22 @@ class PriceGroupController extends AdminController
 		return parent::pagination($request, $searchCols);
 	}
 
+	public function storePagination(Request $request, $id){
+		$searchCols = ["ffullname"];
+		$pg = PriceGroup::find($id);
+		return parent::pagination($request, $searchCols, [], function (&$query) use($pg) {
+			$query = $pg->stores()->getQuery();
+		});
+	}
+
+	public function customerPagination(Request $request, $id){
+		$searchCols = ["fname"];
+		$pg = PriceGroup::find($id);
+		return parent::pagination($request, $searchCols, [], function (&$query) use($pg) {
+			$query = $pg->customers()->getQuery();
+		});
+	}
+
 	/*
      * 审核
      */
@@ -150,4 +171,49 @@ class PriceGroupController extends AdminController
 		]);
 	}
 
+	public function chooseStore(Request $request, $id){
+		$citys = City::query()->where('LevelType', 1)->get();
+		$channels = Channel::all();
+		$cus = Customer::all();
+		$lines = VisitLine::all();
+		//$employees = Employee::query()->whereIn('id',$this->getCurUsersEmployeeIds())->get();
+		$entity = PriceGroup::find($id);
+
+		return  view('admin.price-group.store',  compact('citys', 'channels', 'cus','lines', 'entity'));
+	}
+
+	public function chooseCustomer(Request $request, $id){
+		$entity = PriceGroup::find($id);
+		return  view('admin.price-group.customer', ['entity' => $entity]);
+	}
+
+	public function attachStore(Request $request, $id){
+		$ids = $request->input('ids',[]);
+		$entity = PriceGroup::find($id);
+		$entity->stores()->detach($ids);
+		$entity->stores()->attach($ids);
+		return $this->success(1);
+	}
+
+	public function detachStore(Request $request, $id){
+		$ids = $request->input('ids',[]);
+		$entity = PriceGroup::find($id);
+		$entity->stores()->detach($ids);
+		return $this->success(1);
+	}
+
+	public function attachCustomer(Request $request, $id){
+		$ids = $request->input('ids',[]);
+		$entity = PriceGroup::find($id);
+		$entity->customers()->detach($ids);
+		$entity->customers()->attach($ids);
+		return $this->success(1);
+	}
+
+	public function detachCustomer(Request $request, $id){
+		$ids = $request->input('ids',[]);
+		$entity = PriceGroup::find($id);
+		$entity->customers()->detach($ids);
+		return $this->success(1);
+	}
 }
