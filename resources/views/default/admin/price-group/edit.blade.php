@@ -125,7 +125,7 @@ $docStatus = ['A' => '未审核', 'C' => '已审核'];
                         </div>
                         <!-- /.box-body -->
                         <div class="box-footer">
-                            <a href="/admin/price-group" class="btn btn-default">取消</a>
+                            <a href="/admin/price-group" class="btn btn-default">返回</a>
                             @if($entity->fdocument_status == 'A')
                             <button type="submit" class="btn btn-info pull-right">保存</button>
                             @endif

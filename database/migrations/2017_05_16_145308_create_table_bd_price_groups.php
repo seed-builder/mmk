@@ -23,7 +23,7 @@ class CreateTableBdPriceGroups extends Migration
             $table->integer('flevel')->default(9)->comment('优先级（数字越大优先级越低）');
             $table->char('fdocument_status', 1)->default('A')->comment('审核状态（A-未审核, B-审核中, C-审核通过)');
 	        $table->timestamp('fcheck_date')->nullable()->comment('审核日期');
-	        $table->timestamp('fchecker')->nullable()->comment('审核人id');
+	        $table->integer('fchecker')->nullable()->comment('审核人id');
 	        $table->timestamp('fcreate_date')->nullable();
 	        $table->timestamp('fmodify_date')->nullable();
 	        $table->integer('fcreator')->nullable();
