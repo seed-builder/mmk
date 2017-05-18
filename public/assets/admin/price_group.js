@@ -416,7 +416,30 @@ define(function(require, exports, module) {
                 { text: '新增', action: function () {
                     window.location.href='/admin/price-group/'+groupId+'/choose-customer';
                 }  },
-                { text: '删除', className: 'delete', enabled: false,  },
+                { text: '删除', className: 'delete', enabled: false,  action: function () {
+                        layer.confirm('确定删除关联的经销商?',['确定','取消'], function () {
+                            var customers = customerTable.rows('.selected').data();
+                            if (customers.length > 0) {
+                                var ids = [];
+                                var orderId = 0
+                                for (var i = 0; i < customers.length; i++) {
+                                    ids[ids.length] = customers[i].id;
+                                }
+                                $.post('/admin/price-group/' + groupId + '/detach-customer',
+                                    {_token: $('meta[name="_token"]').attr('content'), ids: ids},
+                                    function (result) {
+                                        if (result.data) {
+                                            layer.msg('删除关联经销商成功!');
+                                            customerTable.ajax.reload();
+                                        } else {
+                                            layer.msg('删除关联经销商失败, 错误：' + result.error);
+                                        }
+                                    }
+                                )
+                            }
+                        });
+                    }
+                },
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
                 //{extend: 'colvis', text: '列显示'}
@@ -603,6 +626,78 @@ define(function(require, exports, module) {
         table.on( 'select', detailCheckBtn).on( 'deselect', detailCheckBtn);
 
         function detailCheckBtn(e, dt, type, indexes) {
+            var count = table.rows({selected: true}).count();
+            table.buttons(['.btn-primary']).enable(count > 0);
+        }
+    }
+
+    exports.chooseCustomer = function ($, tableId, groupId) {
+        var table = $("#" + tableId).DataTable({
+            dom: '<"pull-right"B>lrtip',
+            language: zhCN,
+            processing: true,
+            serverSide: true,
+            select: true,
+            paging: true,
+            rowId: "id",
+            ajax: {
+                url : '/admin/customer/pagination'
+            },
+            columns: [
+                {'data': 'id',
+                    render: function (data, type, full) {
+                        return '<input type="checkbox" class="editor-active" value="'+data+'">';
+                    },
+                    className: "dt-body-center"
+                },
+                {'data': 'fname'},
+                {'data': 'faddress'},
+                {'data': 'ftel'},
+                {
+                    "data": "fdocument_status",
+                    render: function ( data, type, full ) {
+                        return document_status(data);
+                    }
+                },
+
+            ],
+            columnDefs: [
+                {
+                    'targets': 0,
+                    'checkboxes': {
+                        'selectRow': true
+                    },
+                    'sortable': false
+                }
+            ],
+            buttons: [
+                { text: '关联选择', className: 'btn-primary', enabled: false,  action: function () {
+                    var stores = table.rows('.selected').data();
+                    if(stores.length > 0){
+                        var ids = [] ;
+                        for(var i = 0; i < stores.length; i++){
+                            ids[ids.length] = stores[i].id;
+                        }
+                        $.post('/admin/price-group/'+groupId+'/attach-customer',
+                            {_token: $('meta[name="_token"]').attr('content'), ids: ids},
+                            function (result) {
+                                if(result.data){
+                                    layer.msg('关联成功!');
+                                }else{
+                                    layer.msg('关联成功, 错误：' + result.error);
+                                }
+                            }
+                        )
+                    }
+                }  },
+                { text: '返回', action: function () {
+                    window.location.href= '/admin/price-group/'+groupId+'/edit';
+                } },
+            ]
+        });
+
+        table.on( 'select', rowSelect).on( 'deselect', rowSelect);
+        function rowSelect(e, dt, type, indexes) {
             var count = table.rows({selected: true}).count();
             table.buttons(['.btn-primary']).enable(count > 0);
         }
