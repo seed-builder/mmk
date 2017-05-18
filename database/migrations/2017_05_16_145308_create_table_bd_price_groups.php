@@ -42,7 +42,7 @@ class CreateTableBdPriceGroups extends Migration
 		    $table->timestamp('fmodify_date')->nullable();
 		    $table->char('fdocument_status', 1)->default('A')->comment('审核状态（A-未审核, B-审核中, C-审核通过)');
 		    $table->timestamp('fcheck_date')->nullable()->comment('审核日期');
-		    $table->timestamp('fchecker')->nullable()->comment('审核人id');
+		    $table->integer('fchecker')->nullable()->comment('审核人id');
 
 		    $table->foreign('fgroup_id')->references('id')->on('bd_price_groups')
 			    ->onUpdate('cascade')->onDelete('cascade');
