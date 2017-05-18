@@ -88,8 +88,8 @@ $docStatus = ['A' => '未审核', 'C' => '已审核'];
                                 <label for="fis_all" class="col-sm-1 control-label">是否全部</label>
                                 <div class="col-sm-3">
                                     <select class="form-control" id="fis_all" name="fis_all" >
-                                       <option value="0">否</option>
-                                       <option value="1">是</option>
+                                        <option value="0" {{$entity->fis_all == 0 ? 'selected':''}}>否</option>
+                                        <option value="1" {{$entity->fis_all == 1 ? 'selected':''}}>是</option>
                                     </select>
                                 </div>
                                 <label for="fnumber" class="col-sm-1 control-label">审核状态</label>
@@ -140,10 +140,10 @@ $docStatus = ['A' => '未审核', 'C' => '已审核'];
                     <!-- Tabs within a box -->
                     <ul class="nav nav-tabs ">
                         <li class="active"><a href="#group-prices" data-toggle="tab">商品价格</a></li>
-                        @if($entity->fsuit_object == 'store')
+                        @if($entity->fis_all == 0 && $entity->fsuit_object == 'store')
                         <li><a href="#group-stores" data-toggle="tab">门店</a></li>
                         @endif
-                        @if($entity->fsuit_object == 'customer')
+                        @if($entity->fis_all == 0 && $entity->fsuit_object == 'customer')
                         <li><a href="#group-customers" data-toggle="tab">经销商</a></li>
                         @endif
                     </ul>

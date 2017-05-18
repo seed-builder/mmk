@@ -70,8 +70,8 @@ $docStatus = ['A' => '未审核', 'C' => '已审核'];
                                 <label for="fis_all" class="col-sm-1 control-label">是否全部</label>
                                 <div class="col-sm-3">
                                     <select class="form-control" id="fis_all" name="fis_all" >
-                                        <option value="0">否</option>
-                                        <option value="1">是</option>
+                                        <option value="0" {{$entity->fis_all == 0 ? 'selected':''}}>否</option>
+                                        <option value="1" {{$entity->fis_all == 1 ? 'selected':''}}>是</option>
                                     </select>
                                 </div>
                             </div>
