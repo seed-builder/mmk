@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Busi\DisplayPolicyStore;
 use App\Models\Busi\VisitStoreCalendar;
+use App\Services\LogSvr;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Busi\VisitTodoCalendar;
@@ -111,13 +112,16 @@ class VisitTodoCalendarController extends ApiController
 
 	public function update(Request $request, $id)
 	{
+		LogSvr::update()->info('update');
 		//return parent::update($request, $id);
 		$entity = $this->newEntity()->newQuery()->find($id);
 		//$entity = Entity::find($id);
 		$data = $request->all();
 		//var_dump($data);
 		$needDos = $this->checkEnd($entity, $data);
+		LogSvr::update()->info('$needDos ' . json_encode($needDos));
 		if(empty($needDos)) {
+			LogSvr::update()->info(' do update ');
 			if ($data['fstatus'] == 2) {
 				$data['fbegin'] = date('Y-m-d H:i:s');
 			} else if ($data['fstatus'] == 3) {
@@ -130,6 +134,7 @@ class VisitTodoCalendarController extends ApiController
 			$status = $re ? 200 : 401;
 			return response(['success' => $re], $status);
 		}else{
+			LogSvr::update()->info('no update ');
 			return response(['success' => false, 'msg' => '未完成的项有：' . implode(',', $needDos)], 401);
 		}
 	}
