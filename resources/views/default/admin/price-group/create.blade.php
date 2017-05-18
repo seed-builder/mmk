@@ -67,7 +67,15 @@ $docStatus = ['A' => '未审核', 'C' => '已审核'];
                                         @endforeach
                                     </select>
                                 </div>
-
+                                <label for="fis_all" class="col-sm-1 control-label">是否全部</label>
+                                <div class="col-sm-3">
+                                    <select class="form-control" id="fis_all" name="fis_all" >
+                                        <option value="0">否</option>
+                                        <option value="1">是</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label for="fname" class="col-sm-1 control-label">起始日期</label>
                                 <div class="col-sm-3">
                                     <input type="text" class="form-control datepicker" id="fbegin" name="fbegin" value="{{$entity->fbegin}}" placeholder="起始日期">

@@ -127,6 +127,22 @@ class PriceGroupController extends AdminController
 		return parent::pagination($request, $searchCols);
 	}
 
+	public function storePagination(Request $request, $id){
+		$searchCols = ["ffullname"];
+		$pg = PriceGroup::find($id);
+		return parent::pagination($request, $searchCols, [], function (&$query) use($pg) {
+			$query = $pg->stores()->getQuery();
+		});
+	}
+
+	public function customerPagination(Request $request, $id){
+		$searchCols = ["fname"];
+		$pg = PriceGroup::find($id);
+		return parent::pagination($request, $searchCols, [], function (&$query) use($pg) {
+			$query = $pg->customers()->getQuery();
+		});
+	}
+
 	/*
      * 审核
      */

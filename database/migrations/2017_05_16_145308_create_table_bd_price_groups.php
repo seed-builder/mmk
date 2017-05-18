@@ -17,7 +17,7 @@ class CreateTableBdPriceGroups extends Migration
             $table->increments('id');
             $table->string('fnumber')->nullable()->comment();
             $table->string('fname')->comment('名称');
-            $table->string('fsuit_object')->default('store')->comment('适用范围:(all-全部, store-门店, customer-经销商)');
+            $table->string('fsuit_object')->default('store')->comment('适用范围:(store-门店, customer-经销商)');
             $table->timestamp('fbegin')->nullable()->comment('起始时间');
             $table->timestamp('fend')->nullable()->comment('截止时间');
             $table->integer('flevel')->default(9)->comment('优先级（数字越大优先级越低）');

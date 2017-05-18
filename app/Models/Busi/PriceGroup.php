@@ -37,11 +37,11 @@ class PriceGroup extends BaseModel
 	}
 
 	public function stores(){
-		return $this->belongsToMany(Store::class, 'bd_price_group_store', 'fstore_id', 'fgroup_id');
+		return $this->belongsToMany(Store::class, 'bd_price_group_store', 'fgroup_id', 'fstore_id');
 	}
 
 	public function customers(){
-		return $this->belongsToMany(Customer::class, 'bd_price_group_customer', 'fcustomer_id', 'fgroup_id');
+		return $this->belongsToMany(Customer::class, 'bd_price_group_customer', 'fgroup_id', 'fcustomer_id');
 	}
 
 	protected static function boot()

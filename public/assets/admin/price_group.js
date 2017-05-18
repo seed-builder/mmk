@@ -334,6 +334,59 @@ define(function(require, exports, module) {
                 }
             }, 'json');
         });
+
+        //store table
+        var storeTable = $("#storeTable").DataTable({
+            dom: "lBfrtip",
+            language: zhCN,
+            processing: true,
+            serverSide: true,
+            select: true,
+            paging: true,
+            rowId: "id",
+            ajax:{
+                url : '/admin/price-group/'+groupId+'/store-pagination',
+            },
+            columns: [
+                {  'data': 'id' },
+                {  'data': 'fnumber' },
+                {  'data': 'ffullname' },
+                {  'data': 'faddress' },
+            ],
+            buttons: [
+                { text: '新增', action: function () { }  },
+                { text: '删除', className: 'delete', enabled: false },
+                {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
+                {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
+                //{extend: 'colvis', text: '列显示'}
+            ]
+        });
+
+        //store table
+        var customerTable = $("#customerTable").DataTable({
+            dom: "lBfrtip",
+            language: zhCN,
+            processing: true,
+            serverSide: true,
+            select: true,
+            paging: true,
+            rowId: "id",
+            ajax:{
+                url : '/admin/price-group/'+groupId+'/customer-pagination',
+            },
+            columns: [
+                {  'data': 'id' },
+                {  'data': 'fname' },
+                {  'data': 'faddress' },
+            ],
+            buttons: [
+                { text: '新增', action: function () { }  },
+                { text: '删除', className: 'delete', enabled: false },
+                {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
+                {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
+                //{extend: 'colvis', text: '列显示'}
+            ]
+        });
     }
 
     exports.create = function ($) {

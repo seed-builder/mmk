@@ -1,5 +1,5 @@
 <?php
-$ranges = ['all' => '全部', 'store' => '门店', 'customer' => '经销商'];
+$ranges = ['store' => '门店', 'customer' => '经销商'];
 $docStatus = ['A' => '未审核', 'C' => '已审核'];
 ?>
 @extends('admin.layout.collapsed-sidebar')
@@ -85,7 +85,23 @@ $docStatus = ['A' => '未审核', 'C' => '已审核'];
                                         @endforeach
                                     </select>
                                 </div>
-
+                                <label for="fis_all" class="col-sm-1 control-label">是否全部</label>
+                                <div class="col-sm-3">
+                                    <select class="form-control" id="fis_all" name="fis_all" >
+                                       <option value="0">否</option>
+                                       <option value="1">是</option>
+                                    </select>
+                                </div>
+                                <label for="fnumber" class="col-sm-1 control-label">审核状态</label>
+                                <div class="col-sm-3">
+                                    <select disabled="disabled" readonly="readonly" class="form-control readonly" id="fdocument_status" >
+                                        @foreach($docStatus as $k => $v)
+                                            <option value="{{$k}}" {{$k == $entity->fdocument_status ? 'selected':''}}>{{$v}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label for="fname" class="col-sm-1 control-label">起始日期</label>
                                 <div class="col-sm-3">
                                     <input type="text" class="form-control datepicker" id="fbegin" name="fbegin" value="{{$entity->fbegin}}" placeholder="起始日期">
@@ -95,22 +111,12 @@ $docStatus = ['A' => '未审核', 'C' => '已审核'];
                                 <div class="col-sm-3">
                                     <input type="text" class="form-control datepicker" id="fend" name="fend" value="{{$entity->fend}}" placeholder="起始日期">
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="fnumber" class="col-sm-1 control-label">审核状态</label>
-                                <div class="col-sm-3">
-                                    <select disabled="disabled" readonly="readonly" class="form-control readonly" id="fdocument_status" >
-                                        @foreach($docStatus as $k => $v)
-                                            <option value="{{$k}}" {{$k == $entity->fdocument_status ? 'selected':''}}>{{$v}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
                                 <label for="fname" class="col-sm-1 control-label">创建日期</label>
                                 <div class="col-sm-3">
                                     <input readonly="readonly" disabled="disabled" type="text" class="form-control readonly" id="fcreate_date" value="{{$entity->fcreate_date}}" placeholder="创建日期">
                                 </div>
-
+                            </div>
+                            <div class="form-group">
                                 <label for="fname" class="col-sm-1 control-label">修改日期</label>
                                 <div class="col-sm-3">
                                     <input readonly="readonly" disabled="disabled" type="text" class="form-control readonly" id="fmodify_date" value="{{$entity->fmodify_date}}" placeholder="修改日期">
@@ -134,10 +140,10 @@ $docStatus = ['A' => '未审核', 'C' => '已审核'];
                     <!-- Tabs within a box -->
                     <ul class="nav nav-tabs ">
                         <li class="active"><a href="#group-prices" data-toggle="tab">商品价格</a></li>
-                        @if($entity->fsuit_object == 'all' || $entity->fsuit_object == 'store')
+                        @if($entity->fsuit_object == 'store')
                         <li><a href="#group-stores" data-toggle="tab">门店</a></li>
                         @endif
-                        @if($entity->fsuit_object == 'all' || $entity->fsuit_object == 'customer')
+                        @if($entity->fsuit_object == 'customer')
                         <li><a href="#group-customers" data-toggle="tab">经销商</a></li>
                         @endif
                     </ul>
@@ -163,10 +169,27 @@ $docStatus = ['A' => '未审核', 'C' => '已审核'];
                             </table>
                         </div>
                         <div class="chart tab-pane" id="group-stores" style="position: relative; height: 300px;">
-
+                            <table id="storeTable" class="table table-bordered table-hover display nowrap" cellspacing="0" width="100%">
+                                <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>编号</th>
+                                    <th>名称</th>
+                                    <th>地址</th>
+                                </tr>
+                                </thead>
+                            </table>
                         </div>
                         <div class="chart tab-pane" id="group-customers" style="position: relative; height: 300px;">
-
+                            <table id="customerTable" class="table table-bordered table-hover display nowrap" cellspacing="0" width="100%">
+                                <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>名称</th>
+                                    <th>地址</th>
+                                </tr>
+                                </thead>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -192,7 +215,6 @@ $docStatus = ['A' => '未审核', 'C' => '已审核'];
             seajs.use('admin/price_group.js', function (app) {
                 app.edit($, 'detailTable', groupId ,options);
             });
-
 
             $('.datepicker').datepicker({
                 format: 'yyyy-mm-dd',
