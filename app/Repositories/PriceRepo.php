@@ -16,9 +16,9 @@ class PriceRepo extends Repo
 {
 	/**
 	 * 获取商品的价格
-	 * @param $material_id
-	 * @param int $qty
-	 * @param string $date
+	 * @param $material_id - 商品id
+	 * @param int $qty - 数量
+	 * @param string $date - 日期
 	 */
 	public static function getPrice($material_id, $qty = 0, $date = ''){
 		if($date == '') $date = date('Y-m-d');
@@ -31,6 +31,14 @@ class PriceRepo extends Repo
 		return $price;
 	}
 
+	/**
+	 * 获取门店的商品价格
+	 * @param $store_id
+	 * @param $material_id - 商品id
+	 * @param int $qty - 数量
+	 * @param string $date - 日期
+	 * @return mixed
+	 */
 	public static function getStorePrice($store_id, $material_id, $qty = 0, $date = ''){
 		$price = ViewMaterialPrice::where('fbegin', '<=', $date)
 			->where(function ($query)use($store_id){
@@ -46,6 +54,14 @@ class PriceRepo extends Repo
 		return $price;
 	}
 
+	/**
+	 * 获取经销商的商品价格
+	 * @param $customer_id
+	 * @param $material_id - 商品id
+	 * @param int $qty - 数量
+	 * @param string $date - 日期
+	 * @return mixed
+	 */
 	public static function getCustomerPrice($customer_id, $material_id, $qty = 0, $date = ''){
 		$price = ViewMaterialPrice::where('fbegin', '<=', $date)
 			->where(function ($query)use($customer_id){
