@@ -254,6 +254,16 @@ define(function(require, exports, module) {
             checkEditEnabble(detailTable,['.detail-check'],['.detail-uncheck']);
         }
 
+        //审核
+        $(".detail-check").on('click',function () {
+            dataCheck(detailTable,'/admin/price/check');
+        })
+
+        $(".detail-uncheck").on('click',function () {
+            dataCheck(detailTable,'/admin/price/uncheck');
+        })
+
+
         //删除
         $('#btnRemove').on('click', function () {
             layer.confirm('确定删除 ? ', ['确定', '取消'], function () {
