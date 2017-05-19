@@ -49,7 +49,6 @@ LEFT JOIN st_stores s ON gs.fstore_id = s.id
 WHERE
 	p.fdocument_status = 'C'
 ORDER BY
-	g.fis_all DESC,
 	g.fsuit_object DESC,
 	g.flevel ASC,
 	p.fcreate_date DESC
