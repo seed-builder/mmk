@@ -141,7 +141,9 @@ define(function(require, exports, module) {
         table.on( 'select', checkBtn).on( 'deselect', checkBtn);
 
         function checkBtn(e, dt, type, indexes) {
-            checkEditEnabble(table,['.check', '.edit'],['.uncheck']);
+            var count = table.rows( { selected: true } ).count();
+            table.buttons( ['.edit'] ).enable(count > 0);
+            checkEditEnabble(table,['.check', '.buttons-remove'],['.uncheck']);
         }
 
         //审核

@@ -35,9 +35,9 @@ $docStatus = ['A' => '未审核', 'C' => '已审核'];
                                     <i class="fa fa-wrench"></i></button>
                                 <ul class="dropdown-menu" role="menu">
                                     @if($entity->id > 0 )
+                                        @if($entity->fdocument_status=='A')
                                         <li><a href="#" id="btnRemove"><i class="fa fa-remove"></i>删除</a></li>
                                         <li class="divider"></li>
-                                        @if($entity->fdocument_status=='A')
                                         <li><a href="#" id="btnCheck"><i class="fa fa-folder-open"></i>审核</a></li>
                                         @endif
                                         @if($entity->fdocument_status=='C')
