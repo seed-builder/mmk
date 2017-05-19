@@ -1,5 +1,5 @@
 <?php
-$ranges = ['all' => '全部', 'store' => '门店', 'customer' => '经销商'];
+$ranges = ['store' => '门店', 'customer' => '经销商'];
 $docStatus = ['A' => '未审核', 'C' => '已审核'];
 ?>
 @extends('admin.layout.collapsed-sidebar')
