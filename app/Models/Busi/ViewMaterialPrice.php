@@ -5,7 +5,7 @@ namespace App\Models\Busi;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * 商品价格
+ * 商品价格（视图）
  * Class ViewMaterialPrice
  * @package  App\Models
  *
