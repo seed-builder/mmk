@@ -162,6 +162,11 @@ class PriceGroupController extends AdminController
 			$entity->fcheck_date = date('Y-m-d H:i:s');
 			$entity->fchecker = Auth::user()->id;
 			$entity->save();
+			$entity->prices()->update([
+				'fdocument_status' => 'C',
+				'fcheck_date' => date('Y-m-d H:i:s'),
+				'fchecker' => Auth::user()->id
+			]);
 		}
 
 		return response()->json([
