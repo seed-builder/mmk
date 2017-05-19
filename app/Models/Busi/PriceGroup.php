@@ -52,5 +52,16 @@ class PriceGroup extends BaseModel
 			$entity->customers()->sync([]);
 			$entity->prices()->delete();
 		});
+
+		static::updating(function ($entity){
+			$old = static::find($entity->id);
+			if($old->fsuit_object != $entity->fsuit_object){
+				if($old->fsuit_object == 'store'){
+					$old->stores()->sync([]);
+				}else{
+					$old->customers()->sync([]);
+				}
+			}
+		});
 	}
 }
