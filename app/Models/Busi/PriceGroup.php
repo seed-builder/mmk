@@ -23,7 +23,8 @@ use Illuminate\Database\Eloquent\Model;
  * @SWG\Property(name="fmodify_date", type="string", description="")
  * @SWG\Property(name="fname", type="string", description="名称")
  * @SWG\Property(name="fnumber", type="string", description="1")
- * @SWG\Property(name="fsuit_object", type="string", description="适用范围:(all-全部, store-门店, customer-经销商)")
+ * @SWG\Property(name="fsuit_object", type="string", description="适用范围:(store-门店, customer-经销商)")
+ * @SWG\Property(name="fis_all", type="integer", description="是否适用全部")
  * @SWG\Property(name="id", type="integer", description="")
   */
 class PriceGroup extends BaseModel
