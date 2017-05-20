@@ -26,8 +26,9 @@ define(function(require, exports, module) {
                 {  'data': 'fmodify_date' },
                 {  'data': 'faddress' },
                 {  'data': 'fphotos' ,render: function (data, type, full) {
-                    var arr = data ? data.split(',') : [];
-                    return  arr.length > 0 ? '<img src="/admin/show-image?imageId='+arr[0]+'" />' : '';
+                    //var arr = data ? data.split(',') : [];
+                    return  '<button type="button" class="btn btnImage" ><i class="fa fa-fw fa-search"></i></button>';
+                    //arr.length > 0 ? '<img src="/admin/show-image?imageId='+arr[0]+'" />' : '';
                 }},
                 {  'data': 'flatitude',  render: function (data, type, full) {
                     return '<button type="button" class="btn btnMap" ><i class="fa fa-fw fa-search"></i></button>';
@@ -121,7 +122,18 @@ define(function(require, exports, module) {
                 }
                 $('#mapDialog').modal('show');
             });
+
+            $('.btnImage').on('click', function () {
+                var rows = table.rows( { selected: true } ).data();
+                if(rows){
+                    var photos = rows[0].fphotos ? rows[0].fphotos.split(','):[];
+                    $('#commonDialogContent').html('<img src="/admin/show-image?imageId='+photos[0]+'" />')
+                    $('#commonDialog').modal('show');
+                }
+            })
         }
+
+
 
         table.on( 'draw', function () {
             //alert( 'Table redrawn' );
