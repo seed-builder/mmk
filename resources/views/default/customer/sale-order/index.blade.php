@@ -34,7 +34,42 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
+                        <div class="panel panel-default" >
+                            <form class="form-horizontal filter" filter-table="#orderTable">
+                                <div class="form-group">
+                                    <label  class="col-sm-1 control-label">门店</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control filter-condition" filter-name="store_name" filter-operator="like" >
+                                    </div>
+                                    <label class="col-sm-1 control-label">下单日期</label>
+                                    <div class="col-sm-4">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control filter-condition filter-date" filter-name="fdate" filter-operator=">=" >
+                                            <span class="input-group-addon">---</span>
+                                            <input type="text" class="form-control filter-condition filter-date" filter-name="fdate" filter-operator="<=" >
+                                        </div>
+                                    </div>
+                                    <label class="col-sm-1 control-label">发货状态</label>
+                                    <div class="col-sm-3">
+                                        <div class="input-group">
+                                           <select class="form-control filter-condition filter-select" filter-name="fsend_status">
+                                               <option value="A">待接单</option>
+                                               <option value="B">已接单</option>
+                                               <option value="C">已配送</option>
+                                               <option value="D">部分配送</option>
+                                           </select>
+                                        </div>
+                                    </div>
 
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-3 col-sm-offset-1">
+                                        <button type="button" class="btn btn-info filter-submit">查询</button>
+                                        <button type="button" class="btn btn-default filter-reset">重置</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                         <table id="orderTable" class="table table-bordered table-hover display nowrap" cellspacing="0" width="100%">
                             <thead>
                             <tr>
@@ -66,6 +101,11 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
+                        <div class="panel panel-default"  style="display: none">
+                            <form class="form-horizontal filter" id="moduleForm">
+                                <input type="text" id="order_id" class="form-control filter-condition" filter-name="fsale_order_id">
+                            </form>
+                        </div>
                         <table id="orderInfoTable" class="table table-bordered table-hover display nowrap" cellspacing="0" width="100%">
                             <thead>
                             <tr>
@@ -78,6 +118,8 @@
                                 <th>基本单位</th>
                                 <th>发货数量</th>
                                 <th>发货基本单位数量</th>
+                                <th>赠送数量</th>
+                                <th>赠送基本单位</th>
                                 <th>发货状态</th>
                             </tr>
                             </thead>
