@@ -127,7 +127,7 @@ define(function(require, exports, module) {
                 var rows = table.rows( { selected: true } ).data();
                 if(rows){
                     var photos = rows[0].fphotos ? rows[0].fphotos.split(','):[];
-                    $('#commonDialogContent').html('<img src="/admin/show-image?imageId='+photos[0]+'" />')
+                    $('#commonDialogContent').html('<img style="max-height: 600px;" src="/admin/show-image?imageId='+photos[0]+'" />')
                     $('#commonDialog').modal('show');
                 }
             })

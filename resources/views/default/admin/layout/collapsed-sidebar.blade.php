@@ -205,7 +205,7 @@ $loginUserName = empty($loginUser->nick_name) ? $loginUser->name: $loginUser->ni
 
     <div id="commonDialog" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
-            <div id="commonDialogContent" class="modal-content">
+            <div id="commonDialogContent" class="modal-content" style="text-align: center;">
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
