@@ -85,7 +85,7 @@ class SaleOrderItem extends BaseModel
 
 	public function getPresentBottleQtyAttribute(){
 		if($this->material){
-			return $this->fpresent_qty - floor($this->fpresent_qty) * $this->material->fratio;
+			return $this->fpresent_base_qty - floor($this->fpresent_qty) * $this->material->fratio;
 		}
 		return $this->fpresent_base_qty ;
 	}
