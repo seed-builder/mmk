@@ -111,11 +111,6 @@ define(function(require, exports, module) {
 
         init();
 
-        table.on( 'draw', function () {
-            //alert( 'Table redrawn' );
-            bindEvt();
-        } );
-        bindEvt();
         function bindEvt() {
             $('.btnMap').on('click', function () {
                 var rows = table.rows( { selected: true } ).data();
@@ -127,6 +122,12 @@ define(function(require, exports, module) {
                 $('#mapDialog').modal('show');
             });
         }
+
+        table.on( 'draw', function () {
+            //alert( 'Table redrawn' );
+            bindEvt();
+        } );
+        bindEvt();
 
     }
 
