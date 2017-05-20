@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Models\Busi\Material;
+use App\Models\Busi\ViewSaleOrder;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
 use App\Models\Busi\SaleOrder;
@@ -10,126 +11,129 @@ use Illuminate\Support\Facades\DB;
 
 class SaleOrderController extends BaseController
 {
-	public function newEntity(array $attributes = [])
-	{
-		// TODO: Implement newEntity() method.
-		return new SaleOrder($attributes);
-	}
+    public function newEntity(array $attributes = [])
+    {
+        // TODO: Implement newEntity() method.
+        return new SaleOrder($attributes);
+    }
 
-	/**
-	* Display a listing of the resource.
-	*
-	* @return  \Illuminate\Http\Response
-	*/
-	public function index()
-	{
-		//
-		$customer = Auth::user()->reference;
-		$emps = [];
-		$stores = [];
-		if(!empty($customer->department))
-		{
-			$employees = $customer->department->getAllEmployeeByDept();
-			$emps = $employees->map(function ($employee){
-				return ['label' => $employee->fname, 'value' => $employee->id];
-			});
-			$emps->prepend(['label' => '--请选择--', 'value' => '']);
-		}
-		if($customer->stores){
-			$stores = $customer->stores->map(function ($store){
-				return ['label' => $store->ffullname, 'value' => $store->id];
-			});
-			$stores->prepend(['label' => '--请选择--', 'value' => '']);
-		}
-		$materials = Material::all();
+    /**
+     * Display a listing of the resource.
+     *
+     * @return  \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        //
+        $customer = Auth::user()->reference;
+        $emps = [];
+        $stores = [];
+        if (!empty($customer->department)) {
+            $employees = $customer->department->getAllEmployeeByDept();
+            $emps = $employees->map(function ($employee) {
+                return ['label' => $employee->fname, 'value' => $employee->id];
+            });
+            $emps->prepend(['label' => '--请选择--', 'value' => '']);
+        }
+        if ($customer->stores) {
+            $stores = $customer->stores->map(function ($store) {
+                return ['label' => $store->ffullname, 'value' => $store->id];
+            });
+            $stores->prepend(['label' => '--请选择--', 'value' => '']);
+        }
+        $materials = Material::all();
 
-		return view('customer.sale-order.index', ['stores' => $stores, 'employees' => $emps, 'materials' => $materials]);
-	}
+        return view('customer.sale-order.index', ['stores' => $stores, 'employees' => $emps, 'materials' => $materials]);
+    }
 
-	/**
-	* Show the form for creating a new resource.
-	*
-	* @return  \Illuminate\Http\Response
-	*/
-	public function create()
-	{
-		return view('customer.sale-order.create');
-	}
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return  \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('customer.sale-order.create');
+    }
 
-	/**
-	* Display the specified resource.
-	*
-	* @param    int  $id
-	* @return  \Illuminate\Http\Response
-	*/
-	public function edit($id)
-	{
-		$entity = SaleOrder::find($id);
-		return view('customer.sale-order.edit', ['entity' => $entity]);
-	}
+    /**
+     * Display the specified resource.
+     *
+     * @param    int $id
+     * @return  \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $entity = SaleOrder::find($id);
+        return view('customer.sale-order.edit', ['entity' => $entity]);
+    }
 
-	/**
-	* Display the specified resource.
-	*
-	* @param    int  $id
-	* @return  \Illuminate\Http\Response
-	*/
-	public function show($id)
-	{
-		//
-	}
+    /**
+     * Display the specified resource.
+     *
+     * @param    int $id
+     * @return  \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
 
-	/**
-	 * @param  Request $request
-	 * @param  array $searchCols
-	 * @param  array $with
-	 * @param  null $conditionCall
-	 * @param bool $all_columns
-	 * @return \Illuminate\Http\JsonResponse
-	 */
-	public function pagination(Request $request, $searchCols = [], $with=[], $conditionCall = null, $all_columns = false){
-		$searchCols = ["fbill_no","fdocument_status","fsend_status"];
-        $with = ['store','employee','customer'];
-		return parent::pagination($request, $searchCols, $with);
-	}
+    /**
+     * @param  Request $request
+     * @param  array $searchCols
+     * @param  array $with
+     * @param  null $conditionCall
+     * @param bool $all_columns
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function pagination(Request $request, $searchCols = [], $with = [], $conditionCall = null, $all_columns = false)
+    {
+        $searchCols = ["fbill_no", "fdocument_status", "fsend_status"];
+//        $with = ['store','employee','customer'];
+        return parent::pagination($request, $searchCols, $with, $conditionCall, true);
+    }
 
-	public function entityQuery()
-	{
-		$customer = Auth::user()->reference;
-		return $customer->orders()->getQuery(); //parent::entityQuery(); // TODO: Change the autogenerated stub
-	}
+    public function entityQuery()
+    {
+        $query = ViewSaleOrder::query();
+        $customer = Auth::user()->reference;
+        return $query->where('customer_id', $customer->id);
+        //return $customer->orders()->getQuery(); //parent::entityQuery(); // TODO: Change the autogenerated stub
+    }
 
-	/**
-	 * 接单
-	 * @param Request $request
-	 * @param $id
-	 * @return \Illuminate\Http\JsonResponse
-	 */
-	public function accept(Request $request, $id){
-		$result = true;
-		$msg = '';
-		$entity = SaleOrder::find($id);
-		DB::beginTransaction();
-		try {
-			$entity->fsend_status = 'B';
-			$entity->fdocument_status = 'C';
-			$entity->save();
-			$entity->items()->update(['fsend_status' => 'B', 'fdocument_status' => 'C']);
-			DB::commit();
-		}catch (\Exception $e){
-			DB::rollBack();
-			$result = false;
-			$msg = $e->getMessage();
-		}
-		return $result ? $this->success($entity) : $this->fail($msg);
-	}
+    /**
+     * 接单
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function accept(Request $request, $id)
+    {
+        $result = true;
+        $msg = '';
+        $entity = SaleOrder::find($id);
+        DB::beginTransaction();
+        try {
+            $entity->fsend_status = 'B';
+            $entity->fdocument_status = 'C';
+            $entity->save();
+            $entity->items()->update(['fsend_status' => 'B', 'fdocument_status' => 'C']);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            $result = false;
+            $msg = $e->getMessage();
+        }
+        return $result ? $this->success($entity) : $this->fail($msg);
+    }
 
-	public function store(Request $request, $extraFields = [])
-	{
-		$extraFields = [
-			'source' => 'customer',
-			'fcust_id' => Auth::user()->reference->id,
-		];
-		return parent::store($request, $extraFields); // TODO: Change the autogenerated stub
-	}
+    public function store(Request $request, $extraFields = [])
+    {
+        $extraFields = [
+            'source' => 'customer',
+            'fcust_id' => Auth::user()->reference->id,
+        ];
+        return parent::store($request, $extraFields); // TODO: Change the autogenerated stub
+    }
 }

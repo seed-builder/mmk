@@ -154,6 +154,7 @@ abstract class DatatablesController extends Controller
         $order = $request->input('order', []);
         $search = $request->input('search', []);
         $draw = $request->input('draw', 0);
+        $filter = $request->input('filter', 0);
 
         $queryBuilder = $this->entityQuery(); //$this->newEntity()->newQuery();
 
@@ -172,6 +173,8 @@ abstract class DatatablesController extends Controller
 
         $total = $queryBuilder->count();
 
+        if (!empty($filter))
+            $this->filter($queryBuilder,$filter);
 //        if (!empty($filter)||!empty($tree)||!empty($initFilter)) {
 //            $this->adminFilter($queryBuilder,$request);
 //        }

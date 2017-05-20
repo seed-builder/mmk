@@ -51,11 +51,11 @@
                                 <div class="form-group">
                                     <label class="col-sm-1 control-label">开始日期</label>
                                     <div class="col-sm-2">
-                                        <input type="text" class="form-control filter-condition filter-date" filter-name="st_sale_orders.fdate" filter-operator="<=" >
+                                        <input type="text" class="form-control filter-condition filter-date" filter-name="st_sale_orders.fdate" filter-operator=">=" >
                                     </div>
                                     <label class="col-sm-1 control-label">结束日期</label>
                                     <div class="col-sm-2">
-                                        <input type="text" class="form-control filter-condition filter-date" filter-name="st_sale_orders.fdate" filter-operator=">=" >
+                                        <input type="text" class="form-control filter-condition filter-date" filter-name="st_sale_orders.fdate" filter-operator="<=" >
                                     </div>
                                     <div class="col-sm-3 col-sm-offset-1">
                                         <button type="button" class="btn btn-info filter-submit">查询</button>

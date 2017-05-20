@@ -34,7 +34,31 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
+                        <div class="panel panel-default" >
+                            <form class="form-horizontal filter"  filter-table="#orderTable">
+                                <div class="form-group">
+                                    <label  class="col-sm-1 control-label">门店</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control filter-condition" filter-name="store_name" filter-operator="like" >
+                                    </div>
+                                    <label class="col-sm-1 control-label">下单日期</label>
+                                    <div class="col-sm-4">
+                                        <div class="input-group">
+                                        <input type="text" class="form-control filter-condition filter-date" filter-name="fdate" filter-operator=">=" >
+                                            <span class="input-group-addon">---</span>
+                                        <input type="text" class="form-control filter-condition filter-date" filter-name="fdate" filter-operator="<=" >
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3 col-sm-offset-1">
+                                        <button type="button" class="btn btn-info filter-submit">查询</button>
+                                        <button type="button" class="btn btn-default filter-reset">重置</button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
 
+                                </div>
+                            </form>
+                        </div>
                         <table id="orderTable" class="table table-bordered table-hover display nowrap" cellspacing="0" width="100%">
                             <thead>
                             <tr>
