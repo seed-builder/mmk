@@ -6,7 +6,7 @@ use App\Http\Controllers\DatatablesController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class BaseController extends DatatablesController
+abstract class BaseController extends DatatablesController
 {
     //
 	public function __construct()
@@ -59,5 +59,30 @@ class BaseController extends DatatablesController
             'result' => '反审核成功！',
             'data' => $entitys
         ]);
+    }
+
+    /*
+	 * 导出excel
+	 */
+    public function exportExcel(Request $request, $with = [], $conditionCall = null)
+    {
+        $queryBuilder = $this->entityQuery(); //$this->newEntity()->newQuery();
+
+        $filter = $request->input('filter', []);
+
+        if (!empty($filter))
+            $this->filter($queryBuilder,$filter);
+
+        if (!empty($with)) {
+            $queryBuilder->with($with);
+        }
+
+        if ($conditionCall != null && is_callable($conditionCall)) {
+            $conditionCall($queryBuilder);
+        }
+
+        $entities = $queryBuilder->get();
+
+        $this->export($entities);
     }
 }

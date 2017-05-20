@@ -235,6 +235,8 @@ define(function (require, exports, module) {
                 {'data': 'fbase_unit'},
                 {'data': 'fsend_qty'},
                 {'data': 'fsend_base_qty'},
+                {'data': 'fpresent_qty'},
+                {'data': 'fpresent_base_qty'},
                 {
                     'data': 'fsend_status',
                     render: function (data, type, full) {
@@ -312,7 +314,12 @@ define(function (require, exports, module) {
                 }
                 },
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: infoEditor, enabled: false},
-                {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
+                {
+                    text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>',
+                    action: function () {
+                        exportExcel('#moduleForm','/customer/sale-order-item/export-excel');
+                    }
+                },
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
                 {extend: 'colvis', text: '列显示'}
             ],
@@ -337,6 +344,7 @@ define(function (require, exports, module) {
             var order = row.length > 0 ? row[0] : null;
             //console.log(order);
             if (order) {
+                $("#order_id").val(order.id);
                 infoTable.columns(1).search(order.id).draw();
                 orderTable.buttons(['.accept']).enable(order.fsend_status == 'A');
                 orderTable.buttons(['.buttons-edit']).enable(order.source != 'phone' && order.fsend_status == 'A');

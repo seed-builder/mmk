@@ -213,12 +213,4 @@ abstract class AdminController extends DatatablesController
         $this->export($entities);
     }
 
-    /*
-     * 打印
-     */
-    public function printView(Request $request, $title, $title_datas = [], $table_datas = [])
-    {
-
-        return view('admin.layout.print_view', compact('title', 'title_datas','table_datas'));
-    }
 }

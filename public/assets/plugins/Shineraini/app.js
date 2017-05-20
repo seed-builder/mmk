@@ -531,11 +531,14 @@ function exportExcel(form_id,url) {
 
     })
 
-    var treeNode = $('.treeview').treeview('getSelected');
-    if (treeNode.length>0){
-        var tree_condition = '<input type="hidden" class="export_conditions" name="tree[nodeid]" value="'+treeNode[0].dataid+'" />'
-        form.append(tree_condition);
+    if ($('#tree').length>1){
+        var treeNode = $('.treeview').treeview('getSelected');
+        if (treeNode.length>0){
+            var tree_condition = '<input type="hidden" class="export_conditions" name="tree[nodeid]" value="'+treeNode[0].dataid+'" />'
+            form.append(tree_condition);
+        }
     }
+
 
     form.attr('action',url)
     form.submit();
