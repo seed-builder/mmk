@@ -133,13 +133,11 @@ define(function(require, exports, module) {
             })
         }
 
-
-
         table.on( 'draw', function () {
             //alert( 'Table redrawn' );
             bindEvt();
         } );
-        bindEvt();
+        //bindEvt();
 
     }
 
