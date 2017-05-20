@@ -124,15 +124,16 @@
                     <!-- /.box-header -->
                     <div class="box-body">
 						<div class="panel panel-default">
-							<div class="form-horizontal filter " filter-table="#childTable">
-
+							<form class="form-horizontal filter" id="childTableForm" filter-table="#childTable">
+								<input type="hidden" class="form-control filter-condition" filter-name="femp_id" id="cd_femp_id">
+								<input type="hidden" class="form-control filter-condition" filter-name="fline_id" id="cd_fline_id">
 								<div class="form-group">
 									<label class="col-sm-1 control-label">门店名称</label>
 									<div class="col-sm-2">
 										<input type="text" class="form-control filter-condition" filter-name="store_ffullname" filter-operator="like" />
 									</div>
 
-									<label class="col-sm-1 control-label">负责人</label>
+									<label class="col-sm-1 control-label">联系人</label>
 									<div class="col-sm-2">
 										<input type="text" class="form-control filter-condition" filter-name="store_fcontracts" filter-operator="like" />
 									</div>
@@ -147,7 +148,7 @@
 									<button type="button" class="btn btn-info filter-submit">查询</button>
 									<button type="button" class="btn btn-default filter-reset">重置</button>
 								</div>
-							</div>
+							</form>
 
 						</div>
                         <table id="childTable" class="table table-bordered table-hover display nowrap" cellspacing="0" width="100%">
@@ -157,7 +158,7 @@
 									<th>门店全称</th>
 									<th>门店简称</th>
 									<th>详细地址</th>
-									<th>负责人</th>
+									<th>联系人</th>
 									<th>联系电话</th>
 									<th>负责业代</th>
 									<th>fline_id</th>
@@ -193,17 +194,34 @@
 							<h3 class="box-title">门店列表</h3>
 						</div>
 						<div class="box-body">
+							<form class="form-horizontal">
+								<div class="box-body">
+									<div class="form-horizontal filter" id="lineStoreTableForm" filter-table="#lineStoreTable">
+										<input type="hidden" class="form-control filter-condition" filter-name="femp_id" id="ls_femp_id">
+										<input type="hidden" class="form-control filter-condition" filter-name="fline_id" id="ls_fline_id">
+										<div class="form-group">
+											<label class="col-sm-3 control-label">门店名称</label>
 
+											<div class="col-sm-4">
+												<input type="text" class="form-control filter-condition" filter-name="store_ffullname" filter-operator="like" id="fname">
+											</div>
+											<div class="col-sm-5">
+												<button type="button" class="btn btn-info filter-submit" ><i class="fa fa-fw fa-search"></i>查询</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</form>
 							<table id="lineStoreTable" class="table table-bordered table-hover ">
 								<thead>
 								<tr style="white-space: nowrap;">
 									<th>id</th>
-									<th>femp_id</th>
-									<th>fline_id</th>
+									<th>所属业代</th>
+									<th>当前线路</th>
 									<th>门店全称</th>
 									<th>门店简称</th>
 									<th>详细地址</th>
-									<th>渠道</th>
+
 								</tr>
 								</thead>
 							</table>
@@ -369,7 +387,7 @@
 											<th>序号</th>
 											<th width="15%">门店全称</th>
 											<th width="15%">详细地址</th>
-											<th width="15%">负责人</th>
+											<th width="15%">联系人</th>
 											<th width="15%">负责业代</th>
 											<th width="15%">联系电话</th>
 											<th width="15%">当前线路</th>
@@ -446,7 +464,7 @@
 										<th>序号</th>
 										<th width="15%">门店全称</th>
 										<th width="15%">详细地址</th>
-										<th width="15%">负责人</th>
+										<th width="15%">联系人</th>
 										<th width="15%">联系电话</th>
 										<th width="15%">负责业代</th>
 										<th>当前线路</th>

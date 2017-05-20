@@ -126,7 +126,10 @@ define(function (require, exports, module) {
                     enabled: false,
                     action: function () {
                         intermodulation();
-                        lineStoreTable.ajax.reload();
+                        // lineStoreTable.ajax.reload();
+                        $("#ls_femp_id").val(fempId(treeId,table));
+                        $("#ls_fline_id").val(table.rows('.selected').data()[0] != null ? table.rows('.selected').data()[0].fline_id : '');
+                        $("#lineStoreTableForm").find('.filter-submit').trigger('click')
                         $('#lineAdjust').modal('show');
                     }
                 },
@@ -252,7 +255,10 @@ define(function (require, exports, module) {
 //                {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: editor},
 //                 {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: editor},
 //                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
-                {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
+//                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
+                { text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>', action: function () {
+                    exportExcel('#childTableForm','/admin/visit_line_store/export-excel');
+                }  },
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
 
 
@@ -476,14 +482,14 @@ define(function (require, exports, module) {
             processing: true,
             serverSide: true,
             select: true,
-            searching: true,
+            searching: false,
             paging: true,
             rowId: "id",
             ajax: {
                 url: '/admin/visit_line_store/pagination',
                 data: function (data) {
-                    data.columns[1]['search']['value'] = fempId(treeId,table);
-                    data.columns[2]['search']['value'] = table.rows('.selected').data()[0] != null ? table.rows('.selected').data()[0].fline_id : '';
+                    // data.columns[1]['search']['value'] = fempId(treeId,table);
+                    // data.columns[2]['search']['value'] = table.rows('.selected').data()[0] != null ? table.rows('.selected').data()[0].fline_id : '';
                     // allotTable.columns( 7 ).search( table.rows('.selected').data()[0].fline_id ).draw();
                 }
             },
@@ -491,9 +497,21 @@ define(function (require, exports, module) {
                 {"data": "id"},
                 {
                     "data": 'femp_id',
+                    render: function (data, type, full) {
+                        if (full.employee != null)
+                            return full.employee.fname
+                        else
+                            return "";
+                    }
                 },
                 {
                     "data": 'fline_id',
+                    render: function (data, type, full) {
+                        if (full.line != null)
+                            return full.line.fname
+                        else
+                            return "";
+                    }
                 },
                 {
                     "data": 'fstore_id',
@@ -522,21 +540,12 @@ define(function (require, exports, module) {
                             return "";
                     }
                 },
-                {
-                    "data": 'fstore_id',
-                    render: function (data, type, full) {
-                        if (full.store.channel)
-                            return full.store.channel.fname
-                        else
-                            return "";
-                    }
-                },
 
 
             ],
             columnDefs: [
                 {
-                    "targets": [0, 1, 2],
+                    "targets": [0],
                     "visible": false
                 }
             ],
@@ -715,18 +724,21 @@ define(function (require, exports, module) {
         }
 
         function reloadChildTable() {
-            var selected_emp_id = fempId(treeId,table)
-            childTable.columns(6).search(fempId(treeId,table))
-                .columns(7).search(table.rows('.selected').data()[0].fline_id)
-                .draw();
+            // var selected_emp_id = fempId(treeId,table)
+            // childTable.columns(6).search(fempId(treeId,table))
+            //     .columns(7).search(table.rows('.selected').data()[0].fline_id)
+            //     .draw();
+            $("#cd_femp_id").val(fempId(treeId,table));
+            $("#cd_fline_id").val(table.rows('.selected').data()[0].fline_id);
+            $("#childTableForm").find('.filter-submit').trigger('click')
         }
 
         //线路门店互调 数据展示 方法
         var intermodulation = function () {
             var femp = table.rows('.selected').data()[0].employee.fname;
             var fdept = table.rows('.selected').data()[0].employee.department.fname;
-            $("input[class='form-control fdept']").val(femp)
-            $("input[class='form-control femp']").val(fdept)
+            $("input[class='form-control fdept']").val(fdept)
+            $("input[class='form-control femp']").val(femp)
 
             tongzu();
             kauzu();
