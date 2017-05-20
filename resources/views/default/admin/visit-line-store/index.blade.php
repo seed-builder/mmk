@@ -346,52 +346,22 @@
 								<div class="box-body">
 									<form class="form-horizontal">
 										<div class="box-body">
-											<div class="form-group">
-												<label class="col-sm-2 control-label">门店名称</label>
+											<div class="form-horizontal filter" id="readyTableForm" filter-table="#readyTable">
+												<input type="hidden" class="form-control filter-condition" filter-name="femp_id" id="ready_femp_id">
+												{{--<input type="hidden" class="form-control filter-condition" filter-name="fline_id" id="ready_fline_id">--}}
+												<div class="form-group">
+													<label class="col-sm-2 control-label">门店名称</label>
 
-												<div class="col-sm-4">
-													<input type="text" class="form-control" id="fname">
-												</div>
-
-												<label class="col-sm-2 control-label">客户详址</label>
-
-												<div class="col-sm-4">
-													<input type="text" class="form-control" id="faddress">
-												</div>
-											</div>
-											<div class="form-group">
-												<label class="col-sm-2 control-label">客户分级</label>
-
-												<div class="col-sm-4">
-													<input type="text" class="form-control" >
-												</div>
-
-												<label class="col-sm-2 control-label">分配线路</label>
-
-												<div class="col-sm-4">
-													<select class="form-control" id="is_allot">
-														<option value="1">已分配线路</option>
-														<option value="2">未分配线路</option>
-													</select>
+													<div class="col-sm-4">
+														<input type="text" class="form-control filter-condition" filter-name="ffullname" filter-operator="like" id="fname">
+													</div>
+													<div class="col-sm-6">
+														<button type="button" class="btn btn-info filter-submit" ><i class="fa fa-fw fa-search"></i>查询</button>
+														<button type="button" class="btn btn-info" id="tAddBtn"><i class="fa fa-fw fa-plus"></i>添加</button>
+													</div>
 												</div>
 											</div>
-
-											<div class="form-group">
-												<label class="col-sm-2 control-label">线路代码</label>
-
-												<div class="col-sm-4">
-													<input type="text" class="form-control" id="fnumber">
-												</div>
-
-												<div class="col-sm-6">
-													<button type="button" class="btn btn-info" id="tQueryBtn"><i class="fa fa-fw fa-search"></i>查询</button>
-													<button type="button" class="btn btn-info" id="tAddBtn"><i class="fa fa-fw fa-plus"></i>添加</button>
-												</div>
-											</div>
-
-
 										</div>
-
 									</form>
 									<table id="readyTable" class="table table-bordered table-hover ">
 										<thead>
@@ -402,6 +372,7 @@
 											<th width="15%">负责人</th>
 											<th width="15%">负责业代</th>
 											<th width="15%">联系电话</th>
+											<th width="15%">当前线路</th>
 										</tr>
 										</thead>
 									</table>

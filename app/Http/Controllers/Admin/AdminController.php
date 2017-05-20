@@ -101,7 +101,6 @@ abstract class AdminController extends DatatablesController
 
     public function adminFilter($queryBuilder, $request)
     {
-
         $data = $request->all();
 
         if (!empty($data['init_filter']))

@@ -281,4 +281,12 @@ class StoreController extends AdminController
             'result' => '调换成功！'
         ]);
     }
+
+    public function initFilter($queryBuilder, $data)
+    {
+        if (!empty($data['femp_id']))
+            $queryBuilder->where('femp_id', $data['femp_id']);
+
+        return $queryBuilder;
+    }
 }

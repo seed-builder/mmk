@@ -47,39 +47,6 @@ define(function (require, exports, module) {
         mapInit(map, params);
 
         //各表初始化
-        var editor = new $.fn.dataTable.Editor({
-            ajax: {
-                create: {
-                    type: 'POST',
-                    url: '/admin/visit-line-store',
-                    data: {_token: $('meta[name="_token"]').attr('content')},
-                },
-                edit: {
-                    type: 'PUT',
-                    url: '/admin/visit-line-store/_id_',
-                    data: {_token: $('meta[name="_token"]').attr('content')},
-                },
-                remove: {
-                    type: 'DELETE',
-                    url: '/admin/visit-line-store/_id_',
-                    data: {_token: $('meta[name="_token"]').attr('content')},
-                }
-            },
-            i18n: editorCN,
-            table: "#" + tableId,
-            idSrc: 'id',
-            fields: [
-                {'label': 'fcreate_date', 'name': 'fcreate_date',},
-                {'label': 'fcreator_id', 'name': 'fcreator_id',},
-                {'label': 'fdocument_status', 'name': 'fdocument_status',},
-                {'label': 'femp_id', 'name': 'femp_id',},
-                {'label': 'fline_id', 'name': 'fline_id',},
-                {'label': 'fmodify_date', 'name': 'fmodify_date',},
-                {'label': 'fmodify_id', 'name': 'fmodify_id',},
-                {'label': 'fstore_id', 'name': 'fstore_id',},
-                {'label': 'fweek_day', 'name': 'fweek_day',},
-            ]
-        });
 
         var table = $("#" + tableId).DataTable({
             dom: "lBfrtip",
@@ -168,14 +135,16 @@ define(function (require, exports, module) {
                     className: 'storeAdjust',
                     enabled: false,
                     action: function () {
-
-                        readyTable.ajax.reload();
+                        $("#ready_femp_id").val(fempId(treeId,table));
+                        $("#ready_fline_id").val(table.rows('.selected').data()[0] != null ? table.rows('.selected').data()[0].fline_id : '');
+                        $("#readyTableForm").find('.filter-submit').trigger('click')
+                        // $("#readyTableForm").find('.filter-submit').trigger('click')
                         allotTable.ajax.reload();
                         $('#storeAdjust').modal('show');
                     }
                 },
 
-                {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
+                // {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
 
@@ -185,36 +154,6 @@ define(function (require, exports, module) {
         });
 
         //子表
-        var childEditor = new $.fn.dataTable.Editor({
-            ajax: {
-                create: {
-                    type: 'POST',
-                    url: '/admin/store',
-                    data: {_token: $('meta[name="_token"]').attr('content')},
-                },
-                edit: {
-                    type: 'PUT',
-                    url: '/admin/store/_id_',
-                    data: {_token: $('meta[name="_token"]').attr('content')},
-                },
-                remove: {
-                    type: 'DELETE',
-                    url: '/admin/store/_id_',
-                    data: {_token: $('meta[name="_token"]').attr('content')},
-                }
-            },
-            table: "#" + childTableId,
-            idSrc: 'id',
-            i18n: editorCN,
-            fields: [
-                {'label': '门店全称', 'name': 'ffullname'},
-                {'label': '门店简称', 'name': 'fshortname'},
-                {'label': '客户详址', 'name': 'faddress'},
-                {'label': '负责人', 'name': 'fcontracts'},
-                {'label': '联系电话', 'name': 'ftelephone'},
-                {'label': '渠道分类', 'name': 'fchannel'},
-            ]
-        });
 
         var childTable = $("#" + childTableId).DataTable({
             dom: "Bfrtip",
@@ -312,7 +251,7 @@ define(function (require, exports, module) {
                 // },
 //                {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: editor},
 //                 {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: editor},
-                {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
+//                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
 
@@ -336,12 +275,12 @@ define(function (require, exports, module) {
                 url: '/admin/store/pagination',
                 data: function (data) {
                     // data.columns[5]['search']['value'] = fempId(treeId,table);
-                    data['femp_id'] = fempId(treeId,table);
-                    data['fname'] = $("#fname").val();
-                    data['faddress'] = $("#faddress").val();
-                    data['is_allot'] = $("#is_allot").val();
-                    data['fnumber'] = $("#fnumber").val();
-                    data['fline_id'] = table.rows('.selected').data()[0] != null ? table.rows('.selected').data()[0].fline_id : '';
+                    // data['femp_id'] = fempId(treeId,table);
+                    // data['fname'] = $("#fname").val();
+                    // data['faddress'] = $("#faddress").val();
+                    // data['is_allot'] = $("#is_allot").val();
+                    // data['fnumber'] = $("#fnumber").val();
+                    // data['fline_id'] = table.rows('.selected').data()[0] != null ? table.rows('.selected').data()[0].fline_id : '';
                 }
             },
             columns: [
@@ -359,6 +298,15 @@ define(function (require, exports, module) {
                     }
                 },
                 {"data": "ftelephone"},
+                {
+                    "data": "fline_id",
+                    render: function (data, type, full) {
+                        if (full.line != null)
+                            return full.line.fname
+                        else
+                            return "";
+                    }
+                },
 
 
             ],
@@ -469,55 +417,55 @@ define(function (require, exports, module) {
                     line(datas)
                 }
                 },
-                {
-                    text: '删除<i class="fa fa-fw fa-trash"></i>', action: function () {
-                    if (allotTable.rows('.selected').data().length == 0) {
-                        layer.alert('请先选择要删除的门店！');
-                        return;
-                    }
-                    layer.confirm('确定删除？', function () {
-                        var load = layer.load(1);
-                        ajaxLink("/admin/visit_line_store/destroy/" + allotTable.rows('.selected').data()[0].id,function () {
-                            readyTable.ajax.reload();
-                            allotTable.ajax.reload();
-                            layer.close(load);
-                        })
-
-                    });
-
-                }
-                },
-                {
-                    text: '重置<i class="fa fa-fw fa-exchange"></i>', action: function () {
-                    var ids = new Array();
-
-                    var data = allotTable.rows().data();
-                    for (var i = 0; i < data.length; i++) {
-                        ids.push(data[i].id);
-                    }
-
-                    layer.confirm('确定重置当前线路上所有门店吗！', function () {
-                        var load = layer.load(1);
-
-
-                        $.ajax({
-                            type: "POST",
-                            url: "/admin/visit_line_store/destroyAll",
-                            dataType: "json",
-                            data: {
-                                "ids": ids,
-                                "_token": $('meta[name="_token"]').attr('content')
-                            },
-                            success: function (data) {
-                                readyTable.ajax.reload();
-                                allotTable.ajax.reload();
-                                layer.closeAll();
-                            }
-                        })
-                    });
-
-                }
-                },
+                // {
+                //     text: '删除<i class="fa fa-fw fa-trash"></i>', action: function () {
+                //     if (allotTable.rows('.selected').data().length == 0) {
+                //         layer.alert('请先选择要删除的门店！');
+                //         return;
+                //     }
+                //     layer.confirm('确定删除？', function () {
+                //         var load = layer.load(1);
+                //         ajaxLink("/admin/visit_line_store/destroy/" + allotTable.rows('.selected').data()[0].id,function () {
+                //             $("#readyTableForm").find('.filter-submit').trigger('click')
+                //             allotTable.ajax.reload();
+                //             layer.close(load);
+                //         })
+                //
+                //     });
+                //
+                // }
+                // },
+                // {
+                //     text: '重置<i class="fa fa-fw fa-exchange"></i>', action: function () {
+                //     var ids = new Array();
+                //
+                //     var data = allotTable.rows().data();
+                //     for (var i = 0; i < data.length; i++) {
+                //         ids.push(data[i].id);
+                //     }
+                //
+                //     layer.confirm('确定重置当前线路上所有门店吗！', function () {
+                //         var load = layer.load(1);
+                //
+                //
+                //         $.ajax({
+                //             type: "POST",
+                //             url: "/admin/visit_line_store/destroyAll",
+                //             dataType: "json",
+                //             data: {
+                //                 "ids": ids,
+                //                 "_token": $('meta[name="_token"]').attr('content')
+                //             },
+                //             success: function (data) {
+                //                 $("#readyTableForm").find('.filter-submit').trigger('click')
+                //                 allotTable.ajax.reload();
+                //                 layer.closeAll();
+                //             }
+                //         })
+                //     });
+                //
+                // }
+                // },
             ]
         });
 
@@ -597,7 +545,7 @@ define(function (require, exports, module) {
 
         //预分配门店 表格查询按钮
         $("#tQueryBtn").on('click', function () {
-            readyTable.ajax.reload();
+            $("#readyTableForm").find('.filter-submit').trigger('click')
         });
 
         //预分配门店 表格添加按钮
@@ -653,7 +601,7 @@ define(function (require, exports, module) {
                 success: function (data) {
                     $("#map_select_id").val("")//将地图所选id清空
                     map.clearOverlays();
-                    readyTable.ajax.reload();
+                    $("#readyTableForm").find('.filter-submit').trigger('click')
                     allotTable.ajax.reload();
                     layer.closeAll();
                 }
