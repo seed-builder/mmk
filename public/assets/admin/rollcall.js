@@ -26,11 +26,12 @@ define(function(require, exports, module) {
                 {  'data': 'fmodify_date' },
                 {  'data': 'faddress' },
                 {  'data': 'fphotos' ,render: function (data, type, full) {
-                    var arr = data ? data.split(',') : [];
-                    return  arr.length > 0 ? '<img src="/admin/show-image?imageId='+arr[0]+'" />' : '';
+                    //var arr = data ? data.split(',') : [];
+                    return  '<button type="button" class="btn btnImage" ><i class="fa fa-fw fa-search"></i></button>';
+                    //arr.length > 0 ? '<img src="/admin/show-image?imageId='+arr[0]+'" />' : '';
                 }},
                 {  'data': 'flatitude',  render: function (data, type, full) {
-                    return '<a class="map" href="javascript:;" ><i class="fa fa-fw fa-search"></i></a>';
+                    return '<button type="button" class="btn btnMap" ><i class="fa fa-fw fa-search"></i></button>';
                 } },
                 {  'data': 'fmode' , render: function (data, type, full) {
                     var txt = '';
@@ -63,10 +64,6 @@ define(function(require, exports, module) {
         //     var count = table.rows( { selected: true } ).count();
         //     table.buttons( ['.edit', '.delete'] ).enable(count > 0);
         // }
-
-
-
-        $('.map').live('click', showDialg);
 
         function showDialg() {
             var rows = table.rows( { selected: true } ).data();
@@ -114,6 +111,34 @@ define(function(require, exports, module) {
         }
 
         init();
+
+        function bindEvt() {
+            $('.btnMap').on('click', function () {
+                var rows = table.rows( { selected: true } ).data();
+                //alert(rows.length);
+                for(var i = 0; i < rows.length; i++){
+                    var data = rows[i];
+                    pointTo(data.flatitude, data.flongitude, data.employee_name, data.position_name);
+                }
+                $('#mapDialog').modal('show');
+            });
+
+            $('.btnImage').on('click', function () {
+                var rows = table.rows( { selected: true } ).data();
+                if(rows){
+                    var photos = rows[0].fphotos ? rows[0].fphotos.split(','):[];
+                    $('#commonDialogContent').html('<img style="max-height: 600px;" src="/admin/show-image?imageId='+photos[0]+'" />')
+                    $('#commonDialog').modal('show');
+                }
+            })
+        }
+
+        table.on( 'draw', function () {
+            //alert( 'Table redrawn' );
+            bindEvt();
+        } );
+        //bindEvt();
+
     }
 
 });
