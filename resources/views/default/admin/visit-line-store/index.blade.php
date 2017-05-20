@@ -86,7 +86,7 @@
 										</select>
 									</div>
 
-									<input type="hidden" class="form-control filter-condition" filter-name="distinct_fields" value="femp_id,fline_id" />
+									<input type="hidden" class="form-control distinct-condition" value="femp_id,fline_id" />
 								</div>
 
 								<div class="box-footer" style="text-align: center">

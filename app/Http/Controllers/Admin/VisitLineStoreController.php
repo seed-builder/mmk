@@ -80,10 +80,11 @@ class VisitLineStoreController extends AdminController
     public function pagination(Request $request, $searchCols = [], $with = [], $conditionCall = null, $all_columns = false)
     {
         $searchCols = ["fline_id", "femp_id"];
-        $data = $request->all();
         $with = ['line','store','employee.department'];
 
-        return parent::pagination($request, $searchCols, $with, function ($queryBuilder) use ($data,$request) {
+        return parent::pagination($request, $searchCols, $with, function ($queryBuilder) use ($request) {
+            $data = $request->all();
+            $queryBuilder->groupBy(explode(',',$data['distinct']))->distinct();
 
             $ids = $this->getCurUsersEmployeeIds();
             //var_dump($ids);
@@ -158,11 +159,6 @@ class VisitLineStoreController extends AdminController
                 continue;
 
             switch ($f['name']){
-                case "distinct_fields" : {
-                    $distinct = explode(",",$f['value']);
-                    $queryBuilder->groupBy($distinct)->distinct();
-                    break;
-                }
                 case "employee_fname" : {
                     $ids = Employee::query()->where('fname','like','%'.$f['value'].'%')->pluck('id');
                     $queryBuilder->whereIn('femp_id', $ids);

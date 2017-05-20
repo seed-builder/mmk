@@ -431,9 +431,8 @@ var filter = function(ele){
                 'value': $(obj).val(),
             }
         }
-
-
     })
+    filter_params['distinct'] = $(filter).find(".distinct-condition").val();
 
 
     table.api().settings()[0].ajax.data = filter_params
