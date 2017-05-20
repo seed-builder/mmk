@@ -64,6 +64,21 @@ class AttendanceController extends ApiController
         return response(['list' => $results], 200);
     }
 
+	public function exists(Request $request){
+		$empId = $request->input('emp_id', 0);
+		$type = $request->input('type', 0);
+		$date = $request->input('date', date('Y-m-d'));
+
+//		$results = DB::select('select count(1) c from ms_attendances WHERE ftype=? and femp_id=? and date_format(ftime, \'%Y-%m-%d\') = ?',
+//			[$type, $empId, $date]);
+//        $results = Entity::where('femp_id', $empId)->where('date_format(ftime, \'%Y-%m-%d\')', $date)->get();
+		$c = Entity::where(DB::raw("date_format(ftime, '%Y-%m-%d')"), $date)
+			->where('ftype', $type)
+			->where('femp_id', $empId)
+			->count();
+		return response(['count' => $c], 200);
+	}
+
     /**
      * 是否日完成
      * @param Request $request
