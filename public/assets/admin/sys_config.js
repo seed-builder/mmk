@@ -32,6 +32,7 @@ define(function(require, exports, module) {
                     {'label':'app端数据隔离', 'value':'app-data-isolate'},
                     {'label':'后端数据隔离', 'value':'mgt-data-isolate'},
                     {'label':'不参与数据隔离的员工', 'value':'no-data-isolate-employees'},
+                    {'label':'建议销售系数', 'value':'sale-variable'},
                 ]},
                 { 'label':  '描述', 'name': 'desc', },
                 { 'label':  '值', 'name': 'value', },
