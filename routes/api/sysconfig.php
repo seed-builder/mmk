@@ -2,7 +2,7 @@
 /**
 * @SWG\Resource(
 *  resourcePath="/sys-config",
-*  description="SysConfig"
+*  description="系统配置信息"
 * )
 */
 Route::group(['prefix' => 'sys-config', 'middleware' => 'api.sign'], function () {
@@ -13,8 +13,8 @@ Route::group(['prefix' => 'sys-config', 'middleware' => 'api.sign'], function ()
     *     @SWG\Operation(
     *      method="GET",
     *      nickname="sys-config-list",
-    *      summary="page list",
-    *      notes="page list",
+    *      summary="系统配置信息列表",
+    *      notes="系统配置信息列表",
     *      type="array",
     *     items="$ref:SysConfig",
     *      @SWG\Parameters(
@@ -35,8 +35,8 @@ Route::group(['prefix' => 'sys-config', 'middleware' => 'api.sign'], function ()
 	 *     @SWG\Operation(
 	 *      method="GET",
 	 *      nickname="sys-config-show",
-	 *      summary="信息详情",
-	 *      notes="信息详情",
+	 *      summary="系统配置信息详情",
+	 *      notes="系统配置信息详情",
 	 *      type="Attendance",
 	 *      @SWG\Parameters(
 	 *          @SWG\Parameter(name="id", description="id", required=true, type="integer", paramType="path", defaultValue="1"),
@@ -53,8 +53,8 @@ Route::group(['prefix' => 'sys-config', 'middleware' => 'api.sign'], function ()
 	 *     @SWG\Operation(
 	 *      method="GET",
 	 *      nickname="sys-config-show",
-	 *      summary="信息详情",
-	 *      notes="信息详情",
+	 *      summary="系统配置信息详情",
+	 *      notes="系统配置信息详情",
 	 *      type="Attendance",
 	 *      @SWG\Parameters(
 	 *          @SWG\Parameter(name="name", description="id", required=true, type="string", paramType="path", defaultValue="	sale-variable"),
