@@ -577,7 +577,7 @@ define(function (require, exports, module) {
                 {
                     "data": 'fstore_id',
                     render: function (data, type, full) {
-                        if (full.store.channel != null)
+                        if (full.store.channel)
                             return full.store.channel.fname
                         else
                             return "";

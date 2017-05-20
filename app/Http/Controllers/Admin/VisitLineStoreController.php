@@ -80,11 +80,13 @@ class VisitLineStoreController extends AdminController
     public function pagination(Request $request, $searchCols = [], $with = [], $conditionCall = null, $all_columns = false)
     {
         $searchCols = ["fline_id", "femp_id"];
-        $with = ['line','store','employee.department'];
+        $with = ['line','store.channel','employee.department'];
 
         return parent::pagination($request, $searchCols, $with, function ($queryBuilder) use ($request) {
             $data = $request->all();
-            $queryBuilder->groupBy(explode(',',$data['distinct']))->distinct();
+            if (!empty($data['distinct'])){
+                $queryBuilder->groupBy(explode(',',$data['distinct']))->distinct();
+            }
 
             $ids = $this->getCurUsersEmployeeIds();
             //var_dump($ids);
@@ -104,30 +106,26 @@ class VisitLineStoreController extends AdminController
     public function storeLineIml(Request $request)
     {
         $data = $request->all();
-        $query = VisitLineStore::query();
-
-        $update = [];
-        $store_ids = explode(",",$data['ids']);
-
-        $query->whereIn('id', $store_ids);
-
-        if (!empty($data['fline_id'])) {
-            $update['fline_id'] = $data['fline_id'];
-            Store::query()->whereIn('id',$store_ids)->update([
-                'fline_id' => $data['fline_id']
-            ]);
-        }
-        if (!empty($data['femp_id'])) {
-            $update['femp_id'] = $data['femp_id'];
-            Store::query()->whereIn('id',$store_ids)->update([
-                'femp_id' => $data['femp_id']
-            ]);
-        }
-        if ($query->update($update))
+        $update = $request->except('_token','ids');
+        DB::beginTransaction();
+        try {
+            foreach (explode(",",$data['ids']) as $id){
+                $vls = VisitLineStore::find($id);
+                $vls->fill($update);
+                $vls->save();
+            }
+            DB::commit();
             return response()->json([
                 'code' => 200,
                 'result' => '线路调整成功！'
             ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'code' => 500,
+                'result' => $e->getMessage()
+            ]);
+        }
 
     }
 
