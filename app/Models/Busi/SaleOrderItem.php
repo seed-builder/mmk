@@ -41,7 +41,7 @@ class SaleOrderItem extends BaseModel
 
 	public function __construct(array $attributes = [])
 	{
-		$attributes = $this->calculate($attributes);
+		//$attributes = $this->calculate($attributes);
 		parent::__construct($attributes);
 	}
 
