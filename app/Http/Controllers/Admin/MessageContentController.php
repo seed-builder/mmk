@@ -36,7 +36,7 @@ class MessageContentController extends AdminController
             $this->toSelectOption($dept, ['label' => 'fname', 'value' => 'id'], $departments);
         }
 
-        return view('admin.message-content.index',compact('customers','admins','departments'));
+        return view('admin.message-content.index', compact('customers', 'admins', 'departments'));
     }
 
     /**
@@ -59,13 +59,13 @@ class MessageContentController extends AdminController
     {
         $entity = MessageContent::find($id);
 
-        if (!empty($entity->files)){
-            $files_arr = explode(',',$entity->files);
+        if (!empty($entity->files)) {
+            $files_arr = explode(',', $entity->files);
             $files = [];
             foreach ($files_arr as $f)
                 $files[] = Resources::find($f);
             $entity->files = $files;
-        }else{
+        } else {
             $entity->files = [];
         }
 
@@ -96,16 +96,18 @@ class MessageContentController extends AdminController
     {
         $searchCols = ["content", "fdocument_status", "files", "title"];
 
-        $with = ['creator','modifyer'];
-        return parent::pagination($request, $searchCols, $with);
+        $with = ['creator', 'modifyer'];
+        return parent::pagination($request, $searchCols, $with, function ($query) {
+            $query->whereIn('type',[1,2]);
+        });
     }
 
     public function store(Request $request, $extraFields = [])
     {
-        $data = $request->only(['files','title','subtitle','content','type']);
+        $data = $request->only(['files', 'title', 'subtitle', 'content', 'type']);
 
         if (!empty($data['files']))
-            $data['files'] = implode(',',$data['files']);
+            $data['files'] = implode(',', $data['files']);
         $data['fcreator_id'] = Auth::user()->id;
         $data['fmodify_id'] = Auth::user()->id;
 
@@ -118,10 +120,10 @@ class MessageContentController extends AdminController
 
     public function update(Request $request, $id, $extraFields = [])
     {
-        $data = $request->only(['files','title','subtitle','content','type']);
+        $data = $request->only(['files', 'title', 'subtitle', 'content', 'type']);
 
         if (!empty($data['files']))
-            $data['files'] = implode(',',$data['files']);
+            $data['files'] = implode(',', $data['files']);
         $data['fmodify_id'] = Auth::user()->id;
 
         $entity = $this->newEntity()->newQuery()->find($id);
@@ -131,39 +133,40 @@ class MessageContentController extends AdminController
         return redirect(url('admin/message-content'));
     }
 
-    public function send(Request $request){
+    public function send(Request $request)
+    {
         $data = $request->all();
-        if ($data['scope']==1){//所有人
+        if ($data['scope'] == 1) {//所有人
             $users = User::all();
 
             $users_ids = $users->pluck('id')->toArray();
-            $emp_ids = $users->where('reference_type','employee')->pluck('id')->toArray();
+            $emp_ids = $users->where('reference_type', 'employee')->pluck('id')->toArray();
 
-            $this->sendMessage($users_ids,$data['message_content_id']);
-            $this->sendApp($emp_ids,$data['message_content_id']);
-        }else{
+            $this->sendMessage($users_ids, $data['message_content_id']);
+            $this->sendApp($emp_ids, $data['message_content_id']);
+        } else {
             $users = [];
-            if (!empty($data['fcust_ids'])){
-                $customers = User::query()->where('reference_type','customer')->whereIn('reference_id',$data['fcust_ids'])->pluck('id')->toArray();
-                $users = array_merge($users,$customers);
+            if (!empty($data['fcust_ids'])) {
+                $customers = User::query()->where('reference_type', 'customer')->whereIn('reference_id', $data['fcust_ids'])->pluck('id')->toArray();
+                $users = array_merge($users, $customers);
             }
-            if (!empty($data['fadmin_ids'])){
-                $admins = User::query()->whereIn('id',$data['fadmin_ids'])->pluck('id')->toArray();
-                $users = array_merge($users,$admins);
+            if (!empty($data['fadmin_ids'])) {
+                $admins = User::query()->whereIn('id', $data['fadmin_ids'])->pluck('id')->toArray();
+                $users = array_merge($users, $admins);
             }
-            if (!empty($data['fdept_ids'])){
-                $departments = Department::query()->whereIn('id',$data['fdept_ids'])->get();
-                foreach ($departments as $department){
+            if (!empty($data['fdept_ids'])) {
+                $departments = Department::query()->whereIn('id', $data['fdept_ids'])->get();
+                foreach ($departments as $department) {
                     $emp_ids = $department->getAllEmployeeByDept()->pluck('id');
-                    $employees = User::query()->where('reference_type','employee')->whereIn('reference_id',$emp_ids)->pluck('id')->toArray();
-                    $users = array_merge($users,$employees);
+                    $employees = User::query()->where('reference_type', 'employee')->whereIn('reference_id', $emp_ids)->pluck('id')->toArray();
+                    $users = array_merge($users, $employees);
 
-                    $this->sendApp($emp_ids,$data['message_content_id']);
+                    $this->sendApp($emp_ids, $data['message_content_id']);
                 }
             }
             $users = array_unique($users);
 
-            $this->sendMessage($users,$data['message_content_id']);
+            $this->sendMessage($users, $data['message_content_id']);
         }
 
 
@@ -173,14 +176,16 @@ class MessageContentController extends AdminController
         ]);
     }
 
-    protected function sendApp($emp_ids,$content_id){
+    protected function sendApp($emp_ids, $content_id)
+    {
         $appSend = new MessageService();
-        $appSend->sendMessage($emp_ids,$content_id);
+        $appSend->sendMessage($emp_ids, $content_id);
     }
 
-    protected function sendMessage($users,$content_id){
-        foreach ($users as $user){
-            $datas[] =[
+    protected function sendMessage($users, $content_id)
+    {
+        foreach ($users as $user) {
+            $datas[] = [
                 'from_id' => Auth::user()->id,
                 'to_id' => $user,
                 'message_content_id' => $content_id,
@@ -193,20 +198,21 @@ class MessageContentController extends AdminController
     }
 
 
-    public function info($message_id){
+    public function info($message_id)
+    {
 
         $message = Message::find($message_id);
         $message->read = 1;
         $message->save();
 
         $entity = $this->newEntity()->newQuery()->find($message->message_content_id);
-	    $files = [];
-        if(!empty($entity->files)) {
-	        $files_arr = explode(',', $entity->files);
-	        foreach ($files_arr as $f)
-		        $files[] = '/admin/download-file?id=' . $f;
+        $files = [];
+        if (!empty($entity->files)) {
+            $files_arr = explode(',', $entity->files);
+            foreach ($files_arr as $f)
+                $files[] = '/admin/download-file?id=' . $f;
         }
-	    $entity->files = $files;
+        $entity->files = $files;
 
         return view('admin.message-content.info', ['entity' => $entity]);
     }

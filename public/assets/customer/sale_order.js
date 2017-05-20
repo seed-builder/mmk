@@ -176,6 +176,11 @@ define(function (require, exports, module) {
                     type: 'DELETE',
                     url: '/customer/sale-order-item/_id_',
                     data: {_token: $('meta[name="_token"]').attr('content')},
+                    success : function () {
+                        orderTable.ajax.reload();
+                        infoTable.ajax.reload();
+                        $(".modal").modal('hide')
+                    }
                 }
             },
             i18n: editorCN,
