@@ -134,6 +134,7 @@ class VisitLineStoreController extends AdminController
      */
     public  function initFilter($queryBuilder, $data)
     {
+
         if (!empty($data['distinct']))
             $queryBuilder->groupBy($data['distinct'])->distinct();
 
@@ -142,6 +143,7 @@ class VisitLineStoreController extends AdminController
 
         if (!empty($data['fline_id']))
             $queryBuilder->where('fline_id', $data['fline_id']);
+
 
         return $queryBuilder;
     }

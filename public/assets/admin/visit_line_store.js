@@ -111,7 +111,7 @@ define(function (require, exports, module) {
                 {
                     "data": 'femp_id',
                     render: function (data, type, full) {
-                        if (full.line != null)
+                        if (full.employee != null)
                             return full.employee.fname
                         else
                             return "";

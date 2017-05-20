@@ -173,6 +173,8 @@ abstract class DatatablesController extends Controller
 
         $total = $queryBuilder->count();
 
+        if (!empty($filter))
+            $this->filter($queryBuilder,$filter);
 //        if (!empty($filter)||!empty($tree)||!empty($initFilter)) {
 //            $this->adminFilter($queryBuilder,$request);
 //        }
@@ -192,7 +194,7 @@ abstract class DatatablesController extends Controller
                 }
             });
         }
-        $filterCount = $queryBuilder->count();
+        $filterCount = $queryBuilder->get()->count();
 
         foreach ($order as $o) {
             $index = $o['column'];
