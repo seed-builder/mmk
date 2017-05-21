@@ -237,6 +237,8 @@ define(function(require, exports, module) {
             }]);
         }
 
+        $("#moduleForm").find('.filter-submit').trigger('click');
+
 
         treeSearch();
     	getTreeData();
