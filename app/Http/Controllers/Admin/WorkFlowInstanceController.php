@@ -85,7 +85,8 @@ class WorkFlowInstanceController extends AdminController
 		$searchCols = ["bill_no","desc","title"];
 		return parent::pagination($request, $searchCols, ['workflow'], function ($query){
 			$user = Auth::user();
-			$query->where('sponsor_id', $user->id);
+			if(!$user->isAdmin())
+				$query->where('sponsor_id', $user->id);
 		});
 	}
 
