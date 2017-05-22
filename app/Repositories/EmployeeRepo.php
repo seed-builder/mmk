@@ -104,7 +104,7 @@ class EmployeeRepo extends Repo
 		}else{
 			$employee->user()->update([
 				'name' => $employee->fphone,
-//						'password' =>  bcrypt('888888'), //$employee->fpassword,
+				'password' =>  bcrypt('888888'), //$employee->fpassword,
 				'login_time' => $employee->login_time,
 				'nick_name' => $employee->fname,
 				'logo' => $employee->fphoto,
