@@ -172,9 +172,9 @@ Artisan::command('cp-customer-to-user', function () {
 					$this->comment('success copy customer:  ' . $customer->fname);
 				}else{
 					$customer->user()->update([
-//						'name' => $customer->ftel,
-//						'password' => bcrypt('888888'),
-//						'status' => 1,
+						'name' => $customer->ftel,
+						'password' => bcrypt('888888'),
+						'status' => 1,
 						'nick_name' => $customer->fname,
 
 					]);
