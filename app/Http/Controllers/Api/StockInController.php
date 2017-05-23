@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\ApiController;
-use App\Models\Busi\StockIn;
+use App\Models\Busi\CustStockIn;
 
 class StockInController extends ApiController
 {
@@ -12,6 +12,6 @@ class StockInController extends ApiController
 	public function newEntity(array $attributes = [])
 	{
 		// TODO: Implement newEntity() method.
-		return new StockIn($attributes);
+		return new CustStockIn($attributes);
 	}
 }

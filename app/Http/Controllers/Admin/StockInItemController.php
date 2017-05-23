@@ -2,17 +2,17 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Busi\Material;
-use App\Models\Busi\StockIn;
+use App\Models\Busi\CustStockIn;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
-use App\Models\Busi\StockInItem;
+use App\Models\Busi\CustStockInItem;
 
 class StockInItemController extends AdminController
 {
 	public function newEntity(array $attributes = [])
 	{
 		// TODO: Implement newEntity() method.
-		return new StockInItem($attributes);
+		return new CustStockInItem($attributes);
 	}
 
 	/**
@@ -44,7 +44,7 @@ class StockInItemController extends AdminController
 	*/
 	public function edit($id)
 	{
-		$entity = StockInItem::find($id);
+		$entity = CustStockInItem::find($id);
 		return view('admin.stock-in-item.edit', ['entity' => $entity]);
 	}
 
@@ -106,7 +106,7 @@ class StockInItemController extends AdminController
 
             switch ($f['name']){
                 case "stock_in_fbill_no" : {
-                    $ids = StockIn::query()->where('fbill_no','like','%'.$f['value'].'%')->pluck('id');
+                    $ids = CustStockIn::query()->where('fbill_no','like','%'.$f['value'].'%')->pluck('id');
                     $queryBuilder->whereIn('fstock_in_id', $ids);
                     break;
                 }

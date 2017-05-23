@@ -132,7 +132,7 @@ class Customer extends Authenticatable
 	}
 
 	public function stock_ins(){
-		return $this->hasManyThrough(StockIn::class, Store::class, 'fcust_id', 'fstore_id')
+		return $this->hasManyThrough(CustStockIn::class, Store::class, 'fcust_id', 'fstore_id')
 			->select([
 				'st_stock_ins.id',
 				'st_stock_ins.fbill_no',
@@ -146,7 +146,7 @@ class Customer extends Authenticatable
 	}
 
 	public function stock_outs(){
-		return $this->hasManyThrough(StockOut::class, Store::class, 'fcust_id', 'fstore_id');
+		return $this->hasManyThrough(CustStockOut::class, Store::class, 'fcust_id', 'fstore_id');
 	}
 
 	public function department(){

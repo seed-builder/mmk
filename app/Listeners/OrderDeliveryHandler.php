@@ -5,8 +5,8 @@ namespace App\Listeners;
 use App\Events\OrderDeliveryEvent;
 use App\Models\Busi\SaleOrder;
 use App\Models\Busi\SaleOrderItem;
-use App\Models\Busi\StockOut;
-use App\Models\Busi\StockOutItem;
+use App\Models\Busi\CustStockOut;
+use App\Models\Busi\CustStockOutItem;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\DB;
@@ -42,9 +42,9 @@ class OrderDeliveryHandler implements ShouldQueue
 	    if(!empty($orderItems)){
 		    DB::beginTransaction();
 		    try {
-			    $out = StockOut::where('fsbill_no', $order->fbill_no)->first();
+			    $out = CustStockOut::where('fsbill_no', $order->fbill_no)->first();
 			    if (empty($out)) {
-				    $out = StockOut::create([
+				    $out = CustStockOut::create([
 					    'fstore_id' => $order->fstore_id,
 					    'fdate' => date('Y-m-d H:i:s'),
 					    'fsbill_no' => $order->fbill_no,
@@ -53,7 +53,7 @@ class OrderDeliveryHandler implements ShouldQueue
 				    ]);
 			    }
 			    foreach ($orderItems as $item) {
-				    $outItem = StockOutItem::create([
+				    $outItem = CustStockOutItem::create([
 					    'fstock_out_id' => $out->id,
 					    'fmaterial_id' => $item->fmaterial_id,
 					    'fsale_unit' => $item->fsale_unit,

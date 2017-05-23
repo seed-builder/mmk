@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use DB;
 
 /**
- * model description
+ * 门店订单
  * Class SaleOrder
  * @package  App\Models
  *

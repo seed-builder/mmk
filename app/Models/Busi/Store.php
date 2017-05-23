@@ -121,11 +121,11 @@ class Store extends BaseModel
 	}
 
 	public function stock_ins(){
-		return $this->hasMany(StockIn::class, 'fstore_id');
+		return $this->hasMany(CustStockIn::class, 'fstore_id');
 	}
 
 	public function stock_outs(){
-		return $this->hasMany(StockOut::class, 'fstore_id');
+		return $this->hasMany(CustStockOut::class, 'fstore_id');
 	}
 
 	public function todo_groups(){

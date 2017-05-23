@@ -3,14 +3,14 @@ namespace App\Http\Controllers\Customer;
 
 use App\Models\Busi\Material;
 use Illuminate\Http\Request;
-use App\Models\Busi\StockInItem;
+use App\Models\Busi\CustStockInItem;
 
 class StockInItemController extends BaseController
 {
 	public function newEntity(array $attributes = [])
 	{
 		// TODO: Implement newEntity() method.
-		return new StockInItem($attributes);
+		return new CustStockInItem($attributes);
 	}
 
 	/**
@@ -42,7 +42,7 @@ class StockInItemController extends BaseController
 	*/
 	public function edit($id)
 	{
-		$entity = StockInItem::find($id);
+		$entity = CustStockInItem::find($id);
 		return view('customer.stock-in-item.edit', ['entity' => $entity]);
 	}
 

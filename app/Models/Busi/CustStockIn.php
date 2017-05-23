@@ -6,12 +6,12 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * model description
- * Class StockIn
- * @package  App\Models
+ * 经销商入库
+ * Class CustStockIn
+ * @package  App\Models\Busi
  *
  * @author  xrs
- * @SWG\Model(id="StockIn")
+ * @SWG\Model(id="CustStockIn")
  * @SWG\Property(name="fbill_no", type="string", description="订单单号(门店编码+日期)")
  * @SWG\Property(name="fcreate_date", type="string", description="创建时间")
  * @SWG\Property(name="fcreator_id", type="integer", description="创建人")
@@ -25,10 +25,10 @@ use Illuminate\Database\Eloquent\Model;
  * @SWG\Property(name="fuser_id", type="integer", description="到货确认人id")
  * @SWG\Property(name="id", type="integer", description="")
   */
-class StockIn extends BaseModel
+class CustStockIn extends BaseModel
 {
 	//
-	protected $table = 'st_stock_ins';
+	protected $table = 'cust_stock_ins';
 	protected $guarded = ['id'];
 
 	public function customer(){
@@ -49,7 +49,7 @@ class StockIn extends BaseModel
 			//event(new \App\Events\ModelCreatedEvent($model));
 			if(empty($model->fbill_no)){
 				$store = Store::find($model->fstore_id);
-				$count = StockIn::where('fstore_id', $model->fstore_id)
+				$count = CustStockIn::where('fstore_id', $model->fstore_id)
 					->where('fin_date', $model->fin_date)
 					->count();
 				$count ++;

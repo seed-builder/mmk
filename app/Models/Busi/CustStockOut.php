@@ -6,12 +6,12 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * model description
- * Class StockOut
- * @package  App\Models
+ * 经销商出库
+ * Class CustStockOut
+ * @package  App\Models\Busi
  *
  * @author  xrs
- * @SWG\Model(id="StockOut")
+ * @SWG\Model(id="CustStockOut")
  * @SWG\Property(name="fbill_no", type="string", description="出库单号(门店编码+日期)")
  * @SWG\Property(name="fcreate_date", type="string", description="创建时间")
  * @SWG\Property(name="fcreator_id", type="integer", description="创建人")
@@ -28,10 +28,10 @@ use Illuminate\Database\Eloquent\Model;
  * @SWG\Property(name="fuser_id", type="integer", description="到货确认人id")
  * @SWG\Property(name="id", type="integer", description="")
   */
-class StockOut extends BaseModel
+class CustStockOut extends BaseModel
 {
 	//
-	protected $table = 'st_stock_outs';
+	protected $table = 'cust_stock_outs';
 	protected $guarded = ['id'];
 
 
@@ -48,7 +48,7 @@ class StockOut extends BaseModel
     }
 
     public function items(){
-    	return $this->hasMany(StockOutItem::class, 'fstock_out_id');
+    	return $this->hasMany(CustStockOutItem::class, 'fstock_out_id');
     }
 
 	/**
@@ -61,7 +61,7 @@ class StockOut extends BaseModel
 			//event(new \App\Events\ModelCreatedEvent($model));
 			if(empty($model->fbill_no)){
 				$store = Store::find($model->fstore_id);
-				$count = StockOut::where('fstore_id', $model->fstore_id)
+				$count = CustStockOut::where('fstore_id', $model->fstore_id)
 					->where('fdate', $model->fdate)
 					->count();
 				$count ++;

@@ -3,11 +3,11 @@ namespace App\Http\Controllers\Customer;
 
 use App\Models\Busi\Customer;
 use App\Models\Busi\Material;
-use App\Models\Busi\StockOutItem;
+use App\Models\Busi\CustStockOutItem;
 use App\Models\Busi\Store;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
-use App\Models\Busi\StockOut;
+use App\Models\Busi\CustStockOut;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -16,7 +16,7 @@ class StockOutController extends BaseController
 	public function newEntity(array $attributes = [])
 	{
 		// TODO: Implement newEntity() method.
-		return new StockOut($attributes);
+		return new CustStockOut($attributes);
 	}
 
 	/**
@@ -54,7 +54,7 @@ class StockOutController extends BaseController
 	*/
 	public function edit($id)
 	{
-		$entity = StockOut::find($id);
+		$entity = CustStockOut::find($id);
 		return view('customer.stock-out.edit', ['entity' => $entity]);
 	}
 
@@ -165,7 +165,7 @@ class StockOutController extends BaseController
 	}
 
     public function printOutOrder($id){
-        $stock_out = StockOut::find($id);
+        $stock_out = CustStockOut::find($id);
 //dd
         return view('customer.stock-out.print_view', compact('stock_out'));
     }

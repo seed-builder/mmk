@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use DB;
 
 /**
- * model description
+ * 门店库存
  * Class Stock
- * @package  App\Models
+ * @package  App\Models\Busi
  *
  * @author  xrs
  * @SWG\Model(id="Stock")
