@@ -49,32 +49,6 @@ Route::group(['prefix' => 'visit-todo-calendar', 'middleware' => 'api.sign'], fu
 
     /**
      * @SWG\Api(
-     *     path="/api/visit-todo-calendar",
-     *     @SWG\Operation(
-     *      method="POST",
-     *      nickname="visit-todo-calendar-store",
-     *      summary="新增巡访门店项目日历",
-     *      notes="新增巡访门店项目日历",
-     *      type="",
-     *      @SWG\Parameters(
-     *          @SWG\Parameter(name="fparent_id", description="父级id", required=true,type="integer", paramType="form", defaultValue="0" ),
-     *          @SWG\Parameter(name="fdate", description="日期", required=true,type="string", paramType="form", defaultValue="" ),
-     *          @SWG\Parameter(name="femp_id", description="员工id", required=true,type="integer", paramType="form", defaultValue="0" ),
-     *          @SWG\Parameter(name="forg_id", description="组织id", required=false,type="integer", paramType="form", defaultValue="0" ),
-     *          @SWG\Parameter(name="fstatus", description="巡访状态（1-未开始， 2-进行中， 3-已完成）", required=true,type="integer", paramType="form", defaultValue="1" ),
-     *          @SWG\Parameter(name="fstore_calendar_id", description="线路门店巡防日历id", required=true,type="integer", paramType="form", defaultValue="0" ),
-     *          @SWG\Parameter(name="ftodo_id", description="门店巡访项目id", required=true,type="integer", paramType="form", defaultValue="0" ),
-     *          @SWG\Parameter(name="flongitude", description="百度地图经度", required=true,type="string", paramType="form", defaultValue="" ),
-     *          @SWG\Parameter(name="flatitude", description="百度地图纬度", required=true,type="string", paramType="form", defaultValue="" ),
-     *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
-     *      )
-     *  )
-     * )
-     */
-    Route::post('/', ['as' => 'VisitTodoCalendar.store', 'uses' => 'VisitTodoCalendarController@store']);
-
-    /**
-     * @SWG\Api(
      *     path="/api/visit-todo-calendar/{id}",
      *     @SWG\Operation(
      *      method="POST",
@@ -93,23 +67,5 @@ Route::group(['prefix' => 'visit-todo-calendar', 'middleware' => 'api.sign'], fu
      * )
      */
     Route::post('/{id}', ['as' => 'VisitTodoCalendar.update', 'uses' => 'VisitTodoCalendarController@update']);
-
-    /**
-     * @SWG\Api(
-     *     path="/api/visit-todo-calendar/{id}",
-     *     @SWG\Operation(
-     *      method="DELETE",
-     *      nickname="VisitTodoCalendar-delete",
-     *      summary="巡访门店项目日历删除",
-     *      notes="巡访门店项目日历删除",
-     *      type="",
-     *      @SWG\Parameters(
-     *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="1" ),
-     *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
-     *      )
-     *  )
-     * )
-     */
-    Route::delete('/{id}', ['as' => 'VisitTodoCalendar.delete', 'uses' => 'VisitTodoCalendarController@destroy']);
 
 });
