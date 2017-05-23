@@ -39,7 +39,7 @@ class VisitPzbzController extends ApiController
 		}
 		if($entity){
 			$status =   200 ;
-			event(new VisitDetailCompletedEvent($entity->flog_id));
+			//event(new VisitDetailCompletedEvent($entity->flog_id));
 		}else{
 			$status =   400;
 		}
