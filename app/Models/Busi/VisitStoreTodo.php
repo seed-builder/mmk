@@ -48,7 +48,7 @@ class VisitStoreTodo extends BaseModel
 
 	    static::updated(function ($model){
 			VisitTodoCalendar::where('ftodo_id', $model->id)
-				->where('fdate', '>=', date('Y-m-d'))
+				//->where('fdate', '>=', date('Y-m-d'))
 				->where('fstatus', 1)
 				->update(['fis_must_visit' => $model->fis_must_visit]);
 	    });
