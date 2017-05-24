@@ -38,6 +38,7 @@ class VisitStoreTodo extends BaseModel
     public function parent(){
         return $this->hasOne(VisitStoreTodo::class,'id','fparent_id');
     }
+
     public function ffunction(){
         return $this->hasOne(VisitFunction::class,'id','ffunction_id');
     }
