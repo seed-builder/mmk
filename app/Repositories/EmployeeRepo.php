@@ -24,6 +24,12 @@ class EmployeeRepo extends Repo
 			return $this->fail('该号码不存在！');
 		}
 		if ($pwd == $loginData['fpassword']) {
+			if ($phone != '13000000000') {
+				$device_sn = trim($loginData['device_sn']);
+				if ($sn != $device_sn) {
+					return $this->fail('设备号不一致！');
+				}
+			}
 			event(new EmployeeLoginedEvent($loginData['id'], $device, $sn));
 			return $this->success($loginData);
 		}else{
@@ -44,6 +50,8 @@ class EmployeeRepo extends Repo
 					'fpassword' => $emp->fpassword,
 					'fname' => $emp->fname,
 					'femail' => $emp->femail,
+					'device' => $emp->device,
+					'device_sn' => $emp->device_sn,
 					'fphone' => $emp->fphone,
 					'fphoto' => $emp->fphoto,
 					'login_time' => $emp->login_time,
