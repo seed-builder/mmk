@@ -214,7 +214,7 @@ class Store extends BaseModel
 		    //判断该线路日志下是否有门店日志
             $line_calendar = VisitLineCalendar::query()->where('fline_id',$store->fline_id)->where('femp_id',$store->femp_id)->first();
 
-		    if ($line_calendar->store_calendars()->count()==0){
+		    if ($line_calendar != null && $line_calendar->store_calendars()->count()==0){
                 VisitLineCalendar::query()
                     ->where('fline_id',$store->fline_id)
                     ->where('femp_id',$store->femp_id)
