@@ -161,4 +161,23 @@ class UserController extends AdminController
             return redirect(url('admin/login'));
     }
 
+    public function batchUserRole(Request $request){
+        $roles = Role::all();
+
+        if($request->isMethod('post')){
+
+            $roleIds = $request->input('roles',[]);
+            $userIds = $request->input('user_ids','');
+            $userIds = explode(',',$userIds);
+            $users = $this->newEntity()->newQuery()->whereIn('id',$userIds)->get();
+            foreach ($users as $user){
+                $user->roles()->sync($roleIds);
+            }
+
+            $this->flash_success('设置成功!');
+        }
+
+	    return view('admin.user.batch-user-role',['roles' => $roles]);
+    }
+
 }
