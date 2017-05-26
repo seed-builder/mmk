@@ -82,7 +82,7 @@ class WorkFlowTaskController extends AdminController
 	}
 
 	public function todoPagination(Request $request){
-		$searchCols = ["'work_flow_instances.bill_no","work_flow_instances.title","work_flow_instances.sponsor", "work_flows.desc"];
+		$searchCols = ["work_flow_instances.bill_no","work_flow_instances.title","work_flow_instances.sponsor", "work_flows.desc"];
 		return parent::pagination($request, $searchCols, [], function ($query){
 			$user = Auth::user();
 			if(!$user->isAdmin())
@@ -100,7 +100,7 @@ class WorkFlowTaskController extends AdminController
 	}
 
 	public function donePagination(Request $request){
-		$searchCols = ["'work_flow_instances.bill_no","work_flow_instances.title","work_flow_instances.sponsor", "work_flows.desc"];
+		$searchCols = ["work_flow_instances.bill_no","work_flow_instances.title","work_flow_instances.sponsor", "work_flows.desc"];
 		return parent::pagination($request, $searchCols, [], function ($query){
 			$user = Auth::user();
 			if(!$user->isAdmin())
