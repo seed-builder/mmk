@@ -72,7 +72,8 @@ class Employee extends BaseModel
 
 		static::updating(function ($employee){
 			$old = Employee::find($employee->id);
-			if($old->fpassword != $employee->fpassword || empty($employee->device_sn)){
+			$sn = trim($employee->device_sn);
+			if($old->fpassword != $employee->fpassword || empty($sn)){
 				EmployeeRepo::clearCache($employee->fphone);
 			}
 		});
