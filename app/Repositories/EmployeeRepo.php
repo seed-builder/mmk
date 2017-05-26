@@ -31,6 +31,11 @@ class EmployeeRepo extends Repo
 		}
 		if ($pwd == $loginData['fpassword']) {
 			event(new EmployeeLoginedEvent($loginData['id'], $device, $sn));
+			if(empty($loginData['device_sn'])) {
+				$loginData['device'] = $device;
+				$loginData['device_sn'] = $sn;
+				$this->cacheData($phone, $loginData);
+			}
 			return $this->success($loginData);
 		}else{
 			return $this->fail('密码错误！');
@@ -70,6 +75,11 @@ class EmployeeRepo extends Repo
 			}
 		}
 		return $loginData;
+	}
+
+	public function cacheData($phone, $data){
+		$key = $this->prefix . $phone;
+		Cache::forever($key, $data);
 	}
 
 	public function clearCache($phone){
