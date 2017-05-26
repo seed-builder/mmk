@@ -25,7 +25,7 @@ class EmployeeRepo extends Repo
 		}
 		if ($phone != '13000000000') {
 			$device_sn = trim($loginData['device_sn']);
-			if ($sn != $device_sn) {
+			if (!empty($device_sn) && $sn != $device_sn) {
 				return $this->fail('设备号不一致！');
 			}
 		}
