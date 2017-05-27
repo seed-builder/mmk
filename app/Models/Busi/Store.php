@@ -162,7 +162,7 @@ class Store extends BaseModel
 		    }
 	    });
 
-	    static::updating(function ($store) {
+	    static::saving(function ($store) {
 		    //LogSvr::storeUpdate()->info(json_encode($store));
 		    $old = Store::find($store->id);
 		    if($old->fpostalcode != $store->fpostalcode){
@@ -175,6 +175,13 @@ class Store extends BaseModel
 			    }
 			    //$store->fpostalcode = $postalcode;
 		    }
+
+            if ($store->femp_id){ //门店人员调换
+                $entity = VisitLineStore::where('fstore_id', $store->id)->first();
+
+                $entity->femp_id = $store->femp_id;
+                $entity->save();
+            }
 
 		    if($store->fline_id == $old->fline_id)
 		    	return;
@@ -199,6 +206,8 @@ class Store extends BaseModel
 			    });
 	    		VisitLineStore::destroy($ids);
 		    }
+
+
 
 	    });
 

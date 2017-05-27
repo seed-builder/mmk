@@ -10,4 +10,6 @@ Route::get('store/storeInfo/{id}', ['uses' => 'StoreController@storeInfo']);
 Route::post('store/exchange', ['uses' => 'StoreController@exchange']);
 Route::get('store/check', ['uses' => 'StoreController@check']);
 Route::get('store/uncheck', ['uses' => 'StoreController@uncheck']);
+Route::get('store/store-exchange', ['uses' => 'StoreController@storeChangeIndex']);
+Route::post('store/store-exchange', ['uses' => 'StoreController@storeChange']);
 Route::resource('store', 'StoreController');

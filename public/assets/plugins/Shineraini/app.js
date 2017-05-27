@@ -26,7 +26,7 @@ function setActive(el) {
     var p = el.parent();
     var tag = p.get(0).tagName;
     // console.log(tag);
-    if(tag.toLowerCase() == 'section')
+    if (tag.toLowerCase() == 'section')
         return;
 
     el.parent().addClass("active");
@@ -97,12 +97,22 @@ function forbid_status(status) {
 //A-待接单，B-已接单，C-已配送, D-部分配送
 function send_status(status) {
     var txt = '';
-    switch (status){
-        case 'A': txt='待接单';break;
-        case 'B': txt='已接单';break;
-        case 'C': txt='已配送';break;
-        case 'D': txt='部分配送';break;
-        default: txt='状态异常';break;
+    switch (status) {
+        case 'A':
+            txt = '待接单';
+            break;
+        case 'B':
+            txt = '已接单';
+            break;
+        case 'C':
+            txt = '已配送';
+            break;
+        case 'D':
+            txt = '部分配送';
+            break;
+        default:
+            txt = '状态异常';
+            break;
     }
     return txt;
 }
@@ -195,8 +205,8 @@ function ajaxForm(form_id, callback) {
 function ajaxFormWithFile(form_id, callback) {
     var fd = new FormData($(form_id)[0]);
     var data = $(form_id).serializeArray();
-    $.each(data,function(key,input){
-        fd.append(input.name,input.value);
+    $.each(data, function (key, input) {
+        fd.append(input.name, input.value);
     });
 
     $.ajax({
@@ -256,6 +266,34 @@ function ajaxGetData(url, callback) {
 }
 
 /*
+ * ajaxPost
+ */
+function ajaxPost(url, params, callback) {
+    params._token = $("meta[name='_token']").attr('content')
+    $.ajax({
+        type: 'POST',
+        data: params,
+        //async: true,
+        cache: false,
+        url: url,
+        dataType: "json",
+        success: function (res) {
+            if (res.code == 200) {
+                layer.msg('调换门店成功');
+            }
+            if (callback !== undefined) {
+                callback();
+            }
+        },
+
+        error: function (jqXHR, textStatus, errorThrown) {
+            layer.msg(jqXHR.responseText);
+        },
+
+    });
+}
+
+/*
  * treeview
  */
 $('#btnOpen').click(function () {
@@ -273,12 +311,12 @@ var filter_params = {
     'filter': {}
 }
 
-var treeNodeSelect = function(treeId,table){
+var treeNodeSelect = function (treeId, table) {
 
-    var treeNode = $('#'+treeId).treeview('getSelected');
-    if (treeNode.length>0){
+    var treeNode = $('#' + treeId).treeview('getSelected');
+    if (treeNode.length > 0) {
         filter_params['tree']['nodeid'] = treeNode[0].dataid;
-        filter_params['tree']['type'] = $('#'+treeId).attr('tree-type');
+        filter_params['tree']['type'] = $('#' + treeId).attr('tree-type');
     }
     // var form = table.parents('filter')
 
@@ -287,7 +325,7 @@ var treeNodeSelect = function(treeId,table){
 
 
 };
-var treeNodeUnSelect = function (treeId,table) {
+var treeNodeUnSelect = function (treeId, table) {
     filter_params['tree'] = {};
     table.settings()[0].ajax.data = filter_params;
     table.ajax.reload();
@@ -414,7 +452,7 @@ var fempId = function (treeId, table) {
 /*
  * 查询过滤器
  */
-var filter = function(ele){
+var filter = function (ele) {
     var filter = ele.parents(".filter");
     var tableId = $(filter).attr('filter-table')
     var table = $(tableId).dataTable({
@@ -422,9 +460,9 @@ var filter = function(ele){
     });
 
     filter_params['filter'] = {};
-    $(filter).find(".filter-condition").each(function (index,obj) {
+    $(filter).find(".filter-condition").each(function (index, obj) {
 
-        if ($(obj).attr('filter-name')){
+        if ($(obj).attr('filter-name')) {
             filter_params['filter'][index] = {
                 'name': $(obj).attr('filter-name'),
                 'operator': $(obj).attr('filter-operator'),
@@ -439,7 +477,7 @@ var filter = function(ele){
     table.api().ajax.reload();
 }
 
-var filter_reset = function(ele){
+var filter_reset = function (ele) {
     var filter = ele.parents(".filter");
     var tableId = $(filter).attr('filter-table')
     var table = $(tableId).dataTable({
@@ -449,7 +487,7 @@ var filter_reset = function(ele){
     filter_params['filter'] = {}
 
     // filter.reset()
-    $(filter).find(".filter-condition").each(function (index,obj) {
+    $(filter).find(".filter-condition").each(function (index, obj) {
 
         $(obj).val("")
     })
@@ -459,16 +497,16 @@ var filter_reset = function(ele){
     table.api().ajax.reload();
 }
 
-$(".filter-submit").on('click',function () {
+$(".filter-submit").on('click', function () {
     filter($(this));
 })
 
-$(".filter-reset").on('click',function () {
+$(".filter-reset").on('click', function () {
     filter_reset($(this));
 
 })
 
-$(".filter-condition").keydown(function(event) {
+$(".filter-condition").keydown(function (event) {
     if (event.keyCode == 13) {
         //执行操作
         filter($(this));
@@ -479,15 +517,15 @@ $(".filter-select").selectpicker();
 
 
 $('.filter-date').datepicker({
-language: 'zh-CN',
+    language: 'zh-CN',
     format: 'yyyy-mm-dd',
     clearBtn: true,
-    autoclose :true,
+    autoclose: true,
 });
 
 function addOptions(select, options) {
-    select.options.length=0;
-    for(var i=0; i < options.length; i++) {
+    select.options.length = 0;
+    for (var i = 0; i < options.length; i++) {
         var op = document.createElement("option");      // 新建OPTION (op)
         op.setAttribute("value", options[i].value);          // 设置OPTION的 VALUE
         op.appendChild(document.createTextNode(options[i].text)); // 设置OPTION的 TEXT
@@ -499,49 +537,49 @@ function addOptions(select, options) {
 /*
  * layui
  */
-layui.use(['form', 'layedit', 'laydate'], function(){
+layui.use(['form', 'layedit', 'laydate'], function () {
 
 });
 
 $(document).ready(function () {
-    setInterval("message()",5000);
+    setInterval("message()", 5000);
 });
 
 /*
  * 导出excel
  */
-function exportExcel(form_id,url) {
+function exportExcel(form_id, url) {
     var form = $(form_id)
-    $.each(form.find('.form-control'),function (index,input) {
+    $.each(form.find('.form-control'), function (index, input) {
         var name = $(input).attr('filter-name')
         var operator = $(input).attr('filter-operator')
 
-        if (name){
-            var input1 = '<input type="hidden" class="export_conditions" name="filter['+index+'][name]" value="'+$(input).attr('filter-name')+'"/>'
+        if (name) {
+            var input1 = '<input type="hidden" class="export_conditions" name="filter[' + index + '][name]" value="' + $(input).attr('filter-name') + '"/>'
 
-            var input3 = '<input type="hidden" class="export_conditions" name="filter['+index+'][value]" value="'+$(input).val()+'" />'
+            var input3 = '<input type="hidden" class="export_conditions" name="filter[' + index + '][value]" value="' + $(input).val() + '" />'
             form.append(input1)
             form.append(input3)
         }
-        if (operator){
-            var input2 = '<input type="hidden" class="export_conditions" name="filter['+index+'][operator]" value="'+$(input).attr('filter-operator')+'" />'
+        if (operator) {
+            var input2 = '<input type="hidden" class="export_conditions" name="filter[' + index + '][operator]" value="' + $(input).attr('filter-operator') + '" />'
             form.append(input2)
         }
 
     })
 
-    if ($('#tree').length>1){
+    if ($('#tree').length > 1) {
         var treeNode = $('.treeview').treeview('getSelected');
-        if (treeNode.length>0){
-            var tree_condition = '<input type="hidden" class="export_conditions" name="tree[nodeid]" value="'+treeNode[0].dataid+'" />'
+        if (treeNode.length > 0) {
+            var tree_condition = '<input type="hidden" class="export_conditions" name="tree[nodeid]" value="' + treeNode[0].dataid + '" />'
             form.append(tree_condition);
         }
     }
 
 
-    form.attr('action',url)
+    form.attr('action', url)
     form.submit();
-    form.attr('action','')
+    form.attr('action', '')
 
     $(".export_conditions").remove();
 }
@@ -560,7 +598,7 @@ function message() {
         "preventDuplicates": false,
         "onclick": function () {
             // window.location.href=$("#notifications-url").val()
-            $("#message_content").attr("href","/admin/message-content/info/"+$("#last_unread_id").val())
+            $("#message_content").attr("href", "/admin/message-content/info/" + $("#last_unread_id").val())
             $("#message_content").trigger('click')
         },
         "showDuration": "300",
@@ -577,20 +615,20 @@ function message() {
 
     // }
 
-    $.get('/admin/message/unread',{},function(data,status,xhr){
+    $.get('/admin/message/unread', {}, function (data, status, xhr) {
         var last_unread_id = $("#last_unread_id").val();
-        if (data.count>0) {
+        if (data.count > 0) {
             $("#message_count").velocity("fadeOut", {duration: 500})
                 .velocity("fadeIn", {duration: 500});
-            if(!audioPlayed) {
+            if (!audioPlayed) {
                 document.getElementById('audioObj').play();
                 audioPlayed = true;
             }
-        }else{
+        } else {
             $("#message_count").text(0);
             $("#message_count").hide();
         }
-        if (data.last_id>last_unread_id){
+        if (data.last_id > last_unread_id) {
             $("#last_unread_id").val(data.last_id);
             toastr.info('您收到一条新消息！')
             $("#message_count").text(data.count);
@@ -599,44 +637,44 @@ function message() {
             // $("#message_count").velocity("fadeIn", { duration: 1500 })
             //     .velocity("fadeOut", { delay: 500, duration: 1500 });
         }
-    },'json')
+    }, 'json')
 }
 
 
 /*
  * 打印
  */
-function printView(form_id,url,tree_id) {
+function printView(form_id, url, tree_id) {
     var form = $(form_id)
-    $.each(form.find('.form-control'),function (index,input) {
+    $.each(form.find('.form-control'), function (index, input) {
         var name = $(input).attr('filter-name')
         var operator = $(input).attr('filter-operator')
 
-        if (name){
-            var input1 = '<input type="hidden" class="print_conditions" name="filter['+index+'][name]" value="'+$(input).attr('filter-name')+'"/>'
+        if (name) {
+            var input1 = '<input type="hidden" class="print_conditions" name="filter[' + index + '][name]" value="' + $(input).attr('filter-name') + '"/>'
 
-            var input3 = '<input type="hidden" class="print_conditions" name="filter['+index+'][value]" value="'+$(input).val()+'" />'
+            var input3 = '<input type="hidden" class="print_conditions" name="filter[' + index + '][value]" value="' + $(input).val() + '" />'
             form.append(input1)
             form.append(input3)
         }
-        if (operator){
-            var input2 = '<input type="hidden" class="print_conditions" name="filter['+index+'][operator]" value="'+$(input).attr('filter-operator')+'" />'
+        if (operator) {
+            var input2 = '<input type="hidden" class="print_conditions" name="filter[' + index + '][operator]" value="' + $(input).attr('filter-operator') + '" />'
             form.append(input2)
         }
 
     })
-    if (tree_id!=null){
+    if (tree_id != null) {
         var treeNode = $('.treeview').treeview('getSelected');
-        if (treeNode.length>0){
-            var tree_condition = '<input type="hidden" class="print_conditions" name="tree[nodeid]" value="'+treeNode[0].dataid+'" />'
+        if (treeNode.length > 0) {
+            var tree_condition = '<input type="hidden" class="print_conditions" name="tree[nodeid]" value="' + treeNode[0].dataid + '" />'
             form.append(tree_condition);
         }
     }
 
 
-    form.attr('action',url)
+    form.attr('action', url)
     form.submit();
-    form.attr('action','')
+    form.attr('action', '')
 
     $(".print_conditions").remove();
 }

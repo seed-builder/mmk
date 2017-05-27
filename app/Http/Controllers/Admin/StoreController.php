@@ -289,4 +289,27 @@ class StoreController extends AdminController
 
         return $queryBuilder;
     }
+
+    public function storeChangeIndex(){
+        $lines = VisitLine::all();
+
+        return view('admin.store.store-change', compact('lines'));
+    }
+
+    public function storeChange(Request $request){
+        $store_ids = $request->input('store_ids',[]);
+        $user_id = $request->input('user_id',0);
+
+        $stores = $this->newEntity()->newQuery()->whereIn('id',$store_ids)->get();
+
+        foreach ($stores as $store){
+            $store->femp_id = $user_id;
+            $store->save();
+        }
+
+        return response()->json([
+            'code' => 200,
+            'result' => '调换门店成功'
+        ]);
+    }
 }
