@@ -75,7 +75,7 @@ Route::group(['prefix' => 'user', 'middleware' => 'api.sign'], function () {
     * @SWG\Api(
     *     path="/api/user/{id}",
     *     @SWG\Operation(
-    *      method="PUT",
+    *      method="POST",
     *      nickname="user-update",
     *      summary="更新",
     *      notes="更新",
@@ -94,7 +94,7 @@ Route::group(['prefix' => 'user', 'middleware' => 'api.sign'], function () {
     *  )
     * )
     */
-    Route::put('/{id}', ['as' => 'User.update', 'uses' => 'UserController@update']);
+    Route::post('/{id}', ['as' => 'User.update', 'uses' => 'UserController@update']);
 
     /**
     * @SWG\Api(
