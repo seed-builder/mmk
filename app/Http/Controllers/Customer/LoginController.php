@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Customer;
 
+use App\Events\UserLoginedEvent;
 use App\Models\Busi\Customer;
 use App\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -87,6 +88,19 @@ class LoginController extends Controller
 		}
 		if($user->status == 0){
 			throw new ValidationException(null, redirect('/customer/login')->withErrors(['该用户已经被禁用, 请联系管理员']));
+		}
+	}
+
+	protected function attemptLogin(Request $request)
+	{
+		$data =  $this->credentials($request);
+		$user = User::where('name', $data['name'])->where('password', md5($data['password']))->first();
+		if(!empty($user)){
+			$this->guard()->login($user, $request->has('remember'));
+			event(new UserLoginedEvent($user));
+			return true;
+		}else{
+			return false;
 		}
 	}
 

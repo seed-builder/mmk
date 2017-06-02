@@ -86,7 +86,7 @@ class Customer extends Authenticatable
 			if(!empty($customer->ftel)) {
 				$customer->user()->create([
 					'name' => $customer->ftel,
-					'password' => bcrypt('888888'),
+					'password' => md5('888888'),
 					'status' => 0
 				]);
 			}

@@ -188,4 +188,12 @@ abstract class  ApiController extends Controller
 		}
 		return implode(',', $result);
 	}
+
+	public function success($data, $msg = ''){
+		return response(['data' => $data, 'code' => 200, 'msg' => $msg]);
+	}
+
+	public function fail($msg){
+		return response(['data' => null, 'code' => 401, 'msg' => $msg]);
+	}
 }
