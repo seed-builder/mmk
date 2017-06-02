@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\ApiController;
 use App\Models\User;
+use Sms;
 
 class UserController extends ApiController
 {
@@ -33,4 +34,49 @@ class UserController extends ApiController
 			return response($entity, 200);
 		}
 	}
+
+	public function login(Request $request){
+		$this->validate($request, [
+			'phone' => 'required',
+			'password' => 'required',
+		]);
+		$phone = $request->input('phone', '');
+		$pwd = $request->input('password', '');
+
+		$user = User::with(['reference'])->where('name', $phone)->where('password', $pwd)->first();
+		if(!empty($user)){
+			$user->login_time += 1;
+			$user->save();
+			return $this->success($user);
+		}else {
+			return $this->fail('用户名或者密码错误');
+		}
+	}
+
+	public function changePwd(Request $request){
+		$this->validate($request, [
+			'phone' => 'required',
+			'password' => 'required',
+			'code' => 'required',
+		]);
+		$phone = $request->input('phone', '');
+		$pwd = $request->input('password', '');
+		$code = $request->input('code');
+
+		$resp = Sms::checkVerifyCode($phone, $code);
+		if($resp){
+			$emp = User::where('name', $phone)->first();
+			if(!empty($emp)) {
+				$emp->password = $pwd;
+				$emp->save();
+
+				return $this->success($emp, '修改密码成功');
+			}else{
+				return $this->fail('用户不存在!');
+			}
+		}else{
+			return $this->fail('验证码错误!');
+		}
+	}
+
 }

@@ -164,7 +164,7 @@ Artisan::command('cp-customer-to-user', function () {
 
 					$customer->user()->create([
 						'name' => $customer->ftel,
-						'password' => bcrypt('888888'),
+						'password' => md5('888888'),
 						'status' => 1,
 						'nick_name' => $customer->fname,
 
@@ -173,7 +173,7 @@ Artisan::command('cp-customer-to-user', function () {
 				}else{
 					$customer->user()->update([
 						'name' => $customer->ftel,
-						'password' => bcrypt('888888'),
+						'password' => md5('888888'),
 						'status' => 1,
 						'nick_name' => $customer->fname,
 

@@ -150,7 +150,7 @@ class UserController extends AdminController
 	public function resetPwd(Request $request){
 	    $id = $request->input('id',0);
 	    $user = User::find($id);
-        $user->password = bcrypt('888888');
+        $user->password = md5('888888');
         $user->save();
 
         Auth::logout();

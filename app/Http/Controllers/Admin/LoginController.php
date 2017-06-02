@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 
@@ -75,4 +76,15 @@ class LoginController extends Controller
 		return redirect('/admin/login');
 	}
 
+	protected function attemptLogin(Request $request)
+	{
+		$data =  $this->credentials($request);
+		$user = User::where('name', $data['name'])->where('password', md5($data['password']))->first();
+		if(!empty($user)){
+			$this->guard()->login($user, $request->has('remember'));
+			return true;
+		}else{
+			return false;
+		}
+	}
 }
