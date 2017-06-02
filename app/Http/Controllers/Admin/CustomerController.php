@@ -86,7 +86,7 @@ class CustomerController extends AdminController
 			]);
 			$prop = [
 				'name' => $request->input('name'),
-				'password' =>  bcrypt($request->input('password')),
+				'password' =>  md5($request->input('password')),
 				'status' => 1
 			];
 			$user = $customer->user;
