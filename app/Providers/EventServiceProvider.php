@@ -43,6 +43,9 @@ class EventServiceProvider extends ServiceProvider
 	    'App\Events\FlagChangedEvent' => [
 		    'App\Listeners\FlagChangedEventHandler',
 	    ],
+	    'App\Events\UserLoginedEvent' => [
+		    'App\Listeners\UserLoginedHandler',
+	    ],
     ];
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\UserLoginedEvent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\ApiController;
@@ -45,8 +46,7 @@ class UserController extends ApiController
 
 		$user = User::with(['reference'])->where('name', $phone)->where('password', $pwd)->first();
 		if(!empty($user)){
-			$user->login_time += 1;
-			$user->save();
+			event(new UserLoginedEvent($user));
 			return $this->success($user);
 		}else {
 			return $this->fail('用户名或者密码错误');
