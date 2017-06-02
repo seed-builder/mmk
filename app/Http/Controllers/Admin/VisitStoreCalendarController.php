@@ -61,7 +61,9 @@ class VisitStoreCalendarController extends AdminController
                     $images[] = '/admin/show-image?imageId='.$i;
                 }
                 $t->images = $images;
+                $t->remark = $pzs->fremark;
             }
+
         }
 
 

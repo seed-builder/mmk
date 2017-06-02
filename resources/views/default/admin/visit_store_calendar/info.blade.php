@@ -42,6 +42,7 @@
                                         @if(!empty($t->images))
                                             @foreach($t->images as $i)
                                                 <img src="{{$i}}" alt="..." class="margin" style="width: 150px;height: 100px;">
+                                                <p>{{$t->remark}}</p>
                                             @endforeach
                                         @endif
                                     </div>
