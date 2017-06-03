@@ -18,7 +18,7 @@ Route::group(['prefix' => 'stock-in', 'middleware' => 'api.sign'], function () {
     *      type="array",
     *     items="$ref:StockIn",
     *      @SWG\Parameters(
-    *          @SWG\Parameter(name="user_id", description="用户id", required=false, type="integer", paramType="query", defaultValue="1"),
+    *          @SWG\Parameter(name="user_id", description="用户id", required=false, type="integer", paramType="query", defaultValue="0"),
     *          @SWG\Parameter(name="page", description="当前页", required=false, type="integer", paramType="query", defaultValue="1"),
     *          @SWG\Parameter(name="pageSize", description="页大小", required=false, type="integer", paramType="query", defaultValue="10"),
     *          @SWG\Parameter(name="sort", description="排序", required=false, type="string", paramType="query", defaultValue="id asc"),
