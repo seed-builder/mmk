@@ -53,6 +53,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @SWG\Property(name="ftrading_curr_id", type="string", description="结算币别")
  * @SWG\Property(name="fwebsite", type="string", description="公司网址")
  * @SWG\Property(name="fzip", type="string", description="邮政编码")
+ * @SWG\Property(name="flongitude", type="string", description="百度地图经度")
+ * @SWG\Property(name="flatitude", type="string", description="百度地图纬度")
+ * @SWG\Property(name="fstock_address", type="string", description="库存地址")
+ * @SWG\Property(name="fcheck_limit", type="integer", description="限制盘点位置距离（0-不限制，单位：米")
  * @SWG\Property(name="id", type="integer", description="")
  */
 class Customer extends Authenticatable
