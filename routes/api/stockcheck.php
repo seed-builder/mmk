@@ -116,22 +116,4 @@ Route::group(['prefix' => 'stock-check', 'middleware' => 'api.sign'], function (
     */
     Route::post('/{id}', ['as' => 'StockCheck.update', 'uses' => 'StockCheckController@update']);
 
-    /**
-    * @SWG\Api(
-    *     path="/api/stock-check/{id}",
-    *     @SWG\Operation(
-    *      method="DELETE",
-    *      nickname="stock-check-delete",
-    *      summary="删除经销商库存盘点单",
-    *      notes="删除经销商库存盘点单",
-    *      type="",
-    *      @SWG\Parameters(
-    *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="1" ),
-    *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
-    *      )
-    *  )
-    * )
-    */
-    Route::delete('/{id}', ['as' => 'StockCheck.delete', 'uses' => 'StockCheckController@destroy']);
-
 });
