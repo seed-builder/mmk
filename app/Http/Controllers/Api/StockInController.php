@@ -44,7 +44,7 @@ class StockInController extends ApiController
 		$ids = $request->input('ids');
 		if(!empty($ids)){
 			$arr = explode(',', $ids);
-			$res = StockIn::whereIn('id', $arr)->update(['fsend_status' => 'C']);
+			$res = StockIn::whereIn('id', $arr)->update(['fsend_status' => 'C', 'fin_date' => date('Y-m-d H:i:s')]);
 			return $this->success($res);
 		}else{
 			return $this->fail('ids is empty');
