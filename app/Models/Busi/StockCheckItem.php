@@ -28,4 +28,11 @@ class StockCheckItem extends BaseModel
 	//
 	protected $table = 'st_stock_check_items';
 	protected $guarded = ['id'];
+
+	/**
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+	 */
+	public function material(){
+		return $this->belongsTo(Material::class, 'fmaterial_id');
+	}
 }

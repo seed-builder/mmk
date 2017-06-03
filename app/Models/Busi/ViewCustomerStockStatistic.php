@@ -5,7 +5,7 @@ namespace App\Models\Busi;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * model description
+ * 经销商实时库存视图
  * Class ViewCustomerStockStatistic
  * @package  App\Models
  *
