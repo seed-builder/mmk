@@ -39,6 +39,10 @@ class StockIn extends BaseModel
         return $this->hasOne(User::class,'id','fuser_id');
     }
 
+    public function items(){
+    	return $this->hasMany(StockInItem::class, 'fstock_in_id');
+    }
+
 	/**
 	 *
 	 */
