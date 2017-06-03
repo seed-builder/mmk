@@ -34,4 +34,20 @@ class StockInController extends ApiController
 			}
 		}
 	}
+
+	/**
+	 * 批量签收
+	 * @param Request $request
+	 * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+	 */
+	public function batchSign(Request $request){
+		$ids = $request->input('ids');
+		if(!empty($ids)){
+			$arr = explode(',', $ids);
+			$res = StockIn::whereIn('id', $arr)->update(['fsend_status' => 'C']);
+			return $this->success($res);
+		}else{
+			return $this->fail('ids is empty');
+		}
+	}
 }
