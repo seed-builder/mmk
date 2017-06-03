@@ -37,7 +37,7 @@ Route::group(['prefix' => 'stock-check', 'middleware' => 'api.sign'], function (
     *      nickname="stock-check-show",
     *      summary="经销商库存盘点单信息详情",
     *      notes="经销商库存盘点单信息详情",
-    *      type="Attendance",
+    *      type="StockCheck",
     *      @SWG\Parameters(
     *          @SWG\Parameter(name="id", description="id", required=true, type="integer", paramType="path", defaultValue="1"),
     *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="query", defaultValue="****")
@@ -47,7 +47,27 @@ Route::group(['prefix' => 'stock-check', 'middleware' => 'api.sign'], function (
     */
     Route::get('/{id}', ['as' => 'StockCheck.show', 'uses' => 'StockCheckController@show']);
 
-    /**
+	/**
+	 * @SWG\Api(
+	 *     path="/api/stock-check/find-or-create/{cust_id}",
+	 *     @SWG\Operation(
+	 *      method="GET",
+	 *      nickname="stock-check-find-or-create",
+	 *      summary="查询或者创建 经销商库存盘点单信息详情",
+	 *      notes="查询或者创建 经销商库存盘点单信息详情",
+	 *      type="StockCheck",
+	 *      @SWG\Parameters(
+	 *          @SWG\Parameter(name="cust_id", description="经销商id", required=true, type="integer", paramType="path", defaultValue="1"),
+	 *          @SWG\Parameter(name="checker_id", description="当前盘点人用户id（user id）", required=true, type="integer", paramType="query", defaultValue="1"),
+	 *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="query", defaultValue="****")
+	 *      )
+	 *  )
+	 * )
+	 */
+	Route::get('/find-or-create/{cust_id}', ['as' => 'StockCheck.findOrCreate', 'uses' => 'StockCheckController@findOrCreate']);
+
+
+	/**
     * @SWG\Api(
     *     path="/api/stock-check",
     *     @SWG\Operation(
@@ -55,7 +75,7 @@ Route::group(['prefix' => 'stock-check', 'middleware' => 'api.sign'], function (
     *      nickname="stock-check-store",
     *      summary="新增经销商库存盘点单",
     *      notes="新增经销商库存盘点单",
-    *      type="",
+    *      type="StockCheck",
     *      @SWG\Parameters(
     *          @SWG\Parameter(name="fchecker_id", description="盘点人id(user id)", required=true,type="string", paramType="form", defaultValue="" ),
             *          @SWG\Parameter(name="fcheck_date", description="盘点日期", required=true,type="string", paramType="form", defaultValue="" ),
@@ -64,7 +84,7 @@ Route::group(['prefix' => 'stock-check', 'middleware' => 'api.sign'], function (
             *          @SWG\Parameter(name="fcust_id", description="", required=false,type="integer", paramType="form", defaultValue="" ),
             *          @SWG\Parameter(name="fcust_user_id", description="", required=false,type="integer", paramType="form", defaultValue="" ),
             *          @SWG\Parameter(name="fmodify_date", description="", required=true,type="string", paramType="form", defaultValue="" ),
-                *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
+            *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
     *      )
     *  )
     * )
@@ -79,7 +99,7 @@ Route::group(['prefix' => 'stock-check', 'middleware' => 'api.sign'], function (
     *      nickname="stock-check-update",
     *      summary="更新经销商库存盘点单",
     *      notes="更新经销商库存盘点单",
-    *      type="",
+    *      type="StockCheck",
     *      @SWG\Parameters(
     *          @SWG\Parameter(name="fchecker_id", description="盘点人id(user id)", required=false,type="string", paramType="form", defaultValue="" ),
             *          @SWG\Parameter(name="fcheck_date", description="盘点日期", required=false,type="string", paramType="form", defaultValue="" ),

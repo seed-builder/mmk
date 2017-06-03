@@ -25,4 +25,8 @@ class StockCheck extends BaseModel
 	//
 	protected $table = 'st_stock_checks';
 	protected $guarded = ['id'];
+
+	public function items(){
+		return $this->hasMany(StockCheckItem::class, 'fstock_check_id');
+	}
 }

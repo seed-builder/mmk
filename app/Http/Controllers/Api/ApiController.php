@@ -190,10 +190,10 @@ abstract class  ApiController extends Controller
 	}
 
 	public function success($data, $msg = ''){
-		return response(['data' => $data, 'code' => 200, 'msg' => $msg]);
+		return response(['data' => $data, 'code' => 200, 'msg' => $msg, 'success' => true]);
 	}
 
 	public function fail($msg){
-		return response(['data' => null, 'code' => 401, 'msg' => $msg]);
+		return response(['data' => null, 'code' => 401, 'msg' => $msg, 'success' => false]);
 	}
 }
