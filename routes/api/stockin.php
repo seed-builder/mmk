@@ -133,6 +133,7 @@ Route::group(['prefix' => 'stock-in', 'middleware' => 'api.sign'], function () {
 	 *      notes="批量签收入库",
 	 *      type="",
 	 *      @SWG\Parameters(
+	 *          @SWG\Parameter(name="fuser_id", description="到货确认人id", required=false,type="string", paramType="form", defaultValue="2,3,4,5" ),
 	 *          @SWG\Parameter(name="ids", description="入库单id(多个，逗号隔开)", required=false,type="string", paramType="form", defaultValue="2,3,4,5" ),
 	 *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
 	 *      )

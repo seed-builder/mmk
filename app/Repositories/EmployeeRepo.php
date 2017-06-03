@@ -123,7 +123,7 @@ class EmployeeRepo extends Repo
 		}else{
 			$employee->user()->update([
 				'name' => $employee->fphone,
-				'password' =>  md5('888888'), //$employee->fpassword,
+//				'password' =>  md5('888888'), //$employee->fpassword,
 				'login_time' => $employee->login_time,
 				'nick_name' => $employee->fname,
 				'logo' => $employee->fphoto,

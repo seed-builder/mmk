@@ -78,7 +78,8 @@ class AppServiceProvider extends ServiceProvider
 	    	$svr->registerFilter(DefaultFilter::class);
 	    	$svr->registerFilter(DisplayPolicyStoreFilter::class, 'exp_display_policy_store');
 	    	$svr->registerFilter(EmployeeFilter::class, 'bd_employees');
-	    	$svr->registerFilter(EmployeeFilter::class, 'bd_customers');
+	    	$svr->registerFilter(CustomerFilter::class, 'bd_customers');
+	    	$svr->registerFilter(StockInFilter::class, 'st_stock_ins');
 	    	$svr->registerWorker(KingdeeWorker::class);
 	    	return $svr;
 	    });

@@ -42,9 +42,15 @@ class StockInController extends ApiController
 	 */
 	public function batchSign(Request $request){
 		$ids = $request->input('ids');
+		$fuser_id = $request->input('fuser_id');
 		if(!empty($ids)){
 			$arr = explode(',', $ids);
-			$res = StockIn::whereIn('id', $arr)->update(['fsend_status' => 'C', 'fin_date' => date('Y-m-d H:i:s')]);
+			$res = StockIn::whereIn('id', $arr)
+				->update([
+					'fuser_id' => $fuser_id,
+					'fsend_status' => 'C',
+					'fin_date' => date('Y-m-d H:i:s')
+				]);
 			return $this->success($res);
 		}else{
 			return $this->fail('ids is empty');
