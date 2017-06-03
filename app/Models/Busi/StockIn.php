@@ -64,7 +64,14 @@ class StockIn extends BaseModel
 
 		static::created(function ($model){
 			if(!empty($model->customer) && !empty($model->customer->user)) {
-				MessageService::Instance()->systemSend($model->customer->user->id, '您有一条到货确认消息', '您有一条到货确认消息');
+				MessageService::Instance()->systemSend(
+					$model->customer->user->id,
+					'您有一条到货确认消息',
+					'您有一条到货确认消息',
+					false,
+					$model->id,
+					'stock_in'
+				);
 			}
 		});
 

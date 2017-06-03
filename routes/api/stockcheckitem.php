@@ -57,17 +57,11 @@ Route::group(['prefix' => 'stock-check-item', 'middleware' => 'api.sign'], funct
     *      notes="新增经销商库存盘点单详情",
     *      type="",
     *      @SWG\Parameters(
-    *          @SWG\Parameter(name="fcheck_eqty", description="盘点瓶数量", required=false,type="number", paramType="form", defaultValue="0.00" ),
-            *          @SWG\Parameter(name="fcheck_hqty", description="盘点箱数量", required=false,type="number", paramType="form", defaultValue="0.00" ),
-            *          @SWG\Parameter(name="fcreate_date", description="", required=true,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="fdiff_eqty", description="盘点差异瓶数量(库存减盘点)", required=false,type="number", paramType="form", defaultValue="0.00" ),
-            *          @SWG\Parameter(name="fdiff_hqty", description="盘点差异箱数量(库存减盘点)", required=false,type="number", paramType="form", defaultValue="0.00" ),
-            *          @SWG\Parameter(name="finv_eqty", description="期初库存余额瓶数量（余额表取值）", required=false,type="number", paramType="form", defaultValue="0.00" ),
-            *          @SWG\Parameter(name="finv_hqty", description="期初库存余额箱数量（余额表取值）", required=false,type="number", paramType="form", defaultValue="0.00" ),
-            *          @SWG\Parameter(name="fmaterial_id", description="", required=false,type="integer", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="fmodify_date", description="", required=true,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="fstock_check_id", description="", required=false,type="integer", paramType="form", defaultValue="" ),
-                *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
+    *          @SWG\Parameter(name="box_qty", description="盘点瓶数量", required=false,type="number", paramType="form", defaultValue="0.00" ),
+    *          @SWG\Parameter(name="bottle_qty", description="盘点箱数量", required=false,type="number", paramType="form", defaultValue="0.00" ),
+    *          @SWG\Parameter(name="fmaterial_id", description="物料id", required=false,type="integer", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="fstock_check_id", description="盘点单id", required=false,type="integer", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
     *      )
     *  )
     * )
@@ -84,40 +78,14 @@ Route::group(['prefix' => 'stock-check-item', 'middleware' => 'api.sign'], funct
     *      notes="更新经销商库存盘点单详情",
     *      type="",
     *      @SWG\Parameters(
-    *          @SWG\Parameter(name="fcheck_eqty", description="盘点瓶数量", required=false,type="number", paramType="form", defaultValue="0.00" ),
-            *          @SWG\Parameter(name="fcheck_hqty", description="盘点箱数量", required=false,type="number", paramType="form", defaultValue="0.00" ),
-            *          @SWG\Parameter(name="fcreate_date", description="", required=false,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="fdiff_eqty", description="盘点差异瓶数量(库存减盘点)", required=false,type="number", paramType="form", defaultValue="0.00" ),
-            *          @SWG\Parameter(name="fdiff_hqty", description="盘点差异箱数量(库存减盘点)", required=false,type="number", paramType="form", defaultValue="0.00" ),
-            *          @SWG\Parameter(name="finv_eqty", description="期初库存余额瓶数量（余额表取值）", required=false,type="number", paramType="form", defaultValue="0.00" ),
-            *          @SWG\Parameter(name="finv_hqty", description="期初库存余额箱数量（余额表取值）", required=false,type="number", paramType="form", defaultValue="0.00" ),
-            *          @SWG\Parameter(name="fmaterial_id", description="", required=false,type="integer", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="fmodify_date", description="", required=false,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="fstock_check_id", description="", required=false,type="integer", paramType="form", defaultValue="" ),
-                *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="" ),
+    *          @SWG\Parameter(name="box_qty", description="盘点瓶数量", required=false,type="number", paramType="form", defaultValue="0.00" ),
+    *          @SWG\Parameter(name="bottle_qty", description="盘点箱数量", required=false,type="number", paramType="form", defaultValue="0.00" ),
+    *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="" ),
     *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
     *      )
     *  )
     * )
     */
     Route::post('/{id}', ['as' => 'StockCheckItem.update', 'uses' => 'StockCheckItemController@update']);
-
-    /**
-    * @SWG\Api(
-    *     path="/api/stock-check-item/{id}",
-    *     @SWG\Operation(
-    *      method="DELETE",
-    *      nickname="stock-check-item-delete",
-    *      summary="删除经销商库存盘点单详情",
-    *      notes="删除经销商库存盘点单详情",
-    *      type="",
-    *      @SWG\Parameters(
-    *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="1" ),
-    *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
-    *      )
-    *  )
-    * )
-    */
-    Route::delete('/{id}', ['as' => 'StockCheckItem.delete', 'uses' => 'StockCheckItemController@destroy']);
 
 });

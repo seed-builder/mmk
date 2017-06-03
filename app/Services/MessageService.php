@@ -87,12 +87,25 @@ class MessageService
 	 * @param $title
 	 * @param MessageContent $content
 	 * @param bool $push
+	 * @param int $extraId
+	 * @param string $extraType
 	 */
-    public function systemSend($toId, $title, $content, $push = false){
-    	$mc = new MessageContent(['title' => $title, 'subtitle' => $title, 'content' => $content, 'type' => 0]);
+    public function systemSend($toId, $title, $content, $push = false, $extraId=0, $extraType=''){
+    	$mc = new MessageContent([
+    		'title' => $title,
+		    'subtitle' => $title,
+		    'content' => $content,
+		    'type' => 0,
+		    'extra_id' => $extraId,
+		    'extra_type' => $extraType,
+	    ]);
     	return $this->createSend(0, $toId, $mc, $push);
     }
 
+	/**
+	 * singleton
+	 * @return MessageService
+	 */
     public static function Instance(){
     	if(static::$instance == null){
 		    static::$instance = new MessageService();

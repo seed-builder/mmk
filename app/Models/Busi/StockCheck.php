@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * 经销商库存盘点单
  * Class StockCheck
- * @package  App\Models
+ * @package  App\Models\Busi
  *
  * @author  xrs
  * @SWG\Model(id="StockCheck")
