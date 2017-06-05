@@ -19,7 +19,7 @@ class CreateTableStStockChecks extends Migration
 	        $table->integer("fcust_user_id");
 	        $table->timestamp("fcheck_date")->nullable()->comment('盘点日期');
 	        $table->integer("fcheck_status")->default(0)->comment('0-盘点中,1-盘点完成，2-取消盘点');
-	        $table->timestamp("fchecker_id")->nullable()->comment('盘点人id(user id)');
+	        $table->integer("fchecker_id")->nullable()->comment('盘点人id(user id)');
 	        $table->timestamp('fcreate_date')->nullable();
 	        $table->timestamp('fmodify_date')->nullable();
         });
