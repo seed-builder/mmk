@@ -1,25 +1,19 @@
-<?php echo "@extends('customer.layout.collapsed-sidebar')"; ?>
+@extends('customer.layout.collapsed-sidebar')
+@section('styles')
+    @include('customer.layout.datatable-css')
+@endsection
 
-<?php echo  "@section('styles')" ; ?>
-
-    <?php echo  "@include('customer.layout.datatable-css')" ; ?>
-
-<?php echo  "@endsection" ; ?>
-
-
-<?php echo  "@section('content')" ; ?>
-
+@section('content')
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            <?php echo e(isset($topModule) ? $topModule : 'top module'); ?>
-
-            <small><?php echo e($table); ?></small>
+            top module
+            <small>st_cust_orders</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="#"><?php echo e(isset($topModule) ? $topModule : 'top module'); ?></a></li>
-            <li class="active"><?php echo e($table); ?></li>
+            <li><a href="#">top module</a></li>
+            <li class="active">st_cust_orders</li>
         </ol>
     </section>
 
@@ -29,7 +23,7 @@
             <div class="col-xs-12">
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title"><?php echo e($table); ?>列表</h3>
+                        <h3 class="box-title">st_cust_orders列表</h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                             </button>
@@ -42,11 +36,18 @@
                         <table id="moduleTable" class="table table-bordered table-hover display nowrap" cellspacing="0" width="100%">
                             <thead>
                             <tr>
-                <?php $__empty_1 = true; $__currentLoopData = $columns; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $col): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-                <th><?php echo e($col->name); ?></th>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
-                <?php endif; ?>
-            </tr>
+                                <th>fbill_no</th>
+                                <th>fcreate_date</th>
+                                <th>fcreator_id</th>
+                                <th>fcust_id</th>
+                                <th>fdate</th>
+                                <th>fdocument_status</th>
+                                <th>femp_id</th>
+                                <th>fmodify_date</th>
+                                <th>fmodify_id</th>
+                                <th>fsend_status</th>
+                                <th>id</th>
+                            </tr>
                             </thead>
                         </table>
                     </div>
@@ -59,18 +60,15 @@
         <!-- /.row -->
     </section>
 
-<?php echo "@endsection"  ; ?>
-
-<?php echo "@section('js')"  ; ?>
-
-    <?php echo "@include('customer.layout.datatable-js')"  ; ?>
-
+@endsection
+@section('js')
+    @include('customer.layout.datatable-js')
     <script type="text/javascript">
         $(function () {
-            seajs.use('customer/<?php echo e(snake_case($model)); ?>.js', function (app) {
+            seajs.use('customer/customer_order.js', function (app) {
                 app.index($, 'moduleTable');
             });
         });
     </script>
 
-<?php echo "@endsection"  ; ?>
+@endsection
