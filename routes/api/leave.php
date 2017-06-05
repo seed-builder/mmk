@@ -133,7 +133,7 @@ Route::group(['prefix' => 'leave', 'middleware' => 'api.sign'], function () {
      *      type="",
      *      @SWG\Parameters(
      *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="1" ),
-     *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
+     *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="query", defaultValue="****")
      *      )
      *  )
      * )

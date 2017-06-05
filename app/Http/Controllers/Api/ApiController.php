@@ -142,6 +142,7 @@ abstract class  ApiController extends Controller
 	{
 		//
 		$entity = $this->newEntity()->newQuery()->find($id);
+		//var_dump($entity);
 		$re = $entity->delete();
 		$status = $re ? 200 : 401;
 		return response(['success' => $re], $status);
