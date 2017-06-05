@@ -45,7 +45,7 @@ Route::group(['prefix' => '<?php echo e(snake_case($model,'-')); ?>', 'middlewar
     *      nickname="<?php echo e(snake_case($model,'-')); ?>-show",
     *      summary="信息详情",
     *      notes="信息详情",
-    *      type="Attendance",
+    *      type="<?php echo e($model); ?>",
     *      @SWG\Parameters(
     *          @SWG\Parameter(name="id", description="id", required=true, type="integer", paramType="path", defaultValue="1"),
     *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="query", defaultValue="****")
@@ -63,7 +63,7 @@ Route::group(['prefix' => '<?php echo e(snake_case($model,'-')); ?>', 'middlewar
     *      nickname="<?php echo e(snake_case($model,'-')); ?>-store",
     *      summary="新增",
     *      notes="新增",
-    *      type="",
+    *      type="<?php echo e($model); ?>",
     *      @SWG\Parameters(
 <?php $__empty_1 = true; $__currentLoopData = $columns; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $col): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
     <?php if($col->name != 'id'): ?>
@@ -86,7 +86,7 @@ Route::group(['prefix' => '<?php echo e(snake_case($model,'-')); ?>', 'middlewar
     *      nickname="<?php echo e(snake_case($model,'-')); ?>-update",
     *      summary="更新",
     *      notes="更新",
-    *      type="",
+    *      type="<?php echo e($model); ?>",
     *      @SWG\Parameters(
 <?php $__empty_1 = true; $__currentLoopData = $columns; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $col): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
     <?php if($col->name != 'id'): ?>
@@ -113,7 +113,7 @@ Route::group(['prefix' => '<?php echo e(snake_case($model,'-')); ?>', 'middlewar
     *      type="",
     *      @SWG\Parameters(
     *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="1" ),
-    *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
+    *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="query", defaultValue="****")
     *      )
     *  )
     * )
