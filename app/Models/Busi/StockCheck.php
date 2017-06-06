@@ -2,6 +2,7 @@
 
 namespace App\Models\Busi;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -29,6 +30,14 @@ class StockCheck extends BaseModel
 	public function items(){
 		return $this->hasMany(StockCheckItem::class, 'fstock_check_id');
 	}
+
+	public function customer(){
+	    return $this->hasOne(Customer::class,'id','fcust_id');
+    }
+
+    public function user(){
+        return $this->hasOne(User::class,'id','fchecker_id');
+    }
 
 	/**
 	 * 查询或者新建盘点单

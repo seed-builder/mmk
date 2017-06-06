@@ -23,7 +23,7 @@
             <div class="col-xs-12">
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">st_stock_check_items列表</h3>
+                        <h3 class="box-title">盘点明细列表</h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                             </button>
@@ -36,17 +36,16 @@
                         <table id="moduleTable" class="table table-bordered table-hover display nowrap" cellspacing="0" width="100%">
                             <thead>
                             <tr>
-                                <th>fcheck_eqty</th>
-                                <th>fcheck_hqty</th>
-                                <th>fcreate_date</th>
-                                <th>fdiff_eqty</th>
-                                <th>fdiff_hqty</th>
-                                <th>finv_eqty</th>
-                                <th>finv_hqty</th>
-                                <th>fmaterial_id</th>
-                                <th>fmodify_date</th>
-                                <th>fstock_check_id</th>
                                 <th>id</th>
+                                <th>fstock_check_id</th>
+                                <th>盘点商品</th>
+                                <th>期初库存箱数量</th>
+                                <th>期初库存瓶数量</th>
+                                <th>盘点箱数量</th>
+                                <th>盘点瓶数量</th>
+                                <th>盘点差异箱数量</th>
+                                <th>盘点差异瓶数量</th>
+
                             </tr>
                             </thead>
                         </table>

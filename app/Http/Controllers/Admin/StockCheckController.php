@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Busi\Customer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
 use App\Models\Busi\StockCheck;
@@ -20,8 +21,8 @@ class StockCheckController extends AdminController
 	*/
 	public function index()
 	{
-		//
-		return view('admin.stock-check.index');
+		$customers = Customer::all();
+		return view('admin.stock-check.index',compact('customers'));
 	}
 
 	/**
@@ -67,7 +68,7 @@ class StockCheckController extends AdminController
 	*/
 	public function pagination(Request $request, $searchCols = [], $with=[], $conditionCall = null, $all_columns = false){
 		$searchCols = [];
-		return parent::pagination($request, $searchCols);
+		return parent::pagination($request, $searchCols,['customer','user']);
 	}
 
 }
