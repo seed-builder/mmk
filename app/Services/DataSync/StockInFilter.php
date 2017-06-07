@@ -28,6 +28,5 @@ class StockInFilter extends DefaultFilter
 				'stock_in'
 			);
 		}
-
 	}
 }
