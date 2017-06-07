@@ -76,6 +76,27 @@
                                         <input type="text" class="form-control filter-condition" filter-name="bd_employees.fphone" filter-operator="like" />
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">部门</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control filter-condition filter-select" filter-name="bd_employees.fdept_id" data-live-search="true">
+                                            <option value="">--请选择--</option>
+                                            @foreach($deptOptions as $dept)
+                                                <option value="{{$dept['value']}}">{{$dept['label']}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <label class="col-sm-2 control-label">职位</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control filter-condition filter-select" filter-name="bd_employees.fpost_id" data-live-search="true">
+                                            <option value="">--请选择--</option>
+                                            @foreach($positOptions as $pos)
+                                                <option value="{{$pos['value']}}">{{$pos['label']}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
 
                                 <div class="box-footer" style="text-align: center">
                                     <button type="button" class="btn btn-info filter-submit">查询</button>
@@ -96,6 +117,8 @@
                                 <th>设备</th>
                                 <th>设备号</th>
                                 <th>审核状态</th>
+                                <th>登陆次数</th>
+                                <th>创建时间</th>
                             </tr>
                             </thead>
                         </table>
