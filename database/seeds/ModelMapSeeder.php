@@ -34,6 +34,20 @@ class ModelMapSeeder extends Seeder
             'table' => 'st_stores',
             'foreign_table' => 'st_stores'
         ]);
-
+	    ModelMap::create([
+		    'model' => 'DisplayPolicyStore',
+		    'table' => 'exp_display_policy_store',
+		    'foreign_table' => 'exp_display_policy_store'
+	    ]);
+	    ModelMap::create([
+		    'model' => 'StockIn',
+		    'table' => 'st_stock_ins',
+		    'foreign_table' => 'st_stock_ins'
+	    ]);
+	    ModelMap::create([
+		    'model' => 'StockInItem',
+		    'table' => 'st_stock_in_items',
+		    'foreign_table' => 'st_stock_in_items'
+	    ]);
     }
 }

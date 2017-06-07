@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
 	    if(empty($admin)){
 		    $admin = User::create([
 		    	'name' => 'admin',
-			    'password' =>  bcrypt('admin123!'),
+			    'password' =>  md5('888888'),
 			    'status' => 1,
 		    ]);
 	    }
