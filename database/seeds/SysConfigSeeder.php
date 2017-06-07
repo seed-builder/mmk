@@ -55,7 +55,7 @@ class SysConfigSeeder extends Seeder
 
 	    $exists = SysConfig::where('name', 'store-visit-distance')->count();
 	    if($exists == 0) {
-		    ModelMap::create([
+		    SysConfig::create([
 			    'name' => 'store-visit-distance',
 			    'desc' => '门店拜访控制距离(单位米)',
 			    'value' => '50',
