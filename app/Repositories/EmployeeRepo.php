@@ -109,9 +109,9 @@ class EmployeeRepo extends Repo
 		if (empty($employee->user)) {
 			$user = $employee->user()->create([
 				'name' => $employee->fphone,
-				'password' => bcrypt('888888'),
+				'password' => md5('888888'),
 				'login_time' => $employee->login_time,
-				'status' => $employee->fforbid_status == 'A',
+				'status' => $employee->fforbid_status == 'A' ? 1 : 0,
 				'nick_name' => $employee->fname,
 				'logo' => $employee->fphoto,
 			]);
@@ -123,11 +123,11 @@ class EmployeeRepo extends Repo
 		}else{
 			$employee->user()->update([
 				'name' => $employee->fphone,
-				'password' =>  bcrypt('888888'), //$employee->fpassword,
+				'password' =>  md5('888888'), //$employee->fpassword,
 				'login_time' => $employee->login_time,
 				'nick_name' => $employee->fname,
 				'logo' => $employee->fphoto,
-				'status' => $employee->fforbid_status == 'A',
+				'status' => $employee->fforbid_status == 'A' ? 1 : 0,
 			]);
 //			if($employee->fpost_id > 0)
 //			{
