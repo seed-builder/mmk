@@ -91,7 +91,8 @@ class Customer extends Authenticatable
 				$customer->user()->create([
 					'name' => $customer->ftel,
 					'password' => md5('888888'),
-					'status' => 0
+					'status' => 1,
+					'nick_name' => $customer->fname,
 				]);
 			}
 		});
@@ -102,9 +103,21 @@ class Customer extends Authenticatable
 			event(new ModelUpdatedEvent($model));
 			if( !empty($model->user) ) {
 				if ($model->fforbid_status == 'A') {
-					$model->user->update(['status' => 1]);
+					$model->user->update([
+						'status' => 1,
+						'name' => $model->ftel,
+						//'password' => md5('888888'),
+						'status' => 1,
+						'nick_name' => $model->fname,
+					]);
 				}else{
-					$model->user->update(['status' => 0]);
+					$model->user->update([
+						'status' => 0,
+						'name' => $model->ftel,
+						//'password' => md5('888888'),
+						'status' => 1,
+						'nick_name' => $model->fname,
+					]);
 				}
 			}
 		});
