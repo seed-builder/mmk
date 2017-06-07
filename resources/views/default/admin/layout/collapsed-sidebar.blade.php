@@ -42,7 +42,7 @@ $loginUserName = empty($loginUser->nick_name) ? $loginUser->name: $loginUser->ni
     </style>
     {{--<script src="/js/app.js"></script>--}}
     <!-- jQuery 2.2.3 -->
-    <script src="/assets/plugins//jQuery/jquery-2.2.3.min.js"></script>
+    <script src="/assets/plugins/jQuery/jquery-2.2.3.min.js"></script>
     {{--<!-- Bootstrap 3.3.6 -->--}}
     <script src="/assets/plugins/AdminLTE/bootstrap/js/bootstrap.min.js"></script>
     <!-- SlimScroll -->

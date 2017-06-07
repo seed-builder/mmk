@@ -60,14 +60,16 @@ class StockCheckItem extends BaseModel
 	}
 
 	public function getInvBoxQtyAttribute(){
-		return floor($this->finv_hqty);
+		return intval(floor($this->finv_hqty));
 	}
 
 	public function getInvBottleQtyAttribute(){
 		if($this->material){
-			return $this->finv_eqty - floor($this->finv_hqty) * $this->material->fratio;
+			$val = $this->finv_eqty - floor($this->finv_hqty) * $this->material->fratio;
+		}else {
+			$val = $this->finv_eqty;
 		}
-		return $this->finv_eqty ;
+		return intval($val);
 	}
 
 }
