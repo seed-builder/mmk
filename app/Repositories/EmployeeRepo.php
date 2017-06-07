@@ -50,7 +50,7 @@ class EmployeeRepo extends Repo
 		$loginData = Cache::get($key);
 		//var_dump($loginData);
 		if(is_null($loginData)){
-			$emp = Employee::where('fphone', $phone)->first();
+			$emp = Employee::where('fphone', $phone)->where('fforbid_status','A')->first();
 			if(!empty($emp)){
 				$senior = $emp->getSenior();
 				$loginData = [
