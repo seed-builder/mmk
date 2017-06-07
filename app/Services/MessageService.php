@@ -18,7 +18,7 @@ class MessageService
 {
     private static $instance;
 
-    public function sendMessage($ids,$content_id){
+    public function sendMessage($ids,$content_id, $type = 1){
         $message = MessageContent::find($content_id);
         $content = $message->content;
         if(env('APP_DEBUG')){
@@ -36,12 +36,12 @@ class MessageService
                     // 'content-available' => true,
                     // 'mutable-content' => true,
                     'category' => 'jiguang',
-                    'extras' => ['type' => 1]
+                    'extras' => ['type' => $type]
                 ))
                 ->androidNotification($content, array(
                     'title' => $message->title,
                     // 'build_id' => 2,
-                    'extras' =>  ['type' => 1]
+                    'extras' =>  ['type' => $type]
                 ))
                 //->message($content, $message)
                 ->send();
@@ -77,7 +77,7 @@ class MessageService
 			'type' => $content->type
 		]);
 		if($push){
-
+			$this->sendMessage([$toId], $content->id, 2);
 		}
     }
 

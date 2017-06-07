@@ -23,7 +23,7 @@ class StockInFilter extends DefaultFilter
 				$stockIn->customer->user->id,
 				'您有一条到货确认消息',
 				'您有一条到货确认消息',
-				false,
+				true,
 				$stockIn->id,
 				'stock_in'
 			);
