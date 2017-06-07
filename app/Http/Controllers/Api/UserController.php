@@ -49,6 +49,7 @@ class UserController extends ApiController
 			->where('name', $phone)
 			->where('password', $pwd)
 			->where('reference_type', $type)
+			->where('status', 1)
 			->first();
 		if(!empty($user)){
 			event(new UserLoginedEvent($user));
