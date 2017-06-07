@@ -29,11 +29,11 @@ class CreateTableStStockChecks extends Migration
 		    $table->integer("fstock_check_id");
 		    $table->integer("fmaterial_id");
 		    $table->decimal('finv_hqty')->default(0)->comment('（合计）期初库存余额箱数量（余额表取值）');
-		    $table->decimal('finv_eqty')->default(0)->comment('（合计）期初库存余额瓶数量（余额表取值）');
+		    $table->integer('finv_eqty')->default(0)->comment('（合计）期初库存余额瓶数量（余额表取值）');
 		    $table->decimal('fcheck_hqty')->default(0)->comment('（合计）盘点箱数量');
-		    $table->decimal('fcheck_eqty')->default(0)->comment('（合计）盘点瓶数量');
+		    $table->integer('fcheck_eqty')->default(0)->comment('（合计）盘点瓶数量');
 		    $table->decimal('fdiff_hqty')->default(0)->comment('（合计）盘点差异箱数量(库存减盘点)');
-		    $table->decimal('fdiff_eqty')->default(0)->comment('（合计）盘点差异瓶数量(库存减盘点)');
+		    $table->integer('fdiff_eqty')->default(0)->comment('（合计）盘点差异瓶数量(库存减盘点)');
 
 		    $table->integer('box_qty')->default(0)->comment('（拆分）盘点箱数量');
 		    $table->integer('bottle_qty')->default(0)->comment('（拆分）盘点瓶数量');
