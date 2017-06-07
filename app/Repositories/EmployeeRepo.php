@@ -111,7 +111,7 @@ class EmployeeRepo extends Repo
 				'name' => $employee->fphone,
 				'password' => bcrypt('888888'),
 				'login_time' => $employee->login_time,
-				'status' => 1,
+				'status' => $employee->fforbid_status == 'A',
 				'nick_name' => $employee->fname,
 				'logo' => $employee->fphoto,
 			]);
@@ -127,6 +127,7 @@ class EmployeeRepo extends Repo
 				'login_time' => $employee->login_time,
 				'nick_name' => $employee->fname,
 				'logo' => $employee->fphoto,
+				'status' => $employee->fforbid_status == 'A',
 			]);
 //			if($employee->fpost_id > 0)
 //			{
