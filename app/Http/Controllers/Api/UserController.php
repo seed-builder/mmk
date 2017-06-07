@@ -40,11 +40,16 @@ class UserController extends ApiController
 		$this->validate($request, [
 			'phone' => 'required',
 			'password' => 'required',
+			'type' => 'required'
 		]);
 		$phone = $request->input('phone', '');
 		$pwd = $request->input('password', '');
-
-		$user = User::with(['reference'])->where('name', $phone)->where('password', $pwd)->first();
+		$type = $request->input('type','customer');
+		$user = User::with(['reference'])
+			->where('name', $phone)
+			->where('password', $pwd)
+			->where('reference_type', $type)
+			->first();
 		if(!empty($user)){
 			event(new UserLoginedEvent($user));
 			return $this->success($user);
