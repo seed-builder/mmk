@@ -35,8 +35,8 @@ class CreateTableStStockChecks extends Migration
 		    $table->decimal('fdiff_hqty')->default(0)->comment('（合计）盘点差异箱数量(库存减盘点)');
 		    $table->decimal('fdiff_eqty')->default(0)->comment('（合计）盘点差异瓶数量(库存减盘点)');
 
-		    $table->decimal('box_qty')->default(0)->comment('（拆分）盘点箱数量');
-		    $table->decimal('bottle_qty')->default(0)->comment('（拆分）盘点瓶数量');
+		    $table->integer('box_qty')->default(0)->comment('（拆分）盘点箱数量');
+		    $table->integer('bottle_qty')->default(0)->comment('（拆分）盘点瓶数量');
 
 		    $table->timestamp('fcreate_date')->nullable();
 		    $table->timestamp('fmodify_date')->nullable();
