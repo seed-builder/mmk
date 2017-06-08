@@ -66,7 +66,7 @@ class MessageService
 	 * @param $content
 	 * @param bool $push 是否推送到app
 	 */
-    public function createSend(int $fromId, int $toId, MessageContent $content, $push = false){
+    public function createSend(int $fromId, int $toId, MessageContent $content, $push = false, $extraId=0, $extraType=''){
 		if(empty($content->id)){
 			$content->save();
 		}
@@ -74,7 +74,9 @@ class MessageService
 			'from_id' => $fromId,
 			'to_id' => $toId,
 			'message_content_id' => $content->id,
-			'type' => $content->type
+			'type' => $content->type,
+			'extra_id' => $extraId,
+			'extra_type' => $extraType,
 		]);
 		if($push){
 			$this->sendMessage([$toId], $content->id, 2);
@@ -96,8 +98,7 @@ class MessageService
 		    'subtitle' => $title,
 		    'content' => $content,
 		    'type' => 0,
-		    'extra_id' => $extraId,
-		    'extra_type' => $extraType,
+
 	    ]);
     	return $this->createSend(0, $toId, $mc, $push);
     }

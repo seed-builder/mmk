@@ -9,6 +9,7 @@ use App\Repositories\EmployeeRepo;
 use App\Services\CodeBuilder;
 use App\Services\DataSync\KingdeeWorker;
 use App\Services\DbHelper;
+use App\Services\MessageService;
 use App\Services\VisitCalendarService;
 use App\Services\WorkFlowEngine;
 use Illuminate\Foundation\Inspiring;
@@ -32,14 +33,7 @@ Artisan::command('inspire', function () {
 
 Artisan::command('test', function () {
 	$this->comment('begin ...');
-
-	$engine = new WorkFlowEngine();
-	$engine->createInstance(123,'store-change', 5, 'wf_change_list');
-	$logs = $engine->start();
-	//$logs = $engine->agree(18,'agree ssss!', []);
-	//$logs = $engine->against(21,'agree ssss!');
-	//$this->assertNotNull($logs);
-	$this->comment('log count = ' . count($logs));
+	MessageService::Instance()->systemSend(462, "测试", '测试');
 	$this->comment('end ...');
 })->describe('philo blade test');
 
