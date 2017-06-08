@@ -197,6 +197,9 @@ class UtlController extends Controller
 	 * 获取经销商账款余额接口
 	 */
     public function getCustAmount(Request $request, $cust_id){
+    	if(env('APP_DEBUG')){
+		    return response(['data' => 100.10, 'code' => 200, 'msg' => '', 'success' => true]);
+	    }
 	    $worker = new KingdeeWorker();
 	    $url = env('KINGDEE_HOST') . '/k3cloud/CYD.ApiService.ServicesStub.CustomBusinessService.CustBalAmountGet.common.kdsvc';
 	    $res = $worker->post($url, ['parameters' => [$cust_id]]);
