@@ -51,14 +51,29 @@ class AttendancePolling extends Command
         if(!$day->fis_work_time) return; //非工作日
 
         $sql = <<<EOH
-select e.id from bd_employees e
-where NOT EXISTS (select a.id from ms_attendances a where e.id = a.femp_id and DATE_FORMAT(a.ftime,'%Y-%m-%d')='$today' and a.ftype = 1)
+SELECT
+	e.id,
+	u.id as user_id
+FROM
+	bd_employees e
+INNER JOIN sys_users u on e.id=u.reference_id and u.reference_type='employee'
+WHERE
+	NOT EXISTS (
+		SELECT
+			a.id
+		FROM
+			ms_attendances a
+		WHERE
+			e.id = a.femp_id
+		AND DATE_FORMAT(a.ftime, '%Y-%m-%d') = '$today'
+		AND a.ftype = 1
+	)
 EOH;
 		$result = DB::select($sql);
 
 		if(!empty($result)){
 			$ids = array_map(function ($item){
-				return $item->id . '';
+				return $item->user_id . '';
 			}, $result);
 			$this->sendMsg($ids);
 		}

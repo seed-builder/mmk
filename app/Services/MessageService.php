@@ -98,10 +98,28 @@ class MessageService
 		    'subtitle' => $title,
 		    'content' => $content,
 		    'type' => 0,
-
 	    ]);
     	return $this->createSend(0, $toId, $mc, $push, $extraId, $extraType);
     }
+
+	/**
+	 * 系统发送消息
+	 * @param $toId
+	 * @param $title
+	 * @param MessageContent $content
+	 * @param bool $push
+	 * @param int $extraId
+	 * @param string $extraType
+	 */
+	public function taskSend($toId, $title, $content, $push = false, $extraId=0, $extraType=''){
+		$mc = new MessageContent([
+			'title' => $title,
+			'subtitle' => $title,
+			'content' => $content,
+			'type' => 3,
+		]);
+		return $this->createSend(0, $toId, $mc, $push, $extraId, $extraType);
+	}
 
 	/**
 	 * singleton
