@@ -100,7 +100,7 @@ class MessageService
 		    'type' => 0,
 
 	    ]);
-    	return $this->createSend(0, $toId, $mc, $push);
+    	return $this->createSend(0, $toId, $mc, $push, $extraId, $extraType);
     }
 
 	/**
