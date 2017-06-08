@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Services\DataSync\KingdeeWorker;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Storage;
@@ -190,6 +191,16 @@ class UtlController extends Controller
 	    $resp = Sms::checkVerifyCode($phone, $code);
 	    $status = $resp ? 200 : 400;
 	    return response(['success' => $resp], $status);
+    }
+
+	/**
+	 * 获取经销商账款余额接口
+	 */
+    public function getCustAmount(Request $request, $cust_id){
+	    $worker = new KingdeeWorker();
+	    $url = env('KINGDEE_HOST') . '/k3cloud/CYD.ApiService.ServicesStub.CustomBusinessService.CustBalAmountGet.common.kdsvc';
+	    $res = $worker->post($url, ['parameters' => [$cust_id]]);
+	    return response(['data' => $res, 'code' => 200, 'msg' => '', 'success' => true]);
     }
 
 }

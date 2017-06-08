@@ -7,6 +7,7 @@ use App\Models\City;
 use App\Models\User;
 use App\Repositories\EmployeeRepo;
 use App\Services\CodeBuilder;
+use App\Services\DataSync\KingdeeWorker;
 use App\Services\DbHelper;
 use App\Services\VisitCalendarService;
 use App\Services\WorkFlowEngine;
@@ -246,3 +247,13 @@ Artisan::command('push-attendance', function () {
 	}
 	$this->comment('end ...');
 })->describe('push attendance to cloud');
+
+Artisan::command('cust-amount', function () {
+	$this->comment('begin get cust amount');
+	$worker = new KingdeeWorker();
+	$res = $worker->post('http://shantu.ik3cloud.com/k3cloud/CYD.ApiService.ServicesStub.CustomBusinessService.CustBalAmountGet.common.kdsvc',
+		['parameters' => [293095]]);
+	var_dump($res);
+	$this->comment('end get cust amount');
+})->describe('get cust amount');
+

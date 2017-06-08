@@ -355,4 +355,41 @@ Route::group(['prefix' => 'utl', 'middleware' => 'api.sign'], function (){
 	 * )
 	 */
 	Route::post('/check-verify', ['uses' => 'UtlController@checkVerifyCode']);
+
+	/**
+	 * @SWG\Api(
+	 *   path="/api/utl/get-cust-amount/{cust_id}",
+	 *   @SWG\Operation(
+	 *      method="GET",
+	 *      nickname="get-cust-amount",
+	 *      summary="获取经销商账款余额",
+	 *      notes="获取经销商账款余额",
+	 *      type="",
+	 *      @SWG\Parameters(
+	 *          @SWG\Parameter(
+	 *              name="cust_id",
+	 *              description="经销商id",
+	 *              required=true,
+	 *              type="integer",
+	 *              paramType="path",
+	 *              defaultValue="293095"
+	 *          ),
+	 *          @SWG\Parameter(
+	 *              name="_sign",
+	 *              description="签名",
+	 *              required=true,
+	 *              type="string",
+	 *              paramType="query",
+	 *              defaultValue="****"
+	 *          )
+	 *      ),
+	 *      @SWG\ResponseMessages(
+	 *          @SWG\ResponseMessage(code=401, message="签名验证错误！"),
+	 *          @SWG\ResponseMessage(code=200, message="成功。")
+	 *      )
+	 *   )
+	 * )
+	 */
+	Route::get('/get-cust-amount/{cust_id}', ['uses' => 'UtlController@getCustAmount']);
+
 });
