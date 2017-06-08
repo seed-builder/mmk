@@ -66,7 +66,7 @@ class MessageService
 	 * @param $content
 	 * @param bool $push 是否推送到app
 	 */
-    public function createSend(int $fromId, int $toId, MessageContent $content, $push = false, $extraId=0, $extraType=''){
+    public function createSend($fromId, $toId, MessageContent $content, $push = false, $extraId=0, $extraType=''){
 		if(empty($content->id)){
 			$content->save();
 		}
