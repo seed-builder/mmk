@@ -18,45 +18,82 @@ class MessageService
 {
     private static $instance;
 
+    public function pushToApp($ids, $type, $title, $content){
+	    $msg=[];
+	    $client = new JPush(env('JPUSH_APP_KEY'), env('JPUSH_SECRET'));
+	    try {
+		    $response = $client->push()
+			    ->setPlatform(array('ios', 'android'))
+			    ->addAlias($ids)
+			    ->iosNotification($content, array(
+				    'sound' => 'sound.caf',
+				    'badge' => '1',
+				    // 'content-available' => true,
+				    // 'mutable-content' => true,
+				    'category' => 'jiguang',
+				    'extras' => ['type' => $type]
+			    ))
+			    ->androidNotification($content, array(
+				    'title' => $title,
+				    // 'build_id' => 2,
+				    'extras' =>  ['type' => $type]
+			    ))
+			    //->message($content, $message)
+			    ->send();
+		    $msg[] = '发送成功！';
+	    } catch (\JPush\Exceptions\APIConnectionException $e) {
+		    // try something here
+		    //print $e;
+		    LogSvr::MessageService()->error('错误, APIConnectionException：'. $e);
+		    $msg[] = '发送失败: ' . $e->getMessage();
+	    } catch (\JPush\Exceptions\APIRequestException $e) {
+		    // try something here
+		    //print $e;
+		    LogSvr::MessageService()->error('错误, APIRequestException：'. $e);
+		    $msg[] = '发送失败: ' . $e->getMessage();
+	    }
+	    return $msg;
+    }
+
     public function sendMessage($ids,$content_id, $type = 1){
         $message = MessageContent::find($content_id);
-        $content = $message->content;
+        //$content = $message->content;
         if(env('APP_DEBUG')){
             return;
         }
-
-        $client = new JPush(env('JPUSH_APP_KEY'), env('JPUSH_SECRET'));
-        try {
-            $response = $client->push()
-                ->setPlatform(array('ios', 'android'))
-                ->addAlias($ids)
-                ->iosNotification($content, array(
-                    'sound' => 'sound.caf',
-                    'badge' => '1',
-                    // 'content-available' => true,
-                    // 'mutable-content' => true,
-                    'category' => 'jiguang',
-                    'extras' => ['type' => $type]
-                ))
-                ->androidNotification($content, array(
-                    'title' => $message->title,
-                    // 'build_id' => 2,
-                    'extras' =>  ['type' => $type]
-                ))
-                //->message($content, $message)
-                ->send();
-            $msg[] = '发送成功！';
-        } catch (\JPush\Exceptions\APIConnectionException $e) {
-            // try something here
-            //print $e;
-            LogSvr::MessageService()->error('错误, APIConnectionException：'. $e);
-            $msg[] = '发送失败: ' . $e->getMessage();
-        } catch (\JPush\Exceptions\APIRequestException $e) {
-            // try something here
-            //print $e;
-            LogSvr::MessageService()->error('错误, APIRequestException：'. $e);
-            $msg[] = '发送失败: ' . $e->getMessage();
-        }
+	    $this->pushToApp($ids, $type, $message->title, $message->content);
+//        $client = new JPush(env('JPUSH_APP_KEY'), env('JPUSH_SECRET'));
+//        try {
+//            $response = $client->push()
+//                ->setPlatform(array('ios', 'android'))
+//                ->addAlias($ids)
+//                ->iosNotification($content, array(
+//                    'sound' => 'sound.caf',
+//                    'badge' => '1',
+//                    // 'content-available' => true,
+//                    // 'mutable-content' => true,
+//                    'category' => 'jiguang',
+//                    'extras' => ['type' => $type]
+//                ))
+//                ->androidNotification($content, array(
+//                    'title' => $message->title,
+//                    // 'build_id' => 2,
+//                    'extras' =>  ['type' => $type]
+//                ))
+//                //->message($content, $message)
+//                ->send();
+//            $msg[] = '发送成功！';
+//        } catch (\JPush\Exceptions\APIConnectionException $e) {
+//            // try something here
+//            //print $e;
+//            LogSvr::MessageService()->error('错误, APIConnectionException：'. $e);
+//            $msg[] = '发送失败: ' . $e->getMessage();
+//        } catch (\JPush\Exceptions\APIRequestException $e) {
+//            // try something here
+//            //print $e;
+//            LogSvr::MessageService()->error('错误, APIRequestException：'. $e);
+//            $msg[] = '发送失败: ' . $e->getMessage();
+//        }
     }
 
 	/**

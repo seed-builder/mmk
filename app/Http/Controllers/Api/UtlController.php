@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Services\DataSync\KingdeeWorker;
+use App\Services\MessageService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Storage;
@@ -204,6 +205,14 @@ class UtlController extends Controller
 	    $url = env('KINGDEE_HOST') . '/k3cloud/CYD.ApiService.ServicesStub.CustomBusinessService.CustBalAmountGet.common.kdsvc';
 	    $res = $worker->post($url, ['parameters' => [$cust_id]]);
 	    return response(['data' => $res, 'code' => 200, 'msg' => '', 'success' => true]);
+    }
+
+    public function pushMessage(Request $request, $user_id){
+    	$msg = $request->input('msg');
+    	$title = $request->input('title');
+    	$type = $request->input('type');
+    	$res = MessageService::Instance()->pushToApp([$user_id], $type, $title, $msg);
+		return response(['data' => $res, 'code' => 200, 'msg' => '', 'success' => true]);
     }
 
 }
