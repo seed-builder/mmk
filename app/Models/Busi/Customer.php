@@ -149,22 +149,25 @@ class Customer extends Authenticatable
 	}
 
 	public function stock_ins(){
-		return $this->hasManyThrough(StockIn::class, Store::class, 'fcust_id', 'fstore_id')
-			->select([
-				'st_stock_ins.id',
-				'st_stock_ins.fbill_no',
-				'st_stock_ins.fsend_date',
-				'st_stock_ins.fin_date',
-				'st_stock_ins.fcust_id',
-				'st_stock_ins.fsend_status',
-				'st_stock_ins.fuser_id',
-				'st_stock_ins.fdocument_status',
-			]);
+//		return $this->hasManyThrough(StockIn::class, Store::class, 'fcust_id', 'fstore_id')
+//			->select([
+//				'st_stock_ins.id',
+//				'st_stock_ins.fbill_no',
+//				'st_stock_ins.fsend_date',
+//				'st_stock_ins.fin_date',
+//				'st_stock_ins.fcust_id',
+//				'st_stock_ins.fsend_status',
+//				'st_stock_ins.fuser_id',
+//				'st_stock_ins.fdocument_status',
+//			]);
+		return $this->hasMany(StockIn::class, 'fcust_id');
 	}
 
 	public function stock_outs(){
-		return $this->hasManyThrough(StockOut::class, Store::class, 'fcust_id', 'fstore_id');
+//		return $this->hasManyThrough(StockOut::class, Store::class, 'fcust_id', 'fstore_id');
+		return $this->hasMany(StockOut::class, 'fcust_id');
 	}
+
 
 	public function department(){
 		return $this->belongsTo(Department::class, 'fsale_area_id');

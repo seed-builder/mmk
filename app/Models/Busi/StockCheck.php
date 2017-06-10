@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @author  xrs
  * @SWG\Model(id="StockCheck")
+ * @SWG\Property(name="fphotos", type="string", description="图片id（多个，逗号隔开）")
  * @SWG\Property(name="fchecker_id", type="string", description="盘点人id(user id)")
  * @SWG\Property(name="fcheck_date", type="string", description="盘点日期")
  * @SWG\Property(name="fcheck_status", type="integer", description="0-盘点中,1-盘点完成，2-取消盘点")
@@ -26,6 +27,7 @@ class StockCheck extends BaseModel
 	//
 	protected $table = 'st_stock_checks';
 	protected $guarded = ['id'];
+	//public $validateRules=['fphotos' => 'required', 'fphone' => 'required'];
 
 	public function items(){
 		return $this->hasMany(StockCheckItem::class, 'fstock_check_id');
