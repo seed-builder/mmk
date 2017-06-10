@@ -112,4 +112,19 @@ class CustomerController extends AdminController
 		return response(['valid' => $valid, 'message' => '该名称已存在'], 200);
 	}
 
+	public function resetLocation($id){
+	    $customer = Customer::find($id);
+        $customer->flongitude = 0;
+        $customer->flatitude = 0;
+        $customer->fcheck_limit = null;
+        $customer->fstock_address = null;
+        $customer->save();
+
+        return response()->json([
+            'code' => 200,
+            'result' => '位置信息重置成功！'
+        ]);
+
+    }
+
 }

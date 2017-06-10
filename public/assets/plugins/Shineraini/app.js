@@ -405,6 +405,7 @@ function mapWindow(element, data, callback) {
         if (callback !== undefined) {
             callback();
         }
+        return false;
     });
 }
 
