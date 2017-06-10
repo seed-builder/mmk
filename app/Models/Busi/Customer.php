@@ -164,8 +164,10 @@ class Customer extends Authenticatable
 	}
 
 	public function stock_outs(){
-		return $this->hasManyThrough(StockOut::class, Store::class, 'fcust_id', 'fstore_id');
+//		return $this->hasManyThrough(StockOut::class, Store::class, 'fcust_id', 'fstore_id');
+		return $this->hasMany(StockOut::class, 'fcust_id');
 	}
+
 
 	public function department(){
 		return $this->belongsTo(Department::class, 'fsale_area_id');
