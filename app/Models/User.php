@@ -54,6 +54,13 @@ class User extends Authenticatable
 //	    static::creating(function ($user){
 //	    	$user->password = bcrypt($user->password);
 //	    });
+        static::updated(function ($model){
+            if ($model->reference_type=='customer'){
+                $customer = $model->reference;
+                $customer->ftel = $model->name;
+                $customer->save();
+            }
+        });
     }
 
     public function hasPosition($positionId){
