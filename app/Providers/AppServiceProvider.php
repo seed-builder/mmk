@@ -15,6 +15,7 @@ use App\Services\DataSync\DefaultFilter;
 use App\Services\DataSync\DisplayPolicyStoreFilter;
 use App\Services\DataSync\EmployeeFilter;
 use App\Services\DataSync\KingdeeWorker;
+use App\Services\DataSync\StockInFilter;
 use App\Services\Sms\AliDaYuSms;
 use App\Services\Sms\ISmsSvr;
 use App\Services\WorkFlow\Engine;

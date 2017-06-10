@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Services\DataSync\KingdeeWorker;
+use App\Services\MessageService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Storage;
@@ -190,6 +192,27 @@ class UtlController extends Controller
 	    $resp = Sms::checkVerifyCode($phone, $code);
 	    $status = $resp ? 200 : 400;
 	    return response(['success' => $resp], $status);
+    }
+
+	/**
+	 * 获取经销商账款余额接口
+	 */
+    public function getCustAmount(Request $request, $cust_id){
+    	if(env('APP_DEBUG')){
+		    return response(['data' => 100.10, 'code' => 200, 'msg' => '', 'success' => true]);
+	    }
+	    $worker = new KingdeeWorker();
+	    $url = env('KINGDEE_HOST') . '/k3cloud/CYD.ApiService.ServicesStub.CustomBusinessService.CustBalAmountGet.common.kdsvc';
+	    $res = $worker->post($url, ['parameters' => [$cust_id]]);
+	    return response(['data' => $res, 'code' => 200, 'msg' => '', 'success' => true]);
+    }
+
+    public function pushMessage(Request $request, $user_id){
+    	$msg = $request->input('msg');
+    	$title = $request->input('title');
+    	$type = $request->input('type');
+    	$res = MessageService::Instance()->pushToApp([$user_id], $type, $title, $msg);
+		return response(['data' => $res, 'code' => 200, 'msg' => '', 'success' => true]);
     }
 
 }
