@@ -21,7 +21,7 @@ SELECT
 	DISTINCT
 	fstore_id,
 	femp_id,
-	DATE_FORMAT(fdate, '%Y-%m') fmonth,
+	DATE_FORMAT(fdate, '%Y-%m') fmonth
 FROM
 	visit_store_calendar
 where 
@@ -36,7 +36,7 @@ SELECT
 	DISTINCT
 	fstore_id,
 	femp_id,
-	DATE_FORMAT(fdate, '%Y-%m') fmonth,
+	DATE_FORMAT(fdate, '%Y-%m') fmonth
 FROM
 	visit_store_calendar
 GROUP BY
