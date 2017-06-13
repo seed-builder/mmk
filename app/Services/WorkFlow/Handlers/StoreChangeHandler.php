@@ -14,6 +14,7 @@ use App\Models\Busi\StoreChange;
 use App\Services\VisitCalendarService;
 use App\Services\WorkFlow\IEngineHandler;
 use App\Services\WorkFlow\Instance;
+use App\Services\WorkFlow\Task;
 
 class StoreChangeHandler implements IEngineHandler
 {
@@ -64,5 +65,11 @@ class StoreChangeHandler implements IEngineHandler
 			}
 		}
 
+	}
+
+	public function terminating(Task $task)
+	{
+		// TODO: Implement terminating() method.
+		return true;
 	}
 }
