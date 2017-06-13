@@ -40,6 +40,13 @@ class DisplayPolicyStore extends BaseModel
 	protected $table = 'exp_display_policy_store';
 	protected $guarded = ['id'];
 
+	public $validateRules=[
+		'fcreator_id' => 'required',
+	];
+	public $fieldNames = [
+		'fcreator_id' => '创建人',
+	];
+
 	public function policy(){
         return $this->hasOne(DisplayPolicy::class, 'id', 'fpolicy_id');
     }
