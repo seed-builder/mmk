@@ -9,6 +9,7 @@
 namespace App\Services\WorkFlow\Handlers;
 
 
+use App\Models\Busi\DisplayPolicy;
 use App\Models\Busi\DisplayPolicyStore;
 use App\Services\WorkFlow\IEngineHandler;
 use App\Services\WorkFlow\Instance;
@@ -32,7 +33,13 @@ class ExpDisplayPolicyStoreHandler implements IEngineHandler
 				$store = DisplayPolicyStore::find($obj['id']);
 				$store->fdocument_status = 'C'; //审核状态通过
 				$store->fcheck_amount = $obj->fcheck_amount;
+				$store->fstatus = 1;
 				$store->save();
+
+				$policy = DisplayPolicy::find($obj->fpolicy_id);
+				$policy->fsign_amount = $policy->fsign_amount + $obj->fcheck_amount;
+				$policy->fsign_store_num = $policy->fsign_store_num + 1;
+				$policy->save();
 			}
 		}
 	}
