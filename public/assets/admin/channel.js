@@ -140,7 +140,7 @@ define(function (require, exports, module) {
                     'type': 'select',
                     'options': groups
                 },
-                {'label': '备注', 'name': 'fremark',},
+                {'label': '备注', 'name': 'fremark', 'type': 'textarea'},
             ]
         });
 
