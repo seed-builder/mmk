@@ -29,7 +29,7 @@ define(function(require, exports, module) {
                 {
                     'data': 'rate',
                     render: function ( data, type, full ) {
-                        return (data==null?0:data.toFixed(2))+'%'
+                        return (data==null?0: Number(data).toFixed(2))+'%'
                     }
                 },
                 {
