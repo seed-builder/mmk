@@ -53,10 +53,11 @@ Route::group(['prefix' => 'display-policy-store', 'middleware' => 'api.sign'], f
     *     @SWG\Operation(
     *      method="POST",
     *      nickname="display-policy-store-store",
-    *      summary="新增陈列费用签约门店",
-    *      notes="新增陈列费用签约门店",
+    *      summary="新增陈列费用签约门店（工作流）",
+    *      notes="新增陈列费用签约门店（工作流）",
     *      type="",
     *      @SWG\Parameters(
+    *          @SWG\Parameter(name="fcreator_id", description="创建人id", required=true,type="integer", paramType="form", defaultValue="0" ),
     *          @SWG\Parameter(name="famount", description="费用总金额", required=false,type="number", paramType="form", defaultValue="0.00" ),
     *          @SWG\Parameter(name="fbill_no", description="bill no", required=false,type="string", paramType="form", defaultValue="" ),
     *          @SWG\Parameter(name="fcheck_amount", description="核定签约金额", required=false,type="number", paramType="form", defaultValue="0.00" ),
