@@ -197,13 +197,13 @@ define(function (require, exports, module) {
 
                     }
                 },
-                {
-                    text: '调换门店<i class="fa fa-fw fa-exchange"></i>',
-                    action: function () {
-                        $("#exchange-modal").modal('show')
-
-                    }
-                },
+                // {
+                //     text: '调换门店<i class="fa fa-fw fa-exchange"></i>',
+                //     action: function () {
+                //         $("#exchange-modal").modal('show')
+                //
+                //     }
+                // },
 
 
 //                {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: editor},
@@ -211,7 +211,10 @@ define(function (require, exports, module) {
 //                 { text: '审核<i class="fa fa-fw fa-paperclip"></i>',className: 'check', enabled: false },
 //                 { text: '反审核<i class="fa fa-fw fa-unlink"></i>',className: 'uncheck', enabled: false },
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
-                {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
+                // {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
+                { text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>', action: function () {
+                    exportExcel('#moduleForm','/admin/store/export-excel');
+                }  },
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
             ]
         });
@@ -460,15 +463,15 @@ define(function (require, exports, module) {
 
 
         //调换门店
-        $("#exchangeForm").on('submit',function () {
-            layer.confirm('确定将旧员工的所有门店分配给新员工？',function () {
-                ajaxForm("#exchangeForm",function () {
-                    $("#exchange-modal").modal('hide');
-                })
-            })
-
-            return false;
-        })
+        // $("#exchangeForm").on('submit',function () {
+        //     layer.confirm('确定将旧员工的所有门店分配给新员工？',function () {
+        //         ajaxForm("#exchangeForm",function () {
+        //             $("#exchange-modal").modal('hide');
+        //         })
+        //     })
+        //
+        //     return false;
+        // })
 
     }
 

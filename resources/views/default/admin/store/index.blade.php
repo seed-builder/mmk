@@ -79,7 +79,8 @@
                     <!-- /.box-header -->
                     <div class="box-body">
                         <div class="panel panel-default">
-                            <div class="form-horizontal filter " filter-table="#moduleTable">
+                            <form class="form-horizontal filter" id="moduleForm" filter-table="#moduleTable" method="post">
+                                {{ csrf_field() }}
 
                                 <div class="form-group">
                                     <label class="col-sm-1 control-label">门店名称</label>
@@ -138,7 +139,7 @@
                                     <button type="button" class="btn btn-info filter-submit">查询</button>
                                     <button type="button" class="btn btn-default filter-reset">重置</button>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                         <table id="moduleTable" class="table table-bordered table-hover display nowrap" cellspacing="0" width="100%">
                             <thead>
@@ -354,49 +355,49 @@
         </div>
     </div>
 
-    <div id="exchange-modal" class="modal fade modal-scroll" role="dialog" tabindex="-1" data-replace="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"
-                            aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title">门店调换</h4>
-                </div>
-                <form class="form-horizontal" id="exchangeForm" action="{{url('admin/store/exchange')}}">
-                    {{ csrf_field() }}
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label class="control-label col-sm-3">旧员工</label>
-                            <div class="col-sm-9">
-                                <select class="form-control filter-select" name="old_femp_id" data-live-search="true">
-                                    <option value="">--请选择--</option>
-                                    @foreach($employees as $e)
-                                        <option value="{{$e->id}}">{{$e->fname}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-3">新员工</label>
-                            <div class="col-sm-9">
-                                <select class="form-control filter-select" name="new_femp_id" data-live-search="true">
-                                    <option value="">--请选择--</option>
-                                    @foreach($employees as $e)
-                                        <option value="{{$e->id}}">{{$e->fname}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary pull-right">调换门店</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+    {{--<div id="exchange-modal" class="modal fade modal-scroll" role="dialog" tabindex="-1" data-replace="true">--}}
+        {{--<div class="modal-dialog">--}}
+            {{--<div class="modal-content">--}}
+                {{--<div class="modal-header">--}}
+                    {{--<button type="button" class="close" data-dismiss="modal"--}}
+                            {{--aria-label="Close">--}}
+                        {{--<span aria-hidden="true">&times;</span>--}}
+                    {{--</button>--}}
+                    {{--<h4 class="modal-title">门店调换</h4>--}}
+                {{--</div>--}}
+                {{--<form class="form-horizontal" id="exchangeForm" action="{{url('admin/store/exchange')}}">--}}
+                    {{--{{ csrf_field() }}--}}
+                    {{--<div class="modal-body">--}}
+                        {{--<div class="form-group">--}}
+                            {{--<label class="control-label col-sm-3">旧员工</label>--}}
+                            {{--<div class="col-sm-9">--}}
+                                {{--<select class="form-control filter-select" name="old_femp_id" data-live-search="true">--}}
+                                    {{--<option value="">--请选择--</option>--}}
+                                    {{--@foreach($employees as $e)--}}
+                                        {{--<option value="{{$e->id}}">{{$e->fname}}</option>--}}
+                                    {{--@endforeach--}}
+                                {{--</select>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                        {{--<div class="form-group">--}}
+                            {{--<label class="control-label col-sm-3">新员工</label>--}}
+                            {{--<div class="col-sm-9">--}}
+                                {{--<select class="form-control filter-select" name="new_femp_id" data-live-search="true">--}}
+                                    {{--<option value="">--请选择--</option>--}}
+                                    {{--@foreach($employees as $e)--}}
+                                        {{--<option value="{{$e->id}}">{{$e->fname}}</option>--}}
+                                    {{--@endforeach--}}
+                                {{--</select>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                    {{--<div class="modal-footer">--}}
+                        {{--<button type="submit" class="btn btn-primary pull-right">调换门店</button>--}}
+                    {{--</div>--}}
+                {{--</form>--}}
+            {{--</div>--}}
+        {{--</div>--}}
+    {{--</div>--}}
 
 @endsection
 @section('js')

@@ -10,4 +10,5 @@ Route::get('store/storeInfo/{id}', ['uses' => 'StoreController@storeInfo']);
 Route::post('store/exchange', ['uses' => 'StoreController@exchange']);
 Route::get('store/check', ['uses' => 'StoreController@check']);
 Route::get('store/uncheck', ['uses' => 'StoreController@uncheck']);
+Route::post('store/export-excel', ['uses' => 'StoreController@exportExcel']);
 Route::resource('store', 'StoreController');
