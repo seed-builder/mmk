@@ -153,6 +153,15 @@ class Task
 							'approver_id' => $approver->id,
 						]);
 					}
+				}else{
+					$tasks[] = $this->createTask([
+						'work_flow_id' => $preTask->work_flow_id,
+						'work_flow_instance_id' => $preTask->work_flow_instance_id,
+						'link_id' => $link->id,
+						'pre_task_id' => $preTask->id,
+						'node_id' => $curNode->id,
+						'status' => 2 //挂起
+					]);
 				}
 				break;
 		}
