@@ -86,4 +86,14 @@ class FinStatementController extends BaseController
 		return response(['data' => $amount, 'code' => 200, 'msg' => '', 'success' => true]);
 	}
 
+	public function print(Request $request){
+		$ids = $request->input('ids');
+		$items = [];
+		if(!empty($ids)){
+			$arr = explode(',', $ids);
+			$items = FinStatement::whereIn('id', $arr)->get();
+		}
+		return view('customer.fin-statement.print', ['items' => $items]);
+	}
+
 }

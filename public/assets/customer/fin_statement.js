@@ -79,7 +79,18 @@ define(function(require, exports, module) {
                 } },
                 // { text: '删除', className: 'delete', enabled: false },
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
-                {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
+                { text: '打印<i class="fa fa-fw fa-print"></i>',action: function () {
+                    var row = table.rows('.selected').data();
+                    if (row.length==0){
+                        layer.alert('请选择对账信息')
+                        return ;
+                    }
+                    var ids = [];
+                    for(var i=0; i < row.length; i++){
+                        ids[ids.length] = row[i].id;
+                    }
+                    window.location.href= "/customer/fin-statement/print?ids=" + ids.join(',');
+                } },
                 //{extend: 'colvis', text: '列显示'}
             ]
         });
