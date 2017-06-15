@@ -17,9 +17,11 @@ define(function(require, exports, module) {
             rowId: "id",
             ajax: '/customer/fin-statement/pagination',
             columns: [
-                {  'data': 'seq' },
-                {  'data': 'id' },
-                {  'data': 'status' },
+                {  'data': 'id', render: function (data, type, full) {
+                        return '<input type="checkbox" class="editor-active" value="' + data + '">';
+                    },
+                    className: "dt-body-center"
+                },
                 {  'data': 'cust_num' },
                 {  'data': 'cust_name' },
                 {  'data': 'bill_type' },
@@ -31,13 +33,22 @@ define(function(require, exports, module) {
                 {  'data': 'bal_amount' },
                 {  'data': 'abstract' },
                 {  'data': 'remarks' },
+                {  'data': 'seq' },
+                {  'data': 'status' },
             ],
             columnDefs: [
                 {
-                    "targets": [0,1,2],
+                    'targets': 0,
+                    'checkboxes': {
+                        'selectRow': true
+                    }
+                },
+                {
+                    "targets": [12,13],
                     "visible": false
                 }
             ],
+            order: [[12, 'asc']],
             buttons: [
                 { text: '确认对账', className: 'sure', enabled: false ,  action: function () {
                     layer.confirm("确认对账?", ["确定", "取消"], function () {

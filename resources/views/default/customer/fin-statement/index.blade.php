@@ -1,6 +1,7 @@
 @extends('customer.layout.collapsed-sidebar')
 @section('styles')
     @include('customer.layout.datatable-css')
+    <link rel="stylesheet" href="/assets/plugins/bootstrap-select/bootstrap-select.min.css" />
 @endsection
 
 @section('content')
@@ -36,9 +37,7 @@
                         <table id="moduleTable" class="table table-bordered table-hover display nowrap" cellspacing="0" width="100%">
                             <thead>
                             <tr>
-                                <th>seq</th>
-                                <th>id</th>
-                                <th>status</th>
+                                <th></th>
                                 <th>往来单位代码</th>
                                 <th>往来单位名称</th>
                                 <th>单据类型</th>
@@ -50,6 +49,8 @@
                                 <th>金额</th>
                                 <th>摘要</th>
                                 <th>备注</th>
+                                <th>seq</th>
+                                <th>status</th>
                             </tr>
                             </thead>
                         </table>
@@ -66,6 +67,8 @@
 @endsection
 @section('js')
     @include('customer.layout.datatable-js')
+    <script src="/assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="/js/dt.ext.js"></script>
     <script type="text/javascript">
         $(function () {
             seajs.use('customer/fin_statement.js', function (app) {
