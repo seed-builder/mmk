@@ -39,7 +39,25 @@ define(function(require, exports, module) {
                 }
             ],
             buttons: [
-                // { text: '新增', action: function () { }  },
+                { text: '确认对账', className: 'sure', enabled: false ,  action: function () {
+                    layer.confirm("确认对账?", ["确定", "取消"], function () {
+                        var data = table.rows( { selected: true } ).data()[0];
+                        $.ajax({
+                            url: "/customer/fin-statement/" + data.id,
+                            type: 'PUT',
+                            data: {_token: $('meta[name="_token"]').attr('content'), 'data': [{status: 1}]},
+                            success: function (res) {
+                                if (res.data) {
+                                    // You can reload the current location
+                                    layer.msg('对账成功！');
+                                    table.ajax.reload();
+                                } else {
+                                    layer.msg('对账失败！');
+                                }
+                            }
+                        })
+                    })
+                }  },
                 // { text: '编辑', className: 'edit', enabled: false },
                 // { text: '删除', className: 'delete', enabled: false },
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
@@ -48,12 +66,15 @@ define(function(require, exports, module) {
             ]
         });
 
-        // table.on( 'select', checkBtn).on( 'deselect', checkBtn);
-        //
-        // function checkBtn(e, dt, type, indexes) {
-        //     var count = table.rows( { selected: true } ).count();
-        //     table.buttons( ['.edit', '.delete'] ).enable(count > 0);
-        // }
+        table.on( 'select', checkBtn).on( 'deselect', checkBtn);
+
+        function checkBtn(e, dt, type, indexes) {
+            var data = table.rows( { selected: true } ).data()[0];
+            if(data ){
+                table.buttons( ['.sure'] ).enable(data.status == 0);
+            }
+
+        }
 
     }
 
