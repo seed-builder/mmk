@@ -38,6 +38,8 @@ class Task
 			'task_processed',
 			'task_terminating',
 			'task_terminated',
+			'task_suspended',
+			'task_resumed',
 		];
 	}
 
@@ -160,8 +162,9 @@ class Task
 						'link_id' => $link->id,
 						'pre_task_id' => $preTask->id,
 						'node_id' => $curNode->id,
-						'status' => 2 //挂起
+						'status' => 4 //挂起
 					]);
+					$this->fireEvent('task_suspended', false);
 				}
 				break;
 		}
@@ -219,6 +222,11 @@ class Task
 		$this->task->update(['status' => 3]);
 		$this->fireEvent('task_terminated', false);
 		return true;
+	}
+
+	public function resume($approverId){
+		$this->task->update(['approver_id' => $approverId, 'status' => 0]);
+		$this->fireEvent('task_resumed', false);
 	}
 
 	/**
@@ -283,6 +291,14 @@ class Task
 
 	public static function processed($callback){
 		static::registerEvent('task_processed', $callback);
+	}
+
+	public static function suspended($callback){
+		static::registerEvent('task_suspended', $callback);
+	}
+
+	public static function resumed($callback){
+		static::registerEvent('task_resumed', $callback);
 	}
 
 	public function getStatus(){

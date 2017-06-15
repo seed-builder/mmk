@@ -126,7 +126,7 @@ class Instance
 		if ($this->fireEvent('suspending', true) === false) {
 			return false;
 		}
-		$this->work_flow_instance->update(['status' => 2]);
+		$this->work_flow_instance->update(['status' => 4]);
 		$this->fireEvent('suspended');
 	}
 

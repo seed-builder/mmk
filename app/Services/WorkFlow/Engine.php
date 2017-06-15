@@ -118,6 +118,19 @@ class Engine
 
 		});
 
+		//挂起
+		Task::suspended(function (Task $task){
+			$instance = new Instance();
+			$instance->init($task->work_flow_instance_id);
+			$instance->suspend();
+		});
+
+		Task::resumed(function (Task $task){
+			$instance = new Instance();
+			$instance->init($task->work_flow_instance_id);
+			$instance->resume();
+		});
+
 		Instance::variablesSaved(function (Instance $instance){
 			//LogSvr::engine()->info('variables-saved');
 			$wfInstance = $instance->getWorkFlowInstance();
