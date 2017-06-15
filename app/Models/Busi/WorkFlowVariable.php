@@ -37,6 +37,6 @@ class WorkFlowVariable extends Model
 	}
 
 	public function getValueObjAttribute(){
-		return $this->value ? json_decode($this->value()):null;
+		return $this->value ? json_decode($this->value):null;
 	}
 }
