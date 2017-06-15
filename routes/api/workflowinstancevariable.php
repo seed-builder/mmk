@@ -58,13 +58,13 @@ Route::group(['prefix' => 'work-flow-instance-variable', 'middleware' => 'api.si
     *      type="WorkFlowInstanceVariable",
     *      @SWG\Parameters(
     *          @SWG\Parameter(name="created_at", description="", required=false,type="string", paramType="form", defaultValue="" ),
-                    *          @SWG\Parameter(name="name", description="变量名（英文）", required=false,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="uid", description="guid", required=false,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="updated_at", description="", required=false,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="value", description="变量值", required=false,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="work_flow_instance_id", description="", required=false,type="integer", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="work_flow_variable_id", description="", required=false,type="integer", paramType="form", defaultValue="" ),
-        *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="" ),
+    *          @SWG\Parameter(name="name", description="变量名（英文）", required=false,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="uid", description="guid", required=false,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="updated_at", description="", required=false,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="value", description="变量值", required=false,type="string", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="work_flow_instance_id", description="", required=false,type="integer", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="work_flow_variable_id", description="", required=false,type="integer", paramType="form", defaultValue="" ),
+    *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="" ),
     *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
     *      )
     *  )
