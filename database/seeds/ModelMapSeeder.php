@@ -73,5 +73,14 @@ class ModelMapSeeder extends Seeder
 		    ]);
 	    }
 
+	    $exists = ModelMap::where('model', 'FinStatement')->count();
+	    if($exists == 0) {
+		    ModelMap::create([
+			    'model' => 'FinStatement',
+			    'table' => 'fin_statements',
+			    'foreign_table' => 'fin_statements'
+		    ]);
+	    }
+
     }
 }
