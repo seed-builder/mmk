@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Customer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Customer\BaseController;
 use App\Models\Busi\FinStatement;
+use Illuminate\Support\Facades\Auth;
 
 class FinStatementController extends BaseController
 {
