@@ -34,15 +34,15 @@ class WorkFlowSeeder extends Seeder
 			    'category' => 1,
 			    'uid' => uuid(),
 		    ]);
-		    $v2 = WorkFlowVariable::create([
-			    'work_flow_id' => $wf->id,
-			    'name' => 'store_id',
-			    'display_name' => '门店id',
-			    'data_type' => 'int',
-			    'value' => 0,
-			    'category' => 1,
-			    'uid' => uuid(),
-		    ]);
+//		    $v2 = WorkFlowVariable::create([
+//			    'work_flow_id' => $wf->id,
+//			    'name' => 'store_id',
+//			    'display_name' => '门店id',
+//			    'data_type' => 'int',
+//			    'value' => 0,
+//			    'category' => 1,
+//			    'uid' => uuid(),
+//		    ]);
 
 		    $nf = WorkFlowNode::create([
 			    'work_flow_id' => $wf->id,

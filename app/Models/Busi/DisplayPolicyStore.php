@@ -98,7 +98,7 @@ class DisplayPolicyStore extends BaseModel
 		    $engine->startInstance('exp_display_policy_store', $sponsor,
 			    [
 				    'data' => $model,
-				    'store_id' => $model->fstore_id,
+//				    'store_id' => $model->fstore_id,
 				    'creator' => $sponsor->nick_name,
 				    'policy_sn' =>  $model->policy->fbill_no,
 				    'store_name' => $model->store->ffullname,
