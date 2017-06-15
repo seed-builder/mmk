@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Customer;
 
+use App\Services\Utility;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Customer\BaseController;
 use App\Models\Busi\FinStatement;
@@ -71,6 +72,18 @@ class FinStatementController extends BaseController
 		return parent::pagination($request, $searchCols, $with, function ($queryBuilder){
 			$queryBuilder->where('cust_id', Auth::user()->reference_id);
 		});
+	}
+
+	/**
+	 * 获取经销商账款余额接口
+	 */
+	public function getCustAmount(Request $request){
+		if(env('APP_DEBUG')){
+			return response(['data' => 100.10, 'code' => 200, 'msg' => '', 'success' => true]);
+		}
+		$cust_id = Auth::user()->reference_id;
+		$amount = Utility::getCustomerBalance($cust_id);
+		return response(['data' => $amount, 'code' => 200, 'msg' => '', 'success' => true]);
 	}
 
 }

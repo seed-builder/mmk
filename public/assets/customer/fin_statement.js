@@ -69,7 +69,14 @@ define(function(require, exports, module) {
                         })
                     })
                 }  },
-                // { text: '编辑', className: 'edit', enabled: false },
+                { text: '货款余额', className: 'edit', enabled: true, action: function () {
+                    $.getJSON("/customer/fin-statement/get-cust-amount",{}, function (res) {
+                        if (res.data) {
+                            // You can reload the current location
+                            layer.msg('货款余额:' + res.data);
+                        }
+                    })
+                } },
                 // { text: '删除', className: 'delete', enabled: false },
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},

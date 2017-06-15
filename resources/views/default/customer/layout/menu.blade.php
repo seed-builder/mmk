@@ -60,7 +60,7 @@ $customer = $user->reference;
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="{{url('/customer/fin-statement')}}"><i class="fa fa-database"></i>往来对账</a></li>
-                        <li><a href="{{url('/customer/fin')}}"><i class="fa fa-diamond"></i>货款余额</a></li>
+                        {{--<li><a href="{{url('/customer/fin')}}"><i class="fa fa-diamond"></i>货款余额</a></li>--}}
                     </ul>
                 </li>
                 <li class="treeview ">
