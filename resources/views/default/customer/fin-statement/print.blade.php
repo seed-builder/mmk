@@ -134,6 +134,7 @@ $dateMax = $items->max('bill_date');
                     </div>
 
                     <div class="box-footer">
+                        <a href="/customer/fin-statement" style="margin-left: 10px" class="btn btn-default pull-right">返回</a>
                         <button id="makePrint" type="button" class="btn btn-info pull-right">打印本页</button>
                     </div>
                 </div>
