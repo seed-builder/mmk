@@ -42,7 +42,7 @@ Artisan::command('test1', function () {
 	$db = new DbHelper();
 	$columns = $db->getColumns('fin_statements');
 	$builder = new CodeBuilder('FinStatement','fin_statements', $columns);
-	$builder->createFiles( 'admin','api','datatables');
+	$builder->createFiles( 'customer');
 	$this->comment('end ...');
 })->describe('philo blade test');
 
