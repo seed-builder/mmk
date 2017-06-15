@@ -2,7 +2,7 @@
 /**
 * @SWG\Resource(
 *  resourcePath="/work-flow-instance-variable",
-*  description="WorkFlowInstanceVariable"
+*  description="工作流实例变量"
 * )
 */
 Route::group(['prefix' => 'work-flow-instance-variable', 'middleware' => 'api.sign'], function () {
@@ -13,8 +13,8 @@ Route::group(['prefix' => 'work-flow-instance-variable', 'middleware' => 'api.si
     *     @SWG\Operation(
     *      method="GET",
     *      nickname="work-flow-instance-variable-list",
-    *      summary="page list",
-    *      notes="page list",
+    *      summary="工作流实例变量列表",
+    *      notes="工作流实例变量列表",
     *      type="array",
     *     items="$ref:WorkFlowInstanceVariable",
     *      @SWG\Parameters(
@@ -35,8 +35,8 @@ Route::group(['prefix' => 'work-flow-instance-variable', 'middleware' => 'api.si
     *     @SWG\Operation(
     *      method="GET",
     *      nickname="work-flow-instance-variable-show",
-    *      summary="信息详情",
-    *      notes="信息详情",
+    *      summary="工作流实例变量详情",
+    *      notes="工作流实例变量详情",
     *      type="WorkFlowInstanceVariable",
     *      @SWG\Parameters(
     *          @SWG\Parameter(name="id", description="id", required=true, type="integer", paramType="path", defaultValue="1"),
@@ -49,36 +49,12 @@ Route::group(['prefix' => 'work-flow-instance-variable', 'middleware' => 'api.si
 
     /**
     * @SWG\Api(
-    *     path="/api/work-flow-instance-variable",
-    *     @SWG\Operation(
-    *      method="POST",
-    *      nickname="work-flow-instance-variable-store",
-    *      summary="新增",
-    *      notes="新增",
-    *      type="WorkFlowInstanceVariable",
-    *      @SWG\Parameters(
-    *          @SWG\Parameter(name="created_at", description="", required=true,type="string", paramType="form", defaultValue="" ),
-                    *          @SWG\Parameter(name="name", description="变量名（英文）", required=false,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="uid", description="guid", required=false,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="updated_at", description="", required=true,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="value", description="变量值", required=true,type="string", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="work_flow_instance_id", description="", required=false,type="integer", paramType="form", defaultValue="" ),
-            *          @SWG\Parameter(name="work_flow_variable_id", description="", required=false,type="integer", paramType="form", defaultValue="" ),
-        *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
-    *      )
-    *  )
-    * )
-    */
-    Route::post('/', ['as' => 'WorkFlowInstanceVariable.store', 'uses' => 'WorkFlowInstanceVariableController@store']);
-
-    /**
-    * @SWG\Api(
     *     path="/api/work-flow-instance-variable/{id}",
     *     @SWG\Operation(
     *      method="POST",
     *      nickname="work-flow-instance-variable-update",
-    *      summary="更新",
-    *      notes="更新",
+    *      summary="更新工作流实例变量",
+    *      notes="更新工作流实例变量",
     *      type="WorkFlowInstanceVariable",
     *      @SWG\Parameters(
     *          @SWG\Parameter(name="created_at", description="", required=false,type="string", paramType="form", defaultValue="" ),
@@ -96,22 +72,5 @@ Route::group(['prefix' => 'work-flow-instance-variable', 'middleware' => 'api.si
     */
     Route::post('/{id}', ['as' => 'WorkFlowInstanceVariable.update', 'uses' => 'WorkFlowInstanceVariableController@update']);
 
-    /**
-    * @SWG\Api(
-    *     path="/api/work-flow-instance-variable/{id}",
-    *     @SWG\Operation(
-    *      method="DELETE",
-    *      nickname="work-flow-instance-variable-delete",
-    *      summary="删除",
-    *      notes="删除",
-    *      type="",
-    *      @SWG\Parameters(
-    *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="1" ),
-    *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="query", defaultValue="****")
-    *      )
-    *  )
-    * )
-    */
-    Route::delete('/{id}', ['as' => 'WorkFlowInstanceVariable.delete', 'uses' => 'WorkFlowInstanceVariableController@destroy']);
 
 });
