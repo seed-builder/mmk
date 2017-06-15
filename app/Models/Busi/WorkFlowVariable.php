@@ -26,7 +26,7 @@ class WorkFlowVariable extends Model
 	//
 	protected $table = 'work_flow_variables';
 	protected $guarded = ['id'];
-	protected $appends = ['value_obj'];
+
 
 	protected static function boot()
 	{
@@ -36,7 +36,5 @@ class WorkFlowVariable extends Model
 		});
 	}
 
-	public function getValueObjAttribute(){
-		return $this->value ? json_decode($this->value):null;
-	}
+
 }

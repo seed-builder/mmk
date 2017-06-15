@@ -25,6 +25,7 @@ class WorkFlowInstanceVariable extends Model
 	//
 	protected $table = 'work_flow_instance_variables';
 	protected $guarded = ['id'];
+	protected $appends = ['value_obj'];
 
 	public function definition(){
 		return $this->belongsTo(WorkFlowVariable::class, 'work_flow_variable_id');
@@ -32,6 +33,10 @@ class WorkFlowInstanceVariable extends Model
 
 	public function instance(){
 		return $this->belongsTo(WorkFlowInstance::class, 'work_flow_instance_id');
+	}
+
+	public function getValueObjAttribute(){
+		return $this->value ? json_decode($this->value):null;
 	}
 
 	protected static function boot()
