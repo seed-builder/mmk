@@ -34,7 +34,8 @@ class Task
 	public function getObservableEvents()
 	{
 		return [
-			'data_received',
+			'task_data_receiving',
+			'task_data_received',
 			'task_processed',
 			'task_terminating',
 			'task_terminated',
@@ -72,10 +73,13 @@ class Task
 
 	public function receive($variables){
 		$this->variables = $variables;
+		if ($this->fireEvent('task_data_receiving', true) === false) {
+			return false;
+		}
 		if(array_key_exists('remark', $variables)){
 			$this->task->update(['remark' => $variables['remark']]);
 		}
-		$this->fireEvent('data_received', false);
+		$this->fireEvent('task_data_received', false);
 	}
 
 	/**
@@ -85,18 +89,18 @@ class Task
 	 */
 	public function process($variables){
 		//$nextTasks = [];
+		$this->receive($variables);
 		DB::beginTransaction();
 		try {
-			$this->receive($variables);
 			//更新当前执行日志状态数据 为已经执行
 			$this->task->update(['status' => 1]);
 			$nextLinks = $this->findNextLinks($this->task->node);
 			$this->nextTasks = $this->createNextTasks($this->task, $nextLinks);
 			DB::commit();
-			$this->fireEvent('task_processed', false);
 		} catch (Exception $e) {
 			DB::rollback();
 		}
+		$this->fireEvent('task_processed', false);
 		//return $nextTasks;
 	}
 
@@ -277,8 +281,12 @@ class Task
 		return $rightLinks;
 	}
 
+	public static function dataReceiving($callback){
+		static::registerEvent('task_data_receiving', $callback);
+	}
+
 	public static function dataReceived($callback){
-		static::registerEvent('data_received', $callback);
+		static::registerEvent('task_data_received', $callback);
 	}
 
 	public static function terminated($callback){

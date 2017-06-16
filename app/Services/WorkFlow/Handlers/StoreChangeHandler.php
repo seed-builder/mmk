@@ -72,4 +72,9 @@ class StoreChangeHandler implements IEngineHandler
 		// TODO: Implement terminating() method.
 		return true;
 	}
+
+	public function variablesSaving(Instance $instance, $variables)
+	{
+		// TODO: Implement variablesSaving() method.
+	}
 }

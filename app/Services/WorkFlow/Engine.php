@@ -54,6 +54,19 @@ class Engine
 		Instance::setEventDispatcher($dispatcher);
 		Task::setEventDispatcher($dispatcher);
 
+		Task::dataReceiving(function (Task $task){
+			$variables = $task->getVariables();
+			//LogSvr::task()->info(json_encode($variables));
+			$instance = new Instance();
+			$instance->init($task->work_flow_instance_id);
+			$wfInstance = $instance->getWorkFlowInstance();
+			$handlerName = $wfInstance->workflow->name;
+			$handler = static::getHandler($handlerName);
+			if($handler != null){
+				$handler->variablesSaving($instance, $variables);
+			}
+		});
+
 		Task::dataReceived(function (Task $task){
 			$variables = $task->getVariables();
 			//LogSvr::task()->info(json_encode($variables));
@@ -135,26 +148,10 @@ class Engine
 			//LogSvr::engine()->info('variables-saved');
 			$wfInstance = $instance->getWorkFlowInstance();
 			$handlerName = $wfInstance->workflow->name;
-			if(array_key_exists($handlerName, static::$handlers)){
-				$handlerClass = static::$handlers[$handlerName];
-				$reflect = new ReflectionClass($handlerClass);
-				$handler = $reflect->newInstance();
+			$handler = static::getHandler($handlerName);
+			if($handler != null){
 				$handler->variablesSaved( $instance );
 			}
-//			if($wfInstance->workflow->name == 'store-change') {
-//				//保存变量
-//				$store_change_list = $wfInstance->variables()->where('name', 'store_change_list')->first();
-//				if (!empty($store_change_list)) {
-//					//LogSvr::engine()->info('variables-saved, value: ' . $store_change_list->value);
-//					$data = json_decode($store_change_list->value, true);
-//					unset($data['customer']);
-//					unset($data['employee']);
-//					unset($data['line']);
-//					$storeChange = StoreChange::find($data['id']);
-//					$storeChange->fill($data);
-//					$storeChange->save();
-//				}
-//			}
 		});
 
 		/**
@@ -164,39 +161,10 @@ class Engine
 			//LogSvr::engine()->info('Instance terminated');
 			$wfInstance = $instance->getWorkFlowInstance();
 			$handlerName = $wfInstance->workflow->name;
-			if(array_key_exists($handlerName, static::$handlers)){
-				$handlerClass = static::$handlers[$handlerName];
-				$reflect = new ReflectionClass($handlerClass);
-				$handler = $reflect->newInstance();
+			$handler = static::getHandler($handlerName);
+			if($handler != null){
 				$handler->terminated( $instance );
 			}
-
-//			if($wfInstance->workflow->name == 'store-change') {
-//				if ($wfInstance->status == 1) {
-//					//正常审批结束
-//					$store_change_list = $wfInstance->variables()->where('name', 'store_change_list')->first();
-//					if (!empty($store_change_list)) {
-//						$data = json_decode($store_change_list->value, true);
-//						$store = Store::find($data['fstore_id']);
-//						unset($data['fstore_id']);
-//						unset($data['id']);
-//						unset($data['remark']);
-//						unset($data['type']);
-//						unset($data['change_reason']);
-//						unset($data['customer']);
-//						unset($data['employee']);
-//						unset($data['line']);
-//						$data['fdocument_status'] = 'C'; //审核状态通过
-////						$data['fforbid_status'] = 'A';
-//						$store->fill($data);
-//						$store->save();
-//						//审批通过，则生成拜访日志
-//						$calendar = new VisitCalendarService();
-//						$calendar->byStore($store);
-//						//LogSvr::engine()->info('save store');
-//					}
-//				}
-//			}
 		});
 
 	}
@@ -280,5 +248,17 @@ class Engine
 		$this->task->getCurrentTask()->update(['approver_id' => $userId]);
 	}
 
-
+	/**
+	 * @param $handlerName
+	 * @return \App\Services\WorkFlow\IEngineHandler
+	 */
+	public static function getHandler($handlerName){
+		$handler = null;
+		if(array_key_exists($handlerName, static::$handlers)){
+			$handlerClass = static::$handlers[$handlerName];
+			$reflect = new ReflectionClass($handlerClass);
+			$handler = $reflect->newInstance();
+		}
+		return $handler;
+	}
 }

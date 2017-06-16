@@ -162,7 +162,17 @@ class Instance
 			foreach ($variables as $name => $value){
 				$variable = $this->work_flow_instance->variables()->where('name', $name)->first();
 				if(!empty($variable)){
-					$variable->update(['value' => json_encode($value)]);
+					$origValArr = json_decode($variable->value, true);
+					if(is_array($origValArr)) {
+						foreach ($value as $p => $v) {
+							if(array_key_exists($p, $origValArr)){
+								$origValArr[$p] = $v;
+							}
+						}
+						$variable->update(['value' => json_encode($value)]);
+					}else{
+						$variable->update(['value' =>$value]);
+					}
 				} else {
 					$variable = WorkFlowVariable::where('work_flow_id', $this->work_flow_instance->work_flow_id)
 						->where('name', $name)
