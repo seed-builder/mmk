@@ -260,5 +260,25 @@ class Engine
 		return $this->instance->saveVariables($variables);
 	}
 
+	/**
+	 * 恢复任务，流程
+	 * @param $taskId
+	 * @param $userId
+	 */
+	public function resume($taskId, $userId){
+		$this->task->init($taskId);
+		$this->task->resume($userId);
+	}
+
+	/**
+	 * 转移
+	 * @param $taskId
+	 * @param $userId
+	 */
+	public function transfer($taskId, $userId){
+		$this->task->init($taskId);
+		$this->task->getCurrentTask()->update(['approver_id' => $userId]);
+	}
+
 
 }
