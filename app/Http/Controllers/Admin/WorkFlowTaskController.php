@@ -110,7 +110,7 @@ class WorkFlowTaskController extends AdminController
 			{
 				$query->where('work_flow_tasks.approver_id', $user->id);
 			}
-			$query->where('work_flow_tasks.status' , 1);
+			$query->where('work_flow_tasks.status' , 1)->where('action', '!=', 'start');
 		}, true);
 	}
 
@@ -151,5 +151,25 @@ class WorkFlowTaskController extends AdminController
 		return $this->success(['success' => 1]);
 	}
 
+	/**
+	 * 挂起的任务
+	 * @param Request $request
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+	 */
+	public function suspend(Request $request){
+		return view('admin.work-flow-task.suspend');
+	}
+
+	public function suspendPagination(Request $request){
+		$searchCols = ["work_flow_instances.bill_no","work_flow_instances.title","work_flow_instances.sponsor", "work_flows.desc"];
+		return parent::pagination($request, $searchCols, [], function ($query){
+//			$user = Auth::user();
+//			if(!$user->isAdmin())
+//			{
+//				$query->where('work_flow_tasks.approver_id', $user->id);
+//			}
+			$query->where('work_flow_tasks.status' , 4);
+		}, true);
+	}
 
 }

@@ -209,4 +209,50 @@ define(function(require, exports, module) {
         //     table.buttons( ['.edit', '.delete'] ).enable(count > 0);
         // }
     }
+
+    exports.suspend = function ($, tableId) {
+        var table = $("#" + tableId).DataTable({
+            dom: "lBfrtip",
+            language: zhCN,
+            processing: true,
+            serverSide: true,
+            select: true,
+            paging: true,
+            rowId: "id",
+            ajax: '/admin/work-flow-task/suspend-pagination',
+            columns: [
+                {  'data': 'id' },
+                {  'data': 'desc' },
+                {  'data': 'bill_no' },
+                {  'data': 'title' },
+                {  'data': 'sponsor' },
+                {  'data': 'created_at' },
+                {  'data': 'updated_at' },
+            ],
+            order: [[ 5, 'desc' ]],
+            buttons: [
+                { text: '移交', className: 'transfer', enabled: false, action: function () {
+
+                }  },
+                // { text: '编辑', className: 'edit', enabled: false },
+                // { text: '删除', className: 'delete', enabled: false },
+                {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
+                {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
+                //{extend: 'colvis', text: '列显示'}
+            ],
+            columnDefs: [
+                {
+                    "targets": [0],
+                    "visible": false
+                }
+            ]
+        });
+
+        table.on( 'select', checkBtn).on( 'deselect', checkBtn);
+
+        function checkBtn(e, dt, type, indexes) {
+            var count = table.rows( { selected: true } ).count();
+            table.buttons( ['.transfer'] ).enable(count > 0);
+        }
+    }
 });
