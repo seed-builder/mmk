@@ -39,7 +39,7 @@ Route::group(['prefix' => 'work-flow-task', 'middleware' => 'api.sign'], functio
     *      notes="信息详情",
     *      type="Attendance",
     *      @SWG\Parameters(
-    *          @SWG\Parameter(name="id", description="id", required=true, type="integer", paramType="path", defaultValue="1"),
+    *          @SWG\Parameter(name="id", description="任务id", required=true, type="integer", paramType="path", defaultValue="1"),
     *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="query", defaultValue="****")
     *      )
     *  )
@@ -58,7 +58,7 @@ Route::group(['prefix' => 'work-flow-task', 'middleware' => 'api.sign'], functio
 	 *      type="",
 	 *      @SWG\Parameters(
 	 *          @SWG\Parameter(name="variables", description="变量（数组的json格式）", required=false,type="string", paramType="form", defaultValue="{&quot;store_change_list&quot;:{&quot;remark&quot;:&quot;同意，审批通过&quot;}}" ),
-	 *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="" ),
+	 *          @SWG\Parameter(name="id", description="任务id", required=true,type="integer", paramType="path", defaultValue="" ),
 	 *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
 	 *      )
 	 *  )
@@ -77,7 +77,7 @@ Route::group(['prefix' => 'work-flow-task', 'middleware' => 'api.sign'], functio
 	 *      type="",
 	 *      @SWG\Parameters(
 	 *          @SWG\Parameter(name="variables", description="变量（数组的json格式）", required=false,type="string", paramType="form", defaultValue="{&quot;store_change_list&quot;:{&quot;remark&quot;:&quot;同意，审批通过&quot;}}" ),
-	 *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="" ),
+	 *          @SWG\Parameter(name="id", description="任务id", required=true,type="integer", paramType="path", defaultValue="" ),
 	 *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
 	 *      )
 	 *  )
@@ -95,7 +95,7 @@ Route::group(['prefix' => 'work-flow-task', 'middleware' => 'api.sign'], functio
 	 *      notes="批量审批通过",
 	 *      type="",
 	 *      @SWG\Parameters(
-	 *          @SWG\Parameter(name="ids", description="多个id,逗号隔开", required=false,type="string", paramType="form", defaultValue="15,16" ),
+	 *          @SWG\Parameter(name="ids", description="多个任务id,逗号隔开", required=false,type="string", paramType="form", defaultValue="15,16" ),
 	 *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
 	 *      )
 	 *  )
@@ -113,7 +113,7 @@ Route::group(['prefix' => 'work-flow-task', 'middleware' => 'api.sign'], functio
 	 *      notes="批量审批不通过",
 	 *      type="",
 	 *      @SWG\Parameters(
-	 *          @SWG\Parameter(name="ids", description="多个id,逗号隔开", required=false,type="string", paramType="form", defaultValue="15,16" ),
+	 *          @SWG\Parameter(name="ids", description="多个任务id,逗号隔开", required=false,type="string", paramType="form", defaultValue="15,16" ),
 	 *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
 	 *      )
 	 *  )
