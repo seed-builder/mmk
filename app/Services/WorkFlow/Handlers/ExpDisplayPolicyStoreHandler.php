@@ -20,6 +20,9 @@ class ExpDisplayPolicyStoreHandler implements IEngineHandler
 {
 	public function variablesSaving(Instance $instance, $variables)
 	{
+		if(empty($variables))
+			return ;
+
 		$data = $variables['data'];
 		$suc = true;
 		$err = '';
