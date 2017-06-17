@@ -26,7 +26,7 @@ class ExpDisplayPolicyStoreHandler implements IEngineHandler
 		$entity = DisplayPolicyStore::find($data['id']);
 		$policy = DisplayPolicy::find($entity->fpolicy_id);
 
-		if($suc && $entity->fsign_store_num <= $entity->fsign_store_num){//执行门店总数小于或者等于签约门店总数 ！防止超签
+		if($suc && $policy->fsign_store_num >= $policy->fact_store_num){//执行门店总数小于或者等于签约门店总数 ！防止超签
 			$err = '政策执行门店总数已达到上限，审核失败！';
 			$suc = false;
 		}
