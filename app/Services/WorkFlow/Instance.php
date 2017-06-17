@@ -169,7 +169,7 @@ class Instance
 								$origValArr[$p] = $v;
 							}
 						}
-						$variable->update(['value' => json_encode($value)]);
+						$variable->update(['value' => json_encode($origValArr)]);
 					}else{
 						$variable->update(['value' =>$value]);
 					}
