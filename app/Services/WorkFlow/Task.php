@@ -89,6 +89,9 @@ class Task
 	 */
 	public function process($variables){
 		//$nextTasks = [];
+		if($this->task->status == 1)
+			return;
+
 		$this->receive($variables);
 		DB::beginTransaction();
 		try {
