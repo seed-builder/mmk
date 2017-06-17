@@ -59,8 +59,8 @@ class ExpDisplayPolicyStoreHandler implements IEngineHandler
 			//正常审批结束
 			$data = $wfInstance->variables()->where('name', 'data')->first();
 			if (!empty($data)) {
-				$obj = json_decode($data->value, true);
-				$store = DisplayPolicyStore::find($obj['id']);
+				$obj = json_decode($data->value);
+				$store = DisplayPolicyStore::find($obj->id);
 				$store->fdocument_status = 'C'; //审核状态通过
 				$store->fcheck_amount = $obj->fcheck_amount;
 				$store->fstatus = 1;
