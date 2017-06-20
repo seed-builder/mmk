@@ -163,6 +163,9 @@ class Store extends BaseModel
 	    });
 
 	    static::saving(function ($store) {
+	    	if(empty($store->id))
+	    		return;
+
 		    //LogSvr::storeUpdate()->info(json_encode($store));
 		    $old = Store::find($store->id);
 		    if($old->fpostalcode != $store->fpostalcode){
