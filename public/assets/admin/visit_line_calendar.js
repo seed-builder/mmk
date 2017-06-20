@@ -220,7 +220,20 @@ define(function(require, exports, module) {
                     }
                 },
                 {
-                    "data": "fdate"
+                    "data": "fdate",
+                    render: function ( data, type, full ) {
+                        if (full.fstatus==1)
+                            return data
+                        else if (full.fstatus==2){
+                            return full.fmodify_date
+                        }else if (full.fstatus==3){
+                            if (full.begin!=null)
+                                return full.begin+'至'+full.fmodify_date
+                            else
+                                return full.fmodify_date
+                        }
+
+                    }
                 },
                 {
                     "data": 'fstatus',

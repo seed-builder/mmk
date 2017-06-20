@@ -52,6 +52,19 @@ $customer = $user->reference;
                 </li>
                 <li class="treeview ">
                     <a href="#">
+                        <i class="fa fa-fw fa-sitemap"></i>
+                        <span>对账平台</span>
+                        <span class="pull-right-container">
+                              <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="{{url('/customer/fin-statement')}}"><i class="fa fa-database"></i>往来对账</a></li>
+                        {{--<li><a href="{{url('/customer/fin')}}"><i class="fa fa-diamond"></i>货款余额</a></li>--}}
+                    </ul>
+                </li>
+                <li class="treeview ">
+                    <a href="#">
                         <i class="fa fa-comments"></i>
                         <span>消息管理</span>
                         <span class="pull-right-container">

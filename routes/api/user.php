@@ -75,7 +75,7 @@ Route::group(['prefix' => 'user', 'middleware' => 'api.sign'], function () {
     * @SWG\Api(
     *     path="/api/user/{id}",
     *     @SWG\Operation(
-    *      method="PUT",
+    *      method="POST",
     *      nickname="user-update",
     *      summary="更新",
     *      notes="更新",
@@ -94,7 +94,7 @@ Route::group(['prefix' => 'user', 'middleware' => 'api.sign'], function () {
     *  )
     * )
     */
-    Route::put('/{id}', ['as' => 'User.update', 'uses' => 'UserController@update']);
+    Route::post('/{id}', ['as' => 'User.update', 'uses' => 'UserController@update']);
 
     /**
     * @SWG\Api(
@@ -107,11 +107,85 @@ Route::group(['prefix' => 'user', 'middleware' => 'api.sign'], function () {
     *      type="",
     *      @SWG\Parameters(
     *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="1" ),
-    *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
+    *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="query", defaultValue="****")
     *      )
     *  )
     * )
     */
     Route::delete('/{id}', ['as' => 'User.delete', 'uses' => 'UserController@destroy']);
+
+	/**
+	 * @SWG\Api(
+	 *   path="/api/user/login",
+	 *   @SWG\Operation(
+	 *      method="POST",
+	 *      nickname="user-login",
+	 *      summary="用户登陆",
+	 *      notes="用户登陆",
+	 *      type="User",
+	 *      @SWG\Parameters(
+	 *          @SWG\Parameter(
+	 *              name="phone",
+	 *              description="电话号码",
+	 *              required=true,
+	 *              type="string",
+	 *              paramType="query",
+	 *              defaultValue="1387777777"
+	 *          ),
+	 *          @SWG\Parameter(
+	 *              name="password",
+	 *              description="密码",
+	 *              required=true,
+	 *              type="string",
+	 *              paramType="query",
+	 *              defaultValue="123456"
+	 *          ),
+	 *         @SWG\Parameter(
+	 *              name="type",
+	 *              description="类型(employee--员工, customer--经销商)",
+	 *              required=true,
+	 *              type="string",
+	 *              paramType="query",
+	 *              defaultValue="customer"
+	 *          ),
+	 *          @SWG\Parameter(
+	 *              name="_sign",
+	 *              description="签名",
+	 *              required=true,
+	 *              type="string",
+	 *              paramType="query",
+	 *              defaultValue="09af6226a3643ea393622c67aedb9908"
+	 *          )
+	 *      ),
+	 *      @SWG\ResponseMessages(
+	 *          @SWG\ResponseMessage(code=401, message="签名验证错误！"),
+	 *          @SWG\ResponseMessage(code=200, message="成功。")
+	 *      )
+	 *   )
+	 * )
+	 */
+	Route::post('/login', ['as' => 'User.Login', 'uses' => 'UserController@login']);
+
+	//changePwd
+	/**
+	 * @SWG\Api(
+	 *     path="/api/user/change-pwd",
+	 *     @SWG\Operation(
+	 *      method="POST",
+	 *      nickname="change-pwd",
+	 *      summary="修改密码",
+	 *      notes="修改密码",
+	 *      type="",
+	 *      @SWG\Parameters(
+	 *          @SWG\Parameter(name="phone", description="手机号", required=true,type="string", paramType="form", defaultValue="" ),
+				@SWG\Parameter(name="password", description="密码", required=true,type="string", paramType="form", defaultValue="" ),
+				@SWG\Parameter(name="code", description="验证码", required=true,type="string", paramType="form", defaultValue="" ),
+	 *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
+	 *      )
+	 *  )
+	 * )
+	 */
+	Route::post('/change-pwd', ['as' => 'User.changePwd', 'uses' => 'UserController@changePwd']);
+
 
 });

@@ -143,7 +143,7 @@ class MessageContentController extends AdminController
             $emp_ids = $users->where('reference_type', 'employee')->pluck('id')->toArray();
 
             $this->sendMessage($users_ids, $data['message_content_id']);
-            $this->sendApp($emp_ids, $data['message_content_id']);
+            $this->sendApp($users_ids, $data['message_content_id']);
         } else {
             $users = [];
             if (!empty($data['fcust_ids'])) {
@@ -161,7 +161,7 @@ class MessageContentController extends AdminController
                     $employees = User::query()->where('reference_type', 'employee')->whereIn('reference_id', $emp_ids)->pluck('id')->toArray();
                     $users = array_merge($users, $employees);
 
-                    $this->sendApp($emp_ids, $data['message_content_id']);
+                    $this->sendApp($users, $data['message_content_id']);
                 }
             }
             $users = array_unique($users);

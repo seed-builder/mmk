@@ -69,9 +69,26 @@ class KingdeeWorker extends DbWorker
 	protected function sendData($table, $op, $data, $cookie_jar = null){
 		$arr = ['parameters' => [$table, $op, json_encode($data)]];
 		//var_dump(json_encode($arr));
-		LogSvr::KingdeeSync()->info('data Url : ' . $this->dataUrl);
-		LogSvr::KingdeeSync()->info('data : ' . json_encode($arr));
+//		LogSvr::KingdeeSync()->info('data Url : ' . $this->dataUrl);
+//		LogSvr::KingdeeSync()->info('data : ' . json_encode($arr));
 		return $this->httpPost($this->dataUrl, $arr, 0, $cookie_jar);
+	}
+
+	public function post($url, $data){
+		LOGIN:
+		$cookie_jar = tempnam('./tmp', 'CloudSession');
+		$re = $this->login($cookie_jar);
+		LogSvr::KingdeeSync()->info('login result : ' . $re);
+		//if(!empty($re))
+
+		$result = $this->httpPost($url, $data, 0, $cookie_jar);
+		LogSvr::KingdeeSync()->info('$result  : ' . $result);
+		$resArr = json_decode($result, true);
+		if($resArr['Result'] == 0 && $resArr['Msg'] == '请先登录'){
+			LogSvr::KingdeeSync()->info('跳转到登录');
+			goto LOGIN;
+		}
+		return $resArr;
 	}
 
 //	public function sync($table, $op, $data){

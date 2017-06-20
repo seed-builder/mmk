@@ -87,7 +87,7 @@ define(function(require, exports, module) {
 
     };
 
-    exports.todo = function ($, tableId) {
+    exports.todo = function ($, tableId, userTable) {
         var table = $("#" + tableId).DataTable({
             dom: "lBfrtip",
             language: zhCN,
@@ -103,6 +103,7 @@ define(function(require, exports, module) {
                 {  'data': 'bill_no' },
                 {  'data': 'title' },
                 {  'data': 'sponsor' },
+                {  'data': 'approver' },
                 {  'data': 'created_at' },
                 {  'data': 'updated_at' },
             ],
@@ -141,8 +142,10 @@ define(function(require, exports, module) {
                         }
                     });
                 }  },
-                { text: '审批详情',  className: 'info', enabled: false, action: function () {
-
+                { text: '移交', className: 'transfer', enabled: false, action: function () {
+                    $('#chooseUserDialog').modal('show');
+                    usertable.rows().deselect();
+                    usertable.ajax.reload();
                 }  },
                 // { text: '编辑', className: 'edit', enabled: false },
                 // { text: '删除', className: 'delete', enabled: false },
@@ -162,8 +165,76 @@ define(function(require, exports, module) {
 
         function checkBtn(e, dt, type, indexes) {
             var count = table.rows( { selected: true } ).count();
-            table.buttons( ['.agree', '.disagree', '.info'] ).enable(count > 0);
+            table.buttons( ['.agree', '.disagree', '.info', '.transfer'] ).enable(count > 0);
         }
+
+        var usertable = $("#" + userTable).DataTable({
+            dom: "frtip",
+            language: zhCN,
+            processing: true,
+            serverSide: true,
+            select: {
+                style: 'single'
+            },
+            paging: true,
+            rowId: "id",
+            ajax: {
+                url: '/admin/user/pagination',
+                data : function (data) {
+                    data.columns[3]['search']['value'] = 'employee';
+                    data.columns[4]['search']['value'] = 1;
+                }
+            },
+            columns: [
+                {  'data': 'id',render: function (data, type, full) {
+                    return '<input type="checkbox" class="editor-active" value="' + data + '">';
+                },
+                    className: "dt-body-center"
+                },
+                {  'data': 'name' },
+                {  'data': 'nick_name' },
+                {  'data': 'reference_type' },
+                {  'data': 'status' },
+            ],
+            columnDefs: [
+                {
+                    'targets': 0,
+                    'checkboxes': {
+                        'selectRow': true
+                    }
+                },
+                {
+                    "targets": [3,4],
+                    "visible": false
+                }
+            ],
+        });
+
+        $('#transferBtn').click(function () {
+            var count = usertable.rows( { selected: true } ).count();
+            if(count > 0){
+                layer.confirm('确定移交 ?', ['确定','取消'], function () {
+                    var task = table.rows( { selected: true } ).data()[0];
+                    var user = usertable.rows( { selected: true } ).data()[0];
+                    $.post('/admin/work-flow-task/transfer',
+                        {
+                            _token: $('meta[name="_token"]').attr('content'),
+                            taskId: task.id,
+                            userId: user.id
+                        }, function (res) {
+                            if(res.cancelled == 0){
+                                layer.msg('移交任务成功!');
+                                $('#chooseUserDialog').modal('hide');
+                                table.ajax.reload();
+                            }
+                        }
+                    );
+                })
+            }else{
+                layer.alert('请选择移交人');
+            }
+        })
+
     }
 
     exports.done = function ($, tableId) {
@@ -208,5 +279,120 @@ define(function(require, exports, module) {
         //     var count = table.rows( { selected: true } ).count();
         //     table.buttons( ['.edit', '.delete'] ).enable(count > 0);
         // }
+    }
+
+    exports.suspend = function ($, tableId, userTable) {
+        var table = $("#" + tableId).DataTable({
+            dom: "lBfrtip",
+            language: zhCN,
+            processing: true,
+            serverSide: true,
+            select: true,
+            paging: true,
+            rowId: "id",
+            ajax: '/admin/work-flow-task/suspend-pagination',
+            columns: [
+                {  'data': 'id' },
+                {  'data': 'desc' },
+                {  'data': 'bill_no' },
+                {  'data': 'title' },
+                {  'data': 'sponsor' },
+                {  'data': 'created_at' },
+                {  'data': 'updated_at' },
+            ],
+            order: [[ 5, 'desc' ]],
+            buttons: [
+                { text: '移交恢复', className: 'transfer', enabled: false, action: function () {
+                    $('#chooseUserDialog').modal('show');
+                    usertable.rows().deselect();
+                    usertable.ajax.reload();
+                }  },
+                // { text: '编辑', className: 'edit', enabled: false },
+                // { text: '删除', className: 'delete', enabled: false },
+                {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
+                {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
+                //{extend: 'colvis', text: '列显示'}
+            ],
+            columnDefs: [
+                {
+                    "targets": [0],
+                    "visible": false
+                }
+            ]
+        });
+
+        table.on( 'select', checkBtn).on( 'deselect', checkBtn);
+
+        function checkBtn(e, dt, type, indexes) {
+            var count = table.rows( { selected: true } ).count();
+            table.buttons( ['.transfer'] ).enable(count > 0);
+        }
+
+        var usertable = $("#" + userTable).DataTable({
+            dom: "frtip",
+            language: zhCN,
+            processing: true,
+            serverSide: true,
+            select: {
+                style: 'single'
+            },
+            paging: true,
+            rowId: "id",
+            ajax: {
+                url: '/admin/user/pagination',
+                data : function (data) {
+                    data.columns[3]['search']['value'] = 'employee';
+                    data.columns[4]['search']['value'] = 1;
+                }
+            },
+            columns: [
+                {  'data': 'id',render: function (data, type, full) {
+                        return '<input type="checkbox" class="editor-active" value="' + data + '">';
+                    },
+                    className: "dt-body-center"
+                },
+                {  'data': 'name' },
+                {  'data': 'nick_name' },
+                {  'data': 'reference_type' },
+                {  'data': 'status' },
+            ],
+            columnDefs: [
+                {
+                    'targets': 0,
+                    'checkboxes': {
+                        'selectRow': true
+                    }
+                },
+                {
+                    "targets": [3,4],
+                    "visible": false
+                }
+            ],
+        });
+
+        $('#transferBtn').click(function () {
+            var count = usertable.rows( { selected: true } ).count();
+           if(count > 0){
+               layer.confirm('确定移交恢复?', ['确定','取消'], function () {
+                    var task = table.rows( { selected: true } ).data()[0];
+                    var user = usertable.rows( { selected: true } ).data()[0];
+                    $.post('/admin/work-flow-task/resume',
+                        {
+                            _token: $('meta[name="_token"]').attr('content'),
+                            taskId: task.id,
+                            userId: user.id
+                        }, function (res) {
+                            if(res.cancelled == 0){
+                                layer.msg('移交恢复任务成功!');
+                                $('#chooseUserDialog').modal('hide');
+                                table.ajax.reload();
+                            }
+                        }
+                    );
+               })
+           }else{
+               layer.alert('请选择移交人');
+           }
+        })
     }
 });

@@ -57,7 +57,7 @@ Route::group(['prefix' => 'sys-config', 'middleware' => 'api.sign'], function ()
 	 *      notes="系统配置信息详情",
 	 *      type="Attendance",
 	 *      @SWG\Parameters(
-	 *          @SWG\Parameter(name="name", description="id", required=true, type="string", paramType="path", defaultValue="sale-variable"),
+	 *          @SWG\Parameter(name="name", description="name(sale-variable -- 建议销售系数, store-visit-distance -- 门店拜访控制距离(单位米))", required=true, type="string", paramType="path", defaultValue="sale-variable"),
 	 *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="query", defaultValue="****")
 	 *      )
 	 *  )

@@ -53,6 +53,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @SWG\Property(name="ftrading_curr_id", type="string", description="结算币别")
  * @SWG\Property(name="fwebsite", type="string", description="公司网址")
  * @SWG\Property(name="fzip", type="string", description="邮政编码")
+ * @SWG\Property(name="flongitude", type="string", description="百度地图经度")
+ * @SWG\Property(name="flatitude", type="string", description="百度地图纬度")
+ * @SWG\Property(name="fstock_address", type="string", description="库存地址")
+ * @SWG\Property(name="fcheck_limit", type="integer", description="限制盘点位置距离（0-不限制，单位：米")
  * @SWG\Property(name="id", type="integer", description="")
  */
 class Customer extends Authenticatable
@@ -86,8 +90,9 @@ class Customer extends Authenticatable
 			if(!empty($customer->ftel)) {
 				$customer->user()->create([
 					'name' => $customer->ftel,
-					'password' => bcrypt('888888'),
-					'status' => 0
+					'password' => md5('888888'),
+					'status' => 1,
+					'nick_name' => $customer->fname,
 				]);
 			}
 		});
@@ -98,9 +103,21 @@ class Customer extends Authenticatable
 			event(new ModelUpdatedEvent($model));
 			if( !empty($model->user) ) {
 				if ($model->fforbid_status == 'A') {
-					$model->user->update(['status' => 1]);
+					$model->user->update([
+						'status' => 1,
+						'name' => $model->ftel,
+						//'password' => md5('888888'),
+						'status' => 1,
+						'nick_name' => $model->fname,
+					]);
 				}else{
-					$model->user->update(['status' => 0]);
+					$model->user->update([
+						'status' => 0,
+						'name' => $model->ftel,
+						//'password' => md5('888888'),
+						'status' => 1,
+						'nick_name' => $model->fname,
+					]);
 				}
 			}
 		});
@@ -132,22 +149,25 @@ class Customer extends Authenticatable
 	}
 
 	public function stock_ins(){
-		return $this->hasManyThrough(StockIn::class, Store::class, 'fcust_id', 'fstore_id')
-			->select([
-				'st_stock_ins.id',
-				'st_stock_ins.fbill_no',
-				'st_stock_ins.fsend_date',
-				'st_stock_ins.fin_date',
-				'st_stock_ins.fcust_id',
-				'st_stock_ins.fsend_status',
-				'st_stock_ins.fuser_id',
-				'st_stock_ins.fdocument_status',
-			]);
+//		return $this->hasManyThrough(StockIn::class, Store::class, 'fcust_id', 'fstore_id')
+//			->select([
+//				'st_stock_ins.id',
+//				'st_stock_ins.fbill_no',
+//				'st_stock_ins.fsend_date',
+//				'st_stock_ins.fin_date',
+//				'st_stock_ins.fcust_id',
+//				'st_stock_ins.fsend_status',
+//				'st_stock_ins.fuser_id',
+//				'st_stock_ins.fdocument_status',
+//			]);
+		return $this->hasMany(StockIn::class, 'fcust_id');
 	}
 
 	public function stock_outs(){
-		return $this->hasManyThrough(StockOut::class, Store::class, 'fcust_id', 'fstore_id');
+//		return $this->hasManyThrough(StockOut::class, Store::class, 'fcust_id', 'fstore_id');
+		return $this->hasMany(StockOut::class, 'fcust_id');
 	}
+
 
 	public function department(){
 		return $this->belongsTo(Department::class, 'fsale_area_id');

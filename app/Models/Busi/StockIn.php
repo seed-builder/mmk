@@ -3,6 +3,7 @@
 namespace App\Models\Busi;
 
 use App\Models\User;
+use App\Services\MessageService;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -39,6 +40,10 @@ class StockIn extends BaseModel
         return $this->hasOne(User::class,'id','fuser_id');
     }
 
+    public function items(){
+    	return $this->hasMany(StockInItem::class, 'fstock_in_id');
+    }
+
 	/**
 	 *
 	 */
@@ -54,6 +59,19 @@ class StockIn extends BaseModel
 					->count();
 				$count ++;
 				$model->fbill_no = $store->fnumber . date('Ymd') . sprintf('%02d',$count);
+			}
+		});
+
+		static::created(function ($model){
+			if(!empty($model->customer) && !empty($model->customer->user)) {
+				MessageService::Instance()->systemSend(
+					$model->customer->user->id,
+					'您有一条到货确认消息',
+					'您有一条到货确认消息',
+					false,
+					$model->id,
+					'stock_in'
+				);
 			}
 		});
 

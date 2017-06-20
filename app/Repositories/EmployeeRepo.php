@@ -24,11 +24,13 @@ class EmployeeRepo extends Repo
 			return $this->fail('该号码不存在！');
 		}
 		$device_sn = trim($loginData['device_sn']);
-		if ($phone != '13000000000') {
+
+		if (!env('APP_DEBUG') && $phone != '13000000000') {
 			if (!empty($device_sn) && $sn != $device_sn) {
 				return $this->fail('设备号不一致！');
 			}
 		}
+
 		if ($pwd == $loginData['fpassword']) {
 			event(new EmployeeLoginedEvent($loginData['id'], $device, $sn));
 			if(empty($device_sn)) {

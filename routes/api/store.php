@@ -73,10 +73,11 @@ Route::group(['prefix' => 'store', 'middleware' => 'api.sign'], function () {
      *     @SWG\Operation(
      *      method="POST",
      *      nickname="store-store",
-     *      summary="新增门店",
-     *      notes="新增门店",
+     *      summary="新增门店（工作流）",
+     *      notes="新增门店（工作流）",
      *      type="",
      *      @SWG\Parameters(
+     *          @SWG\Parameter(name="fcreator_id", description="创建人id", required=true,type="integer", paramType="form", defaultValue="0" ),
      *          @SWG\Parameter(name="faccountnum", description="账户", required=false,type="string", paramType="form", defaultValue="" ),
                 @SWG\Parameter(name="faddress", description="详细地址", required=false,type="string", paramType="form", defaultValue="" ),
                 @SWG\Parameter(name="farea", description="面积", required=false,type="string", paramType="form", defaultValue="0.00" ),
@@ -123,10 +124,11 @@ Route::group(['prefix' => 'store', 'middleware' => 'api.sign'], function () {
      *     @SWG\Operation(
      *      method="POST",
      *      nickname="store-update",
-     *      summary="门店更新",
-     *      notes="门店更新",
+     *      summary="门店更新（工作流）",
+     *      notes="门店更新（工作流）",
      *      type="",
      *      @SWG\Parameters(
+     *          @SWG\Parameter(name="fmodify_id", description="修改人id", required=true,type="integer", paramType="form", defaultValue="0" ),
      *          @SWG\Parameter(name="faccountnum", description="账户", required=false,type="string", paramType="form", defaultValue="" ),
                 @SWG\Parameter(name="faddress", description="详细地址", required=false,type="string", paramType="form", defaultValue="" ),
                 @SWG\Parameter(name="farea", description="面积", required=false,type="string", paramType="form", defaultValue="0.00" ),
@@ -179,7 +181,7 @@ Route::group(['prefix' => 'store', 'middleware' => 'api.sign'], function () {
      *      type="",
      *      @SWG\Parameters(
      *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="1" ),
-     *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
+     *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="query", defaultValue="****")
      *      )
      *  )
      * )

@@ -44,7 +44,7 @@ Route::group(['prefix' => '{{snake_case($model,'-')}}', 'middleware' => 'api.sig
     *      nickname="{{snake_case($model,'-')}}-show",
     *      summary="信息详情",
     *      notes="信息详情",
-    *      type="Attendance",
+    *      type="{{$model}}",
     *      @SWG\Parameters(
     *          @SWG\Parameter(name="id", description="id", required=true, type="integer", paramType="path", defaultValue="1"),
     *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="query", defaultValue="****")
@@ -62,7 +62,7 @@ Route::group(['prefix' => '{{snake_case($model,'-')}}', 'middleware' => 'api.sig
     *      nickname="{{snake_case($model,'-')}}-store",
     *      summary="新增",
     *      notes="新增",
-    *      type="",
+    *      type="{{$model}}",
     *      @SWG\Parameters(
 @forelse($columns as $col)
     @if($col->name != 'id')
@@ -85,7 +85,7 @@ Route::group(['prefix' => '{{snake_case($model,'-')}}', 'middleware' => 'api.sig
     *      nickname="{{snake_case($model,'-')}}-update",
     *      summary="更新",
     *      notes="更新",
-    *      type="",
+    *      type="{{$model}}",
     *      @SWG\Parameters(
 @forelse($columns as $col)
     @if($col->name != 'id')
@@ -112,7 +112,7 @@ Route::group(['prefix' => '{{snake_case($model,'-')}}', 'middleware' => 'api.sig
     *      type="",
     *      @SWG\Parameters(
     *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="1" ),
-    *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
+    *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="query", defaultValue="****")
     *      )
     *  )
     * )

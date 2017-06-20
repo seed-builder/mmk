@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @SWG\Property(name="node_id", type="integer", description="work flow node id")
  * @SWG\Property(name="pre_log_id", type="integer", description="pre log id")
  * @SWG\Property(name="remark", type="string", description="备注")
- * @SWG\Property(name="status", type="integer", description="处理状态（0-未处理，1-已经处理， 2-被撤销, 3-非正常结束）")
+ * @SWG\Property(name="status", type="integer", description="处理状态（0-未处理，1-已经处理， 2-被撤销, 3-非正常结束, 4-挂起）")
  * @SWG\Property(name="uid", type="string", description="guid")
  * @SWG\Property(name="updated_at", type="string", description="")
  * @SWG\Property(name="work_flow_id", type="integer", description="")

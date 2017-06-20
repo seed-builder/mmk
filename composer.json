@@ -15,7 +15,8 @@
         "philo/laravel-blade": "3.*",
         "laravel/tinker": "^1.0",
         "doctrine/dbal": "^2.5",
-        "phpoffice/phpexcel": "1.8.1"
+        "phpoffice/phpexcel": "1.8.1",
+        "barryvdh/laravel-debugbar": "^2.4"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

@@ -19,7 +19,13 @@
                         <!-- timeline time label -->
                             <li class="time-label">
                           <span class="bg-green">
-                            {{$t->fdate}}
+                              @if($t->fstatus==1)
+                                  {{$t->fdate}}
+                              @elseif($t->fstatus==2)
+                                  {{$t->fmodify_date}}
+                              @else
+                                  {{!empty($t->fbegin)?$t->fbegin.'至'.$t->fmodify_date:$t->fmodify_date}}
+                              @endif
                           </span>
                             </li>
                             <!-- /.timeline-label -->
@@ -36,6 +42,7 @@
                                         @if(!empty($t->images))
                                             @foreach($t->images as $i)
                                                 <img src="{{$i}}" alt="..." class="margin" style="width: 150px;height: 100px;">
+                                                <p>{{$t->remark}}</p>
                                             @endforeach
                                         @endif
                                     </div>

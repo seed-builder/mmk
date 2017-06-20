@@ -18,6 +18,7 @@ Route::group(['prefix' => 'stock-in', 'middleware' => 'api.sign'], function () {
     *      type="array",
     *     items="$ref:StockIn",
     *      @SWG\Parameters(
+    *          @SWG\Parameter(name="user_id", description="用户id", required=false, type="integer", paramType="query", defaultValue="0"),
     *          @SWG\Parameter(name="page", description="当前页", required=false, type="integer", paramType="query", defaultValue="1"),
     *          @SWG\Parameter(name="pageSize", description="页大小", required=false, type="integer", paramType="query", defaultValue="10"),
     *          @SWG\Parameter(name="sort", description="排序", required=false, type="string", paramType="query", defaultValue="id asc"),
@@ -79,7 +80,7 @@ Route::group(['prefix' => 'stock-in', 'middleware' => 'api.sign'], function () {
     * @SWG\Api(
     *     path="/api/stock-in/{id}",
     *     @SWG\Operation(
-    *      method="PUT",
+    *      method="POST",
     *      nickname="stock-in-update",
     *      summary="更新",
     *      notes="更新",
@@ -102,7 +103,7 @@ Route::group(['prefix' => 'stock-in', 'middleware' => 'api.sign'], function () {
     *  )
     * )
     */
-    Route::put('/{id}', ['as' => 'StockIn.update', 'uses' => 'StockInController@update']);
+    Route::post('/{id}', ['as' => 'StockIn.update', 'uses' => 'StockInController@update']);
 
     /**
     * @SWG\Api(
@@ -115,11 +116,30 @@ Route::group(['prefix' => 'stock-in', 'middleware' => 'api.sign'], function () {
     *      type="",
     *      @SWG\Parameters(
     *          @SWG\Parameter(name="id", description="id", required=true,type="integer", paramType="path", defaultValue="1" ),
-    *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
+    *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="query", defaultValue="****")
     *      )
     *  )
     * )
     */
     Route::delete('/{id}', ['as' => 'StockIn.delete', 'uses' => 'StockInController@destroy']);
+
+	/**
+	 * @SWG\Api(
+	 *     path="/api/stock-in/batch-sign",
+	 *     @SWG\Operation(
+	 *      method="POST",
+	 *      nickname="stock-in-batch-sign",
+	 *      summary="批量签收入库",
+	 *      notes="批量签收入库",
+	 *      type="",
+	 *      @SWG\Parameters(
+	 *          @SWG\Parameter(name="fuser_id", description="到货确认人id", required=false,type="string", paramType="form", defaultValue="2,3,4,5" ),
+	 *          @SWG\Parameter(name="ids", description="入库单id(多个，逗号隔开)", required=false,type="string", paramType="form", defaultValue="2,3,4,5" ),
+	 *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
+	 *      )
+	 *  )
+	 * )
+	 */
+	Route::post('/batch-sign', ['as' => 'StockIn.batchSign', 'uses' => 'StockInController@batchSign']);
 
 });

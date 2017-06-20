@@ -7,7 +7,9 @@ use App\Models\City;
 use App\Models\User;
 use App\Repositories\EmployeeRepo;
 use App\Services\CodeBuilder;
+use App\Services\DataSync\KingdeeWorker;
 use App\Services\DbHelper;
+use App\Services\MessageService;
 use App\Services\VisitCalendarService;
 use App\Services\WorkFlowEngine;
 use Illuminate\Foundation\Inspiring;
@@ -31,22 +33,15 @@ Artisan::command('inspire', function () {
 
 Artisan::command('test', function () {
 	$this->comment('begin ...');
-
-	$engine = new WorkFlowEngine();
-	$engine->createInstance(123,'store-change', 5, 'wf_change_list');
-	$logs = $engine->start();
-	//$logs = $engine->agree(18,'agree ssss!', []);
-	//$logs = $engine->against(21,'agree ssss!');
-	//$this->assertNotNull($logs);
-	$this->comment('log count = ' . count($logs));
+	MessageService::Instance()->systemSend(462, "测试", '测试');
 	$this->comment('end ...');
 })->describe('philo blade test');
 
 Artisan::command('test1', function () {
 	$this->comment('begin ...');
 	$db = new DbHelper();
-	$columns = $db->getColumns('sys_configs');
-	$builder = new CodeBuilder('SysConfig', 'sys_configs', $columns);
+	$columns = $db->getColumns('work_flow_instance_variables');
+	$builder = new CodeBuilder('WorkFlowInstanceVariable','work_flow_instance_variables', $columns);
 	$builder->createFiles( 'api');
 	$this->comment('end ...');
 })->describe('philo blade test');
@@ -164,7 +159,7 @@ Artisan::command('cp-customer-to-user', function () {
 
 					$customer->user()->create([
 						'name' => $customer->ftel,
-						'password' => bcrypt('888888'),
+						'password' => md5('888888'),
 						'status' => 1,
 						'nick_name' => $customer->fname,
 
@@ -173,7 +168,7 @@ Artisan::command('cp-customer-to-user', function () {
 				}else{
 					$customer->user()->update([
 						'name' => $customer->ftel,
-						'password' => bcrypt('888888'),
+						'password' => md5('888888'),
 						'status' => 1,
 						'nick_name' => $customer->fname,
 
@@ -246,3 +241,13 @@ Artisan::command('push-attendance', function () {
 	}
 	$this->comment('end ...');
 })->describe('push attendance to cloud');
+
+Artisan::command('cust-amount', function () {
+	$this->comment('begin get cust amount');
+	$worker = new KingdeeWorker();
+	$res = $worker->post('http://shantu.ik3cloud.com/k3cloud/CYD.ApiService.ServicesStub.CustomBusinessService.CustBalAmountGet.common.kdsvc',
+		['parameters' => [293095]]);
+	var_dump($res);
+	$this->comment('end get cust amount');
+})->describe('get cust amount');
+

@@ -142,6 +142,7 @@ abstract class  ApiController extends Controller
 	{
 		//
 		$entity = $this->newEntity()->newQuery()->find($id);
+		//var_dump($entity);
 		$re = $entity->delete();
 		$status = $re ? 200 : 401;
 		return response(['success' => $re], $status);
@@ -187,5 +188,13 @@ abstract class  ApiController extends Controller
 			}
 		}
 		return implode(',', $result);
+	}
+
+	public function success($data, $msg = ''){
+		return response(['data' => $data, 'code' => 200, 'msg' => $msg, 'success' => true]);
+	}
+
+	public function fail($msg){
+		return response(['data' => null, 'code' => 401, 'msg' => $msg, 'success' => false]);
 	}
 }

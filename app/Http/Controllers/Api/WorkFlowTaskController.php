@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Services\WorkFlow\Engine;
+use App\Services\WorkFlow\WorkFlowException;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\ApiController;
@@ -85,8 +86,12 @@ class WorkFlowTaskController extends ApiController
 //		$remark = $request->input('remark','同意，审批通过');
 		$variablesStr = $request->input('variables', '{}');
 		$variables = json_decode($variablesStr, true);
-		$engine->agree($id, $variables);
-		return response(['success' => 1], 200);
+		try{
+			$engine->agree($id, $variables);
+			return response(['success' => 1], 200);
+		}catch (\Exception $e){
+			return response(['success' => 0, 'error' => $e->getMessage()], 401);
+		}
 	}
 
 	/**
@@ -100,8 +105,12 @@ class WorkFlowTaskController extends ApiController
 //		$remark = $request->input('remark','不同意，审批结束');
 		$variablesStr = $request->input('variables', '{}');
 		$variables = json_decode($variablesStr, true);
-		$engine->against($id, $variables);
-		return response(['success' => 1], 200);
+		try{
+			$engine->against($id, $variables);
+			return response(['success' => 1], 200);
+		}catch (\Exception $e){
+			return response(['success' => 0, 'error' => $e->getMessage()], 401);
+		}
 	}
 
 }

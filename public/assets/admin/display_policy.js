@@ -241,17 +241,17 @@ define(function (require, exports, module) {
                 // {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
-                { text: '审核<i class="fa fa-fw fa-paperclip"></i>',className: 'check', enabled: false ,action:function(){
-                    var id = chlidTable.rows('.selected').data()[0].id;
-                    layer.prompt({title: '请输入核定签约金额', formType: 3}, function(price, index){
-                        ajaxLink('/admin/display-policy-store/check?id='+id+'&fcheck_amount='+price,function () {
-                            table.ajax.reload();
-                            chlidTable.ajax.reload();
-                        })
-                        layer.close(index);
-                    });
-                }},
-                { text: '反审核<i class="fa fa-fw fa-unlink"></i>',className: 'uncheck', enabled: false },
+                // { text: '审核<i class="fa fa-fw fa-paperclip"></i>',className: 'check', enabled: false ,action:function(){
+                //     var id = chlidTable.rows('.selected').data()[0].id;
+                //     layer.prompt({title: '请输入核定签约金额', formType: 3}, function(price, index){
+                //         ajaxLink('/admin/display-policy-store/check?id='+id+'&fcheck_amount='+price,function () {
+                //             table.ajax.reload();
+                //             chlidTable.ajax.reload();
+                //         })
+                //         layer.close(index);
+                //     });
+                // }},
+                // { text: '反审核<i class="fa fa-fw fa-unlink"></i>',className: 'uncheck', enabled: false },
                 {extend: 'colvis', text: '列显示'}
             ]
         });

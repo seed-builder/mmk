@@ -12,28 +12,75 @@ class ModelMapSeeder extends Seeder
      */
     public function run()
     {
-        $entities = ModelMap::all();
-        if(!empty($entities)) {
-            $entities->each(function ($item) {
-                $item->delete();
-            });
-        }
+//        $entities = ModelMap::all();
+//        if(!empty($entities)) {
+//            $entities->each(function ($item) {
+//                $item->delete();
+//            });
+//        }
         //
-        ModelMap::create([
-            'model' => 'Employee',
-            'table' => 'bd_employees',
-            'foreign_table' => 'bd_employees'
-        ]);
-        ModelMap::create([
-            'model' => 'Attendance',
-            'table' => 'ms_attendances',
-            'foreign_table' => 'ms_attendances'
-        ]);
-        ModelMap::create([
-            'model' => 'Store',
-            'table' => 'st_stores',
-            'foreign_table' => 'st_stores'
-        ]);
+	    $exists = ModelMap::where('model', 'Employee')->count();
+	    if($exists == 0) {
+		    ModelMap::create([
+			    'model' => 'Employee',
+			    'table' => 'bd_employees',
+			    'foreign_table' => 'bd_employees'
+		    ]);
+	    }
+
+	    $exists = ModelMap::where('model', 'Attendance')->count();
+	    if($exists == 0) {
+		    ModelMap::create([
+			    'model' => 'Attendance',
+			    'table' => 'ms_attendances',
+			    'foreign_table' => 'ms_attendances'
+		    ]);
+	    }
+
+	    $exists = ModelMap::where('model', 'Store')->count();
+	    if($exists == 0) {
+		    ModelMap::create([
+			    'model' => 'Store',
+			    'table' => 'st_stores',
+			    'foreign_table' => 'st_stores'
+		    ]);
+	    }
+
+	    $exists = ModelMap::where('model', 'DisplayPolicyStore')->count();
+	    if($exists == 0) {
+		    ModelMap::create([
+			    'model' => 'DisplayPolicyStore',
+			    'table' => 'exp_display_policy_store',
+			    'foreign_table' => 'exp_display_policy_store'
+		    ]);
+	    }
+
+	    $exists = ModelMap::where('model', 'StockIn')->count();
+	    if($exists == 0) {
+		    ModelMap::create([
+			    'model' => 'StockIn',
+			    'table' => 'st_stock_ins',
+			    'foreign_table' => 'st_stock_ins'
+		    ]);
+	    }
+
+	    $exists = ModelMap::where('model', 'StockInItem')->count();
+	    if($exists == 0) {
+		    ModelMap::create([
+			    'model' => 'StockInItem',
+			    'table' => 'st_stock_in_items',
+			    'foreign_table' => 'st_stock_in_items'
+		    ]);
+	    }
+
+	    $exists = ModelMap::where('model', 'FinStatement')->count();
+	    if($exists == 0) {
+		    ModelMap::create([
+			    'model' => 'FinStatement',
+			    'table' => 'fin_statements',
+			    'foreign_table' => 'fin_statements'
+		    ]);
+	    }
 
     }
 }

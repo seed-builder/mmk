@@ -16,8 +16,13 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
  * @SWG\Model(id="User")
  * @SWG\Property(name="id", type="integer", description="pk")
  * @SWG\Property(name="name", type="string", description="name")
+ * @SWG\Property(name="nick_name", type="string", description="name")
+ * @SWG\Property(name="logo", type="string", description="logo")
  * @SWG\Property(name="email", type="string", description="email")
  * @SWG\Property(name="password", type="string", description="password")
+ * @SWG\Property(name="reference_id", type="integer", description="reference_id")
+ * @SWG\Property(name="reference_type", type="string", description="reference_type")
+ * @SWG\Property(name="login_time", type="integer", description="登陆次数")
  */
 class User extends Authenticatable
 {
@@ -49,6 +54,13 @@ class User extends Authenticatable
 //	    static::creating(function ($user){
 //	    	$user->password = bcrypt($user->password);
 //	    });
+        static::updated(function ($model){
+            if ($model->reference_type=='customer'){
+                $customer = $model->reference;
+                $customer->ftel = $model->name;
+                $customer->save();
+            }
+        });
     }
 
     public function hasPosition($positionId){

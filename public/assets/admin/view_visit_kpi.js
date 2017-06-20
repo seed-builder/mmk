@@ -6,43 +6,6 @@ define(function(require, exports, module) {
     var zhCN = require('datatableZh');
     var editorCN = require('i18n');
     exports.index = function ($, tableId) {
-        var editor = new $.fn.dataTable.Editor({
-            ajax: {
-                create: {
-                    type: 'POST',
-                    url: '/admin/view-visit-kpi',
-                    data: {_token: $('meta[name="_token"]').attr('content')},
-                },
-                edit: {
-                    type: 'PUT',
-                    url: '/admin/view-visit-kpi/_id_',
-                    data: {_token: $('meta[name="_token"]').attr('content')},
-                },
-                remove: {
-                    type: 'DELETE',
-                    url: '/admin/view-visit-kpi/_id_',
-                    data: {_token: $('meta[name="_token"]').attr('content')},
-                }
-            },
-            i18n: editorCN,
-            table: "#" + tableId,
-            idSrc: 'id',
-            fields: [
-            { 'label':  'cust_avg_cost', 'name': 'cust_avg_cost', },
-                { 'label':  'day_cost_total', 'name': 'day_cost_total', },
-                { 'label':  'day_visit_cust_num', 'name': 'day_visit_cust_num', },
-                { 'label':  'fdate', 'name': 'fdate', },
-                { 'label':  'femp_id', 'name': 'femp_id', },
-                { 'label':  'fname', 'name': 'fname', },
-                { 'label':  'line_cust_total', 'name': 'line_cust_total', },
-                { 'label':  'month_cost_total', 'name': 'month_cost_total', },
-                { 'label':  'month_visit_cust_num', 'name': 'month_visit_cust_num', },
-                { 'label':  'position_name', 'name': 'position_name', },
-                { 'label':  'rate', 'name': 'rate', },
-                { 'label':  'valid_cust_total', 'name': 'valid_cust_total', },
-    ]
-        });
-
         var table = $("#" + tableId).DataTable({
             dom: "lBfrtip",
             language: zhCN,
@@ -66,28 +29,28 @@ define(function(require, exports, module) {
                 {
                     'data': 'rate',
                     render: function ( data, type, full ) {
-                        return (data==null?0:data)+'%'
+                        return (data==null?0: Number(data).toFixed(2))+'%'
                     }
                 },
                 {
                     'data': 'day_cost_total',
                     render: function ( data, type, full ) {
                         var second = isNaN(parseInt(data))?0:parseInt(data);
-                        return second/60
+                        return Math.round( second/60 );
                     }
                 },
                 {
                     'data': 'month_cost_total',
                     render: function ( data, type, full ) {
                         var second = isNaN(parseInt(data))?0:parseInt(data);
-                        return second/60
+                        return Math.round( second/60 );
                     }
                 },
                 {
                     'data': 'store_avg_cost',
                     render: function ( data, type, full ) {
                         var second = isNaN(parseInt(data))?0:parseInt(data);
-                        return second/60
+                        return Math.round( second/60 );
                     }
                 },
                 // {  'data': 'fdate' },

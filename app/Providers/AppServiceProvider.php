@@ -15,6 +15,7 @@ use App\Services\DataSync\DefaultFilter;
 use App\Services\DataSync\DisplayPolicyStoreFilter;
 use App\Services\DataSync\EmployeeFilter;
 use App\Services\DataSync\KingdeeWorker;
+use App\Services\DataSync\StockInFilter;
 use App\Services\Sms\AliDaYuSms;
 use App\Services\Sms\ISmsSvr;
 use App\Services\WorkFlow\Engine;
@@ -78,7 +79,8 @@ class AppServiceProvider extends ServiceProvider
 	    	$svr->registerFilter(DefaultFilter::class);
 	    	$svr->registerFilter(DisplayPolicyStoreFilter::class, 'exp_display_policy_store');
 	    	$svr->registerFilter(EmployeeFilter::class, 'bd_employees');
-	    	$svr->registerFilter(EmployeeFilter::class, 'bd_customers');
+	    	$svr->registerFilter(CustomerFilter::class, 'bd_customers');
+	    	$svr->registerFilter(StockInFilter::class, 'st_stock_ins');
 	    	$svr->registerWorker(KingdeeWorker::class);
 	    	return $svr;
 	    });

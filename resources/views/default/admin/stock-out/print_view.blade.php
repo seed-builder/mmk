@@ -80,6 +80,7 @@
                                     </tr>
                                     </tbody>
                                 </table>
+                                <p style="text-align: right;padding-right: 200px;">门店负责人：</p>
                             </div>
                         </div>
                     </div>
