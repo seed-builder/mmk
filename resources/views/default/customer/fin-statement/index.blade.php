@@ -1,3 +1,11 @@
+<?php
+$years = [];
+$curYear = date('Y');
+for($i=-10; $i < 10; $i ++){
+	$years[] = $curYear + $i;
+}
+$months = [1,2,3,4,5,6,7,8,9,10,11,12]
+?>
 @extends('customer.layout.collapsed-sidebar')
 @section('styles')
     @include('customer.layout.datatable-css')
@@ -33,7 +41,32 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-
+                        <div class="panel panel-default" >
+                            <form class="form-inline filter "  filter-table="#moduleTable">
+                                <div class="form-group">
+                                    <label class="">年份</label>
+                                    <select class="form-control filter-condition" filter-name="year" filter-operator="=">
+                                        <option value="">--请选择--</option>
+                                        @foreach($years as $y)
+                                        <option value="{{$y}}">{{$y}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="">月份</label>
+                                    <select class="form-control filter-condition" filter-name="month" filter-operator="=">
+                                        <option value="">--请选择--</option>
+                                        @foreach($months as $m)
+                                            <option value="{{$m}}">{{$m}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-info filter-submit">查询</button>
+                                    <button type="button" class="btn btn-default filter-reset">重置</button>
+                                </div>
+                            </form>
+                        </div>
                         <table id="moduleTable" class="table table-bordered table-hover display nowrap" cellspacing="0" width="100%">
                             <thead>
                             <tr>

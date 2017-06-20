@@ -15,7 +15,9 @@ define(function(require, exports, module) {
             select: true,
             paging: true,
             rowId: "id",
-            ajax: '/customer/fin-statement/pagination',
+            ajax: {
+                url: '/customer/fin-statement/pagination'
+            },
             columns: [
                 {  'data': 'id', render: function (data, type, full) {
                         return '<input type="checkbox" class="editor-active" value="' + data + '">';
