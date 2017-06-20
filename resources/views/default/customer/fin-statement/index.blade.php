@@ -62,6 +62,14 @@ $months = [1,2,3,4,5,6,7,8,9,10,11,12]
                                     </select>
                                 </div>
                                 <div class="form-group">
+                                    <label class="">状态</label>
+                                    <select class="form-control filter-condition" filter-name="status" filter-operator="=">
+                                        <option value="">--请选择--</option>
+                                        <option value="0">未对账</option>
+                                        <option value="1">已对账</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
                                     <button type="button" class="btn btn-info filter-submit">查询</button>
                                     <button type="button" class="btn btn-default filter-reset">重置</button>
                                 </div>

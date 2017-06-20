@@ -320,16 +320,16 @@ abstract class DatatablesController extends Controller
     /*
      * 查询过滤器
      */
-    public function filter($queryBuilder,$filterdata){
+    public function filter($queryBuilder, $filterdata){
         foreach ($filterdata as $f){
-            if (!empty($f['value'])){
+//            if (!empty($f['value'])){
                 $operator = !empty($f['operator'])?$f['operator']:'=';
 
                 if ($operator=='like')
                     $queryBuilder->where($f['name'],$operator,'%'.$f['value'].'%');
                 else
                     $queryBuilder->where($f['name'],$operator,$f['value']);
-            }
+//            }
         }
     }
 
