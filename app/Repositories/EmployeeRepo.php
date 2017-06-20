@@ -96,6 +96,7 @@ class EmployeeRepo extends Repo
 			$emp = Employee::where('fphone', $phone)->first();
 			if(!empty($emp)) {
 				$emp->fpassword = $pwd;
+				$emp->login_time += 1;
 				$emp->save();
 				$this->clearCache($phone);
 				return $this->success($emp, '修改密码成功');
