@@ -179,11 +179,12 @@ class Store extends BaseModel
 			    //$store->fpostalcode = $postalcode;
 		    }
 
-            if ($store->femp_id){ //门店人员调换
+            if ($store->femp_id != $old->femp_id){ //门店人员调换
                 $entity = VisitLineStore::where('fstore_id', $store->id)->first();
-
-                $entity->femp_id = $store->femp_id;
-                $entity->save();
+				if(!empty($entity)) {
+					$entity->femp_id = $store->femp_id;
+					$entity->save();
+				}
 
                 //同时变更在审批中的任务的发起人
                 $variables = WorkFlowInstanceVariable::query()
