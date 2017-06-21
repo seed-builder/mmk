@@ -257,8 +257,8 @@ class StoreController extends AdminController
     public function storeInfo($id)
     {
         $store = Store::find($id);
-
-        $store->image = '/admin/show-image?imageId=' . $store->fphoto;
+		if(!empty($store))
+            $store->image = '/admin/show-image?imageId=' . $store->fphoto;
 
         return view('admin.store.info', compact('store'));
     }
