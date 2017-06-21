@@ -228,7 +228,7 @@ class Store extends BaseModel
 
 	    });
 
-	    static::deleted(function ($store) {
+	    static::deleting(function ($store) {
 		    $entities = VisitLineStore::where('fstore_id', $store->id)->get();
 		    $ids = $entities->map(function ($item){
 			    return $item->id;
