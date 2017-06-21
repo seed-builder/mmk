@@ -88,6 +88,8 @@ class Engine
 				$lastTask->update(['status' => 1]);
 			}else{
 				foreach ($nextTasks as $ntask){
+					if(empty($ntask->approver_id))
+						continue;
 					$extraType = 'workflow_' . str_replace('-', '_', $ntask->workflow->name);
 					Message::send(
 						$ntask->approver_id,
