@@ -91,6 +91,15 @@ class User extends Authenticatable
     }
 
 	/**
+	 * 是否经理
+	 * 不受数据隔离限制
+	 * @return bool
+	 */
+	public function isManager(){
+		return $this->hasRole('manager');
+	}
+
+	/**
 	 * 实体（多态关联-Employee,Customer）
 	 * @return \Illuminate\Database\Eloquent\Relations\MorphTo
 	 */

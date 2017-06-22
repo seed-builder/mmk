@@ -85,7 +85,7 @@ class WorkFlowTaskController extends AdminController
 		$searchCols = ["work_flow_instances.bill_no","work_flow_instances.title","work_flow_instances.sponsor", "work_flows.desc"];
 		return parent::pagination($request, $searchCols, [], function ($query){
 			$user = Auth::user();
-			if(!$user->isAdmin())
+			if(!$user->isAdmin() && !$user->isManager())
 			{
 				$query->where('work_flow_tasks.approver_id', $user->id);
 			}
@@ -106,7 +106,7 @@ class WorkFlowTaskController extends AdminController
 		$searchCols = ["work_flow_instances.bill_no","work_flow_instances.title","work_flow_instances.sponsor", "work_flows.desc"];
 		return parent::pagination($request, $searchCols, [], function ($query){
 			$user = Auth::user();
-			if(!$user->isAdmin())
+			if(!$user->isAdmin() && !$user->isManager())
 			{
 				$query->where('work_flow_tasks.approver_id', $user->id);
 			}
