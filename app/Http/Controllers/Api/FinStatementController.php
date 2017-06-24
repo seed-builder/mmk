@@ -31,6 +31,8 @@ class FinStatementController extends ApiController
 	 */
 	public function pagination(Request $request, $searchCols = [], $with = [], $conditionCall = null, $all_columns = false)
 	{
+		$data = $request->all();
+
 		$start = $request->input('start', 0);
 		$length = $request->input('length', 10);
 		$columns = $request->input('columns', []);
@@ -59,6 +61,11 @@ class FinStatementController extends ApiController
 		if ($conditionCall != null && is_callable($conditionCall)) {
 			$conditionCall($queryBuilder);
 		}
+
+		if (!empty($data['filter']))
+			$this->formFilter($queryBuilder, $data['filter']);
+
+
 		foreach ($conditions as $col => $val) {
 			$queryBuilder->where($col, $val);
 		}
@@ -93,6 +100,27 @@ class FinStatementController extends ApiController
 			'data' => $entities
 		];
 		return response()->json($result);
+	}
+
+	public function formFilter($queryBuilder, $data)
+	{
+		foreach ($data as $f) {
+			if (empty($f['value']))
+				continue;
+			$queryBuilder = $this->adminFilterQuery($queryBuilder, $f);
+		}
+
+		return $queryBuilder;
+	}
+
+	public function adminFilterQuery($queryBuilder, $data)
+	{
+		$operator = !empty($data['operator']) ? $data['operator'] : '=';
+		if ($operator == 'like')
+			$queryBuilder->where($data['name'], $operator, '%' . $data['value'] . '%');
+		else
+			$queryBuilder->where($data['name'], $operator, $data['value']);
+		return $queryBuilder;
 	}
 
 }
