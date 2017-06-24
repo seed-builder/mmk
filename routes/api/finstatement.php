@@ -138,4 +138,35 @@ Route::group(['prefix' => 'fin-statement', 'middleware' => 'api.sign'], function
     */
     Route::delete('/{id}', ['as' => 'FinStatement.delete', 'uses' => 'FinStatementController@destroy']);
 
+	/**
+	 * @SWG\Api(
+	 *     path="/api/fin-statement/customer/{customerId}",
+	 *     @SWG\Operation(
+	 *      method="GET",
+	 *      nickname="fin-customer-show",
+	 *      summary="经销商对账信息分页页面详情",
+	 *      notes="经销商对账信息分页页面详情",
+	 *      type="array",
+	 *      @SWG\Parameters(
+	 *          @SWG\Parameter(name="customerId", description="customerId", required=true, type="integer", paramType="path", defaultValue="1"),
+	 *      )
+	 *  )
+	 * )
+	 */
+	Route::get('/customer/{customerId}', ['as' => 'FinStatement.customer', 'uses' => 'FinStatementController@customer']);
+
+	/**
+	 * @SWG\Api(
+	 *     path="/api/fin-statement/pagination",
+	 *     @SWG\Operation(
+	 *      method="GET",
+	 *      nickname="fin-pagination",
+	 *      summary="分页信息",
+	 *      notes="分页信息",
+	 *      type="array",
+	 *  )
+	 * )
+	 */
+	Route::get('/pagination', ['as' => 'FinStatement.pagination', 'uses' => 'FinStatementController@pagination']);
+
 });

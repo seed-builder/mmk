@@ -11,6 +11,12 @@ use Closure;
  */
 class VerifyApiSign
 {
+	protected $except = [
+		//
+		'/api/fin-statement/customer/*',
+		'/api/fin-statement/pagination',
+	];
+
     /**
      * Handle an incoming request.
      *
@@ -20,26 +26,42 @@ class VerifyApiSign
      */
     public function handle($request, Closure $next)
     {
+    	if($this->inExceptArray($request)){
+		    return $next($request);
+	    }
+	    $p = $request->decodedPath();
         $data = $request->except(['nsukey']);
         if(empty($data['_sign'])){
-            return response('Fail: the sign is empty! ', 401);
+            return response('Fail: the sign is empty! path=' . $p , 401);
         }
         $_sign = $data['_sign'];
-//        unset($data['_sign']);
-//        ksort($data);
-//        $arr = [];
-//        foreach($data as $k => $v) {
-//            if($request->hasFile($k))
-//                continue;
-//            $arr[] = $k .'=' . $v;
-//        }
-//        $str =  implode('&', $arr). env('APP_KEY');
         $sign = api_sign($data, $request);// md5($str);
         if($_sign == $sign) {
             return $next($request);
         }else{
-            return response('Fail: the sign is wrong!  the correct sign is: '.$sign. ' , 401');
+            return response('Fail: the sign is wrong!  the correct sign is: '.$sign, 401);
         }
 
     }
+
+	/**
+	 * Determine if the request has a URI that should pass through CSRF verification.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @return bool
+	 */
+	protected function inExceptArray($request)
+	{
+		foreach ($this->except as $except) {
+			if ($except !== '/') {
+				$except = trim($except, '/');
+			}
+
+			if ($request->is($except)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 }
