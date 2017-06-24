@@ -112,4 +112,22 @@ Route::group(['prefix' => 'sale-order', 'middleware' => 'api.sign'], function ()
     */
     Route::delete('/{id}', ['as' => 'SaleOrder.delete', 'uses' => 'SaleOrderController@destroy']);
 
+	/**
+	 * @SWG\Api(
+	 *     path="/api/sale-order/distribute/{id}",
+	 *     @SWG\Operation(
+	 *      method="POST",
+	 *      nickname="sale-order-distribute",
+	 *      summary="订单配送",
+	 *      notes="订单配送",
+	 *      type="",
+	 *      @SWG\Parameters(
+	 *          @SWG\Parameter(name="id", description="订单id", required=false,type="integer", paramType="path", defaultValue="" ),
+	 *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="form", defaultValue="****")
+	 *      )
+	 *  )
+	 * )
+	 */
+	Route::post('/distribute/{id}', ['as' => 'SaleOrder.distribute', 'uses' => 'SaleOrderController@distribute']);
+
 });
