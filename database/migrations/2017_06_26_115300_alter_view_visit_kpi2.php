@@ -64,7 +64,6 @@ FROM
 	
 EOD;
 
-
 	    $query[] = <<<EOD
 create or replace view view_visit_month_store_done_times
 as
@@ -97,8 +96,8 @@ GROUP BY
 EOD;
 
 	    $query[] = <<<EOD
-CREATE
-OR REPLACE VIEW view_visit_kpi AS SELECT
+CREATE OR REPLACE VIEW view_visit_kpi AS  
+SELECT
 	ed.fdate,
 	ed.femp_id,
 	emp.fname,
@@ -114,7 +113,11 @@ OR REPLACE VIEW view_visit_kpi AS SELECT
 	mcs.store_cost_second_total AS month_cost_total,
 	round(
 		mcs.store_cost_second_total / msd.month_store_total
-	) AS store_avg_cost
+	) AS store_avg_cost,
+	mst.times as times_total,
+	msdt.times as done_times_total,
+	msdt.times / mst.times * 100 as times_rate
+	
 FROM
 	view_visit_employee_day ed
 INNER JOIN bd_employees emp ON ed.femp_id = emp.id
@@ -128,8 +131,10 @@ LEFT JOIN view_visit_month_store ms ON ed.femp_id = ms.femp_id AND ed.fmonth = m
 LEFT JOIN view_visit_month_store_done msd ON ed.femp_id = msd.femp_id AND ed.fmonth = msd.fmonth
 LEFT JOIN view_visit_day_cost_sum dcs on ed.femp_id=dcs.femp_id and dcs.fdate=ed.fdate
 LEFT JOIN view_visit_month_cost_sum mcs ON ed.femp_id = mcs.femp_id AND ed.fmonth = mcs.fmonth
-EOD;
+LEFT JOIN  view_visit_month_store_times mst on ed.femp_id=mst.femp_id AND ed.fmonth = mst.fmonth
+LEFT JOIN  view_visit_month_store_done_times msdt on ed.femp_id=msdt.femp_id AND ed.fmonth = msdt.fmonth
 
+EOD;
 
 	    foreach ($query as $q)
 		    DB::statement($q);
