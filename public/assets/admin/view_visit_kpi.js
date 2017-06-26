@@ -20,12 +20,27 @@ define(function(require, exports, module) {
             columns: [
                 {  'data': 'fname' },
                 {  'data': 'position_name' },
-                {  'data': 'store_total' },
-                {  'data': 'valid_store_total' },
+                {  'data': 'store_total',render: function ( data, type, full ) {
+                    d = isNaN(parseInt(data))?0:parseInt(data);
+                    return d;
+                } },
+                {  'data': 'valid_store_total',render: function ( data, type, full ) {
+                    d = isNaN(parseInt(data))?0:parseInt(data);
+                    return d;
+                } },
                 // {  'data': 'day_store_total' },
-                {  'data': 'day_store_done_total' },
-                {  'data': 'month_times_total' },
-                {  'data': 'month_done_times_total' },
+                {  'data': 'day_store_done_total',render: function ( data, type, full ) {
+                    d = isNaN(parseInt(data))?0:parseInt(data);
+                    return d;
+                } },
+                {  'data': 'month_times_total' ,render: function ( data, type, full ) {
+                    d = isNaN(parseInt(data))?0:parseInt(data);
+                    return d;
+                }},
+                {  'data': 'month_done_times_total',render: function ( data, type, full ) {
+                    d = isNaN(parseInt(data))?0:parseInt(data);
+                    return d;
+                } },
                 {
                     'data': 'month_times_rate',
                     render: function ( data, type, full ) {
