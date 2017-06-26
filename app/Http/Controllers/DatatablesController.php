@@ -205,7 +205,11 @@ abstract class DatatablesController extends Controller
         if (!empty($fields)) {
             $queryBuilder->select($fields);
         }
-        $entities = $queryBuilder->skip($start)->take($length)->get();
+        if($length > 0) {
+	        $entities = $queryBuilder->skip($start)->take($length)->get();
+        }else{
+	        $entities = $queryBuilder->get();
+        }
         //$entities = $queryBuilder->skip($start)->take($length)->get();
 	    //var_dump($queryBuilder->toSql());
         //LogSvr::sql()->info($queryBuilder->toSql());
