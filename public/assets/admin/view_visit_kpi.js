@@ -61,7 +61,8 @@ define(function(require, exports, module) {
                         // return Math.round( second/60 );
                         var month_cost_total = isNaN(parseInt(full.month_cost_total))?0:parseInt(full.month_cost_total);
                         var month_done_times_total = isNaN(parseInt(full.month_done_times_total ))?0:parseInt(full.month_done_times_total);
-                        return Math.round(month_cost_total / month_done_times_total / 60);
+                        var res = Math.round(month_cost_total / month_done_times_total / 60);
+                        return isNaN(res) ? 0 : res;
                     }
                 },
                 {
