@@ -20,6 +20,6 @@
     $.fn.dataTable.ext.errMode = 'throw';
     $.extend( $.fn.dataTable.defaults, {
         responsive: true,
-        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+        "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]]
     } );
 </script>
