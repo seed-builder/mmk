@@ -25,6 +25,5 @@ class CustomerFilter extends DefaultFilter
 				'nick_name' => $customer->fname,
 			]);
 		}
-
 	}
 }
