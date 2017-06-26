@@ -16,6 +16,25 @@ class AlterViewVisitKpi2 extends Migration
     {
         //
 	    $query[] = <<<EOD
+CREATE or REPLACE view view_visit_day as
+SELECT DISTINCT
+	date_format(
+		`visit_store_calendar`.`fdate`,
+		'%Y-%m-%d'
+	) AS `fdate`
+FROM
+	`visit_store_calendar`
+WHERE
+	(
+		date_format(now(), '%Y-%m') = date_format(
+			`visit_store_calendar`.`fdate`,
+			'%Y-%m'
+		)
+	)
+	
+EOD;
+
+	    $query[] = <<<EOD
 CREATE or REPLACE view view_visit_month_store_list as
 SELECT
 	distinct
