@@ -87,6 +87,4 @@ class ViewVisitKpiController extends AdminController
 	        }
         });
     }
-
-
 }
