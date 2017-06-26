@@ -47,8 +47,14 @@ define(function(require, exports, module) {
                         return (data==null?0: Number(data).toFixed(2))+'%'
                     }
                 },
-                {  'data': 'month_store_total' },
-                {  'data': 'month_store_done_total' },
+                {  'data': 'month_store_total',render: function ( data, type, full ) {
+                    d = isNaN(parseInt(data))?0:parseInt(data);
+                    return d;
+                } },
+                {  'data': 'month_store_done_total',render: function ( data, type, full ) {
+                    d = isNaN(parseInt(data))?0:parseInt(data);
+                    return d;
+                } },
                 {
                     'data': 'rate',
                     render: function ( data, type, full ) {
