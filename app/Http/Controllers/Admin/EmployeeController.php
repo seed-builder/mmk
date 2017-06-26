@@ -236,7 +236,7 @@ class EmployeeController extends AdminController
         if($length > 0) {
 	        $entities = $queryBuilder->select($fields)->skip($start)->take($length)->get();
         }else{
-	        $entities = $queryBuilder->get();
+	        $entities = $queryBuilder->select($fields)->get();
         }
         $result = [
             'draw' => $draw,
