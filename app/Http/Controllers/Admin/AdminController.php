@@ -212,4 +212,8 @@ abstract class AdminController extends DatatablesController
         $this->export($entities);
     }
 
+	public function export($datas){
+    	throw new \Exception("need implement");
+	}
+
 }

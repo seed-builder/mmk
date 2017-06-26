@@ -84,4 +84,42 @@ class ViewVisitKpiController extends AdminController
         });
     }
 
+	public function export($datas)
+	{
+		$data = [['门店编码', '门店全称', '详细地址', '负责人', '联系电话', '负责业代', '经销商', '路线','渠道','是否签约','审核状态']];
+		foreach ($datas as $d) {
+			$status = "无";
+			switch ($d->fdocument_status){
+				case 'A':
+					$status= '未审核';
+					break;
+				case 'C':
+					$status= '已审核';
+					break;
+				case 'B':
+					$status= '审核中';
+					break;
+
+			}
+			$signed = $d->fis_signed ? '是':'否';
+
+			$data[] = [
+				$d->fnumber,
+				$d->ffullname,
+				$d->faddress,
+				$d->fcontracts,
+				$d->ftelephone,
+				$d->employee ? $d->employee->fname : '',
+				$d->customer ? $d->customer->fname : '',
+				$d->line ? $d->line->fname : '',
+				$d->channel ? $d->channel->fname : '',
+				$signed,
+				$status
+			];
+		}
+
+		$excel = new ExcelService();
+		$excel->export($data, date('Ymd') . '_门店信息');
+	}
+
 }
