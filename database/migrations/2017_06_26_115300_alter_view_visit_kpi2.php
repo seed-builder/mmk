@@ -114,9 +114,9 @@ SELECT
 	round(
 		mcs.store_cost_second_total / msd.month_store_total
 	) AS store_avg_cost,
-	mst.times as times_total,
-	msdt.times as done_times_total,
-	msdt.times / mst.times * 100 as times_rate
+	mst.times as month_times_total,
+	msdt.times as month_done_times_total,
+	msdt.times / mst.times * 100 as month_times_rate
 	
 FROM
 	view_visit_employee_day ed
@@ -133,7 +133,7 @@ LEFT JOIN view_visit_day_cost_sum dcs on ed.femp_id=dcs.femp_id and dcs.fdate=ed
 LEFT JOIN view_visit_month_cost_sum mcs ON ed.femp_id = mcs.femp_id AND ed.fmonth = mcs.fmonth
 LEFT JOIN  view_visit_month_store_times mst on ed.femp_id=mst.femp_id AND ed.fmonth = mst.fmonth
 LEFT JOIN  view_visit_month_store_done_times msdt on ed.femp_id=msdt.femp_id AND ed.fmonth = msdt.fmonth
-
+;
 EOD;
 
 	    foreach ($query as $q)

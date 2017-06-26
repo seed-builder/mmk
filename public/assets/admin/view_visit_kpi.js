@@ -22,8 +22,16 @@ define(function(require, exports, module) {
                 {  'data': 'position_name' },
                 {  'data': 'store_total' },
                 {  'data': 'valid_store_total' },
-                {  'data': 'day_store_total' },
+                // {  'data': 'day_store_total' },
                 {  'data': 'day_store_done_total' },
+                {  'data': 'month_times_total' },
+                {  'data': 'month_done_times_total' },
+                {
+                    'data': 'month_times_rate',
+                    render: function ( data, type, full ) {
+                        return (data==null?0: Number(data).toFixed(2))+'%'
+                    }
+                },
                 {  'data': 'month_store_total' },
                 {  'data': 'month_store_done_total' },
                 {
@@ -44,6 +52,16 @@ define(function(require, exports, module) {
                     render: function ( data, type, full ) {
                         var second = isNaN(parseInt(data))?0:parseInt(data);
                         return Math.round( second/60 );
+                    }
+                },
+                {
+                    'data': 'day_store_total',
+                    render: function ( data, type, full ) {
+                        // var second = isNaN(parseInt(data))?0:parseInt(data);
+                        // return Math.round( second/60 );
+                        var month_cost_total = isNaN(parseInt(full.month_cost_total))?0:parseInt(full.month_cost_total);
+                        var month_done_times_total = isNaN(parseInt(full.month_done_times_total ))?0:parseInt(full.month_done_times_total);
+                        return Math.round(month_cost_total / month_done_times_total / 60);
                     }
                 },
                 {
