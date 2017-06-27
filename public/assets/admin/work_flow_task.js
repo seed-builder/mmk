@@ -109,7 +109,7 @@ define(function(require, exports, module) {
                 {  'data': 'created_at' },
                 {  'data': 'updated_at' },
             ],
-            order: [[ 5, 'desc' ]],
+            order: [[ 7, 'desc' ]],
             buttons: [
                 { text: '同意',  className: 'agree', enabled: false, action: function () {
                     //prompt层
@@ -258,7 +258,7 @@ define(function(require, exports, module) {
                 {  'data': 'created_at' },
                 {  'data': 'updated_at' },
             ],
-            order: [[ 5, 'desc' ]],
+            order: [[ 6, 'desc' ]],
             buttons: [
                 // { text: '新增', action: function () { }  },
                 // { text: '编辑', className: 'edit', enabled: false },
@@ -304,7 +304,7 @@ define(function(require, exports, module) {
                 {  'data': 'created_at' },
                 {  'data': 'updated_at' },
             ],
-            order: [[ 5, 'desc' ]],
+            order: [[ 6, 'desc' ]],
             buttons: [
                 { text: '移交恢复', className: 'transfer', enabled: false, action: function () {
                     $('#chooseUserDialog').modal('show');
