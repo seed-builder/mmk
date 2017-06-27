@@ -120,7 +120,7 @@ class WorkFlowTaskController extends AdminController
 		$query->select(['work_flow_tasks.*', 'work_flow_instances.bill_no','work_flow_instances.title', 'work_flow_instances.sponsor','work_flows.desc', 'sys_users.nick_name as approver'])
 			->join('work_flow_instances' , 'work_flow_instances.id', '=', 'work_flow_tasks.work_flow_instance_id')
 			->join('work_flows' , 'work_flows.id', '=', 'work_flow_tasks.work_flow_id')
-			->join('sys_users' , 'sys_users.id', '=', 'work_flow_tasks.approver_id');
+			->leftJoin('sys_users' , 'sys_users.id', '=', 'work_flow_tasks.approver_id');
 		return $query;
 	}
 
