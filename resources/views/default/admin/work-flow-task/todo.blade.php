@@ -32,7 +32,28 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-
+                        <div class="panel panel-default">
+                            <form class="form-horizontal filter " filter-table="#moduleTable">
+                                <div class="form-group">
+                                    <label class="col-md-1 control-label">标题</label>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control filter-condition" filter-name="work_flow_instances.title" filter-operator="like" />
+                                    </div>
+                                    <label class="col-md-1 control-label">发起人</label>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control filter-condition" filter-name="work_flow_instances.sponsor" filter-operator="like" />
+                                    </div>
+                                    <label class="col-md-1 control-label">处理人</label>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control filter-condition" filter-name="sys_users.nick_name" filter-operator="like" />
+                                    </div>
+                                </div>
+                                <div class="box-footer" style="text-align: center">
+                                    <button type="button" class="btn btn-info filter-submit">查询</button>
+                                    <button type="button" class="btn btn-default filter-reset">重置</button>
+                                </div>
+                            </form>
+                        </div>
                         <table id="moduleTable" class="table table-bordered table-hover display nowrap" cellspacing="0" width="100%">
                             <thead>
                             <tr>

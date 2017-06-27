@@ -39,7 +39,7 @@ class StoreChange extends BaseModel
 	/**
 	 * 从门店数据新增变更数据
 	 * @param array $store
-	 * @param int $type | 0-新增，1-修改，2-删除
+	 * @param int $type | 0-新增，1-修改，2-删除, 3-禁用
 	 * @param string $remark
 	 * @return
 	 */
@@ -73,6 +73,9 @@ class StoreChange extends BaseModel
 					break;
 				case 2:
 					$action = '删除';
+					break;
+				case 3:
+					$action = '禁用';
 					break;
 			}
 			if(empty($model->change_reason)){

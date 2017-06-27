@@ -16,16 +16,15 @@ use App\Models\Busi\Store;
 use App\Models\Busi\VisitLine;
 use App\Models\City;
 use App\Models\Busi\Resources;
+use Illuminate\Support\Facades\DB;
 use Image;
 use Illuminate\Http\Response;
-use DB;
 use Auth;
 use SysConfigRepo;
 use App\Services\LogSvr;
 
 class StoreController extends AdminController
 {
-
     //
     public function newEntity(array $attributes = [])
     {
@@ -262,6 +261,33 @@ class StoreController extends AdminController
 
         return view('admin.store.info', compact('store'));
     }
+
+	/**
+	 * 禁用门店
+	 * @param Request $request
+	 * @param $id
+	 * @return \Illuminate\Http\JsonResponse
+	 */
+    public function forbidden(Request $request, $id){
+	    $store = Store::find($id);
+	    $store->fmodify_id =  Auth::user()->id;
+	    $store->fforbid_status = 'B';
+	    //$store->save();
+	    $re = StoreChange::addFromStore($store->toArray(), 3, '禁用门店');
+	    return $this->success($re);
+    }
+
+	/**
+	 * 反禁用门店
+	 * @param Request $request
+	 * @param $id
+	 * @return \Illuminate\Http\JsonResponse
+	 */
+	public function start_use(Request $request, $id){
+		$affected = DB::update('update st_stores set fforbid_status = ? where id = ?', ['A', $id]);
+		return $this->success($affected);
+	}
+
 
     /*
      * d调换门店

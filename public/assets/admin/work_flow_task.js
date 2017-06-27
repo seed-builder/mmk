@@ -96,7 +96,9 @@ define(function(require, exports, module) {
             select: true,
             paging: true,
             rowId: "id",
-            ajax: '/admin/work-flow-task/todo-pagination',
+            ajax: {
+                url: '/admin/work-flow-task/todo-pagination'
+            },
             columns: [
                 {  'data': 'id' },
                 {  'data': 'desc' },
@@ -290,7 +292,9 @@ define(function(require, exports, module) {
             select: true,
             paging: true,
             rowId: "id",
-            ajax: '/admin/work-flow-task/suspend-pagination',
+            ajax: {
+                url: '/admin/work-flow-task/suspend-pagination'
+            },
             columns: [
                 {  'data': 'id' },
                 {  'data': 'desc' },
