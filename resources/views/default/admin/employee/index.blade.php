@@ -119,6 +119,7 @@
                                 <th>审核状态</th>
                                 <th>登陆次数</th>
                                 <th>创建时间</th>
+                                <th>禁用状态</th>
                             </tr>
                             </thead>
                         </table>

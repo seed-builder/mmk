@@ -7,4 +7,5 @@ Route::any('employee/employees', ['uses' => 'EmployeeController@ajaxGetEmployees
 Route::get('employee/check', ['uses' => 'EmployeeController@check']);
 Route::get('employee/uncheck', ['uses' => 'EmployeeController@unCheck']);
 Route::post('employee/reset-pwd/{id}', ['uses' => 'EmployeeController@resetPwd']);
+Route::post('employee/reset-device/{id}', ['uses' => 'EmployeeController@resetDevice']);
 Route::resource('employee', 'EmployeeController');

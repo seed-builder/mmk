@@ -282,4 +282,22 @@ class EmployeeController extends AdminController
 	    ]);
     }
 
+    /**
+     * 重置设备
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function resetDevice(Request $request, $id){
+        $emp = Employee::find($id);
+        $emp->update([
+            'device' => '',
+            'device_sn' => '',
+        ]);
+        return response()->json([
+            'code' => 200,
+            'data' => $emp
+        ]);
+    }
+
 }

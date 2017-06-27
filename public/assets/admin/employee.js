@@ -105,16 +105,28 @@ define(function (require, exports, module) {
                 },
                 {"data": "login_time"},
                 {"data": "fcreate_date"},
+                {
+                    "data": "fforbid_status",
+                    render: function (data, type, full) {
+                        if (data == 'A')
+                            return '启用'
+                        else
+                            return '禁用'
+                    }
+                },
 
             ],
             "columnDefs": [
                 {
-                    "targets": [0, 8, 10, 11],
+                    "targets": [0, 8, 10, 11, 12],
                     "visible": false,
                     "searchable": false
                 },
             ],
             createdRow: function (row, data, dataIndex) {
+                if (data.fforbid_status=='B'){
+                    $(row).css('color','red')
+                }
 
             },
             buttons: [
@@ -128,7 +140,8 @@ define(function (require, exports, module) {
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
                 {text: '审核<i class="fa fa-fw fa-paperclip"></i>', className: 'check', enabled: false},
                 {text: '反审核<i class="fa fa-fw fa-unlink"></i>', className: 'uncheck', enabled: false},
-                {text: '重置密码<i class="fa fa-fw fa-unlink"></i>', className: 'reset', enabled: false},
+                {text: '重置密码<i class="fa fa-fw fa-link"></i>', className: 'reset', enabled: false},
+                {text: '重置设备<i class="fa fa-fw fa-mobile"></i>', className: 'reset-device', enabled: false},
                 {extend: 'colvis', text: '列显示'}
             ]
         });
@@ -139,7 +152,7 @@ define(function (require, exports, module) {
         function rowSelect() {
             checkEditEnabble(table, ['.check'], ['.uncheck']);
             var count = table.rows({selected: true}).count();
-            table.buttons(['.edit', '.reset']).enable(count > 0);
+            table.buttons(['.edit', '.reset', '.reset-device']).enable(count > 0);
         }
 
         //审核
@@ -162,6 +175,18 @@ define(function (require, exports, module) {
                 });
             });
         });
+
+        $(".reset-device").on('click', function () {
+            var row = table.rows('.selected').data();
+            layer.confirm('确认重置该用户设备和设备号？', function () {
+                $.post('/admin/employee/reset-device/' + row[0].id, {_token: $('meta[name="_token"]').attr('content')}, function (res) {
+                    if (res.code == 200) {
+                        layer.msg('重置设备成功');
+                        table.ajax.reload()
+                    }
+                });
+            });
+        })
         //
         // function checkBtn(e, dt, type, indexes) {
         //     var count = table.rows( { selected: true } ).count();
