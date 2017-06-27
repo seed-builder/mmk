@@ -68,7 +68,17 @@ class WorkFlowController extends AdminController
 	 */
 	public function pagination(Request $request, $searchCols = [],$with=[], $conditionCall = null, $all_columns = false){
 		$searchCols = ["name","table"];
-		return parent::pagination($request, $searchCols);
+		return parent::pagination($request, $searchCols, ['default_task_approver']);
+	}
+
+	public function setDefaultApprover(Request $request, $id){
+		$wf = WorkFlow::find($id);
+		if(!empty($wf)){
+			$wf->default_task_approver_id = $request->input('approver_id');
+			$res = $wf->save();
+			return $this->success($res);
+		}
+		return $this->fail('fail');
 	}
 
 }

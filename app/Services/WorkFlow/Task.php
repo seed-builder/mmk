@@ -163,15 +163,27 @@ class Task
 						]);
 					}
 				}else{
-					$tasks[] = $this->createTask([
-						'work_flow_id' => $preTask->work_flow_id,
-						'work_flow_instance_id' => $preTask->work_flow_instance_id,
-						'link_id' => $link->id,
-						'pre_task_id' => $preTask->id,
-						'node_id' => $curNode->id,
-						'status' => 4 //挂起
-					]);
-					$this->fireEvent('task_suspended', false);
+					//检查是否有默认缺省处理人
+					if(!empty($this->task->workflow->default_task_approver_id)){
+						$tasks[] = $this->createTask([
+							'work_flow_id' => $preTask->work_flow_id,
+							'work_flow_instance_id' => $preTask->work_flow_instance_id,
+							'link_id' => $link->id,
+							'pre_task_id' => $preTask->id,
+							'node_id' => $curNode->id,
+							'approver_id' => $this->task->workflow->default_task_approver_id
+						]);
+					} else {
+						$tasks[] = $this->createTask([
+							'work_flow_id' => $preTask->work_flow_id,
+							'work_flow_instance_id' => $preTask->work_flow_instance_id,
+							'link_id' => $link->id,
+							'pre_task_id' => $preTask->id,
+							'node_id' => $curNode->id,
+							'status' => 4 //挂起
+						]);
+						$this->fireEvent('task_suspended', false);
+					}
 				}
 				break;
 		}
