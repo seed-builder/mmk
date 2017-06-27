@@ -462,6 +462,8 @@ var filter = function (ele) {
 
     filter_params['filter'] = {};
     $(filter).find(".filter-condition").each(function (index, obj) {
+        if($(obj).val() == '')
+            return;
 
         if ($(obj).attr('filter-name')) {
             filter_params['filter'][index] = {

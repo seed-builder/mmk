@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
 use App\Models\Busi\ViewVisitKpi;
+use Illuminate\Support\Facades\Auth;
 
 class ViewVisitKpiController extends AdminController
 {
@@ -77,11 +78,13 @@ class ViewVisitKpiController extends AdminController
                     $date = $filter['value'];
             }
             $query->where('fdate', '=', $date);
-            $ids = $this->getCurUsersEmployeeIds();
-            if (!empty($ids)) {
-                $query->whereIn('femp_id', $ids);
-            }
+	        $user = Auth::user();
+	        if(!$user->isAdmin()) {
+		        $ids = $this->getCurUsersEmployeeIds();
+		        if (!empty($ids)) {
+			        $query->whereIn('femp_id', $ids);
+		        }
+	        }
         });
     }
-
 }

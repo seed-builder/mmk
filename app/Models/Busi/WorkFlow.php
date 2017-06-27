@@ -2,6 +2,7 @@
 
 namespace App\Models\Busi;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -38,6 +39,14 @@ class WorkFlow extends Model
 	 */
 	public function variables(){
 		return $this->hasMany(WorkFlowVariable::class, 'work_flow_id');
+	}
+
+	/**
+	 * 任务缺省处理人
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+	 */
+	public function default_task_approver(){
+		return $this->belongsTo(User::class, 'default_task_approver_id');
 	}
 
 	protected static function boot()

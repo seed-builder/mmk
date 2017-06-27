@@ -55,5 +55,32 @@ class ModelMapSeeder extends Seeder
 		    ]);
 	    }
 
+	    $exists = ModelMap::where('model', 'StockIn')->count();
+	    if($exists == 0) {
+		    ModelMap::create([
+			    'model' => 'StockIn',
+			    'table' => 'st_stock_ins',
+			    'foreign_table' => 'st_stock_ins'
+		    ]);
+	    }
+
+	    $exists = ModelMap::where('model', 'StockInItem')->count();
+	    if($exists == 0) {
+		    ModelMap::create([
+			    'model' => 'StockInItem',
+			    'table' => 'st_stock_in_items',
+			    'foreign_table' => 'st_stock_in_items'
+		    ]);
+	    }
+
+	    $exists = ModelMap::where('model', 'FinStatement')->count();
+	    if($exists == 0) {
+		    ModelMap::create([
+			    'model' => 'FinStatement',
+			    'table' => 'fin_statements',
+			    'foreign_table' => 'fin_statements'
+		    ]);
+	    }
+
     }
 }

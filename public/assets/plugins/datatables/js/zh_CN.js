@@ -31,6 +31,6 @@ define(function(require, exports, module) {
                 0: "点击选择行",
                 1: "只 1 行被选"
             }
-        }
+        },
     };
 });

@@ -181,6 +181,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Zizaco\Entrust\EntrustServiceProvider::class,
 	    Laravel\Tinker\TinkerServiceProvider::class,
+	    Barryvdh\Debugbar\ServiceProvider::class,
 
     ],
 
@@ -236,6 +237,7 @@ return [
 	    'Sms' => \App\Facades\SmsFacade::class,
 	    'EmployeeRepo' => \App\Facades\EmployeeRepoFacade::class,
 	    'WorkFlowEngine' => \App\Facades\WorkFlowEngineFacade::class,
+	    'Debugbar' => Barryvdh\Debugbar\Facade::class,
     ],
 
 ];

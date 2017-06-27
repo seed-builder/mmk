@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
     {
          $this->call(ModelMapSeeder::class);
          $this->call(SysConfigSeeder::class);
+         $this->call(WorkFlowSeeder::class);
          //$this->call(HolidaySeeder::class);
 //	    $this->call(SysCrontabSeeder::class);
 //	    $this->call(UserSeeder::class);

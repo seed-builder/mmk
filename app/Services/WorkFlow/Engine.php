@@ -7,13 +7,11 @@
  */
 
 namespace App\Services\WorkFlow;
-use App\Models\Busi\Store;
-use App\Models\Busi\StoreChange;
 use App\Models\Busi\WorkFlowInstance;
 use App\Models\Busi\WorkFlowTask;
-use App\Services\LogSvr;
-use App\Services\VisitCalendarService;
-use function foo\func;
+use App\Services\WorkFlow\Handlers\ExpDisplayPolicyStoreHandler;
+use App\Services\WorkFlow\Handlers\StoreChangeHandler;
+use ReflectionClass;
 
 /**
  * 工作流引擎
@@ -31,6 +29,10 @@ class Engine
 	 * @var array
 	 */
 	protected static $booted = false;
+	protected static $handlers = [
+		'store-change' => StoreChangeHandler::class,
+		'exp_display_policy_store' => ExpDisplayPolicyStoreHandler::class
+	];
 
 	public function __construct()
 	{
@@ -51,6 +53,19 @@ class Engine
 		$dispatcher = app('events');
 		Instance::setEventDispatcher($dispatcher);
 		Task::setEventDispatcher($dispatcher);
+
+		Task::dataReceiving(function (Task $task){
+			$variables = $task->getVariables();
+			//LogSvr::task()->info(json_encode($variables));
+			$instance = new Instance();
+			$instance->init($task->work_flow_instance_id);
+			$wfInstance = $instance->getWorkFlowInstance();
+			$handlerName = $wfInstance->workflow->name;
+			$handler = static::getHandler($handlerName);
+			if($handler != null){
+				$handler->variablesSaving($instance, $variables);
+			}
+		});
 
 		Task::dataReceived(function (Task $task){
 			$variables = $task->getVariables();
@@ -73,6 +88,8 @@ class Engine
 				$lastTask->update(['status' => 1]);
 			}else{
 				foreach ($nextTasks as $ntask){
+					if(empty($ntask->approver_id))
+						continue;
 					$extraType = 'workflow_' . str_replace('-', '_', $ntask->workflow->name);
 					Message::send(
 						$ntask->approver_id,
@@ -116,22 +133,26 @@ class Engine
 
 		});
 
+		//挂起
+		Task::suspended(function (Task $task){
+			$instance = new Instance();
+			$instance->init($task->work_flow_instance_id);
+			$instance->suspend();
+		});
+
+		Task::resumed(function (Task $task){
+			$instance = new Instance();
+			$instance->init($task->work_flow_instance_id);
+			$instance->resume();
+		});
+
 		Instance::variablesSaved(function (Instance $instance){
 			//LogSvr::engine()->info('variables-saved');
 			$wfInstance = $instance->getWorkFlowInstance();
-			if($wfInstance->workflow->name == 'store-change') {
-				//保存变量
-				$store_change_list = $wfInstance->variables()->where('name', 'store_change_list')->first();
-				if (!empty($store_change_list)) {
-					//LogSvr::engine()->info('variables-saved, value: ' . $store_change_list->value);
-					$data = json_decode($store_change_list->value, true);
-					unset($data['customer']);
-					unset($data['employee']);
-					unset($data['line']);
-					$storeChange = StoreChange::find($data['id']);
-					$storeChange->fill($data);
-					$storeChange->save();
-				}
+			$handlerName = $wfInstance->workflow->name;
+			$handler = static::getHandler($handlerName);
+			if($handler != null){
+				$handler->variablesSaved( $instance );
 			}
 		});
 
@@ -141,31 +162,10 @@ class Engine
 		Instance::terminated(function ($instance){
 			//LogSvr::engine()->info('Instance terminated');
 			$wfInstance = $instance->getWorkFlowInstance();
-			if($wfInstance->workflow->name == 'store-change') {
-				if ($wfInstance->status == 1) {
-					//正常审批结束
-					$store_change_list = $wfInstance->variables()->where('name', 'store_change_list')->first();
-					if (!empty($store_change_list)) {
-						$data = json_decode($store_change_list->value, true);
-						$store = Store::find($data['fstore_id']);
-						unset($data['fstore_id']);
-						unset($data['id']);
-						unset($data['remark']);
-						unset($data['type']);
-						unset($data['change_reason']);
-						unset($data['customer']);
-						unset($data['employee']);
-						unset($data['line']);
-						$data['fdocument_status'] = 'C'; //审核状态通过
-//						$data['fforbid_status'] = 'A';
-						$store->fill($data);
-						$store->save();
-						//审批通过，则生成拜访日志
-						$calendar = new VisitCalendarService();
-						$calendar->byStore($store);
-						//LogSvr::engine()->info('save store');
-					}
-				}
+			$handlerName = $wfInstance->workflow->name;
+			$handler = static::getHandler($handlerName);
+			if($handler != null){
+				$handler->terminated( $instance );
 			}
 		});
 
@@ -230,5 +230,37 @@ class Engine
 		return $this->instance->saveVariables($variables);
 	}
 
+	/**
+	 * 恢复任务，流程
+	 * @param $taskId
+	 * @param $userId
+	 */
+	public function resume($taskId, $userId){
+		$this->task->init($taskId);
+		$this->task->resume($userId);
+	}
 
+	/**
+	 * 转移
+	 * @param $taskId
+	 * @param $userId
+	 */
+	public function transfer($taskId, $userId){
+		$this->task->init($taskId);
+		$this->task->getCurrentTask()->update(['approver_id' => $userId]);
+	}
+
+	/**
+	 * @param $handlerName
+	 * @return \App\Services\WorkFlow\IEngineHandler
+	 */
+	public static function getHandler($handlerName){
+		$handler = null;
+		if(array_key_exists($handlerName, static::$handlers)){
+			$handlerClass = static::$handlers[$handlerName];
+			$reflect = new ReflectionClass($handlerClass);
+			$handler = $reflect->newInstance();
+		}
+		return $handler;
+	}
 }

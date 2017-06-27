@@ -163,6 +163,9 @@ class Store extends BaseModel
 	    });
 
 	    static::saving(function ($store) {
+	    	if(empty($store->id))
+	    		return;
+
 		    //LogSvr::storeUpdate()->info(json_encode($store));
 		    $old = Store::find($store->id);
 		    if($old->fpostalcode != $store->fpostalcode){
@@ -176,11 +179,12 @@ class Store extends BaseModel
 			    //$store->fpostalcode = $postalcode;
 		    }
 
-            if ($store->femp_id){ //门店人员调换
+            if ($store->femp_id != $old->femp_id){ //门店人员调换
                 $entity = VisitLineStore::where('fstore_id', $store->id)->first();
-
-                $entity->femp_id = $store->femp_id;
-                $entity->save();
+				if(!empty($entity)) {
+					$entity->femp_id = $store->femp_id;
+					$entity->save();
+				}
 
                 //同时变更在审批中的任务的发起人
                 $variables = WorkFlowInstanceVariable::query()
@@ -225,7 +229,7 @@ class Store extends BaseModel
 
 	    });
 
-	    static::deleted(function ($store) {
+	    static::deleting(function ($store) {
 		    $entities = VisitLineStore::where('fstore_id', $store->id)->get();
 		    $ids = $entities->map(function ($item){
 			    return $item->id;

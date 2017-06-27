@@ -115,6 +115,12 @@ define(function (require, exports, module) {
                     }
                 },
                 {
+                    "data": "fforbid_status",
+                    render: function (data, type, full) {
+                        return forbid_status(data);
+                    }
+                },
+                {
                     "data": 'id',
                     render: function (data, type, full) {
                         return '<a href="/admin/store/storeInfo/'+data+'" title="查看详情" data-target="#storeDetail" data-toggle="modal"><i class="fa fa-fw fa-search"></i></a>';
@@ -128,9 +134,6 @@ define(function (require, exports, module) {
                 }
             ],
             buttons: [
-                // { text: '新增', action: function () { }  },
-                // { text: '编辑', className: 'edit', enabled: false },
-                // { text: '删除', className: 'delete', enabled: false },
                 {
                     text: '新增<i class="fa fa-fw fa-plus"></i>',
                     className: 'add',
@@ -197,21 +200,33 @@ define(function (require, exports, module) {
 
                     }
                 },
-                // {
-                //     text: '调换门店<i class="fa fa-fw fa-exchange"></i>',
-                //     action: function () {
-                //         $("#exchange-modal").modal('show')
-                //
-                //     }
-                // },
-
-
-//                {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: editor},
-//                 {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: editor},
-//                 { text: '审核<i class="fa fa-fw fa-paperclip"></i>',className: 'check', enabled: false },
-//                 { text: '反审核<i class="fa fa-fw fa-unlink"></i>',className: 'uncheck', enabled: false },
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
-                {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
+                { text: '禁用<i class="fa fa-minus-circle"></i>', className: 'forbidden', enabled: false, action: function () {
+                    layer.confirm("确定禁用该项 ?", ['确定', '取消'], function () {
+                        var store = table.rows({selected: true}).data()[0];
+                        $.post('/admin/store/forbidden/' + store.id, {'_token': $('meta[name="_token"]').attr('content') }, function (res) {
+                            if(res.cancelled == 0){
+                                layer.msg('禁用审批流程开启成功！');
+                                table.ajax.reload();
+                            }
+                        });
+                    })
+                }},
+                { text: '反禁用<i class="fa fa-check-circle"></i>', className: 'unforbidden', enabled: false, action: function () {
+                    var data = table.rows({selected: true}).data();
+                    layer.confirm("确定反禁用该项 ?", ['确定', '取消'], function () {
+                        var store = table.rows({selected: true}).data()[0];
+                        $.post('/admin/store/start_use/' + store.id, { '_token': $('meta[name="_token"]').attr('content') }, function (res) {
+                            if(res.cancelled == 0){
+                                layer.msg('反禁用成功！');
+                                table.ajax.reload();
+                            }
+                        });
+                    })
+                }},
+                { text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>', action: function () {
+                    exportExcel('#moduleForm','/admin/store/export-excel');
+                }  },
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
             ]
         });
@@ -219,8 +234,15 @@ define(function (require, exports, module) {
         table.on('select', rowselect).on( 'deselect', editEnable);
         //设置编辑门店按钮是否可用
         function editEnable() {
-            var count = table.rows({selected: true}).count();
-            table.buttons(['.edit']).enable(count > 0);
+            var data = table.rows({selected: true}).data();
+            table.buttons(['.edit']).enable(data.length > 0);
+            if(data.length > 0){
+                var store = data[0];
+                table.buttons(['.forbidden']).enable(store.fforbid_status == 'A');
+                table.buttons(['.unforbidden']).enable(store.fforbid_status == 'B');
+            }else{
+                table.buttons(['.forbidden', '.unforbidden']).enable(false);
+            }
             checkEditEnabble(table,['.check'],['.uncheck']);
         }
 

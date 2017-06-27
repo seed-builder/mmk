@@ -233,8 +233,11 @@ class EmployeeController extends AdminController
         if (!empty($request->distinct)) {
             $queryBuilder->groupBy($request->distinct)->distinct();
         }
-
-        $entities = $queryBuilder->select($fields)->skip($start)->take($length)->get();
+        if($length > 0) {
+	        $entities = $queryBuilder->select($fields)->skip($start)->take($length)->get();
+        }else{
+	        $entities = $queryBuilder->select($fields)->get();
+        }
         $result = [
             'draw' => $draw,
             'recordsTotal' => $total,

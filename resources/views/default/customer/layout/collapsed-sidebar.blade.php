@@ -123,24 +123,23 @@ $loginUserName = empty($loginUser->nick_name) ? $loginUser->name: $loginUser->ni
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
-                            <li class="user-header">
-                                <img src="/assets/plugins/AdminLTE/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                            {{--<li class="user-header">--}}
+                                {{--<img src="/assets/plugins/AdminLTE/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">--}}
 
-                                <p>
-                                    {{$loginUserName}}
-                                    <small>{{Auth::user()->fcreate_date}}</small>
-                                </p>
-                            </li>
+                                {{--<p>--}}
+                                    {{--{{$loginUserName}}--}}
+                                    {{--<small>{{Auth::user()->fcreate_date}}</small>--}}
+                                {{--</p>--}}
+                            {{--</li>--}}
                             <!-- Menu Body -->
                             <li class="user-body">
                                 <div class="row">
                                     <div class="col-xs-4 text-center">
-                                        <a id="pwd-reset" style="cursor: pointer">密码重置</a>
-
+                                        <a id="customer-amount" href="#">货款余额</a>
                                     </div>
-                                    {{--<div class="col-xs-4 text-center">--}}
-                                        {{--<a href="#">Sales</a>--}}
-                                    {{--</div>--}}
+                                    <div class="col-xs-4 text-center">
+                                        <a id="pwd-reset" style="cursor: pointer">密码重置</a>
+                                    </div>
                                     {{--<div class="col-xs-4 text-center">--}}
                                         {{--<a href="#">Friends</a>--}}
                                     {{--</div>--}}
@@ -218,8 +217,17 @@ $loginUserName = empty($loginUser->nick_name) ? $loginUser->name: $loginUser->ni
         layer.confirm('确认重置密码吗？重置后密码为：888888',function () {
             window.location.href="/customer/user/reset-pwd?id="+{{$loginUser->id}}
             layer.closeAll();
-        })
-    })
+        });
+    });
+
+    $('#customer-amount').click(function () {
+        $.getJSON("/customer/fin-statement/get-cust-amount",{}, function (res) {
+            if (res.data) {
+                // You can reload the current location
+                layer.msg('货款余额:' + res.data);
+            }
+        });
+    });
 
     $(function () {
         $.get('/customer/message/unread',{},function(data,status,xhr){

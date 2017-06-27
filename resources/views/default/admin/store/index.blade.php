@@ -79,7 +79,8 @@
                     <!-- /.box-header -->
                     <div class="box-body">
                         <div class="panel panel-default">
-                            <div class="form-horizontal filter " filter-table="#moduleTable">
+                            <form class="form-horizontal filter" id="moduleForm" filter-table="#moduleTable" method="post">
+                                {{ csrf_field() }}
 
                                 <div class="form-group">
                                     <label class="col-sm-1 control-label">门店名称</label>
@@ -138,7 +139,7 @@
                                     <button type="button" class="btn btn-info filter-submit">查询</button>
                                     <button type="button" class="btn btn-default filter-reset">重置</button>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                         <table id="moduleTable" class="table table-bordered table-hover display nowrap" cellspacing="0" width="100%">
                             <thead>
@@ -157,6 +158,7 @@
                                 <th>渠道</th>
                                 <th>是否签约</th>
                                 <th>审核状态</th>
+                                <th>禁用状态</th>
                                 <th>操作</th>
                             </tr>
 

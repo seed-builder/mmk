@@ -34,10 +34,13 @@ class Task
 	public function getObservableEvents()
 	{
 		return [
-			'data_received',
+			'task_data_receiving',
+			'task_data_received',
 			'task_processed',
 			'task_terminating',
 			'task_terminated',
+			'task_suspended',
+			'task_resumed',
 		];
 	}
 
@@ -70,10 +73,13 @@ class Task
 
 	public function receive($variables){
 		$this->variables = $variables;
+		if ($this->fireEvent('task_data_receiving', true) === false) {
+			return false;
+		}
 		if(array_key_exists('remark', $variables)){
 			$this->task->update(['remark' => $variables['remark']]);
 		}
-		$this->fireEvent('data_received', false);
+		$this->fireEvent('task_data_received', false);
 	}
 
 	/**
@@ -83,18 +89,21 @@ class Task
 	 */
 	public function process($variables){
 		//$nextTasks = [];
+		if($this->task->status == 1)
+			return;
+
+		$this->receive($variables);
 		DB::beginTransaction();
 		try {
-			$this->receive($variables);
 			//更新当前执行日志状态数据 为已经执行
 			$this->task->update(['status' => 1]);
 			$nextLinks = $this->findNextLinks($this->task->node);
 			$this->nextTasks = $this->createNextTasks($this->task, $nextLinks);
 			DB::commit();
-			$this->fireEvent('task_processed', false);
 		} catch (Exception $e) {
 			DB::rollback();
 		}
+		$this->fireEvent('task_processed', false);
 		//return $nextTasks;
 	}
 
@@ -152,6 +161,28 @@ class Task
 							'node_id' => $curNode->id,
 							'approver_id' => $approver->id,
 						]);
+					}
+				}else{
+					//检查是否有默认缺省处理人
+					if(!empty($this->task->workflow->default_task_approver_id)){
+						$tasks[] = $this->createTask([
+							'work_flow_id' => $preTask->work_flow_id,
+							'work_flow_instance_id' => $preTask->work_flow_instance_id,
+							'link_id' => $link->id,
+							'pre_task_id' => $preTask->id,
+							'node_id' => $curNode->id,
+							'approver_id' => $this->task->workflow->default_task_approver_id
+						]);
+					} else {
+						$tasks[] = $this->createTask([
+							'work_flow_id' => $preTask->work_flow_id,
+							'work_flow_instance_id' => $preTask->work_flow_instance_id,
+							'link_id' => $link->id,
+							'pre_task_id' => $preTask->id,
+							'node_id' => $curNode->id,
+							'status' => 4 //挂起
+						]);
+						$this->fireEvent('task_suspended', false);
 					}
 				}
 				break;
@@ -212,6 +243,11 @@ class Task
 		return true;
 	}
 
+	public function resume($approverId){
+		$this->task->update(['approver_id' => $approverId, 'status' => 0]);
+		$this->fireEvent('task_resumed', false);
+	}
+
 	/**
 	 * 查找下一步符合条件的所有走向
 	 * @param $curNode
@@ -260,8 +296,12 @@ class Task
 		return $rightLinks;
 	}
 
+	public static function dataReceiving($callback){
+		static::registerEvent('task_data_receiving', $callback);
+	}
+
 	public static function dataReceived($callback){
-		static::registerEvent('data_received', $callback);
+		static::registerEvent('task_data_received', $callback);
 	}
 
 	public static function terminated($callback){
@@ -274,6 +314,14 @@ class Task
 
 	public static function processed($callback){
 		static::registerEvent('task_processed', $callback);
+	}
+
+	public static function suspended($callback){
+		static::registerEvent('task_suspended', $callback);
+	}
+
+	public static function resumed($callback){
+		static::registerEvent('task_resumed', $callback);
 	}
 
 	public function getStatus(){

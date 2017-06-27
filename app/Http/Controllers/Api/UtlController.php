@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Services\DataSync\KingdeeWorker;
 use App\Services\MessageService;
+use App\Services\Utility;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Storage;
@@ -201,10 +202,11 @@ class UtlController extends Controller
     	if(env('APP_DEBUG')){
 		    return response(['data' => 100.10, 'code' => 200, 'msg' => '', 'success' => true]);
 	    }
-	    $worker = new KingdeeWorker();
-	    $url = env('KINGDEE_HOST') . '/k3cloud/CYD.ApiService.ServicesStub.CustomBusinessService.CustBalAmountGet.common.kdsvc';
-	    $res = $worker->post($url, ['parameters' => [$cust_id]]);
-	    return response(['data' => $res, 'code' => 200, 'msg' => '', 'success' => true]);
+//	    $worker = new KingdeeWorker();
+//	    $url = env('KINGDEE_HOST') . '/k3cloud/CYD.ApiService.ServicesStub.CustomBusinessService.CustBalAmountGet.common.kdsvc';
+//	    $res = $worker->post($url, ['parameters' => [$cust_id]]);
+	    $amount = Utility::getCustomerBalance($cust_id);
+	    return response(['data' => $amount, 'code' => 200, 'msg' => '', 'success' => true]);
     }
 
     public function pushMessage(Request $request, $user_id){

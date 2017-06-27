@@ -205,9 +205,13 @@ abstract class DatatablesController extends Controller
         if (!empty($fields)) {
             $queryBuilder->select($fields);
         }
-        $entities = $queryBuilder->skip($start)->take($length)->get();
+        if($length > 0) {
+	        $entities = $queryBuilder->skip($start)->take($length)->get();
+        }else{
+	        $entities = $queryBuilder->get();
+        }
         //$entities = $queryBuilder->skip($start)->take($length)->get();
-	    //var_dump($queryBuilder->toSql());
+//	    var_dump($queryBuilder->toSql());
         //LogSvr::sql()->info($queryBuilder->toSql());
         $result = [
             'draw' => $draw,
@@ -320,16 +324,16 @@ abstract class DatatablesController extends Controller
     /*
      * 查询过滤器
      */
-    public function filter($queryBuilder,$filterdata){
+    public function filter($queryBuilder, $filterdata){
         foreach ($filterdata as $f){
-            if (!empty($f['value'])){
+//            if (!empty($f['value'])){
                 $operator = !empty($f['operator'])?$f['operator']:'=';
 
                 if ($operator=='like')
                     $queryBuilder->where($f['name'],$operator,'%'.$f['value'].'%');
                 else
                     $queryBuilder->where($f['name'],$operator,$f['value']);
-            }
+//            }
         }
     }
 

@@ -37,8 +37,9 @@
                             <thead>
                             <tr>
                                 <th>id</th>
-                                <th>名称</th>
-                                <th>相关表</th>
+                                <th>英文名称</th>
+                                <th>中文名称</th>
+                                <th>缺省处理人</th>
                                 <th>状态</th>
                                 <th>创建时间</th>
                                 <th>修改时间</th>
@@ -54,6 +55,33 @@
         </div>
         <!-- /.row -->
     </section>
+    <div id="chooseUserDialog" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="text-align: center;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">选择处理人</h4>
+                </div>
+                <div class="modal-body">
+                    <table id="userTable" class="table table-bordered table-hover display nowrap" cellspacing="0" width="100%">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>登陆名</th>
+                            <th>昵称</th>
+                            <th>类型</th>
+                            <th>状态</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" id="transferBtn" class="btn btn-primary">确定</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
 @endsection
 @section('js')
@@ -61,7 +89,7 @@
     <script type="text/javascript">
         $(function () {
             seajs.use('admin/work_flow.js', function (app) {
-                app.index($, 'moduleTable');
+                app.index($, 'moduleTable', 'userTable');
             });
         });
     </script>
