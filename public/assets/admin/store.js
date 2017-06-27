@@ -115,6 +115,12 @@ define(function (require, exports, module) {
                     }
                 },
                 {
+                    "data": "fforbid_status",
+                    render: function (data, type, full) {
+                        return forbid_status(data);
+                    }
+                },
+                {
                     "data": 'id',
                     render: function (data, type, full) {
                         return '<a href="/admin/store/storeInfo/'+data+'" title="查看详情" data-target="#storeDetail" data-toggle="modal"><i class="fa fa-fw fa-search"></i></a>';
