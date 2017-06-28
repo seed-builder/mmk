@@ -34,6 +34,7 @@ class FinStatementController extends ApiController
 		$data = $request->all();
 
 		$start = $request->input('start', 0);
+		$customerId = $request->input('customerId', 0);
 		$length = $request->input('length', 10);
 		$columns = $request->input('columns', []);
 		$order = $request->input('order', []);
@@ -69,6 +70,7 @@ class FinStatementController extends ApiController
 		foreach ($conditions as $col => $val) {
 			$queryBuilder->where($col, $val);
 		}
+		$queryBuilder->where('cust_id', $customerId);
 
 		//模糊查询
 		if (!empty($searchCols) && !empty($search['value'])) {

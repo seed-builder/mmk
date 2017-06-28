@@ -145,7 +145,7 @@ $months = [1,2,3,4,5,6,7,8,9,10,11,12]
         </div>
         <!-- /.row -->
     </section>
-    <input id="customerId" value="{{$customerId}}">
+    <input id="customerId" value="{{$customerId}}" type="hidden">
     <!-- AdminLTE App -->
     <script src="/assets/plugins/AdminLTE/dist/js/app.min.js"></script>
     <script src="/assets/plugins/Shineraini/app.js"></script>

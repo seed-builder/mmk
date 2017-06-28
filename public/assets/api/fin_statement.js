@@ -16,7 +16,7 @@ define(function(require, exports, module) {
             paging: true,
             rowId: "id",
             ajax: {
-                url: '/api/fin-statement/pagination',
+                url: '/api/fin-statement/pagination?customerId='+customerId,
                 data: function (data) {
                     data['columns'][14]['search']['value'] = customerId;
                 }
@@ -36,7 +36,7 @@ define(function(require, exports, module) {
                 {  'data': 'remarks' },
                 {  'data': 'seq' },
                 {  'data': 'status' },
-                {'data': 'cust_id'},
+                {  'data': 'cust_id'},
             ],
             columnDefs: [
                 // {
