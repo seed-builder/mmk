@@ -75,18 +75,20 @@ class KingdeeWorker extends DbWorker
 	}
 
 	public function post($url, $data){
+		$login_times = 0;
 		LOGIN:
 		$cookie_jar = tempnam('./tmp', 'CloudSession');
 		$re = $this->login($cookie_jar);
 		LogSvr::KingdeeSync()->info('login result : ' . $re);
 		//if(!empty($re))
-
+		$login_times++;
 		$result = $this->httpPost($url, $data, 0, $cookie_jar);
 		LogSvr::KingdeeSync()->info('$result  : ' . $result);
 		$resArr = json_decode($result, true);
 		if($resArr['Result'] == 0 && $resArr['Msg'] == '请先登录'){
 			LogSvr::KingdeeSync()->info('跳转到登录');
-			goto LOGIN;
+			if($login_times < 10)
+				goto LOGIN;
 		}
 		return $resArr;
 	}
