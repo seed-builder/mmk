@@ -73,7 +73,10 @@ define(function (require, exports, module) {
                 {
                     'data': 'fchecker_id',
                     render: function (data, type, full) {
-                        return full.user.nick_name;
+                        if (full.user!=null)
+                            return full.user.nick_name;
+                        else
+                            return ''
                     }
                 },
             ],
