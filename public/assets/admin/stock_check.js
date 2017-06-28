@@ -79,6 +79,12 @@ define(function (require, exports, module) {
                             return ''
                     }
                 },
+                {
+                    'data': 'id',
+                    render: function (data, type, full) {
+                        return '<a href="/admin/stock-check/show/'+data+'" title="查看盘点照片" data-target="#show" data-toggle="modal"><i class="fa fa-fw fa-search"></i></a>';
+                    }
+                },
             ],
             columnDefs: [
                 {

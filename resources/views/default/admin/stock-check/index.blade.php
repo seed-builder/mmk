@@ -81,6 +81,7 @@
                                 <th>盘点日期</th>
                                 <th>盘点状态</th>
                                 <th>盘点人</th>
+                                <th>操作</th>
                             </tr>
                             </thead>
                         </table>
@@ -127,6 +128,13 @@
         </div>
         <!-- /.row -->
     </section>
+
+    <div id="show" class="modal fade modal-scroll" role="dialog" tabindex="-1" data-replace="true">
+        <div class="modal-dialog" style="width: 50%">
+            <div class="modal-content">
+            </div>
+        </div>
+    </div>
 
 @endsection
 @section('js')

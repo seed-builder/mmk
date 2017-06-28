@@ -55,7 +55,19 @@ class StockCheckController extends AdminController
 	*/
 	public function show($id)
 	{
-		//
+		$entity = $this->newEntity()->newQuery()->find($id);
+		$image_ids = [];
+		if (!empty($entity->fphotos)){
+            $image_ids = explode(',',$entity->fphotos);
+        }
+
+        $images = [];
+        foreach ($image_ids as $image_id){
+		    $images[] = '/show-image?imageId='.$image_id;
+        }
+
+        return view('admin.stock-check.show',['images' => $images]);
+
 	}
 
 	/**
