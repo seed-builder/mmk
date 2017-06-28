@@ -48,6 +48,7 @@ $customer = $user->reference;
                         <li><a href="{{url('/customer/stock-out')}}"><i class="fa fa-fw fa-truck"></i>出库管理</a></li>
                         <li><a href="{{url('/customer/view-customer-stock-statistic')}}"><i class="fa fa-fw fa-cubes"></i>我的库存</a></li>
                         <li><a href="{{url('/customer/display-policy')}}"><i class="fa fa-fw fa-folder"></i>费用政策</a></li>
+                        <li><a href="{{url('/customer/stock-check')}}"><i class="fa fa-circle-o"></i>经销商盘点</a></li>
                     </ul>
                 </li>
                 <li class="treeview ">

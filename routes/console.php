@@ -40,9 +40,9 @@ Artisan::command('test', function () {
 Artisan::command('test1', function () {
 	$this->comment('begin ...');
 	$db = new DbHelper();
-	$columns = $db->getColumns('work_flow_instance_variables');
-	$builder = new CodeBuilder('WorkFlowInstanceVariable','work_flow_instance_variables', $columns);
-	$builder->createFiles( 'api');
+	$columns = $db->getColumns('st_stock_check_items');
+	$builder = new CodeBuilder('StockCheckItem','st_stock_check_items', $columns);
+	$builder->createFiles( 'customer');
 	$this->comment('end ...');
 })->describe('philo blade test');
 

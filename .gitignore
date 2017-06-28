@@ -7,3 +7,4 @@ Homestead.yaml
 .env
 .composer.lock
 jpush.log
+/public/mix-manifest.json
