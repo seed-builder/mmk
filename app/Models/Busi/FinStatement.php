@@ -5,7 +5,7 @@ namespace App\Models\Busi;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * model description
+ * 经销商往来对账
  * Class FinStatement
  * @package  App\Models
  *
