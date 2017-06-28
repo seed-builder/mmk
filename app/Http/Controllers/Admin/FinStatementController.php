@@ -25,8 +25,8 @@ class FinStatementController extends AdminController
 	public function index()
 	{
 		//
-		$customers = Customer::where('fdocument_status', 'C')->where('fforbid_status', 'A')->get();
-		return view('admin.fin-statement.index', compact('customers'));
+		//$customers = Customer::where('fdocument_status', 'C')->where('fforbid_status', 'A')->get();
+		return view('admin.fin-statement.index');
 	}
 
 	/**
