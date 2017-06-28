@@ -63,7 +63,7 @@ class StockCheckController extends AdminController
 
         $images = [];
         foreach ($image_ids as $image_id){
-		    $images[] = '/show-image?imageId='.$image_id;
+		    $images[] = '/admin/show-image?imageId='.$image_id;
         }
 
         return view('admin.stock-check.show',['images' => $images]);
