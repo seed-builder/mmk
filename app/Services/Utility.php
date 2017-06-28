@@ -35,9 +35,9 @@ class Utility
 	public static function getCustomerDDReturn($custId, $year, $month){
 		$worker = new KingdeeWorker();
 		$url = env('KINGDEE_HOST') . '/k3cloud/CYD.ApiService.ServicesStub.CustomBusinessService.CustDDDetailGet.common.kdsvc';
-		var_dump($url);
+//		var_dump($url);
 		$data = $worker->post($url, ['parameters' => [$custId, $year, $month]]);
-		var_dump($data);
+//		var_dump($data);
 		return $data;
 	}
 
