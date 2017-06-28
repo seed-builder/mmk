@@ -13,7 +13,7 @@
     <!-- Ionicons -->
     <link rel="stylesheet" href="/assets/plugins/ionicons/css/ionicons.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="/assets/plugins/AdminLTE/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="/assets/plugins/AdminLTE/dist/css/AdminLTE.css">
     <!-- iCheck -->
     <link rel="stylesheet" href="/assets/plugins/iCheck/square/blue.css">
 
