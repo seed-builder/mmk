@@ -24,6 +24,8 @@ use Illuminate\Database\Eloquent\Model;
  * @SWG\Property(name="fsend_date", type="string", description="发货日期")
  * @SWG\Property(name="fsend_status", type="string", description="发货状态(A-未发货，B-发货中，C-已到货)")
  * @SWG\Property(name="fuser_id", type="integer", description="到货确认人id")
+ * @SWG\Property(name="total_qty", type="integer", description="合计数量")
+ * @SWG\Property(name="total_amount", type="number", description="合计金额")
  * @SWG\Property(name="id", type="integer", description="")
   */
 class StockIn extends BaseModel

@@ -22,6 +22,8 @@ use Illuminate\Database\Eloquent\Model;
  * @SWG\Property(name="fqty", type="number", description="订单数量")
  * @SWG\Property(name="fsale_unit", type="string", description="销售单位")
  * @SWG\Property(name="fstock_in_id", type="integer", description="入库ID")
+ * @SWG\Property(name="price", type="number", description="单价")
+ * @SWG\Property(name="amount", type="number", description="金额")
  * @SWG\Property(name="id", type="integer", description="")
  */
 class StockInItem extends BaseModel
