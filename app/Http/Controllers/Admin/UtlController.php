@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Busi\Customer;
+use App\Services\Utility;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Storage;
@@ -168,16 +170,22 @@ class UtlController extends Controller
 	    return response(['affected' => $affected], 200);
     }
 
-    /**
-     * 发送验证码短信
-     * @param Request $request
-     */
-    public function sendVerifyCode(Request $request){
+	/**
+	 * 获取经销商代垫返还数据
+	 * @param Request $request
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+	 */
+	public function getCustomerDDReturn(Request $request){
 
-    }
-
-    public function checkVerifyCode(Request $request){
-
-    }
+    	$custId = $request->input('custId',0);
+    	$year = $request->input('year', date('Y'));
+    	$month = $request->input('month', date('n'));
+		$data = [];
+		if( $custId > 0 && $year > 0 && $month > 0){
+			$data = Utility::getCustomerDDReturn($custId, $year, $month);
+		}
+		$customers = Customer::where('fdocument_status', 'C')->where('fforbid_status', 'A')->get();
+    	return view('admin.utl.ddreturn', compact('custId', 'year', 'month', 'data', 'customers'));
+	}
 
 }

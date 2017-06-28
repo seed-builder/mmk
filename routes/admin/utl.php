@@ -11,3 +11,4 @@ Route::post('/fake-delete', function (){
     ]);
 });
 Route::post('/send-data', ['uses' => 'UtlController@sendData']);
+Route::any('/customer-dd-return', ['uses' => 'UtlController@getCustomerDDReturn']);
