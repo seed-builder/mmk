@@ -5,9 +5,9 @@ $dateMin = $items->min('bill_date');
 $dateMax = $items->max('bill_date');
 
 ?>
-@extends('customer.layout.collapsed-sidebar')
+@extends('admin.layout.collapsed-sidebar')
 @section('styles')
-    @include('customer.layout.datatable-css')
+    @include('admin.layout.datatable-css')
     <style>
         @page rotated {
             size: landscape;
@@ -134,7 +134,7 @@ $dateMax = $items->max('bill_date');
                     </div>
 
                     <div class="box-footer">
-                        <a href="/customer/fin-statement" style="margin-left: 10px" class="btn btn-default pull-right">返回</a>
+                        <a href="/admin/fin-statement" style="margin-left: 10px" class="btn btn-default pull-right">返回</a>
                         <button id="makePrint" type="button" class="btn btn-info pull-right">打印本页</button>
                     </div>
                 </div>
@@ -145,7 +145,7 @@ $dateMax = $items->max('bill_date');
 
 @endsection
 @section('js')
-    @include('customer.layout.datatable-js')
+    @include('admin.layout.datatable-js')
     <!-- jqprint -->
     <script src="http://www.jq22.com/jquery/jquery-migrate-1.2.1.min.js"></script>
     <script src="/assets/plugins/jquery-print/jquery.jqprint-0.3.js"></script>
