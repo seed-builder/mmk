@@ -37,7 +37,7 @@ class SaleOrderItem extends BaseModel
 	//
 	protected $table = 'st_sale_order_items';
 	protected $guarded = ['id'];
-	protected $appends = ['box_qty', 'bottle_qty','present_box_qty','present_bottle_qty'];
+//	protected $appends = ['box_qty', 'bottle_qty','present_box_qty','present_bottle_qty'];
 
     protected static function boot()
     {
@@ -68,10 +68,10 @@ class SaleOrderItem extends BaseModel
 			$attributes['fpresent_qty'] = $attributes['present_box_qty'] + round($attributes['present_bottle_qty'] / $material->fratio, 2);
 			$attributes['fpresent_base_qty'] = $attributes['present_box_qty'] * $material->fratio + $attributes['present_bottle_qty'];
 
-			unset($attributes['box_qty']);
-			unset($attributes['bottle_qty']);
-			unset($attributes['present_box_qty']);//present_box_qty
-			unset($attributes['present_bottle_qty']);
+//			unset($attributes['box_qty']);
+//			unset($attributes['bottle_qty']);
+//			unset($attributes['present_box_qty']);//present_box_qty
+//			unset($attributes['present_bottle_qty']);
 		}
 		return $attributes;
 	}
@@ -93,26 +93,26 @@ class SaleOrderItem extends BaseModel
         return $this->hasOne(Store::class,'id','fstore_id');
     }
 
-    public function getBoxQtyAttribute(){
-	    return floor($this->fqty);
-    }
-
-	public function getBottleQtyAttribute(){
-		if($this->material){
-			return $this->fbase_qty - floor($this->fqty) * $this->material->fratio;
-		}
-		return $this->fbase_qty ;
-	}
-
-	public function getPresentBoxQtyAttribute(){
-		return floor($this->fpresent_qty);
-	}
-
-	public function getPresentBottleQtyAttribute(){
-		if($this->material){
-			return $this->fpresent_base_qty - floor($this->fpresent_qty) * $this->material->fratio;
-		}
-		return $this->fpresent_base_qty ;
-	}
+//    public function getBoxQtyAttribute(){
+//	    return floor($this->fqty);
+//    }
+//
+//	public function getBottleQtyAttribute(){
+//		if($this->material){
+//			return $this->fbase_qty - floor($this->fqty) * $this->material->fratio;
+//		}
+//		return $this->fbase_qty ;
+//	}
+//
+//	public function getPresentBoxQtyAttribute(){
+//		return floor($this->fpresent_qty);
+//	}
+//
+//	public function getPresentBottleQtyAttribute(){
+//		if($this->material){
+//			return $this->fpresent_base_qty - floor($this->fpresent_qty) * $this->material->fratio;
+//		}
+//		return $this->fpresent_base_qty ;
+//	}
 
 }
