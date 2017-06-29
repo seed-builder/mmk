@@ -66,6 +66,24 @@ Route::group(['prefix' => 'stock-check', 'middleware' => 'api.sign'], function (
 	 */
 	Route::get('/find-or-create/{cust_id}', ['as' => 'StockCheck.findOrCreate', 'uses' => 'StockCheckController@findOrCreate']);
 
+	/**
+	 * @SWG\Api(
+	 *     path="/api/stock-check/statistic/{id}",
+	 *     @SWG\Operation(
+	 *      method="GET",
+	 *      nickname="stock-check-statistic",
+	 *      summary="经销商库存盘点单统计信息",
+	 *      notes="经销商库存盘点单统计信息",
+	 *      type="",
+	 *      @SWG\Parameters(
+	 *          @SWG\Parameter(name="id", description="id", required=true, type="integer", paramType="path", defaultValue="1"),
+	 *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="query", defaultValue="****")
+	 *      )
+	 *  )
+	 * )
+	 */
+	Route::get('/statistic/{id}', ['as' => 'StockCheck.statistic', 'uses' => 'StockCheckController@statistic']);
+
 
 	/**
     * @SWG\Api(
