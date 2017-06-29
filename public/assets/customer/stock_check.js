@@ -127,12 +127,20 @@ define(function (require, exports, module) {
                         return full.material.fname;
                     }
                 },
-                {'data': 'finv_hqty'},
-                {'data': 'finv_eqty'},
-                {'data': 'fcheck_hqty'},
-                {'data': 'fcheck_eqty'},
-                {'data': 'fdiff_hqty'},
-                {'data': 'fdiff_eqty'},
+                {'data': 'finv_hqty', render: function (data, type, full) {
+                    return full.inv_box_qty;
+                }},
+                {'data': 'finv_eqty', render: function (data, type, full) {
+                    return full.inv_bottle_qty;
+                }},
+                {'data': 'box_qty'},
+                {'data': 'bottle_qty'},
+                {'data': 'fdiff_hqty', render: function (data, type, full) {
+                    return full.diff_box_qty;
+                }},
+                {'data': 'fdiff_eqty', render: function (data, type, full) {
+                    return full.diff_bottle_qty;
+                }},
                 // {'data': 'box_qty'},
                 // {'data': 'bottle_qty'},
             ],

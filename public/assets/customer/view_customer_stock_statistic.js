@@ -20,8 +20,12 @@ define(function(require, exports, module) {
                 {  'data': 'material_specification' },
                 {  'data': 'fsale_unit' },
                 {  'data': 'fbase_unit' },
-                {  'data': 'fqty' },
-                {  'data': 'fbase_qty' },
+                {  'data': 'fqty', render: function (data, type, full) {
+                    return full.box_qty;
+                } },
+                {  'data': 'fbase_qty', render: function (data, type, full) {
+                    return full.bottle_qty;
+                } },
             ],
             buttons: [
                 // { text: '新增', action: function () { }  },
