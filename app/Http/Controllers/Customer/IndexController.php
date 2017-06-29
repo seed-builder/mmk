@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Models\Busi\Resources;
+use App\Services\Utility;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Image;
 
 class IndexController extends BaseController
@@ -29,5 +31,23 @@ class IndexController extends BaseController
 		}else{
 			return response('not image', 404);
 		}
+	}
+
+	/**
+	 * 获取经销商代垫返还数据
+	 * @param Request $request
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+	 */
+	public function getCustomerDDReturn(Request $request){
+
+//		$custId = $request->input('custId',0);
+		$custId = Auth::user()->reference_id;
+		$year = $request->input('year', date('Y'));
+		$month = $request->input('month', date('n'));
+		$data = [];
+		if( $custId > 0 && $year > 0 && $month > 0){
+			$data = Utility::getCustomerDDReturn($custId, $year, $month);
+		}
+		return view('customer.index.ddreturn', compact( 'year', 'month', 'data'));
 	}
 }
