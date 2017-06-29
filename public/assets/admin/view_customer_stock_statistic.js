@@ -24,8 +24,8 @@ define(function(require, exports, module) {
                 {  'data': 'material_specification' },
                 {  'data': 'fsale_unit' },
                 {  'data': 'fbase_unit' },
-                {  'data': 'fqty' },
-                {  'data': 'fbase_qty' },
+                {  'data': 'box_qty' },
+                {  'data': 'bottle_qty' },
             ],
             buttons: [
                 // { text: '新增', action: function () { }  },

@@ -133,12 +133,12 @@ define(function (require, exports, module) {
                         return full.material.fname;
                     }
                 },
-                {'data': 'finv_hqty'},
-                {'data': 'finv_eqty'},
-                {'data': 'fcheck_hqty'},
-                {'data': 'fcheck_eqty'},
-                {'data': 'fdiff_hqty'},
-                {'data': 'fdiff_eqty'},
+                {'data': 'inv_box_qty'},
+                {'data': 'inv_bottle_qty'},
+                {'data': 'box_qty'},
+                {'data': 'bottle_qty'},
+                {'data': 'diff_box_qty'},
+                {'data': 'diff_bottle_qty'},
                 // {'data': 'box_qty'},
                 // {'data': 'bottle_qty'},
             ],

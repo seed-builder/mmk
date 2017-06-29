@@ -30,7 +30,7 @@ class StockCheckItem extends BaseModel
 	//
 	protected $table = 'st_stock_check_items';
 	protected $guarded = ['id'];
-	protected $appends = ['inv_box_qty', 'inv_bottle_qty'];
+	protected $appends = ['inv_box_qty', 'inv_bottle_qty','diff_box_qty', 'diff_bottle_qty'];
 
 	public function calculate($attributes){
 		if ($this->id > 0 && !empty($this->material)) {
@@ -68,6 +68,19 @@ class StockCheckItem extends BaseModel
 			$val = $this->finv_eqty - floor($this->finv_hqty) * $this->material->fratio;
 		}else {
 			$val = $this->finv_eqty;
+		}
+		return intval($val);
+	}
+
+	public function getDiffBoxQtyAttribute(){
+		return intval(floor($this->fdiff_hqty));
+	}
+
+	public function getDiffBottleQtyAttribute(){
+		if($this->material){
+			$val = $this->fdiff_eqty - floor($this->fdiff_hqty) * $this->material->fratio;
+		}else {
+			$val = $this->fdiff_eqty;
 		}
 		return intval($val);
 	}

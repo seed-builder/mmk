@@ -26,5 +26,14 @@ class ViewCustomerStockStatistic extends BaseModel
 	//
 	protected $table = 'view_customer_stock_statistic';
 	protected $guarded = ['id'];
+	protected $appends = ['box_qty', 'bottle_qty'];
+
+	public function getBoxQtyAttribute(){
+		return floor($this->fqty);
+	}
+
+	public function getBottleQtyAttribute(){
+		return $this->fbase_qty - floor($this->fqty) * $this->fratio;
+	}
 
 }
