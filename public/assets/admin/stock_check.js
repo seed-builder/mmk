@@ -133,12 +133,20 @@ define(function (require, exports, module) {
                         return full.material.fname;
                     }
                 },
-                {'data': 'inv_box_qty'},
-                {'data': 'inv_bottle_qty'},
+                {'data': 'finv_hqty', render: function (data, type, full) {
+                    return full.inv_box_qty;
+                }},
+                {'data': 'finv_eqty', render: function (data, type, full) {
+                    return full.inv_bottle_qty;
+                }},
                 {'data': 'box_qty'},
                 {'data': 'bottle_qty'},
-                {'data': 'diff_box_qty'},
-                {'data': 'diff_bottle_qty'},
+                {'data': 'fdiff_hqty', render: function (data, type, full) {
+                    return full.diff_box_qty;
+                }},
+                {'data': 'fdiff_eqty', render: function (data, type, full) {
+                    return full.diff_bottle_qty;
+                }},
                 // {'data': 'box_qty'},
                 // {'data': 'bottle_qty'},
             ],
