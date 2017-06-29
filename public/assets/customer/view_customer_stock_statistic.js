@@ -15,6 +15,7 @@ define(function(require, exports, module) {
             rowId: "id",
             ajax: '/customer/view-customer-stock-statistic/pagination',
             columns: [
+                {  'data': 'fratio' },
                 {  'data': 'material_number' },
                 {  'data': 'material_name' },
                 {  'data': 'material_specification' },
@@ -37,7 +38,13 @@ define(function(require, exports, module) {
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
                 {extend: 'colvis', text: '列显示'}
-            ]
+            ],
+            columnDefs: [
+                {
+                    "targets": [0],
+                    "visible": false
+                }
+            ],
         });
 
         // table.on( 'select', checkBtn).on( 'deselect', checkBtn);

@@ -36,6 +36,7 @@
                         <table id="moduleTable" class="table table-bordered table-hover display nowrap" cellspacing="0" width="100%">
                             <thead>
                             <tr>
+                                <th>fratio</th>
                                 <th>物料编码</th>
                                 <th>物料名称</th>
                                 <th>规格型号</th>
