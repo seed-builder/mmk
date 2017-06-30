@@ -90,7 +90,7 @@ class SaleOrderController extends BaseController
      */
     public function pagination(Request $request, $searchCols = [], $with = [], $conditionCall = null, $all_columns = false)
     {
-        $searchCols = ["fbill_no", "fdocument_status", "fsend_status"];
+        $searchCols = ["fbill_no"];
 //        $with = ['store','employee','customer'];
         return parent::pagination($request, $searchCols, $with, $conditionCall, true);
     }
