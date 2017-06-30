@@ -159,7 +159,8 @@ define(function (require, exports, module) {
                 {extend: 'colvis', text: '列显示'},
                 { text: '审核<i class="fa fa-fw fa-paperclip"></i>',className: 'check', enabled: false },
                 { text: '反审核<i class="fa fa-fw fa-unlink"></i>',className: 'uncheck', enabled: false },
-            ]
+            ],
+            order: [[3,'desc']]
         });
 
         table.on( 'select', rowSelect).on( 'deselect', rowSelect);
