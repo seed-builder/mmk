@@ -53,6 +53,7 @@
                                     <div class="col-sm-3">
                                         <div class="input-group">
                                            <select class="form-control filter-condition filter-select" filter-name="fsend_status">
+                                               <option value="">-- 请选择 --</option>
                                                <option value="A">待接单</option>
                                                <option value="B">已接单</option>
                                                <option value="C">已配送</option>

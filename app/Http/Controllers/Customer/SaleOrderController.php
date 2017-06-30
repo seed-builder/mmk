@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Customer;
 
+use App\Events\OrderDeliveryEvent;
 use App\Models\Busi\Material;
 use App\Models\Busi\SaleOrderItem;
 use App\Models\Busi\ViewSaleOrder;
@@ -152,6 +153,7 @@ class SaleOrderController extends BaseController
 		try {
 			SaleOrder::whereIn('id', $ids)->update(['fsend_status' => 'C']);
 			SaleOrderItem::whereIn('fsale_order_id', $ids)->update(['fsend_status' => 'C']);
+			event(new OrderDeliveryEvent($ids));
 			DB::commit();
 		} catch (Exception $e) {
 			DB::rollBack();

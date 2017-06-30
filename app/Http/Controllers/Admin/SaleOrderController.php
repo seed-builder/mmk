@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
+use App\Events\OrderDeliveryEvent;
 use App\Models\Busi\SaleOrderItem;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
@@ -135,6 +136,7 @@ class SaleOrderController extends AdminController
 		try {
 			SaleOrder::whereIn('id', $ids)->update(['fsend_status' => 'C']);
 			SaleOrderItem::whereIn('fsale_order_id', $ids)->update(['fsend_status' => 'C']);
+			event(new OrderDeliveryEvent($ids));
 			DB::commit();
 		} catch (Exception $e) {
 			DB::rollBack();

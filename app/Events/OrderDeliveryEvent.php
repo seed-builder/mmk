@@ -19,17 +19,17 @@ class OrderDeliveryEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $orderId;
+    public $ids;
 
 	/**
 	 * Create a new event instance.
 	 *
 	 * @param $orderId
 	 */
-    public function __construct($orderId)
+    public function __construct($ids)
     {
         //
-	    $this->orderId = $orderId;
+	    $this->ids = $ids;
     }
 
     /**
