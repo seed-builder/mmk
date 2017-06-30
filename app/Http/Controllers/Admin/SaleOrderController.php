@@ -120,5 +120,26 @@ class SaleOrderController extends AdminController
 		return $result ? $this->success($entity) : $this->fail($msg);
 	}
 
-
+	/**
+	 * 配送
+	 * @param Request $request
+	 * @return \Illuminate\Http\JsonResponse
+	 */
+	public function send(Request $request)
+	{
+		$result = true;
+		$msg = '';
+		$ids = $request->input('ids', []);
+		DB::beginTransaction();
+		try {
+			SaleOrder::whereIn('id', $ids)->update(['fsend_status' => 'C']);
+			SaleOrderItem::whereIn('fsale_order_id', $ids)->update(['fsend_status' => 'C']);
+			DB::commit();
+		} catch (Exception $e) {
+			DB::rollBack();
+			$result = false;
+			$msg = $e->getMessage();
+		}
+		return $result ? $this->success(1) : $this->fail($msg);
+	}
 }

@@ -109,25 +109,55 @@ define(function (require, exports, module) {
                 // { text: '新增', action: function () { }  },
                 // { text: '编辑', className: 'edit', enabled: false },
                 // { text: '删除', className: 'delete', enabled: false },
+                // {
+                //     text: '接单<i class="fa fa-fw fa-arrow-circle-right"></i>',
+                //     className: 'accept',
+                //     enabled: false,
+                //     action: function (e, dt, node, config) {
+                //         //dt.ajax.reload();
+                //         layer.confirm('确认接单?', {btn: ['确定', '取消']}, function () {
+                //             var row = dt.rows('.selected').data();
+                //             var order = row.length > 0 ? row[0] : null;
+                //             if (order) {
+                //                 $.post('/customer/sale-order/accept/' + order.id,
+                //                     {_token: $('meta[name="_token"]').attr('content')},
+                //                     function (result) {
+                //                         if (result.data) {
+                //                             layer.msg('接单成功!');
+                //                             infoTable.ajax.reload();
+                //                             dt.ajax.reload();
+                //                         } else {
+                //                             layer.msg('接单失败, 错误：' + result.error);
+                //                         }
+                //                     }
+                //                 )
+                //             }
+                //         }, function () {
+                //             layer.close();
+                //         })
+                //     }
+                // },
                 {
-                    text: '接单<i class="fa fa-fw fa-arrow-circle-right"></i>',
-                    className: 'accept',
+                    text: '确认配送<i class="fa fa-fw fa-send"></i>',
+                    className: 'send',
                     enabled: false,
                     action: function (e, dt, node, config) {
-                        //dt.ajax.reload();
-                        layer.confirm('确认接单?', {btn: ['确定', '取消']}, function () {
-                            var row = dt.rows('.selected').data();
-                            var order = row.length > 0 ? row[0] : null;
-                            if (order) {
-                                $.post('/customer/sale-order/accept/' + order.id,
-                                    {_token: $('meta[name="_token"]').attr('content')},
+                        layer.confirm('确认配送?', {btn: ['确定', '取消']}, function () {
+                            var orders = dt.rows('.selected').data();
+                            if(orders.length > 0){
+                                var ids = [] ;
+                                for(var i = 0; i < orders.length; i++){
+                                    ids[ids.length] = orders[i].id;
+                                }
+                                $.post('/admin/sale-order/send',
+                                    {_token: $('meta[name="_token"]').attr('content'), ids: ids},
                                     function (result) {
-                                        if (result.data) {
-                                            layer.msg('接单成功!');
-                                            infoTable.ajax.reload();
+                                        if(result.cancelled == 0){
+                                            layer.msg('确认配送成功!');
                                             dt.ajax.reload();
-                                        } else {
-                                            layer.msg('接单失败, 错误：' + result.error);
+                                            orderTable.ajax.reload();
+                                        }else{
+                                            layer.msg('确认配送失败, 错误：' + result.error);
                                         }
                                     }
                                 )
@@ -275,38 +305,38 @@ define(function (require, exports, module) {
                 //         }
                 //     }
                 // },
-                {
-                    text: '确认配送<i class="fa fa-fw fa-send"></i>',
-                    className: 'send',
-                    enabled: false,
-                    action: function (e, dt, node, config) {
-                        layer.confirm('确认配送?', {btn: ['确定', '取消']}, function () {
-                            var orders = dt.rows('.selected').data();
-                            if (orders.length > 0) {
-                                var ids = [];
-                                var orderId = 0
-                                for (var i = 0; i < orders.length; i++) {
-                                    ids[ids.length] = orders[i].id;
-                                }
-                                orderId = orders[0].fsale_order_id;
-                                $.post('/customer/sale-order-item/send',
-                                    {_token: $('meta[name="_token"]').attr('content'), ids: ids, order_id: orderId},
-                                    function (result) {
-                                        if (result.data) {
-                                            layer.msg('确认配送成功!');
-                                            dt.ajax.reload();
-                                            orderTable.ajax.reload();
-                                        } else {
-                                            layer.msg('确认配送失败, 错误：' + result.error);
-                                        }
-                                    }
-                                )
-                            }
-                        }, function () {
-                            layer.close();
-                        })
-                    }
-                },
+                // {
+                //     text: '确认配送<i class="fa fa-fw fa-send"></i>',
+                //     className: 'send',
+                //     enabled: false,
+                //     action: function (e, dt, node, config) {
+                //         layer.confirm('确认配送?', {btn: ['确定', '取消']}, function () {
+                //             var orders = dt.rows('.selected').data();
+                //             if (orders.length > 0) {
+                //                 var ids = [];
+                //                 var orderId = 0
+                //                 for (var i = 0; i < orders.length; i++) {
+                //                     ids[ids.length] = orders[i].id;
+                //                 }
+                //                 orderId = orders[0].fsale_order_id;
+                //                 $.post('/customer/sale-order-item/send',
+                //                     {_token: $('meta[name="_token"]').attr('content'), ids: ids, order_id: orderId},
+                //                     function (result) {
+                //                         if (result.data) {
+                //                             layer.msg('确认配送成功!');
+                //                             dt.ajax.reload();
+                //                             orderTable.ajax.reload();
+                //                         } else {
+                //                             layer.msg('确认配送失败, 错误：' + result.error);
+                //                         }
+                //                     }
+                //                 )
+                //             }
+                //         }, function () {
+                //             layer.close();
+                //         })
+                //     }
+                // },
                 {
                     text: '新增<i class="fa fa-fw fa-plus"></i>', className: 'send', enabled: false, action: function () {
                     $('#itemFormDialog').modal('show');
