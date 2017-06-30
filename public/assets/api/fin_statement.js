@@ -14,6 +14,7 @@ define(function(require, exports, module) {
             serverSide: true,
             select: true,
             paging: true,
+            responsive: false,
             rowId: "id",
             ajax: {
                 url: '/api/fin-statement/pagination?customerId='+customerId,
