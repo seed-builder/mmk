@@ -14,6 +14,7 @@ define(function(require, exports, module) {
             serverSide: true,
             select: true,
             paging: true,
+            pageLength: 1000,
             responsive: false,
             rowId: "id",
             ajax: {
