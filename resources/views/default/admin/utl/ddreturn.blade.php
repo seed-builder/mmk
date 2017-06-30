@@ -48,7 +48,7 @@ $NoReturnAmount = 0;
                                  {!! csrf_field() !!}
                                 <div class="form-group">
                                     <label class="">经销商</label>
-                                    <select class="form-control" id="custId" name="custId" data-live-search="true">
+                                    <select class="form-control filter-select" id="custId" name="custId" data-live-search="true">
                                         <option value="">--请选择--</option>
                                         @foreach($customers as $c)
                                             <option data-tokens="{{$c->fname}}" value="{{$c->id}}" {{$c->id == $custId ? 'selected':''}}>{{$c->fname}}</option>

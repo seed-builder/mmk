@@ -15,6 +15,7 @@ class VerifyApiSign
 		//
 		'/api/fin-statement/customer/*',
 		'/api/fin-statement/pagination',
+		'/api/utl/customer-dd-return/*'
 	];
 
     /**
