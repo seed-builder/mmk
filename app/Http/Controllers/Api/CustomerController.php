@@ -25,6 +25,7 @@ class CustomerController extends ApiController
 	 */
 	public function fillQueryForIndex(Request $request, Builder &$query){
 		$search = $request->input('search', '{}');
+		$type = $request->input('type', 0);
 		$conditions = json_decode($search, true);
 		if(!empty($conditions)) {
 			//dump($conditions);
@@ -45,12 +46,15 @@ class CustomerController extends ApiController
 								}, $subs);
 							}
 							$ids[] = [$fempId];
-							//var_dump($ids);
-							$query->distinct();
-							$query->select('bd_customers.*');
-							$query->join('bd_employee_customers', 'bd_customers.id', '=', 'bd_employee_customers.fcust_id');
-							$query->whereIn('bd_employee_customers.femp_id', $ids);
-//							$query->whereIn('fseller', $ids);
+							if($type == 0) {
+								//var_dump($ids);
+								$query->distinct();
+								$query->select('bd_customers.*');
+								$query->join('bd_employee_customers', 'bd_customers.id', '=', 'bd_employee_customers.fcust_id');
+								$query->whereIn('bd_employee_customers.femp_id', $ids);
+							}else{
+								$query->whereIn('fseller', $ids);
+							}
 						}
 					}
 				} else {
