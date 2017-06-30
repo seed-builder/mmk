@@ -36,6 +36,8 @@ class EmployeeRepo extends Repo
 			if(empty($device_sn)) {
 				$loginData['device'] = $device;
 				$loginData['device_sn'] = $sn;
+				$loginData['login_time'] += 1;
+
 				$this->clearCache($phone);
 				$this->cacheData($phone, $loginData);
 			}
