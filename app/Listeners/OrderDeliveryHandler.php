@@ -55,6 +55,7 @@ class OrderDeliveryHandler //implements ShouldQueue
 						    'fsbill_no' => $order->fbill_no,
 						    'ftype' => 'A',
 						    'fcust_id' => $order->fcust_id,
+						    'fdocument_status' => 'C',
 					    ]);
 				    }
 				    foreach ($orderItems as $item) {
@@ -65,6 +66,7 @@ class OrderDeliveryHandler //implements ShouldQueue
 						    'fbase_unit' => $item->fbase_unit,
 						    'fqty' => $item->fsend_qty,
 						    'fbase_qty' => $item->fsend_base_qty,
+						    'fdocument_status' => 'C',
 					    ]);
 				    }
 				    DB::commit();
