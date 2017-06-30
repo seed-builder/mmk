@@ -155,7 +155,7 @@ define(function (require, exports, module) {
                                         if(result.cancelled == 0){
                                             layer.msg('确认配送成功!');
                                             dt.ajax.reload();
-                                            orderTable.ajax.reload();
+                                            infoTable.ajax.reload();
                                         }else{
                                             layer.msg('确认配送失败, 错误：' + result.error);
                                         }
