@@ -48,6 +48,11 @@ class SaleOrderItem extends BaseModel
                 $order->delete();
             }
         });
+
+        static::creating(function ($model){
+        	$model->fsend_qty = $model->fqty + $model->fpresent_qty;
+        	$model->fsend_base_qty = $model->fbase_qty + $model->fpresent_base_qty;
+        });
     }
 
 	public function __construct(array $attributes = [])

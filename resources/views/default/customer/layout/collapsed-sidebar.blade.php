@@ -26,6 +26,7 @@ $loginUserName = empty($loginUser->nick_name) ? $loginUser->name: $loginUser->ni
     <link rel="stylesheet" href="/assets/plugins/toastr/toastr.min.css">
 
     <link rel="stylesheet" href="{{url('assets')}}/plugins/layui/css/layui.css">
+    <link type="text/css" href="/assets/plugins/datepicker/datepicker3.css" rel="stylesheet"/>
     <link rel="stylesheet" href="/css/style.css">
 
     @yield('styles')
@@ -192,6 +193,8 @@ $loginUserName = empty($loginUser->nick_name) ? $loginUser->name: $loginUser->ni
 <audio id="audioObj" src="/audio/2478.wav" >提示声音</audio>
 
 <!-- AdminLTE App -->
+<script src="/assets/plugins/datepicker/bootstrap-datepicker.js"></script>
+<script src="/assets/plugins/datepicker/locales/bootstrap-datepicker.zh-CN.js"></script>
 <script src="/assets/plugins/AdminLTE/dist/js/app.min.js"></script>
 <script src="/assets/plugins/Shineraini/app.js"></script>
 <!-- AdminLTE for demo purposes -->

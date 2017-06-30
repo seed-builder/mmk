@@ -112,48 +112,52 @@ define(function (require, exports, module) {
                             return full.material.fname;
                     }
                 },
-                {'data': 'fqty'},
+                {'data': 'box_qty'},
                 {'data': 'fsale_unit'},
-                {'data': 'fbase_qty'},
+                {'data': 'bottle_qty'},
                 {'data': 'fbase_unit'},
-                {'data': 'fsend_qty'},
-                {'data': 'fsend_base_qty'},
+                {'data': 'fsend_qty', render: function (data, type, full) {
+                    return full.box_qty + full.present_box_qty;
+                }},
+                {'data': 'fsend_base_qty', render: function (data, type, full) {
+                    return full.bottle_qty + full.present_bottle_qty;
+                }},
                 {
                     'data': 'fsend_status',
                     render: function (data, type, full) {
                         return send_status(data);
                     }
                 },
-                {'data': 'fpresent_qty'},
-                {'data': 'fpresent_base_qty'},
+                {'data': 'present_box_qty'},
+                {'data': 'present_bottle_qty'},
 
             ],
             buttons: [
-                {
-                    text: '发货数量确认<i class="fa fa-fw fa-info"></i>',
-                    className: 'sure',
-                    enabled: false,
-                    action: function (e, dt, node, config) {
-                        $('#sureForm').get(0).reset();
-                        $('#sureForm').bootstrapValidator('resetForm');
-                        var detailrows = infoTable.rows('.selected').data();
-                        var detail = detailrows.length > 0 ? detailrows[0] : null;
-                        if(detail){
-                            $('#id', '#sureForm').val(detail.id);
-                            $('#material', '#sureForm').val(detail.material.fname);
-                            $('#order_no', '#sureForm').val(detail.order.fbill_no);
-                            //$('#unit', '#sureForm').val(detail.id);
-                            addOptions(document.getElementById('unit'),
-                                [
-                                    { text: detail.material.fsale_unit, value:  'sale_unit' },
-                                    { text: detail.material.fbase_unit, value:  'base_unit' }
-                                ]
-                            );
-                            $('#sureForm').attr('')
-                            $('#sureFormDialog').modal('show');
-                        }
-                    }
-                },
+                // {
+                //     text: '发货数量确认<i class="fa fa-fw fa-info"></i>',
+                //     className: 'sure',
+                //     enabled: false,
+                //     action: function (e, dt, node, config) {
+                //         $('#sureForm').get(0).reset();
+                //         $('#sureForm').bootstrapValidator('resetForm');
+                //         var detailrows = infoTable.rows('.selected').data();
+                //         var detail = detailrows.length > 0 ? detailrows[0] : null;
+                //         if(detail){
+                //             $('#id', '#sureForm').val(detail.id);
+                //             $('#material', '#sureForm').val(detail.material.fname);
+                //             $('#order_no', '#sureForm').val(detail.order.fbill_no);
+                //             //$('#unit', '#sureForm').val(detail.id);
+                //             addOptions(document.getElementById('unit'),
+                //                 [
+                //                     { text: detail.material.fsale_unit, value:  'sale_unit' },
+                //                     { text: detail.material.fbase_unit, value:  'base_unit' }
+                //                 ]
+                //             );
+                //             $('#sureForm').attr('')
+                //             $('#sureFormDialog').modal('show');
+                //         }
+                //     }
+                // },
                 {
                     text: '确认配送<i class="fa fa-fw fa-send"></i>',
                     className: 'send',
