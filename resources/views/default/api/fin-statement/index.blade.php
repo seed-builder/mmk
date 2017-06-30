@@ -81,7 +81,7 @@ $months = [1,2,3,4,5,6,7,8,9,10,11,12]
                         </div>
                     </div>
                     <!-- /.box-header -->
-                    <div class="box-body">
+                    <div class="box-body" style="width: 100%; overflow: scroll;">
                         <div class="panel panel-default" >
                             <form class="form-inline filter "  filter-table="#moduleTable">
                                 <div class="form-group">
