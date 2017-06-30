@@ -260,17 +260,15 @@ define(function (require, exports, module) {
                     }
                 },
                 {'data': 'box_qty'},
-                {'data': 'fsale_unit'},
                 {'data': 'bottle_qty'},
-                {'data': 'fbase_unit'},
+                {'data': 'present_box_qty'},
+                {'data': 'present_bottle_qty'},
                 {'data': 'fsend_qty', render: function (data, type, full) {
                     return full.box_qty + full.present_box_qty;
                 }},
                 {'data': 'fsend_base_qty', render: function (data, type, full) {
                     return full.bottle_qty + full.present_bottle_qty;
                 }},
-                {'data': 'present_box_qty'},
-                {'data': 'present_bottle_qty'},
                 {
                     'data': 'fsend_status',
                     render: function (data, type, full) {

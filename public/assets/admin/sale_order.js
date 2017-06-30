@@ -143,9 +143,9 @@ define(function (require, exports, module) {
                     }
                 },
                 {'data': 'box_qty'},
-                {'data': 'fsale_unit'},
                 {'data': 'bottle_qty'},
-                {'data': 'fbase_unit'},
+                {'data': 'present_box_qty'},
+                {'data': 'present_bottle_qty'},
                 {'data': 'fsend_qty', render: function (data, type, full) {
                     return full.box_qty + full.present_box_qty;
                 }},
@@ -158,9 +158,6 @@ define(function (require, exports, module) {
                         return send_status(data);
                     }
                 },
-                {'data': 'present_box_qty'},
-                {'data': 'present_bottle_qty'},
-
             ],
             buttons: [
                 // {
