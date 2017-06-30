@@ -61,6 +61,8 @@
                                     <div class="col-sm-2 col-md-3">
                                         <input type="text" class="form-control filter-condition" filter-name="ftel" filter-operator="like" />
                                     </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="col-sm-2 col-md-1 control-label">负责业务员</label>
                                     <div class="col-sm-2 col-md-3">
                                         {{--<input type="text" class="form-control filter-condition" filter-name="ftel" filter-operator="like" />--}}
