@@ -81,6 +81,9 @@ define(function (require, exports, module) {
                 {'data': 'fname'},
                 {'data': 'faddress'},
                 {'data': 'ftel'},
+                {'data': 'fseller', render: function (data, type, full){
+                    return full.seller ? full.seller.fname:'';
+                }},
                 {
                     "data": "fdocument_status",
                     render: function (data, type, full) {
@@ -109,7 +112,7 @@ define(function (require, exports, module) {
             ],
             columnDefs: [
                 {
-                    "targets": [6,7],
+                    "targets": [7,8],
                     "visible": false
                 }
             ],

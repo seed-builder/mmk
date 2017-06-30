@@ -174,13 +174,16 @@ class Customer extends Authenticatable
 		return $this->hasMany(StockOut::class, 'fcust_id');
 	}
 
-
 	public function department(){
 		return $this->belongsTo(Department::class, 'fsale_area_id');
 	}
 
 	public function received_messages(){
 		return $this->morphMany(Message::class, 'to');
+	}
+
+	public function seller(){
+		return $this->belongsTo(Employee::class, 'fseller');
 	}
 
 	public function send_messages(){
