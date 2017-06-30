@@ -26,6 +26,7 @@ $loginUserName = empty($loginUser->nick_name) ? $loginUser->name: $loginUser->ni
     <link rel="stylesheet" href="/assets/plugins/toastr/toastr.min.css">
 
     <link rel="stylesheet" href="{{url('assets')}}/plugins/layui/css/layui.css">
+    <link type="text/css" href="/assets/plugins/bootstrap-select/bootstrap-select.css" rel="stylesheet"/>
     <link type="text/css" href="/assets/plugins/datepicker/datepicker3.css" rel="stylesheet"/>
     <link rel="stylesheet" href="/css/style.css">
 
@@ -193,6 +194,8 @@ $loginUserName = empty($loginUser->nick_name) ? $loginUser->name: $loginUser->ni
 <audio id="audioObj" src="/audio/2478.wav" >提示声音</audio>
 
 <!-- AdminLTE App -->
+<script src="/assets/plugins/bootstrap-select/bootstrap-select.js"></script>
+<script src="/assets/plugins/bootstrap-select/i18n/defaults-zh_CN.js"></script>
 <script src="/assets/plugins/datepicker/bootstrap-datepicker.js"></script>
 <script src="/assets/plugins/datepicker/locales/bootstrap-datepicker.zh-CN.js"></script>
 <script src="/assets/plugins/AdminLTE/dist/js/app.min.js"></script>
