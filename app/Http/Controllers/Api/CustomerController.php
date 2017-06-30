@@ -46,11 +46,11 @@ class CustomerController extends ApiController
 							}
 							$ids[] = [$fempId];
 							//var_dump($ids);
-//							$query->distinct();
-//							$query->select('bd_customers.*');
-//							$query->join('bd_employee_customers', 'bd_customers.id', '=', 'bd_employee_customers.fcust_id');
-//							$query->whereIn('bd_employee_customers.femp_id', $ids);
-							$query->whereIn('fseller', $ids);
+							$query->distinct();
+							$query->select('bd_customers.*');
+							$query->join('bd_employee_customers', 'bd_customers.id', '=', 'bd_employee_customers.fcust_id');
+							$query->whereIn('bd_employee_customers.femp_id', $ids);
+//							$query->whereIn('fseller', $ids);
 						}
 					}
 				} else {
