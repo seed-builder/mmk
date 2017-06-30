@@ -377,10 +377,11 @@ define(function (require, exports, module) {
             var row = orderTable.rows('.selected').data();
             var order = row.length > 0 ? row[0] : null;
             //console.log(order);
+            //send
             if (order) {
                 $("#order_id").val(order.id);
                 infoTable.columns(1).search(order.id).draw();
-                orderTable.buttons(['.accept']).enable(order.fsend_status == 'A');
+                orderTable.buttons(['.accept', '.send']).enable(order.fsend_status == 'A');
                 orderTable.buttons(['.buttons-edit']).enable(order.source != 'phone' && order.fsend_status == 'A');
                 orderTable.buttons(['.buttons-remove']).enable(order.source != 'phone' && order.fsend_status == 'A');
                 infoTable.buttons(['.buttons-create']).enable(order.source != 'phone');
