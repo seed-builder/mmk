@@ -7,6 +7,10 @@ for($i=-10; $i < 10; $i ++){
 $months = [1,2,3,4,5,6,7,8,9,10,11,12];
 
 $ddArr = empty($data['DDAmount']) ? [] : $data['DDAmount'];
+
+$CurReturnAmount = 0;
+$AllReturnAmount = 0;
+$NoReturnAmount = 0;
 ?>
 @extends('customer.layout.collapsed-sidebar')
 
@@ -101,8 +105,28 @@ $ddArr = empty($data['DDAmount']) ? [] : $data['DDAmount'];
                                 <td>{{$dd['FAllReturnAmount']}}</td>
                                 <td>{{$dd['FNoReturnAmount']}}</td>
                             </tr>
+                            <?php
+                            $CurReturnAmount +=  $dd['FCurReturnAmount'];
+                            $AllReturnAmount +=  $dd['FAllReturnAmount'];
+                            $NoReturnAmount +=  $dd['FNoReturnAmount'];
+                            ?>
                                 @empty
                             @endforelse
+                            <tr>
+                                <td></td>
+                                <td>合计</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>{{$CurReturnAmount}}</td>
+                                <td>{{$AllReturnAmount}}</td>
+                                <td>{{$NoReturnAmount}}</td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
