@@ -24,9 +24,9 @@ define(function(require, exports, module) {
                 }
             },
             columns: [
-                // {  'data': 'id' },
-                // {  'data': 'cust_num' },
-                // {  'data': 'cust_name' },
+                {  'data': 'id' },
+                {  'data': 'cust_num' },
+                {  'data': 'cust_name' },
                 {  'data': 'bill_type' },
                 {  'data': 'bill_no' },
                 {  'data': 'srcbill_no' },
