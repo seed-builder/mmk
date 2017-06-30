@@ -452,4 +452,31 @@ Route::group(['prefix' => 'utl', 'middleware' => 'api.sign'], function (){
 	 */
 	Route::post('/push-message/{user_id}', ['uses' => 'UtlController@pushMessage']);
 
+	/**
+	 * @SWG\Api(
+	 *   path="/api/utl/customer-dd-return/{custId}",
+	 *   @SWG\Operation(
+	 *      method="GET",
+	 *      nickname="api-customer-dd-return",
+	 *      summary="经销商代垫返还",
+	 *      notes="经销商代垫返还",
+	 *      type="",
+	 *      @SWG\Parameters(
+	 *          @SWG\Parameter(
+	 *              name="custId",
+	 *              description="经销商id",
+	 *              required=true,
+	 *              type="integer",
+	 *              paramType="path",
+	 *              defaultValue="12"
+	 *          ),
+	 *      ),
+	 *      @SWG\ResponseMessages(
+	 *          @SWG\ResponseMessage(code=401, message="签名验证错误！"),
+	 *          @SWG\ResponseMessage(code=200, message="成功。")
+	 *      )
+	 *   )
+	 * )
+	 */
+	Route::any('/customer-dd-return/{custId}', ['uses' => 'UtlController@getCustomerDDReturn']);
 });

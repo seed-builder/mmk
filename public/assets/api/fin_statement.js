@@ -8,7 +8,7 @@ define(function(require, exports, module) {
     exports.index = function ($, tableId, customerId) {
 
         var table = $("#" + tableId).DataTable({
-            dom: "lBfrtip",
+            dom: "t",
             language: zhCN,
             processing: true,
             serverSide: true,
@@ -23,9 +23,9 @@ define(function(require, exports, module) {
                 }
             },
             columns: [
-                {  'data': 'id' },
-                {  'data': 'cust_num' },
-                {  'data': 'cust_name' },
+                // {  'data': 'id' },
+                // {  'data': 'cust_num' },
+                // {  'data': 'cust_name' },
                 {  'data': 'bill_type' },
                 {  'data': 'bill_no' },
                 {  'data': 'srcbill_no' },
@@ -47,7 +47,7 @@ define(function(require, exports, module) {
                 //     }
                 // },
                 {
-                    "targets": [12,13,14],
+                    "targets": [0,1,2,12,13,14],
                     "visible": false
                 }
             ],

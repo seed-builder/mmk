@@ -217,4 +217,21 @@ class UtlController extends Controller
 		return response(['data' => $res, 'code' => 200, 'msg' => '', 'success' => true]);
     }
 
+	/**
+	 * 获取经销商代垫返还数据
+	 * @param Request $request
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+	 */
+	public function getCustomerDDReturn(Request $request, $custId){
+
+		//$custId = $request->input('custId',0);
+		$year = $request->input('year', date('Y'));
+		$month = $request->input('month', date('n'));
+		$data = [];
+		if( $custId > 0 && $year > 0 && $month > 0){
+			$data = Utility::getCustomerDDReturn($custId, $year, $month);
+		}
+		$customers = Customer::where('fdocument_status', 'C')->where('fforbid_status', 'A')->get();
+		return view('api.utl.ddreturn', compact('custId', 'year', 'month', 'data', 'customers'));
+	}
 }

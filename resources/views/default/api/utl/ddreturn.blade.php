@@ -4,9 +4,11 @@ $curYear = date('Y');
 for($i=-10; $i < 10; $i ++){
 	$years[] = $curYear + $i;
 }
-$months = [1,2,3,4,5,6,7,8,9,10,11,12]
+$months = [1,2,3,4,5,6,7,8,9,10,11,12];
+
+$ddArr = empty($data['DDAmount']) ? [] : $data['DDAmount'];
 ?>
-        <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -73,7 +75,7 @@ $months = [1,2,3,4,5,6,7,8,9,10,11,12]
             <div class="col-xs-12">
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">往来对账列表</h3>
+                        <h3 class="box-title">代垫返还情况</h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                             </button>
@@ -81,60 +83,81 @@ $months = [1,2,3,4,5,6,7,8,9,10,11,12]
                         </div>
                     </div>
                     <!-- /.box-header -->
-                    <div class="box-body" style="width: 100%; overflow: scroll;">
+                    <div class="box-body">
                         <div class="panel panel-default" >
-                            <form class="form-inline filter "  filter-table="#moduleTable">
+                            <form class="form-inline " action="/admin/customer-dd-return" method="post">
+                                 {!! csrf_field() !!}
+                                <div class="form-group">
+                                    <label class="">经销商</label>
+                                    <select class="form-control" id="custId" name="custId" >
+                                        <option value="">--请选择--</option>
+                                        @foreach($customers as $c)
+                                            <option value="{{$c->id}}" {{$c->id == $custId ? 'selected':''}}>{{$c->fname}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                                 <div class="form-group">
                                     <label class="">年份</label>
-                                    <select class="form-control filter-condition" filter-name="year" filter-operator="=">
+                                    <select class="form-control " id="year" name="year" >
                                         <option value="">--请选择--</option>
                                         @foreach($years as $y)
-                                        <option value="{{$y}}">{{$y}}</option>
+                                            <option value="{{$y}}" {{$y == $year ? 'selected':''}}>{{$y}}</option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label class="">月份</label>
-                                    <select class="form-control filter-condition" filter-name="month" filter-operator="=">
+                                    <select class="form-control " id="month" name="month">
                                         <option value="">--请选择--</option>
                                         @foreach($months as $m)
-                                            <option value="{{$m}}">{{$m}}</option>
+                                            <option value="{{$m}}" {{$m == $month ? 'selected':''}}>{{$m}}</option>
                                         @endforeach
                                     </select>
                                 </div>
-                                {{--<div class="form-group">--}}
-                                    {{--<label class="">状态</label>--}}
-                                    {{--<select class="form-control filter-condition" filter-name="status" filter-operator="=">--}}
-                                        {{--<option value="">--请选择--</option>--}}
-                                        {{--<option value="0">未对账</option>--}}
-                                        {{--<option value="1">已对账</option>--}}
-                                    {{--</select>--}}
-                                {{--</div>--}}
                                 <div class="form-group">
-                                    <button type="button" class="btn btn-info filter-submit">查询</button>
-                                    <button type="button" class="btn btn-default filter-reset">重置</button>
+                                    <button type="submit" class="btn btn-info filter-submit">查询</button>
                                 </div>
                             </form>
                         </div>
+
                         <table id="moduleTable" class="table table-bordered table-hover display nowrap" cellspacing="0" width="100%">
                             <thead>
                             <tr>
-                                <th></th>
-                                <th>往来单位代码</th>
-                                <th>往来单位名称</th>
-                                <th>单据类型</th>
-                                <th>单据编码</th>
-                                <th>源单编号</th>
+                                <th>单据编号</th>
+                                <th>代垫单号</th>
                                 <th>方案编号</th>
-                                <th>业务日期</th>
-                                <th>本期发生额</th>
-                                <th>金额</th>
-                                <th>摘要</th>
-                                <th>备注</th>
-                                <th>seq</th>
-                                <th>status</th>
+                                <th>客户代码</th>
+                                <th>客户名称</th>
+                                <th>纸质单日期 </th>
+                                <th>审核日期 </th>
+                                <th>返还期间 </th>
+                                <th>用途 </th>
+                                <th>代垫金额 </th>
+                                <th>本期返还金额 </th>
+                                <th>累计返还金额 </th>
+                                <th>未返还金额 </th>
                             </tr>
                             </thead>
+                            <tbody>
+                            @forelse($ddArr as $dd)
+                            <tr>
+                                <td>{{$dd['FBILLNO']}}</td>
+                                <td>{{$dd['FPageNo']}}</td>
+                                <td>{{$dd['FPromotionNo']}}</td>
+                                <td>{{$dd['fcustnum']}}</td>
+                                <td>{{$dd['fcustName']}}</td>
+                                <td>{{$dd['FPageDate']}}</td>
+                                <td>{{$dd['FCheckDate']}}</td>
+                                <td>{{$dd['FReturnMonth']}}</td>
+                                <td>{{$dd['FPurpose']}}</td>
+                                <td>{{$dd['FDDAmount']}}</td>
+                                <td>{{$dd['FCurReturnAmount']}}</td>
+                                <td>{{$dd['FAllReturnAmount']}}</td>
+                                <td>{{$dd['FNoReturnAmount']}}</td>
+                            </tr>
+                                @empty
+                            @endforelse
+                            </tbody>
                         </table>
                     </div>
                     <!-- /.box-body -->
@@ -145,22 +168,5 @@ $months = [1,2,3,4,5,6,7,8,9,10,11,12]
         </div>
         <!-- /.row -->
     </section>
-    <input id="customerId" value="{{$customerId}}" type="hidden">
-    <!-- AdminLTE App -->
-    <script src="/assets/plugins/AdminLTE/dist/js/app.min.js"></script>
-    <script src="/assets/plugins/Shineraini/app.js"></script>
-    <!-- AdminLTE for demo purposes -->
-    @include('customer.layout.datatable-js')
-    <script src="/assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
-    <script src="/js/dt.ext.js"></script>
-    <script type="text/javascript">
-        $(function () {
-            seajs.use('api/fin_statement.js', function (app) {
-                var customerId = $('#customerId').val();
-                app.index($, 'moduleTable', customerId);
-            });
-        });
-    </script>
-
 </body>
 </html>
