@@ -338,12 +338,12 @@ define(function (require, exports, module) {
                 //     }
                 // },
                 {
-                    text: '新增<i class="fa fa-fw fa-plus"></i>', className: 'send', enabled: false, action: function () {
+                    text: '新增<i class="fa fa-fw fa-plus"></i>', className: 'buttons-create', enabled: false, action: function () {
                     $('#itemFormDialog').modal('show');
                 }
                 },
                 {
-                    text: '编辑<i class="fa fa-fw fa-pencil"></i>', enabled: false, action: function () {
+                    text: '编辑<i class="fa fa-fw fa-pencil"></i>', className: 'buttons-edit', enabled: false, action: function () {
                     $('#itemFormDialog').modal('show');
                 }
                 },
