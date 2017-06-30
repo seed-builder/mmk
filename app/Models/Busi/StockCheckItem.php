@@ -45,8 +45,8 @@ class StockCheckItem extends BaseModel
 			$attributes['fcheck_hqty'] = $attributes['box_qty'] + round($attributes['bottle_qty'] / $material->fratio, 2);
 			$attributes['fcheck_eqty'] = $attributes['box_qty'] * $material->fratio + $attributes['bottle_qty'];
 			//差值
-			$attributes['fdiff_hqty'] = $attributes['fcheck_hqty'] - $attributes['finv_hqty']?:0;
-			$attributes['fdiff_eqty'] = $attributes['fcheck_eqty'] - $attributes['finv_eqty']?:0;
+			$attributes['fdiff_hqty'] = $attributes['fcheck_hqty'] - $this->finv_hqty ?: 0;
+			$attributes['fdiff_eqty'] = $attributes['fcheck_eqty'] - $this->finv_eqty ?: 0;
 
 		}
 		return $attributes;
