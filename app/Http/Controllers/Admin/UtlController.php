@@ -179,7 +179,7 @@ class UtlController extends Controller
 
     	$custId = $request->input('custId',0);
     	$year = $request->input('year', date('Y'));
-    	$month = $request->input('month', date('n'));
+    	$month = $request->input('month', date('n')-1);
 		$data = [];
 		if( $custId > 0 && $year > 0 && $month > 0){
 			$data = Utility::getCustomerDDReturn($custId, $year, $month);

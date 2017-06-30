@@ -1,6 +1,7 @@
 <?php
 $years = [];
 $curYear = date('Y');
+$curMonth = date('n');
 for($i=-10; $i < 10; $i ++){
 	$years[] = $curYear + $i;
 }

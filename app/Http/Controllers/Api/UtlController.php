@@ -226,12 +226,11 @@ class UtlController extends Controller
 
 		//$custId = $request->input('custId',0);
 		$year = $request->input('year', date('Y'));
-		$month = $request->input('month', date('n'));
+		$month = $request->input('month', date('n')-1);
 		$data = [];
 		if( $custId > 0 && $year > 0 && $month > 0){
 			$data = Utility::getCustomerDDReturn($custId, $year, $month);
 		}
-		$customers = Customer::where('fdocument_status', 'C')->where('fforbid_status', 'A')->get();
-		return view('api.utl.ddreturn', compact('custId', 'year', 'month', 'data', 'customers'));
+		return view('api.utl.ddreturn', compact('custId', 'year', 'month', 'data'));
 	}
 }

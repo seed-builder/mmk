@@ -43,7 +43,7 @@ class IndexController extends BaseController
 //		$custId = $request->input('custId',0);
 		$custId = Auth::user()->reference_id;
 		$year = $request->input('year', date('Y'));
-		$month = $request->input('month', date('n'));
+		$month = $request->input('month', date('n')-1);
 		$data = [];
 		if( $custId > 0 && $year > 0 && $month > 0){
 			$data = Utility::getCustomerDDReturn($custId, $year, $month);
