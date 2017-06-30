@@ -32,6 +32,12 @@ class StockCheckItem extends BaseModel
 	protected $guarded = ['id'];
 	protected $appends = ['inv_box_qty', 'inv_bottle_qty','diff_box_qty', 'diff_bottle_qty'];
 
+	public function __construct(array $attributes = [])
+	{
+		//$attributes = $this->calculate($attributes);
+		parent::__construct($attributes);
+	}
+
 	public function calculate($attributes){
 		if ($this->id > 0 && !empty($this->material)) {
 			//
