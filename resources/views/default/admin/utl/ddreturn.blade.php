@@ -44,10 +44,10 @@ $ddArr = empty($data['DDAmount']) ? [] : $data['DDAmount'];
                                  {!! csrf_field() !!}
                                 <div class="form-group">
                                     <label class="">经销商</label>
-                                    <select class="form-control" id="custId" name="custId" >
+                                    <select class="form-control" id="custId" name="custId" data-live-search="true">
                                         <option value="">--请选择--</option>
                                         @foreach($customers as $c)
-                                            <option value="{{$c->id}}" {{$c->id == $custId ? 'selected':''}}>{{$c->fname}}</option>
+                                            <option data-tokens="{{$c->fname}}" value="{{$c->id}}" {{$c->id == $custId ? 'selected':''}}>{{$c->fname}}</option>
                                         @endforeach
                                     </select>
                                 </div>

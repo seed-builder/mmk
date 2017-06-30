@@ -88,15 +88,6 @@ $ddArr = empty($data['DDAmount']) ? [] : $data['DDAmount'];
                             <form class="form-inline " action="/admin/customer-dd-return" method="post">
                                  {!! csrf_field() !!}
                                 <div class="form-group">
-                                    <label class="">经销商</label>
-                                    <select class="form-control" id="custId" name="custId" >
-                                        <option value="">--请选择--</option>
-                                        @foreach($customers as $c)
-                                            <option value="{{$c->id}}" {{$c->id == $custId ? 'selected':''}}>{{$c->fname}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="form-group">
                                     <label class="">年份</label>
                                     <select class="form-control " id="year" name="year" >
                                         <option value="">--请选择--</option>

@@ -20,13 +20,15 @@ define(function(require, exports, module) {
             ajax: {
                 url: '/api/fin-statement/pagination?customerId='+customerId,
                 data: function (data) {
-                    data['columns'][14]['search']['value'] = customerId;
+                    var d = new Date();
+                    // alert(d.getMonth());
+                    data['columns'][0]['search']['value'] = d.getFullYear();
+                    data['columns'][1]['search']['value'] = d.getMonth();
                 }
             },
             columns: [
-                {  'data': 'id' },
-                {  'data': 'cust_num' },
-                {  'data': 'cust_name' },
+                {  'data': 'year' },
+                {  'data': 'month' },
                 {  'data': 'bill_type' },
                 {  'data': 'bill_no' },
                 {  'data': 'srcbill_no' },
@@ -36,9 +38,6 @@ define(function(require, exports, module) {
                 {  'data': 'bal_amount' },
                 {  'data': 'abstract' },
                 {  'data': 'remarks' },
-                {  'data': 'seq' },
-                {  'data': 'status' },
-                {  'data': 'cust_id'},
             ],
             columnDefs: [
                 // {
@@ -48,11 +47,11 @@ define(function(require, exports, module) {
                 //     }
                 // },
                 {
-                    "targets": [0,1,2,12,13,14],
+                    "targets": [0,1],
                     "visible": false
                 }
             ],
-            order: [[12, 'asc']],
+            // order: [[12, 'asc']],
             buttons: [
                 // { text: '确认对账', className: 'sure', enabled: false ,  action: function () {
                 //     layer.confirm("确认对账?", ["确定", "取消"], function () {
@@ -99,15 +98,15 @@ define(function(require, exports, module) {
             ]
         });
 
-        table.on( 'select', checkBtn).on( 'deselect', checkBtn);
-
-        function checkBtn(e, dt, type, indexes) {
-            var data = table.rows( { selected: true } ).data()[0];
-            if(data ){
-                table.buttons( ['.sure'] ).enable(data.status == 0);
-            }
-
-        }
+        // table.on( 'select', checkBtn).on( 'deselect', checkBtn);
+        //
+        // function checkBtn(e, dt, type, indexes) {
+        //     var data = table.rows( { selected: true } ).data()[0];
+        //     if(data ){
+        //         table.buttons( ['.sure'] ).enable(data.status == 0);
+        //     }
+        //
+        // }
 
     }
 
