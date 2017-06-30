@@ -61,6 +61,17 @@
                                     <div class="col-sm-2 col-md-3">
                                         <input type="text" class="form-control filter-condition" filter-name="ftel" filter-operator="like" />
                                     </div>
+                                    <label class="col-sm-2 col-md-1 control-label">负责业务员</label>
+                                    <div class="col-sm-2 col-md-3">
+                                        {{--<input type="text" class="form-control filter-condition" filter-name="ftel" filter-operator="like" />--}}
+                                        <select class="selectpicker form-control filter-condition" data-live-search="true" filter-name="fseller" filter-operator="=">
+                                            <option value="">-- 请选择 --</option>
+                                            @foreach($employees as $employee)
+                                            <option data-tokens="{{$employee->fname}}" value="{{$employee->id}}">{{$employee->fname}}</option>
+                                            @endforeach
+                                        </select>
+
+                                    </div>
                                 </div>
                                 <div class="box-footer" style="text-align: center">
                                     <button type="button" class="btn btn-info filter-submit">查询</button>
