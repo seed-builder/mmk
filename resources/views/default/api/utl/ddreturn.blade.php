@@ -89,7 +89,7 @@ $NoReturnAmount = 0;
                     <!-- /.box-header -->
                     <div class="box-body">
                         <div class="panel panel-default" >
-                            <form class="form-inline " action="/admin/customer-dd-return" method="post">
+                            <form class="form-inline " action="/api/utl/customer-dd-return" method="post">
                                 <div class="form-group">
                                     <label class="">年份</label>
                                     <select class="form-control " id="year" name="year" >
