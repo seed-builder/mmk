@@ -86,22 +86,24 @@ $months = [1,2,3,4,5,6,7,8,9,10,11,12]
                         <div class="panel panel-default" >
                             <form class="form-inline filter "  filter-table="#moduleTable">
                                 <div class="form-group">
-                                    <label class="">年份</label>
-                                    <select class="form-control filter-condition" filter-name="year" filter-operator="=">
-                                        <option value="">--请选择--</option>
-                                        @foreach($years as $y)
-                                        <option value="{{$y}}" {{$y == $curYear ? 'selected':''}}>{{$y}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label class="">月份</label>
-                                    <select class="form-control filter-condition" filter-name="month" filter-operator="=">
-                                        <option value="">--请选择--</option>
-                                        @foreach($months as $m)
-                                            <option value="{{$m}}" {{$m == $curMonth ? 'selected':''}}>{{$m}}</option>
-                                        @endforeach
-                                    </select>
+                                    <label class="col-md-1  col-xs-1 control-label">年份</label>
+                                    <div class="col-md-2 col-xs-4 ">
+                                        <select class="form-control filter-condition" filter-name="year" filter-operator="=">
+                                            <option value="">--请选择--</option>
+                                            @foreach($years as $y)
+                                            <option value="{{$y}}" {{$y == $curYear ? 'selected':''}}>{{$y}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <label class="col-md-1  col-xs-1 control-label">月份</label>
+                                    <div class="col-md-2 col-xs-4 ">
+                                        <select class="form-control filter-condition" filter-name="month" filter-operator="=">
+                                            <option value="">--请选择--</option>
+                                            @foreach($months as $m)
+                                                <option value="{{$m}}" {{$m == $curMonth ? 'selected':''}}>{{$m}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
                                 {{--<div class="form-group">--}}
                                     {{--<label class="">状态</label>--}}
@@ -111,7 +113,7 @@ $months = [1,2,3,4,5,6,7,8,9,10,11,12]
                                         {{--<option value="1">已对账</option>--}}
                                     {{--</select>--}}
                                 {{--</div>--}}
-                                <div class="form-group">
+                                <div class="col-md-2 col-xs-2">
                                     <button type="button" class="btn btn-info filter-submit">查询</button>
                                     {{--<button type="button" class="btn btn-default filter-reset">重置</button>--}}
                                 </div>
@@ -123,12 +125,12 @@ $months = [1,2,3,4,5,6,7,8,9,10,11,12]
                                 <th>year</th>
                                 <th>month</th>
                                 <th>单据类型</th>
+                                <th>本期发生额</th>
+                                <th>金额</th>
                                 <th>单据编码</th>
                                 <th>源单编号</th>
                                 <th>方案编号</th>
                                 <th>业务日期</th>
-                                <th>本期发生额</th>
-                                <th>金额</th>
                                 <th>摘要</th>
                                 <th>备注</th>
                             </tr>
