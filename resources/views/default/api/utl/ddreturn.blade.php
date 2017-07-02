@@ -87,7 +87,7 @@ $NoReturnAmount = 0;
                         </div>
                     </div>
                     <!-- /.box-header -->
-                    <div class="box-body">
+                    <div class="box-body" style="width: 100%; overflow: scroll;">
                         <div class="panel panel-default" >
                             <form class="form-inline " action="#" method="post">
                                 {!! csrf_field() !!}
@@ -119,24 +119,29 @@ $NoReturnAmount = 0;
                             <thead>
                             <tr>
                                 <th>单据编号</th>
-                                <th>代垫单号</th>
-                                <th>方案编号</th>
-                                <th>客户代码</th>
-                                <th>客户名称</th>
-                                <th>纸质单<br/>日期 </th>
-                                <th>审核日期 </th>
+                                <th style="min-width: 100px;">代垫金额 </th>
+                                <th style="min-width: 100px;">本期返<br/>还金额 </th>
+                                <th style="min-width: 100px;">累计返<br/>还金额 </th>
+                                <th style="min-width: 100px;">未返还<br/>金额 </th>
+                                <th style="min-width: 150px;">用途 </th>
+                                <th style="min-width: 100px;">代垫单号</th>
+                                <th style="min-width: 100px;">方案编号</th>
+                                <th style="min-width: 100px;">客户代码</th>
+                                <th style="min-width: 100px;">客户名称</th>
+                                <th style="min-width: 100px;">纸质单<br/>日期 </th>
+                                <th style="min-width: 100px;">审核日期 </th>
                                 <th>返还期间 </th>
-                                <th>用途 </th>
-                                <th>代垫金<br/>额 </th>
-                                <th>本期返<br/>还金额 </th>
-                                <th>累计返<br/>还金额 </th>
-                                <th>未返还<br/>金额 </th>
                             </tr>
                             </thead>
                             <tbody>
                             @forelse($ddArr as $dd)
                             <tr>
                                 <td>{{$dd['FBILLNO']}}</td>
+                                <td>{{$dd['FDDAmount']}}</td>
+                                <td>{{$dd['FCurReturnAmount']}}</td>
+                                <td>{{$dd['FAllReturnAmount']}}</td>
+                                <td>{{$dd['FNoReturnAmount']}}</td>
+                                <td>{{$dd['FPurpose']}}</td>
                                 <td>{{$dd['FPageNo']}}</td>
                                 <td>{{$dd['FPromotionNo']}}</td>
                                 <td>{{$dd['fcustnum']}}</td>
@@ -144,11 +149,6 @@ $NoReturnAmount = 0;
                                 <td>{{$dd['FPageDate']}}</td>
                                 <td>{{$dd['FCheckDate']}}</td>
                                 <td>{{$dd['FReturnMonth']}}</td>
-                                <td>{{$dd['FPurpose']}}</td>
-                                <td>{{$dd['FDDAmount']}}</td>
-                                <td>{{$dd['FCurReturnAmount']}}</td>
-                                <td>{{$dd['FAllReturnAmount']}}</td>
-                                <td>{{$dd['FNoReturnAmount']}}</td>
                             </tr>
                             <?php
                             $CurReturnAmount +=  $dd['FCurReturnAmount'];
