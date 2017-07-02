@@ -84,7 +84,7 @@ $months = [1,2,3,4,5,6,7,8,9,10,11,12]
                     <!-- /.box-header -->
                     <div class="box-body" style="width: 100%; overflow: scroll;">
                         <div class="panel panel-default" >
-                            <form class="form-inline filter "  filter-table="#moduleTable">
+                            <form class="form-horizontal filter "  filter-table="#moduleTable">
                                 <div class="form-group">
                                     <label class="col-md-1  col-xs-1 control-label">年份</label>
                                     <div class="col-md-2 col-xs-4 ">
@@ -104,7 +104,7 @@ $months = [1,2,3,4,5,6,7,8,9,10,11,12]
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
+
                                 {{--<div class="form-group">--}}
                                     {{--<label class="">状态</label>--}}
                                     {{--<select class="form-control filter-condition" filter-name="status" filter-operator="=">--}}
@@ -116,6 +116,7 @@ $months = [1,2,3,4,5,6,7,8,9,10,11,12]
                                 <div class="col-md-2 col-xs-2">
                                     <button type="button" class="btn btn-info filter-submit">查询</button>
                                     {{--<button type="button" class="btn btn-default filter-reset">重置</button>--}}
+                                </div>
                                 </div>
                             </form>
                         </div>
