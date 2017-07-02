@@ -127,8 +127,8 @@ $NoReturnAmount = 0;
                                 <th style="min-width: 150px;">用途 </th>
                                 <th style="min-width: 100px;">代垫单号</th>
                                 <th style="min-width: 100px;">方案编号</th>
-                                <th style="min-width: 100px;">客户代码</th>
-                                <th style="min-width: 100px;">客户名称</th>
+                                {{--<th style="min-width: 100px;">客户代码</th>--}}
+                                {{--<th style="min-width: 100px;">客户名称</th>--}}
                                 <th style="min-width: 100px;">纸质单<br/>日期 </th>
                                 <th style="min-width: 100px;">审核日期 </th>
                                 <th>返还期间 </th>
@@ -145,8 +145,8 @@ $NoReturnAmount = 0;
                                 <td>{{$dd['FPurpose']}}</td>
                                 <td>{{$dd['FPageNo']}}</td>
                                 <td>{{$dd['FPromotionNo']}}</td>
-                                <td>{{$dd['fcustnum']}}</td>
-                                <td>{{$dd['fcustName']}}</td>
+                                {{--<td>{{$dd['fcustnum']}}</td>--}}
+                                {{--<td>{{$dd['fcustName']}}</td>--}}
                                 <td>{{$dd['FPageDate']}}</td>
                                 <td>{{$dd['FCheckDate']}}</td>
                                 <td>{{$dd['FReturnMonth']}}</td>
@@ -159,16 +159,16 @@ $NoReturnAmount = 0;
                                 @empty
                             @endforelse
                             <tr>
+                                {{--<td></td>--}}
+                                {{--<td></td>--}}
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                                 <td></td>
                                 <td>合计</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
                                 <td>{{$CurReturnAmount}}</td>
                                 <td>{{$AllReturnAmount}}</td>
                                 <td>{{$NoReturnAmount}}</td>
