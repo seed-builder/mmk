@@ -122,14 +122,14 @@ $NoReturnAmount = 0;
                                 <th>方案编号</th>
                                 <th>客户代码</th>
                                 <th>客户名称</th>
-                                <th>纸质单日期 </th>
+                                <th>纸质单<br/>日期 </th>
                                 <th>审核日期 </th>
                                 <th>返还期间 </th>
                                 <th>用途 </th>
-                                <th>代垫金额 </th>
-                                <th>本期返还金额 </th>
-                                <th>累计返还金额 </th>
-                                <th>未返还金额 </th>
+                                <th>代垫金<br/>额 </th>
+                                <th>本期返<br/>还金额 </th>
+                                <th>累计返<br/>还金额 </th>
+                                <th>未返还<br/>金额 </th>
                             </tr>
                             </thead>
                             <tbody>
