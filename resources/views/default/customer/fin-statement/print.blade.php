@@ -12,6 +12,16 @@ $dateMax = $items->max('bill_date');
         @page rotated {
             size: landscape;
         }
+        body{
+            font-size: 9px !important;
+        }
+        th{
+            line-height:30px;
+            text-align: center;
+        }
+        h3{
+            font-weight: bold;
+        }
     </style>
 @endsection
 
@@ -24,27 +34,27 @@ $dateMax = $items->max('bill_date');
                 <div class="box">
                     <div id="print-content">
                         <div class="box-header with-border" style="text-align: center">
-                            <h3 class="box-title">{{date('Y年m月份', strtotime($dateMax))}}客户往来对账单</h3>
+                            <span class="pull-left"><img src="/images/logo5.png"></span><h3 class="box-title">{{date('Y年m月份', strtotime($dateMax))}}客户往来对账单</h3>
                         </div>
                         <div class="box-body">
                             <div class="col-xs-12">
-                                对账期限：{{date('Y年m月d日',strtotime($dateMin))}}至{{date('Y年m月d日',strtotime($dateMax))}}
+                                对账期限：{{date('Y年m月1日',strtotime($dateMin))}}至{{date('Y年m月d日',strtotime($dateMax))}}
                             </div>
                             <div class="col-xs-12">
                                 <table class="table table-bordered">
                                     <tbody>
                                     <tr>
-                                        <th>往来单位代码</th>
-                                        <th>往来单位名称</th>
-                                        <th>单据类型</th>
-                                        <th>单据编码</th>
-                                        <th>源单编号</th>
-                                        <th>方案编号</th>
-                                        <th>业务日期</th>
-                                        <th>本期发生额</th>
-                                        <th>金额</th>
-                                        <th>摘要</th>
-                                        <th>备注</th>
+                                        <th style="min-width: 100px">往来单位代码</th>
+                                        <th style="min-width: 100px">往来单位名称</th>
+                                        <th style="min-width: 80px">单据类型</th>
+                                        <th style="min-width: 80px">单据编码</th>
+                                        <th style="min-width: 80px">源单编号</th>
+                                        <th style="min-width: 80px">方案编号</th>
+                                        <th style="min-width: 80px">业务日期</th>
+                                        <th style="min-width: 80px">本期发生额</th>
+                                        <th style="min-width: 80px">金额</th>
+                                        <th style="min-width: 80px">摘要</th>
+                                        <th style="min-width: 80px">备注</th>
                                     </tr>
                                     @foreach($items as $item)
                                         <tr>
@@ -65,24 +75,24 @@ $dateMax = $items->max('bill_date');
                                         $balAmount += $item->bal_amount;
                                         ?>
                                     @endforeach
-                                    <tr>
-                                        <td>{{$item->cust_num}}</td>
-                                        <td>{{$item->cust_name}}</td>
-                                        <td align="right">合计：</td>
-                                        <td ></td>
-                                        <td ></td>
-                                        <td ></td>
-                                        <td ></td>
-                                        <td >{{$curAmount}}</td>
-                                        <td >{{$balAmount}}</td>
-                                        <td ></td>
-                                        <td ></td>
-                                    </tr>
+                                    {{--<tr>--}}
+                                        {{--<td>{{$item->cust_num}}</td>--}}
+                                        {{--<td>{{$item->cust_name}}</td>--}}
+                                        {{--<td align="right">合计：</td>--}}
+                                        {{--<td ></td>--}}
+                                        {{--<td ></td>--}}
+                                        {{--<td ></td>--}}
+                                        {{--<td ></td>--}}
+                                        {{--<td >{{$curAmount}}</td>--}}
+                                        {{--<td >{{$balAmount}}</td>--}}
+                                        {{--<td ></td>--}}
+                                        {{--<td ></td>--}}
+                                    {{--</tr>--}}
                                     <tr>
                                         <td colspan="11">
                                             <ul>
                                                 <li>
-                                                    1、本对帐单仅为复核帐目使用，不作为结算凭证，如若有不符或疑问，请致电核对,联系人：韩小清,联系电话0592-2228069；邮箱hxqing@shantuwine.com。
+                                                    1、本对帐单仅为复核帐目使用，不作为结算凭证，如若有不符或疑问，请致电核对,<b>联系人：韩小清,联系电话0592-2228069；邮箱hxqing@shantuwine.com</b>.
                                                 </li>
                                                 <li>
                                                     2、客户要认真核对本期发生及期末余额，经客户签字盖章后的对帐单，本公司视为确认数据无误，且具有法律效力。
