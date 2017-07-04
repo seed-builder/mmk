@@ -12,16 +12,7 @@ $dateMax = $items->max('bill_date');
         @page rotated {
             size: landscape;
         }
-        body{
-            font-size: 9px !important;
-        }
-        th{
-            line-height:30px;
-            text-align: center;
-        }
-        h3{
-            font-weight: bold;
-        }
+
     </style>
 @endsection
 
@@ -33,6 +24,20 @@ $dateMax = $items->max('bill_date');
             <div class="col-xs-12">
                 <div class="box">
                     <div id="print-content">
+                        <style>
+                            * {
+                                font-size: 8px !important;
+                            }
+                            th{
+                                font-size: 12px;
+                                line-height:30px;
+                                text-align: center;
+                            }
+                            h3{
+                                font-size: 18px;
+                                font-weight: bold;
+                            }
+                        </style>
                         <div class="box-header with-border" style="text-align: center">
                             <span class="pull-left"><img src="/images/logo5.png"></span><h3 class="box-title">{{date('Y年m月份', strtotime($dateMax))}}客户往来对账单</h3>
                         </div>
