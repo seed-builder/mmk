@@ -29,7 +29,7 @@ $dateMax = $items->max('bill_date');
                                 font-size: 12px !important;
                             }
                             th{
-                                font-size: 18px  !important;
+                                font-size: 14px  !important;
                                 line-height:30px;
                                 text-align: center;
                             }
