@@ -39,6 +39,9 @@ $dateMax = $items->max('bill_date');
                             table tr td{
                                 padding: 2px !important;
                             }
+                            .sign {
+                                font-size: 16px !important;
+                            }
                         </style>
                         <div class="box-header with-border" style="text-align: center">
                             <span class="pull-left"><img src="/images/logo5.png"></span><h3 class="box-title">{{date('Y年m月份', strtotime($dateMax))}}客户往来对账单</h3>
@@ -116,7 +119,7 @@ $dateMax = $items->max('bill_date');
                                             </ul>
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <tr class="sign">
                                         <td colspan="5">
                                             <b>1、信息证明无误</b>
                                         </td>

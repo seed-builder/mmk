@@ -40,6 +40,9 @@ $dateMax = $items->max('bill_date');
                             table tr td{
                                 padding: 2px !important;
                             }
+                            .sign {
+                                font-size: 16px !important;
+                            }
                         </style>
                         <div class="box-header with-border" style="text-align: center">
                             <span class="pull-left"><img src="/images/logo5.png"></span><h3 class="box-title">{{date('Y年m月份', strtotime($dateMax))}}客户往来对账单</h3>
@@ -125,14 +128,14 @@ $dateMax = $items->max('bill_date');
                                             <b>2、信息不符，请列明不符项目及具体内容</b>
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <tr class="sign">
                                         <td colspan="5" style="height: 180px;overflow: auto;width: 50%;">
                                             <div style="position: relative;">
                                                 <div style="position: absolute ; top: 80px; right: 80px;">公司盖章</div>
                                                 <div style="position: absolute ; top: 110px; right: 60px;">
                                                     <span>年</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>月</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>日</span>
                                                 </div>
-                                                <div style="position: absolute ; top: 140px; right: 150px;"><span>经办人：</span></div>
+                                                <div style="position: absolute ; top: 140px; right: 250px;"><span>经办人：</span></div>
                                             </div>
                                         </td>
                                         <td colspan="6" style="height: 180px;overflow: auto;width: 50%;">
@@ -141,7 +144,7 @@ $dateMax = $items->max('bill_date');
                                                 <div style="position: absolute ; top: 110px; right: 60px;">
                                                     <span>年</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>月</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>日</span>
                                                 </div>
-                                                <div style="position: absolute ; top: 140px; right: 150px;"><span>经办人：</span></div>
+                                                <div style="position: absolute ; top: 140px; right: 250px;"><span>经办人：</span></div>
                                             </div>
                                         </td>
                                     </tr>
