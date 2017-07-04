@@ -37,7 +37,7 @@ $dateMax = $items->max('bill_date');
                                 font-weight: bold;
                             }
                             table tr td{
-                                padding: 0px !important;
+                                padding: 2px !important;
                             }
                         </style>
                         <div class="box-header with-border" style="text-align: center">
