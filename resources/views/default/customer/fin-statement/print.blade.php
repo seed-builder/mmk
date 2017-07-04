@@ -133,18 +133,18 @@ $dateMax = $items->max('bill_date');
                                             <div style="position: relative;">
                                                 <div style="position: absolute ; top: 80px; right: 80px;">公司盖章</div>
                                                 <div style="position: absolute ; top: 110px; right: 60px;">
-                                                    <span>年</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>月</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>日</span>
+                                                    <span class="sign">年</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="sign">月</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="sign">日</span>
                                                 </div>
-                                                <div style="position: absolute ; top: 140px; right: 250px;"><span>经办人：</span></div>
+                                                <div style="position: absolute ; top: 140px; right: 250px;"><span class="sign">经办人：</span></div>
                                             </div>
                                         </td>
                                         <td colspan="6" style="height: 180px;overflow: auto;width: 50%;font-size: 16px !important;">
                                             <div style="position: relative;">
                                                 <div style="position: absolute ; top: 80px; right: 80px;">公司盖章</div>
                                                 <div style="position: absolute ; top: 110px; right: 60px;">
-                                                    <span>年</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>月</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>日</span>
+                                                    <span class="sign">年</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="sign">月</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="sign">日</span>
                                                 </div>
-                                                <div style="position: absolute ; top: 140px; right: 250px;"><span>经办人：</span></div>
+                                                <div style="position: absolute ; top: 140px; right: 250px;"><span class="sign">经办人：</span></div>
                                             </div>
                                         </td>
                                     </tr>
