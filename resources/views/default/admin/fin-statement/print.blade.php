@@ -128,7 +128,7 @@ $dateMax = $items->max('bill_date');
                                         </td>
                                     </tr>
                                     <tr  class="sign">
-                                        <td colspan="5" style="height: 180px;overflow: auto;width: 50%;">
+                                        <td colspan="5" style="height: 180px;overflow: auto;width: 50%;font-size: 16px !important;">
                                             <div style="position: relative;">
                                                 <div style="position: absolute ; top: 80px; right: 80px;font-size: 16px !important;">公司盖章</div>
                                                 <div style="position: absolute ; top: 110px; right: 60px;font-size: 16px !important;">
