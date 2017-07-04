@@ -127,7 +127,7 @@ $dateMax = $items->max('bill_date');
                                             <b>2、信息不符，请列明不符项目及具体内容</b>
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <tr  class="sign">
                                         <td colspan="5" style="height: 180px;overflow: auto;width: 50%;">
                                             <div style="position: relative;">
                                                 <div style="position: absolute ; top: 80px; right: 80px;">公司盖章</div>

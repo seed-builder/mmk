@@ -120,7 +120,7 @@ $dateMax = $items->max('bill_date');
                                             </ul>
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <tr  class="sign">
                                         <td colspan="5">
                                             <b>1、信息证明无误</b>
                                         </td>
