@@ -44,7 +44,7 @@ $dateMax = $items->max('bill_date');
                             }
                         </style>
                         <div class="box-header with-border" style="text-align: center">
-                            <span class="pull-left"><img src="/images/logo5.png"></span><h3 class="box-title">{{date('Y年m月份', strtotime($dateMax))}}客户往来对账单</h3>
+                            <span class="pull-left"><img src="/images/logo-black.png"></span><h3 class="box-title">{{date('Y年m月份', strtotime($dateMax))}}客户往来对账单</h3>
                         </div>
                         <div class="box-body">
                             <div class="col-xs-12">
