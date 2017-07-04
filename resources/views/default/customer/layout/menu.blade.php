@@ -49,7 +49,7 @@ $customer = $user->reference;
                         <li><a href="{{url('/customer/view-customer-stock-statistic')}}"><i class="fa fa-fw fa-cubes"></i>我的库存</a></li>
                         <li><a href="{{url('/customer/display-policy')}}"><i class="fa fa-fw fa-folder"></i>费用政策</a></li>
                         <li><a href="{{url('/customer/stock-check')}}"><i class="fa fa-circle-o"></i>经销商盘点</a></li>
-                        <li><a href="{{url('/customer/customer-dd-return')}}"><i class="fa fa-circle-o"></i>代垫返还</a></li>
+
                     </ul>
                 </li>
                 <li class="treeview ">
@@ -62,6 +62,7 @@ $customer = $user->reference;
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="{{url('/customer/fin-statement')}}"><i class="fa fa-database"></i>往来对账</a></li>
+                        <li><a href="{{url('/customer/customer-dd-return')}}"><i class="fa fa-circle-o"></i>代垫返还</a></li>
                         {{--<li><a href="{{url('/customer/fin')}}"><i class="fa fa-diamond"></i>货款余额</a></li>--}}
                     </ul>
                 </li>
