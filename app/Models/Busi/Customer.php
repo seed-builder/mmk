@@ -125,6 +125,13 @@ class Customer extends Authenticatable
 						'nick_name' => $model->fname,
 					]);
 				}
+			}else{
+				$model->user()->create([
+					'name' => $model->ftel,
+					'password' => md5('888888'),
+					'status' => 1,
+					'nick_name' => $model->fname,
+				]);
 			}
 		});
 	}
