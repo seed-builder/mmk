@@ -101,9 +101,6 @@
                                             @endforeach
                                         </select>
                                     </div>
-
-
-
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-1 control-label">经销商</label>
@@ -135,6 +132,16 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="col-sm-1 control-label">创建日期</label>
+                                    <div class="col-sm-4">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control filter-condition filter-date" filter-name="fcreate_date" filter-operator=">="/>
+                                            <span class="input-group-addon">-</span>
+                                            <input type="text" class="form-control filter-condition filter-date" filter-name="fcreate_date" filter-operator="<="/>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="box-footer" style="text-align: center">
                                     <button type="button" class="btn btn-info filter-submit">查询</button>
                                     <button type="button" class="btn btn-default filter-reset">重置</button>
@@ -159,6 +166,7 @@
                                 <th>是否签约</th>
                                 <th>审核状态</th>
                                 <th>禁用状态</th>
+                                <th>创建时间</th>
                                 <th>操作</th>
                             </tr>
 

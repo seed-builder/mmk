@@ -120,6 +120,7 @@ define(function (require, exports, module) {
                         return forbid_status(data);
                     }
                 },
+                {"data": "fcreate_date"},
                 {
                     "data": 'id',
                     render: function (data, type, full) {

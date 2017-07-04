@@ -86,6 +86,7 @@ define(function (require, exports, module) {
                         }
                     }
                 },
+                {"data": "fcreate_date"},
                 {
                     "data": 'id',
                     render: function (data, type, full) {

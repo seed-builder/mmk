@@ -74,6 +74,14 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
+                                    <label class="">创建日期</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control filter-condition filter-date" filter-name="st_stores.fcreate_date" filter-operator=">="/>
+                                        <span class="input-group-addon">-</span>
+                                        <input type="text" class="form-control filter-condition filter-date" filter-name="st_stores.fcreate_date" filter-operator="<="/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <button type="button" class="btn btn-info filter-submit">查询</button>
                                     <button type="button" class="btn btn-default filter-reset">重置</button>
                                 </div>
@@ -92,6 +100,7 @@
                                 <th>flongitude</th>
                                 <th>flatitude</th>
                                 <th>是否签约</th>
+                                <th>创建时间</th>
                                 <th>操作</th>
                             </tr>
 
