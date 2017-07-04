@@ -26,7 +26,7 @@ $dateMax = $items->max('bill_date');
                     <div id="print-content">
                         <style>
                             * {
-                                font-size: 8px !important;
+                                font-size: 10px !important;
                             }
                             th{
                                 font-size: 12px;
