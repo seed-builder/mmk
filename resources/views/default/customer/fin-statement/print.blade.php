@@ -3,7 +3,9 @@ $curAmount = 0;
 $balAmount = 0;
 $dateMin = $items->min('bill_date');
 $dateMax = $items->max('bill_date');
-
+$firstday = date('Y-m-01', strtotime($dateMax));
+$nextMonth = strtotime('+1 month', strtotime($firstday));
+$lastday = strtotime('-1 day', $nextMonth);
 ?>
 @extends('customer.layout.collapsed-sidebar')
 @section('styles')
@@ -49,7 +51,7 @@ $dateMax = $items->max('bill_date');
                         </div>
                         <div class="box-body">
                             <div class="col-xs-12">
-                                对账期限：{{date('Y年m月1日',strtotime($dateMax))}}至{{date('Y年m月d日',strtotime($dateMax))}}
+                                对账期限：{{date('Y年m月1日',strtotime($dateMax))}}至{{date('Y年m月d日',$lastday)}}
                             </div>
                             <div class="col-xs-12">
                                 <table class="table table-bordered">
