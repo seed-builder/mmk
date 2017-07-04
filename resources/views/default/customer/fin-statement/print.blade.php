@@ -26,15 +26,15 @@ $dateMax = $items->max('bill_date');
                     <div id="print-content">
                         <style>
                             * {
-                                font-size: 10px !important;
+                                font-size: 12px !important;
                             }
                             th{
-                                font-size: 30px;
+                                font-size: 18px  !important;
                                 line-height:30px;
                                 text-align: center;
                             }
                             h3{
-                                font-size: 18px;
+                                font-size: 30px  !important;
                                 font-weight: bold;
                             }
                             table tr td{
