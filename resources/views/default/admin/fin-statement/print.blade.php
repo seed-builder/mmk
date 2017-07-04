@@ -28,13 +28,16 @@ $dateMax = $items->max('bill_date');
                                 font-size: 10px !important;
                             }
                             th{
-                                font-size: 12px  !important;
+                                font-size: 30px;
                                 line-height:30px;
                                 text-align: center;
                             }
                             h3{
-                                font-size: 18px  !important;
+                                font-size: 18px;
                                 font-weight: bold;
+                            }
+                            table tr td{
+                                padding: 0px !important;
                             }
                         </style>
                         <div class="box-header with-border" style="text-align: center">
@@ -69,8 +72,8 @@ $dateMax = $items->max('bill_date');
                                             <td>{{$item->srcbill_no}}</td>
                                             <td>{{$item->project_no}}</td>
                                             <td>{{trim($item->bill_date, "00:00:00")}}</td>
-                                            <td>{{$item->cur_amount}}</td>
-                                            <td>{{$item->bal_amount}}</td>
+                                            <td style="text-align: right;">{{$item->cur_amount}}</td>
+                                            <td style="text-align: right;">{{$item->bal_amount}}</td>
                                             <td>{{$item->abstract}}</td>
                                             <td>{{$item->remarks}}</td>
                                         </tr>
