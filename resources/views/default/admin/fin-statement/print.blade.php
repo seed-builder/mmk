@@ -130,20 +130,20 @@ $dateMax = $items->max('bill_date');
                                     <tr  class="sign">
                                         <td colspan="5" style="height: 180px;overflow: auto;width: 50%;">
                                             <div style="position: relative;">
-                                                <div style="position: absolute ; top: 80px; right: 80px;">公司盖章</div>
-                                                <div style="position: absolute ; top: 110px; right: 60px;">
+                                                <div style="position: absolute ; top: 80px; right: 80px;font-size: 16px !important;">公司盖章</div>
+                                                <div style="position: absolute ; top: 110px; right: 60px;font-size: 16px !important;">
                                                     <span>年</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>月</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>日</span>
                                                 </div>
-                                                <div style="position: absolute ; top: 140px; right: 250px;"><span>经办人：</span></div>
+                                                <div style="position: absolute ; top: 140px; right: 250px;font-size: 16px !important;"><span>经办人：</span></div>
                                             </div>
                                         </td>
-                                        <td colspan="6" style="height: 180px;overflow: auto;width: 50%;">
+                                        <td colspan="6" style="height: 180px;overflow: auto;width: 50%;font-size: 16px !important;">
                                             <div style="position: relative;">
-                                                <div style="position: absolute ; top: 80px; right: 80px;">公司盖章</div>
-                                                <div style="position: absolute ; top: 110px; right: 60px;">
+                                                <div style="position: absolute ; top: 80px; right: 80px;font-size: 16px !important;">公司盖章</div>
+                                                <div style="position: absolute ; top: 110px; right: 60px;font-size: 16px !important;">
                                                     <span>年</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>月</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>日</span>
                                                 </div>
-                                                <div style="position: absolute ; top: 140px; right: 250px;"><span>经办人：</span></div>
+                                                <div style="position: absolute ; top: 140px; right: 250px;font-size: 16px !important;"><span>经办人：</span></div>
                                             </div>
                                         </td>
                                     </tr>
