@@ -75,7 +75,7 @@ st_stock_check_items item
 INNER JOIN st_stock_checks c on c.id=item.fstock_check_id
 INNER JOIN bd_materials m on item.fmaterial_id = m.id
 left join bd_customers cust on c.fcust_id = cust.id
-where c.fcheck_status < 2
+where c.fcheck_status = 1
 ;
 EOD;
 	    DB::statement($sql);
