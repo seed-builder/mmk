@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Busi\Customer;
+use App\Models\Busi\Material;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
 use App\Models\Busi\CustomerPrice;
@@ -26,9 +27,13 @@ class CustomerPriceController extends AdminController
 		$options = $customers->map(function ($item){
 			return ['label' => $item->fname, 'value' => $item->id];
 		});
-		$collection = collect([['label'=> '--请选择--', 'value' => '']]);
-		$collection->merge($options);
-		return view('admin.customer-price.index', ['customers' => $collection]);
+		$collection = [['label'=> '--请选择--', 'value' => '']] + $options->toArray();
+		$materials = Material::all();
+		$option2s = $materials->map(function ($item){
+			return ['label' => $item->fname, 'value' => $item->id];
+		});
+		$mc = [['label'=> '--请选择--', 'value' => '']] + $option2s->toArray();
+		return view('admin.customer-price.index', ['customers' => $collection, 'materials' => $mc]);
 	}
 
 	/**
@@ -74,7 +79,7 @@ class CustomerPriceController extends AdminController
 	*/
 	public function pagination(Request $request, $searchCols = [], $with=[], $conditionCall = null, $all_columns = false){
 		$searchCols = ["fspecification"];
-		return parent::pagination($request, $searchCols);
+		return parent::pagination($request, $searchCols, ['customer', 'material']);
 	}
 
 }

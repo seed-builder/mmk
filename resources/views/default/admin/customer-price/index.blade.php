@@ -66,11 +66,13 @@
 @section('js')
     @include('admin.layout.datatable-js')
     <script type="text/javascript">
-        var customers = {!! $customers !!}
+        var customers = {!! json_encode($customers) !!} ;
+        var materials = {!! json_encode($materials) !!} ;
         $(function () {
             seajs.use('admin/customer_price.js', function (app) {
-                app.index($, 'moduleTable', customers);
+                app.index($, 'moduleTable', customers, materials);
             });
+
         });
     </script>
 
