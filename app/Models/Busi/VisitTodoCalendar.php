@@ -42,15 +42,15 @@ class VisitTodoCalendar extends BaseModel
 
 		    //LogSvr::todo()->info('model updated, id=' . $model->id);
 		    event(new VisitTodoStatusChangedEvent($model));
-
-		    Rollcall::createOrUpdate([
-			    'femp_id' => $model->femp_id,
-			    'faddress' => $model->store_calendar->store->faddress,
-			    'flongitude' => $model->flongitude,
-			    'flatitude' => $model->flatitude,
-			    'fmode' => 2
-		    ]);
-
+//			if ($model->todo->fname == '正常陈列') {
+//				Rollcall::createOrUpdate([
+//					'femp_id' => $model->femp_id,
+//					'faddress' => $model->store_calendar->store->faddress,
+//					'flongitude' => $model->flongitude,
+//					'flatitude' => $model->flatitude,
+//					'fmode' => 2
+//				]);
+//			}
 	    });
     }
 

@@ -92,7 +92,7 @@ class StoreChange extends BaseModel
 					'store_address' => $model->faddress,
 					'created' => date('Y-m-d H:i:s'),
 					'reason' => $model->change_reason,
-					'lineName' => $model->line->fname
+					'lineName' => !empty($model->line) ? $model->line->fname : ''
 				]);
 		});
 	}
