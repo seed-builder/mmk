@@ -25,20 +25,25 @@
     <![endif]-->
     <style type="text/css">
         body{
-            background-image: url('/images/bk2.jpg') !important;
+            background-image: url('/images/nbk.png') !important;
             background-repeat: no-repeat;
             background-size:100% 100%;
             opacity: 0.8;
+        }
+        .btn{
+            color: #ffffff;
+            background-color: darkred;
         }
     </style>
 </head>
 <body class="hold-transition ">
 <div class="login-box">
-    <div class="login-logo">
-        <b>经销商系统登陆</b>
-    </div>
+
     <!-- /.login-logo -->
     <div class="login-box-body">
+        <div class="login-logo">
+            <b>经销商系统登陆</b>
+        </div>
         {{--<p class="login-box-msg">Sign in to start your session</p>--}}
         @include('customer.layout.flash-message')
         <form action="/customer/login" method="post">
@@ -61,7 +66,7 @@
                 </div>
                 <!-- /.col -->
                 <div class="col-xs-4">
-                    <button type="submit" class="btn btn-primary btn-block btn-flat">登  陆</button>
+                    <button type="submit" class="btn btn-block btn-flat">登  陆</button>
                 </div>
                 <!-- /.col -->
             </div>
