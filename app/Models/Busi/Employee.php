@@ -137,7 +137,7 @@ class Employee extends BaseModel
         if(empty($position->senior)){
            return [];
         }
-        return static::where('fpost_id', $position->senior->id)->first();
+        return static::where('fpost_id', $position->senior->id)->where('fforbid_status', 'A')->first();
     }
 
 	public function getAllSeniors(){
@@ -146,7 +146,7 @@ class Employee extends BaseModel
 		if(empty($position->senior)){
 			return collect([]);
 		}
-		return static::where('fpost_id', $position->senior->id)->get();
+		return static::where('fpost_id', $position->senior->id)->where('fforbid_status', 'A')->get();
 	}
 
 
