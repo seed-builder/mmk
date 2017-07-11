@@ -26,8 +26,9 @@ class CustomerPriceController extends AdminController
 		$options = $customers->map(function ($item){
 			return ['label' => $item->fname, 'value' => $item->id];
 		});
-		$options->push(['label'=> '--请选择--', 'value' => '']);
-		return view('admin.customer-price.index', ['customers' => $options->reverse()]);
+		$collection = collect([['label'=> '--请选择--', 'value' => '']]);
+		$collection->merge($options);
+		return view('admin.customer-price.index', ['customers' => $collection]);
 	}
 
 	/**
