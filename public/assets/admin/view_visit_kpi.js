@@ -93,6 +93,10 @@ define(function(require, exports, module) {
                         return Math.round( second/60 );
                     }
                 },
+                { 'data': 'day_amount' },
+                { 'data': 'month_amount' },
+                { 'data': 'times_amount' },
+                { 'data': 'num_amount' },
                 // {  'data': 'fdate' },
 
             ],
