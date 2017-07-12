@@ -28,7 +28,7 @@ class AttendanceReport extends BaseModel
 {
     //
 	protected $table = 'attendance_reports';
-	protected $with = ['employee'];
+	protected $with = ['employee.position'];
 
 	public function employee(){
 		return $this->belongsTo(Employee::class, 'femp_id');

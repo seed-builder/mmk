@@ -53,6 +53,7 @@ class AttendanceReportController extends ApiController
 				}
 			}
 		}
+		$query->with(['employee.position']);
 		//return $query;
 	}
 
