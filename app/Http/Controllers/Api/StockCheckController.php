@@ -27,7 +27,7 @@ class StockCheckController extends ApiController
 	/**
 	 * 统计盘点： 品项、箱 （合计）
 	 * @param Request $request
-	 * @param $stock_check_id
+	 * @param $id
 	 * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
 	 */
 	public function statistic(Request $request, $id){
