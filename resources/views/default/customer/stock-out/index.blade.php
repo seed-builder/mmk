@@ -75,6 +75,8 @@
                             <thead>
                             <tr>
                                 <th>id</th>
+                                <th>present_box_qty</th>
+                                <th>present_bottle_qty</th>
                                 <th>出库单号</th>
                                 <th>出库商品</th>
                                 <th>销售单位数量</th>
