@@ -81,6 +81,9 @@
                                 <th>销售单位</th>
                                 <th>基本单位数量</th>
                                 <th>基本单位</th>
+                                <th>单价/箱</th>
+                                <th>单价/瓶</th>
+                                <th>金额</th>
                             </tr>
                             </thead>
                         </table>

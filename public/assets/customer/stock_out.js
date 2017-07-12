@@ -264,6 +264,8 @@ define(function (require, exports, module) {
             },
             columns: [
                 {'data': 'id'},
+                {'data': 'present_box_qty'},
+                {'data': 'present_bottle_qty'},
                 {
                     'data': 'fstock_out_id',
                     render: function (data, type, full) {
@@ -282,14 +284,21 @@ define(function (require, exports, module) {
                             return "";
                     }
                 },
-                {'data': 'fqty'},
+                {'data': 'box_qty', render: function (data, type, full) {
+                    return full.box_qty + full.present_box_qty;
+                }},
                 {'data': 'fsale_unit'},
-                {'data': 'fbase_qty'},
+                {'data': 'bottle_qty',render: function (data, type, full) {
+                    return full.bottle_qty + full.present_bottle_qty;
+                } },
                 {'data': 'fbase_unit'},
+                {'data': 'fprice_box'},
+                {'data': 'fprice_bottle'},
+                {'data': 'famount'},
             ],
             columnDefs: [
                 {
-                    "targets": [0],
+                    "targets": [0,1,2],
                     "visible": false
                 }
             ],
