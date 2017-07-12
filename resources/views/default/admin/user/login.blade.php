@@ -35,11 +35,14 @@
             color: #ffffff;
             background-color: darkred;
         }
+        .login-box, .register-box {
+            width: 300px;
+            margin: 10% auto;
+        }
     </style>
 </head>
 <body class="hold-transition ">
 <div class="login-box">
-
     <!-- /.login-logo -->
     <div class="login-box-body">
         <div class="login-logo">
@@ -50,12 +53,12 @@
         <form action="/admin/login" method="post">
             {!! csrf_field() !!}
             <div class="form-group has-feedback">
+                <span class="glyphicon glyphicon-user form-control-feedback"></span>
                 <input type="text" name="name" class="form-control" placeholder="user name">
-                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">
-                <input type="password" name="password" class="form-control" placeholder="password">
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                <input type="password" name="password" class="form-control" placeholder="password">
             </div>
             <div class="row">
                 <div class="col-xs-8">
