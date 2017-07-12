@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Events\OrderDeliveryEvent;
+use App\Models\Busi\CustomerPrice;
 use App\Models\Busi\SaleOrderItem;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
@@ -132,6 +133,10 @@ class SaleOrderController extends AdminController
 		$result = true;
 		$msg = '';
 		$ids = $request->input('ids', []);
+		$re = $this->checkPrice($ids);
+		if($re['success'] == false){
+			return $this->fail('【'+$re['material']+'】未维护售价，无法配送');
+		}
 		DB::beginTransaction();
 		try {
 			SaleOrder::whereIn('id', $ids)->update(['fsend_status' => 'C']);
@@ -145,4 +150,21 @@ class SaleOrderController extends AdminController
 		}
 		return $result ? $this->success(1) : $this->fail($msg);
 	}
+
+	protected function checkPrice($orderIds){
+		$orders = SaleOrder::whereIn('id', $orderIds)->get();
+		if(!empty($orders)){
+			foreach ($orders as $order){
+				$items = SaleOrderItem::where('fsale_order_id', $order->id)->where('fmaterial_form', 1)->get();
+				foreach ($items as $item){
+					$price = CustomerPrice::getPrice($order->fcust_id, $item->fmaterial_id, $item->box_qty);
+					if(empty($price))
+						return ['success' => false, 'material' => $item->material->fname];
+				}
+			}
+		}
+		return ['success' => false];
+	}
+
+
 }

@@ -94,6 +94,7 @@ class SaleOrderItem extends BaseModel
     public function material(){
         return $this->hasOne(Material::class,'id','fmaterial_id');
     }
+
     public function store(){
         return $this->hasOne(Store::class,'id','fstore_id');
     }

@@ -27,9 +27,11 @@
         body{
             background-image: url('/images/nbk.png') !important;
             background-repeat: no-repeat;
-            background-size:100% 100%;
+            background-size:100% ;
             /*background-position: center;*/
             opacity: 0.8;
+            background-color:#E83132;
+            background-position: center bottom;
         }
         .btn{
             color: #ffffff;

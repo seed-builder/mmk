@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\OrderDeliveryEvent;
+use App\Models\Busi\CustomerPrice;
 use App\Models\Busi\SaleOrder;
 use App\Models\Busi\SaleOrderItem;
 use App\Models\Busi\StockOut;
@@ -59,6 +60,8 @@ class OrderDeliveryHandler //implements ShouldQueue
 					    ]);
 				    }
 				    foreach ($orderItems as $item) {
+				    	$price = CustomerPrice::getPrice($order->fcust_id, $item->fmaterial_id,  $item->box_qty);
+
 					    $outItem = StockOutItem::create([
 						    'fstock_out_id' => $out->id,
 						    'fmaterial_id' => $item->fmaterial_id,
@@ -67,6 +70,13 @@ class OrderDeliveryHandler //implements ShouldQueue
 						    'fqty' => $item->fsend_qty,
 						    'fbase_qty' => $item->fsend_base_qty,
 						    'fdocument_status' => 'C',
+						    'box_qty' => $item->box_qty ,
+						    'bottle_qty' => $item->bottle_qty ,
+						    'present_box_qty' => $item->present_box_qty ,
+						    'present_bottle_qty' => $item->present_bottle_qty ,
+							'fprice_box' => $price->fprice_box,
+							'fprice_bottle' => $price->fprice_bottle,
+							'famount' => $price->fprice_box * $item->box_qty + $price->fprice_bottle * $item->bottle_qty,
 					    ]);
 				    }
 				    DB::commit();
