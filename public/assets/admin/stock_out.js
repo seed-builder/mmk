@@ -240,9 +240,12 @@ define(function (require, exports, module) {
             idSrc: 'id',
             fields: [
                 { 'label': '商品', 'name': 'fmaterial_id', 'type': 'select', 'options': materials},
-                {'label': '单价/箱', 'name': 'fprice_box',},
-                {'label': '单价/瓶', 'name': 'fprice_bottle',},
-                {'label': '订单数量', 'name': 'fqty',},
+                {'label': '单价(箱)', 'name': 'fprice_box',},
+                {'label': '单价(瓶)', 'name': 'fprice_bottle',},
+                {'label': '数量(箱)', 'name': 'box_qty',},
+                {'label': '数量(瓶)', 'name': 'bottle_qty',},
+                {'label': '赠送数量(箱)', 'name': 'present_box_qty',},
+                {'label': '赠送数量(瓶)', 'name': 'present_bottle_qty',},
                 {
                     'name': "fstock_out_id",
                     'def': function () {
@@ -272,8 +275,6 @@ define(function (require, exports, module) {
             },
             columns: [
                 {'data': 'id'},
-                {'data': 'present_box_qty'},
-                {'data': 'present_bottle_qty'},
                 {
                     'data': 'fstock_out_id',
                     render: function (data, type, full) {
@@ -292,65 +293,61 @@ define(function (require, exports, module) {
                             return "";
                     }
                 },
-                {'data': 'box_qty', render: function (data, type, full) {
-                    return full.box_qty + full.present_box_qty;
-                }},
-                {'data': 'fsale_unit'},
-                {'data': 'bottle_qty',render: function (data, type, full) {
-                    return full.bottle_qty + full.present_bottle_qty;
-                } },
-                {'data': 'fbase_unit'},
+                {'data': 'box_qty'},
+                {'data': 'bottle_qty'},
+                {'data': 'present_box_qty'},
+                {'data': 'present_bottle_qty'},
                 {'data': 'fprice_box'},
                 {'data': 'fprice_bottle'},
                 {'data': 'famount'},
             ],
             columnDefs: [
                 {
-                    "targets": [0,1,2],
+                    "targets": [0],
                     "visible": false
                 }
             ],
             buttons: [
-                {
-                    text: '新增',
-                    className: 'item-add',
-                    enabled: false,
-                    action: function () {
-                        $('#stockItemFormDialogTitle').text('新增出库明细');
-                        $('#stockItemForm').get(0).reset();
-                        $('#stockItemForm').bootstrapValidator('resetForm');
-                        var rows = table.rows('.selected').data();
-                        var stock = rows.length > 0 ? rows[0] : null;
-                        if (stock) {
-                            $('#fstock_out_id', '#stockItemForm').val(stock.id);
-                            $('#stockItemFormDialog').modal('show');
-                        }
-                    }
-                },
-                { text: '编辑', className: 'item-edit', enabled: false,  action: function () {
-                        $('#stockItemFormDialogTitle').text('编辑出库明细');
-                        $('#stockItemForm').get(0).reset();
-                        $('#stockItemForm').bootstrapValidator('resetForm');
-                        var rows = itemTable.rows('.selected').data();
-                        var stockItem = rows.length > 0 ? rows[0] : null;
-                        if (stockItem) {
-                            $('#id', '#stockItemForm').val(stockItem.id);
-                            $('#fstock_out_id', '#stockItemForm').val(stockItem.fstock_out_id);
-                            $('#fmaterial_id', '#stockItemForm').val(stockItem.fmaterial_id);
-                            $('#fmaterial_id', '#stockItemForm').trigger('change');
-                            var unit = $("#unit", '#stockItemForm').val();
-                            if(unit == 'sale_unit'){
-                                $('#qty', '#stockItemForm').val(stockItem.fqty);
-                            }else{
-                                $('#qty', '#stockItemForm').val(stockItem.fbase_qty);
-                            }
-                            $('#stockItemFormDialog').modal('show');
-                        }
-                    }
-                },
+                // {
+                //     text: '新增',
+                //     className: 'item-add',
+                //     enabled: false,
+                //     action: function () {
+                //         $('#stockItemFormDialogTitle').text('新增出库明细');
+                //         $('#stockItemForm').get(0).reset();
+                //         $('#stockItemForm').bootstrapValidator('resetForm');
+                //         var rows = table.rows('.selected').data();
+                //         var stock = rows.length > 0 ? rows[0] : null;
+                //         if (stock) {
+                //             $('#fstock_out_id', '#stockItemForm').val(stock.id);
+                //             $('#stockItemFormDialog').modal('show');
+                //         }
+                //     }
+                // },
+                // { text: '编辑', className: 'item-edit', enabled: false,  action: function () {
+                //         $('#stockItemFormDialogTitle').text('编辑出库明细');
+                //         $('#stockItemForm').get(0).reset();
+                //         $('#stockItemForm').bootstrapValidator('resetForm');
+                //         var rows = itemTable.rows('.selected').data();
+                //         var stockItem = rows.length > 0 ? rows[0] : null;
+                //         if (stockItem) {
+                //             $('#id', '#stockItemForm').val(stockItem.id);
+                //             $('#fstock_out_id', '#stockItemForm').val(stockItem.fstock_out_id);
+                //             $('#fmaterial_id', '#stockItemForm').val(stockItem.fmaterial_id);
+                //             $('#fmaterial_id', '#stockItemForm').trigger('change');
+                //             var unit = $("#unit", '#stockItemForm').val();
+                //             if(unit == 'sale_unit'){
+                //                 $('#qty', '#stockItemForm').val(stockItem.fqty);
+                //             }else{
+                //                 $('#qty', '#stockItemForm').val(stockItem.fbase_qty);
+                //             }
+                //             $('#stockItemFormDialog').modal('show');
+                //         }
+                //     }
+                // },
                 // { text: '删除', className: 'delete', enabled: false },
-                // {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: itemEditor},
-                // {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: itemEditor},
+                {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: itemEditor},
+                {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: itemEditor},
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: itemEditor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},

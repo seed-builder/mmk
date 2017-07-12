@@ -117,16 +117,14 @@
                             <thead>
                             <tr>
                                 <th>id</th>
-                                <th>present_box_qty</th>
-                                <th>present_bottle_qty</th>
                                 <th>出库单号</th>
                                 <th>出库商品</th>
-                                <th>销售单位数量</th>
-                                <th>销售单位</th>
-                                <th>基本单位数量</th>
-                                <th>基本单位</th>
-                                <th>单价/箱</th>
-                                <th>单价/瓶</th>
+                                <th>数量(箱)</th>
+                                <th>数量(瓶)</th>
+                                <th>赠送数量(箱)</th>
+                                <th>赠送数量(瓶)</th>
+                                <th>单价(箱)</th>
+                                <th>单价(瓶)</th>
                                 <th>金额</th>
                             </tr>
                             </thead>
@@ -140,61 +138,61 @@
         <!-- /.row -->
     </section>
 
-    <div class="modal fade" tabindex="-1" role="dialog" id="stockItemFormDialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"
-                            aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title" id="stockItemFormDialogTitle">出库明细</h4>
-                </div>
-                <form class="form-horizontal" id="stockItemForm" action="{{url('/admin/stock-out-item')}}" method="post">
-                    {!! csrf_field() !!}
-                    <input type="hidden" id="id" name="id" value="" />
-                    <input type="hidden" id="fstock_out_id" name="fstock_out_id" value="" />
-                    <div class="modal-body">
-                        <div class="box-body">
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">商品</label>
-                                <div class="col-sm-10">
-                                    <select class="form-control" name="fmaterial_id" id="fmaterial_id">
-                                        <option value="">--请选择--</option>
-                                        @forelse($materials as $material)
-                                            <option value="{{$material->id}}" data-sale-unit="{{$material->fsale_unit}}" data-base-unit="{{$material->fbase_unit}}" >{{$material->fname}}</option>
-                                        @empty
-                                        @endforelse
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">单位</label>
-                                <div class="col-sm-10">
-                                    <select class="form-control" name="unit" id="unit">
-                                        <option value="">--请选择--</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">数量</label>
-                                <div class="col-sm-10">
-                                    <input class="form-control" type="number" name="qty" id="qty"/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <input type="hidden" name="femp_id" id="femp_id">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button type="submit" class="btn btn-primary" id="makeBtn">保存</button>
-                    </div>
-                </form>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
+    {{--<div class="modal fade" tabindex="-1" role="dialog" id="stockItemFormDialog">--}}
+        {{--<div class="modal-dialog" role="document">--}}
+            {{--<div class="modal-content">--}}
+                {{--<div class="modal-header">--}}
+                    {{--<button type="button" class="close" data-dismiss="modal"--}}
+                            {{--aria-label="Close">--}}
+                        {{--<span aria-hidden="true">&times;</span>--}}
+                    {{--</button>--}}
+                    {{--<h4 class="modal-title" id="stockItemFormDialogTitle">出库明细</h4>--}}
+                {{--</div>--}}
+                {{--<form class="form-horizontal" id="stockItemForm" action="{{url('/admin/stock-out-item')}}" method="post">--}}
+                    {{--{!! csrf_field() !!}--}}
+                    {{--<input type="hidden" id="id" name="id" value="" />--}}
+                    {{--<input type="hidden" id="fstock_out_id" name="fstock_out_id" value="" />--}}
+                    {{--<div class="modal-body">--}}
+                        {{--<div class="box-body">--}}
+                            {{--<div class="form-group">--}}
+                                {{--<label class="col-sm-2 control-label">商品</label>--}}
+                                {{--<div class="col-sm-10">--}}
+                                    {{--<select class="form-control" name="fmaterial_id" id="fmaterial_id">--}}
+                                        {{--<option value="">--请选择--</option>--}}
+                                        {{--@forelse($materials as $material)--}}
+                                            {{--<option value="{{$material->id}}" data-sale-unit="{{$material->fsale_unit}}" data-base-unit="{{$material->fbase_unit}}" >{{$material->fname}}</option>--}}
+                                        {{--@empty--}}
+                                        {{--@endforelse--}}
+                                    {{--</select>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                            {{--<div class="form-group">--}}
+                                {{--<label class="col-sm-2 control-label">单位</label>--}}
+                                {{--<div class="col-sm-10">--}}
+                                    {{--<select class="form-control" name="unit" id="unit">--}}
+                                        {{--<option value="">--请选择--</option>--}}
+                                    {{--</select>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                            {{--<div class="form-group">--}}
+                                {{--<label class="col-sm-2 control-label">数量</label>--}}
+                                {{--<div class="col-sm-10">--}}
+                                    {{--<input class="form-control" type="number" name="qty" id="qty"/>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                    {{--<div class="modal-footer">--}}
+                        {{--<input type="hidden" name="femp_id" id="femp_id">--}}
+                        {{--<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>--}}
+                        {{--<button type="submit" class="btn btn-primary" id="makeBtn">保存</button>--}}
+                    {{--</div>--}}
+                {{--</form>--}}
+            {{--</div>--}}
+            {{--<!-- /.modal-content -->--}}
+        {{--</div>--}}
+        {{--<!-- /.modal-dialog -->--}}
+    {{--</div>--}}
 
 @endsection
 @section('js')
@@ -202,12 +200,13 @@
     <script src="/assets/plugins/bootstrap-validator/js/bootstrapValidator.min.js"></script>
     <script src="/assets/plugins/bootstrap-validator/js/language/zh_CN.js"></script>
     <script type="text/javascript">
-        var admins = {!! json_encode($customers) !!}
-        var stores = {!! json_encode($stores) !!}
+        var admins = {!! json_encode($customers) !!} ;
+        var stores = {!! json_encode($stores) !!} ;
+        var materials = {!! json_encode($materials) !!} ;
 
         $(function () {
             seajs.use('admin/stock_out.js', function (app) {
-                app.index($, 'moduleTable','itemTable',admins,stores);
+                app.index($, 'moduleTable','itemTable',admins,stores,materials);
             });
         });
     </script>
