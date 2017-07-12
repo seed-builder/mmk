@@ -21,7 +21,7 @@ class StockCheckController extends ApiController
 	public function findOrCreate(Request $request, $cust_id){
 		$fchecker_id = $request->input('checker_id');
 		$check = StockCheck::findOrInit($cust_id, $fchecker_id);
-		return $this->success($check);
+		return $check ? $this->success($check) : $this->fail('用户不存在!');
 	}
 
 	/**

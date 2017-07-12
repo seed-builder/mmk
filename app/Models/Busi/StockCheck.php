@@ -54,10 +54,10 @@ class StockCheck extends BaseModel
 			->count();
 		if($count == 0){
 			$customer = Customer::find($cust_id);
-			if(!empty($customer) ) {
+			if(!empty($customer) && !empty($customer->user)) {
 				$check = static::create([
 					'fcust_id' => $cust_id,
-					'fcust_user_id' => empty($customer->user) ? 0: $customer->user->id,
+					'fcust_user_id' => $customer->user->id,
 					'fcheck_status' => 0,
 					'fcheck_date' => date('Y-m-d H:i:s'),
 					'fchecker_id' => $checker_id
