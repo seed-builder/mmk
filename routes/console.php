@@ -3,6 +3,7 @@
 use App\Models\Busi\Customer;
 use App\Models\Busi\DisplayPolicyStore;
 use App\Models\Busi\Employee;
+use App\Models\Busi\StoreChange;
 use App\Models\City;
 use App\Models\User;
 use App\Repositories\EmployeeRepo;
@@ -33,7 +34,8 @@ Artisan::command('inspire', function () {
 
 Artisan::command('test', function () {
 	$this->comment('begin ...');
-	MessageService::Instance()->systemSend(462, "测试", '测试');
+	$store = Store::find(4575);
+	StoreChange::addFromStore($store->toArray(), 0, "test");
 	$this->comment('end ...');
 })->describe('philo blade test');
 

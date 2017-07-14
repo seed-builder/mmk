@@ -11,6 +11,7 @@ namespace App\Services\WorkFlow;
 use App\Models\Busi\WorkFlowLink;
 use App\Models\Busi\WorkFlowNode;
 use App\Models\Busi\WorkFlowTask;
+use App\Services\LogSvr;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -69,6 +70,7 @@ class Task
 		]);
 		//$this->receive($variables);
 		$this->process($variables);
+		//LogSvr::wf()->info('task start .');
 	}
 
 	public function receive($variables){
@@ -89,18 +91,21 @@ class Task
 	 */
 	public function process($variables){
 		//$nextTasks = [];
-		if($this->task->status == 1)
+		if($this->task->status == 1 && $this->task->action != 'start')
 			return;
-
+		//LogSvr::wf()->info('task process .');
 		$this->receive($variables);
 		DB::beginTransaction();
 		try {
 			//更新当前执行日志状态数据 为已经执行
 			$this->task->update(['status' => 1]);
 			$nextLinks = $this->findNextLinks($this->task->node);
+			//LogSvr::wf()->info('task process $nextLinks !' . json_encode($nextLinks));
 			$this->nextTasks = $this->createNextTasks($this->task, $nextLinks);
+			//LogSvr::wf()->info('task process createNextTasks !' . json_encode($this->nextTasks));
 			DB::commit();
 		} catch (Exception $e) {
+			LogSvr::wf()->info('task process err: ' . $e->getMessage());
 			DB::rollback();
 		}
 		$this->fireEvent('task_processed', false);
@@ -149,9 +154,12 @@ class Task
 				]);
 				break;
 			default:
+				//LogSvr::wf()->info('task process 中间审批节点: ');
 				//中间审批节点
 				$approvers = Approver::getApprovers($curNode, new Approver($preTask->approver_id) );
-				if (!empty($approvers)) {
+				if ($approvers->count() > 0) {
+					//var_dump($approvers);
+					//LogSvr::wf()->info('task process 中间审批人: ' . json_encode($approvers));
 					foreach ($approvers as $approver) {
 						$tasks[] = $this->createTask([
 							'work_flow_id' => $preTask->work_flow_id,
@@ -165,6 +173,7 @@ class Task
 				}else{
 					//检查是否有默认缺省处理人
 					if(!empty($this->task->workflow->default_task_approver_id)){
+						//LogSvr::wf()->info('task process 检查是否有默认缺省处理人: ' );
 						$tasks[] = $this->createTask([
 							'work_flow_id' => $preTask->work_flow_id,
 							'work_flow_instance_id' => $preTask->work_flow_instance_id,
@@ -174,6 +183,7 @@ class Task
 							'approver_id' => $this->task->workflow->default_task_approver_id
 						]);
 					} else {
+						//LogSvr::wf()->info('task process 挂起: ' );
 						$tasks[] = $this->createTask([
 							'work_flow_id' => $preTask->work_flow_id,
 							'work_flow_instance_id' => $preTask->work_flow_instance_id,

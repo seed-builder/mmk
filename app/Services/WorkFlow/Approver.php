@@ -8,6 +8,7 @@
 
 namespace App\Services\WorkFlow;
 use App\Models\User;
+use App\Services\LogSvr;
 
 /**
  * 审批人，处理人
@@ -26,11 +27,13 @@ class Approver
 	}
 
 	public function getSeniors(){
-		$seniors = [];
+		$seniors = collect([]);
 		$user = User::find($this->id);
+		//LogSvr::wf()->info('getSeniors $user ：'. json_encode($user));
 		if(!empty($user)){
 			$arr = $user->getSeniors();
-			if(!empty($arr)) {
+			//LogSvr::wf()->info('getSeniors ：'. json_encode($arr));
+			if($arr->count() > 0) {
 				$seniors = $arr->map(function ($user) {
 					return new Approver($user->id, $user->name);
 				});
@@ -50,6 +53,7 @@ class Approver
 
 				break;
 			case 2:
+				//LogSvr::wf()->info('getApprovers get seniors ');
 				$approvers = $preTaskApprover->getSeniors();
 				break;
 		}
