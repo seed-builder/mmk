@@ -44,7 +44,7 @@ $NoReturnAmount = 0;
                     <!-- /.box-header -->
                     <div class="box-body">
                         <div class="panel panel-default" >
-                            <form class="form-inline " action="/admin/customer-dd-return" method="post">
+                            <form class="form-inline " action="/customer/customer-dd-return" method="post">
                                  {!! csrf_field() !!}
                                 <div class="form-group">
                                     <label class="">年份</label>
