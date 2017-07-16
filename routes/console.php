@@ -253,3 +253,11 @@ Artisan::command('cust-amount', function () {
 	$this->comment('end get cust amount');
 })->describe('get cust amount');
 
+Artisan::command('make-calendar-week', function () {
+	$this->comment('make all stores todo calendar of 7 days...');
+	$svr = new VisitCalendarService();
+	for ($fnumber=1;$fnumber<=7;$fnumber++){
+		$svr->byDay(date('Y-m-d',strtotime('+'.$fnumber.' day')));
+	}
+	$this->comment('end ...');
+})->describe('make all stores todo calendars of 7 days');
