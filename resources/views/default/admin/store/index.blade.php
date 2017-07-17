@@ -133,6 +133,14 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label class="col-sm-1 control-label">是否禁用</label>
+                                    <div class="col-sm-3">
+                                        <select class="form-control filter-condition filter-select" filter-name="fforbid_status" >
+                                            <option value="">--请选择--</option>
+                                            <option value="A">否</option>
+                                            <option value="B">是</option>
+                                        </select>
+                                    </div>
                                     <label class="col-sm-1 control-label">创建日期</label>
                                     <div class="col-sm-4">
                                         <div class="input-group">
@@ -141,6 +149,7 @@
                                             <input type="text" class="form-control filter-condition filter-date" filter-name="fcreate_date" filter-operator="<="/>
                                         </div>
                                     </div>
+
                                 </div>
                                 <div class="box-footer" style="text-align: center">
                                     <button type="button" class="btn btn-info filter-submit">查询</button>

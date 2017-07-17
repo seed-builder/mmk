@@ -53,7 +53,10 @@ define(function (require, exports, module) {
                 url : '/admin/store/pagination',
             },
             columns: [
-                {"data": "id"},
+                {  "data": "id",render: function (data, type, full) {
+                        return '<input type="checkbox" class="editor-active" value="'+data+'">';
+                    },
+                    className: "dt-body-center"},
                 {"data": "flongitude"},
                 {"data": "flatitude"},
                 {"data": "fnumber"},
@@ -130,7 +133,13 @@ define(function (require, exports, module) {
             ],
             columnDefs: [
                 {
-                    "targets": [0,1,2],
+                    'targets': 0,
+                    'checkboxes': {
+                        'selectRow': true
+                    }
+                },
+                {
+                    "targets": [1,2],
                     "visible": false
                 }
             ],
@@ -201,7 +210,21 @@ define(function (require, exports, module) {
 
                     }
                 },
-                {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
+                {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', className: 'delete', enabled: false, action: function () {
+                    layer.confirm("确定删除 ?", ['确定', '取消'], function () {
+                        var stores = table.rows({selected: true}).data();
+                        var ids = [];
+                        for(var i = 0; i < stores.length; i++){
+                            ids[ids.length] = stores[i].id;
+                        }
+                        $.post('/admin/store/batch-remove', { '_token': $('meta[name="_token"]').attr('content'), 'ids': ids }, function (res) {
+                            if(res.cancelled == 0){
+                                layer.msg('删除成功！');
+                                table.ajax.reload();
+                            }
+                        });
+                    })
+                }},
                 { text: '禁用<i class="fa fa-minus-circle"></i>', className: 'forbidden', enabled: false, action: function () {
                     layer.confirm("确定禁用该项 ?", ['确定', '取消'], function () {
                         var store = table.rows({selected: true}).data()[0];
@@ -236,7 +259,7 @@ define(function (require, exports, module) {
         //设置编辑门店按钮是否可用
         function editEnable() {
             var data = table.rows({selected: true}).data();
-            table.buttons(['.edit']).enable(data.length > 0);
+            table.buttons(['.edit', '.delete']).enable(data.length > 0);
             if(data.length > 0){
                 var store = data[0];
                 table.buttons(['.forbidden']).enable(store.fforbid_status == 'A');

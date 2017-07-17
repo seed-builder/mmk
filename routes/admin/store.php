@@ -15,4 +15,5 @@ Route::get('store/uncheck', ['uses' => 'StoreController@uncheck']);
 Route::get('store/store-exchange', ['uses' => 'StoreController@storeChangeIndex']);
 Route::post('store/store-exchange', ['uses' => 'StoreController@storeChange']);
 Route::post('store/export-excel', ['uses' => 'StoreController@exportExcel']);
+Route::post('store/batch-remove', ['uses' => 'StoreController@batch_remove']);
 Route::resource('store', 'StoreController');

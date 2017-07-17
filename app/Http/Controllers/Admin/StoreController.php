@@ -288,6 +288,11 @@ class StoreController extends AdminController
 		return $this->success($affected);
 	}
 
+	public function batch_remove(Request $request){
+		$ids = $request->input('ids', []);
+		$res = Store::whereIn('id', $ids)->delete();
+		return $this->success($res);
+	}
 
     /*
      * d调换门店
