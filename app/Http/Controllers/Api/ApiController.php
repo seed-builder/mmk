@@ -27,17 +27,12 @@ abstract class  ApiController extends Controller
 				$tmp = explode(' ', $k);
 				if(isset($tmp[1])){
 					$operator = trim($tmp[1]);
-					if(preg_match('/^[a-zA-Z]+$/', $operator)){
-						$query->{'where'.ucwords($operator)}($tmp[0], $v);
-					}else{
-						$query->where($tmp[0], $tmp[1], $v);
-					}
-				}else {
+					$query->where($tmp[0], $operator, $v);
+				}else{
 					$query->where($tmp[0], $v);
 				}
 			}
 		}
-		//return $query;
 	}
 
 	/**
