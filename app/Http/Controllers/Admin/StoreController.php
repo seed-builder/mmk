@@ -265,14 +265,11 @@ class StoreController extends AdminController
 	/**
 	 * 禁用门店
 	 * @param Request $request
-	 * @param $id
 	 * @return \Illuminate\Http\JsonResponse
 	 */
-    public function forbidden(Request $request, $id){
-	    $store = Store::find($id);
-	    $store->fmodify_id =  Auth::user()->id;
-	    $store->fforbid_status = 'B';
-	    $re = $store->save();
+    public function forbidden(Request $request){
+	    $ids = $request->input('ids', []);
+	    $re = Store::whereIn('id', $ids)->update(['fmodify_id' => Auth::user()->id, 'fforbid_status' => 'B']);
 	    //$re = StoreChange::addFromStore($store->toArray(), 3, '禁用门店');
 	    return $this->success($re);
     }
@@ -280,11 +277,14 @@ class StoreController extends AdminController
 	/**
 	 * 反禁用门店
 	 * @param Request $request
-	 * @param $id
 	 * @return \Illuminate\Http\JsonResponse
 	 */
-	public function start_use(Request $request, $id){
-		$affected = DB::update('update st_stores set fforbid_status = ? where id = ?', ['A', $id]);
+	public function start_use(Request $request){
+		$ids = $request->input('ids', []);
+		$affected = Store::whereIn('id', $ids)->update(['fmodify_id' => Auth::user()->id, 'fforbid_status' => 'A']);
+
+//		$ids = $request->input('ids', []);
+//		$affected = DB::update('update st_stores set fforbid_status = ? where id = ?', ['A', $id]);
 		return $this->success($affected);
 	}
 

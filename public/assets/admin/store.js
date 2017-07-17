@@ -227,10 +227,15 @@ define(function (require, exports, module) {
                 }},
                 { text: '禁用<i class="fa fa-minus-circle"></i>', className: 'forbidden', enabled: false, action: function () {
                     layer.confirm("确定禁用该项 ?", ['确定', '取消'], function () {
-                        var store = table.rows({selected: true}).data()[0];
-                        $.post('/admin/store/forbidden/' + store.id, {'_token': $('meta[name="_token"]').attr('content') }, function (res) {
+                        var stores = table.rows({selected: true}).data();
+                        var ids = [];
+                        for(var i = 0; i < stores.length; i++){
+                            ids[ids.length] = stores[i].id;
+                        }
+
+                        $.post('/admin/store/forbidden', {'_token': $('meta[name="_token"]').attr('content'), 'ids': ids }, function (res) {
                             if(res.cancelled == 0){
-                                layer.msg('禁用审批流程开启成功！');
+                                layer.msg('禁用成功！');
                                 table.ajax.reload();
                             }
                         });
@@ -239,8 +244,12 @@ define(function (require, exports, module) {
                 { text: '反禁用<i class="fa fa-check-circle"></i>', className: 'unforbidden', enabled: false, action: function () {
                     var data = table.rows({selected: true}).data();
                     layer.confirm("确定反禁用该项 ?", ['确定', '取消'], function () {
-                        var store = table.rows({selected: true}).data()[0];
-                        $.post('/admin/store/start_use/' + store.id, { '_token': $('meta[name="_token"]').attr('content') }, function (res) {
+                        var stores = table.rows({selected: true}).data();
+                        var ids = [];
+                        for(var i = 0; i < stores.length; i++){
+                            ids[ids.length] = stores[i].id;
+                        }
+                        $.post('/admin/store/start_use', { '_token': $('meta[name="_token"]').attr('content'), 'ids': ids }, function (res) {
                             if(res.cancelled == 0){
                                 layer.msg('反禁用成功！');
                                 table.ajax.reload();
