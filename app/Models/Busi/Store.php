@@ -247,8 +247,8 @@ class Store extends BaseModel
                     ->where('femp_id',$store->femp_id)
                     ->delete();
             }
-
-		    VisitLineStore::destroy($ids);
+			if($ids->count() > 0)
+		        VisitLineStore::destroy($ids->toArray());
 	    });
 
 	    /**

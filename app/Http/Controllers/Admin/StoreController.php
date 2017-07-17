@@ -272,8 +272,8 @@ class StoreController extends AdminController
 	    $store = Store::find($id);
 	    $store->fmodify_id =  Auth::user()->id;
 	    $store->fforbid_status = 'B';
-	    //$store->save();
-	    $re = StoreChange::addFromStore($store->toArray(), 3, '禁用门店');
+	    $re = $store->save();
+	    //$re = StoreChange::addFromStore($store->toArray(), 3, '禁用门店');
 	    return $this->success($re);
     }
 
