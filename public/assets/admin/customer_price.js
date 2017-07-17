@@ -53,7 +53,7 @@ define(function(require, exports, module) {
             columns: [
                 {  'data': 'id' },
                 {  'data': 'fcust_id', render: function (data, type, full) {
-                    return full.customer.fname;
+                    return full.customer ? full.customer.fname : '';
                 } },
                 {  'data': 'fmaterial_id', render: function (data, type, full) {
                     return full.material.fname
