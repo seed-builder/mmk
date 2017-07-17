@@ -79,22 +79,23 @@ class Employee extends BaseModel
 		});
 
 		static::updated(function ($employee){
-			if(empty($employee->user)) {
-				$employee->user()->create([
-					'name' => $employee->fphone,
-					'password' => $employee->fpassword,
-					'login_time' => $employee->login_time?:0,
-					'logo' => $employee->fphoto?:'',
-					'status' => 1
-				]);
-			}else{
-				$employee->user()->update([
-					'name' => $employee->fphone,
-					'password' => $employee->fpassword,
-					'login_time' => $employee->login_time?:0,
-					'logo' => $employee->fphoto?:'',
-				]);
-			}
+//			if(empty($employee->user)) {
+//				$employee->user()->create([
+//					'name' => $employee->fphone,
+//					'password' => $employee->fpassword,
+//					'login_time' => $employee->login_time?:0,
+//					'logo' => $employee->fphoto?:'',
+//					'status' => 1
+//				]);
+//			}else{
+//				$employee->user()->update([
+//					'name' => $employee->fphone,
+//					'password' => $employee->fpassword,
+//					'login_time' => $employee->login_time?:0,
+//					'logo' => $employee->fphoto?:'',
+//				]);
+//			}
+			EmployeeRepo::syncUser($employee);
 
 		});
 	}
