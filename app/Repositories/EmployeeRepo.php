@@ -33,14 +33,14 @@ class EmployeeRepo extends Repo
 
 		if ($pwd == $loginData['fpassword']) {
 			event(new EmployeeLoginedEvent($loginData['id'], $device, $sn));
-			if(empty($device_sn)) {
+//			if(empty($device_sn)) {
 				$loginData['device'] = $device;
 				$loginData['device_sn'] = $sn;
 				$loginData['login_time'] += 1;
 
 				$this->clearCache($phone);
 				$this->cacheData($phone, $loginData);
-			}
+//			}
 			return $this->success($loginData);
 		}else{
 			return $this->fail('密码错误！');

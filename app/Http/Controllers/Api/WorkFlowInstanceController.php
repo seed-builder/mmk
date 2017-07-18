@@ -48,6 +48,7 @@ class WorkFlowInstanceController extends ApiController
 			$approvers = [];
 			foreach ($tasks as $task){
 				$approvers[] = $task->approver;
+
 			}
 			$instance->approvers = $approvers;
 		}
