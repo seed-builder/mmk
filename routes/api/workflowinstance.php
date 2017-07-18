@@ -102,5 +102,21 @@ Route::group(['prefix' => 'work-flow-instance', 'middleware' => 'api.sign'], fun
 	 */
 	Route::post('/{id}/dismiss', ['as' => 'WorkFlowInstance.dismiss', 'uses' => 'WorkFlowInstanceController@dismiss']);
 
-
+	/**
+	 * @SWG\Api(
+	 *     path="/api/work-flow-instance/{id}/approvers",
+	 *     @SWG\Operation(
+	 *      method="GET",
+	 *      nickname="work-flow-instance-show",
+	 *      summary="获取工作流实例当前的处理人",
+	 *      notes="获取工作流实例当前的处理人",
+	 *      type="Attendance",
+	 *      @SWG\Parameters(
+	 *          @SWG\Parameter(name="id", description="id", required=true, type="integer", paramType="path", defaultValue="1"),
+	 *          @SWG\Parameter(name="_sign", description="签名", required=true, type="string", paramType="query", defaultValue="****")
+	 *      )
+	 *  )
+	 * )
+	 */
+	Route::get('/{id}/approvers', ['as' => 'WorkFlowInstance.getApprovers', 'uses' => 'WorkFlowInstanceController@getApprovers']);
 });

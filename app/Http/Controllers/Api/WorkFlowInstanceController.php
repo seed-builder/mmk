@@ -80,4 +80,13 @@ class WorkFlowInstanceController extends ApiController
 		return response(['success' => $res], 200);
 	}
 
+	public function getApprovers(Request $request, $id){
+		$tasks = WorkFlowTask::where('work_flow_instance_id', $id)->where('status', 0)->get();
+		$approvers = [];
+		foreach ($tasks as $task){
+			$approvers[] = $tasks->approver;
+		}
+		return $this->success($approvers);
+	}
+
 }
