@@ -85,7 +85,7 @@ class WorkFlowInstanceController extends ApiController
 		$tasks = WorkFlowTask::where('work_flow_instance_id', $id)->where('status', 0)->get();
 		$approvers = [];
 		foreach ($tasks as $task){
-			$approvers[] = $tasks->approver;
+			$approvers[] = $task->approver;
 		}
 		return $this->success($approvers);
 	}
