@@ -56,7 +56,7 @@ define(function(require, exports, module) {
                     return full.customer ? full.customer.fname : '';
                 } },
                 {  'data': 'fmaterial_id', render: function (data, type, full) {
-                    return full.material.fname
+                    return full.material ? full.material.fname : '';
                 } },
                 {  'data': 'fspecification' },
                 {  'data': 'fsale_unit' },
