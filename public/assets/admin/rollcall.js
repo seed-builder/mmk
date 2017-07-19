@@ -121,6 +121,8 @@ define(function(require, exports, module) {
                     if(data.flatitude && data.flongitude)
                     {
                         pointTo(data.flatitude, data.flongitude, data.employee_name, data.position_name);
+                    }else{
+                        layer.msg('没有经纬度信息');
                     }
                 }
                 $('#mapDialog').modal('show');
