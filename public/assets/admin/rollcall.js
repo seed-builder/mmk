@@ -118,7 +118,10 @@ define(function(require, exports, module) {
                 //alert(rows.length);
                 for(var i = 0; i < rows.length; i++){
                     var data = rows[i];
-                    pointTo(data.flatitude, data.flongitude, data.employee_name, data.position_name);
+                    if(data.flatitude && data.flongitude)
+                    {
+                        pointTo(data.flatitude, data.flongitude, data.employee_name, data.position_name);
+                    }
                 }
                 $('#mapDialog').modal('show');
             });
