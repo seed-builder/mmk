@@ -70,6 +70,7 @@
         var materials = {!! json_encode($materials) !!} ;
         $(function () {
             seajs.use('admin/customer_price.js', function (app) {
+                //alert(materials.length);
                 app.index($, 'moduleTable', customers, materials);
             });
 

@@ -27,12 +27,12 @@ class CustomerPriceController extends AdminController
 		$options = $customers->map(function ($item){
 			return ['label' => $item->fname, 'value' => $item->id];
 		});
-		$collection = [['label'=> '--请选择--', 'value' => '']] + $options->toArray();
+		$collection = array_merge([['label'=> '--请选择--', 'value' => '']] , $options->toArray());
 		$materials = Material::all();
 		$option2s = $materials->map(function ($item){
 			return ['label' => $item->fname, 'value' => $item->id];
 		});
-		$mc = [['label'=> '--请选择--', 'value' => '']] + $option2s->toArray();
+		$mc = array_merge([['label'=> '--请选择--', 'value' => '']] , $option2s->toArray());
 		return view('admin.customer-price.index', ['customers' => $collection, 'materials' => $mc]);
 	}
 
