@@ -2,7 +2,7 @@
 /**
 * @SWG\Resource(
 *  resourcePath="/carousel",
-*  description="Carousel"
+*  description="APP轮播图"
 * )
 */
 Route::group(['prefix' => 'carousel', 'middleware' => 'api.sign'], function () {
