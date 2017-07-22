@@ -2,9 +2,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Busi\StockCheck;
+use App\Services\LogSvr;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
 use App\Models\Busi\StockCheckItem;
+use DB;
 
 class StockCheckItemController extends AdminController
 {
@@ -84,21 +86,25 @@ class StockCheckItemController extends AdminController
 		$order = $request->input('order', []);
 		$search = $request->input('search', []);
 		$draw = $request->input('draw', 0);
-//        $filter = $request->input('filter', 0);
+        $filter = $request->input('filter', []);
 
 		$queryBuilder = DB::table('st_stock_check_items')
 			->join('st_stock_checks', 'st_stock_check_items.fstock_check_id', '=', 'st_stock_checks.id')
-			->join('bd_materials', 'bd_materials.id', '=', 'st_stock_check_items.fmaterial_id')
-			->join('sys_users', 'sys_users.id', '=', 'st_stock_checks.fchecker_id')
+			->leftJoin('bd_materials', 'bd_materials.id', '=', 'st_stock_check_items.fmaterial_id')
+			->leftJoin('sys_users', 'sys_users.id', '=', 'st_stock_checks.fchecker_id')
+			->leftJoin('bd_customers', 'bd_customers.id', '=', 'st_stock_checks.fcust_id')
 			->select(['st_stock_check_items.*',
 				'st_stock_checks.fyear',
 				'st_stock_checks.fmonth',
 				'st_stock_checks.fcomplete_date',
 				'st_stock_checks.fcheck_status',
 				'sys_users.nick_name',
-				'bd_materials.fnumber',
-				'bd_materials.fname',
-				'bd_materials.fspecification'
+				'bd_materials.fnumber as material_number',
+				'bd_materials.fname as material_name',
+				'bd_materials.fspecification as material_spec',
+				'bd_materials.fratio as material_fratio',
+				'st_stock_checks.fcust_id as cust_id',
+				'bd_customers.fname as cust_name'
 			]);
 
 		$conditions = [];
@@ -113,6 +119,9 @@ class StockCheckItemController extends AdminController
 		foreach ($conditions as $col => $val) {
 			$queryBuilder->where($col, $val);
 		}
+
+		if (!empty($filter))
+            $this->filter($queryBuilder,$filter);
 
 		//模糊查询
 		if (!empty($searchCols) && !empty($search['value'])) {
@@ -137,7 +146,7 @@ class StockCheckItemController extends AdminController
 		}
 		//$entities = $queryBuilder->skip($start)->take($length)->get();
 //	    var_dump($queryBuilder->toSql());
-		//LogSvr::sql()->info($queryBuilder->toSql());
+		LogSvr::sql()->info($queryBuilder->toSql());
 		$result = [
 			'draw' => $draw,
 			'recordsTotal' => $total,
