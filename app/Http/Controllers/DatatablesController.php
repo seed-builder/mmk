@@ -194,7 +194,7 @@ abstract class DatatablesController extends Controller
                 }
             });
         }
-        $filterCount = $queryBuilder->get()->count();
+        $filterCount = $queryBuilder->count();
 
         foreach ($order as $o) {
             $index = $o['column'];

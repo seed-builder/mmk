@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Busi\StockCheck;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
 use App\Models\Busi\StockCheckItem;
@@ -74,13 +75,9 @@ class StockCheckItemController extends AdminController
 	 * 月度报表
 	 * month_pagination
 	 * @param  Request $request
-	 * @param  array $searchCols
-	 * @param  array $with
-	 * @param  null $conditionCall
-	 * @param  bool $all_columns
-	 * @return  \Illuminate\Http\JsonResponse
+	 * @return \Illuminate\Http\JsonResponse
 	 */
-	public function month_pagination(Request $request, $searchCols = [], $with=[], $conditionCall = null, $all_columns = false){
+	public function month_pagination(Request $request){
 		$start = $request->input('start', 0);
 		$length = $request->input('length', 10);
 		$columns = $request->input('columns', []);
@@ -89,16 +86,23 @@ class StockCheckItemController extends AdminController
 		$draw = $request->input('draw', 0);
 //        $filter = $request->input('filter', 0);
 
-		$queryBuilder = $this->entityQuery(); //$this->newEntity()->newQuery();
+		$queryBuilder = DB::table('st_stock_check_items')
+			->join('st_stock_checks', 'st_stock_check_items.fstock_check_id', '=', 'st_stock_checks.id')
+			->join('bd_materials', 'bd_materials.id', '=', 'st_stock_check_items.fmaterial_id')
+			->join('sys_users', 'sys_users.id', '=', 'st_stock_checks.fchecker_id')
+			->select(['st_stock_check_items.*',
+				'st_stock_checks.fyear',
+				'st_stock_checks.fmonth',
+				'st_stock_checks.fcomplete_date',
+				'st_stock_checks.fcheck_status',
+				'sys_users.nick_name',
+				'bd_materials.fnumber',
+				'bd_materials.fname',
+				'bd_materials.fspecification'
+			]);
 
-		if (!empty($with)) {
-			$queryBuilder->with($with);
-		}
-		$fields = [];
 		$conditions = [];
 		foreach ($columns as $column) {
-			if (!$all_columns)
-				$fields[] = $column['data'];
 			if (!empty($column['search']['value'])) {
 				$conditions[$column['data']] = $column['search']['value'];
 			}
@@ -106,15 +110,6 @@ class StockCheckItemController extends AdminController
 
 		$total = $queryBuilder->count();
 
-//        if (!empty($filter))
-//            $this->filter($queryBuilder,$filter);
-//        if (!empty($filter)||!empty($tree)||!empty($initFilter)) {
-//            $this->adminFilter($queryBuilder,$request);
-//        }
-
-		if ($conditionCall != null && is_callable($conditionCall)) {
-			$conditionCall($queryBuilder);
-		}
 		foreach ($conditions as $col => $val) {
 			$queryBuilder->where($col, $val);
 		}
@@ -127,7 +122,7 @@ class StockCheckItemController extends AdminController
 				}
 			});
 		}
-		$filterCount = $queryBuilder->get()->count();
+		$filterCount = $queryBuilder->count();
 
 		foreach ($order as $o) {
 			$index = $o['column'];
@@ -135,9 +130,6 @@ class StockCheckItemController extends AdminController
 			$queryBuilder->orderBy($columns[$index]['data'], $dir);
 		}
 
-		if (!empty($fields)) {
-			$queryBuilder->select($fields);
-		}
 		if($length > 0) {
 			$entities = $queryBuilder->skip($start)->take($length)->get();
 		}else{
