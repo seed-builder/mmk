@@ -13,8 +13,8 @@ Route::group(['prefix' => 'carousel', 'middleware' => 'api.sign'], function () {
     *     @SWG\Operation(
     *      method="GET",
     *      nickname="carousel-list",
-    *      summary="page list",
-    *      notes="page list",
+    *      summary="APP轮播图列表",
+    *      notes="APP轮播图列表",
     *      type="array",
     *     items="$ref:Carousel",
     *      @SWG\Parameters(
