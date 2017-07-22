@@ -13,8 +13,8 @@ Route::group(['prefix' => 'customer-price', 'middleware' => 'api.sign'], functio
     *     @SWG\Operation(
     *      method="GET",
     *      nickname="customer-price-list",
-    *      summary="page list",
-    *      notes="page list",
+    *      summary="获取价格",
+    *      notes="获取价格",
     *      type="array",
     *     items="$ref:CustomerPrice",
     *      @SWG\Parameters(

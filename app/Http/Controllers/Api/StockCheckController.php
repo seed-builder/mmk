@@ -53,8 +53,10 @@ class StockCheckController extends ApiController
 		$entity = $this->newEntity()->newQuery()->find($id);
 		$data = $request->all();
 		unset($data['_sign']);
-		if($data['fcheck_status'] == 1 && $entity->fcheck_status == 0){
-			$entity->fcomplete_date = date('Y-m-d H:i:s');
+		if(!empty($data['fcheck_status'])) {
+			if ($data['fcheck_status'] == 1 && $entity->fcheck_status == 0) {
+				$entity->fcomplete_date = date('Y-m-d H:i:s');
+			}
 		}
 		$entity->fill($data);
 		$re = $entity->save();
