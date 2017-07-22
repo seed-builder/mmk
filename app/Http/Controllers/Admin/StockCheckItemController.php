@@ -146,7 +146,7 @@ class StockCheckItemController extends AdminController
 		}
 		//$entities = $queryBuilder->skip($start)->take($length)->get();
 //	    var_dump($queryBuilder->toSql());
-		LogSvr::sql()->info($queryBuilder->toSql());
+//		LogSvr::sql()->info($queryBuilder->toSql());
 		$result = [
 			'draw' => $draw,
 			'recordsTotal' => $total,

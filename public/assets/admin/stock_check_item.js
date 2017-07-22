@@ -56,7 +56,7 @@ define(function (require, exports, module) {
                 // {'data': 'box_qty'},
                 // {'data': 'bottle_qty'},
             ],
-
+            order: [[1,'desc'],[2,'desc']],
             buttons: [
                 // { text: '新增', action: function () { }  },
                 // { text: '编辑', className: 'edit', enabled: false },
