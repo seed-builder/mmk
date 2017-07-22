@@ -18,7 +18,8 @@ class CreateTableBdCarousels extends Migration
             $table->integer('fseq')->default(0)->comment('排序');
             $table->string('fname')->nullable()->comment('图片名称');
             $table->integer('fpicture_id')->nullable()->comment('图片id');
-            $table->timestamps();
+	        $table->timestamp('fcreate_date')->nullable();
+	        $table->timestamp('fmodify_date')->nullable();
         });
     }
 

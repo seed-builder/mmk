@@ -23,7 +23,7 @@
             <div class="col-xs-12">
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">bd_carousels列表</h3>
+                        <h3 class="box-title">APP轮播图列表</h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                             </button>
@@ -36,12 +36,12 @@
                         <table id="moduleTable" class="table table-bordered table-hover display nowrap" cellspacing="0" width="100%">
                             <thead>
                             <tr>
-                                <th>created_at</th>
-                                <th>fname</th>
-                                <th>fpicture_id</th>
-                                <th>fseq</th>
                                 <th>id</th>
-                                <th>updated_at</th>
+                                <th>名称</th>
+                                <th>排序</th>
+                                <th>创建日期</th>
+                                <th>修改日期</th>
+                                <th>图片</th>
                             </tr>
                             </thead>
                         </table>

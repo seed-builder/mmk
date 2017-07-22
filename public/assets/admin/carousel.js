@@ -28,9 +28,19 @@ define(function(require, exports, module) {
             table: "#" + tableId,
             idSrc: 'id',
             fields: [
-                { 'label':  'fname', 'name': 'fname', },
-                { 'label':  'fpicture_id', 'name': 'fpicture_id', },
-                { 'label':  'fseq', 'name': 'fseq', },
+                { 'label':  '名称', 'name': 'fname', },
+                { 'label':  '排序', 'name': 'fseq', },
+                {
+                    label: "Image:",
+                    name: "fpicture_id",
+                    type: "upload",
+                    display: function ( file_id ) {
+                        //alert(file_id);
+                        return '<img src="/admin/show-image?imageId='+ file_id + '"/>';
+                    },
+                    clearText: "Clear",
+                    noImageText: 'No image'
+                }
             ]
         });
 
@@ -44,13 +54,23 @@ define(function(require, exports, module) {
             rowId: "id",
             ajax: '/admin/carousel/pagination',
             columns: [
-                    {  'data': 'created_at' },
-                    {  'data': 'fname' },
-                    {  'data': 'fpicture_id' },
-                    {  'data': 'fseq' },
-                    {  'data': 'id' },
-                    {  'data': 'updated_at' },
+                {  'data': 'id' },
+                {  'data': 'fname' },
+                {  'data': 'fseq' },
+                {  'data': 'fcreate_date' },
+                {  'data': 'fmodify_date' },
+                {
+                    data: "fpicture_id",
+                    render: function ( file_id ) {
+                        return file_id ?
+                            '<img src="/admin/show-image?imageId='+ file_id + '" style="max-height: 50px;"/>' :
+                            null;
+                    },
+                    defaultContent: "No image",
+                    // title: "Image"
+                }
             ],
+            order:[[2,'asc']],
             buttons: [
                 // { text: '新增', action: function () { }  },
                 // { text: '编辑', className: 'edit', enabled: false },

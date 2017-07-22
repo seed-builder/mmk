@@ -15,5 +15,6 @@ class VerifyCsrfToken extends BaseVerifier
         //
         '/admin/upload-file',
         '/admin/fake-delete',
+        '/admin/carousel',
     ];
 }
