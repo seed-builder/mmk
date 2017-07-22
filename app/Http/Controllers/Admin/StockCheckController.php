@@ -83,4 +83,6 @@ class StockCheckController extends AdminController
 		return parent::pagination($request, $searchCols,['customer','user']);
 	}
 
+
+
 }

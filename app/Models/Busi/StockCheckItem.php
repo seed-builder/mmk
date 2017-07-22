@@ -72,6 +72,13 @@ class StockCheckItem extends BaseModel
 		return $this->belongsTo(Material::class, 'fmaterial_id');
 	}
 
+	/**
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+	 */
+	public function stock_check(){
+		return $this->belongsTo(StockCheck::class, 'fstock_check_id');
+	}
+
 	public function getInvBoxQtyAttribute(){
 		return intval(floor($this->finv_hqty));
 	}

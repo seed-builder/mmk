@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Events\UserLoginedEvent;
+use EmployeeRepo;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\ApiController;
@@ -75,6 +76,12 @@ class UserController extends ApiController
 			if(!empty($emp)) {
 				$emp->password = $pwd;
 				$emp->save();
+				if($emp->reference_type == 'employee' && !empty($emp->reference)) {
+					$emp->reference->fpassword = $pwd;
+					$emp->reference->login_time += 1;
+					$emp->reference->save();
+					EmployeeRepo::clearCache($phone);
+				}
 
 				return $this->success($emp, '修改密码成功');
 			}else{
