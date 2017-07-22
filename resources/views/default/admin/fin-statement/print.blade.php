@@ -27,10 +27,10 @@ $lastday = strtotime('-1 day', $nextMonth);
                     <div id="print-content">
                         <style>
                             * {
-                                font-size: 12px !important;
+                                font-size: 10px !important;
                             }
                             th{
-                                font-size: 14px  !important;
+                                font-size: 12px  !important;
                                 line-height:30px;
                                 text-align: center;
                             }
@@ -104,19 +104,13 @@ $lastday = strtotime('-1 day', $nextMonth);
                                         <td colspan="11">
                                             <ul>
                                                 <li>
-                                                    1、本对帐单仅为复核帐目使用，不作为结算凭证，如若有不符或疑问，请致电核对,<b>联系人：韩小清,联系电话0592-2228069；邮箱hxqing@shantuwine.com</b>.
+                                                    1、余额为“负数”，代表客户在本公司帐上可用余款。余额为“正数”，代表客户欠本公司的货款。.
                                                 </li>
                                                 <li>
-                                                    2、客户要认真核对本期发生及期末余额，经客户签字盖章后的对帐单，本公司视为确认数据无误，且具有法律效力。
+                                                    2、山图财务于每月10日前将截止上月末对帐单发至客户指定邮箱，客户可通过系统对帐单或邮箱对帐单进行核对，核对完毕后应打印、签字盖章确认，并于月底前将原件直接寄至财务管理部，地址：厦门市思明区中航紫金广场B座27层。
                                                 </li>
                                                 <li>
-                                                    3、客户签字盖章后的对帐单原件，请于次月5号前直接寄至财务部，地址：厦门市思明区中航紫金广场B座27层。
-                                                </li>
-                                                <li>
-                                                    4、下次双方对帐自本次截止日期起核对。
-                                                </li>
-                                                <li>
-                                                    5、余额为“负数”，代表客户在本公司帐上可用余款。余额为“正数”，代表客户欠本公司的货款。
+                                                    3、对帐单可帮助购销双方核对帐目，如有疑问或不详，欢迎来电或邮件咨询！联系人：①韩小清，联系电话0592-2228069，邮箱hxqing@shantuwine.com；②陈铃，联系电话0592-2228237，邮箱cling@shantuwine.com；③李黎黎，联系电话0592-2226931，邮箱llli@shantuwine.com。
                                                 </li>
                                             </ul>
                                         </td>
