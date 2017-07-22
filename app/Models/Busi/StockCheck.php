@@ -49,8 +49,12 @@ class StockCheck extends BaseModel
 	 */
 	public static function findOrInit($cust_id, $checker_id)
 	{
+		$year = date('Y');
+		$month = date('n');
 		$count = static::where('fcust_id', $cust_id)
-			->where('fcheck_status', 0)
+			->where('fyear', $year)
+			->where('fmonth', $month)
+			//->where('fcheck_status', 0)
 			->count();
 		if($count == 0){
 			$customer = Customer::find($cust_id);
@@ -60,7 +64,9 @@ class StockCheck extends BaseModel
 					'fcust_user_id' => $customer->user->id,
 					'fcheck_status' => 0,
 					'fcheck_date' => date('Y-m-d H:i:s'),
-					'fchecker_id' => $checker_id
+					'fchecker_id' => $checker_id,
+					'fyear' => $year,
+					'fmonth' => $month,
 				]);
 				//create items
 				$stocks = ViewCustomerStockStatistic::where('cust_id', $cust_id)->whereNotNull('material_name')->get();
@@ -85,9 +91,11 @@ class StockCheck extends BaseModel
 			}
 		}
 		$check = static::with(['items.material'])
-			->where('fcust_id', $cust_id)
-			->where('fcheck_status', 0)
-			->first();
+				->where('fcust_id', $cust_id)
+				->where('fyear', $year)
+				->where('fmonth', $month)
+				//->where('fcheck_status', 0)
+				->first();
 		return $check;
 	}
 }
