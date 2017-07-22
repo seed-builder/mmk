@@ -42,7 +42,7 @@ class StockCheckItem extends BaseModel
 		if(empty($attributes))
 			return $attributes;
 //		var_dump($attributes);
-		if($this->id > 0){
+		if($this->id > 0 && !empty($this->material)){
 			$material = $this->material;
 			$attributes['fcheck_hqty'] = $attributes['box_qty'] + round($attributes['bottle_qty'] / $material->fratio, 2);
 			$attributes['fcheck_eqty'] = $attributes['box_qty'] * $material->fratio + $attributes['bottle_qty'];
