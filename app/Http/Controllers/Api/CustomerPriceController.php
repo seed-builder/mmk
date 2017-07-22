@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Busi\Store;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\ApiController;
 use App\Models\Busi\CustomerPrice;
@@ -20,5 +21,10 @@ class CustomerPriceController extends ApiController
 		$store_id = $request->input('store_id', 0);
 		$material_id = $request->input('material_id', 0);
 		$store = Store::find($store_id);
+		$price = null;
+		if(!empty($store)){
+			$price = CustomerPrice::getPrice($store->fcust_id, $material_id, 100);
+		}
+		return $this->success($price);
 	}
 }

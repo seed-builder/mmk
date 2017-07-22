@@ -48,6 +48,8 @@ class StockCheck extends BaseModel
 	 * 查询或者新建盘点单
 	 * @param $cust_id
 	 * @param $checker_id
+	 * @param $year
+	 * @param $month
 	 * @return mixed
 	 */
 	public static function findOrInit($cust_id, $checker_id, $year, $month)

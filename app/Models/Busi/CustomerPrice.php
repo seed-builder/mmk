@@ -61,8 +61,8 @@ class CustomerPrice extends BaseModel
 
 	public static function getPrice($cust_id, $material_id, $box_qty){
 		$prices = static::where('fmaterial_id', $material_id)
-			->where('fmin_qty', '<=', $box_qty)
-			->where('fmax_qty', '>=', $box_qty)
+//			->where('fmin_qty', '<=', $box_qty)
+//			->where('fmax_qty', '>=', $box_qty)
 			->where('fdocument_status', 'C')
 			->where('fis_valid', 1)
 			->where(function ($query) use($cust_id){
