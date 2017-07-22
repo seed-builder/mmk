@@ -31,6 +31,9 @@ use App\Services\LogSvr;
  * @SWG\Property(name="fdocument_status", type="string", description="审核状态")
  * @SWG\Property(name="fmodify_date", type="string", description="修改时间")
  * @SWG\Property(name="fmodify_id", type="integer", description="修改人")
+ * @SWG\Property(name="fprice_box", type="integer", description="单价/箱")
+ * @SWG\Property(name="fprice_bottle", type="integer", description="单价/瓶")
+ * @SWG\Property(name="famount", type="integer", description="金额")
  */
 class SaleOrderItem extends BaseModel
 {

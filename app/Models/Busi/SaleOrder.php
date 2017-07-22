@@ -24,6 +24,7 @@ use DB;
  * @SWG\Property(name="fcreator_id", type="integer", description="创建人")
  * @SWG\Property(name="fdocument_status", type="string", description="审核状态")
  * @SWG\Property(name="fsend_status", type="string", description="发货状态(A-未发货，B-发货中，C-已到货)")
+ * @SWG\Property(name="ftotal_amount", type="number", description="总金额")
  * @SWG\Property(name="id", type="integer", description="")
   */
 class SaleOrder extends BaseModel

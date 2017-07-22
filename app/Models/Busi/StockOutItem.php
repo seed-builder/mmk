@@ -27,6 +27,9 @@ use Illuminate\Database\Eloquent\Model;
  * @SWG\Property(name="fsale_unit", type="string", description="销售单位")
  * @SWG\Property(name="fstock_out_id", type="integer", description="出库ID")
  * @SWG\Property(name="id", type="integer", description="")
+ * @SWG\Property(name="fprice_box", type="number", description="单价/箱")
+ * @SWG\Property(name="fprice_bottle", type="number", description="单价/瓶")
+ * @SWG\Property(name="famount", type="number", description="金额")
   */
 class StockOutItem extends BaseModel
 {
