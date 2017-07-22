@@ -19,8 +19,12 @@ class StockCheckController extends ApiController
 	}
 
 	public function findOrCreate(Request $request, $cust_id){
+		$d = strtotime("-1 month");
+		$year = date('Y', $d);
+		$month = date('n', $d);
+
 		$fchecker_id = $request->input('checker_id');
-		$check = StockCheck::findOrInit($cust_id, $fchecker_id);
+		$check = StockCheck::findOrInit($cust_id, $fchecker_id, $year, $month);
 		return $check ? $this->success($check) : $this->fail('该经销商用户不存在!');
 	}
 

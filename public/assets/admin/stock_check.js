@@ -28,13 +28,16 @@ define(function (require, exports, module) {
             table: "#" + tableId,
             idSrc: 'id',
             fields: [
-                {'label': 'fchecker_id', 'name': 'fchecker_id',},
-                {'label': 'fcheck_date', 'name': 'fcheck_date',},
-                {'label': 'fcheck_status', 'name': 'fcheck_status',},
-                {'label': 'fcreate_date', 'name': 'fcreate_date',},
-                {'label': 'fcust_id', 'name': 'fcust_id',},
-                {'label': 'fcust_user_id', 'name': 'fcust_user_id',},
-                {'label': 'fmodify_date', 'name': 'fmodify_date',},
+                {'label': '经销商','name': 'readonly_customer_name', 'data': 'customer.fname', 'type':"readonly"},
+                {'label': '年份','name':'readonly_fyear', 'data': 'fyear', 'type':"readonly"},
+                {'label': '月份', 'name':'readonly_fmonth','data': 'fmonth', 'type':"readonly"},
+                {'label': '完成日期','name':'readonly_fcomplete_date', 'data': 'fcomplete_date', 'type':"readonly"},
+                {'label': '盘点状态', 'name': 'fcheck_status', 'type': 'select', 'options':[
+                    {"label": "盘点中", 'value': 0},
+                    {"label": "盘点完成", 'value': 1},
+                    {"label": "取消盘点", 'value': 2},
+                    ]
+                },
             ]
         });
 
@@ -58,7 +61,10 @@ define(function (require, exports, module) {
                         return full.customer.fname;
                     }
                 },
-                {'data': 'fcheck_date'},
+
+                {'data': 'fyear'},
+                {'data': 'fmonth'},
+                {'data': 'fcomplete_date'},
                 {
                     'data': 'fcheck_status',
                     render: function (data, type, full) {
@@ -97,7 +103,7 @@ define(function (require, exports, module) {
                 // { text: '编辑', className: 'edit', enabled: false },
                 // { text: '删除', className: 'delete', enabled: false },
                 // {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: editor},
-                // {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: editor},
+                {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: editor},
                 // {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
@@ -130,7 +136,7 @@ define(function (require, exports, module) {
                 {
                     'data': 'fmaterial_id',
                     render: function (data, type, full) {
-                        return full.material.fname;
+                        return full.material ? full.material.fname : '';
                     }
                 },
                 {'data': 'finv_hqty', render: function (data, type, full) {

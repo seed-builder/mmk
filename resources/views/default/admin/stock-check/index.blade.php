@@ -78,7 +78,9 @@
                             <tr>
                                 <th>id</th>
                                 <th>经销商</th>
-                                <th>盘点日期</th>
+                                <th>年份</th>
+                                <th>月份</th>
+                                <th>完成日期</th>
                                 <th>盘点状态</th>
                                 <th>盘点人</th>
                                 <th>操作</th>

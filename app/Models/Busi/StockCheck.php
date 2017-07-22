@@ -50,10 +50,10 @@ class StockCheck extends BaseModel
 	 * @param $checker_id
 	 * @return mixed
 	 */
-	public static function findOrInit($cust_id, $checker_id)
+	public static function findOrInit($cust_id, $checker_id, $year, $month)
 	{
-		$year = date('Y');
-		$month = date('n');
+//		$year = date('Y');
+//		$month = date('n');
 		$count = static::where('fcust_id', $cust_id)
 			->where('fyear', $year)
 			->where('fmonth', $month)
