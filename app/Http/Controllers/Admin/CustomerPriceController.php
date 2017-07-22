@@ -23,7 +23,7 @@ class CustomerPriceController extends AdminController
 	public function index()
 	{
 		// TODO: Implement newEntity() method.
-		$customers = Customer::where('fdocument_status','A')->where('fforbid_status', 'A')->get();
+		$customers = Customer::where('fdocument_status','C')->where('fforbid_status', 'A')->get();
 		$options = $customers->map(function ($item){
 			return ['label' => $item->fname, 'value' => $item->id];
 		});
