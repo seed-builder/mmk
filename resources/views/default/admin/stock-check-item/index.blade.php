@@ -49,7 +49,12 @@ $months = [1,2,3,4,5,6,7,8,9,10,11,12]
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">经销商</label>
                                     <div class="col-sm-4">
-                                        <input type="text" class="form-control filter-condition" filter-name="bd_customers.fname" filter-operator="like" />
+                                        <select class="form-control filter-select " id="custId" name="custId" data-live-search="true"  filter-name="bd_customers.id" filter-operator="=">
+                                            <option value="">--请选择--</option>
+                                            @foreach($customers as $c)
+                                                <option data-tokens="{{$c->fname}}" value="{{$c->id}}" >{{$c->fname}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
 
                                     <label class="col-sm-2 control-label">物料名称</label>

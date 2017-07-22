@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Busi\Customer;
 use App\Models\Busi\StockCheck;
 use App\Services\LogSvr;
 use Illuminate\Http\Request;
@@ -24,7 +25,8 @@ class StockCheckItemController extends AdminController
 	public function index()
 	{
 		//
-		return view('admin.stock-check-item.index');
+		$customers = Customer::where('fdocument_status', 'C')->where('fforbid_status', 'A')->get();
+		return view('admin.stock-check-item.index', ['customers' => $customers]);
 	}
 
 	/**
