@@ -44,15 +44,11 @@ class StockCheckItem extends BaseModel
 //		var_dump($attributes);
 		if($this->id > 0){
 			$material = $this->material;
-		}else if(!empty($attributes['fmaterial_id'])){
-			$material = Material::find($attributes['fmaterial_id']);
-		}
-		if(!empty($material)) {
 			$attributes['fcheck_hqty'] = $attributes['box_qty'] + round($attributes['bottle_qty'] / $material->fratio, 2);
 			$attributes['fcheck_eqty'] = $attributes['box_qty'] * $material->fratio + $attributes['bottle_qty'];
 			//差值
-			$attributes['fdiff_hqty'] = $attributes['fcheck_hqty'] - ($this->finv_hqty ?: 0);
-			$attributes['fdiff_eqty'] = $attributes['fcheck_eqty'] - ($this->finv_eqty ?: 0);
+			$attributes['fdiff_hqty'] = $attributes['fcheck_hqty'] - $this->finv_hqty ;
+			$attributes['fdiff_eqty'] = $attributes['fcheck_eqty'] - $this->finv_eqty;
 		}
 		return $attributes;
 	}

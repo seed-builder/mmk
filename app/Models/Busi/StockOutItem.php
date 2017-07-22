@@ -23,12 +23,12 @@ use Illuminate\Database\Eloquent\Model;
  * @SWG\Property(name="fmaterial_id", type="integer", description="物料内码id")
  * @SWG\Property(name="fmodify_date", type="string", description="修改时间")
  * @SWG\Property(name="fmodify_id", type="integer", description="修改人")
- * @SWG\Property(name="fqty", type="number", description="订单数量")
+ * @SWG\Property(name="fqty", type="float", description="订单数量")
  * @SWG\Property(name="fsale_unit", type="string", description="销售单位")
  * @SWG\Property(name="fstock_out_id", type="integer", description="出库ID")
  * @SWG\Property(name="id", type="integer", description="")
- * @SWG\Property(name="fprice_box", type="number", description="单价/箱")
- * @SWG\Property(name="fprice_bottle", type="number", description="单价/瓶")
+ * @SWG\Property(name="fprice_box", type="float", description="单价/箱")
+ * @SWG\Property(name="fprice_bottle", type="float", description="单价/瓶")
  * @SWG\Property(name="famount", type="number", description="金额")
   */
 class StockOutItem extends BaseModel
