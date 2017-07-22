@@ -66,7 +66,7 @@ class CustomerPrice extends BaseModel
 			->where('fdocument_status', 'C')
 			->where('fis_valid', 1)
 			->where(function ($query) use($cust_id){
-				$query->where('fcust_id', $cust_id)->orWhereNull('fcust_id');
+				$query->where('fcust_id', $cust_id)->orWhere('fcust_id', 0);
 			})
 			->orderBy('fcust_id', 'desc')
 			->orderBy('fmodify_date', 'desc')
