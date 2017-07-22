@@ -35,4 +35,27 @@ class StockCheckController extends ApiController
 		$total = StockCheckItem::where('fstock_check_id', $id)->count('fmaterial_id');
 		return $this->success(['total' => $total, 'boxes' => $boxes]);
 	}
+
+	/**
+	 * Update the specified resource in storage.
+	 *
+	 * @param  \Illuminate\Http\Request $request
+	 * @param  int $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function update(Request $request, $id)
+	{
+		//
+		$entity = $this->newEntity()->newQuery()->find($id);
+		$data = $request->all();
+		unset($data['_sign']);
+		if($data['fcheck_status'] == 1 && $entity->fcheck_status == 0){
+			$entity->fcomplete_date = date('Y-m-d H:i:s');
+		}
+		$entity->fill($data);
+		$re = $entity->save();
+		$status = $re ? 200 : 401;
+		return response(['success' => $re], $status);
+	}
+
 }
