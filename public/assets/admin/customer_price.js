@@ -30,8 +30,8 @@ define(function(require, exports, module) {
             fields: [
                 { 'label':  '经销商', 'name': 'fcust_id', 'type': 'select', 'options': customers},
                 { 'label':  '产品', 'name': 'fmaterial_id', 'type': 'select', 'options': materials},
-                { 'label':  '销售起数量', 'name': 'fmin_qty', def: 0},
-                { 'label':  '销售止数量', 'name': 'fmax_qty', def: 1000000},
+                // { 'label':  '销售起数量', 'name': 'fmin_qty', def: 0},
+                // { 'label':  '销售止数量', 'name': 'fmax_qty', def: 1000000},
                 { 'label':  '单价/箱', 'name': 'fprice_box', },
                 { 'label':  '单价/瓶', 'name': 'fprice_bottle', },
             ]
