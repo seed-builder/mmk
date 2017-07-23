@@ -28,15 +28,17 @@ class Utility
 	/**
 	 * 获取经销商代垫返还数据
 	 * @param $custId
-	 * @param $year
-	 * @param $month
+	 * @param $begin_year
+	 * @param $begin_month
+	 * @param $end_year
+	 * @param $end_month
 	 * @return mixed
 	 */
-	public static function getCustomerDDReturn($custId, $year, $month){
+	public static function getCustomerDDReturn($custId, $begin_year, $begin_month, $end_year, $end_month){
 		$worker = new KingdeeWorker();
 		$url = env('KINGDEE_HOST') . '/k3cloud/CYD.ApiService.ServicesStub.CustomBusinessService.CustDDDetailGet.common.kdsvc';
 //		var_dump($url);
-		$data = $worker->post($url, ['parameters' => [$custId, $year, $month]]);
+		$data = $worker->post($url, ['parameters' => [$custId, $begin_year, $begin_month, $end_year, $end_month]]);
 //		var_dump($data);
 		return $data;
 	}

@@ -57,22 +57,38 @@ $NoReturnAmount = 0;
                                         </select>
                                     </div>
 
-                                    <label class="col-md-1 control-label">年份</label>
-                                    <div class="col-md-2">
-                                        <select class="form-control" id="year" name="year" >
+                                    <label class="col-md-1 control-label">起始年月</label>
+                                    <div class="col-md-1">
+                                        <select class="form-control" id="begin_year" name="begin_year" >
                                             <option value="">--请选择--</option>
                                             @foreach($years as $y)
-                                                <option value="{{$y}}" {{$y == $year ? 'selected':''}}>{{$y}}</option>
+                                                <option value="{{$y}}" {{$y == $begin_year ? 'selected':''}}>{{$y}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <select class="form-control " id="begin_month" name="begin_month">
+                                            <option value="">--请选择--</option>
+                                            @foreach($months as $m)
+                                                <option value="{{$m}}" {{$m == $begin_month ? 'selected':''}}>{{$m}}</option>
                                             @endforeach
                                         </select>
                                     </div>
 
-                                    <label class="col-md-1 control-label">月份</label>
-                                    <div class="col-md-2">
-                                        <select class="form-control " id="month" name="month">
+                                    <label class="col-md-1 control-label">截止年月</label>
+                                    <div class="col-md-1">
+                                        <select class="form-control " id="end_year" name="end_year" >
+                                            <option value="">--请选择--</option>
+                                            @foreach($years as $y)
+                                                <option value="{{$y}}" {{$y == $end_year ? 'selected':''}}>{{$y}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <select class="form-control " id="end_month" name="end_month">
                                             <option value="">--请选择--</option>
                                             @foreach($months as $m)
-                                                <option value="{{$m}}" {{$m == $month ? 'selected':''}}>{{$m}}</option>
+                                                <option value="{{$m}}" {{$m == $end_month ? 'selected':''}}>{{$m}}</option>
                                             @endforeach
                                         </select>
                                     </div>
