@@ -89,29 +89,36 @@ $NoReturnAmount = 0;
                     <!-- /.box-header -->
                     <div class="box-body" style="width: 100%; overflow: scroll;">
                         <div class="panel panel-default" >
-                            <form class="form-horizontal" action="#" method="post">
+                            <form class="form-inline" action="#" method="post">
                                 <div class="form-group ">
-                                    <label class="col-md-1  col-xs-1 control-label">年份</label>
-                                    <div class="col-md-2 col-xs-4 ">
-                                        <select class="form-control" id="year" name="year" >
-                                            <option value="">--请选择--</option>
-                                            @foreach($years as $y)
-                                                <option value="{{$y}}" {{$y == $year ? 'selected':''}}>{{$y}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <label class="col-md-1 col-xs-1  control-label">月份</label>
-                                    <div class="col-md-2 col-xs-4">
-                                        <select class="form-control " id="month" name="month">
-                                            <option value="">--请选择--</option>
-                                            @foreach($months as $m)
-                                                <option value="{{$m}}" {{$m == $month ? 'selected':''}}>{{$m}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="col-md-2 col-xs-2">
-                                        <button type="submit" class="btn btn-info filter-submit">查询</button>
-                                    </div>
+                                    <label class="control-label">起始年月</label>
+                                    <select class="form-control" id="begin_year" name="begin_year" >
+                                        <option value="">--请选择--</option>
+                                        @foreach($years as $y)
+                                            <option value="{{$y}}" {{$y == $begin_year ? 'selected':''}}>{{$y}}</option>
+                                        @endforeach
+                                    </select>
+                                    <select class="form-control " id="begin_month" name="begin_month">
+                                        <option value="">--请选择--</option>
+                                        @foreach($months as $m)
+                                            <option value="{{$m}}" {{$m == $begin_month ? 'selected':''}}>{{$m}}</option>
+                                        @endforeach
+                                    </select>
+                                    <label class="control-label">截止年月</label>
+                                    <select class="form-control " id="end_year" name="end_year" >
+                                        <option value="">--请选择--</option>
+                                        @foreach($years as $y)
+                                            <option value="{{$y}}" {{$y == $end_year ? 'selected':''}}>{{$y}}</option>
+                                        @endforeach
+                                    </select>
+                                    <select class="form-control " id="end_month" name="end_month">
+                                        <option value="">--请选择--</option>
+                                        @foreach($months as $m)
+                                            <option value="{{$m}}" {{$m == $end_month ? 'selected':''}}>{{$m}}</option>
+                                        @endforeach
+                                    </select>
+
+                                    <button type="submit" class="btn btn-info filter-submit">查询</button>
                                 </div>
                             </form>
                         </div>

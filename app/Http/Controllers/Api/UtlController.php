@@ -225,14 +225,21 @@ class UtlController extends Controller
 	public function getCustomerDDReturn(Request $request, $custId){
 
 		//$custId = $request->input('custId',0);
-		$year = $request->input('year', date('Y'));
-		$month = $request->input('month', date('n')-1);
+//		$year = $request->input('year', date('Y'));
+//		$month = $request->input('month', date('n')-1);
+
+		$begin_year = $request->input('begin_year', date('Y'));
+		$begin_month = $request->input('begin_month', date('n')-1);
+
+		$end_year = $request->input('end_year', date('Y'));
+		$end_month = $request->input('end_month', date('n')-1);
+
 		//var_dump($year);
 		//var_dump($month);
 		$data = [];
-		if( $custId > 0 && $year > 0 && $month > 0){
-			$data = Utility::getCustomerDDReturn($custId, $year, $month);
+		if( $custId > 0 && $begin_year > 0 && $begin_month > 0){
+			$data = Utility::getCustomerDDReturn($custId, $begin_year, $begin_month, $end_year, $end_month);
 		}
-		return view('api.utl.ddreturn', compact('custId', 'year', 'month', 'data'));
+		return view('api.utl.ddreturn', compact('custId', 'begin_year', 'begin_month', 'end_year', 'end_month', 'data'));
 	}
 }
