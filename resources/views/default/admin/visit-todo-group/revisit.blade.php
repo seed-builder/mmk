@@ -37,12 +37,12 @@
                             <thead>
                             <tr>
                                 <th>id</th>
+                                <th>fcategory</th>
                                 <th>方案名称</th>
                                 <th>备注</th>
                                 <th>开始时间</th>
                                 <th>结束时间</th>
                                 <th>是否默认</th>
-                                <th>类型</th>
                                 <th>创建时间</th>
                             </tr>
                             </thead>
@@ -62,7 +62,7 @@
     @include('admin.layout.datatable-js')
     <script type="text/javascript">
         $(function () {
-            seajs.use('admin/visit_todo_group.js', function (app) {
+            seajs.use('admin/visit_todo_group_revisit.js', function (app) {
                 app.index($, 'moduleTable');
             });
         });

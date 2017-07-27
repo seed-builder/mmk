@@ -28,7 +28,17 @@ class VisitTodoGroupController extends AdminController
         return view('admin.visit-todo-group.index', compact('customers'));
     }
 
-    /**
+	/**
+	 * 复巡
+	 */
+	public function revisit()
+	{
+		$customers = Customer::all();
+		return view('admin.visit-todo-group.revisit', compact('customers'));
+	}
+
+
+	/**
      * Show the form for creating a new resource.
      *
      * @return  \Illuminate\Http\Response
@@ -66,8 +76,9 @@ class VisitTodoGroupController extends AdminController
         $data = $data = $request->input('data', []);
         $props = $this->beforeSave(current($data));
         $is_default = $props['fis_default'];
+        $category = $props['fcategory'];
         if ($is_default==1){
-            VisitTodoGroup::query()->where('fis_default',1)->update([
+            VisitTodoGroup::query()->where('fis_default',1)->where('fcategory', $category)->update([
                 'fis_default' => 0
             ]);
         }
@@ -79,8 +90,9 @@ class VisitTodoGroupController extends AdminController
         $data = $data = $request->input('data', []);
         $props = $this->beforeSave(current($data));
         $is_default = $props['fis_default'];
+	    $category = $props['fcategory'];
         if ($is_default==1){
-            VisitTodoGroup::query()->where('fis_default',1)->update([
+            VisitTodoGroup::query()->where('fis_default',1)->where('fcategory', $category)->update([
                 'fis_default' => 0
             ]);
         }

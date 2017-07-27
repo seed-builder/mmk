@@ -28,6 +28,7 @@ define(function (require, exports, module) {
             table: "#" + tableId,
             idSrc: 'id',
             fields: [
+                {'label': 'fcategory', 'name': 'fcategory', type: 'hidden', def: 2},
                 {'label': '拜访方案名称', 'name': 'fname',},
                 {'label': '备注', 'name': 'fremark',},
                 {
@@ -44,7 +45,6 @@ define(function (require, exports, module) {
                     def:   function () { return new Date(); }
                 },
                 { 'label':  '是否为默认方案', 'name': 'fis_default', 'type':'select', 'options': [{'label':'否', value:0},{'label': '是', value: 1}]},
-                {'label': '类型', 'name': 'fcategory', type: 'select',  'options': [{'label':'正常拜访', value:1},{'label': '组长复巡', value: 2}], def: 1},
             ]
         });
 
@@ -56,9 +56,15 @@ define(function (require, exports, module) {
             select: true,
             paging: true,
             rowId: "id",
-            ajax: '/admin/visit-todo-group/pagination',
+            ajax: {
+                url: '/admin/visit-todo-group/pagination',
+                data: function (data) {
+                    data.columns[1]['search']['value'] = 2
+                }
+            },
             columns: [
                 {'data': 'id'},
+                {'data': 'fcategory'},
                 {'data': 'fname'},
                 {'data': 'fremark'},
                 {'data': 'fstart_date'},
@@ -66,15 +72,12 @@ define(function (require, exports, module) {
                 {'data': 'fis_default', render: function (data) {
                     return data == 1 ? '是':"否";
                 }},
-                {'data': 'fcategory', render: function (data) {
-                    return data == 1 ? '正常拜访':"组长复巡";
-                }},
                 {'data': 'fcreate_date'},
 
             ],
             columnDefs: [
                 {
-                    "targets": [0],
+                    "targets": [0,1],
                     "visible": false
                 }
             ],

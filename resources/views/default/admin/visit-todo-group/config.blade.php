@@ -22,7 +22,7 @@
     <!-- Main content -->
     <section class="content">
         <div class="row">
-            <div class="col-xs-3">
+            <div class="col-xs-3" id="todoTree">
                 <div class="box box-primary">
                     <div class="box-header">
                         <h3 class="box-title">模板</h3>
@@ -43,6 +43,30 @@
                     <!-- /.box-header -->
                     <div class="box-body">
                         <div id="tree-todo"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-3" id="revisitTree" style="display: none;">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <h3 class="box-title">复巡模板</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                        class="fa fa-minus"></i>
+                            </button>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-wrench"></i></button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#" id="btnOpen"><i class="fa fa-folder-open"></i>展开</a></li>
+                                    <li><a href="#" id="btnCollapse"><i class="fa fa-folder"></i>折叠</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div id="tree-todo-revisit"></div>
                     </div>
                 </div>
             </div>
@@ -71,7 +95,7 @@
                                 <select class="form-control todo_group" id="todo_group_id" data-live-search="true">
                                     <option value="0">请选择一个方案</option>
                                     @foreach($groups as $g)
-                                        <option value="{{$g->id}}">{{$g->fname." ".date("Y-m-d",strtotime($g->fstart_date))}}</option>
+                                        <option value="{{$g->id}}" data-category="{{$g->fcategory}}">{{$g->fname." ".date("Y-m-d",strtotime($g->fstart_date))}}</option>
                                     @endforeach
                                 </select>
                             </div>

@@ -35,6 +35,33 @@ define(function(require, exports, module) {
                 },
             });
         }
+
+        var revisitTree = function () {
+            $.ajax({
+                url: "/admin/visit-store-todo/todoTree/2",
+                type: "GET",
+                data: {
+                    '_token':$('meta[name="_token"]').attr('content')
+                },
+                dataType:'json',
+                success:function(data){
+                    $("#tree-todo-revisit").treeview({
+                        color: "#428bca",
+                        enableLinks: true,
+                        levels: 99,
+                        data: data,
+                        onNodeSelected: function(event, data) {
+                            todoCurNodeData = data;
+
+                            addTodo();
+                        },
+                        onNodeUnselected: function(event, data) {
+                            todoCurNodeData = null;
+                        },
+                    });
+                },
+            });
+        }
         
         var addTodo = function () {
             if ($("#todo_group_id").val()==0)
@@ -89,9 +116,6 @@ define(function(require, exports, module) {
                 },
             });
         }
-
-
-
 
         var table = $("#" + tableId).DataTable({
             dom: "lBfrtip",
@@ -180,11 +204,24 @@ define(function(require, exports, module) {
         });
 
         todoTree();
+        revisitTree();
 
         $('.todo_group').selectpicker({});
 
-        $('#todo_group_id').on('change',function () {
+        $('#todo_group_id').on('change', function () {
             todoGroupTree();
+            var el = $('#todo_group_id').get(0);
+            var op = el.options[el.selectedIndex];
+            if(op){
+                var category = $(op).attr('data-category');
+                if(category == 2){
+                    $('#revisitTree').show();
+                    $('#todoTree').hide();
+                }else{
+                    $('#revisitTree').hide();
+                    $('#todoTree').show();
+                }
+            }
         })
 
         // $("#btnMakeTodos").on('click',function(){
@@ -218,7 +255,6 @@ define(function(require, exports, module) {
             })
             return false;
         })
-
     }
 
 });

@@ -26,4 +26,5 @@ Route::get('visit-todo-group/test', function (){
 
     dd($todos);
 });
+Route::get('visit-todo-group/revisit', ['uses' => 'VisitTodoGroupController@revisit']);
 Route::resource('visit-todo-group', 'VisitTodoGroupController');

@@ -30,8 +30,19 @@ class VisitStoreTodoController extends AdminController
         return view('admin.visit-store-todo.index', compact('functions','todos'));
     }
 
+	/**
+	 * 复巡
+	 */
+    public function revisit()
+    {
+	    $functions = VisitFunction::all();
+	    $todos = VisitStoreTodo::where('fcategory', 2);
 
-    public function save(Request $request){
+	    return view('admin.visit-store-todo.revisit', compact('functions','todos'));
+    }
+
+
+	public function save(Request $request){
         $data = $request->except('_token');
         if (!empty($data['id'])) {
             $todo = $this->newEntity()->newQuery()->find($data['id']);
@@ -84,9 +95,14 @@ class VisitStoreTodoController extends AdminController
         ]);
     }
 
-    public function todoTree(Request $request)
+	/**
+	 * @param Request $request
+	 * @param int $fcategory
+	 * @return \Illuminate\Http\JsonResponse
+	 */
+	public function todoTree(Request $request, $fcategory = 1)
     {
-        $all = VisitStoreTodo::where('fparent_id', 0)->get();
+        $all = VisitStoreTodo::where('fparent_id', 0)->where('fcategory', $fcategory)->get();
         $tree = [];
         foreach ($all as $top)
             $tree[] = $this->toBootstrapTreeViewData($top, ['text' => 'fname', 'dataid' => 'id'], false);
