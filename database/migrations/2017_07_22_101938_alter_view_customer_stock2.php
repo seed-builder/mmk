@@ -16,6 +16,7 @@ class AlterViewCustomerStock2 extends Migration
     {
         //
 	    $sql = <<<EOD
+	   CREATE or REPLACE view view_customer_stock as 
 select 
 ins.fcust_id as cust_id,
 c.fname as cust_name,
