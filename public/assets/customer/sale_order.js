@@ -82,6 +82,7 @@ define(function (require, exports, module) {
                         return full.employee_name
                     }
                 },
+                {'data': 'ftotal_amount'},
                 // {
                 //     'data': 'fcust_id',
                 //     render: function (data, type, full) {
@@ -275,6 +276,9 @@ define(function (require, exports, module) {
                         return send_status(data);
                     }
                 },
+                {'data': 'fprice_box'},
+                {'data': 'fprice_bottle'},
+                {'data': 'famount'},
 
             ],
             buttons: [

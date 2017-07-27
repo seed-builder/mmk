@@ -25,6 +25,7 @@ define(function (require, exports, module) {
                 {'data': 'fdate'},
                 {'data': 'employee_name'},
                 {'data': 'customer_name'},
+                {'data': 'ftotal_amount'},
                 {
                     'data': 'fsend_status',
                     render: function (data, type, full) {
@@ -158,6 +159,9 @@ define(function (require, exports, module) {
                         return send_status(data);
                     }
                 },
+                {'data': 'fprice_box'},
+                {'data': 'fprice_bottle'},
+                {'data': 'famount'},
             ],
             buttons: [
                 // {
