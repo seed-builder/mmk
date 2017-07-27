@@ -179,6 +179,7 @@ class VisitCalendarService
     {
         $store = Store::find($store_calendar->fstore_id);
         $group = $store->todo_groups()
+	        ->where('fcategory', 1)
             ->where('fstart_date', '<=', $store_calendar->fdate)
             ->where('fend_date', '>=', $store_calendar->fdate)
             ->orderBy('fcreate_date', 'desc')
@@ -187,7 +188,7 @@ class VisitCalendarService
         if (!empty($group->todos)) {
             $this->saveTodoCalendars($group, $store_calendar);
         } else {
-            $group = VisitTodoGroup::query()->where('fis_default', 1)->first();//默认方案
+            $group = VisitTodoGroup::query()->where('fis_default', 1)->where('fcategory', 1)->first();//默认方案
             if (count($group) > 0) {
                 $this->saveTodoCalendars($group, $store_calendar);
             }
