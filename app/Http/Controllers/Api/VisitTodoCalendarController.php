@@ -113,6 +113,9 @@ class VisitTodoCalendarController extends ApiController
 	public function update(Request $request, $id)
 	{
 		$entity = $this->newEntity()->newQuery()->find($id);
+		if(empty($entity)){
+			return response(['success' => false, 'msg' => '不存在该巡访日历项'], 401);
+		}
 		//$entity = Entity::find($id);
 		$data = $request->all();
 		//var_dump($data);
