@@ -2,6 +2,7 @@
 
 namespace App\Models\Busi;
 
+use App\Events\OrderItemChanged;
 use Illuminate\Database\Eloquent\Model;
 use App\Services\LogSvr;
 
@@ -49,12 +50,18 @@ class SaleOrderItem extends BaseModel
             $order = SaleOrder::find($model->fsale_order_id);
             if ($order->items()->count()==0){
                 $order->delete();
+            }else{
+            	event(new OrderItemChanged($model));
             }
         });
 
         static::creating(function ($model){
         	$model->fsend_qty = $model->fqty + $model->fpresent_qty;
         	$model->fsend_base_qty = $model->fbase_qty + $model->fpresent_base_qty;
+        });
+
+        static::saved(function($model){
+	        event(new OrderItemChanged($model));
         });
     }
 

@@ -46,6 +46,9 @@ class EventServiceProvider extends ServiceProvider
 	    'App\Events\UserLoginedEvent' => [
 		    'App\Listeners\UserLoginedHandler',
 	    ],
+	    'App\Events\OrderItemChanged' => [
+		    'App\Listeners\OrderItemChangedHandler',
+	    ],
     ];
 
     /**
