@@ -14,16 +14,18 @@ define(function(require, exports, module) {
             serverSide: true,
             select: true,
             paging: true,
+            pageLength: -1,
             rowId: "id",
             ajax: {
                 url: '/customer/fin-statement/pagination'
             },
             columns: [
-                {  'data': 'id', render: function (data, type, full) {
-                        return '<input type="checkbox" class="editor-active" value="' + data + '">';
-                    },
-                    className: "dt-body-center"
-                },
+                // {  'data': 'id', render: function (data, type, full) {
+                //         return '<input type="checkbox" class="editor-active" value="' + data + '">';
+                //     },
+                //     className: "dt-body-center"
+                // },
+                {  'data': 'id' },
                 {  'data': 'cust_num' },
                 {  'data': 'cust_name' },
                 {  'data': 'bill_type' },
@@ -39,12 +41,12 @@ define(function(require, exports, module) {
                 {  'data': 'status' },
             ],
             columnDefs: [
-                {
-                    'targets': 0,
-                    'checkboxes': {
-                        'selectRow': true
-                    }
-                },
+                // {
+                //     'targets': 0,
+                //     'checkboxes': {
+                //         'selectRow': true
+                //     }
+                // },
                 {
                     "targets": [12,13],
                     "visible": false
@@ -82,7 +84,7 @@ define(function(require, exports, module) {
                 // { text: '删除', className: 'delete', enabled: false },
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 { text: '打印<i class="fa fa-fw fa-print"></i>',action: function () {
-                    var row = table.rows('.selected').data();
+                    var row = table.rows().data();
                     if (row.length==0){
                         layer.alert('请选择对账信息')
                         return ;
