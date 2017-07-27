@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Models\Busi\DisplayPolicyStore;
+use App\Models\Busi\SaleOrder;
 use App\Models\Busi\Store;
 use App\Models\Busi\VisitLine;
 use App\Models\Busi\VisitLineCalendar;
@@ -82,6 +83,19 @@ class Kernel extends ConsoleKernel
 	        SysCrontab::exec('check-store-signed');
 
         })->dailyAt('01:00');
+
+	    //每天02:00点执行 删除过期的空订单
+	    $schedule->call(function(){
+		    $results = DB::select('select o.id from st_sale_orders o where NOT EXISTS (select 1 from st_sale_order_items item where item.fsale_order_id = o.id)');
+			if(!empty($results)){
+				$ids = [];
+				foreach ($results as $res){
+					$ids[] = $res->id;
+				}
+				SaleOrder::destroy($ids);
+			}
+	    })->dailyAt('02:00');
+
     }
 
     /**
