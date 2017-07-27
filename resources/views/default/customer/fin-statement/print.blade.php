@@ -65,7 +65,7 @@ $lastday = strtotime('-1 day', $nextMonth);
                                         <th style="min-width: 80px">方案编号</th>
                                         <th style="min-width: 80px">业务日期</th>
                                         <th style="min-width: 80px">本期发生额</th>
-                                        <th style="min-width: 80px">金额</th>
+                                        <th style="min-width: 80px">余额</th>
                                         <th style="min-width: 80px">摘要</th>
                                         <th style="min-width: 80px">备注</th>
                                     </tr>
