@@ -1,6 +1,9 @@
 <?php
 $years = [];
 $curYear = date('Y');
+$preMonthDate = strtotime('-1 month');
+$preYear = date('Y', $preMonthDate);
+$preMonth = date('n', $preMonthDate);
 for($i=-10; $i < 10; $i ++){
 	$years[] = $curYear + $i;
 }
@@ -52,7 +55,7 @@ $months = [1,2,3,4,5,6,7,8,9,10,11,12]
                                     <select class="form-control filter-condition" filter-name="year" filter-operator="=">
                                         <option value="">--请选择--</option>
                                         @foreach($years as $y)
-                                        <option value="{{$y}}">{{$y}}</option>
+                                        <option value="{{$y}}" {{$y == $preYear ? 'selected':''}}>{{$y}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -61,7 +64,7 @@ $months = [1,2,3,4,5,6,7,8,9,10,11,12]
                                     <select class="form-control filter-condition" filter-name="month" filter-operator="=">
                                         <option value="">--请选择--</option>
                                         @foreach($months as $m)
-                                            <option value="{{$m}}">{{$m}}</option>
+                                            <option value="{{$m}}" {{$m == $preMonth ? 'selected':''}}>{{$m}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -74,7 +77,7 @@ $months = [1,2,3,4,5,6,7,8,9,10,11,12]
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <button type="button" class="btn btn-info filter-submit">查询</button>
+                                    <button id="submitBtn" type="button" class="btn btn-info filter-submit">查询</button>
                                     <button type="button" class="btn btn-default filter-reset">重置</button>
                                 </div>
                             </form>
@@ -115,6 +118,7 @@ $months = [1,2,3,4,5,6,7,8,9,10,11,12]
     <script src="/assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
     <script src="/js/dt.ext.js"></script>
     <script type="text/javascript">
+
         $(function () {
             seajs.use('admin/fin_statement.js', function (app) {
                 app.index($, 'moduleTable');

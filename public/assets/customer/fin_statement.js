@@ -109,6 +109,8 @@ define(function(require, exports, module) {
 
         }
 
+        $('#submitBtn').click();
+
     }
 
 });
