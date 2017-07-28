@@ -33,7 +33,7 @@ class VisitTodoCalendarController extends ApiController
 		$pageSize = $request->input('pageSize', 10);
 		$sort = $request->input('sort', 'id asc');
 		$entity = $this->newEntity();
-		$query = $entity->query();
+		$query = $entity->query()->with(['todo', 'employee']);
 		$query->where('fcategory', $category);
 		if($store_calendar_id > 0){
 			$query->where('fstore_calendar_id', $store_calendar_id);
