@@ -14,6 +14,7 @@ define(function(require, exports, module) {
             serverSide: true,
             select: true,
             paging: true,
+            pageLength: 100,
             rowId: "id",
             ajax: {
                 url: '/admin/fin-statement/pagination'

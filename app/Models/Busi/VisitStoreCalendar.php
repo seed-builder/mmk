@@ -18,6 +18,7 @@ use Log;
  * @SWG\Property(name="fline_calendar_id", type="integer", description="线路巡防日历id")
  * @SWG\Property(name="forg_id", type="integer", description="组织id")
  * @SWG\Property(name="fstatus", type="integer", description="巡访状态（1-未开始， 2-进行中， 3-已完成）")
+ * @SWG\Property(name="frevisit_status", type="integer", description="复巡状态（1-未开始， 2-进行中， 3-已完成）")
  * @SWG\Property(name="fstore_id", type="integer", description="门店id")
  * @SWG\Property(name="id", type="integer", description="")
  * @SWG\Property(name="fcreate_date", type="string", description="创建时间")

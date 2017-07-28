@@ -27,12 +27,22 @@ class VisitTodoCalendarController extends ApiController
 	public function index(Request $request)
 	{
 		$page = $request->input('page', 1);
+		$category = $request->input('category', 1);
+		$store_calendar_id = $request->input('store_calendar_id', 0);
 		$pageSize = $request->input('pageSize', 10);
 		$sort = $request->input('sort', 'id asc');
 		$entity = $this->newEntity();
 		$query = $entity->query();
+		$query->where('fcategory', $category);
+		if($store_calendar_id > 0){
+			$query->where('fstore_calendar_id', $store_calendar_id);
+		}
 		$this->fillQueryForIndex($request, $query);
 		$count = $query->count();
+		if($count == 0 && $category == 2 && $store_calendar_id >0){
+			//生成组长复巡项
+
+		}
 		$arr = explode(',', $sort);
 		//var_dump($arr);
 		foreach ($arr as $order){

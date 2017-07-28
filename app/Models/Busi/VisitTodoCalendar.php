@@ -19,6 +19,7 @@ use App\Services\LogSvr;
  * @SWG\Property(name="flongitude", type="string", description="百度地图经度")
  * @SWG\Property(name="flatitude", type="string", description="百度地图纬度")
  * @SWG\Property(name="fstatus", type="integer", description="巡访状态（1-未开始， 2-进行中， 3-已完成）")
+ * @SWG\Property(name="fcategory", type="integer", description="分类(1-正常巡访项, 2-组长复巡项)")
  * @SWG\Property(name="femp_id", type="integer", description="员工id")
  * @SWG\Property(name="fcreate_date", type="string", description="创建时间")
  * @SWG\Property(name="fcreator_id", type="integer", description="创建人")

@@ -38,11 +38,15 @@ class VisitLineStoreController extends ApiController
 		}
 		$data = $query->take($pageSize)->skip(($page - 1) * $pageSize)->get();
 		foreach ($data as &$d){
-			$calendar = VisitStoreCalendar::where('femp_id', $d->femp_id)->where('fstore_id', $d->fstore_id)->orderBy('id', 'desc')->first();
+			$calendar = VisitStoreCalendar::where('femp_id', $d->femp_id)->where('fstore_id', $d->fstore_id)->orderBy('id', 'desc')->first(['id','fstatus','frevisit_status']);
 			if(!empty($calendar)) {
+				$d->store_calender_id = $calendar->id;
 				$d->store_calender_status = $calendar->fstatus;
+				$d->store_calender_revisit_status = $calendar->frevisit_status;
 			}else{
+				$d->store_calender_id = 0;
 				$d->store_calender_status = 0;
+				$d->store_calender_revisit_status = 0;
 			}
 		}
 		//LogSvr::apiSql()->info($query->toSql());
