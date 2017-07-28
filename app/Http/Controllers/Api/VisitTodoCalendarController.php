@@ -42,6 +42,7 @@ class VisitTodoCalendarController extends ApiController
 		QUERY:
 		$count = $query->count();
 		if($count == 0 && $category == 2 && $store_calendar_id >0){
+			//LogSvr::apiSql()->info('generateRevisitTodoCalendars');
 			//生成组长复巡项
 			$srv = new VisitCalendarService();
 			$res = $srv->generateRevisitTodoCalendars($store_calendar_id);
