@@ -6,7 +6,23 @@ use App\Events\ModelCreatedEvent;
 use App\Events\ModelUpdatedEvent;
 use Illuminate\Database\Eloquent\Model;
 
-
+/**
+ * Class VisitLineStore
+ * @package App\Models\Busi
+ * @author xrs
+ * @SWG\Model(id="VisitLineStore")
+ * @SWG\Property(name="fcreate_date", type="string", description="创建时间")
+ * @SWG\Property(name="fcreator_id", type="integer", description="创建人")
+ * @SWG\Property(name="fdocument_status", type="string", description="数据状态")
+ * @SWG\Property(name="femp_id", type="integer", description="employee id")
+ * @SWG\Property(name="fline_id", type="integer", description="线路id")
+ * @SWG\Property(name="fmodify_date", type="string", description="修改时间")
+ * @SWG\Property(name="fmodify_id", type="integer", description="修改人")
+ * @SWG\Property(name="fstore_id", type="integer", description="门店id")
+ * @SWG\Property(name="fweek_day", type="integer", description="week day")
+ * @SWG\Property(name="store_calender_status", type="integer", description="门店巡访状态（0-unknown ,1-未开始， 2-进行中， 3-已完成）")
+ * @SWG\Property(name="id", type="integer", description="")
+ */
 class VisitLineStore extends BaseModel
 {
     //
