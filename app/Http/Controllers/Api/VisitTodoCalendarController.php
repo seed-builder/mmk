@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\Busi\DisplayPolicyStore;
 use App\Models\Busi\VisitStoreCalendar;
 use App\Services\LogSvr;
+use App\Services\VisitCalendarService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Busi\VisitTodoCalendar;
@@ -38,10 +39,14 @@ class VisitTodoCalendarController extends ApiController
 			$query->where('fstore_calendar_id', $store_calendar_id);
 		}
 		$this->fillQueryForIndex($request, $query);
+		QUERY:
 		$count = $query->count();
 		if($count == 0 && $category == 2 && $store_calendar_id >0){
 			//生成组长复巡项
-
+			$srv = new VisitCalendarService();
+			$res = $srv->generateRevisitTodoCalendars($store_calendar_id);
+			if($res)
+				goto QUERY;
 		}
 		$arr = explode(',', $sort);
 		//var_dump($arr);

@@ -2,6 +2,7 @@
 
 namespace App\Models\Busi;
 
+use App\Events\RevisitTodoStatusChangedEvent;
 use App\Events\VisitTodoStatusChangedEvent;
 use Illuminate\Database\Eloquent\Model;
 use App\Services\LogSvr;
@@ -42,7 +43,11 @@ class VisitTodoCalendar extends BaseModel
 	    static::updated(function ($model){
 
 		    //LogSvr::todo()->info('model updated, id=' . $model->id);
-		    event(new VisitTodoStatusChangedEvent($model));
+		    if($model->fcategory == 1) {
+			    event(new VisitTodoStatusChangedEvent($model));
+		    }else{
+		    	event(new RevisitTodoStatusChangedEvent($model));
+		    }
 //			if ($model->todo->fname == '正常陈列') {
 //				Rollcall::createOrUpdate([
 //					'femp_id' => $model->femp_id,

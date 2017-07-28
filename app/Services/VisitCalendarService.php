@@ -209,7 +209,8 @@ class VisitCalendarService
                 'fdate' => $store_calendar->fdate,
                 'femp_id' => $store_calendar->femp_id,
                 'ftodo_id' => $t->id,
-                'fis_must_visit' => $t->fis_must_visit
+                'fis_must_visit' => $t->fis_must_visit,
+                'fcategory' => $t->fcategory,
             ]));
             if (!empty($t->children)) {
                 foreach ($t->children->whereIn('id', $todo_ids) as $child) {
@@ -218,7 +219,8 @@ class VisitCalendarService
                         'fdate' => $store_calendar->fdate,
                         'femp_id' => $store_calendar->femp_id,
                         'ftodo_id' => $child->id,
-                        'fis_must_visit' => $child->fis_must_visit
+                        'fis_must_visit' => $child->fis_must_visit,
+                        'fcategory' => $child->fcategory,
                     ]));
                 }
             }
@@ -244,5 +246,15 @@ class VisitCalendarService
             ->delete();
     }
 
-
+	public function generateRevisitTodoCalendars($store_calendar_id){
+    	$storeCalendar = VisitStoreCalendar::find($store_calendar_id);
+    	if(!empty($storeCalendar)){
+    		$group = VisitTodoGroup::where('fis_default',1)->where('fcategory', 2)->first();
+			if(!empty($group)){
+				$this->saveTodoCalendars($group, $storeCalendar);
+				return true;
+			}
+	    }
+	    return false;
+	}
 }

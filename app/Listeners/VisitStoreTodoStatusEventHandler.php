@@ -52,6 +52,7 @@ class VisitStoreTodoStatusEventHandler  //implements ShouldQueue
 			    $count = VisitTodoCalendar::where('fstore_calendar_id', $event->model->fstore_calendar_id)
 				    ->where('fparent_id',0)
 				    ->where('fis_must_visit',1)
+				    ->where('fcategory',1)
 				    ->where('fstatus', '<', 3)->count();
 			    if ($count == 0) {
 				    $storeCalendar->fend = date('Y-m-d H:i:s');
@@ -84,6 +85,7 @@ class VisitStoreTodoStatusEventHandler  //implements ShouldQueue
 			    if($parent->todo->fchildren_calculate == 'and') {
 				    $count = VisitTodoCalendar::where('fparent_id', $todoCalendar->fparent_id)
 					    ->where('fis_must_visit',1)
+					    ->where('fcategory',1)
 					    ->where('fstatus', '<', 3)->count();
 				    if ($count == 0) {
 					    $parent->fend = date('Y-m-d H:i:s');
@@ -98,6 +100,7 @@ class VisitStoreTodoStatusEventHandler  //implements ShouldQueue
 			    }else if($parent->todo->fchildren_calculate == 'or') {
 				    $count = VisitTodoCalendar::where('fparent_id', $todoCalendar->fparent_id)
 					    ->where('fis_must_visit',1)
+					    ->where('fcategory',1)
 					    ->where('fstatus', '=', 3)->count();
 				    if ($count > 0) {
 					    $parent->fend = date('Y-m-d H:i:s');
