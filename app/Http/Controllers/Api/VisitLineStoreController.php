@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Busi\VisitStoreCalendar;
 use Illuminate\Http\Request;
 use App\Models\Busi\VisitLineStore;
 
@@ -36,6 +37,9 @@ class VisitLineStoreController extends ApiController
 			$query->orderBy($tmpArr[0], $tmpArr[1]);
 		}
 		$data = $query->take($pageSize)->skip(($page - 1) * $pageSize)->get();
+		foreach ($data as &$d){
+			$d->store_calender = VisitStoreCalendar::where('femp_id', $d->femp_id)->where('fstore_id', $d->fstore_id)->orderBy('id', 'desc')->first();
+		}
 		//LogSvr::apiSql()->info($query->toSql());
 		return response(['count' => $count, 'list' => $data, 'page' => $page, 'pageSize' => $pageSize], 200);
 	}
