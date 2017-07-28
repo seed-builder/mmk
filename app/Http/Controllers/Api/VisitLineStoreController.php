@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\ApiController;
 use App\Models\Busi\VisitLineStore;
 
 class VisitLineStoreController extends ApiController
