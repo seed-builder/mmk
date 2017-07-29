@@ -50,7 +50,7 @@ class VisitLineStoreController extends ApiController
 				$d->store_calender_revisit_status = 0;
 			}
 		}
-		LogSvr::apiSql()->info($query->toSql());
+//		LogSvr::apiSql()->info($query->toSql());
 		return response(['count' => $count, 'list' => $data, 'page' => $page, 'pageSize' => $pageSize], 200);
 	}
 }
