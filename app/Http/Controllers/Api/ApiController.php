@@ -22,12 +22,16 @@ abstract class  ApiController extends Controller
 		$search = $request->input('search', '{}');
 		$conditions = json_decode($search, true);
 		if (!empty($conditions)) {
-			//dump($conditions);
+//			dump($conditions);
 			foreach ($conditions as $k => $v) {
 				$tmp = explode(' ', $k);
 				if(isset($tmp[1])){
 					$operator = trim($tmp[1]);
-					$query->where($tmp[0], $operator, $v);
+					if(is_array($v) && $tmp[1] == 'in') {
+						$query->whereIn($tmp[0], $v);
+					}else{
+						$query->where($tmp[0], $operator, $v);
+					}
 				}else{
 					$query->where($tmp[0], $v);
 				}

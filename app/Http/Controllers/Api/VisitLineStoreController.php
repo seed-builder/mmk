@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Busi\VisitStoreCalendar;
+use App\Services\LogSvr;
 use Illuminate\Http\Request;
 use App\Models\Busi\VisitLineStore;
 
@@ -49,7 +50,7 @@ class VisitLineStoreController extends ApiController
 				$d->store_calender_revisit_status = 0;
 			}
 		}
-		//LogSvr::apiSql()->info($query->toSql());
+		LogSvr::apiSql()->info($query->toSql());
 		return response(['count' => $count, 'list' => $data, 'page' => $page, 'pageSize' => $pageSize], 200);
 	}
 }
