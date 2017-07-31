@@ -19,9 +19,11 @@ class StockCheckController extends ApiController
 	}
 
 	public function findOrCreate(Request $request, $cust_id){
-		$d = strtotime("-1 month");
-		$year = date('Y', $d);
-		$month = date('n', $d);
+
+		$firstday = date("Y-m-01");
+
+		$year = date('Y', strtotime("$firstday  -1 day"));
+		$month = date('n', strtotime("$firstday  -1 day"));
 
 		$fchecker_id = $request->input('checker_id');
 		$check = StockCheck::findOrInit($cust_id, $fchecker_id, $year, $month);
