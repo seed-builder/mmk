@@ -86,10 +86,10 @@ class StockCheck extends BaseModel
 							'finv_eqty' => $stock->fbase_qty,
 							'fcheck_hqty' => 0, //$stock->fqty,
 							'fcheck_eqty' => 0, //$stock->fbase_qty,
-							'fdiff_hqty' => 0,
-							'fdiff_eqty' => 0,
-							'box_qty' => $boxes,
-							'bottle_qty' => $bottles,
+							'fdiff_hqty' => 0 - $stock->fqty,
+							'fdiff_eqty' => 0 - $stock->fbase_qty,
+							'box_qty' => 0,
+							'bottle_qty' => 0,
 						]);
 					}
 				}
