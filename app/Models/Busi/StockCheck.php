@@ -59,7 +59,7 @@ class StockCheck extends BaseModel
 		$count = static::where('fcust_id', $cust_id)
 			->where('fyear', $year)
 			->where('fmonth', $month)
-			//->where('fcheck_status', 0)
+			->where('fcheck_status', '<', 2)
 			->count();
 		if($count == 0){
 			$customer = Customer::find($cust_id);
@@ -99,7 +99,7 @@ class StockCheck extends BaseModel
 				->where('fcust_id', $cust_id)
 				->where('fyear', $year)
 				->where('fmonth', $month)
-				//->where('fcheck_status', 0)
+				->where('fcheck_status', '<', 2)
 				->first();
 		return $check;
 	}
