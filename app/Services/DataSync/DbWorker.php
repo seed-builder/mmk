@@ -8,6 +8,7 @@
 
 namespace App\Services\DataSync;
 
+use App\Services\LogSvr;
 use DB;
 
 /**
