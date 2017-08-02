@@ -28,7 +28,7 @@ class DbWorker extends Worker
 	 */
 	public function accept($name, $op, array $data)
 	{
-		LogSvr::DbWorker()->info("accept 【 $name 】 【 $op 】 data： ".json_encode($data));
+		//LogSvr::DbWorker()->info("accept 【 $name 】 【 $op 】 data： ".json_encode($data));
 		$table = $name;
 		// TODO: Implement accept() method.
 		$affected = 0;
