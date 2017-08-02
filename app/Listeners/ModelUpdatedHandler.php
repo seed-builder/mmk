@@ -32,7 +32,7 @@ class ModelUpdatedHandler implements ShouldQueue
     public function handle(ModelUpdatedEvent $event)
     {
         //
-        LogSvr::Sync()->info('ModelUpdatedHandler: '.json_encode($event->model));
+//        LogSvr::Sync()->info('ModelUpdatedHandler: '.json_encode($event->model));
         $map = ModelMap::where('table', $event->model->getTable())->first();
         if(!empty($map)){
 //            $result = KingdeeSyncData::update($map->foreign_table, $event->model);

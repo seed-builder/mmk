@@ -32,7 +32,7 @@ class ModelDeletedHandler implements ShouldQueue
     public function handle(ModelDeletedEvent $event)
     {
         //
-        LogSvr::Sync()->info('ModelDeletedHandler: '.json_encode($event->model));
+//        LogSvr::Sync()->info('ModelDeletedHandler: '.json_encode($event->model));
         $map = ModelMap::where('table', $event->model->getTable())->first();
         if(!empty($map)){
 //            $result = KingdeeSyncData::delete($map->foreign_table, $event->model);

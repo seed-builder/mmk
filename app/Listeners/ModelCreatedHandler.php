@@ -32,7 +32,7 @@ class ModelCreatedHandler implements ShouldQueue
     public function handle(ModelCreatedEvent $event)
     {
         //
-        LogSvr::Sync()->info('ModelCreatedHandler: '.json_encode($event->model));
+//        LogSvr::Sync()->info('ModelCreatedHandler: '.json_encode($event->model));
         $map = ModelMap::where('table', $event->model->getTable())->first();
         if(!empty($map)){
 	        $dataSync = app('dataSync');
