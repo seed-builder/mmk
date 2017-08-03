@@ -166,19 +166,17 @@ $NoReturnAmount = 0;
                                 @empty
                             @endforelse
                             <tr>
-                                {{--<td></td>--}}
-                                {{--<td></td>--}}
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
                                 <td>合计</td>
                                 <td>{{$CurReturnAmount}}</td>
                                 <td>{{$AllReturnAmount}}</td>
                                 <td>{{$NoReturnAmount}}</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
                             </tbody>
                         </table>
