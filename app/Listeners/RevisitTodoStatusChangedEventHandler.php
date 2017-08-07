@@ -25,10 +25,10 @@ class RevisitTodoStatusChangedEventHandler
 	 * （1-未开始， 2-进行中， 3-已完成）
 	 * Handle the event.
 	 *
-	 * @param  VisitTodoStatusChangedEvent  $event
+	 * @param  RevisitTodoStatusChangedEvent  $event
 	 * @return void
 	 */
-	public function handle(VisitTodoStatusChangedEvent $event)
+	public function handle(RevisitTodoStatusChangedEvent $event)
 	{
 		//LogSvr::todo()->info('handle VisitStoreTodoStatusEventHandler, id=' . $event->model->id);
 		if($event->model->fstatus > 1) {

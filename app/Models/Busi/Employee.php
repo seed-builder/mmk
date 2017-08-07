@@ -6,6 +6,7 @@ use App\Models\SysConfig;
 use App\Models\User;
 use App\Repositories\ISysConfigRepo;
 use App\Repositories\SysConfigRepo;
+use function foo\func;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use DB;
@@ -170,6 +171,18 @@ class Employee extends BaseModel
 	    }
 	    $subs[] = $this;
 	    return $subs;
+    }
+
+	/**
+	 * 获取有权限查看的经销商数据
+	 */
+    public function getVisibleCustomer(){
+	    $subs = $this->getSubordinates();
+		$sellers = array_map(function($item){
+			return $item->id;
+		}, $subs);
+		$customers = Customer::whereIn('fseller', $sellers)->get();
+		return $customers;
     }
 
 	/**
