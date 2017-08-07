@@ -158,7 +158,9 @@ class VisitTodoCalendarController extends ApiController
 	public function checkEnd($todoCalendar, $data){
 		$needDos = [];
 		//拜访总结 - 结束
-		if(!empty($todoCalendar->todo) && $todoCalendar->todo->ffunction_number == 'JSBF' && $data['fstatus'] == 3){
+		if(!empty($todoCalendar->todo) &&
+			($todoCalendar->todo->ffunction_number == 'JSBF' || $todoCalendar->todo->ffunction_number == 'FXZJ') &&
+			$data['fstatus'] == 3){
 			$calendars = VisitTodoCalendar::where('fstore_calendar_id', $todoCalendar->fstore_calendar_id)
 				->where('fparent_id', 0)
 				->where('fis_must_visit', 1)
