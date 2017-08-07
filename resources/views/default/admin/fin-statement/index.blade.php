@@ -53,7 +53,7 @@ $months = [1,2,3,4,5,6,7,8,9,10,11,12]
                                     <select class="form-control filter-select " id="custId" name="custId" data-live-search="true">
                                         <option value="">--请选择--</option>
                                         @foreach($customers as $c)
-                                            <option data-tokens="{{$c->fname}}" value="{{$c->id}}" {{$c->id == $custId ? 'selected':''}}>{{$c->fname}}</option>
+                                            <option data-tokens="{{$c->fname}}" value="{{$c->id}}" >{{$c->fname}}</option>
                                         @endforeach
                                     </select>
                                 </div>
