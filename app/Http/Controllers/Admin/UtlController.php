@@ -190,7 +190,7 @@ class UtlController extends Controller
 			$data = Utility::getCustomerDDReturn($custId, $begin_year, $begin_month, $end_year, $end_month);
 		}
 		$user = Auth::user();
-		if($user->isAdmin){
+		if($user->isAdmin()){
 			$customers = Customer::where('fdocument_status', 'C')->where('fforbid_status', 'A')->get();
 		}else if ($user->reference_type == 'employee'){
 			$customers = $user->reference->getVisibleCustomer();
