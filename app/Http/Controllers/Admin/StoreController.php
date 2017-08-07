@@ -9,6 +9,8 @@ use App\Models\Busi\Employee;
 use App\Models\Busi\StoreChange;
 use App\Models\Busi\VisitLineCalendar;
 use App\Models\Busi\VisitLineStore;
+use App\Models\Busi\VisitStoreCalendar;
+use App\Models\Busi\VisitTodoCalendar;
 use App\Services\ExcelService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -20,6 +22,7 @@ use Illuminate\Support\Facades\DB;
 use Image;
 use Illuminate\Http\Response;
 use Auth;
+use Mockery\Exception;
 use SysConfigRepo;
 use App\Services\LogSvr;
 
@@ -300,18 +303,45 @@ class StoreController extends AdminController
     public function exchange(Request $request){
         $data = $request->all();
 
-        Store::query()->where('femp_id',$data['old_femp_id'])->update([
-            'femp_id' => $data['new_femp_id']
-        ]);
+	    DB::beginTransaction();
+	    try {
+		    Store::query()->where('femp_id', $data['old_femp_id'])->update([
+			    'femp_id' => $data['new_femp_id']
+		    ]);
 
-        VisitLineStore::query()->where('femp_id',$data['old_femp_id'])->update([
-            'femp_id' => $data['new_femp_id']
-        ]);
+		    VisitLineStore::query()->where('femp_id', $data['old_femp_id'])->update([
+			    'femp_id' => $data['new_femp_id']
+		    ]);
 
-        return response()->json([
-            'code' => 200,
-            'result' => '调换成功！'
-        ]);
+		    $yesterday = date('Y-m-d', strtotime('-1 day'));
+		    VisitLineCalendar::where('femp_id', $data['old_femp_id'])
+			    ->where('fcreate_date', '>', $yesterday)
+			    ->update([
+				    'femp_id' => $data['new_femp_id']
+			    ]);
+		    VisitStoreCalendar::where('femp_id', $data['old_femp_id'])
+			    ->where('fcreate_date', '>', $yesterday)
+			    ->update([
+				    'femp_id' => $data['new_femp_id']
+			    ]);
+		    VisitTodoCalendar::where('femp_id', $data['old_femp_id'])
+			    ->where('fcreate_date', '>', $yesterday)
+			    ->update([
+				    'femp_id' => $data['new_femp_id']
+			    ]);
+		    DB::commit();
+
+		    return response()->json([
+			    'code' => 200,
+			    'result' => '调换成功！'
+		    ]);
+	    }catch (Exception $exception){
+		    DB::rollBack();
+		    return response()->json([
+			    'code' => 400,
+			    'result' => '调换失败！'
+		    ]);
+	    }
     }
 
     public function initFilter($queryBuilder, $data)
