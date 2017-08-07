@@ -28,7 +28,7 @@ class VisitLineStoreController extends ApiController
 		$pageSize = $request->input('pageSize', 10);
 		$sort = $request->input('sort', 'id asc');
 		$entity = $this->newEntity();
-		$query = $entity->query()->with(['store']);
+		$query = $entity->query()->with(['store','employee']);
 		$this->fillQueryForIndex($request, $query);
 		$count = $query->count();
 		$arr = explode(',', $sort);
@@ -39,7 +39,10 @@ class VisitLineStoreController extends ApiController
 		}
 		$data = $query->take($pageSize)->skip(($page - 1) * $pageSize)->get();
 		foreach ($data as &$d){
-			$calendar = VisitStoreCalendar::where('femp_id', $d->femp_id)->where('fstore_id', $d->fstore_id)->orderBy('id', 'desc')->first(['id','fstatus','frevisit_status']);
+			$calendar = VisitStoreCalendar::where('femp_id', $d->femp_id)
+				->where('fstore_id', $d->fstore_id)
+				->orderBy('id', 'desc')
+				->first(['id','fstatus','frevisit_status']);
 			if(!empty($calendar)) {
 				$d->store_calender_id = $calendar->id;
 				$d->store_calender_status = $calendar->fstatus;
