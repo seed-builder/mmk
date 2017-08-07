@@ -26,7 +26,14 @@ class FinStatementController extends AdminController
 	{
 		//
 		//$customers = Customer::where('fdocument_status', 'C')->where('fforbid_status', 'A')->get();
-		return view('admin.fin-statement.index');
+		$user = Auth::user();
+		if($user->isAdmin){
+			$customers = Customer::where('fdocument_status', 'C')->where('fforbid_status', 'A')->get();
+		}else if ($user->reference_type == 'employee'){
+			$customers = $user->reference->getVisibleCustomer();
+		}
+
+		return view('admin.fin-statement.index', ['customers' => $customers]);
 	}
 
 	/**

@@ -6,6 +6,7 @@ use App\Models\Busi\Customer;
 use App\Services\Utility;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Storage;
 use Response;
 use Image;
