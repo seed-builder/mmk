@@ -188,8 +188,13 @@ class UtlController extends Controller
 		if( $custId > 0 && $begin_year > 0 && $begin_month > 0){
 			$data = Utility::getCustomerDDReturn($custId, $begin_year, $begin_month, $end_year, $end_month);
 		}
-
-		//$customers = Customer::where('fdocument_status', 'C')->where('fforbid_status', 'A')->get();
+		$user = Auth::user();
+		if($user->isAdmin){
+			$customers = Customer::where('fdocument_status', 'C')->where('fforbid_status', 'A')->get();
+		}else if ($user->reference_type == 'employee'){
+			$customers = $user->reference->getVisibleCustomer();
+		}
+		//
     	return view('admin.utl.ddreturn', compact('custId', 'begin_year', 'begin_month', 'end_year', 'end_month', 'data', 'customers'));
 	}
 
