@@ -162,6 +162,7 @@ class VisitTodoCalendarController extends ApiController
 			$calendars = VisitTodoCalendar::where('fstore_calendar_id', $todoCalendar->fstore_calendar_id)
 				->where('fparent_id', 0)
 				->where('fis_must_visit', 1)
+				->where('fcategory', $todoCalendar->fcategory)
 				->where('fstatus', '<', 3)
 				->where('id', '<>', $todoCalendar->id)
 				->get();
