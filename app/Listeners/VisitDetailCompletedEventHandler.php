@@ -32,7 +32,7 @@ class VisitDetailCompletedEventHandler
 		if($event->visit_todo_calendar_id){
 			$todoCalendar = VisitTodoCalendar::find($event->visit_todo_calendar_id);
 			$needDos = $todoCalendar->checkEnd();
-			if($needDos == 0) {
+			if(empty($needDos)) {
 				$todoCalendar->fstatus = $this->completeStatus;
 				$todoCalendar->save();
 			}
