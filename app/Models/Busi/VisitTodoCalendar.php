@@ -85,4 +85,24 @@ class VisitTodoCalendar extends BaseModel
         }
     }
 
+	public function checkEnd(){
+		$needDos = [];
+		//拜访总结 - 结束
+		if(!empty($this->todo) &&
+			($this->todo->ffunction_number == 'JSBF' || $this->todo->ffunction_number == 'FXZJ')){
+			$calendars = VisitTodoCalendar::where('fstore_calendar_id', $this->fstore_calendar_id)
+				->where('fparent_id', 0)
+				->where('fis_must_visit', 1)
+				->where('fcategory', $this->fcategory)
+				->where('fstatus', '<', 3)
+				->where('id', '<>', $this->id)
+				->get();
+			if(!empty($calendars)){
+				foreach ($calendars as $calendar){
+					$needDos[] = $calendar->todo->fname;
+				}
+			}
+		}
+		return $needDos;
+	}
 }

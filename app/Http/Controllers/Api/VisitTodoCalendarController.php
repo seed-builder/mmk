@@ -135,7 +135,11 @@ class VisitTodoCalendarController extends ApiController
 		//$entity = Entity::find($id);
 		$data = $request->all();
 		//var_dump($data);
-		$needDos = $this->checkEnd($entity, $data);
+		$needDos = [];
+		if( $data['fstatus'] == 3){
+			$needDos = $entity->checkEnd();
+		}
+
 		//LogSvr::update()->info('$needDos ' . json_encode($needDos));
 		if(empty($needDos)) {
 			//LogSvr::update()->info(' do update ');
