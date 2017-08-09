@@ -41,6 +41,7 @@ class VisitLineStoreController extends ApiController
 		foreach ($data as &$d){
 			$calendar = VisitStoreCalendar::where('femp_id', $d->femp_id)
 				->where('fstore_id', $d->fstore_id)
+				->where('fstatus', 3)
 				->orderBy('id', 'desc')
 				->first(['id','fstatus','frevisit_status']);
 			if(!empty($calendar)) {
