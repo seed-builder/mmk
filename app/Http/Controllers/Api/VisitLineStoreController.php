@@ -43,14 +43,16 @@ class VisitLineStoreController extends ApiController
 				->where('fstore_id', $d->fstore_id)
 				->where('fstatus', 3)
 				->orderBy('id', 'desc')
-				->first(['id','fstatus','frevisit_status']);
+				->first(['id','fstatus','fdate','frevisit_status']);
 			if(!empty($calendar)) {
 				$d->store_calender_id = $calendar->id;
 				$d->store_calender_status = $calendar->fstatus;
+				$d->store_calender_date = $calendar->fdate;
 				$d->store_calender_revisit_status = $calendar->frevisit_status;
 			}else{
 				$d->store_calender_id = 0;
 				$d->store_calender_status = 0;
+				$d->store_calender_date = '';
 				$d->store_calender_revisit_status = 0;
 			}
 		}
