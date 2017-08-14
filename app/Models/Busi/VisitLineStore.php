@@ -20,8 +20,9 @@ use Illuminate\Database\Eloquent\Model;
  * @SWG\Property(name="fmodify_id", type="integer", description="修改人")
  * @SWG\Property(name="fstore_id", type="integer", description="门店id")
  * @SWG\Property(name="fweek_day", type="integer", description="week day")
- * @SWG\Property(name="store_calender_id", type="integer", description="门店巡访日历id")
- * @SWG\Property(name="store_calender_status", type="integer", description="门店巡访状态（0-unknown ,1-未开始， 2-进行中， 3-已完成）")
+ * @SWG\Property(name="store_calender_id", type="integer", description="门店最后一次巡访完成日历id")
+ * @SWG\Property(name="store_calender_status", type="integer", description="门店最后一次巡访完成状态（0-unknown ,3-已完成）")
+ * @SWG\Property(name="store_calender_date", type="integer", description="门店最后一次巡访完成日期")
  * @SWG\Property(name="store_calender_revisit_status", type="integer", description="门店复巡状态（0-unknown ,1-未开始， 2-进行中， 3-已完成）")
  * @SWG\Property(name="id", type="integer", description="")
  */
