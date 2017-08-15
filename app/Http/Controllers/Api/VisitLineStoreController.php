@@ -47,7 +47,7 @@ class VisitLineStoreController extends ApiController
 			if(!empty($calendar)) {
 				$d->store_calender_id = $calendar->id;
 				$d->store_calender_status = $calendar->fstatus;
-				$d->store_calender_date = date('Y-m-d',$calendar->fmodify_date);
+				$d->store_calender_date = date('Y-m-d H:i:s',strtotime($calendar->fmodify_date));
 				$d->store_calender_revisit_status = $calendar->frevisit_status;
 			}else{
 				$d->store_calender_id = 0;
