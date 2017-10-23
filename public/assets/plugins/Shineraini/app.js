@@ -544,10 +544,6 @@ layui.use(['form', 'layedit', 'laydate'], function () {
 
 });
 
-$(document).ready(function () {
-    setInterval("message()", 5000);
-});
-
 /*
  * 导出excel
  */

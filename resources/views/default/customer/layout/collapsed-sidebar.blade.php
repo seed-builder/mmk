@@ -235,7 +235,7 @@ $loginUserName = empty($loginUser->nick_name) ? $loginUser->name: $loginUser->ni
         });
     });
 
-    $(function () {
+    function message() {
         $.get('/customer/message/unread',{},function(data,status,xhr){
             var last_unread_id = $("#last_unread_id").val();
             if (data.count>0) {
@@ -259,7 +259,11 @@ $loginUserName = empty($loginUser->nick_name) ? $loginUser->name: $loginUser->ni
                 //     .velocity("fadeOut", { delay: 500, duration: 1500 });
             }
         },'json')
-    })
+    }
+
+    $(document).ready(function () {
+        setInterval("message()", 5000);
+    });
 </script>
 @yield('js')
 @include('customer.layout.toastr-message')

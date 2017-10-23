@@ -252,7 +252,9 @@ $loginUserName = empty($loginUser->nick_name) ? $loginUser->name: $loginUser->ni
         })
     })
 
-
+    $(document).ready(function () {
+        setInterval("message()", 5000);
+    });
 </script>
 @yield('js')
 @include('admin.layout.toastr-message')
