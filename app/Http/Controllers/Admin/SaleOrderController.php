@@ -164,7 +164,7 @@ class SaleOrderController extends AdminController
 				}
 			}
 		}
-		return ['success' => false];
+		return ['success' => true];
 	}
 
 
