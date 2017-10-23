@@ -111,10 +111,10 @@ $loginUserName = empty($loginUser->nick_name) ? $loginUser->name: $loginUser->ni
                                             <a href="{{url('admin/message/receiveMessages')}}">
                                                 <h4>
                                                     {{$message->content->title}}
-                                                    <small><i class="fa fa-clock-o"></i> {{date('Y-m-d',strtotime($message->fcreate_date))}}</small>
+                                                    {{--<small><i class="fa fa-clock-o"></i> {{date('Y-m-d',strtotime($message->fcreate_date))}}</small>--}}
                                                 </h4>
                                                 {{--<p>{!! substr($message->content->content,0,40) !!}</p>--}}
-                                                <p class="text-overflow">{!! $message->content->content !!}</p>
+                                                {{--<p class="text-overflow">{!! $message->content->content !!}</p>--}}
                                             </a>
                                         </li>
                                     @endforeach

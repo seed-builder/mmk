@@ -106,9 +106,9 @@ $loginUserName = empty($loginUser->nick_name) ? $loginUser->name: $loginUser->ni
                                             <a href="{{url('customer/message/receiveMessages')}}">
                                                 <h4>
                                                     {{$message->content->title}}
-                                                    <small><i class="fa fa-clock-o"></i> {{$message->fcreate_date}}</small>
                                                 </h4>
-                                                <p class="text-overflow">{!! $message->content->content !!}</p>
+                                                {{--<small class="pull-right"><i class="fa fa-clock-o"></i> {{$message->fcreate_date}}</small>--}}
+                                                {{--<p class="text-overflow">{!! $message->content->content !!}</p>--}}
                                             </a>
                                         </li>
                                     @endforeach
