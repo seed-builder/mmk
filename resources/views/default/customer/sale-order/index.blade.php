@@ -77,11 +77,13 @@
                                 <th>id</th>
                                 <th>订单号</th>
                                 <th>门店</th>
+                                <th>订单日期</th>
                                 <th>下单日期</th>
                                 <th>业务员</th>
                                 <th>金额</th>
                                 {{--<th>经销商</th>--}}
                                 <th>发货状态</th>
+                                <th>发货时间</th>
                                 <th>来源</th>
                             </tr>
                             </thead>

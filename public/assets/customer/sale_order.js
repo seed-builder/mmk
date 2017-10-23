@@ -75,7 +75,10 @@ define(function (require, exports, module) {
                         return full.store_name
                     }
                 },
-                {'data': 'fdate'},
+                {'data': 'fdate', render: function (data, type, full) {
+                    return data.replace('00:00:00', '');
+                }},
+                {'data': 'fcreate_date'},
                 {
                     'data': 'employee_id',
                     render: function (data, type, full) {
@@ -83,21 +86,13 @@ define(function (require, exports, module) {
                     }
                 },
                 {'data': 'ftotal_amount'},
-                // {
-                //     'data': 'fcust_id',
-                //     render: function (data, type, full) {
-                //         if (full.customer != null)
-                //             return full.customer.fname
-                //         else
-                //             return "";
-                //     }
-                // },
                 {
                     'data': 'fsend_status',
                     render: function (data, type, full) {
                         return send_status(data);
                     }
                 },
+                {'data': 'fsend_date'},
                 {'data': 'source'},
             ],
             columnDefs: [
@@ -150,7 +145,7 @@ define(function (require, exports, module) {
                                 for(var i = 0; i < orders.length; i++){
                                     ids[ids.length] = orders[i].id;
                                 }
-                                $.post('/admin/sale-order/send',
+                                $.post('/customer/sale-order/send',
                                     {_token: $('meta[name="_token"]').attr('content'), ids: ids},
                                     function (result) {
                                         if(result.cancelled == 0){
@@ -385,7 +380,7 @@ define(function (require, exports, module) {
                 infoTable.columns(1).search(order.id).draw();
                 orderTable.buttons(['.accept', '.send']).enable(order.fsend_status == 'A');
                 orderTable.buttons(['.buttons-edit']).enable(order.source != 'phone' && order.fsend_status == 'A');
-                orderTable.buttons(['.buttons-remove']).enable(order.source != 'phone' && order.fsend_status == 'A');
+                orderTable.buttons(['.buttons-remove']).enable(order.fsend_status == 'A');
                 infoTable.buttons(['.buttons-create']).enable(order.source != 'phone');
             }
         }
@@ -400,7 +395,7 @@ define(function (require, exports, module) {
             var detail = detailrows.length > 0 ? detailrows[0] : null;
             //console.log(order);
             if (order && detail) {
-                infoTable.buttons(['.buttons-edit', '.buttons-remove']).enable(order.source != 'phone' && detail.fsend_status == 'A');
+                infoTable.buttons(['.buttons-edit', '.buttons-remove']).enable(detail.fsend_status == 'A');
                 infoTable.buttons(['.sure', '.send']).enable(detail.fsend_status == 'B');
             }
         }

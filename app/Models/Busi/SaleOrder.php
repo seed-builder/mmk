@@ -98,6 +98,9 @@ class SaleOrder extends BaseModel
 			}
 		});
 
+		static::deleted(function ($order){
+            $order->items()->delete();
+        });
 	}
 
 }

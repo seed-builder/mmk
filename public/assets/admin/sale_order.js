@@ -23,6 +23,7 @@ define(function (require, exports, module) {
                 {'data': 'fbill_no'},
                 {'data': 'store_name',},
                 {'data': 'fdate'},
+                {'data': 'fcreate_date'},
                 {'data': 'employee_name'},
                 {'data': 'customer_name'},
                 {'data': 'ftotal_amount'},
@@ -32,6 +33,7 @@ define(function (require, exports, module) {
                         return send_status(data);
                     }
                 },
+                {'data': 'fsend_date'},
                 {'data': 'source'},
             ],
             columnDefs: [

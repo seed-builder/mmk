@@ -26,6 +26,8 @@ OR REPLACE VIEW view_sale_order AS SELECT
 	st_sale_orders.fsend_status,
 	st_sale_orders.source,
 	st_sale_orders.ftotal_amount,
+	st_sale_orders.fcreate_date,
+	st_sale_orders.fsend_date,
 	bd_customers.id AS customer_id,
 	bd_customers.fname AS customer_name,
 	bd_employees.id AS employee_id,
