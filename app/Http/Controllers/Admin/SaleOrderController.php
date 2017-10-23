@@ -75,6 +75,8 @@ class SaleOrderController extends AdminController
 				'st_sale_orders.fsend_status',
 				'st_sale_orders.source',
 				'st_sale_orders.ftotal_amount',
+				'st_sale_orders.fcreate_date',
+				'st_sale_orders.fsend_date',
 				'bd_customers.fname as customer_name',
 				'bd_employees.fname as employee_name',
 				'st_stores.ffullname as store_name',
