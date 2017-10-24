@@ -56,11 +56,11 @@ class UserController extends ApiController
 			->where('status', 1)
 			->first();
 		if(!empty($user)){
-            if(!empty($user->$device_sn) && $user->$device_sn != $device_sn){
+            if(!empty($user->device_sn) && $user->device_sn != $device_sn){
                 return $this->fail('设备号不一致!');
             }else {
-                $user->$device_sn = $device_sn;
-                $user->$device = $device;
+                $user->device_sn = $device_sn;
+                $user->device = $device;
 
                 event(new UserLoginedEvent($user));
                 return $this->success($user);
