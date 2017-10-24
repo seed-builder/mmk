@@ -112,7 +112,10 @@ class PositionController extends AdminController
     public function updatePos($id,Request $request)
     {
         $data = $request->except('_token');
-        Position::query()->where('id',$id)->update($data);
+        //Position::query()->where('id',$id)->update($data);
+        $entity = Position::find($id);
+        $entity->fill($data);
+        $entity->save();
 
         return response()->json([
             'code' => 200,

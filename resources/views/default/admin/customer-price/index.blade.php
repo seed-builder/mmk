@@ -73,7 +73,6 @@
                 //alert(materials.length);
                 app.index($, 'moduleTable', customers, materials);
             });
-
         });
     </script>
 

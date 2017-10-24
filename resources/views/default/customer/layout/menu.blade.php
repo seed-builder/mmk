@@ -44,6 +44,7 @@ $customer = $user->reference;
                         </span>
                     </a>
                     <ul class="treeview-menu">
+                        <li><a href="{{url('/customer/customer-price')}}"><i class="fa fa-fw fa-clone"></i>售价管理</a></li>
                         <li><a href="{{url('/customer/stock-in')}}"><i class="fa fa-fw fa-indent"></i>入库管理</a></li>
                         <li><a href="{{url('/customer/stock-out')}}"><i class="fa fa-fw fa-truck"></i>出库管理</a></li>
                         <li><a href="{{url('/customer/view-customer-stock-statistic')}}"><i class="fa fa-fw fa-cubes"></i>我的库存</a></li>

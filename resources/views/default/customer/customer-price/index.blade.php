@@ -23,7 +23,7 @@
             <div class="col-xs-12">
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">bd_customer_prices列表</h3>
+                        <h3 class="box-title">售价列表</h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                             </button>
@@ -36,22 +36,19 @@
                         <table id="moduleTable" class="table table-bordered table-hover display nowrap" cellspacing="0" width="100%">
                             <thead>
                             <tr>
-                                <th>fcreate_date</th>
-                                <th>fcust_id</th>
-                                <th>fdocument_status</th>
-                                <th>finvalid_date</th>
-                                <th>finvalid_operator</th>
-                                <th>fis_valid</th>
-                                <th>fmaterial_id</th>
-                                <th>fmax_qty</th>
-                                <th>fmin_qty</th>
-                                <th>fmodify_date</th>
-                                <th>fprice_bottle</th>
-                                <th>fprice_box</th>
-                                <th>fsale_unit</th>
-                                <th>fspecification</th>
-                                <th>fstore_id</th>
                                 <th>id</th>
+                                <th>经销商</th>
+                                <th>产品名称</th>
+                                <th>产品规格</th>
+                                <th>销售单位</th>
+                                {{--<th>销售起数量</th>--}}
+                                {{--<th>销售止数量</th>--}}
+                                <th>单价/箱</th>
+                                <th>单价/瓶</th>
+                                <th>审核状态</th>
+                                <th>是否有效</th>
+                                <th>创建时间</th>
+                                <th>修改时间</th>
                             </tr>
                             </thead>
                         </table>
@@ -69,10 +66,14 @@
 @section('js')
     @include('customer.layout.datatable-js')
     <script type="text/javascript">
+        var customers = {!! json_encode($customers) !!} ;
+        var materials = {!! json_encode($materials) !!} ;
         $(function () {
             seajs.use('customer/customer_price.js', function (app) {
-                app.index($, 'moduleTable');
+                //alert(materials.length);
+                app.index($, 'moduleTable', customers, materials);
             });
+
         });
     </script>
 

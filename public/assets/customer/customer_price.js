@@ -5,7 +5,7 @@ define(function(require, exports, module) {
 
     var zhCN = require('datatableZh');
     var editorCN = require('i18n');
-    exports.index = function ($, tableId) {
+    exports.index = function ($, tableId, customers, materials) {
         var editor = new $.fn.dataTable.Editor({
             ajax: {
                 create: {
@@ -28,24 +28,19 @@ define(function(require, exports, module) {
             table: "#" + tableId,
             idSrc: 'id',
             fields: [
-            { 'label':  'fcreate_date', 'name': 'fcreate_date', },
-                { 'label':  'fcust_id', 'name': 'fcust_id', },
-                { 'label':  'fdocument_status', 'name': 'fdocument_status', },
-                { 'label':  'finvalid_date', 'name': 'finvalid_date', },
-                { 'label':  'finvalid_operator', 'name': 'finvalid_operator', },
-                { 'label':  'fis_valid', 'name': 'fis_valid', },
-                { 'label':  'fmaterial_id', 'name': 'fmaterial_id', },
-                { 'label':  'fmax_qty', 'name': 'fmax_qty', },
-                { 'label':  'fmin_qty', 'name': 'fmin_qty', },
-                { 'label':  'fmodify_date', 'name': 'fmodify_date', },
-                { 'label':  'fprice_bottle', 'name': 'fprice_bottle', },
-                { 'label':  'fprice_box', 'name': 'fprice_box', },
-                { 'label':  'fsale_unit', 'name': 'fsale_unit', },
-                { 'label':  'fspecification', 'name': 'fspecification', },
-                { 'label':  'fstore_id', 'name': 'fstore_id', },
-        ]
+                { 'label':  '经销商', 'name': 'fcust_id', 'type': 'select', 'options': customers},
+                { 'label':  '产品', 'name': 'fmaterial_id', 'type': 'select', 'options': materials},
+                // { 'label':  '销售起数量', 'name': 'fmin_qty', def: 0},
+                // { 'label':  '销售止数量', 'name': 'fmax_qty', def: 1000000},
+                { 'label':  '单价/箱', 'name': 'fprice_box', },
+                { 'label':  '单价/瓶', 'name': 'fprice_bottle', },
+            ]
         });
 
+        editor.on('open', function (e, json, data) {
+            $("#DTE_Field_fcust_id").selectpicker({liveSearch: true});
+            $("#DTE_Field_fmaterial_id").selectpicker({liveSearch: true});
+        })
         var table = $("#" + tableId).DataTable({
             dom: "lBfrtip",
             language: zhCN,
@@ -56,22 +51,27 @@ define(function(require, exports, module) {
             rowId: "id",
             ajax: '/customer/customer-price/pagination',
             columns: [
-                    {  'data': 'fcreate_date' },
-                    {  'data': 'fcust_id' },
-                    {  'data': 'fdocument_status' },
-                    {  'data': 'finvalid_date' },
-                    {  'data': 'finvalid_operator' },
-                    {  'data': 'fis_valid' },
-                    {  'data': 'fmaterial_id' },
-                    {  'data': 'fmax_qty' },
-                    {  'data': 'fmin_qty' },
-                    {  'data': 'fmodify_date' },
-                    {  'data': 'fprice_bottle' },
-                    {  'data': 'fprice_box' },
-                    {  'data': 'fsale_unit' },
-                    {  'data': 'fspecification' },
-                    {  'data': 'fstore_id' },
-                    {  'data': 'id' },
+                {  'data': 'id' },
+                {  'data': 'fcust_id', render: function (data, type, full) {
+                    return full.customer ? full.customer.fname : '';
+                } },
+                {  'data': 'fmaterial_id', render: function (data, type, full) {
+                    return full.material ? full.material.fname : '';
+                } },
+                {  'data': 'fspecification' },
+                {  'data': 'fsale_unit' },
+                // {  'data': 'fmin_qty' },
+                // {  'data': 'fmax_qty' },
+                {  'data': 'fprice_box' },
+                {  'data': 'fprice_bottle' },
+                {  'data': 'fdocument_status', render: function (data, type, full) {
+                    return document_status(data);
+                } },
+                {  'data': 'fis_valid', render: function (data, type, full) {
+                    return data == 1 ? '是' : '否';
+                } },
+                {  'data': 'fcreate_date' },
+                {  'data': 'fmodify_date' },
             ],
             buttons: [
                 // { text: '新增', action: function () { }  },
@@ -80,19 +80,29 @@ define(function(require, exports, module) {
                 {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: editor},
                 {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: editor},
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
+                {text: '审核<i class="fa fa-fw fa-paperclip"></i>', className: 'check', enabled: false},
+                {text: '反审核<i class="fa fa-fw fa-unlink"></i>', className: 'uncheck', enabled: false},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
                 //{extend: 'colvis', text: '列显示'}
             ]
         });
 
-        // table.on( 'select', checkBtn).on( 'deselect', checkBtn);
-        //
-        // function checkBtn(e, dt, type, indexes) {
-        //     var count = table.rows( { selected: true } ).count();
-        //     table.buttons( ['.edit', '.delete'] ).enable(count > 0);
-        // }
+        table.on( 'select', checkBtn).on( 'deselect', checkBtn);
 
+        function checkBtn(e, dt, type, indexes) {
+            // var count = table.rows( { selected: true } ).count();
+            // table.buttons( ['.edit', '.delete'] ).enable(count > 0);
+            checkEditEnabble(table, ['.check'], ['.uncheck']);
+        }
+        //审核
+        $(".check").on('click', function () {
+            dataCheck(table, '/customer/customer-price/check');
+        })
+
+        $(".uncheck").on('click', function () {
+            dataCheck(table, '/customer/customer-price/uncheck');
+        })
     }
 
 });
