@@ -46,6 +46,9 @@ class UserController extends ApiController
 		$phone = $request->input('phone', '');
 		$pwd = $request->input('password', '');
 		$type = $request->input('type','customer');
+        $device_sn = $request->input('device_sn', '');
+        $device = $request->input('device', '');
+
 		$user = User::with(['reference'])
 			->where('name', $phone)
 			->where('password', $pwd)
@@ -53,8 +56,15 @@ class UserController extends ApiController
 			->where('status', 1)
 			->first();
 		if(!empty($user)){
-			event(new UserLoginedEvent($user));
-			return $this->success($user);
+            if(!empty($user->$device_sn) && $user->$device_sn != $device_sn){
+                return $this->fail('设备号不一致!');
+            }else {
+                $user->$device_sn = $device_sn;
+                $user->$device = $device;
+
+                event(new UserLoginedEvent($user));
+                return $this->success($user);
+            }
 		}else {
 			return $this->fail('用户名或者密码错误');
 		}
