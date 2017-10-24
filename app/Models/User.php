@@ -55,7 +55,7 @@ class User extends Authenticatable
 //	    	$user->password = bcrypt($user->password);
 //	    });
         static::updated(function ($model){
-            if ($model->reference_type=='customer'){
+            if ($model->reference_type=='customer' && !empty( $model->reference )){
                 $customer = $model->reference;
                 $customer->ftel = $model->name;
                 $customer->save();
