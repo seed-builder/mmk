@@ -52,9 +52,9 @@ define(function(require, exports, module) {
             ajax: '/customer/customer-price/pagination',
             columns: [
                 {  'data': 'id' },
-                {  'data': 'fcust_id', render: function (data, type, full) {
-                    return full.customer ? full.customer.fname : '';
-                } },
+                // {  'data': 'fcust_id', render: function (data, type, full) {
+                //     return full.customer ? full.customer.fname : '';
+                // } },
                 {  'data': 'fmaterial_id', render: function (data, type, full) {
                     return full.material ? full.material.fname : '';
                 } },

@@ -6,6 +6,7 @@ use App\Models\Busi\Material;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Customer\BaseController;
 use App\Models\Busi\CustomerPrice;
+use Illuminate\Support\Facades\Auth;
 
 class CustomerPriceController extends BaseController
 {
@@ -23,17 +24,19 @@ class CustomerPriceController extends BaseController
     public function index()
     {
         // TODO: Implement newEntity() method.
-        $customers = Customer::where('fdocument_status','C')->where('fforbid_status', 'A')->get();
-        $options = $customers->map(function ($item){
-            return ['label' => $item->fname, 'value' => $item->id];
-        });
-        $collection = array_merge([['label'=> '--请选择--', 'value' => '']] , $options->toArray());
+//        $customers = Customer::where('fdocument_status','C')->where('fforbid_status', 'A')->get();
+//        $options = $customers->map(function ($item){
+//            return ['label' => $item->fname, 'value' => $item->id];
+//        });
+//        $collection = array_merge([['label'=> '--请选择--', 'value' => '']] , $options->toArray());
+        $customer = Auth::user()->reference;
+        $collection = [['label' => $customer->fname, 'value' => $customer->id]];
         $materials = Material::all();
         $option2s = $materials->map(function ($item){
             return ['label' => $item->fname, 'value' => $item->id];
         });
         $mc = array_merge([['label'=> '--请选择--', 'value' => '']] , $option2s->toArray());
-        return view('customer.customer-price.index', ['customers' => $collection, 'materials' => $mc]);
+        return view('customer.customer-price.index', ['customers' => $collection,'materials' => $mc]);
     }
 
 	/**
@@ -79,7 +82,10 @@ class CustomerPriceController extends BaseController
 	*/
 	public function pagination(Request $request, $searchCols = [], $with=[], $conditionCall = null, $all_columns = false){
 		$searchCols = ["fspecification"];
-		return parent::pagination($request, $searchCols, ['customer', 'material']);
+		return parent::pagination($request, $searchCols, ['material'], function ($query){
+		    $customer = Auth::user()->reference;
+            $query->where('fcust_id', $customer->id);
+        });
 	}
 
 }
