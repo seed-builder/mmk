@@ -28,6 +28,7 @@ class Kernel extends ConsoleKernel
         'App\Console\Commands\AttendancePolling',
         'App\Console\Commands\AttRepoortGen',
         'App\Console\Commands\AttStatisticGen',
+        'App\Console\Commands\ClearEmptyOrder',
 
     ];
 
@@ -45,6 +46,7 @@ class Kernel extends ConsoleKernel
 	    $schedule->command('command:attendance_polling')->cron('10 18-22/1 * * *');
 	    $schedule->command('gen:att-stc')->dailyAt('01:10');
 	    $schedule->command('gen:att-rpt')->dailyAt('02:10');
+	    $schedule->command('clear:empty-order')->dailyAt('00:01');
 
 	    //每周日00:00执行 生成下一周的拜访日记
         $schedule->call(function(VisitCalendarService $calendar){
@@ -85,16 +87,16 @@ class Kernel extends ConsoleKernel
         })->dailyAt('01:00');
 
 	    //每天02:00点执行 删除过期的空订单
-	    $schedule->call(function(){
-		    $results = DB::select('select o.id from st_sale_orders o where NOT EXISTS (select 1 from st_sale_order_items item where item.fsale_order_id = o.id)');
-			if(!empty($results)){
-				$ids = [];
-				foreach ($results as $res){
-					$ids[] = $res->id;
-				}
-				SaleOrder::destroy($ids);
-			}
-	    })->dailyAt('02:00');
+//	    $schedule->call(function(){
+//		    $results = DB::select('select o.id from st_sale_orders o where NOT EXISTS (select 1 from st_sale_order_items item where item.fsale_order_id = o.id)');
+//			if(!empty($results)){
+//				$ids = [];
+//				foreach ($results as $res){
+//					$ids[] = $res->id;
+//				}
+//				SaleOrder::destroy($ids);
+//			}
+//	    })->dailyAt('02:00');
 
     }
 
