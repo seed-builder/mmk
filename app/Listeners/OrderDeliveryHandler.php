@@ -61,7 +61,8 @@ class OrderDeliveryHandler //implements ShouldQueue
 				    }
 				    foreach ($orderItems as $item) {
 				    	$price = CustomerPrice::getPrice($order->fcust_id, $item->fmaterial_id,  $item->box_qty);
-
+                        if(empty($price))
+                            return;
 					    $outItem = StockOutItem::create([
 						    'fstock_out_id' => $out->id,
 						    'fmaterial_id' => $item->fmaterial_id,
