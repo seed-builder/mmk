@@ -6,3 +6,5 @@ Route::match(['get', 'post'], 'user/{id}/set-position', ['uses' => 'UserControll
 Route::get('user/batch-user-role', ['uses' => 'UserController@batchUserRole']);
 Route::post('user/batch-user-role', ['uses' => 'UserController@batchUserRole']);
 Route::resource('user', 'UserController');
+Route::post('user/reset-device/{id}', ['uses' => 'UserController@resetDevice']);
+Route::post('user/reset-user-pwd/{id}', ['uses' => 'UserController@resetUserPwd']);

@@ -180,4 +180,39 @@ class UserController extends AdminController
 	    return view('admin.user.batch-user-role',['roles' => $roles]);
     }
 
+    /**
+     * 重置设备
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function resetDevice(Request $request, $id){
+        $emp = User::find($id);
+        $emp->update([
+            'device' => '',
+            'device_sn' => '',
+        ]);
+        return response()->json([
+            'code' => 200,
+            'data' => $emp
+        ]);
+    }
+
+    /**
+     * 重置用户密码
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function resetUserPwd(Request $request, $id){
+        $user = User::find($id);
+        $user->password = md5('888888');
+        $user->save();
+        return response()->json([
+            'code' => 200,
+            'data' => $user
+        ]);
+    }
+
+
 }

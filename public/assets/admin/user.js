@@ -74,6 +74,8 @@ define(function(require, exports, module) {
                 {extend: "create", text: '新增<i class="fa fa-fw fa-plus"></i>', editor: editor},
                 {extend: "edit", text: '编辑<i class="fa fa-fw fa-pencil"></i>', editor: editor},
                 {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: editor},
+                {text: '重置设备<i class="fa fa-fw fa-mobile"></i>', className: 'reset-device', enabled: true},
+                {text: '重置密码<i class="fa fa-fw fa-mobile"></i>', className: 'reset-pwd', enabled: true},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
                 //{extend: 'colvis', text: '列显示'}
@@ -86,6 +88,31 @@ define(function(require, exports, module) {
         //     var count = table.rows( { selected: true } ).count();
         //     table.buttons( ['.edit', '.delete'] ).enable(count > 0);
         // }
+
+        $(".reset-device").on('click', function () {
+            var row = table.rows('.selected').data();
+            layer.confirm('确认重置该用户设备和设备号？', function () {
+                $.post('/admin/user/reset-device/' + row[0].id, {_token: $('meta[name="_token"]').attr('content')}, function (res) {
+                    if (res.code == 200) {
+                        layer.msg('重置设备成功');
+                        table.ajax.reload()
+                    }
+                });
+            });
+        });
+
+        $(".reset-pwd").on('click', function () {
+            //
+            var row = table.rows('.selected').data();
+            layer.confirm('确认重置该用户密码【888888】?', function () {
+                $.post('/admin/user/reset-user-pwd/' + row[0].id, {_token: $('meta[name="_token"]').attr('content')}, function (res) {
+                    if (res.code == 200) {
+                        layer.msg('重置密码成功');
+                    }
+                });
+            });
+        });
+
 
     }
 

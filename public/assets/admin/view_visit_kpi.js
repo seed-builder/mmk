@@ -97,6 +97,8 @@ define(function(require, exports, module) {
                 { 'data': 'month_amount' },
                 { 'data': 'times_amount' },
                 { 'data': 'num_amount' },
+                { 'data': 'sended_day_amount' },
+                { 'data': 'sended_month_amount' },
                 // {  'data': 'fdate' },
 
             ],
