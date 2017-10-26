@@ -54,7 +54,7 @@ class SaleOrder extends BaseModel
 	 * 总的订单数量(箱)
 	 */
     public function getTotalQtyAttribute(){
-		$qty = DB::table('st_sale_order_items')->where('fsale_order_id', $this->id)->sum('fqty');
+		$qty = DB::table('st_sale_order_items')->where('fsale_order_id', $this->id)->sum(DB::raw('fqty+fpresent_qty'));
 		//$baseQty = DB::table('st_sale_order_items')->where('fsale_order_id', $this->id)->sum('fbase_qty');
 		return $qty;
     }
