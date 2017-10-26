@@ -32,7 +32,7 @@ $customer = $user->reference;
                         <li><a href="{{url('/customer/store')}}"><i class="fa fa-fw fa-home"></i>我的门店</a></li>
                         <li><a href="{{url('/customer/sale-order')}}"><i class="fa fa-fw fa-reorder"></i>门店订单</a></li>
                         <li><a href="{{url('/customer/stock')}}"><i class="fa fa-fw fa-cubes"></i>门店库存</a></li>
-                        <li><a href="{{url('/customer/view-store-out')}}"><i class="fa fa-fw fa-truck"></i>门店销售记录</a></li>
+                        <li><a href="{{url('/customer/view-sale-order-item')}}"><i class="fa fa-fw fa-truck"></i>门店销售记录</a></li>
                     </ul>
                 </li>
                 <li class="treeview ">
