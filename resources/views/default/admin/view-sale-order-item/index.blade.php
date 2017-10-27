@@ -49,6 +49,10 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label class="col-sm-1 control-label">物料</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control filter-condition" filter-name="material_name" filter-operator="like" >
+                                    </div>
                                     <label class="col-sm-1 control-label">开始日期</label>
                                     <div class="col-sm-2">
                                         <input type="text" class="form-control filter-condition filter-date" filter-name="fdate" filter-operator=">=" >
@@ -57,10 +61,11 @@
                                     <div class="col-sm-2">
                                         <input type="text" class="form-control filter-condition filter-date" filter-name="fdate" filter-operator="<=" >
                                     </div>
-                                    <div class="col-sm-3 col-sm-offset-1">
-                                        <button type="button" class="btn btn-info filter-submit">查询</button>
-                                        <button type="button" class="btn btn-default filter-reset">重置</button>
-                                    </div>
+
+                                </div>
+                                <div class="box-footer" style="text-align: center">
+                                    <button type="button" class="btn btn-info filter-submit">查询</button>
+                                    <button type="button" class="btn btn-default filter-reset">重置</button>
                                 </div>
                             </form>
                         </div>
