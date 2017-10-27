@@ -32,7 +32,32 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-
+                        <div class="panel panel-default">
+                            <div class="form-horizontal filter " filter-table="#moduleTable">
+                                <div class="form-group">
+                                    <label class="col-sm-2 col-md-1 control-label">物料</label>
+                                    <div class="col-sm-2 col-md-3">
+                                        <select class="form-control filter-select filter-condition" id="fmaterial_id" filter-name="fmaterial_id"  name="fmaterial_id" data-live-search="true" filter-operator="=" >
+                                            @foreach($materials as $c)
+                                                <option data-tokens="{{$c['label']}}" value="{{$c['value']}}" >{{$c['label']}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <label class="col-sm-2 col-md-1 control-label">经销商</label>
+                                    <div class="col-sm-2 col-md-3">
+                                        <select class="form-control filter-select filter-condition" id="fcust_id" filter-name="fcust_id"  name="fcust_id" data-live-search="true" filter-operator="=" >
+                                            @foreach($customers as $c)
+                                                <option data-tokens="{{$c['label']}}" value="{{$c['value']}}" >{{$c['label']}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4 col-md-4">
+                                        <button type="button" class="btn btn-info filter-submit">查询</button>
+                                        <button type="button" class="btn btn-default filter-reset">重置</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <table id="moduleTable" class="table table-bordered table-hover display nowrap" cellspacing="0" width="100%">
                             <thead>
                             <tr>
