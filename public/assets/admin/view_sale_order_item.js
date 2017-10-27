@@ -21,7 +21,9 @@ define(function(require, exports, module) {
             columns: [
                 {  'data': 'employee_name' },
                 {  'data': 'position_name' },
-                {  'data': 'fdate' },
+                {  'data': 'fdate', render: function (data, type, full) {
+                    return data.replace('00:00:00','');
+                } },
                 {  'data': 'store_name' },
                 {  'data': 'store_number' },
                 {  'data': 'store_channel' },
