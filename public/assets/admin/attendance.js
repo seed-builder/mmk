@@ -51,7 +51,9 @@ define(function(require, exports, module) {
             columns: [
                 {"data": "id"},
                 {"data": "fname"},
-                {"data": "fday"},
+                {"data": "fday", render: function (data, type, full) {
+                    return data.replace('00:00:00','');
+                }},
                 {"data": 'fbegin'},
                 {"data": 'bg_address'},
                 {"data": 'fcomplete'},
