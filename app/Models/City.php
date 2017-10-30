@@ -23,7 +23,7 @@ class City extends Model
 		if(!empty($country)) $arr[] = $country;
 		$mergerName = implode(',',$arr);
 		$entity = static::where('MergerName', $mergerName)->first();
-		if($entity){
+		if(!empty($entity->ZipCode)){
 			return $entity->ZipCode;
 		}else{
 			return false;
