@@ -18,7 +18,7 @@ class City extends Model
 	 */
 	public static function getPostalCode($province, $city, $country){
 		$arr = ['中国'];
-		if(!empty($province)) $arr[] = $province;
+		if(!empty($province)) $arr[] = str_replace('市', '', $province) ;
 		if(!empty($city)) $arr[] = $city;
 		if(!empty($country)) $arr[] = $country;
 		$mergerName = implode(',',$arr);
