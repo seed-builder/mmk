@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Busi\Employee;
+use App\Models\Busi\VisitStoreCalendar;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Busi\Attendance as Entity;
@@ -31,12 +32,29 @@ class AttendanceController extends ApiController
 		if(!empty($employee)){
 			$data['fdept_id'] = $employee->fdept_id;
 		}
+		if(empty($data['type'])){
+		    $data['type'] = 0;
+        }
+        if($data['type'] == 1){
+		    //检查是否有日开始
+            $c = Entity::where(DB::raw("date_format(ftime, '%Y-%m-%d')"), date('Y-m-d'))
+                ->where('ftype', 0)
+                ->where('femp_id', $data['femp_id'])
+                ->count();
+            if($c == 0){
+                return $this->fail('未日开始, 不能日完成');
+            }
+            $s = VisitStoreCalendar::where('fdate', date('Y-m-d'))->where('femp_id', $data['femp_id'])->where('fstatus', '<', 3)->count();
+            if($s > 0){
+                return $this->fail('存在未拜访完成门店, 不能日完成');
+            }
+        }
 		$entity = $this->newEntity($data);
 		//$entity = Entity::create($data);
 		$re = $entity->save();
 		//LogSvr::Sync()->info('ModelCreated : '.json_encode($entity));
-		$status = $re ? 200 : 400;
-		return response($entity, $status);
+		//$status = $re ? 200 : 400;
+		return  $re ? $this->success($entity, '成功') : $this->fail('失败'); //response($entity, $status);
 	}
 
     public function month(Request $request){
