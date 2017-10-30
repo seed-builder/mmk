@@ -132,6 +132,15 @@ class VisitTodoCalendarController extends ApiController
 		if(empty($entity)){
 			return response(['success' => false, 'msg' => '不存在该巡访日历项'], 401);
 		}
+		//
+        $s = VisitStoreCalendar::where('id', '<>', $entity->fstore_calendar_id )
+            ->where('femp_id', $entity->femp_id)
+            ->where('fstatus', 2)
+            ->where('fdate', $entity->fdate)
+            ->count();
+        if($s > 0){
+            return $this->fail('存在未拜访完成门店, 不允许进行该项拜访!');
+        }
 		//$entity = Entity::find($id);
 		$data = $request->all();
 		//var_dump($data);
