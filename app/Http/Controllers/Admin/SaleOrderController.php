@@ -142,7 +142,7 @@ class SaleOrderController extends AdminController
 		}
 		DB::beginTransaction();
 		try {
-			SaleOrder::whereIn('id', $ids)->update(['fsend_status' => 'C']);
+			SaleOrder::whereIn('id', $ids)->update(['fsend_status' => 'C', 'fsend_date' => date('Y-m-d H:i:s')]);
 			SaleOrderItem::whereIn('fsale_order_id', $ids)->update(['fsend_status' => 'C']);
 			event(new OrderDeliveryEvent($ids));
 			DB::commit();

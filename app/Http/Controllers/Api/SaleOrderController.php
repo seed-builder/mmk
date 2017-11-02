@@ -67,6 +67,7 @@ class SaleOrderController extends ApiController
 		try {
 			$entity->fsend_status = 'C';
 			$entity->fdocument_status = 'C';
+			$entity->fsend_date = date('Y-m-d H:i:s');
 			$entity->save();
 			$entity->items()->update(['fsend_status' => 'C', 'fdocument_status' => 'C']);
 			DB::commit();
