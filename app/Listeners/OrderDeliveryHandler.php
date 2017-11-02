@@ -46,8 +46,8 @@ class OrderDeliveryHandler //implements ShouldQueue
 
 		    $orderItems = $order->items()->where('fsend_status', 'C')->get();
 		    if (!empty($orderItems)) {
-			    DB::beginTransaction();
-			    try {
+			    //DB::beginTransaction();
+			    //try {
 				    $out = StockOut::where('fsbill_no', $order->fbill_no)->first();
 				    if (empty($out)) {
 					    $out = StockOut::create([
@@ -80,10 +80,10 @@ class OrderDeliveryHandler //implements ShouldQueue
 							'famount' => $price->fprice_box * $item->box_qty + $price->fprice_bottle * $item->bottle_qty,
 					    ]);
 				    }
-				    DB::commit();
-			    } catch (Exception $e) {
-				    DB::rollback();
-			    }
+//				    DB::commit();
+//			    } catch (Exception $e) {
+//				    DB::rollback();
+//			    }
 		    }
 	    }
     }
