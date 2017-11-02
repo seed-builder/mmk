@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Services\LogSvr;
 use Closure;
 
 /**
@@ -38,6 +39,7 @@ class VerifyApiSign
         $_sign = $data['_sign'];
         $sign = api_sign($data, $request);// md5($str);
         if($_sign == $sign) {
+            LogSvr::api()->info("path = {$p}, parameters: " . json_encode($data));
             return $next($request);
         }else{
             return response('Fail: the sign is wrong!  the correct sign is: '.$sign, 401);
