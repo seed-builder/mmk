@@ -138,7 +138,7 @@ class SaleOrderController extends AdminController
 		$ids = $request->input('ids', []);
 		$re = $this->checkPrice($ids);
 		if($re['success'] == false){
-			return $this->fail('【'+$re['material']+'】未维护售价，无法配送');
+			return $this->fail('【' . $re['material'] .'】未维护售价，无法配送');
 		}
 		DB::beginTransaction();
 		try {
@@ -150,6 +150,7 @@ class SaleOrderController extends AdminController
 			DB::rollBack();
 			$result = false;
 			$msg = $e->getMessage();
+
 		}
 		return $result ? $this->success(1) : $this->fail($msg);
 	}
