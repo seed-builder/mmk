@@ -46,7 +46,7 @@ class Kernel extends ConsoleKernel
 	    $schedule->command('command:attendance_polling')->cron('10 18-22/1 * * *');
 	    $schedule->command('gen:att-stc')->dailyAt('01:10');
 	    $schedule->command('gen:att-rpt')->dailyAt('02:10');
-	    $schedule->command('clear:empty-order')->dailyAt('00:01');
+	    $schedule->command('clear:empty-order')->dailyAt('00:25');
 
 	    //每周日00:00执行 生成下一周的拜访日记
         $schedule->call(function(VisitCalendarService $calendar){
