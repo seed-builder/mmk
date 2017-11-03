@@ -32,10 +32,10 @@ class AttendanceController extends ApiController
 		if(!empty($employee)){
 			$data['fdept_id'] = $employee->fdept_id;
 		}
-		if(empty($data['type'])){
-		    $data['type'] = 0;
+		if(empty($data['ftype'])){
+		    $data['ftype'] = 0;
         }
-        if($data['type'] == 1){
+        if($data['ftype'] == 1){
 		    //检查是否有日开始
             $c = Entity::where(DB::raw("date_format(ftime, '%Y-%m-%d')"), date('Y-m-d'))
                 ->where('ftype', 0)
