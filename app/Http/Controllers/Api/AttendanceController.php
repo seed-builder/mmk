@@ -42,19 +42,21 @@ class AttendanceController extends ApiController
                 ->where('femp_id', $data['femp_id'])
                 ->count();
             if($c == 0){
-                return $this->fail('未日开始, 不能日完成');
+//                return $this->fail('未日开始, 不能日完成');
+                return response('未日开始, 不能日完成', 400);
             }
             $s = VisitStoreCalendar::where('fdate', date('Y-m-d'))->where('femp_id', $data['femp_id'])->where('fstatus', '<', 3)->count();
             if($s > 0){
-                return $this->fail('存在未拜访完成门店, 不能日完成');
+//                return $this->fail('存在未拜访完成门店, 不能日完成');
+                return response('存在未拜访完成门店, 不能日完成', 400);
             }
         }
 		$entity = $this->newEntity($data);
 		//$entity = Entity::create($data);
 		$re = $entity->save();
 		//LogSvr::Sync()->info('ModelCreated : '.json_encode($entity));
-		//$status = $re ? 200 : 400;
-		return  $re ? $this->success($entity, '成功') : $this->fail('失败'); //response($entity, $status);
+		$status = $re ? 200 : 400;
+		return  response($entity, $status);//$re ? $this->success($entity, '成功') : $this->fail('失败'); //response($entity, $status);
 	}
 
     public function month(Request $request){
