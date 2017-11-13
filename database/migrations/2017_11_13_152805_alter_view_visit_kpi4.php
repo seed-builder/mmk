@@ -84,8 +84,8 @@ FROM
 INNER JOIN bd_employees emp ON ed.femp_id = emp.id
 LEFT JOIN bd_positions pos ON emp.fpost_id = pos.id
 
-LEFT JOIN view_visit_store st ON ed.femp_id = st.femp_id and st.fcreate_date <= ed.fdate
-LEFT JOIN view_visit_valid_store vst ON ed.femp_id = vst.femp_id and vst.fcreate_date <= ed.fdate
+LEFT JOIN view_visit_store st ON ed.femp_id = st.femp_id and DATE_FORMAT(st.fcreate_date,'%Y-%m-%d') <= ed.fdate
+LEFT JOIN view_visit_valid_store vst ON ed.femp_id = vst.femp_id and DATE_FORMAT(vst.fcreate_date,'%Y-%m-%d') <= ed.fdate
 LEFT JOIN view_visit_day_store ds on ed.femp_id = ds.femp_id and ds.fdate=ed.fdate
 LEFT JOIN view_visit_day_store_done dsd on ed.femp_id=dsd.femp_id and dsd.fdate=ed.fdate
 LEFT JOIN view_visit_month_store ms ON ed.femp_id = ms.femp_id AND ed.fmonth = ms.fmonth
