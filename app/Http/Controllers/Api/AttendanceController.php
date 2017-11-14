@@ -45,7 +45,7 @@ class AttendanceController extends ApiController
 //                return $this->fail('未日开始, 不能日完成');
                 return response('未日开始, 不能日完成', 400);
             }
-            $s = VisitStoreCalendar::where('fdate', date('Y-m-d'))->where('femp_id', $data['femp_id'])->where('fstatus', '<', 3)->count();
+            $s = VisitStoreCalendar::where('fdate', date('Y-m-d'))->where('femp_id', $data['femp_id'])->where('fstatus', '=', 2)->count();
             if($s > 0){
 //                return $this->fail('存在未拜访完成门店, 不能日完成');
                 return response('存在未拜访完成门店, 不能日完成', 400);
