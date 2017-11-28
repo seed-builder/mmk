@@ -165,7 +165,7 @@ select
 view_visit_kpi.*,
 st.store_total,
 vst.valid_store_total,
-view_visit_kpi.month_store_total / vst.valid_store_total * 100 AS rate
+view_visit_kpi.month_store_done_total / vst.valid_store_total * 100 AS rate
 
 from view_visit_kpi
 
