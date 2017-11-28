@@ -138,7 +138,7 @@ class ViewVisitKpiController extends AdminController
         if(!$user->isAdmin()) {
             $ids = $this->getCurUsersEmployeeIds();
             if (!empty($ids)) {
-                $queryBuilder->whereIn('femp_id', $ids);
+                $queryBuilder->whereIn(DB::raw('view_visit_kpi.femp_id'), $ids);
             }
         }
 
