@@ -60,7 +60,7 @@ define(function (require, exports, module) {
                 {'data': 'fdate'},
                 {'data': 'fcreate_date'},
                 {'data': 'employee_name'},
-                {'data': 'admin_name'},
+                {'data': 'customer_name'},
                 {'data': 'ftotal_amount'},
                 {
                     'data': 'fsend_status',
