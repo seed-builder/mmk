@@ -257,6 +257,19 @@ define(function (require, exports, module) {
                         });
                     })
                 }},
+                {
+                    text: '更新编码<i class="fa fa-pencil-square-o"></i>',
+                    className: 'update-number',
+                    enabled: true,
+                    action: function () {
+                        $.post('/admin/store/update-number',{_token: $('meta[name="_token"]').attr('content')}, function (res) {
+                            if(res.cancelled == 0){
+                                layer.msg('成功更新了：'+res['data'][0]+'条数据！');
+                                table.ajax.reload();
+                            }
+                        });
+                    }
+                },
                 { text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>', action: function () {
                     exportExcel('#moduleForm','/admin/store/export-excel');
                 }  },

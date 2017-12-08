@@ -7,6 +7,41 @@ define(function (require, exports, module) {
     var editorCN = require('i18n');
     exports.index = function ($, orderTableId, orderInfoTableId,  stores, employees) {
 
+        var orderEditor = new $.fn.dataTable.Editor({
+            ajax: {
+                create: {
+                    type: 'POST',
+                    url: '/admin/sale-order',
+                    data: {_token: $('meta[name="_token"]').attr('content')},
+                },
+                edit: {
+                    type: 'PUT',
+                    url: '/admin/sale-order/_id_',
+                    data: {_token: $('meta[name="_token"]').attr('content')},
+                },
+                remove: {
+                    type: 'DELETE',
+                    url: '/admin/sale-order/_id_',
+                    data: {_token: $('meta[name="_token"]').attr('content')},
+                }
+            },
+            // i18n: orderEditCn,
+            table: "#" + orderTableId,
+            idSrc: 'id',
+            fields: [
+                {'label': '订单号', 'name': 'readonly_fbill_no', 'data': 'fbill_no', 'type': 'readonly'},
+                {
+                    'label': '订单日期', 'name': 'fdate', 'data': 'fdate', type: 'datetime',
+                    def: function () {
+                        return new Date();
+                    }
+                },
+                {'label': '业务员', 'name': 'femp_id', 'data': 'employee.fname', 'type': 'select', 'options': employees},
+                {'label': '门店', 'name': 'fstore_id', 'data': 'store.ffullname', 'type': 'select', 'options': stores},
+                {'label': 'source', 'name': 'source', 'data': 'source', 'def': 'admin', 'type': 'hidden'}
+            ]
+        });
+
         var orderTable = $("#" + orderTableId).DataTable({
             dom: "lBfrtip",
             language: zhCN,
@@ -25,7 +60,7 @@ define(function (require, exports, module) {
                 {'data': 'fdate'},
                 {'data': 'fcreate_date'},
                 {'data': 'employee_name'},
-                {'data': 'customer_name'},
+                {'data': 'admin_name'},
                 {'data': 'ftotal_amount'},
                 {
                     'data': 'fsend_status',
@@ -104,11 +139,47 @@ define(function (require, exports, module) {
                         })
                     }
                 },
+                {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: orderEditor},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
                 {extend: 'colvis', text: '列显示'}
             ],
             order: [[3, 'desc']]
+        });
+
+        var infoEditor = new $.fn.dataTable.Editor({
+            ajax: {
+                create: {
+                    type: 'POST',
+                    url: '/admin/sale-order-item',
+                    data: {_token: $('meta[name="_token"]').attr('content')},
+                },
+                edit: {
+                    type: 'PUT',
+                    url: '/admin/sale-order-item/_id_',
+                    data: {_token: $('meta[name="_token"]').attr('content')},
+                },
+                remove: {
+                    type: 'DELETE',
+                    url: '/admin/sale-order-item/_id_',
+                    data: {_token: $('meta[name="_token"]').attr('content')},
+                    success: function () {
+                        orderTable.ajax.reload();
+                        infoTable.ajax.reload();
+                        $(".modal").modal('hide')
+                    }
+                }
+            },
+            i18n: editorCN,
+            table: "#" + orderInfoTableId,
+            idSrc: 'id',
+            fields: [
+                {'label': '商品', 'name': 'readonly_material_fname', 'data': 'material.fname', 'type': 'readonly'},
+                {'label': '销售单位数量', 'name': 'readonly_fqty', 'data': 'fqty', 'type': 'readonly'},
+                {'label': '销售单位', 'name': 'readonly_fsale_unit', 'data': 'fsale_unit', 'type': 'readonly'},
+                {'label': '基本单位数量', 'name': 'readonly_fbase_qty', 'data': 'fbase_qty', 'type': 'readonly'},
+                {'label': '基本单位', 'name': 'readonly_fbase_unit', 'data': 'fbase_unit', 'type': 'readonly'},
+            ]
         });
 
         var infoTable = $("#" + orderInfoTableId).DataTable({
@@ -222,6 +293,7 @@ define(function (require, exports, module) {
                 //             layer.close();
                 //         })
                 //     }},
+                {extend: "remove", text: '删除<i class="fa fa-fw fa-trash"></i>', editor: infoEditor, enabled: false},
                 {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
                 {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
                 {extend: 'colvis', text: '列显示'}
@@ -254,8 +326,9 @@ define(function (require, exports, module) {
                 infoTable.columns( 1 ).search( order.id ).draw();
                 orderTable.buttons( ['.accept','.send'] ).enable(order.fsend_status == 'A');
                 orderTable.buttons( ['.buttons-edit'] ).enable(order.source != 'phone' && order.fsend_status == 'A');
-                orderTable.buttons( ['.buttons-remove'] ).enable(order.source != 'phone' && order.fsend_status == 'A');
+                orderTable.buttons( ['.buttons-remove'] ).enable(order.fsend_status == 'A');
                 infoTable.buttons( ['.buttons-create']).enable(order.source != 'phone');
+
             }
         }
 
@@ -269,7 +342,7 @@ define(function (require, exports, module) {
             var detail = detailrows.length > 0 ? detailrows[0] : null;
             //console.log(order);
             if(order && detail){
-                infoTable.buttons( ['.buttons-edit','.buttons-remove']).enable(order.source != 'phone' && detail.fsend_status == 'A');
+                infoTable.buttons( ['.buttons-edit','.buttons-remove']).enable(detail.fsend_status == 'A');
                 infoTable.buttons( ['.sure', '.send']).enable(detail.fsend_status == 'B');
             }
         }
