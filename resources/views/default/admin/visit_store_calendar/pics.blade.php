@@ -39,7 +39,7 @@
                 </div>
 
                 <!-- Slides Container -->
-                <div u="slides" style="position: absolute; left: 0px; top: 0px; width:600px; overflow: hidden;">
+                <div u="slides" style="position: absolute; left: 0px; top: 0px; width:600px; height: 600px; overflow: hidden;">
                     @foreach($ids as $id)
                     <div>
                         <img data-u="image" src="/admin/show-image?imageId={{$id}}" />
