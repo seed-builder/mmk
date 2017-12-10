@@ -113,6 +113,153 @@ define(function(require, exports, module) {
         //     table.buttons( ['.edit', '.delete'] ).enable(count > 0);
         // }
 
-    }
+    };
 
+    exports.all = function ($, tableId) {
+        var table = $("#" + tableId).DataTable({
+            dom: "lBfrtip",
+            language: zhCN,
+            processing: true,
+            serverSide: true,
+            select: true,
+            paging: true,
+            rowId: "id",
+            ajax: {
+                url: '/admin/visit_store_calendar/pagination',
+            },
+            columns: [
+                {"data": "id"},
+                {
+                    "data": 'femp_id',
+                    render: function ( data, type, full ) {
+                        if(full.employee!=null)
+                            return full.employee.fname
+                        else
+                            return "";
+                    }
+                },
+                {"data": 'fdate', render: function ( data, type, full ) {
+                        if (full.fstatus==1) {
+                            return data.replace('00:00:00','');
+                        }else if (full.fstatus==2){
+                            return full.fmodify_date
+                        }else if (full.fstatus==3){
+                            if (full.begin!=null)
+                                return full.begin+'至'+full.fmodify_date
+                            else
+                                return full.fmodify_date
+                        }
+                    },
+                },
+                {
+                    "data": 'fstore_id',
+                    render: function ( data, type, full ) {
+                        if(full.store!=null)
+                            return full.store.ffullname
+                        else
+                            return "";
+                    }
+                },
+                {
+                    "data": 'fstore_id',
+                    render: function ( data, type, full ) {
+                        if(full.store!=null)
+                            return full.store.fnumber
+                        else
+                            return "";
+                    }
+                },
+                {
+                    "data": 'fstatus',
+                    render: function ( data, type, full ) {
+                        if(data==1){
+                            return "未开始";
+                        }else if(data==2){
+                            return "进行中";
+                        }else if(data==3){
+                            return "已完成";
+                        }
+                    }
+                },
+                {
+                    "data": "id",
+                    render: function ( data, type, full ) {
+                        if (full.fstatus > 1) {
+                            return '<a href="/admin/visit_store_calendar/pics/' + data + '" data-target="#todoInfo" data-toggle="modal"><i class="fa fa-fw fa-search"></i></a>';
+                        }else{
+                            return '';
+                        }
+                    }
+                },
+            ],
+            order:[[2,'desc']],
+            buttons: [
+                {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
+                {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
+            ]
+        });
+
+    };
+
+    exports.revisit = function ($, tableId) {
+        var table = $("#" + tableId).DataTable({
+            dom: "lBfrtip",
+            language: zhCN,
+            processing: true,
+            serverSide: true,
+            select: true,
+            paging: true,
+            rowId: "id",
+            ajax: '/admin/visit_store_calendar/pagination',
+            columns: [
+                {"data": "id"},
+                {
+                    "data": 'fstore_id',
+                    render: function ( data, type, full ) {
+                        if(full.line!=null)
+                            return full.store.fname
+                        else
+                            return "";
+                    }
+                },
+                {
+                    "data": 'femp_id',
+                    render: function ( data, type, full ) {
+                        if(full.employee!=null)
+                            return full.employee.fname
+                        else
+                            return "";
+                    }
+                },
+                {
+                    "data": 'forg_id',
+                    render: function ( data, type, full ) {
+                        if(full.organization!=null)
+                            return full.organization.fname
+                        else
+                            return "";
+                    }
+                },
+                {
+                    "data": 'fstatus',
+                    render: function ( data, type, full ) {
+                        if(data==1){
+                            return "未开始";
+                        }else if(data==2){
+                            return "进行中";
+                        }else if(data==3){
+                            return "已开始";
+                        }
+                    }
+                },
+                {"data": "fdate"},
+            ],
+            buttons: [
+                {extend: 'excel', text: '导出Excel<i class="fa fa-fw fa-file-excel-o"></i>'},
+                {extend: 'print', text: '打印<i class="fa fa-fw fa-print"></i>'},
+                //{extend: 'colvis', text: '列显示'}
+            ]
+        });
+
+    };
 });
