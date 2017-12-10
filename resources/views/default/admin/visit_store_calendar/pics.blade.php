@@ -45,15 +45,15 @@
                 .jssora073.jssora073dn {opacity:.4;}
                 .jssora073.jssora073ds {opacity:.3;pointer-events:none;}
             </style>
-            <div id="jssor_1" style="position:relative;margin:0 auto;top:0px;left:0px;width:980px;height:150px;overflow:hidden;visibility:hidden;">
+            <div id="jssor_1" style="position:relative;margin:0 auto;top:0px;left:0px;width:980px;height:600px;overflow:hidden;visibility:hidden;">
                 <!-- Loading Screen -->
                 <div data-u="loading" class="jssorl-009-spin" style="position:absolute;top:0px;left:0px;width:100%;height:100%;text-align:center;background-color:rgba(0,0,0,0.7);">
                     <img style="margin-top:-19px;position:relative;top:50%;width:38px;height:38px;" src="img/spin.svg" />
                 </div>
-                <div data-u="slides" style="cursor:default;position:relative;top:0px;left:0px;width:980px;height:150px;overflow:hidden;">
+                <div data-u="slides" style="cursor:default;position:relative;top:0px;left:0px;width:980px;height:600px;overflow:hidden;">
                     @foreach($ids as $id)
                         @if(!empty($id))
-                        <div data-p="43.75">
+                        <div data-p="300">
                             <img data-u="image" src="/admin/show-image?imageId={{$id}}" />
                         </div>
                         @endif
@@ -94,7 +94,7 @@
             $SlideDuration: 160,
             $SlideWidth: 200,
             $SlideSpacing: 3,
-            $Cols: 5,
+            $Cols: 3,
             $Align: 390,
             $ArrowNavigatorOptions: {
                 $Class: $JssorArrowNavigator$,
