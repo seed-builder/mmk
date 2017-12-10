@@ -195,7 +195,9 @@ class VisitStoreCalendarController extends AdminController
         $ids = [];
         if(!empty($photos)){
             foreach ($photos as $photo){
-                $ids = array_merge($ids, explode(',', $photo->fphotos));
+                if(!empty($photo->fphotos)){
+                    $ids = array_merge($ids, explode(',', $photo->fphotos));
+                }
             }
         }
         return view('admin.visit_store_calendar.pics', ['ids' => $ids]);

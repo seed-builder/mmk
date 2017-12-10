@@ -52,9 +52,11 @@
                 </div>
                 <div data-u="slides" style="cursor:default;position:relative;top:0px;left:0px;width:980px;height:150px;overflow:hidden;">
                     @foreach($ids as $id)
+                        @if(!empty($id))
                         <div data-p="43.75">
                             <img data-u="image" src="/admin/show-image?imageId={{$id}}" />
                         </div>
+                        @endif
                     @endforeach
                 </div>
                 <!-- Bullet Navigator -->
