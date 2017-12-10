@@ -1,6 +1,8 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Busi\Employee;
+use App\Models\Busi\Store;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
 use App\Models\Busi\ViewRevisit;
@@ -21,7 +23,10 @@ class ViewRevisitController extends AdminController
 	public function index()
 	{
 		//
-		return view('admin.view-revisit.index');
+        $ids = $this->getCurUsersEmployeeIds();
+        $employees = Employee::query()->whereIn('id',$ids)->get();
+        $stores = Store::where('fdocument_status', 'A')->get();
+		return view('admin.view-revisit.index',compact('employees','stores'));
 	}
 
 	/**

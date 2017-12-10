@@ -32,7 +32,42 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-
+                        <div class="panel panel-default" >
+                            <form class="form-horizontal filter"  filter-table="#moduleTable">
+                                <div class="form-group">
+                                    <label class="col-sm-1 control-label">复巡主管</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control filter-condition filter-select" filter-name="senior_id" data-live-search="true">
+                                            <option value="">--请选择--</option>
+                                            @foreach($employees as $employee)
+                                                <option value="{{$employee->id}}">{{$employee->fname}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <label class="col-sm-1 control-label">门店</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control filter-condition filter-select" filter-name="fstore_id" data-live-search="true">
+                                            <option value="">--请选择--</option>
+                                            @foreach($stores as $store)
+                                                <option value="{{$store->id}}">{{$store->ffullname}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <label class="col-sm-1 control-label">开始时间</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control filter-condition filter-date" filter-name="frevisit_date" filter-operator=">=" value=""/>
+                                    </div>
+                                    <label class="col-sm-1 control-label">结束时间</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control filter-condition filter-date" filter-name="frevisit_date" filter-operator="<=" value=""/>
+                                    </div>
+                                </div>
+                                <div class="box-footer" style="text-align: center">
+                                    <button type="button" class="btn btn-info filter-submit">查询</button>
+                                    <button type="button" class="btn btn-default filter-reset">重置</button>
+                                </div>
+                            </form>
+                        </div>
                         <table id="moduleTable" class="table table-bordered table-hover display nowrap" cellspacing="0" width="100%">
                             <thead>
                             <tr>
