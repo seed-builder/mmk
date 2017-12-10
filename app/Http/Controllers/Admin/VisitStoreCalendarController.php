@@ -190,6 +190,26 @@ class VisitStoreCalendarController extends AdminController
             ->join('visit_todo_calendar', 'visit_todo_calendar.id', '=', 'visit_pzbz.flog_id')
             ->join('visit_store_calendar', 'visit_store_calendar.id', '=', 'visit_todo_calendar.fstore_calendar_id')
             ->where('visit_store_calendar.id', $id)
+            ->where('visit_todo_calendar.fcategory', 1)
+            ->select('visit_pzbz.fphotos')
+            ->get();
+        $ids = [];
+        if(!empty($photos)){
+            foreach ($photos as $photo){
+                if(!empty($photo->fphotos)){
+                    $ids = array_merge($ids, explode(',', $photo->fphotos));
+                }
+            }
+        }
+        return view('admin.visit_store_calendar.pics', ['ids' => $ids]);
+    }
+
+    public function revisitPics(Request $request, $id){
+        $photos = DB::table('visit_pzbz')
+            ->join('visit_todo_calendar', 'visit_todo_calendar.id', '=', 'visit_pzbz.flog_id')
+            ->join('visit_store_calendar', 'visit_store_calendar.id', '=', 'visit_todo_calendar.fstore_calendar_id')
+            ->where('visit_store_calendar.id', $id)
+            ->where('visit_todo_calendar.fcategory', 2)
             ->select('visit_pzbz.fphotos')
             ->get();
         $ids = [];

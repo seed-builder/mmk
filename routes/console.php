@@ -42,9 +42,9 @@ Artisan::command('test', function () {
 Artisan::command('test1', function () {
 	$this->comment('begin ...');
 	$db = new DbHelper();
-	$columns = $db->getColumns('view_sale_order_items');
-	$builder = new CodeBuilder('ViewSaleOrderItem','view_sale_order_items', $columns);
-	$builder->createFiles( 'customer');
+	$columns = $db->getColumns('view_revisit');
+	$builder = new CodeBuilder('ViewRevisit','view_revisit', $columns);
+	$builder->createFiles( 'admin','datatables');
 	$this->comment('end ...');
 })->describe('philo blade test');
 

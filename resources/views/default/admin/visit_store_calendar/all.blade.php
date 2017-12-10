@@ -81,7 +81,7 @@
                         <table id="moduleTable" class="table table-bordered table-hover display nowrap" cellspacing="0" width="100%">
                             <thead>
                             <tr>
-                                <th>序号</th>
+                                <th>ID</th>
                                 <th>负责业代</th>
                                 <th>拜访日期</th>
                                 <th>门店名称</th>

@@ -33,15 +33,15 @@
 
                         <table id="moduleTable" class="table table-bordered table-hover display nowrap" cellspacing="0" width="100%">
                             <thead>
-                            <tr>
-                                <th>序号</th>
-                                <th>复巡主管</th>
-                                <th>复巡时间</th>
-                                <th>门店名称</th>
-                                <th>门店编码</th>
-                                <th>复巡状态</th>
-                                <th>复巡图片查看</th>
-                            </tr>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>复巡主管</th>
+                                    <th>复巡时间</th>
+                                    <th>门店名称</th>
+                                    <th>门店编码</th>
+                                    <th>复巡状态</th>
+                                    <th>复巡图片查看</th>
+                                </tr>
                             </thead>
                         </table>
                     </div>
@@ -64,8 +64,6 @@
             seajs.use('app-visit-store-calendar', function (calendar) {
             	calendar.revisit($, 'moduleTable');
             });
-
-            
         });
 
     </script>

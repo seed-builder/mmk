@@ -38,6 +38,7 @@ class RevisitTodoStatusChangedEventHandler
 			if ($event->model->fstatus == 2) {
 				if (!empty($storeCalendar)) {
 					$storeCalendar->frevisit_status = 2;
+					$storeCalendar->frevisit_date = date('Y-m-d H:i:s');
 //					if(empty($storeCalendar->fbegin))
 //					{
 //						$storeCalendar->fbegin = date('Y-m-d H:i:s');
