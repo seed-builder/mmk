@@ -31,14 +31,14 @@
                 }
             </style>
             <div id="slider1_container" style="visibility: hidden; position: relative; margin: 0 auto;
-        top: 0px; left: 0px; width: 1300px; height: 500px; overflow: hidden;">
+        top: 0px; left: 0px; width: 1000px; height: 500px; overflow: hidden;">
                 <!-- Loading Screen -->
                 <div data-u="loading" class="jssorl-009-spin" style="position:absolute;top:0px;left:0px;width:100%;height:100%;text-align:center;background-color:rgba(0,0,0,0.7);">
                     <img style="margin-top:-19px;position:relative;top:50%;width:38px;height:38px;" src="../svg/loading/static-svg/spin.svg" />
                 </div>
 
                 <!-- Slides Container -->
-                <div u="slides" style="position: absolute; left: 0px; top: 0px; width: 1300px; height: 500px; overflow: hidden;">
+                <div u="slides" style="position: absolute; left: 0px; top: 0px; width: 1000px; height: 500px; overflow: hidden;">
                     @foreach($ids as $id)
                         <div>
                             <img data-u="image" src="/admin/show-image?imageId={{$id}}" />
