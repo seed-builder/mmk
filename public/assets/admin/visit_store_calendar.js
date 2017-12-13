@@ -184,11 +184,11 @@ define(function(require, exports, module) {
                 {
                     "data": "id",
                     render: function ( data, type, full ) {
+                        var s =  '<a href="/admin/visit_store_calendar/visitStoreCalendarInfo/'+data+'" data-target="#lineInfo" data-toggle="modal">拜访项<i class="fa fa-fw fa-search"></i></a>&nbsp;&nbsp;';
                         if (full.fstatus > 1) {
-                            return '<a href="/admin/visit_store_calendar/pics/' + data + '" data-target="#todoInfo" data-toggle="modal"><i class="fa fa-fw fa-search"></i></a>';
-                        }else{
-                            return '';
+                            s += '<a href="/admin/visit_store_calendar/pics/' + data + '" data-target="#todoInfo" data-toggle="modal">拜访图片<i class="fa fa-fw fa-search"></i></a>';
                         }
+                        return s;
                     }
                 },
             ],
