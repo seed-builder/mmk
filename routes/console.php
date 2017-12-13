@@ -261,3 +261,10 @@ Artisan::command('make-calendar-week', function () {
 	}
 	$this->comment('end ...');
 })->describe('make all stores todo calendars of 7 days');
+
+Artisan::command('make-calendar-day {day}', function ($day) {
+    $this->comment('make all stores todo calendar at day: ' . $day);
+    $svr = new VisitCalendarService();
+    $svr->byDay($day);
+    $this->comment('end ...');
+})->describe('make all stores todo calendars');
